@@ -11,6 +11,8 @@ import pathlib
 from dataclasses import dataclass, field
 from statistics import median
 
+from defasagem import defasagem_meses
+from juros import juros_do_periodo
 from motor_financeiras import (HORIZONTE, IR_JCP, ORDEM, Mercado, interp, liquido_diferido, nota_preco, nota_spread,
                                nota_yield, palavra)
 
@@ -56,7 +58,13 @@ class Industrial:
     # Lote 4 (05/10): defaults preservam os lotes anteriores
     g1_real: float | None = None          # DCF em 2 estágios: crescimento real dos primeiros anos_g1 anos (compounder; só com ROIC > WACC)
     anos_g1: int = 10
-    defasagem_meses: float = 0.0          # provento pago N meses depois da data-com: trazido a valor presente ao Ke nominal (doutrina §6.3)
+    defasagem_meses: float | None = None  # provento pago N meses depois da data-com → valor presente ao Ke nominal (§6.3); None = medida na StatusInvest (defasagem.py)
+
+
+# Lotes 2/3/5/6 foram avaliados sem o aluguel pago no OE. A recoleta de 06/10 trouxe o campo, mas a regra ainda tem dois furos:
+# linhas que misturam principal+juros (UGPA3, KLBN11, SMTO3, ABEV3) contam o juro duas vezes ou são descartadas (LTM negativo).
+# Fica FORA até a Etapa 2 (F2) decidir o método; o golden prova que nada mudou por isso. Lote 4 já usa (proxy próprio).
+SEM_ALUGUEL_NO_OE = frozenset("SUZB3 KLBN11 RANI3 B3SA3 SMTO3 KEPL3 SLCE3 PETR4 PRIO3 RECV3 UGPA3 VBBR3 LEVE3 UNIP6 GGBR4".split())
 
 
 def v(d, k, default=None):
@@ -115,7 +123,8 @@ def owner_earnings_ano(tk, ano, anterior, ciclica=False):
     dwc = capital_giro(d) - capital_giro(p)
     # IFRS 16: a D&A somada de volta inclui a depreciação do direito de uso; o aluguel pago (amortização do passivo de arrendamento,
     # DFC de financiamento) é custo do negócio e sai (05/10). Série coletada antes de 05/10 não tem o campo → 0 (sem mudança)
-    return d["lucro"] + d["da"] - cm - max(dwc, 0) - v(d, "arrendamento_pago", 0)
+    aluguel = 0 if tk in SEM_ALUGUEL_NO_OE else max(v(d, "arrendamento_pago", 0), 0)
+    return d["lucro"] + d["da"] - cm - max(dwc, 0) - aluguel
 
 
 # ---------------------------------------------------------------- qualidade contábil
@@ -430,7 +439,7 @@ def avaliar(emp: Industrial, mk: Mercado) -> dict:
                                                       median([a[x]["da"] for x in r["op"]["anos"][-3:] if a[x].get("da")] or [0]))
     dl_ebitda = r["dl"] / ebitda_ltm if ebitda_ltm > 0 else None
     dl_ebitda_norm = r["dl"] / ebitda_norm if ebitda_norm > 0 else None
-    juros = -v(ltm, "desp_fin", 0)
+    juros, juros_fonte = juros_do_periodo(ltm)
     cobertura = v(ltm, "ebit", 0) / juros if juros > 0 else None
 
     ev = r["e"] + r["dl"]
@@ -469,7 +478,8 @@ def avaliar(emp: Industrial, mk: Mercado) -> dict:
         g1n = (1 + emp.g1_real) * (1 + mk.pi) - 1
         k = min(emp.anos_g1, HORIZONTE)
         g_nom = ((1 + g1n) ** k * (1 + g_nom) ** (HORIZONTE - k)) ** (1 / HORIZONTE) - 1
-    fvp = (1 + mk.ke_nom) ** (-emp.defasagem_meses / 12)   # defasagem: provento a valor presente ao Ke nominal (§6.3)
+    meses = emp.defasagem_meses if emp.defasagem_meses is not None else defasagem_meses(emp.ticker)
+    fvp = (1 + mk.ke_nom) ** (-meses / 12)   # defasagem: provento a valor presente ao Ke nominal (§6.3)
     dpa_sust_vp = dpa_sust * fvp
     dpa_sust_liq = dpa_sust_vp * (1 - emp.jcp_share * IR_JCP)
     teto = dpa_sust_liq / mk.rf_liq_nom if (coberto and dpa_sust > 0) else None
@@ -515,10 +525,10 @@ def avaliar(emp: Industrial, mk: Mercado) -> dict:
     return dict(r, ancoras=anc, central=central, dispersao=disp, confianca=conf, pc=pc, palavra_regua=p0, palavra=p,
                 compra=0.7 * central, saida=1.3 * central, compra_parcial=0.8 * central, desc_controlador=desc,
                 ebitda_ltm=ebitda_ltm, ebitda_norm=ebitda_norm, dl_ebitda=dl_ebitda, dl_ebitda_norm=dl_ebitda_norm,
-                cobertura_juros=cobertura, ey=ey, roc=roc, altman=z, altman_zona=zona, piotroski=pf, piotroski_crit=pf_crit,
+                cobertura_juros=cobertura, cobertura_fonte=juros_fonte, ey=ey, roc=roc, altman=z, altman_zona=zona, piotroski=pf, piotroski_crit=pf_crit,
                 beneish=mb, sloan=sl, ano_qualidade=ult, lpa_norm=lpa_norm, vpa=vpa, graham_orig=graham_orig,
                 graham_br=graham_br, graham_rev=graham_rev, dpa5=dpa5, fcfe_acao=fcfe_acao, dpa_sust=dpa_sust,
-                coberto=coberto, dpa_sust_liq=dpa_sust_liq, teto_renda=teto, dpa_sust_vp=dpa_sust_vp, fator_defasagem=fvp, bazin6=bazin6, dy=dy, dy_liq=dy_liq,
+                coberto=coberto, dpa_sust_liq=dpa_sust_liq, teto_renda=teto, dpa_sust_vp=dpa_sust_vp, fator_defasagem=fvp, defasagem_meses=meses, bazin6=bazin6, dy=dy, dy_liq=dy_liq,
                 g_nom=g_nom, pl_atual=pl_atual, pl_final=pl_final, dmult=dmult, bogle_nom=bogle_nom,
                 bogle_liq_real=bogle_liq_real, so_inv_liq_real=so_inv_liq_real, vence_rf=rf, rf_sem_rerating=rf_inv,
                 so_com_rerating=rf != rf_inv, carimbo_rf=bogle_liq_real < mk.rf_liq_real, trava=trava, peg=peg, pegy=pegy,

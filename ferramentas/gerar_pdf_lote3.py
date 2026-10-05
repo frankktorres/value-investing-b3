@@ -120,7 +120,7 @@ def ficha(emp, r, rank, story):
              ["Receita de meio de ciclo · margem normalizada", f"R$ {br(r['op']['receita_meio'] / 1e6, 1)} bi · {pct(r['op']['m50'])} (p25 {pct(r['op']['m25'])} · p75 {pct(r['op']['m75'])})", "[CVM] mediana 10a"],
              ["Ajuste capex de manutenção (Greenwald)", pct(r["op"]["ajuste_manut"]) + " da receita", "[CVM] 5 exercícios"],
              ["Dívida líquida · DL/EBITDA", f"R$ {br(r['dl'] / 1e6, 1)} bi · {br(r['dl_ebitda'])}×" + (f" (pró-forma Arbex {br(x['dl_ebitda_pf'])}×)" if emp.ticker == 'SUZB3' else ""), "[CVM] 30/06/2026"],
-             ["Cobertura de juros (EBIT ÷ despesa financeira)", f"{br(r['cobertura_juros'], 1) if r['cobertura_juros'] else 'n.d.'}× (inclui variação cambial)", "[CVM]"],
+             ["Cobertura de juros (EBIT ÷ juros)", f"{br(r['cobertura_juros'], 1) if r['cobertura_juros'] else 'n.d.'}× ({r['cobertura_fonte']})", "[CVM]"],
              ["ROIC normalizado · WACC", f"{pct(r['roic'])} · {pct(r['wacc'])} (Kd {pct(r['kd'])}; IR efetivo {pct(r['aliquota'], 0)})", "motor"],
              ["P/L 12m · P/VP", f"{br(x['pl_ltm'], 1) if x['pl_ltm'] else 'n.d.'}× · {br(emp.preco / r['vpa'])}×", "[SI]/[CVM]"]]
     lado = Table([[tabela(fatos, [40 * mm, 40 * mm, 17 * mm]), grafico_margem(emp, r)]], colWidths=[98 * mm, 84 * mm])

@@ -9,6 +9,8 @@ import math
 from dataclasses import dataclass, field
 from statistics import median
 
+from defasagem import defasagem_meses
+
 PIB_REAL_LP = 0.02          # crescimento real de longo prazo da economia (teto do g perpétuo), declarado
 PREMIO_KE = 0.05            # Ke real = rf + 5 p.p.
 IR_RESGATE = 0.15           # Tesouro e ganho de capital, > 720 dias
@@ -115,6 +117,7 @@ class Financeira:
     anos_pagos_10: int = 10
     solidez_manual: float | None = None   # quando o prudencial não se aplica (seguradoras), com razão no texto
     fora_circulo: bool = False
+    defasagem_meses: float | None = None  # provento pago N meses após a data-com → valor presente ao Ke nominal (§6.3); None = medida na StatusInvest (defasagem.py)
     sotp: object = None                   # holding (Lote 4, 05/10): função Mercado → SOTP por ação; âncoras = SOTP + DDM (doutrina §11.2)
 
 
@@ -280,12 +283,15 @@ def avaliar(emp: Financeira, mk: Mercado) -> dict:
     else:                                    # banco: precisa reter g/ROE do lucro para crescer o capital
         dpa_fcfe = lpa_norm * (1 - g / emp.roe_lp) if emp.roe_lp > 0 else 0
     dpa_sust = min(emp.dpa_medio_5a, dpa_fcfe)
-    dpa_sust_liq = dpa_sust * (1 - emp.jcp_share * IR_JCP)
+    meses = emp.defasagem_meses if emp.defasagem_meses is not None else defasagem_meses(emp.ticker)
+    fvp = (1 + ke) ** (-meses / 12)          # defasagem: provento a valor presente ao Ke nominal (§6.3)
+    dpa_sust_vp = dpa_sust * fvp
+    dpa_sust_liq = dpa_sust_vp * (1 - emp.jcp_share * IR_JCP)
     teto_renda = dpa_sust_liq / mk.rf_liq_nom if emp.cobertura_caixa else None
     bazin6 = dpa_sust / 0.06
 
     # Bogle (10 anos) sobre LPA normalizado
-    dy = dpa_sust / emp.preco
+    dy = dpa_sust_vp / emp.preco
     pl_atual = emp.preco / lpa_norm
     pl_final = emp.pl_hist if emp.pl_hist else None
     dmult = (pl_final / pl_atual) ** (1 / HORIZONTE) - 1 if pl_final else 0.0
@@ -356,7 +362,7 @@ def avaliar(emp: Financeira, mk: Mercado) -> dict:
         central=central, dispersao=dispersao, confianca=confianca, pc=pc, palavra_regua=p0, palavra=p,
         compra=0.70 * central, saida=1.30 * central, compra_parcial=0.80 * central,
         lpa_norm=lpa_norm, graham_orig=graham_orig, graham_br=graham_br, dpa_sust=dpa_sust,
-        dpa_fcfe=dpa_fcfe, dpa_sust_liq=dpa_sust_liq, teto_renda=teto_renda, bazin6=bazin6,
+        dpa_fcfe=dpa_fcfe, dpa_sust_vp=dpa_sust_vp, fator_defasagem=fvp, defasagem_meses=meses, dpa_sust_liq=dpa_sust_liq, teto_renda=teto_renda, bazin6=bazin6,
         dy=dy, dy_liq=dy_liq, pl_atual=pl_atual, pl_final=pl_final, dmult=dmult,
         bogle_nom=bogle_nom, bogle_real=bogle_real, bogle_liq_real=bogle_liq_real,
         vence_rf=rf, carimbo_rf=carimbo_rf, trava=trava, roe_implicito=roe_implicito,

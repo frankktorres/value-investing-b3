@@ -52,7 +52,7 @@ T = {
                "Preço embute Ke de {ke_impl} — quase o Ke da casa: o mercado paga o justo, não mais que isso"],
     ameacam=["Imposto de exportação de 12% permanente: central R$ {imposto}",
              "Brent: a US$ 70 permanente o central cai para R$ {b70}; a US$ 60, R$ {b60}",
-             "Zero dividendo (política adiada), cobertura de juros {cobertura}× com variação cambial e dívida líquida de R$ {dl_bi} bi [CVM]"],
+             "Zero dividendo (política adiada), cobertura de juros {cobertura}× (juros pagos) e dívida líquida de R$ {dl_bi} bi [CVM]"],
     gatilho="Produção abaixo de 150 kbpd por 2 trimestres, dívida líquida/EBITDA acima de 2× por M&A caro, ou imposto de exportação tornado permanente.",
     renda="Não. Não paga dividendo; o retorno depende de reinvestir em aquisições.",
     capital="Não. {palavra} ({pc}× o central); compra ≤ R$ {compra}. Só ficaria JUSTA com produção de 187 kbpd sustentada E Brent acima do meio de ciclo.",
@@ -62,7 +62,7 @@ T = {
                  "Pela regra do Lote 3 (margem EBIT de 10 anos, base 12m) o central seria R$ {regra_ebit} — a palavra é a mesma.",
                  "O 1S26 tem o imposto de exportação dentro da receita se ele for deduzido dela; se cair em novembro, a base sobe até 12%.",
                  "A D&A atual (Peregrino a preço de compra) é o custo de repor reservas; se novas aquisições forem mais baratas, o valor sobe.",
-                 "Cobertura de juros {cobertura}× inclui variação cambial da dívida em dólar — não é risco de solvência, mas a dívida cresceu com o M&A."],
+                 "Cobertura de juros {cobertura}× (EBIT ÷ juros pagos na DFC) — a dívida cresceu com o M&A; vigiar."],
     nao_encontrado="Reservas 1P/2P e vida útil; hedge; dívida bruta e caixa pela empresa; produção oficial de setembro; data do 3T26."),
 "RECV3": dict(
     circulo="Produtora onshore de campos maduros (Bahia e Potiguar) com gás relevante. Ganha revitalizando campos que a Petrobras vendeu; "

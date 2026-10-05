@@ -13,6 +13,7 @@ import statistics as st
 import sys
 
 from lote1_bancos import MK
+from juros import juros_do_periodo
 from motor_financeiras import Financeira, avaliar, interp
 
 AQUI = pathlib.Path(__file__).parent
@@ -63,7 +64,7 @@ def alavancagem(tk):
     bruta = (l.get("emprest_cp") or 0) + (l.get("emprest_lp") or 0) + (l.get("arrendamento") or 0)
     dl = bruta - (l.get("caixa") or 0) - (l.get("aplic_cp") or 0)
     ebitda = l["ebit"] + (l.get("da") or 0)
-    juros = -(l.get("desp_fin") or 0)
+    juros, _ = juros_do_periodo(l)
     if juros <= 1e4 and (l.get("res_fin") or 0) < 0:      # sem a linha de despesa (SBSP3): usa o resultado financeiro líquido
         juros = -l["res_fin"]
     cob = l["ebit"] / juros if juros > 1e4 else None

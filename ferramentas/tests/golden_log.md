@@ -1,1 +1,2 @@
 - 2026-10-05 15:19 — Golden inicial: estado dos 6 lotes em 05/10/2026 (doutrina v2.1), antes de propagar defasagem e juros pagos
+- 2026-10-05 18:50 — Etapa 1 (F1): defasagem do provento a VP medida na StatusInvest e aplicada a todos os lotes (Financeira ganha o campo; Lote 4 mantém manuais) + cobertura de juros por juros pagos da DFC (fallback despesa bruta). Central, âncoras e palavra inalterados; mudam yield sustentável, Bogle, nota geral e cobertura

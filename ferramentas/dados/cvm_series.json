@@ -46,7 +46,9 @@
     "da": 1403518.0,
     "capex": 2324338.0,
     "dividendos_pagos": 299926.0,
-    "recompra": 0.0
+    "recompra": 0.0,
+    "arrendamento_pago": 0.0,
+    "juros_pagos": 1102090.0
    },
    "2017": {
     "receita": 10520790.0,
@@ -93,7 +95,9 @@
     "da": 1402778.0,
     "capex": 1780302.0,
     "dividendos_pagos": 570568.0,
-    "recompra": 83.0
+    "recompra": 83.0,
+    "arrendamento_pago": 0.0,
+    "juros_pagos": 1006869.0
    },
    "2018": {
     "receita": 13437329.0,
@@ -140,7 +144,9 @@
     "da": 1563223.0,
     "capex": 2423698.0,
     "dividendos_pagos": 210205.0,
-    "recompra": 0.0
+    "recompra": 0.0,
+    "arrendamento_pago": 0.0,
+    "juros_pagos": 806758.0
    },
    "2019": {
     "receita": 26012950.0,
@@ -187,7 +193,9 @@
     "da": 8052992.0,
     "capex": 5223874.0,
     "dividendos_pagos": 606632.0,
-    "recompra": 0.0
+    "recompra": 0.0,
+    "arrendamento_pago": 645071.0,
+    "juros_pagos": 2977957.0
    },
    "2020": {
     "receita": 30460277.0,
@@ -235,6 +243,8 @@
     "capex": 4897860.0,
     "dividendos_pagos": 0.0,
     "recompra": 0.0,
+    "arrendamento_pago": 824245.0,
+    "juros_pagos": 3623331.0,
     "acoes": 1349221580.0
    },
    "2021": {
@@ -283,6 +293,8 @@
     "capex": 6501142.0,
     "dividendos_pagos": 9683.0,
     "recompra": 0.0,
+    "arrendamento_pago": 1012137.0,
+    "juros_pagos": 2953573.0,
     "acoes": 1349221580.0
    },
    "2022": {
@@ -331,6 +343,8 @@
     "capex": 15194479.0,
     "dividendos_pagos": 4150782.0,
     "recompra": 1904424.0,
+    "arrendamento_pago": 1044119.0,
+    "juros_pagos": 4019072.0,
     "acoes": 1309352015.0
    },
    "2023": {
@@ -379,6 +393,8 @@
     "capex": 18247974.0,
     "dividendos_pagos": 192532.0,
     "recompra": 880914.0,
+    "arrendamento_pago": 1218399.0,
+    "juros_pagos": 4728998.0,
     "acoes": 1289352015.0
    },
    "2024": {
@@ -427,6 +443,8 @@
     "capex": 16828033.0,
     "dividendos_pagos": 1624653.0,
     "recompra": 2806764.0,
+    "arrendamento_pago": 1325398.0,
+    "juros_pagos": 5241389.0,
     "acoes": 1239241828.0
    },
    "2025": {
@@ -475,6 +493,8 @@
     "capex": 12874841.0,
     "dividendos_pagos": 2208158.0,
     "recompra": 191918.0,
+    "arrendamento_pago": 1447973.0,
+    "juros_pagos": 5817907.0,
     "acoes": 1235908788.0
    }
   },
@@ -500,6 +520,8 @@
    "capex": 12406816.0,
    "dividendos_pagos": 1385011.0,
    "recompra": 133541.0,
+   "arrendamento_pago": 1443122.0,
+   "juros_pagos": 5559634.0,
    "vj_biologico": 0.0,
    "impairment": 0.0,
    "impairment_outras": 0.0,
@@ -535,6 +557,10 @@
      "Adições no Imobilizado",
      "Adições nos Ativos Biológicos",
      "Adições no Intangível"
+    ],
+    "linhas_arrendamento": [],
+    "linhas_juros_pagos": [
+     "Pagamento de Juros"
     ]
    },
    "2017": {
@@ -545,6 +571,10 @@
      "Adições no Imobilizado",
      "Adições nos Ativos Biológicos",
      "Adições no Intangível"
+    ],
+    "linhas_arrendamento": [],
+    "linhas_juros_pagos": [
+     "Pagamento de Juros"
     ]
    },
    "2018": {
@@ -555,6 +585,10 @@
      "Adições no Imobilizado",
      "Adições nos Ativos Biológicos",
      "Adições no Intangível"
+    ],
+    "linhas_arrendamento": [],
+    "linhas_juros_pagos": [
+     "Pagamento de Juros"
     ]
    },
    "2019": {
@@ -566,6 +600,12 @@
      "Adições de intangível",
      "Adições de ativos biológicos",
      "Adiantamento para aquisição de madeira de operações com fomento"
+    ],
+    "linhas_arrendamento": [
+     "Pagamento de contratos de arrendamentos"
+    ],
+    "linhas_juros_pagos": [
+     "Pagamento de juros sobre empréstimos, financiamentos e debêntures"
     ]
    },
    "2020": {
@@ -576,6 +616,13 @@
      "Adições no Imobilizado",
      "Adições de intangível",
      "Adições de ativos biológicos"
+    ],
+    "linhas_arrendamento": [
+     "Pagamento de contratos de arrendamentos"
+    ],
+    "linhas_juros_pagos": [
+     "Pagamento de juros sobre empréstimos, financiamentos e debêntures",
+     "Pagamento de juros de recompra de bonds"
     ]
    },
    "2021": {
@@ -587,6 +634,12 @@
      "Adições de intangível",
      "Adições de ativos biológicos",
      "Adiantamento para aquisição (recebimento) de madeira de operações com fomento e parcerias"
+    ],
+    "linhas_arrendamento": [
+     "Pagamento de contratos de arrendamentos"
+    ],
+    "linhas_juros_pagos": [
+     "Pagamento de juros sobre empréstimos, financiamentos e debêntures"
     ]
    },
    "2022": {
@@ -598,6 +651,12 @@
      "Adições de intangível",
      "Adições de ativos biológicos",
      "Adiantamento para aquisição (recebimento) de madeira de operações com fomento e parcerias"
+    ],
+    "linhas_arrendamento": [
+     "Pagamento de contratos de arrendamentos"
+    ],
+    "linhas_juros_pagos": [
+     "Pagamento de juros sobre empréstimos, financiamentos e debêntures"
     ]
    },
    "2023": {
@@ -609,6 +668,12 @@
      "Adições de intangível",
      "Adições de ativos biológicos",
      "Adiantamento para aquisição (recebimento) de madeira de operações com fomento e parcerias"
+    ],
+    "linhas_arrendamento": [
+     "Pagamento de contratos de arrendamentos"
+    ],
+    "linhas_juros_pagos": [
+     "Pagamento de juros sobre empréstimos, financiamentos e debêntures"
     ]
    },
    "2024": {
@@ -620,6 +685,12 @@
      "Adições de intangível",
      "Adições de ativos biológicos",
      "Adiantamento para aquisição (recebimento) de madeira de operações com fomento e parcerias"
+    ],
+    "linhas_arrendamento": [
+     "Pagamento de contratos de arrendamentos"
+    ],
+    "linhas_juros_pagos": [
+     "Pagamento de juros sobre empréstimos, financiamentos e debêntures"
     ]
    },
    "2025": {
@@ -631,6 +702,12 @@
      "Adições de intangível",
      "Adições de ativos biológicos",
      "Adiantamento para aquisição (recebimento) de madeira de operações com fomento e parcerias"
+    ],
+    "linhas_arrendamento": [
+     "Pagamento de contratos de arrendamentos"
+    ],
+    "linhas_juros_pagos": [
+     "Pagamento de juros sobre empréstimos, financiamentos e debêntures"
     ]
    }
   },
@@ -683,7 +760,9 @@
     "da": 1423112.0,
     "capex": 2566647.0,
     "dividendos_pagos": 447503.0,
-    "recompra": 24262.0
+    "recompra": 24262.0,
+    "arrendamento_pago": 0.0,
+    "juros_pagos": 1420834.0
    },
    "2017": {
     "receita": 8373378.0,
@@ -730,7 +809,9 @@
     "da": 1940487.0,
     "capex": 925285.0,
     "dividendos_pagos": 507000.0,
-    "recompra": 11468.0
+    "recompra": 11468.0,
+    "arrendamento_pago": 0.0,
+    "juros_pagos": 1343265.0
    },
    "2018": {
     "receita": 10016461.0,
@@ -777,7 +858,9 @@
     "da": 1673347.0,
     "capex": 1096343.0,
     "dividendos_pagos": 840000.0,
-    "recompra": 0.0
+    "recompra": 0.0,
+    "arrendamento_pago": 0.0,
+    "juros_pagos": 1308543.0
    },
    "2019": {
     "receita": 10271839.0,
@@ -824,7 +907,9 @@
     "da": 2193414.0,
     "capex": 2574075.0,
     "dividendos_pagos": 957000.0,
-    "recompra": 0.0
+    "recompra": 0.0,
+    "arrendamento_pago": 102361.0,
+    "juros_pagos": 1334104.0
    },
    "2020": {
     "receita": 11948794.0,
@@ -872,6 +957,8 @@
     "capex": 4785666.0,
     "dividendos_pagos": 223000.0,
     "recompra": 0.0,
+    "arrendamento_pago": 158590.0,
+    "juros_pagos": 1451959.0,
     "acoes": 5485248166.0
    },
    "2021": {
@@ -920,6 +1007,8 @@
     "capex": 3877692.0,
     "dividendos_pagos": 402000.0,
     "recompra": 0.0,
+    "arrendamento_pago": 243179.0,
+    "juros_pagos": 1203477.0,
     "acoes": 5492190766.0
    },
    "2022": {
@@ -968,6 +1057,8 @@
     "capex": 8124851.0,
     "dividendos_pagos": 1660000.0,
     "recompra": 0.0,
+    "arrendamento_pago": 337211.0,
+    "juros_pagos": 1555034.0,
     "acoes": 5502029996.0
    },
    "2023": {
@@ -1016,6 +1107,8 @@
     "capex": 4363324.0,
     "dividendos_pagos": 1358000.0,
     "recompra": 0.0,
+    "arrendamento_pago": 533734.0,
+    "juros_pagos": 1890575.0,
     "acoes": 5516580371.0
    },
    "2024": {
@@ -1064,6 +1157,8 @@
     "capex": 3548409.0,
     "dividendos_pagos": 1779031.0,
     "recompra": 0.0,
+    "arrendamento_pago": 525850.0,
+    "juros_pagos": 2191872.0,
     "acoes": 6079281567.0
    },
    "2025": {
@@ -1112,6 +1207,8 @@
     "capex": 2831963.0,
     "dividendos_pagos": 1122269.0,
     "recompra": 0.0,
+    "arrendamento_pago": 497299.0,
+    "juros_pagos": 2116146.0,
     "acoes": 6135427665.0
    }
   },
@@ -1137,6 +1234,8 @@
    "capex": 2995408.0,
    "dividendos_pagos": 1189875.0,
    "recompra": 0.0,
+   "arrendamento_pago": 547325.0,
+   "juros_pagos": 1972291.0,
    "vj_biologico": 630319.0,
    "impairment": 0.0,
    "impairment_outras": 0.0,
@@ -1172,6 +1271,11 @@
     "linhas_capex": [
      "Aquisição de Bens do Ativo Imobilizado (Líq. Impostos)",
      "Custo de Plantio de Ativos Biológicos (Líq. Impostos)"
+    ],
+    "linhas_arrendamento": [],
+    "linhas_juros_pagos": [
+     "Pagamento de Juros de Emp. e Financiamentos",
+     "Pagamento de juros das debêntures e variação monetária"
     ]
    },
    "2017": {
@@ -1182,6 +1286,11 @@
     "linhas_capex": [
      "Aquisição de Bens do Ativo Imobilizado (Líq. Impostos)",
      "Custo de Plantio de Ativos Biológicos (Líq. Impostos)"
+    ],
+    "linhas_arrendamento": [],
+    "linhas_juros_pagos": [
+     "Pagamento de Juros de Emp. e Financiamentos",
+     "Pagamento de juros das debêntures e variação monetária"
     ]
    },
    "2018": {
@@ -1192,6 +1301,11 @@
     "linhas_capex": [
      "Aquisição de Bens do Ativo Imobilizado (Líq. Impostos)",
      "Custo de Plantio de Ativos Biológicos (Líq. Impostos)"
+    ],
+    "linhas_arrendamento": [],
+    "linhas_juros_pagos": [
+     "Pagamento de Juros de Emp. e Financiamentos",
+     "Pagamento de juros das debêntures e variação monetária"
     ]
    },
    "2019": {
@@ -1202,6 +1316,13 @@
     "linhas_capex": [
      "Aquisição de Bens do Ativo Imobilizado (Líq. Impostos)",
      "Custo de Plantio de Ativos Biológicos (Líq. Impostos)"
+    ],
+    "linhas_arrendamento": [
+     "Pagamento de passivos de arrendamentos"
+    ],
+    "linhas_juros_pagos": [
+     "Pagamento de Juros de Emp. e Financiamentos",
+     "Pagamento de juros das debêntures e variação monetária"
     ]
    },
    "2020": {
@@ -1212,6 +1333,13 @@
     "linhas_capex": [
      "Aquisição de Bens do Ativo Imobilizado (Líq. Impostos)",
      "Custo de Plantio de Ativos Biológicos (Líq. Impostos)"
+    ],
+    "linhas_arrendamento": [
+     "Pagamento de passivos de arrendamentos"
+    ],
+    "linhas_juros_pagos": [
+     "Pagamento de Juros de Emp. e Financiamentos",
+     "Pagamento de juros das debêntures e variação monetária"
     ]
    },
    "2021": {
@@ -1222,6 +1350,12 @@
     "linhas_capex": [
      "Aquisição de Bens do Ativo Imobilizado (Líq. Impostos)",
      "Custo de Plantio de Ativos Biológicos (Líq. Impostos)"
+    ],
+    "linhas_arrendamento": [
+     "Pagamento de passivos de arrendamentos"
+    ],
+    "linhas_juros_pagos": [
+     "Pagamento de juros das debêntures e variação monetária"
     ]
    },
    "2022": {
@@ -1232,6 +1366,12 @@
     "linhas_capex": [
      "Aquisição de Bens do Ativo Imobilizado (Líq. Impostos)",
      "Custo de Plantio de Ativos Biológicos (Líq. Impostos)"
+    ],
+    "linhas_arrendamento": [
+     "Pagamento de passivos de arrendamentos"
+    ],
+    "linhas_juros_pagos": [
+     "Pagamento de juros das debêntures e variação monetária"
     ]
    },
    "2023": {
@@ -1242,6 +1382,12 @@
     "linhas_capex": [
      "Adição de bens do ativo imobilizado e intangível",
      "Adição de plantio e compras de madeira em pé"
+    ],
+    "linhas_arrendamento": [
+     "Pagamento de passivos de arrendamentos"
+    ],
+    "linhas_juros_pagos": [
+     "Pagamento de juros das debêntures e variação monetária"
     ]
    },
    "2024": {
@@ -1252,6 +1398,12 @@
     "linhas_capex": [
      "Adição de bens do ativo imobilizado e intangível",
      "Adição de plantio e compras de madeira em pé"
+    ],
+    "linhas_arrendamento": [
+     "Pagamento de passivos de arrendamentos"
+    ],
+    "linhas_juros_pagos": [
+     "Pagamento de juros de empréstimos, financiamentos e debêntures"
     ]
    },
    "2025": {
@@ -1262,6 +1414,12 @@
     "linhas_capex": [
      "Adição de bens do ativo imobilizado e intangível",
      "Adição de plantio e compras de madeira em pé"
+    ],
+    "linhas_arrendamento": [
+     "Pagamento de passivos de arrendamentos"
+    ],
+    "linhas_juros_pagos": [
+     "Pagamento de juros de empréstimos, financiamentos e debêntures"
     ]
    }
   },
@@ -1314,7 +1472,9 @@
     "da": 124802.0,
     "capex": 50685.0,
     "dividendos_pagos": 312.0,
-    "recompra": 0.0
+    "recompra": 0.0,
+    "arrendamento_pago": 0.0,
+    "juros_pagos": 85064.0
    },
    "2017": {
     "receita": 859169.0,
@@ -1361,7 +1521,9 @@
     "da": 95576.0,
     "capex": 43850.0,
     "dividendos_pagos": 4143.0,
-    "recompra": 0.0
+    "recompra": 0.0,
+    "arrendamento_pago": 0.0,
+    "juros_pagos": 105624.0
    },
    "2018": {
     "receita": 932817.0,
@@ -1408,7 +1570,9 @@
     "da": 68833.0,
     "capex": 93077.0,
     "dividendos_pagos": 68.0,
-    "recompra": 0.0
+    "recompra": 0.0,
+    "arrendamento_pago": 0.0,
+    "juros_pagos": 68675.0
    },
    "2019": {
     "receita": 898779.0,
@@ -1455,7 +1619,9 @@
     "da": 122184.0,
     "capex": 82471.0,
     "dividendos_pagos": 3725.0,
-    "recompra": 0.0
+    "recompra": 0.0,
+    "arrendamento_pago": 3893.0,
+    "juros_pagos": 23671.0
    },
    "2020": {
     "receita": 1029605.0,
@@ -1503,6 +1669,8 @@
     "capex": 72731.0,
     "dividendos_pagos": 16544.0,
     "recompra": 0.0,
+    "arrendamento_pago": 3992.0,
+    "juros_pagos": 68598.0,
     "acoes": 254344.0
    },
    "2021": {
@@ -1551,6 +1719,8 @@
     "capex": 395561.0,
     "dividendos_pagos": 89933.0,
     "recompra": 18565.0,
+    "arrendamento_pago": 5067.0,
+    "juros_pagos": 42834.0,
     "acoes": 251554.0
    },
    "2022": {
@@ -1599,6 +1769,8 @@
     "capex": 544689.0,
     "dividendos_pagos": 158786.0,
     "recompra": 46471.0,
+    "arrendamento_pago": 6605.0,
+    "juros_pagos": 82688.0,
     "acoes": 244871.0
    },
    "2023": {
@@ -1647,6 +1819,8 @@
     "capex": 369261.0,
     "dividendos_pagos": 205734.0,
     "recompra": 41974.0,
+    "arrendamento_pago": 9409.0,
+    "juros_pagos": 213665.0,
     "acoes": 239830.0
    },
    "2024": {
@@ -1695,6 +1869,8 @@
     "capex": 229464.0,
     "dividendos_pagos": 126043.0,
     "recompra": 49169.0,
+    "arrendamento_pago": 10765.0,
+    "juros_pagos": 153074.0,
     "acoes": 233529.0
    },
    "2025": {
@@ -1743,6 +1919,8 @@
     "capex": 253917.0,
     "dividendos_pagos": 169796.0,
     "recompra": 22052.0,
+    "arrendamento_pago": 9683.0,
+    "juros_pagos": 199987.0,
     "acoes": 230501.0
    }
   },
@@ -1768,6 +1946,8 @@
    "capex": 245895.0,
    "dividendos_pagos": 110118.0,
    "recompra": 8828.0,
+   "arrendamento_pago": 8602.0,
+   "juros_pagos": 211982.0,
    "vj_biologico": 54509.0,
    "impairment": 178.0,
    "impairment_outras": 0.0,
@@ -1803,6 +1983,11 @@
      "Aquisição de imobilizado",
      "Aquisição de ativo biológico",
      "Aquisição de intangível"
+    ],
+    "linhas_arrendamento": [],
+    "linhas_juros_pagos": [
+     "Pagamento de juros sobre empréstimos e financiamentos",
+     "Pagamento juros sobre debêntures"
     ]
    },
    "2017": {
@@ -1813,6 +1998,11 @@
      "Aquisição de Imobilizado",
      "Aquisição de Ativo Biológico",
      "Aquisição de Intangível"
+    ],
+    "linhas_arrendamento": [],
+    "linhas_juros_pagos": [
+     "Pagamento de Juros sobre Empréstimos e Financiamentos",
+     "Pagamento de Juros sobre Debêntures"
     ]
    },
    "2018": {
@@ -1823,6 +2013,10 @@
      "Aquisição de Imobilizado",
      "Aquisição de Ativo Biológico",
      "Aquisição de Intangível"
+    ],
+    "linhas_arrendamento": [],
+    "linhas_juros_pagos": [
+     "Pagamento de Juros sobre Empréstimos e Financiamentos"
     ]
    },
    "2019": {
@@ -1833,6 +2027,13 @@
      "Aquisição de Imobilizado",
      "Aquisição de Ativo Biológico",
      "Aquisição de Intangível"
+    ],
+    "linhas_arrendamento": [
+     "Passivos de Arrendamento Pagos"
+    ],
+    "linhas_juros_pagos": [
+     "Pagamento de Juros sobre Empréstimos, Financiamentos e Debêntures",
+     "Pagamento de Juros sobre Passivos de Arrendamento"
     ]
    },
    "2020": {
@@ -1843,6 +2044,13 @@
      "Aquisição de Imobilizado",
      "Aquisição de Ativo Biológico",
      "Aquisição de Intangível"
+    ],
+    "linhas_arrendamento": [
+     "Passivos de Arrendamento Pagos"
+    ],
+    "linhas_juros_pagos": [
+     "Pagamento de Juros sobre Empréstimos, Financiamentos e Debêntures",
+     "Pagamento de Juros sobre Passivos de Arrendamento"
     ]
    },
    "2021": {
@@ -1853,6 +2061,13 @@
      "Aquisição de Imobilizado",
      "Aquisição de Ativo Biológico",
      "Aquisição de Intangível"
+    ],
+    "linhas_arrendamento": [
+     "Passivos de Arrendamento Pagos"
+    ],
+    "linhas_juros_pagos": [
+     "Pagamento de Juros sobre Empréstimos, Financiamentos e Debêntures",
+     "Pagamento de Juros sobre Passivos de Arrendamento"
     ]
    },
    "2022": {
@@ -1863,6 +2078,13 @@
      "Aquisição de Imobilizado",
      "Aquisição de Ativo Biológico",
      "Aquisição de Intangível"
+    ],
+    "linhas_arrendamento": [
+     "Passivos de Arrendamento Pagos"
+    ],
+    "linhas_juros_pagos": [
+     "Pagamento de Juros sobre Empréstimos, Financiamentos, Debêntures e Swap",
+     "Pagamento de Juros sobre Passivos de Arrendamento"
     ]
    },
    "2023": {
@@ -1873,6 +2095,13 @@
      "Aquisição de Imobilizado",
      "Aquisição de Ativo Biológico",
      "Aquisição de Intangível"
+    ],
+    "linhas_arrendamento": [
+     "Passivos de Arrendamento Pagos"
+    ],
+    "linhas_juros_pagos": [
+     "Pagamento de Juros sobre Empréstimos, Financiamentos, Debêntures e Swap",
+     "Pagamento de Juros sobre Passivos de Arrendamento"
     ]
    },
    "2024": {
@@ -1883,6 +2112,13 @@
      "Aquisição de Imobilizado",
      "Aquisição de Ativo Biológico",
      "Aquisição de Intangível"
+    ],
+    "linhas_arrendamento": [
+     "Passivos de Arrendamento Pagos"
+    ],
+    "linhas_juros_pagos": [
+     "Pagamento de Juros sobre Empréstimos, Financiamentos, Debêntures e Swap",
+     "Pagamento de Juros sobre Passivos de Arrendamento"
     ]
    },
    "2025": {
@@ -1893,6 +2129,13 @@
      "Aquisição de Imobilizado",
      "Aquisição de Ativo Biológico",
      "Aquisição de Intangível"
+    ],
+    "linhas_arrendamento": [
+     "Passivos de Arrendamento Pagos"
+    ],
+    "linhas_juros_pagos": [
+     "Pagamento de Juros sobre Empréstimos, Financiamentos, Debêntures e Swap",
+     "Pagamento de Juros sobre Passivos de Arrendamento"
     ]
    }
   },
@@ -1946,7 +2189,8 @@
     "capex": 221415.0,
     "dividendos_pagos": 584075.0,
     "recompra": 0.0,
-    "arrendamento_pago": 0.0
+    "arrendamento_pago": 0.0,
+    "juros_pagos": 143774.0
    },
    "2017": {
     "receita": 3673596.0,
@@ -1994,7 +2238,8 @@
     "capex": 225229.0,
     "dividendos_pagos": 779143.0,
     "recompra": 0.0,
-    "arrendamento_pago": 0.0
+    "arrendamento_pago": 0.0,
+    "juros_pagos": 1345975.0
    },
    "2018": {
     "receita": 4831915.0,
@@ -2042,7 +2287,8 @@
     "capex": 270860.0,
     "dividendos_pagos": 1528859.0,
     "recompra": 0.0,
-    "arrendamento_pago": 0.0
+    "arrendamento_pago": 0.0,
+    "juros_pagos": 0.0
    },
    "2019": {
     "receita": 6576507.0,
@@ -2090,7 +2336,8 @@
     "capex": 297591.0,
     "dividendos_pagos": 0.0,
     "recompra": 75531.0,
-    "arrendamento_pago": 0.0
+    "arrendamento_pago": 0.0,
+    "juros_pagos": 0.0
    },
    "2020": {
     "receita": 9327395.0,
@@ -2139,6 +2386,7 @@
     "dividendos_pagos": 0.0,
     "recompra": 798185.0,
     "arrendamento_pago": 0.0,
+    "juros_pagos": 0.0,
     "acoes": 2034175662.0
    },
    "2021": {
@@ -2188,6 +2436,7 @@
     "dividendos_pagos": 0.0,
     "recompra": 729443.0,
     "arrendamento_pago": 0.0,
+    "juros_pagos": 0.0,
     "acoes": 6073061367.0
    },
    "2022": {
@@ -2237,6 +2486,7 @@
     "dividendos_pagos": 0.0,
     "recompra": 3746161.0,
     "arrendamento_pago": 0.0,
+    "juros_pagos": 0.0,
     "acoes": 5784524532.0
    },
    "2023": {
@@ -2286,6 +2536,7 @@
     "dividendos_pagos": 0.0,
     "recompra": 2149985.0,
     "arrendamento_pago": 0.0,
+    "juros_pagos": 1242955.0,
     "acoes": 5612359360.0
    },
    "2024": {
@@ -2335,6 +2586,7 @@
     "dividendos_pagos": 0.0,
     "recompra": 3835494.0,
     "arrendamento_pago": 0.0,
+    "juros_pagos": 1389208.0,
     "acoes": 5265204786.0
    },
    "2025": {
@@ -2384,6 +2636,7 @@
     "dividendos_pagos": 0.0,
     "recompra": 3007551.0,
     "arrendamento_pago": 0.0,
+    "juros_pagos": 1495358.0,
     "acoes": 5034561292.0
    }
   },
@@ -2410,6 +2663,7 @@
    "dividendos_pagos": 0.0,
    "recompra": 2761585.0,
    "arrendamento_pago": 0.0,
+   "juros_pagos": 1688405.0,
    "vj_biologico": 0.0,
    "impairment": 0.0,
    "impairment_outras": 0.0,
@@ -2445,7 +2699,10 @@
      "Pagamento pela Aquisição de Imobilizado",
      "Aquisição de Softwares e Projetos"
     ],
-    "linhas_arrendamento": []
+    "linhas_arrendamento": [],
+    "linhas_juros_pagos": [
+     "Juros Pagos"
+    ]
    },
    "2017": {
     "linhas_da": [
@@ -2455,7 +2712,10 @@
      "Pagamento pela Aquisição de Imobilizado",
      "Aquisição de Softwares e Projetos"
     ],
-    "linhas_arrendamento": []
+    "linhas_arrendamento": [],
+    "linhas_juros_pagos": [
+     "Juros Pagos"
+    ]
    },
    "2018": {
     "linhas_da": [
@@ -2465,7 +2725,8 @@
      "Pagamento pela Aquisição de Imobilizado",
      "Pagamento pela Aquisição de Softwares e Projetos"
     ],
-    "linhas_arrendamento": []
+    "linhas_arrendamento": [],
+    "linhas_juros_pagos": []
    },
    "2019": {
     "linhas_da": [
@@ -2475,7 +2736,8 @@
      "Aquisição de Imobilizado",
      "Aquisição de Softwares e Projetos"
     ],
-    "linhas_arrendamento": []
+    "linhas_arrendamento": [],
+    "linhas_juros_pagos": []
    },
    "2020": {
     "linhas_da": [
@@ -2485,7 +2747,8 @@
      "Aquisição de Imobilizado",
      "Aquisição e Desenvolvimento de Softwares"
     ],
-    "linhas_arrendamento": []
+    "linhas_arrendamento": [],
+    "linhas_juros_pagos": []
    },
    "2021": {
     "linhas_da": [
@@ -2495,7 +2758,8 @@
      "Aquisição de Imobilizado",
      "Aquisição e Desenvolvimento de Softwares"
     ],
-    "linhas_arrendamento": []
+    "linhas_arrendamento": [],
+    "linhas_juros_pagos": []
    },
    "2022": {
     "linhas_da": [
@@ -2505,7 +2769,8 @@
      "Aquisição de Imobilizado",
      "Aquisição e Desenvolvimento de Softwares"
     ],
-    "linhas_arrendamento": []
+    "linhas_arrendamento": [],
+    "linhas_juros_pagos": []
    },
    "2023": {
     "linhas_da": [
@@ -2515,7 +2780,10 @@
      "Aquisição de Imobilizado",
      "Aquisição e Desenvolvimento de Softwares"
     ],
-    "linhas_arrendamento": []
+    "linhas_arrendamento": [],
+    "linhas_juros_pagos": [
+     "Amortização dos Juros sobre Empréstimos e Debêntures"
+    ]
    },
    "2024": {
     "linhas_da": [
@@ -2525,7 +2793,10 @@
      "Aquisição de Imobilizado",
      "Aquisição e Desenvolvimento de Softwares"
     ],
-    "linhas_arrendamento": []
+    "linhas_arrendamento": [],
+    "linhas_juros_pagos": [
+     "Amortização dos Juros sobre Empréstimos e Debêntures"
+    ]
    },
    "2025": {
     "linhas_da": [
@@ -2535,7 +2806,10 @@
      "Aquisição de Imobilizado",
      "Aquisição e Desenvolvimento de Softwares"
     ],
-    "linhas_arrendamento": []
+    "linhas_arrendamento": [],
+    "linhas_juros_pagos": [
+     "Amortização dos Juros sobre Empréstimos e Debêntures"
+    ]
    }
   },
   "acoes_por_unit": 1
@@ -2587,7 +2861,9 @@
     "da": 619663.0,
     "capex": 728920.0,
     "dividendos_pagos": 67938.0,
-    "recompra": 31904.0
+    "recompra": 31904.0,
+    "arrendamento_pago": 0.0,
+    "juros_pagos": 188616.0
    },
    "2017": {
     "receita": 2609519.0,
@@ -2634,7 +2910,9 @@
     "da": 640181.0,
     "capex": 873771.0,
     "dividendos_pagos": 55384.0,
-    "recompra": 0.0
+    "recompra": 0.0,
+    "arrendamento_pago": 0.0,
+    "juros_pagos": 208335.0
    },
    "2018": {
     "receita": 3435700.0,
@@ -2681,7 +2959,9 @@
     "da": 903792.0,
     "capex": 1165803.0,
     "dividendos_pagos": 99999.0,
-    "recompra": 0.0
+    "recompra": 0.0,
+    "arrendamento_pago": 0.0,
+    "juros_pagos": 277361.0
    },
    "2019": {
     "receita": 3360362.0,
@@ -2728,7 +3008,9 @@
     "da": 1044774.0,
     "capex": 1287954.0,
     "dividendos_pagos": 180000.0,
-    "recompra": 0.0
+    "recompra": 0.0,
+    "arrendamento_pago": 0.0,
+    "juros_pagos": 229410.0
    },
    "2020": {
     "receita": 3693860.0,
@@ -2776,6 +3058,8 @@
     "capex": 1385048.0,
     "dividendos_pagos": 229999.0,
     "recompra": 0.0,
+    "arrendamento_pago": 276168.0,
+    "juros_pagos": 178303.0,
     "acoes": 346744266.0
    },
    "2021": {
@@ -2824,6 +3108,8 @@
     "capex": 1508315.0,
     "dividendos_pagos": 187617.0,
     "recompra": 0.0,
+    "arrendamento_pago": 295975.0,
+    "juros_pagos": 212512.0,
     "acoes": 346375066.0
    },
    "2022": {
@@ -2872,6 +3158,8 @@
     "capex": 2471563.0,
     "dividendos_pagos": 807557.0,
     "recompra": 0.0,
+    "arrendamento_pago": 525413.0,
+    "juros_pagos": 124009.0,
     "acoes": 346375066.0
    },
    "2023": {
@@ -2920,6 +3208,8 @@
     "capex": 2571157.0,
     "dividendos_pagos": 375840.0,
     "recompra": 0.0,
+    "arrendamento_pago": 577319.0,
+    "juros_pagos": 310702.0,
     "acoes": 346375066.0
    },
    "2024": {
@@ -2968,6 +3258,8 @@
     "capex": 2489613.0,
     "dividendos_pagos": 408165.0,
     "recompra": 10482.0,
+    "arrendamento_pago": 676061.0,
+    "juros_pagos": 456637.0,
     "acoes": 345830666.0
    },
    "2025": {
@@ -3016,6 +3308,8 @@
     "capex": 2783724.0,
     "dividendos_pagos": 407408.0,
     "recompra": 502152.0,
+    "arrendamento_pago": 679181.0,
+    "juros_pagos": 546400.0,
     "acoes": 328577791.0
    },
    "2026": {
@@ -3064,6 +3358,8 @@
     "capex": 2518096.0,
     "dividendos_pagos": 128680.0,
     "recompra": 89431.0,
+    "arrendamento_pago": 696232.0,
+    "juros_pagos": 667470.0,
     "acoes": 322773291.0
    }
   },
@@ -3113,6 +3409,8 @@
    "capex": 2518096.0,
    "dividendos_pagos": 128680.0,
    "recompra": 89431.0,
+   "arrendamento_pago": 696232.0,
+   "juros_pagos": 667470.0,
    "acoes": 322773291.0,
    "nota": "fluxos: exercício abr/2025–mar/2026 (DFP); balanço: ITR de jun/2026"
   },
@@ -3126,6 +3424,10 @@
     "linhas_capex": [
      "Adições ao imobilizado e intangível",
      "Adições aos ativos biológicos (plantio e tratos)"
+    ],
+    "linhas_arrendamento": [],
+    "linhas_juros_pagos": [
+     "Pagamento de juros sobre empréstimos e financiamentos"
     ]
    },
    "2017": {
@@ -3137,6 +3439,10 @@
     "linhas_capex": [
      "Adições ao imobilizado e intangível",
      "Adições ao ativo imobilizado (plantio e tratos)"
+    ],
+    "linhas_arrendamento": [],
+    "linhas_juros_pagos": [
+     "Pagamento de juros sobre empréstimos e financiamentos"
     ]
    },
    "2018": {
@@ -3149,6 +3455,10 @@
     "linhas_capex": [
      "Adições ao imobilizado e intangível",
      "Adições ao ativo imobilizado (plantio e tratos)"
+    ],
+    "linhas_arrendamento": [],
+    "linhas_juros_pagos": [
+     "Pagamento de juros sobre empréstimos e financiamentos"
     ]
    },
    "2019": {
@@ -3161,6 +3471,10 @@
     "linhas_capex": [
      "Adições ao imobilizado e intangível",
      "Adições ao ativo (plantio e tratos)"
+    ],
+    "linhas_arrendamento": [],
+    "linhas_juros_pagos": [
+     "Pagamento de juros sobre empréstimos e financiamentos"
     ]
    },
    "2020": {
@@ -3173,6 +3487,12 @@
     "linhas_capex": [
      "Adições ao imobilizado e intangível",
      "Adições ao ativo (plantio e tratos)"
+    ],
+    "linhas_arrendamento": [
+     "Amortização de arrendamento mercantil"
+    ],
+    "linhas_juros_pagos": [
+     "Pagamento de juros sobre empréstimos e financiamentos"
     ]
    },
    "2021": {
@@ -3185,6 +3505,12 @@
     "linhas_capex": [
      "Adições ao imobilizado e intangível",
      "Adições ao ativo (plantio e tratos)"
+    ],
+    "linhas_arrendamento": [
+     "Amortização de arrendamento mercantil"
+    ],
+    "linhas_juros_pagos": [
+     "Pagamento de juros sobre empréstimos e financiamentos"
     ]
    },
    "2022": {
@@ -3197,6 +3523,12 @@
     "linhas_capex": [
      "Adições ao imobilizado e intangível",
      "Adições ao ativo (plantio e tratos)"
+    ],
+    "linhas_arrendamento": [
+     "Amortização de arrendamento mercantil"
+    ],
+    "linhas_juros_pagos": [
+     "Pagamento de juros sobre empréstimos e financiamentos"
     ]
    },
    "2023": {
@@ -3209,6 +3541,12 @@
     "linhas_capex": [
      "Adições ao imobilizado e intangível",
      "Adições ao ativo (plantio e tratos)"
+    ],
+    "linhas_arrendamento": [
+     "Amortização de arrendamento mercantil"
+    ],
+    "linhas_juros_pagos": [
+     "Pagamento de juros sobre empréstimos e financiamentos"
     ]
    },
    "2024": {
@@ -3220,6 +3558,12 @@
     "linhas_capex": [
      "Adições ao imobilizado e intangível",
      "Adições ao plantio e tratos  (ativo)"
+    ],
+    "linhas_arrendamento": [
+     "Pagamento de arrendamento e parceria agrícola"
+    ],
+    "linhas_juros_pagos": [
+     "Pagamento de juros sobre empréstimos e financiamentos"
     ]
    },
    "2025": {
@@ -3231,6 +3575,12 @@
     "linhas_capex": [
      "Adições ao imobilizado e intangível",
      "Adições ao ativo (plantio e tratos)"
+    ],
+    "linhas_arrendamento": [
+     "Pagamento de arrendamento e parceria"
+    ],
+    "linhas_juros_pagos": [
+     "Pagamento de juros sobre empréstimos e financiamentos"
     ]
    },
    "2026": {
@@ -3242,6 +3592,12 @@
     "linhas_capex": [
      "Adições ao imobilizado e intangível",
      "Adições ao ativo (plantio e tratos)"
+    ],
+    "linhas_arrendamento": [
+     "Pagamento de arrendamento e parceria"
+    ],
+    "linhas_juros_pagos": [
+     "Pagamento de juros sobre empréstimos e financiamentos"
     ]
    }
   },
@@ -3295,7 +3651,8 @@
     "capex": 13128.0,
     "dividendos_pagos": 2686.0,
     "recompra": 0.0,
-    "arrendamento_pago": 0.0
+    "arrendamento_pago": 0.0,
+    "juros_pagos": 7948.0
    },
    "2017": {
     "receita": 578375.0,
@@ -3343,7 +3700,8 @@
     "capex": 17991.0,
     "dividendos_pagos": 0.0,
     "recompra": 0.0,
-    "arrendamento_pago": 0.0
+    "arrendamento_pago": 0.0,
+    "juros_pagos": 8092.0
    },
    "2018": {
     "receita": 576300.0,
@@ -3391,7 +3749,8 @@
     "capex": 11004.0,
     "dividendos_pagos": 0.0,
     "recompra": 0.0,
-    "arrendamento_pago": 0.0
+    "arrendamento_pago": 0.0,
+    "juros_pagos": 4205.0
    },
    "2019": {
     "receita": 583465.0,
@@ -3439,7 +3798,8 @@
     "capex": 13199.0,
     "dividendos_pagos": 6590.0,
     "recompra": 0.0,
-    "arrendamento_pago": 4608.0
+    "arrendamento_pago": 4608.0,
+    "juros_pagos": 4516.0
    },
    "2020": {
     "receita": 671243.0,
@@ -3488,6 +3848,7 @@
     "dividendos_pagos": 14388.0,
     "recompra": 0.0,
     "arrendamento_pago": 4063.0,
+    "juros_pagos": 2059.0,
     "acoes": 26312.0
    },
    "2021": {
@@ -3537,6 +3898,7 @@
     "dividendos_pagos": 46880.0,
     "recompra": 0.0,
     "arrendamento_pago": 3934.0,
+    "juros_pagos": 327.0,
     "acoes": 30007.0
    },
    "2022": {
@@ -3586,6 +3948,7 @@
     "dividendos_pagos": 178551.0,
     "recompra": 0.0,
     "arrendamento_pago": 4637.0,
+    "juros_pagos": 12140.0,
     "acoes": 89328.0
    },
    "2023": {
@@ -3635,6 +3998,7 @@
     "dividendos_pagos": 152690.0,
     "recompra": 0.0,
     "arrendamento_pago": 4534.0,
+    "juros_pagos": 24717.0,
     "acoes": 176760.0
    },
    "2024": {
@@ -3684,6 +4048,7 @@
     "dividendos_pagos": 152651.0,
     "recompra": 0.0,
     "arrendamento_pago": 7010.0,
+    "juros_pagos": 26315.0,
     "acoes": 173367.0
    },
    "2025": {
@@ -3733,6 +4098,7 @@
     "dividendos_pagos": 149351.0,
     "recompra": 0.0,
     "arrendamento_pago": 7072.0,
+    "juros_pagos": 44342.0,
     "acoes": 173332.0
    }
   },
@@ -3759,6 +4125,7 @@
    "dividendos_pagos": 78067.0,
    "recompra": 0.0,
    "arrendamento_pago": 7099.0,
+   "juros_pagos": 45604.0,
    "vj_biologico": 0.0,
    "impairment": -57.0,
    "impairment_outras": 0.0,
@@ -3793,7 +4160,10 @@
     "linhas_capex": [
      "Aquisição de ativo imobilizado e intangível"
     ],
-    "linhas_arrendamento": []
+    "linhas_arrendamento": [],
+    "linhas_juros_pagos": [
+     "Juros pagos por empréstimos e debêntures"
+    ]
    },
    "2017": {
     "linhas_da": [
@@ -3802,7 +4172,10 @@
     "linhas_capex": [
      "Aquisição de ativo imobilizado e intangível"
     ],
-    "linhas_arrendamento": []
+    "linhas_arrendamento": [],
+    "linhas_juros_pagos": [
+     "Juros pagos por empréstimos"
+    ]
    },
    "2018": {
     "linhas_da": [
@@ -3811,7 +4184,10 @@
     "linhas_capex": [
      "Aquisição de ativo imobilizado e intangível"
     ],
-    "linhas_arrendamento": []
+    "linhas_arrendamento": [],
+    "linhas_juros_pagos": [
+     "Juros pagos por empréstimos e debêntures"
+    ]
    },
    "2019": {
     "linhas_da": [
@@ -3822,6 +4198,9 @@
     ],
     "linhas_arrendamento": [
      "Pagamento de arrendamento mercantil financeiro"
+    ],
+    "linhas_juros_pagos": [
+     "Juros pagos por empréstimos"
     ]
    },
    "2020": {
@@ -3833,6 +4212,9 @@
     ],
     "linhas_arrendamento": [
      "Pagamento de arrendamento mercantil financeiro"
+    ],
+    "linhas_juros_pagos": [
+     "Juros pagos por empréstimos"
     ]
    },
    "2021": {
@@ -3844,6 +4226,9 @@
     ],
     "linhas_arrendamento": [
      "Pagamento de arrendamento mercantil financeiro"
+    ],
+    "linhas_juros_pagos": [
+     "Juros pagos por empréstimos"
     ]
    },
    "2022": {
@@ -3855,6 +4240,9 @@
     ],
     "linhas_arrendamento": [
      "Contraprestação de arrendamento a pagar"
+    ],
+    "linhas_juros_pagos": [
+     "Juros pagos por empréstimos"
     ]
    },
    "2023": {
@@ -3866,6 +4254,9 @@
     ],
     "linhas_arrendamento": [
      "Contraprestação de arrendamento a pagar"
+    ],
+    "linhas_juros_pagos": [
+     "Juros pagos por empréstimos e financiamentos e mútuos"
     ]
    },
    "2024": {
@@ -3877,6 +4268,9 @@
     ],
     "linhas_arrendamento": [
      "Contraprestação de arrendamentos"
+    ],
+    "linhas_juros_pagos": [
+     "Juros pagos por empréstimos e financiamentos"
     ]
    },
    "2025": {
@@ -3888,6 +4282,9 @@
     ],
     "linhas_arrendamento": [
      "Contraprestação de arrendamentos"
+    ],
+    "linhas_juros_pagos": [
+     "Juros pagos por empréstimos e financiamentos"
     ]
    }
   },
@@ -3940,7 +4337,9 @@
     "da": 104242.0,
     "capex": 96922.0,
     "dividendos_pagos": 58201.0,
-    "recompra": 0.0
+    "recompra": 0.0,
+    "arrendamento_pago": 0.0,
+    "juros_pagos": 131339.0
    },
    "2017": {
     "receita": 2219901.0,
@@ -3987,7 +4386,9 @@
     "da": 91506.0,
     "capex": 184489.0,
     "dividendos_pagos": 214221.0,
-    "recompra": 35308.0
+    "recompra": 35308.0,
+    "arrendamento_pago": 0.0,
+    "juros_pagos": 186380.0
    },
    "2018": {
     "receita": 2823468.0,
@@ -4034,7 +4435,9 @@
     "da": 111231.0,
     "capex": 255570.0,
     "dividendos_pagos": 211096.0,
-    "recompra": 75391.0
+    "recompra": 75391.0,
+    "arrendamento_pago": 0.0,
+    "juros_pagos": 98982.0
    },
    "2019": {
     "receita": 3040656.0,
@@ -4081,7 +4484,9 @@
     "da": 105810.0,
     "capex": 240921.0,
     "dividendos_pagos": 181243.0,
-    "recompra": 37835.0
+    "recompra": 37835.0,
+    "arrendamento_pago": 78929.0,
+    "juros_pagos": 86852.0
    },
    "2020": {
     "receita": 3873081.0,
@@ -4129,6 +4534,8 @@
     "capex": 211783.0,
     "dividendos_pagos": 179843.0,
     "recompra": 0.0,
+    "arrendamento_pago": 129634.0,
+    "juros_pagos": 93685.0,
     "acoes": 187584570.0
    },
    "2021": {
@@ -4177,6 +4584,8 @@
     "capex": 436404.0,
     "dividendos_pagos": 205339.0,
     "recompra": 71233.0,
+    "arrendamento_pago": 230940.0,
+    "juros_pagos": 105946.0,
     "acoes": 207796978.0
    },
    "2022": {
@@ -4225,6 +4634,8 @@
     "capex": 485477.0,
     "dividendos_pagos": 558383.0,
     "recompra": 175533.0,
+    "arrendamento_pago": 511338.0,
+    "juros_pagos": 328655.0,
     "acoes": 204225170.0
    },
    "2023": {
@@ -4273,6 +4684,8 @@
     "capex": 532184.0,
     "dividendos_pagos": 628934.0,
     "recompra": 193762.0,
+    "arrendamento_pago": 568010.0,
+    "juros_pagos": 426613.0,
     "acoes": 440145630.0
    },
    "2024": {
@@ -4321,6 +4734,8 @@
     "capex": 818062.0,
     "dividendos_pagos": 423837.0,
     "recompra": 2937.0,
+    "arrendamento_pago": 433551.0,
+    "juros_pagos": 419872.0,
     "acoes": 440717130.0
    },
    "2025": {
@@ -4369,6 +4784,8 @@
     "capex": 886636.0,
     "dividendos_pagos": 638311.0,
     "recompra": 0.0,
+    "arrendamento_pago": 495372.0,
+    "juros_pagos": 768215.0,
     "acoes": 496820758.0
    }
   },
@@ -4394,6 +4811,8 @@
    "capex": 1066842.0,
    "dividendos_pagos": 406485.0,
    "recompra": 14136.0,
+   "arrendamento_pago": 498788.0,
+   "juros_pagos": 819556.0,
    "vj_biologico": -1152652.0,
    "impairment": 0.0,
    "impairment_outras": 0.0,
@@ -4428,6 +4847,10 @@
     "linhas_capex": [
      "Em Imobilizado",
      "Em Intangivel"
+    ],
+    "linhas_arrendamento": [],
+    "linhas_juros_pagos": [
+     "Juros Pagos"
     ]
    },
    "2017": {
@@ -4437,6 +4860,10 @@
     "linhas_capex": [
      "Em imobilizado",
      "Em Intangível"
+    ],
+    "linhas_arrendamento": [],
+    "linhas_juros_pagos": [
+     "Juros pagos"
     ]
    },
    "2018": {
@@ -4446,6 +4873,10 @@
     "linhas_capex": [
      "Em imobilizado",
      "Em Intangível"
+    ],
+    "linhas_arrendamento": [],
+    "linhas_juros_pagos": [
+     "Juros pagos"
     ]
    },
    "2019": {
@@ -4455,6 +4886,12 @@
     "linhas_capex": [
      "Em imobilizado",
      "Em Intangível"
+    ],
+    "linhas_arrendamento": [
+     "Arrendamentos Pagos"
+    ],
+    "linhas_juros_pagos": [
+     "Juros pagos"
     ]
    },
    "2020": {
@@ -4465,6 +4902,12 @@
     "linhas_capex": [
      "Em imobilizado",
      "Em intangível"
+    ],
+    "linhas_arrendamento": [
+     "Arrendamentos Pagos"
+    ],
+    "linhas_juros_pagos": [
+     "Juros Pagos"
     ]
    },
    "2021": {
@@ -4475,6 +4918,12 @@
     "linhas_capex": [
      "Em imobilizado",
      "Em intangível"
+    ],
+    "linhas_arrendamento": [
+     "Arrendamentos Pagos"
+    ],
+    "linhas_juros_pagos": [
+     "Juros Pagos"
     ]
    },
    "2022": {
@@ -4485,6 +4934,12 @@
     "linhas_capex": [
      "Em imobilizado",
      "Em intangível"
+    ],
+    "linhas_arrendamento": [
+     "Arrendamentos Pagos"
+    ],
+    "linhas_juros_pagos": [
+     "Juros Pagos"
     ]
    },
    "2023": {
@@ -4495,6 +4950,12 @@
     "linhas_capex": [
      "Em imobilizado",
      "Em intangível"
+    ],
+    "linhas_arrendamento": [
+     "Arrendamentos Pagos"
+    ],
+    "linhas_juros_pagos": [
+     "Juros Pagos"
     ]
    },
    "2024": {
@@ -4505,6 +4966,13 @@
     "linhas_capex": [
      "Em imobilizado",
      "Em intangível"
+    ],
+    "linhas_arrendamento": [
+     "Arrendamentos Pagos"
+    ],
+    "linhas_juros_pagos": [
+     "Juros sobre Empréstimos Pagos",
+     "Juros sobre Arrendamentos pagos"
     ]
    },
    "2025": {
@@ -4515,6 +4983,13 @@
     "linhas_capex": [
      "Em imobilizado",
      "Em intangível"
+    ],
+    "linhas_arrendamento": [
+     "Arrendamentos Pagos"
+    ],
+    "linhas_juros_pagos": [
+     "Juros sobre Empréstimos Pagos",
+     "Juros sobre Arrendamentos pagos"
     ]
    }
   },
@@ -4567,7 +5042,9 @@
     "da": 217111.0,
     "capex": 701293.0,
     "dividendos_pagos": 197561.0,
-    "recompra": 0.0
+    "recompra": 0.0,
+    "arrendamento_pago": 0.0,
+    "juros_pagos": 227344.0
    },
    "2017": {
     "receita": 3869401.0,
@@ -4614,7 +5091,9 @@
     "da": 247282.0,
     "capex": 777807.0,
     "dividendos_pagos": 281305.0,
-    "recompra": 0.0
+    "recompra": 0.0,
+    "arrendamento_pago": 0.0,
+    "juros_pagos": 243699.0
    },
    "2018": {
     "receita": 4162205.0,
@@ -4661,7 +5140,9 @@
     "da": 271387.0,
     "capex": 974554.0,
     "dividendos_pagos": 298398.0,
-    "recompra": 0.0
+    "recompra": 0.0,
+    "arrendamento_pago": 0.0,
+    "juros_pagos": 224797.0
    },
    "2019": {
     "receita": 4722826.0,
@@ -4708,7 +5189,9 @@
     "da": 337442.0,
     "capex": 1027079.0,
     "dividendos_pagos": 394600.0,
-    "recompra": 0.0
+    "recompra": 0.0,
+    "arrendamento_pago": 81555.0,
+    "juros_pagos": 202777.0
    },
    "2020": {
     "receita": 4799655.0,
@@ -4756,6 +5239,8 @@
     "capex": 968931.0,
     "dividendos_pagos": 303649.0,
     "recompra": 0.0,
+    "arrendamento_pago": 78746.0,
+    "juros_pagos": 191712.0,
     "acoes": 1511205519.0
    },
    "2021": {
@@ -4804,6 +5289,8 @@
     "capex": 1320162.0,
     "dividendos_pagos": 267575.0,
     "recompra": 0.0,
+    "arrendamento_pago": 78591.0,
+    "juros_pagos": 230741.0,
     "acoes": 1511205519.0
    },
    "2022": {
@@ -4852,6 +5339,8 @@
     "capex": 1744142.0,
     "dividendos_pagos": 309347.0,
     "recompra": 0.0,
+    "arrendamento_pago": 87578.0,
+    "juros_pagos": 326645.0,
     "acoes": 1511205519.0
    },
    "2023": {
@@ -4900,6 +5389,8 @@
     "capex": 1926103.0,
     "dividendos_pagos": 385542.0,
     "recompra": 0.0,
+    "arrendamento_pago": 109755.0,
+    "juros_pagos": 412885.0,
     "acoes": 1511205519.0
    },
    "2024": {
@@ -4948,6 +5439,8 @@
     "capex": 1908908.0,
     "dividendos_pagos": 403072.0,
     "recompra": 0.0,
+    "arrendamento_pago": 124635.0,
+    "juros_pagos": 451291.0,
     "acoes": 1511205519.0
    },
    "2025": {
@@ -4996,6 +5489,8 @@
     "capex": 2615418.0,
     "dividendos_pagos": 412743.0,
     "recompra": 0.0,
+    "arrendamento_pago": 145421.0,
+    "juros_pagos": 524692.0,
     "acoes": 1511205519.0
    }
   },
@@ -5020,6 +5515,8 @@
    "capex": 2664533.0,
    "dividendos_pagos": 524522.0,
    "recompra": 0.0,
+   "arrendamento_pago": 151721.0,
+   "juros_pagos": 587109.0,
    "vj_biologico": 0.0,
    "impairment": -8883.0,
    "impairment_outras": 0.0,
@@ -5053,6 +5550,10 @@
     ],
     "linhas_capex": [
      "Aplicação no Imobilizado e Intangível"
+    ],
+    "linhas_arrendamento": [],
+    "linhas_juros_pagos": [
+     "Pagamentos de Juros sobre Financiamentos"
     ]
    },
    "2017": {
@@ -5061,6 +5562,10 @@
     ],
     "linhas_capex": [
      "Aplicação no Imobilizado e Intangível"
+    ],
+    "linhas_arrendamento": [],
+    "linhas_juros_pagos": [
+     "Pagamentos de Juros sobre Financiamentos"
     ]
    },
    "2018": {
@@ -5069,6 +5574,10 @@
     ],
     "linhas_capex": [
      "Aplicação no Imobilizado e Intangível"
+    ],
+    "linhas_arrendamento": [],
+    "linhas_juros_pagos": [
+     "Pagamentos de Juros sobre Financiamentos"
     ]
    },
    "2019": {
@@ -5077,6 +5586,12 @@
     ],
     "linhas_capex": [
      "Aplicação no Imobilizado e Intangível"
+    ],
+    "linhas_arrendamento": [
+     "Pagamentos de Arrendamentos Mercantis"
+    ],
+    "linhas_juros_pagos": [
+     "Pagamentos de Juros sobre Financiamentos"
     ]
    },
    "2020": {
@@ -5085,6 +5600,12 @@
     ],
     "linhas_capex": [
      "Aplicação no Imobilizado e Intangível"
+    ],
+    "linhas_arrendamento": [
+     "Pagamentos de Arrendamentos Mercantis"
+    ],
+    "linhas_juros_pagos": [
+     "Pagamentos de Juros sobre Financiamentos"
     ]
    },
    "2021": {
@@ -5093,6 +5614,12 @@
     ],
     "linhas_capex": [
      "Aplicação no Imobilizado e Intangível"
+    ],
+    "linhas_arrendamento": [
+     "Pagamentos de Arrendamentos Mercantis"
+    ],
+    "linhas_juros_pagos": [
+     "Pagamentos de Juros sobre Financiamentos"
     ]
    },
    "2022": {
@@ -5101,6 +5628,12 @@
     ],
     "linhas_capex": [
      "Aplicação no Imobilizado e Intangível"
+    ],
+    "linhas_arrendamento": [
+     "Pagamentos de Arrendamentos Mercantis"
+    ],
+    "linhas_juros_pagos": [
+     "Pagamentos de Juros sobre Financiamentos"
     ]
    },
    "2023": {
@@ -5109,6 +5642,12 @@
     ],
     "linhas_capex": [
      "Aplicação no Imobilizado e Intangível"
+    ],
+    "linhas_arrendamento": [
+     "Pagamentos de Arrendamentos Mercantis"
+    ],
+    "linhas_juros_pagos": [
+     "Pagamentos de Juros sobre Financiamentos"
     ]
    },
    "2024": {
@@ -5117,6 +5656,12 @@
     ],
     "linhas_capex": [
      "Aplicação no Imobilizado e Intangível"
+    ],
+    "linhas_arrendamento": [
+     "Pagamentos de Arrendamentos Mercantis"
+    ],
+    "linhas_juros_pagos": [
+     "Pagamentos de Juros sobre Financiamentos"
     ]
    },
    "2025": {
@@ -5125,6 +5670,12 @@
     ],
     "linhas_capex": [
      "Aplicação no Imobilizado e Intangível"
+    ],
+    "linhas_arrendamento": [
+     "Pagamentos de Arrendamentos Mercantis"
+    ],
+    "linhas_juros_pagos": [
+     "Pagamentos de Juros sobre Financiamentos"
     ]
    }
   },
@@ -5177,7 +5728,9 @@
     "da": 596782.0,
     "capex": 409436.0,
     "dividendos_pagos": 56164.0,
-    "recompra": 0.0
+    "recompra": 0.0,
+    "arrendamento_pago": 0.0,
+    "juros_pagos": 302805.0
    },
    "2017": {
     "receita": 4326401.0,
@@ -5224,7 +5777,9 @@
     "da": 563996.0,
     "capex": 506184.0,
     "dividendos_pagos": 285670.0,
-    "recompra": 0.0
+    "recompra": 0.0,
+    "arrendamento_pago": 0.0,
+    "juros_pagos": 272637.0
    },
    "2018": {
     "receita": 4737285.0,
@@ -5271,7 +5826,9 @@
     "da": 568409.0,
     "capex": 694136.0,
     "dividendos_pagos": 443536.0,
-    "recompra": 0.0
+    "recompra": 0.0,
+    "arrendamento_pago": 0.0,
+    "juros_pagos": 234239.0
    },
    "2019": {
     "receita": 5157224.0,
@@ -5318,7 +5875,9 @@
     "da": 603081.0,
     "capex": 249474.0,
     "dividendos_pagos": 134730.0,
-    "recompra": 0.0
+    "recompra": 0.0,
+    "arrendamento_pago": 23812.0,
+    "juros_pagos": 244929.0
    },
    "2020": {
     "receita": 5343338.0,
@@ -5366,6 +5925,8 @@
     "capex": 157632.0,
     "dividendos_pagos": 1044982.0,
     "recompra": 0.0,
+    "arrendamento_pago": 43023.0,
+    "juros_pagos": 179967.0,
     "acoes": 379181.0
    },
    "2021": {
@@ -5414,6 +5975,8 @@
     "capex": 187334.0,
     "dividendos_pagos": 340119.0,
     "recompra": 0.0,
+    "arrendamento_pago": 32699.0,
+    "juros_pagos": 218520.0,
     "acoes": 379181.0
    },
    "2022": {
@@ -5462,6 +6025,8 @@
     "capex": 290275.0,
     "dividendos_pagos": 136141.0,
     "recompra": 0.0,
+    "arrendamento_pago": 39856.0,
+    "juros_pagos": 357529.0,
     "acoes": 379181.0
    },
    "2023": {
@@ -5510,6 +6075,8 @@
     "capex": 484349.0,
     "dividendos_pagos": 777446.0,
     "recompra": 0.0,
+    "arrendamento_pago": 51622.0,
+    "juros_pagos": 435463.0,
     "acoes": 379181.0
    },
    "2024": {
@@ -5558,6 +6125,8 @@
     "capex": 723618.0,
     "dividendos_pagos": 1157515.0,
     "recompra": 0.0,
+    "arrendamento_pago": 63200.0,
+    "juros_pagos": 438954.0,
     "acoes": 379181.0
    },
    "2025": {
@@ -5606,6 +6175,8 @@
     "capex": 810108.0,
     "dividendos_pagos": 827570.0,
     "recompra": 0.0,
+    "arrendamento_pago": 80674.0,
+    "juros_pagos": 586250.0,
     "acoes": 379181.0
    }
   },
@@ -5631,6 +6202,8 @@
    "capex": 1294077.0,
    "dividendos_pagos": 811157.0,
    "recompra": 0.0,
+   "arrendamento_pago": 82089.0,
+   "juros_pagos": 708892.0,
    "vj_biologico": 0.0,
    "impairment": 0.0,
    "impairment_outras": 0.0,
@@ -5664,6 +6237,10 @@
     ],
     "linhas_capex": [
      "Compra de Ativos Intangíveis e Imobilizado"
+    ],
+    "linhas_arrendamento": [],
+    "linhas_juros_pagos": [
+     "Juros Pagos"
     ]
    },
    "2017": {
@@ -5672,6 +6249,10 @@
     ],
     "linhas_capex": [
      "Compra de Ativos Intangíveis e Imobilizado"
+    ],
+    "linhas_arrendamento": [],
+    "linhas_juros_pagos": [
+     "Juros Pagos"
     ]
    },
    "2018": {
@@ -5680,6 +6261,10 @@
     ],
     "linhas_capex": [
      "Compra de Ativos Intangíveis e Imobilizado"
+    ],
+    "linhas_arrendamento": [],
+    "linhas_juros_pagos": [
+     "Juros Pagos"
     ]
    },
    "2019": {
@@ -5689,6 +6274,13 @@
     "linhas_capex": [
      "Aquisição de Ativos Intangíveis",
      "Aquisição de Ativos Imobilizados"
+    ],
+    "linhas_arrendamento": [
+     "Baixa de Passivo por Arrendamento"
+    ],
+    "linhas_juros_pagos": [
+     "Juros Pagos",
+     "Juros Pagos a Parceria Público Privada"
     ]
    },
    "2020": {
@@ -5698,6 +6290,13 @@
     "linhas_capex": [
      "Aquisição de Ativos Intangíveis",
      "Aquisição de Ativos Imobilizados"
+    ],
+    "linhas_arrendamento": [
+     "Baixa de Passivo por Arrendamento"
+    ],
+    "linhas_juros_pagos": [
+     "Juros Pagos",
+     "Juros Pagos a Parceria Público Privada"
     ]
    },
    "2021": {
@@ -5707,6 +6306,13 @@
     "linhas_capex": [
      "Aquisição de Ativos Intangíveis",
      "Aquisição de Ativos Imobilizados"
+    ],
+    "linhas_arrendamento": [
+     "Baixa de Passivo por Arrendamento"
+    ],
+    "linhas_juros_pagos": [
+     "Juros Pagos",
+     "Juros Pagos a Parceria Público Privada"
     ]
    },
    "2022": {
@@ -5716,6 +6322,13 @@
     "linhas_capex": [
      "Aquisição de Ativo Intangível",
      "Aquisição de Ativo Imobilizado"
+    ],
+    "linhas_arrendamento": [
+     "Pagamento do Passivo de Arrendamento Mercantil"
+    ],
+    "linhas_juros_pagos": [
+     "Juros Pagos",
+     "Juros Pagos da Parceria Público Privada"
     ]
    },
    "2023": {
@@ -5725,6 +6338,13 @@
     "linhas_capex": [
      "Aquisição de Ativo Intangível",
      "Aquisição de Ativo Imobilizado"
+    ],
+    "linhas_arrendamento": [
+     "Pagamento do Passivo de Arrendamento Mercantil"
+    ],
+    "linhas_juros_pagos": [
+     "Juros Pagos",
+     "Juros Pagos da Parceria Público Privada"
     ]
    },
    "2024": {
@@ -5734,6 +6354,13 @@
     "linhas_capex": [
      "Aquisição de Ativos Intangíveis",
      "Aquisição de Ativos Imobilizados"
+    ],
+    "linhas_arrendamento": [
+     "Pagamento de Arrendamento Mercantil"
+    ],
+    "linhas_juros_pagos": [
+     "Juros Pagos",
+     "Juros Pagos a Parceria Público Privada"
     ]
    },
    "2025": {
@@ -5743,6 +6370,13 @@
     "linhas_capex": [
      "Aquisição de Ativos Intangíveis",
      "Aquisição de Ativos Imobilizados"
+    ],
+    "linhas_arrendamento": [
+     "Pagamento do Passivo de Arrendamento Mercantil"
+    ],
+    "linhas_juros_pagos": [
+     "Juros Pagos",
+     "Juros Pagos a Parceria Público Privada"
     ]
    }
   },
@@ -5795,7 +6429,9 @@
     "da": 1146626.0,
     "capex": 2135798.0,
     "dividendos_pagos": 139399.0,
-    "recompra": 0.0
+    "recompra": 0.0,
+    "arrendamento_pago": 0.0,
+    "juros_pagos": 739944.0
    },
    "2017": {
     "receita": 14608233.0,
@@ -5842,7 +6478,9 @@
     "da": 1301897.0,
     "capex": 1976700.0,
     "dividendos_pagos": 765933.0,
-    "recompra": 0.0
+    "recompra": 0.0,
+    "arrendamento_pago": 0.0,
+    "juros_pagos": 676087.0
    },
    "2018": {
     "receita": 16085094.0,
@@ -5889,7 +6527,9 @@
     "da": 1392541.0,
     "capex": 2183204.0,
     "dividendos_pagos": 653393.0,
-    "recompra": 0.0
+    "recompra": 0.0,
+    "arrendamento_pago": 0.0,
+    "juros_pagos": 732048.0
    },
    "2019": {
     "receita": 17983654.0,
@@ -5936,7 +6576,9 @@
     "da": 1780094.0,
     "capex": 3273406.0,
     "dividendos_pagos": 739996.0,
-    "recompra": 0.0
+    "recompra": 0.0,
+    "arrendamento_pago": 0.0,
+    "juros_pagos": 737326.0
    },
    "2020": {
     "receita": 17797541.0,
@@ -5984,6 +6626,8 @@
     "capex": 3342064.0,
     "dividendos_pagos": 890095.0,
     "recompra": 0.0,
+    "arrendamento_pago": 0.0,
+    "juros_pagos": 626625.0,
     "acoes": 683509869.0
    },
    "2021": {
@@ -6032,6 +6676,8 @@
     "capex": 3746950.0,
     "dividendos_pagos": 254218.0,
     "recompra": 0.0,
+    "arrendamento_pago": 0.0,
+    "juros_pagos": 845445.0,
     "acoes": 683509869.0
    },
    "2022": {
@@ -6080,6 +6726,8 @@
     "capex": 3624205.0,
     "dividendos_pagos": 603541.0,
     "recompra": 0.0,
+    "arrendamento_pago": 0.0,
+    "juros_pagos": 1505488.0,
     "acoes": 683509869.0
    },
    "2023": {
@@ -6128,6 +6776,8 @@
     "capex": 4138574.0,
     "dividendos_pagos": 823671.0,
     "recompra": 0.0,
+    "arrendamento_pago": 0.0,
+    "juros_pagos": 1936419.0,
     "acoes": 683509869.0
    },
    "2024": {
@@ -6176,6 +6826,8 @@
     "capex": 8030674.0,
     "dividendos_pagos": 928851.0,
     "recompra": 0.0,
+    "arrendamento_pago": 0.0,
+    "juros_pagos": 1976694.0,
     "acoes": 683509869.0
    },
    "2025": {
@@ -6224,6 +6876,8 @@
     "capex": 13740392.0,
     "dividendos_pagos": 2363776.0,
     "recompra": 0.0,
+    "arrendamento_pago": 0.0,
+    "juros_pagos": 2696320.0,
     "acoes": 700219438.0
    }
   },
@@ -6249,6 +6903,8 @@
    "capex": 16393758.0,
    "dividendos_pagos": 1687300.0,
    "recompra": 746443.0,
+   "arrendamento_pago": 0.0,
+   "juros_pagos": 3411126.0,
    "vj_biologico": 0.0,
    "impairment": 0.0,
    "impairment_outras": 0.0,
@@ -6283,6 +6939,10 @@
     "linhas_capex": [
      "Aquisição de Intangíveis",
      "Aquisição de Bens do Ativo Imobilizado"
+    ],
+    "linhas_arrendamento": [],
+    "linhas_juros_pagos": [
+     "Juros Pagos"
     ]
    },
    "2017": {
@@ -6292,6 +6952,10 @@
     "linhas_capex": [
      "Aquisição de Intangíveis",
      "Aquisição de Bens do Ativo Imobilizado"
+    ],
+    "linhas_arrendamento": [],
+    "linhas_juros_pagos": [
+     "Juros Pagos"
     ]
    },
    "2018": {
@@ -6301,6 +6965,10 @@
     "linhas_capex": [
      "Aquisição de Ativos de Contrato e Intangíveis",
      "Aquisição de Bens do Ativo Imobilizado"
+    ],
+    "linhas_arrendamento": [],
+    "linhas_juros_pagos": [
+     "Juros Pagos"
     ]
    },
    "2019": {
@@ -6310,6 +6978,10 @@
     "linhas_capex": [
      "Aquisição de Ativo de Contrato e Intangíveis",
      "Aquisição de Bens do Ativo Imobilizado"
+    ],
+    "linhas_arrendamento": [],
+    "linhas_juros_pagos": [
+     "Juros Pagos"
     ]
    },
    "2020": {
@@ -6319,6 +6991,10 @@
     "linhas_capex": [
      "Aquisição de Ativo de Contrato e Intangíveis",
      "Aquisição de Bens do Ativo Imobilizado"
+    ],
+    "linhas_arrendamento": [],
+    "linhas_juros_pagos": [
+     "Juros Pagos"
     ]
    },
    "2021": {
@@ -6328,6 +7004,10 @@
     "linhas_capex": [
      "Aquisição de Ativo de Contrato e Intangíveis",
      "Aquisição de Bens do Ativo Imobilizado"
+    ],
+    "linhas_arrendamento": [],
+    "linhas_juros_pagos": [
+     "Juros Pagos"
     ]
    },
    "2022": {
@@ -6337,6 +7017,10 @@
     "linhas_capex": [
      "Aquisição de Ativos de Contrato e Intangíveis",
      "Aquisição de Bens do Ativo Imobilizado"
+    ],
+    "linhas_arrendamento": [],
+    "linhas_juros_pagos": [
+     "Juros Pagos"
     ]
    },
    "2023": {
@@ -6346,6 +7030,10 @@
     "linhas_capex": [
      "Aquisição de Ativos de Contrato e Intangíveis",
      "Aquisição de Bens do Ativo Imobilizado"
+    ],
+    "linhas_arrendamento": [],
+    "linhas_juros_pagos": [
+     "Juros Pagos"
     ]
    },
    "2024": {
@@ -6355,6 +7043,10 @@
     "linhas_capex": [
      "Aquisição de Ativos de Contrato e Intangíveis",
      "Aquisição de Bens do Ativo Imobilizado"
+    ],
+    "linhas_arrendamento": [],
+    "linhas_juros_pagos": [
+     "Juros Pagos"
     ]
    },
    "2025": {
@@ -6363,6 +7055,10 @@
     ],
     "linhas_capex": [
      "Aquisição de ativo de contrato, intangíveis e imobilizados"
+    ],
+    "linhas_arrendamento": [],
+    "linhas_juros_pagos": [
+     "Juros Pagos"
     ]
    }
   },
@@ -6415,7 +7111,9 @@
     "da": 3320.0,
     "capex": 6569.0,
     "dividendos_pagos": 931543.0,
-    "recompra": 0.0
+    "recompra": 0.0,
+    "arrendamento_pago": 0.0,
+    "juros_pagos": 315345.0
    },
    "2017": {
     "receita": 1077059.0,
@@ -6462,7 +7160,9 @@
     "da": 3926.0,
     "capex": 16250.0,
     "dividendos_pagos": 608319.0,
-    "recompra": 0.0
+    "recompra": 0.0,
+    "arrendamento_pago": 0.0,
+    "juros_pagos": 245249.0
    },
    "2018": {
     "receita": 1635237.0,
@@ -6509,7 +7209,9 @@
     "da": 6400.0,
     "capex": 36437.0,
     "dividendos_pagos": 960204.0,
-    "recompra": 0.0
+    "recompra": 0.0,
+    "arrendamento_pago": 0.0,
+    "juros_pagos": 157132.0
    },
    "2019": {
     "receita": 1794959.0,
@@ -6556,7 +7258,9 @@
     "da": 13201.0,
     "capex": 18811.0,
     "dividendos_pagos": 651341.0,
-    "recompra": 0.0
+    "recompra": 0.0,
+    "arrendamento_pago": 7707.0,
+    "juros_pagos": 200218.0
    },
    "2020": {
     "receita": 3561286.0,
@@ -6604,6 +7308,8 @@
     "capex": 41179.0,
     "dividendos_pagos": 1106182.0,
     "recompra": 0.0,
+    "arrendamento_pago": 8712.0,
+    "juros_pagos": 200746.0,
     "acoes": 1033497.0
    },
    "2021": {
@@ -6652,6 +7358,8 @@
     "capex": 52356.0,
     "dividendos_pagos": 1551506.0,
     "recompra": 0.0,
+    "arrendamento_pago": 10412.0,
+    "juros_pagos": 239443.0,
     "acoes": 1033497.0
    },
    "2022": {
@@ -6700,6 +7408,8 @@
     "capex": 178512.0,
     "dividendos_pagos": 1672384.0,
     "recompra": 0.0,
+    "arrendamento_pago": 12789.0,
+    "juros_pagos": 509193.0,
     "acoes": 1033497.0
    },
    "2023": {
@@ -6748,6 +7458,8 @@
     "capex": 75312.0,
     "dividendos_pagos": 1004020.0,
     "recompra": 0.0,
+    "arrendamento_pago": 3909.0,
+    "juros_pagos": 673848.0,
     "acoes": 1033497.0
    },
    "2024": {
@@ -6796,6 +7508,8 @@
     "capex": 44285.0,
     "dividendos_pagos": 1006548.0,
     "recompra": 0.0,
+    "arrendamento_pago": 1618.0,
+    "juros_pagos": 728598.0,
     "acoes": 1033497.0
    },
    "2025": {
@@ -6844,6 +7558,8 @@
     "capex": 43797.0,
     "dividendos_pagos": 1020493.0,
     "recompra": 0.0,
+    "arrendamento_pago": 996.0,
+    "juros_pagos": 793199.0,
     "acoes": 1033497.0
    }
   },
@@ -6869,6 +7585,8 @@
    "capex": 49853.0,
    "dividendos_pagos": 1239511.0,
    "recompra": 0.0,
+   "arrendamento_pago": 916.0,
+   "juros_pagos": 830377.0,
    "vj_biologico": 0.0,
    "impairment": 0.0,
    "impairment_outras": 0.0,
@@ -6902,6 +7620,12 @@
     ],
     "linhas_capex": [
      "Adição no Imobilizado e Intangível"
+    ],
+    "linhas_arrendamento": [],
+    "linhas_juros_pagos": [
+     "Pagamento de empréstimos e financimentos - Juros",
+     "Pagamento de debêntures - Juros",
+     "Pagamento de instrumentos financeiros derivativos - juros"
     ]
    },
    "2017": {
@@ -6910,6 +7634,12 @@
     ],
     "linhas_capex": [
      "Adições no Imobilizado e Intangível"
+    ],
+    "linhas_arrendamento": [],
+    "linhas_juros_pagos": [
+     "Pagamento de Empréstimos e Financiamentos - Juros",
+     "Pagamento de Debêntures - Juros",
+     "Pagamento de Instrumentos Financeiros Derivativos - Juros"
     ]
    },
    "2018": {
@@ -6918,6 +7648,12 @@
     ],
     "linhas_capex": [
      "(Adições) no Imobilizado e Intangível"
+    ],
+    "linhas_arrendamento": [],
+    "linhas_juros_pagos": [
+     "Pagamento de Empréstimos e Financiamentos - Juros",
+     "Pagamento de Debêntures - Juros",
+     "Pagamento de Instrumentos Financeiros Derivativos - Juros"
     ]
    },
    "2019": {
@@ -6927,6 +7663,13 @@
     ],
     "linhas_capex": [
      "(Adições) no Imobilizado e Intangível"
+    ],
+    "linhas_arrendamento": [
+     "Pagamento de passivo de arrendamento"
+    ],
+    "linhas_juros_pagos": [
+     "Pagamento de Empréstimos e Financiamentos - Juros",
+     "Pagamento de Debêntures - Juros"
     ]
    },
    "2020": {
@@ -6936,6 +7679,13 @@
     ],
     "linhas_capex": [
      "(Adições) no Imobilizado e Intangível"
+    ],
+    "linhas_arrendamento": [
+     "Pagamento de passivo de arrendamento"
+    ],
+    "linhas_juros_pagos": [
+     "Pagamento de Empréstimos e Financiamentos - Juros",
+     "Pagamento de Debêntures - Juros"
     ]
    },
    "2021": {
@@ -6945,6 +7695,13 @@
     ],
     "linhas_capex": [
      "(Adições) no Imobilizado e Intangível"
+    ],
+    "linhas_arrendamento": [
+     "Pagamento de passivo de arrendamento"
+    ],
+    "linhas_juros_pagos": [
+     "Pagamento de Empréstimos e Financiamentos - Juros",
+     "Pagamento de Debêntures - Juros"
     ]
    },
    "2022": {
@@ -6954,6 +7711,13 @@
     ],
     "linhas_capex": [
      "Adições no imobilizado e intangível"
+    ],
+    "linhas_arrendamento": [
+     "Pagamento de passivo de arrendamento"
+    ],
+    "linhas_juros_pagos": [
+     "Pagamento de Empréstimos e Financiamentos - Juros",
+     "Pagamento de Debêntures - Juros"
     ]
    },
    "2023": {
@@ -6963,6 +7727,13 @@
     ],
     "linhas_capex": [
      "Adições no imobilizado e intangível"
+    ],
+    "linhas_arrendamento": [
+     "Pagamento de passivo de arrendamento"
+    ],
+    "linhas_juros_pagos": [
+     "Pagamento de Empréstimos e Financiamentos - Juros",
+     "Pagamento de Debêntures - Juros"
     ]
    },
    "2024": {
@@ -6971,6 +7742,13 @@
     ],
     "linhas_capex": [
      "Adições no imobilizado e intangível"
+    ],
+    "linhas_arrendamento": [
+     "Pagamento de passivo de arrendamento"
+    ],
+    "linhas_juros_pagos": [
+     "Pagamento de Empréstimos e Financiamentos - Juros",
+     "Pagamento de Debêntures - Juros"
     ]
    },
    "2025": {
@@ -6979,6 +7757,13 @@
     ],
     "linhas_capex": [
      "Adições no imobilizado e intangível"
+    ],
+    "linhas_arrendamento": [
+     "Pagamento de passivo de arrendamento"
+    ],
+    "linhas_juros_pagos": [
+     "Pagamento de Empréstimos e Financiamentos - Juros",
+     "Pagamento de Debêntures - Juros"
     ]
    }
   },
@@ -7031,7 +7816,9 @@
     "da": 11551.0,
     "capex": 11488.0,
     "dividendos_pagos": 109710.0,
-    "recompra": 0.0
+    "recompra": 0.0,
+    "arrendamento_pago": 0.0,
+    "juros_pagos": 129855.0
    },
    "2017": {
     "receita": 2701193.0,
@@ -7076,9 +7863,11 @@
     "fci": -381898.0,
     "fcf_fin": -182899.0,
     "da": 9627.0,
-    "capex": null,
+    "capex": 5592.0,
     "dividendos_pagos": 636118.0,
-    "recompra": 0.0
+    "recompra": 0.0,
+    "arrendamento_pago": 0.0,
+    "juros_pagos": 96725.0
    },
    "2018": {
     "receita": 3184654.0,
@@ -7123,9 +7912,11 @@
     "fci": -102713.0,
     "fcf_fin": -1201509.0,
     "da": 9214.0,
-    "capex": null,
+    "capex": 7785.0,
     "dividendos_pagos": 2064258.0,
-    "recompra": 0.0
+    "recompra": 0.0,
+    "arrendamento_pago": 0.0,
+    "juros_pagos": 119888.0
    },
    "2019": {
     "receita": 3305155.0,
@@ -7170,9 +7961,11 @@
     "fci": 157179.0,
     "fcf_fin": -928645.0,
     "da": 19963.0,
-    "capex": null,
+    "capex": 21405.0,
     "dividendos_pagos": 900714.0,
-    "recompra": 0.0
+    "recompra": 0.0,
+    "arrendamento_pago": 12165.0,
+    "juros_pagos": 169721.0
    },
    "2020": {
     "receita": 3696428.0,
@@ -7217,9 +8010,11 @@
     "fci": -191642.0,
     "fcf_fin": 286571.0,
     "da": 19791.0,
-    "capex": null,
+    "capex": 13035.0,
     "dividendos_pagos": 747369.0,
     "recompra": 0.0,
+    "arrendamento_pago": 13275.0,
+    "juros_pagos": 167144.0,
     "acoes": 658883304.0
    },
    "2021": {
@@ -7265,9 +8060,11 @@
     "fci": -1828794.0,
     "fcf_fin": -854836.0,
     "da": 22802.0,
-    "capex": null,
+    "capex": 14860.0,
     "dividendos_pagos": 2656470.0,
     "recompra": 0.0,
+    "arrendamento_pago": 12659.0,
+    "juros_pagos": 262099.0,
     "acoes": 658883304.0
    },
    "2022": {
@@ -7313,9 +8110,11 @@
     "fci": -99085.0,
     "fcf_fin": -446717.0,
     "da": 27498.0,
-    "capex": null,
+    "capex": 34118.0,
     "dividendos_pagos": 97726.0,
     "recompra": 0.0,
+    "arrendamento_pago": 14352.0,
+    "juros_pagos": 430756.0,
     "acoes": 658883304.0
    },
    "2023": {
@@ -7361,9 +8160,11 @@
     "fci": -306390.0,
     "fcf_fin": -374162.0,
     "da": 24889.0,
-    "capex": null,
+    "capex": 45969.0,
     "dividendos_pagos": 597757.0,
     "recompra": 0.0,
+    "arrendamento_pago": 14344.0,
+    "juros_pagos": 916093.0,
     "acoes": 658883304.0
    },
    "2024": {
@@ -7409,9 +8210,11 @@
     "fci": 1317777.0,
     "fcf_fin": 1532628.0,
     "da": 37357.0,
-    "capex": null,
+    "capex": 43402.0,
     "dividendos_pagos": 1239070.0,
     "recompra": 0.0,
+    "arrendamento_pago": 20295.0,
+    "juros_pagos": 772742.0,
     "acoes": 658883304.0
    },
    "2025": {
@@ -7457,9 +8260,11 @@
     "fci": 373931.0,
     "fcf_fin": -717116.0,
     "da": 34692.0,
-    "capex": null,
+    "capex": 44449.0,
     "dividendos_pagos": 1701314.0,
     "recompra": 0.0,
+    "arrendamento_pago": 17057.0,
+    "juros_pagos": 1153908.0,
     "acoes": 658883304.0
    }
   },
@@ -7482,8 +8287,11 @@
    "fci": 563226.0,
    "fcf_fin": 494016.0,
    "da": 35914.0,
+   "capex": 47321.0,
    "dividendos_pagos": 1029198.0,
    "recompra": 0.0,
+   "arrendamento_pago": 20529.0,
+   "juros_pagos": 1213540.0,
    "vj_biologico": 0.0,
    "impairment": 0.0,
    "impairment_outras": 0.0,
@@ -7519,64 +8327,145 @@
     "linhas_capex": [
      "Aquisição de Imobilizado",
      "Aquisição de Intangível"
+    ],
+    "linhas_arrendamento": [],
+    "linhas_juros_pagos": [
+     "Pagamento de Empréstimos (Juros)"
     ]
    },
    "2017": {
     "linhas_da": [
      "Depreciação e Amortização"
     ],
-    "linhas_capex": []
+    "linhas_capex": [
+     "Imobilizado",
+     "Intangível"
+    ],
+    "linhas_arrendamento": [],
+    "linhas_juros_pagos": [
+     "Pagamento de Empréstimos e Debêntures (Juros)"
+    ]
    },
    "2018": {
     "linhas_da": [
      "Depreciação e Amortização",
      "Amortização de Ativo de Concessão na aquisição de Controlada"
     ],
-    "linhas_capex": []
+    "linhas_capex": [
+     "Imobilizado",
+     "Intangível"
+    ],
+    "linhas_arrendamento": [],
+    "linhas_juros_pagos": [
+     "Pagamento de Empréstimos e Debêntures (Juros)"
+    ]
    },
    "2019": {
     "linhas_da": [
      "Depreciação e Amortização",
      "Amortização de Ativo de Concessão na aquisição de Controlada"
     ],
-    "linhas_capex": []
+    "linhas_capex": [
+     "Imobilizado",
+     "Intangível"
+    ],
+    "linhas_arrendamento": [
+     "Pagamentos de Arrendamentos Mercantil"
+    ],
+    "linhas_juros_pagos": [
+     "Pagamento de Empréstimos e Debêntures (Juros)"
+    ]
    },
    "2020": {
     "linhas_da": [
      "Depreciação e Amortização",
      "Amortização de Ativo de Concessão na aquisição de Controlada"
     ],
-    "linhas_capex": []
+    "linhas_capex": [
+     "Imobilizado",
+     "Intangível"
+    ],
+    "linhas_arrendamento": [
+     "Pagamentos de Arrendamentos"
+    ],
+    "linhas_juros_pagos": [
+     "Pagamento de Empréstimos e Debêntures (Juros)"
+    ]
    },
    "2021": {
     "linhas_da": [
      "Depreciação e Amortização"
     ],
-    "linhas_capex": []
+    "linhas_capex": [
+     "Imobilizado",
+     "Intangível"
+    ],
+    "linhas_arrendamento": [
+     "Pagamentos de Arrendamentos"
+    ],
+    "linhas_juros_pagos": [
+     "Pagamento de Empréstimos e Debêntures (Juros)"
+    ]
    },
    "2022": {
     "linhas_da": [
      "Depreciação e Amortização"
     ],
-    "linhas_capex": []
+    "linhas_capex": [
+     "Imobilizado",
+     "Intangível"
+    ],
+    "linhas_arrendamento": [
+     "Pagamentos de Arrendamentos"
+    ],
+    "linhas_juros_pagos": [
+     "Pagamento de Empréstimos e Debêntures (Juros)"
+    ]
    },
    "2023": {
     "linhas_da": [
      "Depreciação e Amortização"
     ],
-    "linhas_capex": []
+    "linhas_capex": [
+     "Imobilizado",
+     "Intangível"
+    ],
+    "linhas_arrendamento": [
+     "Pagamentos de Arrendamentos"
+    ],
+    "linhas_juros_pagos": [
+     "Pagamento de Empréstimos e Debêntures (Juros)"
+    ]
    },
    "2024": {
     "linhas_da": [
      "Depreciação e Amortização"
     ],
-    "linhas_capex": []
+    "linhas_capex": [
+     "Imobilizado",
+     "Intangível"
+    ],
+    "linhas_arrendamento": [
+     "Pagamentos de Arrendamentos"
+    ],
+    "linhas_juros_pagos": [
+     "Pagamento de Empréstimos e Debêntures (Juros)"
+    ]
    },
    "2025": {
     "linhas_da": [
      "Depreciação e Amortização"
     ],
-    "linhas_capex": []
+    "linhas_capex": [
+     "Imobilizado",
+     "Intangível"
+    ],
+    "linhas_arrendamento": [
+     "Pagamentos de Arrendamentos"
+    ],
+    "linhas_juros_pagos": [
+     "Pagamento de Empréstimos e Debêntures (Juros)"
+    ]
    }
   },
   "acoes_por_unit": 1
@@ -7628,7 +8517,9 @@
     "da": 834291.0,
     "capex": 1140707.0,
     "dividendos_pagos": 674596.0,
-    "recompra": 0.0
+    "recompra": 0.0,
+    "arrendamento_pago": 0.0,
+    "juros_pagos": 2369244.0
    },
    "2017": {
     "receita": 21711690.0,
@@ -7675,7 +8566,9 @@
     "da": 849768.0,
     "capex": 1117001.0,
     "dividendos_pagos": 539632.0,
-    "recompra": 0.0
+    "recompra": 0.0,
+    "arrendamento_pago": 0.0,
+    "juros_pagos": 1796874.0
    },
    "2018": {
     "receita": 22266217.0,
@@ -7722,7 +8615,9 @@
     "da": 849093.0,
     "capex": 106816.0,
     "dividendos_pagos": 508765.0,
-    "recompra": 0.0
+    "recompra": 0.0,
+    "arrendamento_pago": 0.0,
+    "juros_pagos": 1290348.0
    },
    "2019": {
     "receita": 25390306.0,
@@ -7769,7 +8664,9 @@
     "da": 958234.0,
     "capex": 1926698.0,
     "dividendos_pagos": 701137.0,
-    "recompra": 0.0
+    "recompra": 0.0,
+    "arrendamento_pago": 95664.0,
+    "juros_pagos": 1264800.0
    },
    "2020": {
     "receita": 25227625.0,
@@ -7817,6 +8714,8 @@
     "capex": 174025.0,
     "dividendos_pagos": 598135.0,
     "recompra": 0.0,
+    "arrendamento_pago": 83881.0,
+    "juros_pagos": 1081476.0,
     "acoes": 1518168.0
    },
    "2021": {
@@ -7865,6 +8764,8 @@
     "capex": 233367.0,
     "dividendos_pagos": 1416333.0,
     "recompra": 0.0,
+    "arrendamento_pago": 70145.0,
+    "juros_pagos": 1590268.0,
     "acoes": 1692711.0
    },
    "2022": {
@@ -7913,6 +8814,8 @@
     "capex": null,
     "dividendos_pagos": 2093907.0,
     "recompra": 0.0,
+    "arrendamento_pago": 65677.0,
+    "juros_pagos": 1010077.0,
     "acoes": 2200525.0
    },
    "2023": {
@@ -7961,6 +8864,8 @@
     "capex": null,
     "dividendos_pagos": 1823019.0,
     "recompra": 0.0,
+    "arrendamento_pago": 66634.0,
+    "juros_pagos": 1026146.0,
     "acoes": 2200525.0
    },
    "2024": {
@@ -8009,6 +8914,8 @@
     "capex": null,
     "dividendos_pagos": 4294458.0,
     "recompra": 0.0,
+    "arrendamento_pago": 72339.0,
+    "juros_pagos": 955864.0,
     "acoes": 2860682.0
    },
    "2025": {
@@ -8057,6 +8964,8 @@
     "capex": null,
     "dividendos_pagos": 3968306.0,
     "recompra": 0.0,
+    "arrendamento_pago": 81512.0,
+    "juros_pagos": 1387495.0,
     "acoes": 2860682.0
    }
   },
@@ -8081,6 +8990,8 @@
    "da": 1612566.0,
    "dividendos_pagos": 3608260.0,
    "recompra": 0.0,
+   "arrendamento_pago": 75343.0,
+   "juros_pagos": 1775595.0,
    "vj_biologico": 0.0,
    "impairment": 0.0,
    "impairment_outras": 0.0,
@@ -8115,6 +9026,10 @@
     "linhas_capex": [
      "Em Imobilizado",
      "Em Intangível"
+    ],
+    "linhas_arrendamento": [],
+    "linhas_juros_pagos": [
+     "Juros sobre Emprestimo e Financiamentos Pagos"
     ]
    },
    "2017": {
@@ -8124,6 +9039,10 @@
     "linhas_capex": [
      "Em Imobilizado",
      "Em Intangível"
+    ],
+    "linhas_arrendamento": [],
+    "linhas_juros_pagos": [
+     "Juros sobre Emprestimo e Financiamentos Pagos"
     ]
    },
    "2018": {
@@ -8133,6 +9052,10 @@
     "linhas_capex": [
      "Em Imobilizado",
      "Em Intangível"
+    ],
+    "linhas_arrendamento": [],
+    "linhas_juros_pagos": [
+     "Juros sobre Emprestimo e Financiamentos Pagos"
     ]
    },
    "2019": {
@@ -8142,6 +9065,12 @@
     "linhas_capex": [
      "Em Imobilizado",
      "Em Intangível e Ativos de Contrato - infraestrutura de distribuição e gás"
+    ],
+    "linhas_arrendamento": [
+     "Arrendamentos pagos"
+    ],
+    "linhas_juros_pagos": [
+     "Juros sobre Emprestimo e Financiamentos Pagos"
     ]
    },
    "2020": {
@@ -8151,6 +9080,12 @@
     "linhas_capex": [
      "Em Imobilizado",
      "Em Intangível"
+    ],
+    "linhas_arrendamento": [
+     "Arrendamentos pagos"
+    ],
+    "linhas_juros_pagos": [
+     "Juros sobre Emprestimo e Financiamentos Pagos"
     ]
    },
    "2021": {
@@ -8160,31 +9095,61 @@
     "linhas_capex": [
      "Em Imobilizado",
      "Em Intangível"
+    ],
+    "linhas_arrendamento": [
+     "Arrendamentos pagos"
+    ],
+    "linhas_juros_pagos": [
+     "Juros sobre Emprestimo e Financiamentos Pagos"
     ]
    },
    "2022": {
     "linhas_da": [
      "Depreciação e Amortização"
     ],
-    "linhas_capex": []
+    "linhas_capex": [],
+    "linhas_arrendamento": [
+     "Arrendamentos pagos"
+    ],
+    "linhas_juros_pagos": [
+     "Juros sobre empréstimos pagos"
+    ]
    },
    "2023": {
     "linhas_da": [
      "Depreciação e Amortização"
     ],
-    "linhas_capex": []
+    "linhas_capex": [],
+    "linhas_arrendamento": [
+     "Arrendamentos pagos"
+    ],
+    "linhas_juros_pagos": [
+     "Juros sobre empréstimos pagos"
+    ]
    },
    "2024": {
     "linhas_da": [
      "Depreciação e Amortização"
     ],
-    "linhas_capex": []
+    "linhas_capex": [],
+    "linhas_arrendamento": [
+     "Arrendamentos pagos"
+    ],
+    "linhas_juros_pagos": [
+     "Juros sobre empréstimos pagos"
+    ]
    },
    "2025": {
     "linhas_da": [
      "Depreciação e Amortização"
     ],
-    "linhas_capex": []
+    "linhas_capex": [],
+    "linhas_arrendamento": [
+     "Arrendamentos pagos"
+    ],
+    "linhas_juros_pagos": [
+     "Juros sobre debêntures pagos"
+    ]
    }
   },
   "acoes_por_unit": 1
@@ -8236,7 +9201,9 @@
     "da": 1291165.0,
     "capex": 2237949.0,
     "dividendos_pagos": 231749.0,
-    "recompra": 0.0
+    "recompra": 0.0,
+    "arrendamento_pago": 0.0,
+    "juros_pagos": 1570985.0
    },
    "2017": {
     "receita": 26744905.0,
@@ -8283,7 +9250,9 @@
     "da": 1529052.0,
     "capex": 2570433.0,
     "dividendos_pagos": 336934.0,
-    "recompra": 0.0
+    "recompra": 0.0,
+    "arrendamento_pago": 0.0,
+    "juros_pagos": 1846453.0
    },
    "2018": {
     "receita": 28136627.0,
@@ -8330,7 +9299,9 @@
     "da": 1594064.0,
     "capex": 292849.0,
     "dividendos_pagos": 322163.0,
-    "recompra": 0.0
+    "recompra": 0.0,
+    "arrendamento_pago": 0.0,
+    "juros_pagos": 1353339.0
    },
    "2019": {
     "receita": 29932474.0,
@@ -8377,7 +9348,9 @@
     "da": 1681053.0,
     "capex": 208141.0,
     "dividendos_pagos": 534061.0,
-    "recompra": 0.0
+    "recompra": 0.0,
+    "arrendamento_pago": 0.0,
+    "juros_pagos": 1132479.0
    },
    "2020": {
     "receita": 30898458.0,
@@ -8425,6 +9398,8 @@
     "capex": 357068.0,
     "dividendos_pagos": 2116379.0,
     "recompra": 0.0,
+    "arrendamento_pago": 0.0,
+    "juros_pagos": 761216.0,
     "acoes": 1152254440.0
    },
    "2021": {
@@ -8473,6 +9448,8 @@
     "capex": 575479.0,
     "dividendos_pagos": 4298495.0,
     "recompra": 0.0,
+    "arrendamento_pago": 0.0,
+    "juros_pagos": 651960.0,
     "acoes": 0.0
    },
    "2022": {
@@ -8521,6 +9498,8 @@
     "capex": 395703.0,
     "dividendos_pagos": 3872339.0,
     "recompra": 0.0,
+    "arrendamento_pago": 0.0,
+    "juros_pagos": 1462559.0,
     "acoes": 1152254440.0
    },
    "2023": {
@@ -8569,6 +9548,8 @@
     "capex": 698262.0,
     "dividendos_pagos": 3570467.0,
     "recompra": 0.0,
+    "arrendamento_pago": 0.0,
+    "juros_pagos": 1862324.0,
     "acoes": 1152254440.0
    },
    "2024": {
@@ -8617,6 +9598,8 @@
     "capex": 531044.0,
     "dividendos_pagos": 3479652.0,
     "recompra": 0.0,
+    "arrendamento_pago": 0.0,
+    "juros_pagos": 2142754.0,
     "acoes": 1152254440.0
    },
    "2025": {
@@ -8665,6 +9648,8 @@
     "capex": 390484.0,
     "dividendos_pagos": 3519769.0,
     "recompra": 0.0,
+    "arrendamento_pago": 0.0,
+    "juros_pagos": 2084774.0,
     "acoes": 1152254440.0
    }
   },
@@ -8690,6 +9675,8 @@
    "capex": 414155.0,
    "dividendos_pagos": 4055564.0,
    "recompra": 0.0,
+   "arrendamento_pago": 0.0,
+   "juros_pagos": 2206358.0,
    "vj_biologico": 0.0,
    "impairment": 0.0,
    "impairment_outras": 0.0,
@@ -8724,6 +9711,10 @@
     "linhas_capex": [
      "Aquisições de imobilizado",
      "Adições de intangível"
+    ],
+    "linhas_arrendamento": [],
+    "linhas_juros_pagos": [
+     "Encargos de dívidas e debêntures pagos"
     ]
    },
    "2017": {
@@ -8733,6 +9724,10 @@
     "linhas_capex": [
      "Aquisições de imobilizado",
      "Adições de intangível"
+    ],
+    "linhas_arrendamento": [],
+    "linhas_juros_pagos": [
+     "Encargos de dívidas e debêntures pagos"
     ]
    },
    "2018": {
@@ -8742,6 +9737,10 @@
     "linhas_capex": [
      "Aquisições de imobilizado",
      "Adições e construções de intangível"
+    ],
+    "linhas_arrendamento": [],
+    "linhas_juros_pagos": [
+     "Encargos de dívidas e debêntures pagos"
     ]
    },
    "2019": {
@@ -8751,6 +9750,10 @@
     "linhas_capex": [
      "Aquisições de Imobilizado",
      "Adições e construções de intangível"
+    ],
+    "linhas_arrendamento": [],
+    "linhas_juros_pagos": [
+     "Encargos de dívidas e debêntures pagos"
     ]
    },
    "2020": {
@@ -8760,6 +9763,10 @@
     "linhas_capex": [
      "Aquisições de Imobilizado",
      "Adições e construções de intangível"
+    ],
+    "linhas_arrendamento": [],
+    "linhas_juros_pagos": [
+     "Encargos de dívidas e debêntures pagos"
     ]
    },
    "2021": {
@@ -8769,6 +9776,10 @@
     "linhas_capex": [
      "Aquisições de Imobilizado",
      "Adições e construções de intangível"
+    ],
+    "linhas_arrendamento": [],
+    "linhas_juros_pagos": [
+     "Encargos de dívidas e debêntures pagos"
     ]
    },
    "2022": {
@@ -8778,6 +9789,10 @@
     "linhas_capex": [
      "Aquisições de Imobilizado",
      "Adições e construções de intangível"
+    ],
+    "linhas_arrendamento": [],
+    "linhas_juros_pagos": [
+     "Encargos de dívidas e debêntures pagos"
     ]
    },
    "2023": {
@@ -8787,6 +9802,10 @@
     "linhas_capex": [
      "Aquisições de Imobilizado",
      "Adições e construções de intangível"
+    ],
+    "linhas_arrendamento": [],
+    "linhas_juros_pagos": [
+     "Encargos de dívidas e debêntures pagos"
     ]
    },
    "2024": {
@@ -8796,6 +9815,10 @@
     "linhas_capex": [
      "Aquisições de Imobilizado",
      "Adições e construções de intangível"
+    ],
+    "linhas_arrendamento": [],
+    "linhas_juros_pagos": [
+     "Encargos de dívidas e debêntures pagos"
     ]
    },
    "2025": {
@@ -8805,6 +9828,10 @@
     "linhas_capex": [
      "Aquisições de Imobilizado",
      "Adições e construções de intangível"
+    ],
+    "linhas_arrendamento": [],
+    "linhas_juros_pagos": [
+     "Encargos de dívidas e debêntures pagos"
     ]
    }
   },
@@ -8857,7 +9884,9 @@
     "da": 708296.0,
     "capex": 2213163.0,
     "dividendos_pagos": 368956.0,
-    "recompra": 0.0
+    "recompra": 0.0,
+    "arrendamento_pago": 0.0,
+    "juros_pagos": 910099.0
    },
    "2017": {
     "receita": 14024573.0,
@@ -8904,7 +9933,9 @@
     "da": 731599.0,
     "capex": 2011748.0,
     "dividendos_pagos": 506404.0,
-    "recompra": 0.0
+    "recompra": 0.0,
+    "arrendamento_pago": 0.0,
+    "juros_pagos": 1154848.0
    },
    "2018": {
     "receita": 14934780.0,
@@ -8951,7 +9982,9 @@
     "da": 749179.0,
     "capex": 1496656.0,
     "dividendos_pagos": 300722.0,
-    "recompra": 0.0
+    "recompra": 0.0,
+    "arrendamento_pago": 0.0,
+    "juros_pagos": 790097.0
    },
    "2019": {
     "receita": 16244274.0,
@@ -8998,7 +10031,9 @@
     "da": 1093836.0,
     "capex": 548162.0,
     "dividendos_pagos": 380421.0,
-    "recompra": 0.0
+    "recompra": 0.0,
+    "arrendamento_pago": 30946.0,
+    "juros_pagos": 1035226.0
    },
    "2020": {
     "receita": 18633249.0,
@@ -9046,6 +10081,8 @@
     "capex": 236550.0,
     "dividendos_pagos": 626357.0,
     "recompra": 0.0,
+    "arrendamento_pago": 46365.0,
+    "juros_pagos": 576351.0,
     "acoes": 2736553750.0
    },
    "2021": {
@@ -9094,6 +10131,8 @@
     "capex": 342683.0,
     "dividendos_pagos": 3874318.0,
     "recompra": 0.0,
+    "arrendamento_pago": 51270.0,
+    "juros_pagos": 543838.0,
     "acoes": 2736553750.0
    },
    "2022": {
@@ -9142,6 +10181,8 @@
     "capex": 957271.0,
     "dividendos_pagos": 2167769.0,
     "recompra": 0.0,
+    "arrendamento_pago": 60200.0,
+    "juros_pagos": 1248729.0,
     "acoes": 2736553750.0
    },
    "2023": {
@@ -9190,6 +10231,8 @@
     "capex": 218193.0,
     "dividendos_pagos": 750371.0,
     "recompra": 0.0,
+    "arrendamento_pago": 69293.0,
+    "juros_pagos": 1673025.0,
     "acoes": 2982810591.0
    },
    "2024": {
@@ -9238,6 +10281,8 @@
     "capex": 4235921.0,
     "dividendos_pagos": 1586565.0,
     "recompra": 50044.0,
+    "arrendamento_pago": 70949.0,
+    "juros_pagos": 1593581.0,
     "acoes": 2977112191.0
    },
    "2025": {
@@ -9286,6 +10331,8 @@
     "capex": 205888.0,
     "dividendos_pagos": 1249045.0,
     "recompra": 70046.0,
+    "arrendamento_pago": 69583.0,
+    "juros_pagos": 2006657.0,
     "acoes": 2970070325.0
    }
   },
@@ -9311,6 +10358,8 @@
    "capex": 553218.0,
    "dividendos_pagos": 2337933.0,
    "recompra": 6.0,
+   "arrendamento_pago": 72950.0,
+   "juros_pagos": 2222103.0,
    "vj_biologico": 0.0,
    "impairment": 0.0,
    "impairment_outras": 0.0,
@@ -9345,6 +10394,11 @@
     "linhas_capex": [
      "Aquisições de imobilizado",
      "Aquisições de intangível"
+    ],
+    "linhas_arrendamento": [],
+    "linhas_juros_pagos": [
+     "Encargos de empréstimos e financiamentos pagos",
+     "Encargos de debêntures pagos"
     ]
    },
    "2017": {
@@ -9354,6 +10408,11 @@
     "linhas_capex": [
      "Aquisições de imobilizado",
      "Aquisições de intangível"
+    ],
+    "linhas_arrendamento": [],
+    "linhas_juros_pagos": [
+     "Encargos de empréstimos e financiamentos pagos",
+     "Encargos de debêntures pagos"
     ]
    },
    "2018": {
@@ -9363,6 +10422,11 @@
     "linhas_capex": [
      "Aquisições de imobilizado",
      "Aquisições de intangível"
+    ],
+    "linhas_arrendamento": [],
+    "linhas_juros_pagos": [
+     "Encargos de empréstimos e financiamentos pagos",
+     "Encargos de debêntures pagos"
     ]
    },
    "2019": {
@@ -9372,6 +10436,14 @@
     "linhas_capex": [
      "Aquisições de imobilizado",
      "Aquisições de intangível"
+    ],
+    "linhas_arrendamento": [
+     "Amortizações de principal de passivo de arrendamentos"
+    ],
+    "linhas_juros_pagos": [
+     "Encargos de empréstimos e financiamentos pagos",
+     "Encargos de debêntures pagos",
+     "Encargos de passivo de arrendamentos pagos"
     ]
    },
    "2020": {
@@ -9381,6 +10453,14 @@
     "linhas_capex": [
      "Aquisições de imobilizado",
      "Aquisições de intangível"
+    ],
+    "linhas_arrendamento": [
+     "Amortizações de principal de passivo de arrendamentos"
+    ],
+    "linhas_juros_pagos": [
+     "Encargos de empréstimos e financiamentos pagos",
+     "Encargos de debêntures pagos",
+     "Encargos de passivo de arrendamentos pagos"
     ]
    },
    "2021": {
@@ -9390,6 +10470,14 @@
     "linhas_capex": [
      "Aquisições de imobilizado",
      "Aquisições de intangível"
+    ],
+    "linhas_arrendamento": [
+     "Amortizações de principal de passivo de arrendamentos"
+    ],
+    "linhas_juros_pagos": [
+     "Encargos de empréstimos e financiamentos pagos",
+     "Encargos de debêntures pagos",
+     "Encargos de passivo de arrendamentos pagos"
     ]
    },
    "2022": {
@@ -9399,6 +10487,14 @@
     "linhas_capex": [
      "Aquisições de imobilizado",
      "Aquisições de intangível"
+    ],
+    "linhas_arrendamento": [
+     "Amortizações de principal de passivo de arrendamentos"
+    ],
+    "linhas_juros_pagos": [
+     "Encargos de empréstimos e financiamentos pagos",
+     "Encargos de debêntures pagos",
+     "Encargos de passivo de arrendamentos pagos"
     ]
    },
    "2023": {
@@ -9408,6 +10504,14 @@
     "linhas_capex": [
      "Aquisições de imobilizado",
      "Aquisições de intangível"
+    ],
+    "linhas_arrendamento": [
+     "Amortizações de principal de passivo de arrendamentos"
+    ],
+    "linhas_juros_pagos": [
+     "Encargos de empréstimos e financiamentos pagos",
+     "Encargos de debêntures pagos",
+     "Encargos de passivo de arrendamentos pagos"
     ]
    },
    "2024": {
@@ -9417,6 +10521,14 @@
     "linhas_capex": [
      "Aquisições de imobilizado",
      "Aquisições de intangível"
+    ],
+    "linhas_arrendamento": [
+     "Amortizações de principal de passivo de arrendamentos"
+    ],
+    "linhas_juros_pagos": [
+     "Encargos de empréstimos e financiamentos pagos",
+     "Encargos de debêntures pagos",
+     "Encargos de passivo de arrendamentos pagos"
     ]
    },
    "2025": {
@@ -9426,6 +10538,14 @@
     "linhas_capex": [
      "Aquisições de imobilizado",
      "Aquisições de intangível"
+    ],
+    "linhas_arrendamento": [
+     "Amortizações de principal de passivo de arrendamentos"
+    ],
+    "linhas_juros_pagos": [
+     "Encargos de empréstimos e financiamentos pagos",
+     "Encargos de debêntures pagos",
+     "Encargos de passivo de arrendamentos pagos"
     ]
    }
   },
@@ -9478,7 +10598,9 @@
     "da": 48543000.0,
     "capex": 49289000.0,
     "dividendos_pagos": 239000.0,
-    "recompra": 0.0
+    "recompra": 0.0,
+    "arrendamento_pago": 0.0,
+    "juros_pagos": 25563000.0
    },
    "2017": {
     "receita": 283695000.0,
@@ -9525,7 +10647,9 @@
     "da": 42478000.0,
     "capex": 43614000.0,
     "dividendos_pagos": 538000.0,
-    "recompra": 0.0
+    "recompra": 0.0,
+    "arrendamento_pago": 0.0,
+    "juros_pagos": 22295000.0
    },
    "2018": {
     "receita": 349836000.0,
@@ -9572,7 +10696,9 @@
     "da": 43646000.0,
     "capex": 43987000.0,
     "dividendos_pagos": 3046000.0,
-    "recompra": 0.0
+    "recompra": 0.0,
+    "arrendamento_pago": 0.0,
+    "juros_pagos": 20959000.0
    },
    "2019": {
     "receita": 302245000.0,
@@ -9619,7 +10745,9 @@
     "da": 58502000.0,
     "capex": 34010000.0,
     "dividendos_pagos": 8038000.0,
-    "recompra": 0.0
+    "recompra": 0.0,
+    "arrendamento_pago": 20660000.0,
+    "juros_pagos": 17623000.0
    },
    "2020": {
     "receita": 272069000.0,
@@ -9667,6 +10795,8 @@
     "capex": 29974000.0,
     "dividendos_pagos": 6657000.0,
     "recompra": 0.0,
+    "arrendamento_pago": 30275000.0,
+    "juros_pagos": 15828000.0,
     "acoes": 13044201.0
    },
    "2021": {
@@ -9715,6 +10845,8 @@
     "capex": 34134000.0,
     "dividendos_pagos": 72718000.0,
     "recompra": 0.0,
+    "arrendamento_pago": 31400000.0,
+    "juros_pagos": 12155000.0,
     "acoes": 13044201261.0
    },
    "2022": {
@@ -9763,6 +10895,8 @@
     "capex": 49656000.0,
     "dividendos_pagos": 194609000.0,
     "recompra": 0.0,
+    "arrendamento_pago": 28049000.0,
+    "juros_pagos": 9664000.0,
     "acoes": 13044201261.0
    },
    "2023": {
@@ -9811,6 +10945,8 @@
     "capex": 60315000.0,
     "dividendos_pagos": 98178000.0,
     "recompra": 3644000.0,
+    "arrendamento_pago": 31335000.0,
+    "juros_pagos": 9900000.0,
     "acoes": 12940137261.0
    },
    "2024": {
@@ -9859,6 +10995,8 @@
     "capex": 79856000.0,
     "dividendos_pagos": 100692000.0,
     "recompra": 1919000.0,
+    "arrendamento_pago": 42672000.0,
+    "juros_pagos": 10276000.0,
     "acoes": 12888732761.0
    },
    "2025": {
@@ -9907,6 +11045,8 @@
     "capex": 108714000.0,
     "dividendos_pagos": 45438000.0,
     "recompra": 0.0,
+    "arrendamento_pago": 52437000.0,
+    "juros_pagos": 10311000.0,
     "acoes": 12888732761.0
    }
   },
@@ -9932,6 +11072,8 @@
    "capex": 109021000.0,
    "dividendos_pagos": 38417000.0,
    "recompra": 0.0,
+   "arrendamento_pago": 54167000.0,
+   "juros_pagos": 10914000.0,
    "vj_biologico": 0.0,
    "impairment": -5979000.0,
    "impairment_outras": -5979000.0,
@@ -9965,6 +11107,10 @@
     ],
     "linhas_capex": [
      "Aquisições de Imobilizados e Intangíveis"
+    ],
+    "linhas_arrendamento": [],
+    "linhas_juros_pagos": [
+     "Amortizações de Juros"
     ]
    },
    "2017": {
@@ -9973,6 +11119,10 @@
     ],
     "linhas_capex": [
      "Aquisições de Imobilizados e Intangíveis"
+    ],
+    "linhas_arrendamento": [],
+    "linhas_juros_pagos": [
+     "Amortizações de Juros"
     ]
    },
    "2018": {
@@ -9981,6 +11131,10 @@
     ],
     "linhas_capex": [
      "Aquisições de Imobilizados e Intangíveis"
+    ],
+    "linhas_arrendamento": [],
+    "linhas_juros_pagos": [
+     "Amortizações de Juros"
     ]
    },
    "2019": {
@@ -9989,6 +11143,12 @@
     ],
     "linhas_capex": [
      "Aquisições de Imobilizados e Intangíveis (Exceto pelo Excedente de Cessão Onerosa)"
+    ],
+    "linhas_arrendamento": [
+     "Amortizações de arrendamentos mercantis"
+    ],
+    "linhas_juros_pagos": [
+     "Amortizações de Juros"
     ]
    },
    "2020": {
@@ -9997,6 +11157,12 @@
     ],
     "linhas_capex": [
      "Aquisições de Imobilizados e Intangíveis (Exceto pelo Excedente de Cessão Onerosa)"
+    ],
+    "linhas_arrendamento": [
+     "Amortizações de arrendamentos"
+    ],
+    "linhas_juros_pagos": [
+     "Amortizações de juros - financiamentos"
     ]
    },
    "2021": {
@@ -10005,6 +11171,12 @@
     ],
     "linhas_capex": [
      "Aquisições de ativos imobilizados e intangíveis"
+    ],
+    "linhas_arrendamento": [
+     "Amortizações de arrendamentos"
+    ],
+    "linhas_juros_pagos": [
+     "Amortizações de juros - financiamentos"
     ]
    },
    "2022": {
@@ -10013,6 +11185,12 @@
     ],
     "linhas_capex": [
      "Aquisições de ativos imobilizados e intangíveis"
+    ],
+    "linhas_arrendamento": [
+     "Amortizações de arrendamentos"
+    ],
+    "linhas_juros_pagos": [
+     "Amortizações de juros - financiamentos"
     ]
    },
    "2023": {
@@ -10021,6 +11199,12 @@
     ],
     "linhas_capex": [
      "Aquisições de ativos imobilizados e intangíveis"
+    ],
+    "linhas_arrendamento": [
+     "Amortizações de arrendamentos"
+    ],
+    "linhas_juros_pagos": [
+     "Amortizações de juros - financiamentos"
     ]
    },
    "2024": {
@@ -10029,6 +11213,12 @@
     ],
     "linhas_capex": [
      "Aquisições de ativos imobilizados e intangíveis"
+    ],
+    "linhas_arrendamento": [
+     "Amortizações de arrendamentos"
+    ],
+    "linhas_juros_pagos": [
+     "Amortizações de juros - financiamentos"
     ]
    },
    "2025": {
@@ -10037,6 +11227,12 @@
     ],
     "linhas_capex": [
      "Aquisições de ativos imobilizados e intangíveis"
+    ],
+    "linhas_arrendamento": [
+     "Amortizações de arrendamentos"
+    ],
+    "linhas_juros_pagos": [
+     "Amortizações de juros - financiamentos"
     ]
    }
   },
@@ -10089,7 +11285,9 @@
     "da": 69571.0,
     "capex": 73786.0,
     "dividendos_pagos": 0.0,
-    "recompra": 0.0
+    "recompra": 0.0,
+    "arrendamento_pago": 0.0,
+    "juros_pagos": 0.0
    },
    "2017": {
     "receita": 533922.0,
@@ -10136,7 +11334,9 @@
     "da": 89457.0,
     "capex": 132874.0,
     "dividendos_pagos": 0.0,
-    "recompra": 0.0
+    "recompra": 0.0,
+    "arrendamento_pago": 0.0,
+    "juros_pagos": 0.0
    },
    "2018": {
     "receita": 848920.0,
@@ -10183,7 +11383,9 @@
     "da": 76920.0,
     "capex": 199175.0,
     "dividendos_pagos": 0.0,
-    "recompra": 0.0
+    "recompra": 0.0,
+    "arrendamento_pago": 0.0,
+    "juros_pagos": 0.0
    },
    "2019": {
     "receita": 1644346.0,
@@ -10230,7 +11432,9 @@
     "da": 508958.0,
     "capex": 188805.0,
     "dividendos_pagos": 0.0,
-    "recompra": 0.0
+    "recompra": 0.0,
+    "arrendamento_pago": 158495.0,
+    "juros_pagos": 0.0
    },
    "2020": {
     "receita": 1904185.0,
@@ -10278,6 +11482,8 @@
     "capex": 254090.0,
     "dividendos_pagos": 0.0,
     "recompra": 0.0,
+    "arrendamento_pago": 198701.0,
+    "juros_pagos": 78144.0,
     "acoes": 136870147.0
    },
    "2021": {
@@ -10326,6 +11532,8 @@
     "capex": 1001246.0,
     "dividendos_pagos": 0.0,
     "recompra": 0.0,
+    "arrendamento_pago": 138922.0,
+    "juros_pagos": 267565.0,
     "acoes": 839253280.0
    },
    "2022": {
@@ -10374,6 +11582,8 @@
     "capex": 1901397.00823492,
     "dividendos_pagos": 0.0,
     "recompra": 0.0,
+    "arrendamento_pago": 230139.0,
+    "juros_pagos": 0.0,
     "acoes": 491122735.0
    },
    "2023": {
@@ -10422,6 +11632,8 @@
     "capex": 4247509.0,
     "dividendos_pagos": 60618.0,
     "recompra": 0.0,
+    "arrendamento_pago": 72543.0,
+    "juros_pagos": 526660.0,
     "acoes": 834531182.0
    },
    "2024": {
@@ -10470,6 +11682,8 @@
     "capex": 3615785.0,
     "dividendos_pagos": 0.0,
     "recompra": 0.0,
+    "arrendamento_pago": 74087.0,
+    "juros_pagos": 704987.0,
     "acoes": 817001392.0
    },
    "2025": {
@@ -10518,6 +11732,8 @@
     "capex": 5428983.0,
     "dividendos_pagos": 0.0,
     "recompra": 0.0,
+    "arrendamento_pago": 269411.0,
+    "juros_pagos": 870584.0,
     "acoes": 809922731.0
    }
   },
@@ -10543,6 +11759,8 @@
    "capex": 6120700.0,
    "dividendos_pagos": 0.0,
    "recompra": 0.0,
+   "arrendamento_pago": 364368.0,
+   "juros_pagos": 1632700.0,
    "vj_biologico": 0.0,
    "impairment": 0.0,
    "impairment_outras": 0.0,
@@ -10576,7 +11794,9 @@
     ],
     "linhas_capex": [
      "Compra de ativo intangível"
-    ]
+    ],
+    "linhas_arrendamento": [],
+    "linhas_juros_pagos": []
    },
    "2017": {
     "linhas_da": [
@@ -10584,7 +11804,9 @@
     ],
     "linhas_capex": [
      "Compra de ativo intangível"
-    ]
+    ],
+    "linhas_arrendamento": [],
+    "linhas_juros_pagos": []
    },
    "2018": {
     "linhas_da": [
@@ -10592,7 +11814,9 @@
     ],
     "linhas_capex": [
      "Compra de ativo intangível"
-    ]
+    ],
+    "linhas_arrendamento": [],
+    "linhas_juros_pagos": []
    },
    "2019": {
     "linhas_da": [
@@ -10602,7 +11826,11 @@
     "linhas_capex": [
      "Compra de ativo imobilizado",
      "Compra de ativo intangível"
-    ]
+    ],
+    "linhas_arrendamento": [
+     "Encargos contratuais Leasing IFRS 16"
+    ],
+    "linhas_juros_pagos": []
    },
    "2020": {
     "linhas_da": [
@@ -10612,6 +11840,12 @@
     "linhas_capex": [
      "Compra de ativo imobilizado",
      "Compra de ativo intangível"
+    ],
+    "linhas_arrendamento": [
+     "Encargos contratuais Leasing IFRS 16 - Principal"
+    ],
+    "linhas_juros_pagos": [
+     "Juros pagos sobre empréstimos"
     ]
    },
    "2021": {
@@ -10622,6 +11856,12 @@
     "linhas_capex": [
      "Compra de ativo imobilizado",
      "Compra de ativo intangível"
+    ],
+    "linhas_arrendamento": [
+     "Encargos contratuais Leasing IFRS 16 - Principal"
+    ],
+    "linhas_juros_pagos": [
+     "Juros pagos sobre empréstimos"
     ]
    },
    "2022": {
@@ -10632,7 +11872,11 @@
     "linhas_capex": [
      "Compra de ativo imobilizado",
      "Compra de ativo intangível"
-    ]
+    ],
+    "linhas_arrendamento": [
+     "Encargos contratuais Leasing IFRS 16 - Principal"
+    ],
+    "linhas_juros_pagos": []
    },
    "2023": {
     "linhas_da": [
@@ -10642,6 +11886,13 @@
     "linhas_capex": [
      "Compra de ativo imobilizado",
      "Compra de ativo intangível"
+    ],
+    "linhas_arrendamento": [
+     "Encargos contratuais Leasing IFRS 16 - Principal"
+    ],
+    "linhas_juros_pagos": [
+     "Juros pagos sobre empréstimos",
+     "Juros pagos sobre debêntures"
     ]
    },
    "2024": {
@@ -10652,6 +11903,13 @@
     "linhas_capex": [
      "Compra de ativo imobilizado",
      "Compra de ativo intangível"
+    ],
+    "linhas_arrendamento": [
+     "Encargos contratuais Leasing IFRS 16 - Principal"
+    ],
+    "linhas_juros_pagos": [
+     "Juros pagos sobre empréstimos",
+     "Juros pagos sobre debêntures"
     ]
    },
    "2025": {
@@ -10661,6 +11919,13 @@
     ],
     "linhas_capex": [
      "Compra de ativo imobilizado"
+    ],
+    "linhas_arrendamento": [
+     "Encargos contratuais Leasing IFRS 16 - Principal"
+    ],
+    "linhas_juros_pagos": [
+     "Juros pagos sobre empréstimos",
+     "Juros pagos sobre debêntures"
     ]
    }
   },
@@ -10711,7 +11976,9 @@
     "da": null,
     "capex": null,
     "dividendos_pagos": 0.0,
-    "recompra": 0.0
+    "recompra": 0.0,
+    "arrendamento_pago": 0.0,
+    "juros_pagos": 0.0
    },
    "2017": {
     "receita": null,
@@ -10756,7 +12023,9 @@
     "da": null,
     "capex": null,
     "dividendos_pagos": 0.0,
-    "recompra": 0.0
+    "recompra": 0.0,
+    "arrendamento_pago": 0.0,
+    "juros_pagos": 0.0
    },
    "2018": {
     "receita": null,
@@ -10801,7 +12070,9 @@
     "da": null,
     "capex": null,
     "dividendos_pagos": 0.0,
-    "recompra": 0.0
+    "recompra": 0.0,
+    "arrendamento_pago": 0.0,
+    "juros_pagos": 0.0
    },
    "2019": {
     "receita": null,
@@ -10846,7 +12117,9 @@
     "da": null,
     "capex": null,
     "dividendos_pagos": 0.0,
-    "recompra": 0.0
+    "recompra": 0.0,
+    "arrendamento_pago": 0.0,
+    "juros_pagos": 0.0
    },
    "2020": {
     "receita": 787841.0,
@@ -10894,6 +12167,8 @@
     "capex": 227555.0,
     "dividendos_pagos": 0.0,
     "recompra": 140.0,
+    "arrendamento_pago": 24394.0,
+    "juros_pagos": 72008.0,
     "acoes": 83911766.0
    },
    "2021": {
@@ -10942,6 +12217,8 @@
     "capex": 832281.0,
     "dividendos_pagos": 0.0,
     "recompra": 5527.0,
+    "arrendamento_pago": 20901.0,
+    "juros_pagos": 60126.0,
     "acoes": 248374111.0
    },
    "2022": {
@@ -10990,6 +12267,8 @@
     "capex": 1227617.0,
     "dividendos_pagos": 205309.0,
     "recompra": 8403.0,
+    "arrendamento_pago": 16516.0,
+    "juros_pagos": 46111.0,
     "acoes": 292774540.0
    },
    "2023": {
@@ -11038,6 +12317,8 @@
     "capex": 1366449.0,
     "dividendos_pagos": 281943.0,
     "recompra": 0.0,
+    "arrendamento_pago": 38143.0,
+    "juros_pagos": 60439.0,
     "acoes": 293112130.0
    },
    "2024": {
@@ -11086,6 +12367,8 @@
     "capex": 1185407.0,
     "dividendos_pagos": 775976.0,
     "recompra": 0.0,
+    "arrendamento_pago": 33574.0,
+    "juros_pagos": 140901.0,
     "acoes": 293099190.0
    },
    "2025": {
@@ -11134,6 +12417,8 @@
     "capex": 1639363.0,
     "dividendos_pagos": 238158.0,
     "recompra": 0.0,
+    "arrendamento_pago": 36887.0,
+    "juros_pagos": 199683.0,
     "acoes": 292977928.0
    }
   },
@@ -11159,6 +12444,8 @@
    "capex": 1308026.0,
    "dividendos_pagos": 100000.0,
    "recompra": 0.0,
+   "arrendamento_pago": 36547.0,
+   "juros_pagos": 275258.0,
    "vj_biologico": 0.0,
    "impairment": 0.0,
    "impairment_outras": 0.0,
@@ -11199,6 +12486,13 @@
     "linhas_capex": [
      "Adições ao imobilizado",
      "Adições ao intangível"
+    ],
+    "linhas_arrendamento": [
+     "Amortização de arrendamento mercantil - principal"
+    ],
+    "linhas_juros_pagos": [
+     "Juros pagos",
+     "Juros de arrendamento mercantil pago"
     ]
    },
    "2021": {
@@ -11209,6 +12503,13 @@
     ],
     "linhas_capex": [
      "Adições ao imobilizado"
+    ],
+    "linhas_arrendamento": [
+     "Amortização de arrendamento mercantil - principal"
+    ],
+    "linhas_juros_pagos": [
+     "Juros pagos",
+     "Juros de arrendamento mercantil pago"
     ]
    },
    "2022": {
@@ -11218,6 +12519,13 @@
     ],
     "linhas_capex": [
      "Adições ao imobilizado e intangível"
+    ],
+    "linhas_arrendamento": [
+     "Amortização de arrendamento mercantil - principal"
+    ],
+    "linhas_juros_pagos": [
+     "Juros pagos",
+     "Juros de arrendamento mercantil pago"
     ]
    },
    "2023": {
@@ -11227,6 +12535,12 @@
     ],
     "linhas_capex": [
      "Adições ao imobilizado e intangível"
+    ],
+    "linhas_arrendamento": [
+     "Amortização de arrendamento mercantil - principal"
+    ],
+    "linhas_juros_pagos": [
+     "Juros pagos"
     ]
    },
    "2024": {
@@ -11235,6 +12549,12 @@
     ],
     "linhas_capex": [
      "Adições ao imobilizado e intangível"
+    ],
+    "linhas_arrendamento": [
+     "Amortização de arrendamento mercantil - principal"
+    ],
+    "linhas_juros_pagos": [
+     "Juros pagos"
     ]
    },
    "2025": {
@@ -11243,6 +12563,12 @@
     ],
     "linhas_capex": [
      "Adições ao imobilizado e intangível"
+    ],
+    "linhas_arrendamento": [
+     "Amortização de arrendamento mercantil - principal"
+    ],
+    "linhas_juros_pagos": [
+     "Juros pagos"
     ]
    }
   },
@@ -11295,7 +12621,9 @@
     "da": 1116119.0,
     "capex": 1666370.0,
     "dividendos_pagos": 873270.0,
-    "recompra": 0.0
+    "recompra": 0.0,
+    "arrendamento_pago": 5016.0,
+    "juros_pagos": 1057580.0
    },
    "2017": {
     "receita": 80007422.0,
@@ -11342,7 +12670,9 @@
     "da": 1189085.0,
     "capex": 2064529.0,
     "dividendos_pagos": 940250.0,
-    "recompra": 0.0
+    "recompra": 0.0,
+    "arrendamento_pago": 5191.0,
+    "juros_pagos": 769740.0
    },
    "2018": {
     "receita": 90697983.0,
@@ -11389,7 +12719,9 @@
     "da": 828210.0,
     "capex": 1415905.0,
     "dividendos_pagos": 808603.0,
-    "recompra": 0.0
+    "recompra": 0.0,
+    "arrendamento_pago": 5120.0,
+    "juros_pagos": 737564.0
    },
    "2019": {
     "receita": 89297975.0,
@@ -11436,7 +12768,9 @@
     "da": 1159623.0,
     "capex": 1172039.0,
     "dividendos_pagos": 596436.0,
-    "recompra": 0.0
+    "recompra": 0.0,
+    "arrendamento_pago": 321716.0,
+    "juros_pagos": 1469780.0
    },
    "2020": {
     "receita": 81241102.0,
@@ -11484,6 +12818,8 @@
     "capex": 1150814.0,
     "dividendos_pagos": 284767.0,
     "recompra": 0.0,
+    "arrendamento_pago": 360787.0,
+    "juros_pagos": 740853.0,
     "acoes": 1090266086.0
    },
    "2021": {
@@ -11532,6 +12868,8 @@
     "capex": 1265907.0,
     "dividendos_pagos": 705753.0,
     "recompra": 0.0,
+    "arrendamento_pago": 304975.0,
+    "juros_pagos": 749058.0,
     "acoes": 1091351290.0
    },
    "2022": {
@@ -11580,6 +12918,8 @@
     "capex": 1206836.0,
     "dividendos_pagos": 638280.0,
     "recompra": 0.0,
+    "arrendamento_pago": 351011.0,
+    "juros_pagos": 1405097.0,
     "acoes": 1095198524.0
    },
    "2023": {
@@ -11628,6 +12968,8 @@
     "capex": 1287330.0,
     "dividendos_pagos": 400025.0,
     "recompra": 0.0,
+    "arrendamento_pago": 213527.0,
+    "juros_pagos": 1413033.0,
     "acoes": 1099017051.0
    },
    "2024": {
@@ -11676,6 +13018,8 @@
     "capex": 1787175.0,
     "dividendos_pagos": 833658.0,
     "recompra": 148945.0,
+    "arrendamento_pago": 285404.0,
+    "juros_pagos": 1265646.0,
     "acoes": 1096156032.0
    },
    "2025": {
@@ -11724,6 +13068,8 @@
     "capex": 2005243.0,
     "dividendos_pagos": 2172132.0,
     "recompra": 266954.0,
+    "arrendamento_pago": 0.0,
+    "juros_pagos": 1899251.0,
     "acoes": 1087307868.0
    }
   },
@@ -11749,6 +13095,8 @@
    "capex": 1924648.0,
    "dividendos_pagos": 1684456.0,
    "recompra": 37236.0,
+   "arrendamento_pago": -133374.0,
+   "juros_pagos": 2475988.0,
    "vj_biologico": 0.0,
    "impairment": 0.0,
    "impairment_outras": 0.0,
@@ -11784,6 +13132,12 @@
     "linhas_capex": [
      "Aquisição de Imobilizado",
      "Aquisição de Intangível"
+    ],
+    "linhas_arrendamento": [
+     "Contraprestação de Arrendamento Mercantil"
+    ],
+    "linhas_juros_pagos": [
+     "Financiamentos e Debêntures - Juros Pagos"
     ]
    },
    "2017": {
@@ -11794,6 +13148,12 @@
     "linhas_capex": [
      "Aquisição de Imobilizado",
      "Aquisição de Intangível"
+    ],
+    "linhas_arrendamento": [
+     "Contraprestação de Arrendamento Mercantil"
+    ],
+    "linhas_juros_pagos": [
+     "Financiamentos e Debêntures - Juros Pagos"
     ]
    },
    "2018": {
@@ -11804,6 +13164,12 @@
     "linhas_capex": [
      "Aquisição de imobilizado",
      "Aquisição de intangível"
+    ],
+    "linhas_arrendamento": [
+     "Contraprestação de Arrendamento Mercantil"
+    ],
+    "linhas_juros_pagos": [
+     "Financiamentos e Debêntures - Juros Pagos"
     ]
    },
    "2019": {
@@ -11815,6 +13181,12 @@
     "linhas_capex": [
      "Aquisição de imobilizado",
      "Aquisição de intangível"
+    ],
+    "linhas_arrendamento": [
+     "Contraprestação de Arrendamento Mercantil"
+    ],
+    "linhas_juros_pagos": [
+     "Financiamentos e Debêntures - Juros Pagos"
     ]
    },
    "2020": {
@@ -11826,6 +13198,12 @@
     "linhas_capex": [
      "Aquisição de imobilizado",
      "Aquisição de intangível"
+    ],
+    "linhas_arrendamento": [
+     "Contraprestação de Arrendamento Mercantil"
+    ],
+    "linhas_juros_pagos": [
+     "Financiamentos e Debêntures - Juros Pagos"
     ]
    },
    "2021": {
@@ -11837,6 +13215,13 @@
     "linhas_capex": [
      "Aquisição de imobilizado",
      "Aquisição de intangível"
+    ],
+    "linhas_arrendamento": [
+     "Pagamentos de arrendamentos Principal"
+    ],
+    "linhas_juros_pagos": [
+     "Financiamentos e Debêntures - Juros Pagos",
+     "Pagamentos de arrendamentos Juros Pagos"
     ]
    },
    "2022": {
@@ -11848,6 +13233,13 @@
     "linhas_capex": [
      "Aquisição de imobilizado",
      "Aquisição de intangível"
+    ],
+    "linhas_arrendamento": [
+     "Pagamentos de arrendamentos Principal"
+    ],
+    "linhas_juros_pagos": [
+     "Financiamentos e Debêntures - Juros Pagos",
+     "Pagamentos de arrendamentos Juros Pagos"
     ]
    },
    "2023": {
@@ -11859,6 +13251,13 @@
     "linhas_capex": [
      "Aquisição de imobilizado",
      "Aquisição de intangível"
+    ],
+    "linhas_arrendamento": [
+     "Pagamentos de arrendamentos Principal"
+    ],
+    "linhas_juros_pagos": [
+     "Empréstimos, Financiamentos e Debêntures - Juros e Derivativos Pagos",
+     "Pagamentos de arrendamentos Juros Pagos"
     ]
    },
    "2024": {
@@ -11869,6 +13268,13 @@
     ],
     "linhas_capex": [
      "Aquisição de imobilizado e intangível"
+    ],
+    "linhas_arrendamento": [
+     "Pagamentos de arrendamentos Principal"
+    ],
+    "linhas_juros_pagos": [
+     "Empréstimos, Financiamentos e Debêntures - Juros e Derivativos Pagos",
+     "Pagamentos de arrendamentos Juros Pagos"
     ]
    },
    "2025": {
@@ -11879,6 +13285,10 @@
     ],
     "linhas_capex": [
      "Aquisição de imobilizado e intangível"
+    ],
+    "linhas_arrendamento": [],
+    "linhas_juros_pagos": [
+     "Empréstimos, Financiamentos e Debêntures - Juros e Derivativos Pagos"
     ]
    }
   },
@@ -11931,7 +13341,9 @@
     "da": 454000.0,
     "capex": 402000.0,
     "dividendos_pagos": 684000.0,
-    "recompra": 0.0
+    "recompra": 0.0,
+    "arrendamento_pago": 0.0,
+    "juros_pagos": 1875000.0
    },
    "2017": {
     "receita": 84567000.0,
@@ -11978,7 +13390,9 @@
     "da": 452000.0,
     "capex": 298000.0,
     "dividendos_pagos": 683000.0,
-    "recompra": 0.0
+    "recompra": 0.0,
+    "arrendamento_pago": 0.0,
+    "juros_pagos": 1541000.0
    },
    "2018": {
     "receita": 97770000.0,
@@ -12025,7 +13439,9 @@
     "da": 417000.0,
     "capex": 430000.0,
     "dividendos_pagos": 1034000.0,
-    "recompra": 0.0
+    "recompra": 0.0,
+    "arrendamento_pago": 0.0,
+    "juros_pagos": 320000.0
    },
    "2019": {
     "receita": 94985000.0,
@@ -12072,7 +13488,9 @@
     "da": 528000.0,
     "capex": 595000.0,
     "dividendos_pagos": 3049000.0,
-    "recompra": 0.0
+    "recompra": 0.0,
+    "arrendamento_pago": 110000.0,
+    "juros_pagos": 438000.0
    },
    "2020": {
     "receita": 81501000.0,
@@ -12120,6 +13538,8 @@
     "capex": 606000.0,
     "dividendos_pagos": 1080000.0,
     "recompra": 0.0,
+    "arrendamento_pago": 95000.0,
+    "juros_pagos": 367000.0,
     "acoes": 1165000.0
    },
    "2021": {
@@ -12168,6 +13588,8 @@
     "capex": 584000.0,
     "dividendos_pagos": 2761000.0,
     "recompra": 916000.0,
+    "arrendamento_pago": 218000.0,
+    "juros_pagos": 351000.0,
     "acoes": 1127610.0
    },
    "2022": {
@@ -12216,6 +13638,8 @@
     "capex": 727000.0,
     "dividendos_pagos": 490000.0,
     "recompra": 234000.0,
+    "arrendamento_pago": 126000.0,
+    "juros_pagos": 943000.0,
     "acoes": 1114904.0
    },
    "2023": {
@@ -12264,6 +13688,8 @@
     "capex": 742000.0,
     "dividendos_pagos": 401000.0,
     "recompra": 0.0,
+    "arrendamento_pago": 130000.0,
+    "juros_pagos": 1447000.0,
     "acoes": 1114960.0
    },
    "2024": {
@@ -12312,6 +13738,8 @@
     "capex": 1134000.0,
     "dividendos_pagos": 1528000.0,
     "recompra": 29000.0,
+    "arrendamento_pago": 93000.0,
+    "juros_pagos": 1314000.0,
     "acoes": 1114511.0
    },
    "2025": {
@@ -12360,6 +13788,8 @@
     "capex": 1452000.0,
     "dividendos_pagos": 1547000.0,
     "recompra": 47000.0,
+    "arrendamento_pago": 116000.0,
+    "juros_pagos": 2613000.0,
     "acoes": 1191974.0
    }
   },
@@ -12385,6 +13815,8 @@
    "capex": 1131000.0,
    "dividendos_pagos": 1149000.0,
    "recompra": 0.0,
+   "arrendamento_pago": 130000.0,
+   "juros_pagos": 2953000.0,
    "vj_biologico": 0.0,
    "impairment": 0.0,
    "impairment_outras": 0.0,
@@ -12418,6 +13850,10 @@
     ],
     "linhas_capex": [
      "Adições de imobilizados e intangíveis"
+    ],
+    "linhas_arrendamento": [],
+    "linhas_juros_pagos": [
+     "Amortizações de juros"
     ]
    },
    "2017": {
@@ -12426,6 +13862,10 @@
     ],
     "linhas_capex": [
      "Adições de imobilizados e intangíveis"
+    ],
+    "linhas_arrendamento": [],
+    "linhas_juros_pagos": [
+     "Amortizações de juros"
     ]
    },
    "2018": {
@@ -12434,6 +13874,10 @@
     ],
     "linhas_capex": [
      "Adições de imobilizados e intangíveis"
+    ],
+    "linhas_arrendamento": [],
+    "linhas_juros_pagos": [
+     "Amortizações de juros"
     ]
    },
    "2019": {
@@ -12442,6 +13886,13 @@
     ],
     "linhas_capex": [
      "Adições de imobilizados e intangíveis"
+    ],
+    "linhas_arrendamento": [
+     "Pagamento do principal dos arrendamentos"
+    ],
+    "linhas_juros_pagos": [
+     "Amortizações de juros",
+     "Pagamento dos juros dos arrendamentos"
     ]
    },
    "2020": {
@@ -12450,6 +13901,13 @@
     ],
     "linhas_capex": [
      "Aquisições de imobilizados e intangíveis"
+    ],
+    "linhas_arrendamento": [
+     "Pagamento do principal dos arrendamentos"
+    ],
+    "linhas_juros_pagos": [
+     "Amortizações de juros de financiamentos",
+     "Pagamento dos juros dos arrendamentos"
     ]
    },
    "2021": {
@@ -12458,6 +13916,13 @@
     ],
     "linhas_capex": [
      "Aquisições de imobilizados e intangíveis"
+    ],
+    "linhas_arrendamento": [
+     "Pagamento do principal dos arrendamentos"
+    ],
+    "linhas_juros_pagos": [
+     "Amortizações de juros de financiamentos",
+     "Pagamento dos juros dos arrendamentos"
     ]
    },
    "2022": {
@@ -12466,6 +13931,13 @@
     ],
     "linhas_capex": [
      "Desembolsos por aquisições de imobilizados e intangíveis"
+    ],
+    "linhas_arrendamento": [
+     "Pagamento do principal dos arrendamentos"
+    ],
+    "linhas_juros_pagos": [
+     "Amortizações de juros de financiamentos",
+     "Pagamento dos juros dos arrendamentos"
     ]
    },
    "2023": {
@@ -12474,6 +13946,13 @@
     ],
     "linhas_capex": [
      "Desembolsos por aquisições de imobilizados e intangíveis"
+    ],
+    "linhas_arrendamento": [
+     "Pagamento do principal dos arrendamentos"
+    ],
+    "linhas_juros_pagos": [
+     "Amortizações de juros de financiamentos",
+     "Pagamento dos juros dos arrendamentos"
     ]
    },
    "2024": {
@@ -12482,6 +13961,13 @@
     ],
     "linhas_capex": [
      "Desembolsos por aquisições de imobilizados e intangíveis"
+    ],
+    "linhas_arrendamento": [
+     "Pagamento do principal dos arrendamentos"
+    ],
+    "linhas_juros_pagos": [
+     "Amortizações de juros de financiamentos",
+     "Pagamento dos juros dos arrendamentos"
     ]
    },
    "2025": {
@@ -12490,6 +13976,13 @@
     ],
     "linhas_capex": [
      "Desembolsos por aquisições de imobilizados e intangíveis"
+    ],
+    "linhas_arrendamento": [
+     "Pagamento do principal dos arrendamentos"
+    ],
+    "linhas_juros_pagos": [
+     "Amortizações de juros de financiamentos",
+     "Pagamento dos juros dos arrendamentos"
     ]
    }
   },
@@ -12543,7 +14036,8 @@
     "capex": 104609.0,
     "dividendos_pagos": 86475.0,
     "recompra": 0.0,
-    "arrendamento_pago": 0.0
+    "arrendamento_pago": 0.0,
+    "juros_pagos": 39347.0
    },
    "2017": {
     "receita": 2264443.0,
@@ -12591,7 +14085,8 @@
     "capex": 91269.0,
     "dividendos_pagos": 75085.0,
     "recompra": 0.0,
-    "arrendamento_pago": 0.0
+    "arrendamento_pago": 0.0,
+    "juros_pagos": 38280.0
    },
    "2018": {
     "receita": 2591654.0,
@@ -12639,7 +14134,8 @@
     "capex": 90548.0,
     "dividendos_pagos": 229890.0,
     "recompra": 0.0,
-    "arrendamento_pago": 0.0
+    "arrendamento_pago": 0.0,
+    "juros_pagos": 8773.0
    },
    "2019": {
     "receita": 2526238.0,
@@ -12687,7 +14183,8 @@
     "capex": 93465.0,
     "dividendos_pagos": 276136.0,
     "recompra": 0.0,
-    "arrendamento_pago": 0.0
+    "arrendamento_pago": 0.0,
+    "juros_pagos": 12563.0
    },
    "2020": {
     "receita": 2402578.0,
@@ -12736,6 +14233,7 @@
     "dividendos_pagos": 20947.0,
     "recompra": 0.0,
     "arrendamento_pago": 0.0,
+    "juros_pagos": 13034.0,
     "acoes": 128308500.0
    },
    "2021": {
@@ -12785,6 +14283,7 @@
     "dividendos_pagos": 117910.0,
     "recompra": 0.0,
     "arrendamento_pago": 0.0,
+    "juros_pagos": 25236.0,
     "acoes": 128308500.0
    },
    "2022": {
@@ -12834,6 +14333,7 @@
     "dividendos_pagos": 543741.0,
     "recompra": 0.0,
     "arrendamento_pago": 0.0,
+    "juros_pagos": 6632.0,
     "acoes": 128308500.0
    },
    "2023": {
@@ -12883,6 +14383,7 @@
     "dividendos_pagos": 1344601.0,
     "recompra": 0.0,
     "arrendamento_pago": 0.0,
+    "juros_pagos": 12178.0,
     "acoes": 135539000.0
    },
    "2024": {
@@ -12932,6 +14433,7 @@
     "dividendos_pagos": 318290.0,
     "recompra": 0.0,
     "arrendamento_pago": 0.0,
+    "juros_pagos": 47769.0,
     "acoes": 135539000.0
    },
    "2025": {
@@ -12981,6 +14483,7 @@
     "dividendos_pagos": 366906.0,
     "recompra": 0.0,
     "arrendamento_pago": 0.0,
+    "juros_pagos": 41382.0,
     "acoes": 135539000.0
    }
   },
@@ -13007,6 +14510,7 @@
    "dividendos_pagos": 386160.0,
    "recompra": 0.0,
    "arrendamento_pago": 0.0,
+   "juros_pagos": 78904.0,
    "vj_biologico": 0.0,
    "impairment": 0.0,
    "impairment_outras": 0.0,
@@ -13042,7 +14546,10 @@
      "Adições ao imobilizado",
      "Adições ao intangível"
     ],
-    "linhas_arrendamento": []
+    "linhas_arrendamento": [],
+    "linhas_juros_pagos": [
+     "Amortizações de juros de financiamentos"
+    ]
    },
    "2017": {
     "linhas_da": [
@@ -13052,7 +14559,10 @@
      "Adições ao imobilizado",
      "Adições ao intangível"
     ],
-    "linhas_arrendamento": []
+    "linhas_arrendamento": [],
+    "linhas_juros_pagos": [
+     "Amortizações de juros de financiamentos"
+    ]
    },
    "2018": {
     "linhas_da": [
@@ -13062,7 +14572,10 @@
      "Adições ao imobilizado",
      "Adições ao intangível"
     ],
-    "linhas_arrendamento": []
+    "linhas_arrendamento": [],
+    "linhas_juros_pagos": [
+     "Amortizações de juros de financiamentos"
+    ]
    },
    "2019": {
     "linhas_da": [
@@ -13072,7 +14585,10 @@
      "Adições ao imobilizado",
      "Adições ao intangível"
     ],
-    "linhas_arrendamento": []
+    "linhas_arrendamento": [],
+    "linhas_juros_pagos": [
+     "Amortizações de juros de financiamentos"
+    ]
    },
    "2020": {
     "linhas_da": [
@@ -13082,7 +14598,10 @@
      "Adições ao imobilizado",
      "Adições ao intangível"
     ],
-    "linhas_arrendamento": []
+    "linhas_arrendamento": [],
+    "linhas_juros_pagos": [
+     "Amortizações de juros de financiamentos"
+    ]
    },
    "2021": {
     "linhas_da": [
@@ -13092,7 +14611,10 @@
      "Adições ao imobilizado",
      "Adições ao intangível"
     ],
-    "linhas_arrendamento": []
+    "linhas_arrendamento": [],
+    "linhas_juros_pagos": [
+     "Amortizações de juros de financiamentos"
+    ]
    },
    "2022": {
     "linhas_da": [
@@ -13102,7 +14624,10 @@
      "Adições ao imobilizado",
      "Adições ao intangível"
     ],
-    "linhas_arrendamento": []
+    "linhas_arrendamento": [],
+    "linhas_juros_pagos": [
+     "Amortizações de juros de financiamentos"
+    ]
    },
    "2023": {
     "linhas_da": [
@@ -13112,7 +14637,10 @@
      "Adições ao imobilizado",
      "Adições ao intangível"
     ],
-    "linhas_arrendamento": []
+    "linhas_arrendamento": [],
+    "linhas_juros_pagos": [
+     "Amortizações de juros de financiamentos"
+    ]
    },
    "2024": {
     "linhas_da": [
@@ -13122,7 +14650,10 @@
      "Adições ao imobilizado",
      "Adições ao intangível"
     ],
-    "linhas_arrendamento": []
+    "linhas_arrendamento": [],
+    "linhas_juros_pagos": [
+     "Amortizações de juros de financiamentos"
+    ]
    },
    "2025": {
     "linhas_da": [
@@ -13132,7 +14663,10 @@
      "Adições ao imobilizado",
      "Adições ao intangível"
     ],
-    "linhas_arrendamento": []
+    "linhas_arrendamento": [],
+    "linhas_juros_pagos": [
+     "Amortizações de juros de financiamentos"
+    ]
    }
   },
   "acoes_por_unit": 1
@@ -13184,7 +14718,9 @@
     "da": 630246.0,
     "capex": 1175583.0,
     "dividendos_pagos": 1164012.0,
-    "recompra": 0.0
+    "recompra": 0.0,
+    "arrendamento_pago": 0.0,
+    "juros_pagos": 316595.0
    },
    "2017": {
     "receita": 7009957.0,
@@ -13231,7 +14767,9 @@
     "da": 648947.0,
     "capex": 2956348.0,
     "dividendos_pagos": 838621.0,
-    "recompra": 0.0
+    "recompra": 0.0,
+    "arrendamento_pago": 0.0,
+    "juros_pagos": 243844.0
    },
    "2018": {
     "receita": 8794792.0,
@@ -13278,7 +14816,9 @@
     "da": 660172.0,
     "capex": 3305514.0,
     "dividendos_pagos": 1989966.0,
-    "recompra": 0.0
+    "recompra": 0.0,
+    "arrendamento_pago": 0.0,
+    "juros_pagos": 485754.0
    },
    "2019": {
     "receita": 9804478.0,
@@ -13325,7 +14865,9 @@
     "da": 863343.0,
     "capex": 1165832.0,
     "dividendos_pagos": 2260825.0,
-    "recompra": 0.0
+    "recompra": 0.0,
+    "arrendamento_pago": 16743.0,
+    "juros_pagos": 579734.0
    },
    "2020": {
     "receita": 12259159.0,
@@ -13373,6 +14915,8 @@
     "capex": 1020131.0,
     "dividendos_pagos": 1240918.0,
     "recompra": 0.0,
+    "arrendamento_pago": 20362.0,
+    "juros_pagos": 605487.0,
     "acoes": 815927740.0
    },
    "2021": {
@@ -13421,6 +14965,8 @@
     "capex": 1229753.0,
     "dividendos_pagos": 2792602.0,
     "recompra": 0.0,
+    "arrendamento_pago": 19172.0,
+    "juros_pagos": 808247.0,
     "acoes": 815927740.0
    },
    "2022": {
@@ -13469,6 +15015,8 @@
     "capex": 1528874.0,
     "dividendos_pagos": 2286031.0,
     "recompra": 0.0,
+    "arrendamento_pago": 0.0,
+    "juros_pagos": 1065683.0,
     "acoes": 815927740.0
    },
    "2023": {
@@ -13517,6 +15065,8 @@
     "capex": 2565799.0,
     "dividendos_pagos": 2379596.0,
     "recompra": 0.0,
+    "arrendamento_pago": 0.0,
+    "juros_pagos": 1120734.0,
     "acoes": 815927740.0
    },
    "2024": {
@@ -13565,6 +15115,8 @@
     "capex": 6646060.0,
     "dividendos_pagos": 1133999.0,
     "recompra": 0.0,
+    "arrendamento_pago": 0.0,
+    "juros_pagos": 1377917.0,
     "acoes": 815927740.0
    },
    "2025": {
@@ -13613,6 +15165,8 @@
     "capex": 1752248.0,
     "dividendos_pagos": 2741349.0,
     "recompra": 0.0,
+    "arrendamento_pago": 0.0,
+    "juros_pagos": 1642118.0,
     "acoes": 1142298836.0
    }
   },
@@ -13638,6 +15192,8 @@
    "capex": 673373.0,
    "dividendos_pagos": 2396701.0,
    "recompra": 0.0,
+   "arrendamento_pago": 0.0,
+   "juros_pagos": 1791692.0,
    "vj_biologico": 0.0,
    "impairment": 0.0,
    "impairment_outras": 0.0,
@@ -13672,6 +15228,10 @@
     "linhas_capex": [
      "Aplicação no imobilizado",
      "Aplicação no intangível"
+    ],
+    "linhas_arrendamento": [],
+    "linhas_juros_pagos": [
+     "Pagamento de juros sobre dívidas, líquido de hedge"
     ]
    },
    "2017": {
@@ -13681,6 +15241,10 @@
     "linhas_capex": [
      "Aplicação no imobilizado",
      "Aplicação no intangível"
+    ],
+    "linhas_arrendamento": [],
+    "linhas_juros_pagos": [
+     "Pagamento de juros sobre dívidas, líquido de hedge"
     ]
    },
    "2018": {
@@ -13689,6 +15253,10 @@
     ],
     "linhas_capex": [
      "Aplicação no imobilizado e intangível"
+    ],
+    "linhas_arrendamento": [],
+    "linhas_juros_pagos": [
+     "Pagamento de juros sobre dívidas, líquido de hedge"
     ]
    },
    "2019": {
@@ -13697,6 +15265,12 @@
     ],
     "linhas_capex": [
      "Aplicação no imobilizado e intangível"
+    ],
+    "linhas_arrendamento": [
+     "Pagamento de arrendamentos"
+    ],
+    "linhas_juros_pagos": [
+     "Pagamento de juros sobre dívidas, líquido de hedge"
     ]
    },
    "2020": {
@@ -13705,6 +15279,12 @@
     ],
     "linhas_capex": [
      "Aplicação no imobilizado e no  intangível"
+    ],
+    "linhas_arrendamento": [
+     "Pagamento de arrendamentos"
+    ],
+    "linhas_juros_pagos": [
+     "Pagamento de juros sobre dívidas, líquido de hedge"
     ]
    },
    "2021": {
@@ -13713,6 +15293,12 @@
     ],
     "linhas_capex": [
      "Aplicação no imobilizado e no intangível"
+    ],
+    "linhas_arrendamento": [
+     "Pagamento de arrendamentos"
+    ],
+    "linhas_juros_pagos": [
+     "Pagamento de juros sobre dívidas, líquido de hedge"
     ]
    },
    "2022": {
@@ -13721,6 +15307,10 @@
     ],
     "linhas_capex": [
      "Aplicação no imobilizado e no intangível"
+    ],
+    "linhas_arrendamento": [],
+    "linhas_juros_pagos": [
+     "Pagamento de juros sobre dívidas, líquido de hedge"
     ]
    },
    "2023": {
@@ -13729,6 +15319,10 @@
     ],
     "linhas_capex": [
      "Aplicação no imobilizado e no intangível"
+    ],
+    "linhas_arrendamento": [],
+    "linhas_juros_pagos": [
+     "Pagamento de juros sobre dívidas, líquido de hedge"
     ]
    },
    "2024": {
@@ -13737,6 +15331,10 @@
     ],
     "linhas_capex": [
      "Aplicação no imobilizado e no intangível"
+    ],
+    "linhas_arrendamento": [],
+    "linhas_juros_pagos": [
+     "Pagamento de juros sobre dívidas, líquido de hedge"
     ]
    },
    "2025": {
@@ -13745,6 +15343,10 @@
     ],
     "linhas_capex": [
      "Aplicação no imobilizado e no intangível"
+    ],
+    "linhas_arrendamento": [],
+    "linhas_juros_pagos": [
+     "Pagamento de juros sobre dívidas, líquido de hedge"
     ]
    }
   },
@@ -13797,7 +15399,9 @@
     "da": 109611.0,
     "capex": 39754.0,
     "dividendos_pagos": 23838.0,
-    "recompra": 0.0
+    "recompra": 0.0,
+    "arrendamento_pago": 0.0,
+    "juros_pagos": 82574.0
    },
    "2017": {
     "receita": 3019592.0,
@@ -13844,7 +15448,9 @@
     "da": 145102.0,
     "capex": 151844.0,
     "dividendos_pagos": 387365.0,
-    "recompra": 0.0
+    "recompra": 0.0,
+    "arrendamento_pago": 0.0,
+    "juros_pagos": 109583.0
    },
    "2018": {
     "receita": 3469133.0,
@@ -13891,7 +15497,9 @@
     "da": 176374.0,
     "capex": 200931.0,
     "dividendos_pagos": 206961.0,
-    "recompra": 18342.0
+    "recompra": 18342.0,
+    "arrendamento_pago": 0.0,
+    "juros_pagos": 135521.0
    },
    "2019": {
     "receita": 3048730.0,
@@ -13938,7 +15546,9 @@
     "da": 183082.0,
     "capex": 159422.0,
     "dividendos_pagos": 24985.0,
-    "recompra": 112429.0
+    "recompra": 112429.0,
+    "arrendamento_pago": 0.0,
+    "juros_pagos": 223890.0
    },
    "2020": {
     "receita": 3868223.0,
@@ -13986,6 +15596,8 @@
     "capex": 132264.0,
     "dividendos_pagos": 110562.0,
     "recompra": 144201.0,
+    "arrendamento_pago": 0.0,
+    "juros_pagos": 68743.0,
     "acoes": 94407.0
    },
    "2021": {
@@ -14034,6 +15646,8 @@
     "capex": 266310.0,
     "dividendos_pagos": 1365042.0,
     "recompra": 248.0,
+    "arrendamento_pago": 0.0,
+    "juros_pagos": 75525.0,
     "acoes": 94402772.0
    },
    "2022": {
@@ -14082,6 +15696,8 @@
     "capex": 268492.0,
     "dividendos_pagos": 1355350.0,
     "recompra": 43824.0,
+    "arrendamento_pago": 0.0,
+    "juros_pagos": 145724.0,
     "acoes": 103499066.0
    },
    "2023": {
@@ -14130,6 +15746,8 @@
     "capex": 412374.0,
     "dividendos_pagos": 345392.0,
     "recompra": 1582.0,
+    "arrendamento_pago": 190.0,
+    "juros_pagos": 153984.0,
     "acoes": 103164839.0
    },
    "2024": {
@@ -14178,6 +15796,8 @@
     "capex": 670902.0,
     "dividendos_pagos": 438648.0,
     "recompra": 62223.0,
+    "arrendamento_pago": 1240.0,
+    "juros_pagos": 354643.0,
     "acoes": 112722841.0
    },
    "2025": {
@@ -14226,6 +15846,8 @@
     "capex": 1075968.0,
     "dividendos_pagos": 1319692.0,
     "recompra": 62748.0,
+    "arrendamento_pago": 1681.0,
+    "juros_pagos": 382599.0,
     "acoes": 111622153.0
    }
   },
@@ -14251,6 +15873,8 @@
    "capex": 854221.0,
    "dividendos_pagos": 1075393.0,
    "recompra": 10040.0,
+   "arrendamento_pago": 1488.0,
+   "juros_pagos": 399845.0,
    "vj_biologico": 0.0,
    "impairment": 0.0,
    "impairment_outras": 0.0,
@@ -14286,6 +15910,10 @@
     ],
     "linhas_capex": [
      "Compras de Imobilizado e Intangível"
+    ],
+    "linhas_arrendamento": [],
+    "linhas_juros_pagos": [
+     "Pagamento de Juros e Outros Encargos"
     ]
    },
    "2017": {
@@ -14296,6 +15924,10 @@
     ],
     "linhas_capex": [
      "Compras de Imobilizado e Intangível"
+    ],
+    "linhas_arrendamento": [],
+    "linhas_juros_pagos": [
+     "Pagamento de Juros e Outros Encargos sobre Empréstimos"
     ]
    },
    "2018": {
@@ -14305,6 +15937,10 @@
     ],
     "linhas_capex": [
      "Compras de Imobilizado e Intangível"
+    ],
+    "linhas_arrendamento": [],
+    "linhas_juros_pagos": [
+     "Pagamento de Juros e Outros Encargos sobre Empréstimos"
     ]
    },
    "2019": {
@@ -14314,6 +15950,10 @@
     ],
     "linhas_capex": [
      "Compras de Imobilizado e Intangível"
+    ],
+    "linhas_arrendamento": [],
+    "linhas_juros_pagos": [
+     "Pagamento de Juros e Outros Encargos sobre Empréstimos"
     ]
    },
    "2020": {
@@ -14323,6 +15963,10 @@
     ],
     "linhas_capex": [
      "Compras de Imobilizado e Intangível"
+    ],
+    "linhas_arrendamento": [],
+    "linhas_juros_pagos": [
+     "Pagamento de Juros e Outros Encargos sobre Empréstimos"
     ]
    },
    "2021": {
@@ -14331,6 +15975,10 @@
     ],
     "linhas_capex": [
      "Compras de Imobilizado e Intangível"
+    ],
+    "linhas_arrendamento": [],
+    "linhas_juros_pagos": [
+     "Pagamento de Juros e Outros Encargos sobre Empréstimos"
     ]
    },
    "2022": {
@@ -14339,6 +15987,10 @@
     ],
     "linhas_capex": [
      "Compras de Imobilizado e Intangível"
+    ],
+    "linhas_arrendamento": [],
+    "linhas_juros_pagos": [
+     "Pagamento de Juros e Outros Encargos sobre Empréstimos"
     ]
    },
    "2023": {
@@ -14348,6 +16000,13 @@
     ],
     "linhas_capex": [
      "Compras de Imobilizado e Intangível"
+    ],
+    "linhas_arrendamento": [
+     "Pagamento de arrendamentos por direito de uso"
+    ],
+    "linhas_juros_pagos": [
+     "Pagamento de Juros e Outros Encargos sobre Empréstimos",
+     "Pagamento de juros - arrendamento por direito de uso"
     ]
    },
    "2024": {
@@ -14357,6 +16016,13 @@
     ],
     "linhas_capex": [
      "Compras de Imobilizado e Intangível"
+    ],
+    "linhas_arrendamento": [
+     "Pagamento de principal -  arrendamento por direito de uso"
+    ],
+    "linhas_juros_pagos": [
+     "Pagamento de Juros e Outros Encargos sobre Empréstimos",
+     "Pagamento de juros - arrendamento por direito de uso"
     ]
    },
    "2025": {
@@ -14366,6 +16032,13 @@
     ],
     "linhas_capex": [
      "Compras de Imobilizado e Intangível"
+    ],
+    "linhas_arrendamento": [
+     "Pagamento de principal -  arrendamento por direito de uso"
+    ],
+    "linhas_juros_pagos": [
+     "Pagamento de Juros e Outros Encargos sobre Empréstimos",
+     "Pagamento de juros - arrendamento por direito de uso"
     ]
    }
   },
@@ -14418,7 +16091,9 @@
     "da": 2535955.0,
     "capex": 1377935.0,
     "dividendos_pagos": 85962.0,
-    "recompra": 0.0
+    "recompra": 0.0,
+    "arrendamento_pago": 0.0,
+    "juros_pagos": 1240165.0
    },
    "2017": {
     "receita": 36917619.0,
@@ -14465,7 +16140,9 @@
     "da": 2092551.0,
     "capex": 911268.0,
     "dividendos_pagos": 86386.0,
-    "recompra": 0.0
+    "recompra": 0.0,
+    "arrendamento_pago": 0.0,
+    "juros_pagos": 1330116.0
    },
    "2018": {
     "receita": 46159478.0,
@@ -14512,7 +16189,9 @@
     "da": 1891814.0,
     "capex": 1262322.0,
     "dividendos_pagos": 599099.0,
-    "recompra": 0.0
+    "recompra": 0.0,
+    "arrendamento_pago": 0.0,
+    "juros_pagos": 1162364.0
    },
    "2019": {
     "receita": 39644010.0,
@@ -14559,7 +16238,9 @@
     "da": 2074295.0,
     "capex": 1846913.0,
     "dividendos_pagos": 484173.0,
-    "recompra": 0.0
+    "recompra": 0.0,
+    "arrendamento_pago": 161824.0,
+    "juros_pagos": 945027.0
    },
    "2020": {
     "receita": 43814661.0,
@@ -14607,6 +16288,8 @@
     "capex": 1805028.0,
     "dividendos_pagos": 274815.0,
     "recompra": 0.0,
+    "arrendamento_pago": 247914.0,
+    "juros_pagos": 1141708.0,
     "acoes": 1701161432.0
    },
    "2021": {
@@ -14655,6 +16338,8 @@
     "capex": 3192333.0,
     "dividendos_pagos": 5339426.0,
     "recompra": 0.0,
+    "arrendamento_pago": 275854.0,
+    "juros_pagos": 1169615.0,
     "acoes": 1705746846.0
    },
    "2022": {
@@ -14703,6 +16388,8 @@
     "capex": 4481255.0,
     "dividendos_pagos": 5891690.0,
     "recompra": 0.0,
+    "arrendamento_pago": 310226.0,
+    "juros_pagos": 1057221.0,
     "acoes": 1663560340.0
    },
    "2023": {
@@ -14751,6 +16438,8 @@
     "capex": 5336323.0,
     "dividendos_pagos": 2683328.0,
     "recompra": 0.0,
+    "arrendamento_pago": 388202.0,
+    "juros_pagos": 986088.0,
     "acoes": 1749522409.0
    },
    "2024": {
@@ -14799,6 +16488,8 @@
     "capex": 5946417.0,
     "dividendos_pagos": 1656414.0,
     "recompra": 0.0,
+    "arrendamento_pago": 459504.0,
+    "juros_pagos": 1076073.0,
     "acoes": 2041293481.0
    },
    "2025": {
@@ -14847,6 +16538,8 @@
     "capex": 6852841.0,
     "dividendos_pagos": 1285673.0,
     "recompra": 0.0,
+    "arrendamento_pago": 487784.0,
+    "juros_pagos": 1583468.0,
     "acoes": 1975143891.0
    }
   },
@@ -14872,6 +16565,8 @@
    "capex": 5587991.0,
    "dividendos_pagos": 1372327.0,
    "recompra": 0.0,
+   "arrendamento_pago": 497421.0,
+   "juros_pagos": 1670773.0,
    "vj_biologico": 0.0,
    "impairment": -1964504.0,
    "impairment_outras": 0.0,
@@ -14906,6 +16601,10 @@
     "linhas_capex": [
      "Adições de imobilizado",
      "Adições de outros ativos intangíveis"
+    ],
+    "linhas_arrendamento": [],
+    "linhas_juros_pagos": [
+     "Pagamento de juros de empréstimos e financiamentos"
     ]
    },
    "2017": {
@@ -14915,6 +16614,10 @@
     "linhas_capex": [
      "Adições de imobilizado",
      "Adições de outros ativos intangíveis"
+    ],
+    "linhas_arrendamento": [],
+    "linhas_juros_pagos": [
+     "Pagamento de juros de empréstimos e financiamentos"
     ]
    },
    "2018": {
@@ -14924,6 +16627,10 @@
     "linhas_capex": [
      "Adições de imobilizado",
      "Adições de outros ativos intangíveis"
+    ],
+    "linhas_arrendamento": [],
+    "linhas_juros_pagos": [
+     "Pagamento de juros de empréstimos e financiamentos"
     ]
    },
    "2019": {
@@ -14933,6 +16640,12 @@
     "linhas_capex": [
      "Adições de imobilizado",
      "Adições de outros ativos intangíveis"
+    ],
+    "linhas_arrendamento": [
+     "Pagamento de arrendamento mecantil"
+    ],
+    "linhas_juros_pagos": [
+     "Pagamento de juros de empréstimos e financiamentos"
     ]
    },
    "2020": {
@@ -14942,6 +16655,13 @@
     "linhas_capex": [
      "Adições de imobilizado",
      "Adições de outros ativos intangíveis"
+    ],
+    "linhas_arrendamento": [
+     "Pagamento de arrendamento mecantil"
+    ],
+    "linhas_juros_pagos": [
+     "Pagamento de juros de empréstimos e financiamentos",
+     "Pagamento de juros de arrendamento mercantil"
     ]
    },
    "2021": {
@@ -14951,6 +16671,13 @@
     "linhas_capex": [
      "Adições de imobilizado",
      "Adições de outros ativos intangíveis"
+    ],
+    "linhas_arrendamento": [
+     "Pagamento de arrendamento mecantil"
+    ],
+    "linhas_juros_pagos": [
+     "Pagamento de juros de empréstimos e financiamentos",
+     "Pagamento de juros de arrendamento mercantil"
     ]
    },
    "2022": {
@@ -14960,6 +16687,13 @@
     "linhas_capex": [
      "Adições de imobilizado",
      "Adições de outros ativos intangíveis"
+    ],
+    "linhas_arrendamento": [
+     "Pagamento de arrendamento mecantil"
+    ],
+    "linhas_juros_pagos": [
+     "Pagamento de juros de empréstimos e financiamentos",
+     "Pagamento de juros de arrendamento mercantil"
     ]
    },
    "2023": {
@@ -14969,6 +16703,13 @@
     "linhas_capex": [
      "Adições de imobilizado",
      "Adições de outros ativos intangíveis"
+    ],
+    "linhas_arrendamento": [
+     "Pagamento de arrendamento mecantil"
+    ],
+    "linhas_juros_pagos": [
+     "Pagamento de juros de empréstimos e financiamentos",
+     "Pagamento de juros de arrendamento mercantil"
     ]
    },
    "2024": {
@@ -14978,6 +16719,13 @@
     "linhas_capex": [
      "Adições de imobilizado",
      "Adições de outros ativos intangíveis"
+    ],
+    "linhas_arrendamento": [
+     "Pagamento de arrendamento mecantil"
+    ],
+    "linhas_juros_pagos": [
+     "Pagamento de juros de empréstimos e financiamentos",
+     "Pagamento de juros de arrendamento mercantil"
     ]
    },
    "2025": {
@@ -14987,6 +16735,13 @@
     "linhas_capex": [
      "Adições de imobilizado",
      "Adições de outros ativos intangíveis"
+    ],
+    "linhas_arrendamento": [
+     "Pagamento de arrendamento mecantil"
+    ],
+    "linhas_juros_pagos": [
+     "Pagamento de juros de empréstimos e financiamentos",
+     "Pagamento de juros de arrendamento mercantil"
     ]
    }
   },
@@ -15040,7 +16795,8 @@
     "capex": 4502397.0,
     "dividendos_pagos": 460309.0,
     "recompra": 0.0,
-    "arrendamento_pago": 0.0
+    "arrendamento_pago": 0.0,
+    "juros_pagos": 0.0
    },
    "2017": {
     "receita": 16233959.0,
@@ -15088,7 +16844,8 @@
     "capex": 4147907.0,
     "dividendos_pagos": 332658.0,
     "recompra": 0.0,
-    "arrendamento_pago": 0.0
+    "arrendamento_pago": 0.0,
+    "juros_pagos": 0.0
    },
    "2018": {
     "receita": 16981329.0,
@@ -15136,7 +16893,8 @@
     "capex": 3831906.0,
     "dividendos_pagos": 588247.0,
     "recompra": 0.0,
-    "arrendamento_pago": 0.0
+    "arrendamento_pago": 0.0,
+    "juros_pagos": 0.0
    },
    "2019": {
     "receita": 17377194.0,
@@ -15184,7 +16942,8 @@
     "capex": 3853484.0,
     "dividendos_pagos": 770139.0,
     "recompra": 0.0,
-    "arrendamento_pago": 800621.0
+    "arrendamento_pago": 800621.0,
+    "juros_pagos": 881740.0
    },
    "2020": {
     "receita": 17267812.0,
@@ -15233,6 +16992,7 @@
     "dividendos_pagos": 1153054.0,
     "recompra": 0.0,
     "arrendamento_pago": 927903.0,
+    "juros_pagos": 867034.0,
     "acoes": 2420406967.0
    },
    "2021": {
@@ -15282,6 +17042,7 @@
     "dividendos_pagos": 1042976.0,
     "recompra": 0.0,
     "arrendamento_pago": 0.0,
+    "juros_pagos": 911880.0,
     "acoes": 2420406141.0
    },
    "2022": {
@@ -15331,6 +17092,7 @@
     "dividendos_pagos": 1199201.0,
     "recompra": 0.0,
     "arrendamento_pago": 1566344.0,
+    "juros_pagos": 1461784.0,
     "acoes": 2420816645.0
    },
    "2023": {
@@ -15380,6 +17142,7 @@
     "dividendos_pagos": 2174929.0,
     "recompra": 0.0,
     "arrendamento_pago": 1812508.0,
+    "juros_pagos": 1626064.0,
     "acoes": 2420599036.0
    },
    "2024": {
@@ -15429,6 +17192,7 @@
     "dividendos_pagos": 2720095.0,
     "recompra": 0.0,
     "arrendamento_pago": 1838667.0,
+    "juros_pagos": 1603726.0,
     "acoes": 2420603078.0
    },
    "2025": {
@@ -15478,6 +17242,7 @@
     "dividendos_pagos": 5360083.0,
     "recompra": 0.0,
     "arrendamento_pago": 1563393.0,
+    "juros_pagos": 1752794.0,
     "acoes": 2388668322.0
    }
   },
@@ -15503,6 +17268,7 @@
    "dividendos_pagos": 5365114.0,
    "recompra": 0.0,
    "arrendamento_pago": 1541103.0,
+   "juros_pagos": 1917800.0,
    "vj_biologico": 0.0,
    "impairment": 0.0,
    "impairment_outras": 0.0,
@@ -15537,7 +17303,8 @@
     "linhas_capex": [
      "Adições ao imobilizado e intangível"
     ],
-    "linhas_arrendamento": []
+    "linhas_arrendamento": [],
+    "linhas_juros_pagos": []
    },
    "2017": {
     "linhas_da": [
@@ -15546,7 +17313,8 @@
     "linhas_capex": [
      "Adições ao imobilizado e intangível"
     ],
-    "linhas_arrendamento": []
+    "linhas_arrendamento": [],
+    "linhas_juros_pagos": []
    },
    "2018": {
     "linhas_da": [
@@ -15555,7 +17323,8 @@
     "linhas_capex": [
      "Adições ao imobilizado e intangível"
     ],
-    "linhas_arrendamento": []
+    "linhas_arrendamento": [],
+    "linhas_juros_pagos": []
    },
    "2019": {
     "linhas_da": [
@@ -15566,6 +17335,10 @@
     ],
     "linhas_arrendamento": [
      "Pagamento de arrendamento mercantil financeiro"
+    ],
+    "linhas_juros_pagos": [
+     "Juros pagos - Empréstimos",
+     "Juros pagos - Arrendamento mercantil"
     ]
    },
    "2020": {
@@ -15577,6 +17350,10 @@
     ],
     "linhas_arrendamento": [
      "Pagamento de arrendamento mercantil"
+    ],
+    "linhas_juros_pagos": [
+     "Juros pagos - Empréstimos",
+     "Juros pagos - Arrendamento mercantil"
     ]
    },
    "2021": {
@@ -15586,7 +17363,11 @@
     "linhas_capex": [
      "Adições ao imobilizado e intangível. Efeitos da aquisição 5G sem impacto no caixa, vide nota 40."
     ],
-    "linhas_arrendamento": []
+    "linhas_arrendamento": [],
+    "linhas_juros_pagos": [
+     "Juros pagos - Empréstimos",
+     "Juros pagos - Arrendamento"
+    ]
    },
    "2022": {
     "linhas_da": [
@@ -15597,6 +17378,10 @@
     ],
     "linhas_arrendamento": [
      "Pagamento de arrendamento"
+    ],
+    "linhas_juros_pagos": [
+     "Juros pagos - Empréstimos",
+     "Juros pagos sobre passivo de arrendamento"
     ]
    },
    "2023": {
@@ -15608,6 +17393,10 @@
     ],
     "linhas_arrendamento": [
      "Pagamento de passivo de arrendamento"
+    ],
+    "linhas_juros_pagos": [
+     "Juros pagos - Empréstimos",
+     "Juros pagos sobre passivo de arrendamento"
     ]
    },
    "2024": {
@@ -15619,6 +17408,10 @@
     ],
     "linhas_arrendamento": [
      "Pagamento de passivo de arrendamento"
+    ],
+    "linhas_juros_pagos": [
+     "Juros pagos - Empréstimos",
+     "Juros pagos sobre passivo de arrendamento"
     ]
    },
    "2025": {
@@ -15630,6 +17423,10 @@
     ],
     "linhas_arrendamento": [
      "Pagamento de passivo de arrendamento"
+    ],
+    "linhas_juros_pagos": [
+     "Juros pagos - Empréstimos",
+     "Juros pagos sobre passivo de arrendamento"
     ]
    }
   },
@@ -15683,7 +17480,8 @@
     "capex": 7470869.0,
     "dividendos_pagos": 2966384.0,
     "recompra": 0.0,
-    "arrendamento_pago": 0.0
+    "arrendamento_pago": 0.0,
+    "juros_pagos": 926223.0
    },
    "2017": {
     "receita": 43206832.0,
@@ -15731,7 +17529,8 @@
     "capex": 8367660.0,
     "dividendos_pagos": 3668551.0,
     "recompra": 0.0,
-    "arrendamento_pago": 0.0
+    "arrendamento_pago": 0.0,
+    "juros_pagos": 859586.0
    },
    "2018": {
     "receita": 43462740.0,
@@ -15779,7 +17578,8 @@
     "capex": 8517458.0,
     "dividendos_pagos": 4136878.0,
     "recompra": 0.0,
-    "arrendamento_pago": 0.0
+    "arrendamento_pago": 0.0,
+    "juros_pagos": 494931.0
    },
    "2019": {
     "receita": 44268171.0,
@@ -15827,7 +17627,8 @@
     "capex": 8838641.0,
     "dividendos_pagos": 6176842.0,
     "recompra": 0.0,
-    "arrendamento_pago": 0.0
+    "arrendamento_pago": 0.0,
+    "juros_pagos": 746986.0
    },
    "2020": {
     "receita": 43126472.0,
@@ -15876,6 +17677,7 @@
     "dividendos_pagos": 5259367.0,
     "recompra": 0.0,
     "arrendamento_pago": 0.0,
+    "juros_pagos": 781092.0,
     "acoes": 1688174.0
    },
    "2021": {
@@ -15925,6 +17727,7 @@
     "dividendos_pagos": 4901326.0,
     "recompra": 0.0,
     "arrendamento_pago": 0.0,
+    "juros_pagos": 853805.0,
     "acoes": 1676938.0
    },
    "2022": {
@@ -15974,6 +17777,7 @@
     "dividendos_pagos": 5709263.0,
     "recompra": 0.0,
     "arrendamento_pago": 0.0,
+    "juros_pagos": 1531511.0,
     "acoes": 1663556731.0
    },
    "2023": {
@@ -16023,6 +17827,7 @@
     "dividendos_pagos": 3832612.0,
     "recompra": 488758.0,
     "arrendamento_pago": 0.0,
+    "juros_pagos": 2054278.0,
     "acoes": 1652584004.0
    },
    "2024": {
@@ -16072,6 +17877,7 @@
     "dividendos_pagos": 2532399.0,
     "recompra": 1299583.0,
     "arrendamento_pago": 0.0,
+    "juros_pagos": 2078021.0,
     "acoes": 1626682604.0
    },
    "2025": {
@@ -16121,6 +17927,7 @@
     "dividendos_pagos": 2187402.0,
     "recompra": 1746480.0,
     "arrendamento_pago": 0.0,
+    "juros_pagos": 2308755.0,
     "acoes": 3195606352.0
    }
   },
@@ -16147,6 +17954,7 @@
    "dividendos_pagos": 2821298.0,
    "recompra": 2205200.0,
    "arrendamento_pago": 0.0,
+   "juros_pagos": 2439857.0,
    "vj_biologico": 0.0,
    "impairment": 0.0,
    "impairment_outras": 0.0,
@@ -16181,7 +17989,10 @@
     "linhas_capex": [
      "Aquisições de Imobilizado e Intangível"
     ],
-    "linhas_arrendamento": []
+    "linhas_arrendamento": [],
+    "linhas_juros_pagos": [
+     "Juros Pagos"
+    ]
    },
    "2017": {
     "linhas_da": [
@@ -16190,7 +18001,10 @@
     "linhas_capex": [
      "Aquisições de Imobilizado e Intangível"
     ],
-    "linhas_arrendamento": []
+    "linhas_arrendamento": [],
+    "linhas_juros_pagos": [
+     "Juros Pagos"
+    ]
    },
    "2018": {
     "linhas_da": [
@@ -16199,7 +18013,10 @@
     "linhas_capex": [
      "Aquisições de Imobilizado e Intangível"
     ],
-    "linhas_arrendamento": []
+    "linhas_arrendamento": [],
+    "linhas_juros_pagos": [
+     "Juros Pagos"
+    ]
    },
    "2019": {
     "linhas_da": [
@@ -16208,7 +18025,10 @@
     "linhas_capex": [
      "Aquisições de Imobilizado e Intangível"
     ],
-    "linhas_arrendamento": []
+    "linhas_arrendamento": [],
+    "linhas_juros_pagos": [
+     "Juros Pagos"
+    ]
    },
    "2020": {
     "linhas_da": [
@@ -16217,7 +18037,10 @@
     "linhas_capex": [
      "Aquisições de Imobilizado e Intangível"
     ],
-    "linhas_arrendamento": []
+    "linhas_arrendamento": [],
+    "linhas_juros_pagos": [
+     "Juros Pagos"
+    ]
    },
    "2021": {
     "linhas_da": [
@@ -16226,7 +18049,10 @@
     "linhas_capex": [
      "Aquisições de Imobilizado e Intangível"
     ],
-    "linhas_arrendamento": []
+    "linhas_arrendamento": [],
+    "linhas_juros_pagos": [
+     "Juros Pagos de Empréstimos, Financiamentos, Debêntures, Arrendamentos e Licenças 5G"
+    ]
    },
    "2022": {
     "linhas_da": [
@@ -16235,7 +18061,10 @@
     "linhas_capex": [
      "Aquisições de Imobilizado e Intangível"
     ],
-    "linhas_arrendamento": []
+    "linhas_arrendamento": [],
+    "linhas_juros_pagos": [
+     "Juros Pagos de e Empréstimos, Financiamentos, Debêntures, Arrendamentos, Licenças 5G  e Contrapresta"
+    ]
    },
    "2023": {
     "linhas_da": [
@@ -16244,7 +18073,10 @@
     "linhas_capex": [
      "Aquisições de Imobilizado e Intangível"
     ],
-    "linhas_arrendamento": []
+    "linhas_arrendamento": [],
+    "linhas_juros_pagos": [
+     "Pagamentos de Juros de Empréstimos e Financiamentos, Debêntures, Arrendamentos e Outros Credores"
+    ]
    },
    "2024": {
     "linhas_da": [
@@ -16253,7 +18085,10 @@
     "linhas_capex": [
      "Aquisições de Imobilizado e Intangível"
     ],
-    "linhas_arrendamento": []
+    "linhas_arrendamento": [],
+    "linhas_juros_pagos": [
+     "Juros Pagos de Empréstimos, Financiamentos, Debêntures e Arrendamentos"
+    ]
    },
    "2025": {
     "linhas_da": [
@@ -16262,7 +18097,10 @@
     "linhas_capex": [
      "Aquisições de Imobilizado e Intangível"
     ],
-    "linhas_arrendamento": []
+    "linhas_arrendamento": [],
+    "linhas_juros_pagos": [
+     "Juros Pagos de Empréstimos, Financiamentos, Debêntures e Arrendamentos"
+    ]
    }
   },
   "acoes_por_unit": 1
@@ -16315,7 +18153,8 @@
     "capex": 183984.0,
     "dividendos_pagos": 384387.0,
     "recompra": 0.0,
-    "arrendamento_pago": 0.0
+    "arrendamento_pago": 0.0,
+    "juros_pagos": 128018.0
    },
    "2017": {
     "receita": 2383012.0,
@@ -16363,7 +18202,8 @@
     "capex": 295589.0,
     "dividendos_pagos": 130071.0,
     "recompra": 0.0,
-    "arrendamento_pago": 0.0
+    "arrendamento_pago": 0.0,
+    "juros_pagos": 92045.0
    },
    "2018": {
     "receita": 2664463.0,
@@ -16411,7 +18251,8 @@
     "capex": 326343.0,
     "dividendos_pagos": 303210.0,
     "recompra": 0.0,
-    "arrendamento_pago": 0.0
+    "arrendamento_pago": 0.0,
+    "juros_pagos": 82515.0
    },
    "2019": {
     "receita": 2905107.0,
@@ -16459,7 +18300,8 @@
     "capex": 207856.0,
     "dividendos_pagos": 307466.0,
     "recompra": 0.0,
-    "arrendamento_pago": 162270.0
+    "arrendamento_pago": 162270.0,
+    "juros_pagos": 74030.0
    },
    "2020": {
     "receita": 2971616.0,
@@ -16508,6 +18350,7 @@
     "dividendos_pagos": 228929.0,
     "recompra": 0.0,
     "arrendamento_pago": 173350.0,
+    "juros_pagos": 63470.0,
     "acoes": 317166103.0
    },
    "2021": {
@@ -16557,6 +18400,7 @@
     "dividendos_pagos": 296141.0,
     "recompra": 0.0,
     "arrendamento_pago": 193142.0,
+    "juros_pagos": 91627.0,
     "acoes": 316968763.0
    },
    "2022": {
@@ -16606,6 +18450,7 @@
     "dividendos_pagos": 337201.0,
     "recompra": 0.0,
     "arrendamento_pago": 234538.0,
+    "juros_pagos": 270088.0,
     "acoes": 366403973.0
    },
    "2023": {
@@ -16655,6 +18500,7 @@
     "dividendos_pagos": 510109.0,
     "recompra": 0.0,
     "arrendamento_pago": 354670.0,
+    "juros_pagos": 351343.0,
     "acoes": 545040937.0
    },
    "2024": {
@@ -16704,6 +18550,7 @@
     "dividendos_pagos": 343362.0,
     "recompra": 0.0,
     "arrendamento_pago": 402139.0,
+    "juros_pagos": 411188.0,
     "acoes": 544279739.0
    },
    "2025": {
@@ -16753,6 +18600,7 @@
     "dividendos_pagos": 513055.0,
     "recompra": 0.0,
     "arrendamento_pago": 432618.0,
+    "juros_pagos": 562446.0,
     "acoes": 545015471.0
    }
   },
@@ -16779,6 +18627,7 @@
    "dividendos_pagos": 482298.0,
    "recompra": 0.0,
    "arrendamento_pago": 441419.0,
+   "juros_pagos": 618917.0,
    "vj_biologico": 0.0,
    "impairment": 0.0,
    "impairment_outras": 0.0,
@@ -16813,7 +18662,10 @@
     "linhas_capex": [
      "Adições ao Ativo Imobilizado e Sistemas de Informática"
     ],
-    "linhas_arrendamento": []
+    "linhas_arrendamento": [],
+    "linhas_juros_pagos": [
+     "Juros pagos de Empréstimos e Debentures"
+    ]
    },
    "2017": {
     "linhas_da": [
@@ -16822,7 +18674,10 @@
     "linhas_capex": [
      "Aquisição de ativo Imobilizado e intangível"
     ],
-    "linhas_arrendamento": []
+    "linhas_arrendamento": [],
+    "linhas_juros_pagos": [
+     "Juros pagos de financiamentos e debêntures"
+    ]
    },
    "2018": {
     "linhas_da": [
@@ -16831,7 +18686,10 @@
     "linhas_capex": [
      "Aquisição de ativo imobilizado e intangível"
     ],
-    "linhas_arrendamento": []
+    "linhas_arrendamento": [],
+    "linhas_juros_pagos": [
+     "Juros pagos de financiamentos e debêntures"
+    ]
    },
    "2019": {
     "linhas_da": [
@@ -16842,6 +18700,9 @@
     ],
     "linhas_arrendamento": [
      "Pagamento de Arrendamento Mercantil"
+    ],
+    "linhas_juros_pagos": [
+     "Juros pagos de financiamentos e debêntures"
     ]
    },
    "2020": {
@@ -16853,6 +18714,9 @@
     ],
     "linhas_arrendamento": [
      "Pagamento de Arrendamento Mercantil"
+    ],
+    "linhas_juros_pagos": [
+     "Juros pagos de financiamentos e debêntures"
     ]
    },
    "2021": {
@@ -16864,6 +18728,9 @@
     ],
     "linhas_arrendamento": [
      "Pagamento de Arrendamento Mercantil"
+    ],
+    "linhas_juros_pagos": [
+     "Juros pagos de financiamentos e debêntures"
     ]
    },
    "2022": {
@@ -16875,6 +18742,9 @@
     ],
     "linhas_arrendamento": [
      "Pagamento de Arrendamento Mercantil"
+    ],
+    "linhas_juros_pagos": [
+     "Juros pagos de financiamentos e debêntures"
     ]
    },
    "2023": {
@@ -16886,6 +18756,9 @@
     ],
     "linhas_arrendamento": [
      "Pagamento de Arrendamento Mercantil"
+    ],
+    "linhas_juros_pagos": [
+     "Juros pagos de financiamentos e debêntures"
     ]
    },
    "2024": {
@@ -16897,6 +18770,9 @@
     ],
     "linhas_arrendamento": [
      "Pagamento de Arrendamento Mercantil"
+    ],
+    "linhas_juros_pagos": [
+     "Juros pagos de financiamentos e debêntures"
     ]
    },
    "2025": {
@@ -16908,6 +18784,9 @@
     ],
     "linhas_arrendamento": [
      "Pagamento de Arrendamento Mercantil"
+    ],
+    "linhas_juros_pagos": [
+     "Juros pagos de financiamentos e debêntures"
     ]
    }
   },
@@ -16961,7 +18840,8 @@
     "capex": 214102.0,
     "dividendos_pagos": 316108.0,
     "recompra": 0.0,
-    "arrendamento_pago": 0.0
+    "arrendamento_pago": 0.0,
+    "juros_pagos": 420028.0
    },
    "2017": {
     "receita": 3638458.0,
@@ -17009,7 +18889,8 @@
     "capex": 211864.0,
     "dividendos_pagos": 409827.0,
     "recompra": 0.0,
-    "arrendamento_pago": 0.0
+    "arrendamento_pago": 0.0,
+    "juros_pagos": 119294.0
    },
    "2018": {
     "receita": 3724309.0,
@@ -17057,7 +18938,8 @@
     "capex": 218923.0,
     "dividendos_pagos": 632995.0,
     "recompra": 0.0,
-    "arrendamento_pago": 0.0
+    "arrendamento_pago": 0.0,
+    "juros_pagos": 40767.0
    },
    "2019": {
     "receita": 3294749.0,
@@ -17105,7 +18987,8 @@
     "capex": 361626.0,
     "dividendos_pagos": 623422.0,
     "recompra": 0.0,
-    "arrendamento_pago": 0.0
+    "arrendamento_pago": 0.0,
+    "juros_pagos": 27970.0
    },
    "2020": {
     "receita": 4088871.0,
@@ -17154,6 +19037,7 @@
     "dividendos_pagos": 682474.0,
     "recompra": 0.0,
     "arrendamento_pago": 0.0,
+    "juros_pagos": 166037.0,
     "acoes": 633411347.0
    },
    "2021": {
@@ -17203,6 +19087,7 @@
     "dividendos_pagos": 745936.0,
     "recompra": 0.0,
     "arrendamento_pago": 0.0,
+    "juros_pagos": 308417.0,
     "acoes": 630721581.0
    },
    "2022": {
@@ -17252,6 +19137,7 @@
     "dividendos_pagos": 806208.0,
     "recompra": 0.0,
     "arrendamento_pago": 0.0,
+    "juros_pagos": 867238.0,
     "acoes": 631897472.0
    },
    "2023": {
@@ -17301,6 +19187,7 @@
     "dividendos_pagos": 759885.0,
     "recompra": 0.0,
     "arrendamento_pago": 0.0,
+    "juros_pagos": 1306450.0,
     "acoes": 632908520.0
    },
    "2024": {
@@ -17350,6 +19237,7 @@
     "dividendos_pagos": 787286.0,
     "recompra": 0.0,
     "arrendamento_pago": 0.0,
+    "juros_pagos": 1195001.0,
     "acoes": 632697269.0
    },
    "2025": {
@@ -17399,6 +19287,7 @@
     "dividendos_pagos": 627785.0,
     "recompra": 0.0,
     "arrendamento_pago": 0.0,
+    "juros_pagos": 1147369.0,
     "acoes": 632953512.0
    }
   },
@@ -17425,6 +19314,7 @@
    "dividendos_pagos": 750393.0,
    "recompra": 0.0,
    "arrendamento_pago": 0.0,
+   "juros_pagos": 1333764.0,
    "vj_biologico": 0.0,
    "impairment": 0.0,
    "impairment_outras": 0.0,
@@ -17460,7 +19350,10 @@
      "Compra de Ativo Imobilizado",
      "Compra de Intangíveis"
     ],
-    "linhas_arrendamento": []
+    "linhas_arrendamento": [],
+    "linhas_juros_pagos": [
+     "Pagamento por Empréstimos - Juros"
+    ]
    },
    "2017": {
     "linhas_da": [
@@ -17470,7 +19363,10 @@
      "Compra de Ativo Imobilizado",
      "Compra de Intangíveis"
     ],
-    "linhas_arrendamento": []
+    "linhas_arrendamento": [],
+    "linhas_juros_pagos": [
+     "Pagamento por Empréstimos - Juros"
+    ]
    },
    "2018": {
     "linhas_da": [
@@ -17480,7 +19376,10 @@
      "Compra de Ativo Imobilizado",
      "Compra de Intangíveis"
     ],
-    "linhas_arrendamento": []
+    "linhas_arrendamento": [],
+    "linhas_juros_pagos": [
+     "Pagamento por Empréstimos - Juros"
+    ]
    },
    "2019": {
     "linhas_da": [
@@ -17490,7 +19389,10 @@
      "Compra de Ativo Imobilizado",
      "Compra de Intangíveis"
     ],
-    "linhas_arrendamento": []
+    "linhas_arrendamento": [],
+    "linhas_juros_pagos": [
+     "Pagamento por Empréstimos - Juros"
+    ]
    },
    "2020": {
     "linhas_da": [
@@ -17500,7 +19402,10 @@
      "Compra de Ativo Imobilizado",
      "Compra de Intangíveis"
     ],
-    "linhas_arrendamento": []
+    "linhas_arrendamento": [],
+    "linhas_juros_pagos": [
+     "Pagamento por Empréstimos - Juros"
+    ]
    },
    "2021": {
     "linhas_da": [
@@ -17510,7 +19415,10 @@
      "Compra de Ativo Imobilizado",
      "Compra de Intangíveis"
     ],
-    "linhas_arrendamento": []
+    "linhas_arrendamento": [],
+    "linhas_juros_pagos": [
+     "Pagamento por Empréstimos - Juros"
+    ]
    },
    "2022": {
     "linhas_da": [
@@ -17520,7 +19428,10 @@
      "Compra de Ativo Imobilizado",
      "Compra de Intangíveis"
     ],
-    "linhas_arrendamento": []
+    "linhas_arrendamento": [],
+    "linhas_juros_pagos": [
+     "Pagamento por Empréstimos - Juros"
+    ]
    },
    "2023": {
     "linhas_da": [
@@ -17530,7 +19441,10 @@
      "Compra de Ativo Imobilizado",
      "Compra de Intangíveis"
     ],
-    "linhas_arrendamento": []
+    "linhas_arrendamento": [],
+    "linhas_juros_pagos": [
+     "Pagamento por Empréstimos - Juros"
+    ]
    },
    "2024": {
     "linhas_da": [
@@ -17540,7 +19454,10 @@
      "Compra de Ativo Imobilizado",
      "Compra/desenvolvimento de Intangíves"
     ],
-    "linhas_arrendamento": []
+    "linhas_arrendamento": [],
+    "linhas_juros_pagos": [
+     "Pagamento por Empréstimos - Juros"
+    ]
    },
    "2025": {
     "linhas_da": [
@@ -17550,7 +19467,10 @@
      "Compra de Ativo Imobilizado",
      "Compra/desenvolvimento de Intangíves"
     ],
-    "linhas_arrendamento": []
+    "linhas_arrendamento": [],
+    "linhas_juros_pagos": [
+     "Pagamento por Empréstimos - Juros"
+    ]
    }
   },
   "acoes_por_unit": 1
@@ -17603,7 +19523,8 @@
     "capex": 4132671.0,
     "dividendos_pagos": 10330601.0,
     "recompra": 0.0,
-    "arrendamento_pago": 2908.0
+    "arrendamento_pago": 2908.0,
+    "juros_pagos": 724873.0
    },
    "2017": {
     "receita": 47899276.0,
@@ -17651,7 +19572,8 @@
     "capex": 3203709.0,
     "dividendos_pagos": 8819754.0,
     "recompra": 38614.0,
-    "arrendamento_pago": 9035.0
+    "arrendamento_pago": 9035.0,
+    "juros_pagos": 557305.0
    },
    "2018": {
     "receita": 50231336.0,
@@ -17699,7 +19621,8 @@
     "capex": 3570957.0,
     "dividendos_pagos": 8814129.0,
     "recompra": 0.0,
-    "arrendamento_pago": 13104.0
+    "arrendamento_pago": 13104.0,
+    "juros_pagos": 621879.0
    },
    "2019": {
     "receita": 52599709.0,
@@ -17747,7 +19670,8 @@
     "capex": 5069405.0,
     "dividendos_pagos": 7871338.0,
     "recompra": 32044.0,
-    "arrendamento_pago": 537167.0
+    "arrendamento_pago": 537167.0,
+    "juros_pagos": 405114.0
    },
    "2020": {
     "receita": 58378995.0,
@@ -17796,6 +19720,7 @@
     "dividendos_pagos": 6850271.0,
     "recompra": 7395.0,
     "arrendamento_pago": 498485.0,
+    "juros_pagos": 768785.0,
     "acoes": 15734915.0
    },
    "2021": {
@@ -17845,6 +19770,7 @@
     "dividendos_pagos": 11115251.0,
     "recompra": 44165.0,
     "arrendamento_pago": 663205.0,
+    "juros_pagos": 498243.0,
     "acoes": 15738669.0
    },
    "2022": {
@@ -17894,6 +19820,7 @@
     "dividendos_pagos": 12242324.0,
     "recompra": 54082.0,
     "arrendamento_pago": 854740.0,
+    "juros_pagos": 826340.0,
     "acoes": 15741735.0
    },
    "2023": {
@@ -17943,6 +19870,7 @@
     "dividendos_pagos": 11921949.0,
     "recompra": 118989.0,
     "arrendamento_pago": 1180098.0,
+    "juros_pagos": 666119.0,
     "acoes": 15749449.0
    },
    "2024": {
@@ -17992,6 +19920,7 @@
     "dividendos_pagos": 4056383.0,
     "recompra": 467624.0,
     "arrendamento_pago": 1330676.0,
+    "juros_pagos": 742058.0,
     "acoes": 15727850.0
    },
    "2025": {
@@ -18041,6 +19970,7 @@
     "dividendos_pagos": 20463505.0,
     "recompra": 1860765.0,
     "arrendamento_pago": 1152316.0,
+    "juros_pagos": 886883.0,
     "acoes": 15616526.0
    }
   },
@@ -18067,6 +19997,7 @@
    "dividendos_pagos": 12955939.0,
    "recompra": 2682256.0,
    "arrendamento_pago": 1113627.0,
+   "juros_pagos": 863518.0,
    "vj_biologico": 0.0,
    "impairment": 0.0,
    "impairment_outras": 0.0,
@@ -18103,6 +20034,9 @@
     ],
     "linhas_arrendamento": [
      "Pagamento de Passivos de Arrendamento Financeiro"
+    ],
+    "linhas_juros_pagos": [
+     "Juros Pagos"
     ]
    },
    "2017": {
@@ -18114,6 +20048,9 @@
     ],
     "linhas_arrendamento": [
      "Pagamento de Passivos de Arrendamento Financeiro"
+    ],
+    "linhas_juros_pagos": [
+     "Juros Pagos"
     ]
    },
    "2018": {
@@ -18125,6 +20062,9 @@
     ],
     "linhas_arrendamento": [
      "Pagamento de Passivos de Arrendamento Financeiro"
+    ],
+    "linhas_juros_pagos": [
+     "Juros Pagos"
     ]
    },
    "2019": {
@@ -18136,6 +20076,9 @@
     ],
     "linhas_arrendamento": [
      "Pagamento de Passivos de Arrendamento"
+    ],
+    "linhas_juros_pagos": [
+     "Juros Pagos"
     ]
    },
    "2020": {
@@ -18147,6 +20090,9 @@
     ],
     "linhas_arrendamento": [
      "Pagamento de Passivos de Arrendamento"
+    ],
+    "linhas_juros_pagos": [
+     "Juros Pagos"
     ]
    },
    "2021": {
@@ -18158,6 +20104,9 @@
     ],
     "linhas_arrendamento": [
      "Pagamento de Passivos de Arrendamento"
+    ],
+    "linhas_juros_pagos": [
+     "Juros Pagos"
     ]
    },
    "2022": {
@@ -18169,6 +20118,9 @@
     ],
     "linhas_arrendamento": [
      "Pagamento de Passivos de Arrendamento"
+    ],
+    "linhas_juros_pagos": [
+     "Juros Pagos"
     ]
    },
    "2023": {
@@ -18180,6 +20132,9 @@
     ],
     "linhas_arrendamento": [
      "Pagamento de Passivos de Arrendamento"
+    ],
+    "linhas_juros_pagos": [
+     "Juros Pagos"
     ]
    },
    "2024": {
@@ -18191,6 +20146,9 @@
     ],
     "linhas_arrendamento": [
      "Pagamento de Passivos de Arrendamento"
+    ],
+    "linhas_juros_pagos": [
+     "Juros Pagos"
     ]
    },
    "2025": {
@@ -18202,6 +20160,9 @@
     ],
     "linhas_arrendamento": [
      "Pagamento de Passivos de Arrendamento"
+    ],
+    "linhas_juros_pagos": [
+     "Juros Pagos"
     ]
    }
   },
@@ -18255,7 +20216,8 @@
     "capex": 362625.0,
     "dividendos_pagos": 526730.0,
     "recompra": 0.0,
-    "arrendamento_pago": 0.0
+    "arrendamento_pago": 0.0,
+    "juros_pagos": 405540.0
    },
    "2017": {
     "receita": 9523830.0,
@@ -18303,7 +20265,8 @@
     "capex": 265777.0,
     "dividendos_pagos": 548502.0,
     "recompra": 0.0,
-    "arrendamento_pago": 0.0
+    "arrendamento_pago": 0.0,
+    "juros_pagos": 357638.0
    },
    "2018": {
     "receita": 11970090.0,
@@ -18351,7 +20314,8 @@
     "capex": 429403.0,
     "dividendos_pagos": 603957.0,
     "recompra": 0.0,
-    "arrendamento_pago": 0.0
+    "arrendamento_pago": 0.0,
+    "juros_pagos": 91811.0
    },
    "2019": {
     "receita": 13347434.0,
@@ -18399,7 +20363,8 @@
     "capex": 524482.0,
     "dividendos_pagos": 680924.0,
     "recompra": 0.0,
-    "arrendamento_pago": 0.0
+    "arrendamento_pago": 0.0,
+    "juros_pagos": 68008.0
    },
    "2020": {
     "receita": 17469557.0,
@@ -18448,6 +20413,7 @@
     "dividendos_pagos": 881332.0,
     "recompra": 0.0,
     "arrendamento_pago": 0.0,
+    "juros_pagos": 11784.0,
     "acoes": 2097740051.0
    },
    "2021": {
@@ -18497,6 +20463,7 @@
     "dividendos_pagos": 1657345.0,
     "recompra": 0.0,
     "arrendamento_pago": 0.0,
+    "juros_pagos": 52680.0,
     "acoes": 4196011650.0
    },
    "2022": {
@@ -18546,6 +20513,7 @@
     "dividendos_pagos": 1887512.0,
     "recompra": 0.0,
     "arrendamento_pago": 0.0,
+    "juros_pagos": 55867.0,
     "acoes": 4196015406.0
    },
    "2023": {
@@ -18595,6 +20563,7 @@
     "dividendos_pagos": 2308620.0,
     "recompra": 40396.0,
     "arrendamento_pago": 0.0,
+    "juros_pagos": 127655.0,
     "acoes": 4195234302.0
    },
    "2024": {
@@ -18644,6 +20613,7 @@
     "dividendos_pagos": 2934611.0,
     "recompra": 0.0,
     "arrendamento_pago": 0.0,
+    "juros_pagos": 160301.0,
     "acoes": 4195537378.0
    },
    "2025": {
@@ -18693,6 +20663,7 @@
     "dividendos_pagos": 5384769.0,
     "recompra": 0.0,
     "arrendamento_pago": 0.0,
+    "juros_pagos": 177085.0,
     "acoes": 4195695973.0
    }
   },
@@ -18719,6 +20690,7 @@
    "dividendos_pagos": 3581845.0,
    "recompra": 0.0,
    "arrendamento_pago": 0.0,
+   "juros_pagos": 209894.0,
    "vj_biologico": 0.0,
    "impairment": 0.0,
    "impairment_outras": 0.0,
@@ -18754,7 +20726,10 @@
      "Imobilizado",
      "Intangível"
     ],
-    "linhas_arrendamento": []
+    "linhas_arrendamento": [],
+    "linhas_juros_pagos": [
+     "Juros pagos sobre empréstimos e financimamentos"
+    ]
    },
    "2017": {
     "linhas_da": [
@@ -18764,7 +20739,10 @@
      "Imobilizado",
      "Intangível"
     ],
-    "linhas_arrendamento": []
+    "linhas_arrendamento": [],
+    "linhas_juros_pagos": [
+     "Juros pagos sobre empréstimos e financimamentos"
+    ]
    },
    "2018": {
     "linhas_da": [
@@ -18774,7 +20752,10 @@
      "Imobilizado",
      "Intangível"
     ],
-    "linhas_arrendamento": []
+    "linhas_arrendamento": [],
+    "linhas_juros_pagos": [
+     "Juros pagos sobre empréstimos e financimamentos"
+    ]
    },
    "2019": {
     "linhas_da": [
@@ -18784,7 +20765,10 @@
      "Imobilizado",
      "Intangível"
     ],
-    "linhas_arrendamento": []
+    "linhas_arrendamento": [],
+    "linhas_juros_pagos": [
+     "Juros pagos sobre empréstimos e financimamentos"
+    ]
    },
    "2020": {
     "linhas_da": [
@@ -18794,7 +20778,10 @@
      "Imobilizado",
      "Intangível"
     ],
-    "linhas_arrendamento": []
+    "linhas_arrendamento": [],
+    "linhas_juros_pagos": [
+     "Juros pagos sobre empréstimos e financimamentos"
+    ]
    },
    "2021": {
     "linhas_da": [
@@ -18804,7 +20791,10 @@
      "Imobilizado",
      "Intangível"
     ],
-    "linhas_arrendamento": []
+    "linhas_arrendamento": [],
+    "linhas_juros_pagos": [
+     "Juros pagos sobre empréstimos e financimamentos"
+    ]
    },
    "2022": {
     "linhas_da": [
@@ -18814,7 +20804,10 @@
      "Imobilizado",
      "Intangível"
     ],
-    "linhas_arrendamento": []
+    "linhas_arrendamento": [],
+    "linhas_juros_pagos": [
+     "Juros pagos sobre empréstimos e financimamentos"
+    ]
    },
    "2023": {
     "linhas_da": [
@@ -18824,7 +20817,10 @@
      "Imobilizado",
      "Intangível"
     ],
-    "linhas_arrendamento": []
+    "linhas_arrendamento": [],
+    "linhas_juros_pagos": [
+     "Juros pagos sobre empréstimos e financiamentos"
+    ]
    },
    "2024": {
     "linhas_da": [
@@ -18834,7 +20830,10 @@
      "Imobilizado",
      "Intangível"
     ],
-    "linhas_arrendamento": []
+    "linhas_arrendamento": [],
+    "linhas_juros_pagos": [
+     "Juros pagos sobre empréstimos e financiamentos"
+    ]
    },
    "2025": {
     "linhas_da": [
@@ -18844,7 +20843,10 @@
      "Imobilizado",
      "Intangível"
     ],
-    "linhas_arrendamento": []
+    "linhas_arrendamento": [],
+    "linhas_juros_pagos": [
+     "Juros pagos sobre empréstimos e financiamentos"
+    ]
    }
   },
   "acoes_por_unit": 1
@@ -18896,7 +20898,9 @@
     "da": 645000.0,
     "capex": 404000.0,
     "dividendos_pagos": 2900000.0,
-    "recompra": 0.0
+    "recompra": 0.0,
+    "arrendamento_pago": 0.0,
+    "juros_pagos": 331000.0
    },
    "2017": {
     "receita": 4969000.0,
@@ -18943,7 +20947,9 @@
     "da": 592000.0,
     "capex": 399000.0,
     "dividendos_pagos": 3190000.0,
-    "recompra": 449000.0
+    "recompra": 449000.0,
+    "arrendamento_pago": 0.0,
+    "juros_pagos": 338000.0
    },
    "2018": {
     "receita": 5375000.0,
@@ -18990,7 +20996,9 @@
     "da": 825000.0,
     "capex": 464000.0,
     "dividendos_pagos": 6644000.0,
-    "recompra": 30000.0
+    "recompra": 30000.0,
+    "arrendamento_pago": 0.0,
+    "juros_pagos": 341000.0
    },
    "2019": {
     "receita": 5008000.0,
@@ -19037,7 +21045,9 @@
     "da": 726000.0,
     "capex": 476000.0,
     "dividendos_pagos": 10071000.0,
-    "recompra": 0.0
+    "recompra": 0.0,
+    "arrendamento_pago": 74000.0,
+    "juros_pagos": 354000.0
    },
    "2020": {
     "receita": 5880000.0,
@@ -19085,6 +21095,8 @@
     "capex": 496000.0,
     "dividendos_pagos": 4569000.0,
     "recompra": 0.0,
+    "arrendamento_pago": 60000.0,
+    "juros_pagos": 150000.0,
     "acoes": 8410815.0
    },
    "2021": {
@@ -19133,6 +21145,8 @@
     "capex": 870000.0,
     "dividendos_pagos": 3335000.0,
     "recompra": 179000.0,
+    "arrendamento_pago": 67000.0,
+    "juros_pagos": 335000.0,
     "acoes": 8822956.0
    },
    "2022": {
@@ -19181,6 +21195,8 @@
     "capex": 1215000.0,
     "dividendos_pagos": 3851000.0,
     "recompra": 311000.0,
+    "arrendamento_pago": 87000.0,
+    "juros_pagos": 1140000.0,
     "acoes": 9701410.0
    },
    "2023": {
@@ -19229,6 +21245,8 @@
     "capex": 1263000.0,
     "dividendos_pagos": 4561000.0,
     "recompra": 0.0,
+    "arrendamento_pago": 132000.0,
+    "juros_pagos": 1747000.0,
     "acoes": 10328149.0
    },
    "2024": {
@@ -19277,6 +21295,8 @@
     "capex": 1355000.0,
     "dividendos_pagos": 8196000.0,
     "recompra": 33000.0,
+    "arrendamento_pago": 142000.0,
+    "juros_pagos": 1150000.0,
     "acoes": 10841667.0
    },
    "2025": {
@@ -19325,6 +21345,8 @@
     "capex": 931000.0,
     "dividendos_pagos": 18906000.0,
     "recompra": 0.0,
+    "arrendamento_pago": 156000.0,
+    "juros_pagos": 1155000.0,
     "acoes": 11211347.0
    }
   },
@@ -19350,6 +21372,8 @@
    "capex": 927000.0,
    "dividendos_pagos": 12086000.0,
    "recompra": 65000.0,
+   "arrendamento_pago": 168000.0,
+   "juros_pagos": 1254000.0,
    "vj_biologico": 0.0,
    "impairment": 0.0,
    "impairment_outras": 0.0,
@@ -19383,6 +21407,10 @@
     ],
     "linhas_capex": [
      "Aquisição de Imobilizado de Uso, Intangíveis e Ativos Biológicos"
+    ],
+    "linhas_arrendamento": [],
+    "linhas_juros_pagos": [
+     "Juros Pagos sobre Empréstimos e Finaciamentos"
     ]
    },
    "2017": {
@@ -19391,6 +21419,10 @@
     ],
     "linhas_capex": [
      "Aquisição de Imobilizado de Uso, Intagível e Ativos Biológicos"
+    ],
+    "linhas_arrendamento": [],
+    "linhas_juros_pagos": [
+     "Juros Pagos sobre Empréstimos e Financiamentos"
     ]
    },
    "2018": {
@@ -19399,6 +21431,10 @@
     ],
     "linhas_capex": [
      "Aquisição de Imobilizado de Uso, Intangível e Ativos Biológicos"
+    ],
+    "linhas_arrendamento": [],
+    "linhas_juros_pagos": [
+     "Juros Pagos sobre Empréstimos e Financiamentos"
     ]
    },
    "2019": {
@@ -19407,6 +21443,12 @@
     ],
     "linhas_capex": [
      "Aquisição de Imobilizado, Intangível e Ativos biológicos"
+    ],
+    "linhas_arrendamento": [
+     "Amortização de passivos de arrendamento"
+    ],
+    "linhas_juros_pagos": [
+     "Juros pagos sobre Empréstimos, financiamentos e Debêntures"
     ]
    },
    "2020": {
@@ -19415,6 +21457,12 @@
     ],
     "linhas_capex": [
      "Aquisição de Imobilizado, Intangível e Ativos biológicos"
+    ],
+    "linhas_arrendamento": [
+     "Amortização de passivos de arrendamento"
+    ],
+    "linhas_juros_pagos": [
+     "Juros pagos sobre Empréstimos, financiamentos e Debêntures"
     ]
    },
    "2021": {
@@ -19423,6 +21471,12 @@
     ],
     "linhas_capex": [
      "Aquisição de Imobilizado, Intangível e Ativos biológicos"
+    ],
+    "linhas_arrendamento": [
+     "Amortização de passivos de arrendamento"
+    ],
+    "linhas_juros_pagos": [
+     "Juros pagos sobre Empréstimos, financiamentos e Debêntures"
     ]
    },
    "2022": {
@@ -19431,6 +21485,12 @@
     ],
     "linhas_capex": [
      "Aquisição de Imobilizado, Intangível e Ativos biológicos"
+    ],
+    "linhas_arrendamento": [
+     "Amortização de passivos de arrendamento"
+    ],
+    "linhas_juros_pagos": [
+     "Juros pagos sobre Empréstimos, financiamentos e Debêntures"
     ]
    },
    "2023": {
@@ -19439,6 +21499,12 @@
     ],
     "linhas_capex": [
      "Aquisição de Imobilizado, Intangível e Ativos biológicos"
+    ],
+    "linhas_arrendamento": [
+     "Amortização de passivos de arrendamento"
+    ],
+    "linhas_juros_pagos": [
+     "Juros pagos sobre Empréstimos, financiamentos e Debêntures"
     ]
    },
    "2024": {
@@ -19447,6 +21513,12 @@
     ],
     "linhas_capex": [
      "Aquisição de Imobilizado, Intangível e Ativos biológicos"
+    ],
+    "linhas_arrendamento": [
+     "Amortização de passivos de arrendamento"
+    ],
+    "linhas_juros_pagos": [
+     "Juros pagos sobre Empréstimos, financiamentos e Debêntures"
     ]
    },
    "2025": {
@@ -19455,6 +21527,12 @@
     ],
     "linhas_capex": [
      "Aquisição de Imobilizado, Intangível e Ativos biológicos"
+    ],
+    "linhas_arrendamento": [
+     "Amortização de passivos de arrendamento"
+    ],
+    "linhas_juros_pagos": [
+     "Juros pagos sobre Empréstimos, financiamentos e Debêntures"
     ]
    }
   },

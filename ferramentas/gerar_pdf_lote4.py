@@ -496,8 +496,8 @@ def capa(res, rank, story):
                                                  "nome da conta (WEG); aluguel pago da DFC sem juros nem linha mista. Motor (achado do adversário): "
                                                  "reinvestimento do DCF = g real ÷ ROIC real (Fisher); antes dividia pelo ROIC nominal. Efeito nos outros "
                                                  "lotes, sem mudança de palavra: B3SA3 9,23 → 8,90 · KEPL3 6,63 → 6,58 · LEVE3 36,82 → 36,76 (PDFs dos "
-                                                 "Lotes 3 e 6 reemitidos). Pendente em todos os lotes: a cobertura de juros usa a despesa financeira bruta "
-                                                 "(com variação cambial) — subestima a nota de solidez das teles."],
+                                                 "Lotes 3 e 6 reemitidos). Cobertura de juros: desde 06/10 usa os juros pagos da DFC (sem variação cambial); "
+                                                 "sem a linha, cai na despesa bruta."],
            ["Controlador", "Desconto zero nas sete, com a razão escrita em cada ficha (nenhuma interferência consumada)."]]
     story.append(tabela(met, [36 * mm, 146 * mm]))
     story.append(PageBreak())
