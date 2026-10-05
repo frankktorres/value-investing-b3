@@ -1,0 +1,1 @@
+- 2026-10-05 15:19 — Golden inicial: estado dos 6 lotes em 05/10/2026 (doutrina v2.1), antes de propagar defasagem e juros pagos
