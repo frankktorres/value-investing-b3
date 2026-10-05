@@ -1,0 +1,1478 @@
+{
+ "meta": {
+  "extraido_de": [
+   "Energia_Saneamento_rev_03-10-2026.txt (prevalece; data-base 02/10/2026)",
+   "Energia_Saneamento_rev_07-09-2026.txt (métricas Graham/Bazin/EPV/DDM; data-base 05-06/09/2026)"
+  ],
+  "convencao": "null/nao_encontrado = ausente nas duas fontes. [03/10] = PDF 03/10; [07/09] = PDF 07/09. 'premissa_pdf' = premissa/cálculo do PDF, não fato. Valores em R$ salvo indicação.",
+  "premissas_comuns_03_10": {
+   "tesouro_ipca_2050_real": "7,06% (02/10; era 7,28% em 04/09 e 7,35% usado em 07/09) - Tesouro Transparente CSV",
+   "ke_regra_real": "12,06% (IPCA+ + 5 p.p.); era 12,35% - premissa_pdf (regra da mesa)",
+   "regua_vence_rf": ">= 10,06% (IPCA+ + 3 p.p.); Empate entre 7,06% e 10,06%; Nao abaixo de 7,06%",
+   "selic": "13,75% (Copom 16/09, 5o corte); era ~14,25%",
+   "ipca": "IPCA 12m 4,22% (ago); Focus 2026 4,99%, 2027 4,31%; deflator longo 4% (hipótese)",
+   "irrf_jcp": "17,5% (avisos ISA e Cemig); proventos isentos, nova tributação 2026 acima de R$ 50 mil/mês; Tesouro paga 15% IR (~6,0% real líquido)",
+   "preco_data_base": "fechamento 02/10/2026 (Yahoo Finance)",
+   "regua_veredito": "desconto >=30% BARATA; 10-30% RADAR; +-10% JUSTA; premio >15% CARA; ARMADILHA = barata só no múltiplo",
+   "ponderacao_nota": "qualidade 35%, solidez 20%, renda 25%, preço 20%",
+   "eventos_mesa": "Eleição 04/10 (PR, MG, SP); 2o turno 25/10; 3T26 em nov (TAEE11 11/11; CPFE3 e CMIG4 12/11); Cemig Day 25/11",
+   "mudancas_vs_07_09": "CPFE3 JUSTA->RADAR (erro: renovação assinada desde 08/05); CPLE3 JUSTA(para CARA)->CARA limítrofe (preço, +15,3%); CMIG4 Vence RF Sim(c/ressalva)->Empate (correção); TAEE11 prêmio +30%->+43% (correção); demais: justo ajustado só pela queda do IPCA+ (+2% a +4%)"
+  },
+  "ranking_mesa_03_10": [
+   "1 CPFE3 RADAR (aceitável R$ 43, cheia R$ 37,80)",
+   "2 SBSP3 JUSTA borda RADAR (-9%; compra R$ 24)",
+   "3 CSMG3 JUSTA (R$ 49 aceitável)",
+   "4 ISAE4 JUSTA (R$ 22 aceitável)",
+   "5 CMIG4 JUSTA, risco eleitoral (entrada R$ 7,40)",
+   "6 CPLE3 CARA limítrofe (só R$ 12)",
+   "7 SAPR11 e TAEE11 CARAS (quem tem TAEE11 trocar por Tesouro IPCA+)"
+  ]
+ },
+ "tickers": {
+  "SAPR11": {
+   "nome": "Sanepar (Cia de Saneamento do Paraná)",
+   "segmento": "saneamento",
+   "controlador": {
+    "nome": "Estado do Paraná",
+    "participacao": "60% do votante; 20% do capital total [03/10]",
+    "fonte": "PDF 03/10 ficha SAPR11"
+   },
+   "tag_along": null,
+   "free_float": null,
+   "composicao_unit": "1 ON + 4 PN",
+   "concessoes": "343 concessões até 2048 [07/09]",
+   "preco_02_10": 35.21,
+   "preco_obs": "Yahoo 35,21; StatusInvest 35,34; ficha anterior R$ 36,36 (31/07); +4,7% em 02/10 sem fato relevante (ruído pré-eleição)",
+   "veredito": {
+    "atual": "CARA",
+    "anterior": "CARA (07/09: JUSTA->CARA)",
+    "justo": 27.0,
+    "compra_menos30": 19.0,
+    "saida": 40.0,
+    "faixa": "15-45",
+    "premio": "+35% (07/09) -> +30% (03/10)",
+    "compraria": "Não; só a R$ 19 com JCP de volta e sinal do regulador"
+   },
+   "notas": {
+    "qualidade": 4.0,
+    "solidez": 6.0,
+    "renda": 2.0,
+    "preco": 6.0,
+    "geral": 4.3
+   },
+   "proventos": {
+    "dpa_12m": "~R$ 0,55 por unit (JCP 2S25 pago 26/06/26) - só esse no 12m",
+    "dy_12m": "~1,6% [03/10]; 1,5% [07/09]",
+    "dy_forward": "~3,4-5% se JCP voltar (XP 3,4% em 26-28; DPA ~R$ 1,9)",
+    "politica_payout": "30-40% do lucro ajustado (2025: 29,6%)",
+    "serie_dpa_unit": "2021 1,15; 2022 1,45; 2023 1,52; 2024 1,55; 2025 1,96; 1S26 0 (2016-20 n.e.) [07/09]",
+    "extraordinarios": null,
+    "jcp_1s26": "Suspenso 'por prudência' (bancado pelo precatório; duração não informada); 2026 pode ser o primeiro ano sem provento",
+    "declarado_desde_05_09": "Nada",
+    "defasagem_declaracao_pagamento": null,
+    "proximo_provento": "Nenhum: JCP suspenso",
+    "cobertura": "Caixa cobre (DL 1,0x), renda interrompida por decisão regulatória"
+   },
+   "regulatorio": {
+    "regulador": "Agepar",
+    "rap": null,
+    "brr_base_remuneracao": "BRR/RAB regulatória ~R$ 17 bi (reprodução: BRR 17 bi - dívida ajustada 7 bi ≈ R$ 33/unit) [07/09]; capex ainda longe de virar BRR (2029)",
+    "wacc_regulatorio_real": "nao_encontrado (WACC regulatório da Agepar listado como não encontrado [07/09]); gatilho de reversão: RTP 2029 com WACC >= 8% real e BRR integral",
+    "ciclo_revisao_tarifaria": "4a RTP em 2029; reajuste 2027 decidido abr-mai/27; RTP 3,78% (2025) e IRT 2,50% (2026), abaixo do IPCA",
+    "renovacao_concessoes": "concessões até 2048",
+    "privatizacao_federalizacao": "Privatização afastada: nenhum dos 8 candidatos ao governo do PR propõe privatizar (Moro lidera e não propõe vender); XP não vê 'configuração' para privatizar",
+    "golden_share": null,
+    "decisoes_regulador": [
+     "Agepar destinou 100% do precatório (R$ 4,4 bi) à modicidade tarifária -> passivo regulatório R$ 4,41 bi, provisionado a 100% no 2T26 [07/09, 03/10]",
+     "Agepar negou o recurso da Sanepar em 19/08 [03/10]; conselho: 'caráter prudencial', sem renunciar à via judicial; Sanepar promete 'medidas judiciais', sem decisão judicial encontrada",
+     "Desconto de 25% na tarifa mínima a partir de 01/10/2026",
+     "InfoMoney citou 4,8x de DL/EBITDA: incompatível com o release, tratado como erro"
+    ],
+    "tir_real_citada": "XP: Compra->Neutro, alvo R$ 45,80 (dez/27); DY 3,4% 26-28. TIR de casas n.e. [03/10]",
+    "premissas_tir": null
+   },
+   "divida_capex": {
+    "divida_liquida": "caixa R$ 4,66 bi [07/09]; valor da DL n.e.",
+    "dl_ebitda": "1,0x (2T26); 2,1x com passivo regulatório [07/09]",
+    "custo_divida": "CEF a TR até 2046 [07/09]",
+    "capex": "2025 R$ 2,7 bi; plano R$ 11,2 bi até 2028 (3,9x D&A) [07/09]",
+    "grau_endividamento": "54,4% do PL (gatilho > 65%)"
+   },
+   "controlador_interferencia": {
+    "consumadas": [
+     {
+      "fato": "Agepar tomou 100% do precatório R$ 4,4 bi para modicidade tarifária (confisco)",
+      "ano": 2026,
+      "fonte": "PDF 07/09 e 03/10; Terra/Band/Sanepar RI"
+     },
+     {
+      "fato": "Reajuste/tarifas abaixo da inflação (RTP 3,78% 2025; IRT 2,50% 2026)",
+      "ano": "2025-2026"
+     },
+     {
+      "fato": "Suspensão do JCP 1S26",
+      "ano": 2026
+     }
+    ],
+    "risco_prospectivo": "RTP 2029, reajuste 2027, eleição PR (04/10); Estado e Agepar do mesmo lado",
+    "desconto_aplicado_pdf": "15% adicional no central (justo 32->27) [07/09]; mantido em 03/10 com 'desconto de controlador de 15%'; controlador nota 1->2/10 [premissa_pdf]"
+   },
+   "gatilhos": [
+    {
+     "gatilho": "Agepar glosar BRR na 4a RTP",
+     "status": "Não acionado (RTP em 2029)"
+    },
+    {
+     "gatilho": "JCP não retomado em dez/26",
+     "status": "Não verificável até dez (sinal amarelo)"
+    },
+    {
+     "gatilho": "Endividamento > 65% do PL",
+     "status": "Não acionado (54,4%)"
+    },
+    {
+     "gatilho": "Reajuste 2027 < IPCA",
+     "status": "Não verificável (abr-mai/27)"
+    },
+    {
+     "gatilho": "Mudaria: decisão judicial revertendo o passivo (≈ +R$ 14/unit)",
+     "status": "Não acionado"
+    },
+    {
+     "gatilho": "Mudaria: privatização/saída do Estado",
+     "status": "Não acionado"
+    },
+    {
+     "gatilho": "Mudaria: preço < R$ 25 com JCP de volta",
+     "status": "Não acionado"
+    }
+   ],
+   "eventos_datas": [
+    "19/08/2026 Agepar nega recurso",
+    "01/10/2026 desconto 25% tarifa mínima",
+    "04/10/2026 eleição PR",
+    "dez/2026 decisão JCP",
+    "abr-mai/2027 reajuste 2027",
+    "2029 RTP"
+   ],
+   "riscos": [
+    "Regulador hostil e Estado no conselho",
+    "Renda zero até dez/26; payout 30% e tarifa abaixo da inflação limitam yield a ~5%",
+    "ROIC 4,8% contábil / ~9% ajustado < WACC 11-14%"
+   ],
+   "retorno_vs_rf": {
+    "yield_fwd": "~3,4-5%",
+    "g_nominal": "~3%",
+    "retorno_nominal": "~7-8%",
+    "retorno_real": "~3-4%",
+    "vs_ipca_mais": "-3 a -4 p.p.",
+    "vence_rf": "Não"
+   },
+   "metricas_07_09": {
+    "pl": "~5,8 ajustado / 15 contábil (2T26 contábil -R$ 505 mi; ajustado +447 mi)",
+    "pvp": "0,91 (VPA/unit 40,05; era 1,88x/2,34)",
+    "ev_ebitda": "≈4,3x (5,5x c/ passivo)",
+    "roe_roic": "ROE contábil 3,7% / ROIC 4,8%; ROE ajustado 1S26 ≈ 15,7%",
+    "graham_numero": "R$ 74 (inflado por book de concessão)",
+    "graham_7_criterios": "5/7",
+    "epv": "R$ 18 (WACC 13,7%) / 28 (11%); EPV < reprodução (≈R$ 33)",
+    "bazin": "R$ 25,5 (5a) / 9 (12m) / 31 (fwd)",
+    "dcf_fcff": "pess. 10/22 · base 23/45 · otim. 40/77 (WACC 13,7%/11%)",
+    "pvp_justificado": "Ke 16,8%: 0,59-0,76x (R$ 24-30); Ke 12,35%: 0,95-1,22x (R$ 38-49)",
+    "piotroski_altman": "4/9; Altman Z'' 2,9 (cinzenta)",
+    "margem_ebitda_aj": "42%",
+    "cobertura_juros": "9,7 (comparativo)"
+   },
+   "valuation_premissas_pdf": {
+    "ke": "12,35% -> 12,06% real (regra da mesa)",
+    "g": "~3% (tarifa < inflação)",
+    "justo_03_10": 27.0,
+    "decomposicao": "Ke menor +R$ 1; opcionalidade de privatização -R$ 1; negativa do recurso R$ 0",
+    "faixa": "R$ 15-45",
+    "ciclo": "capex só vira BRR em 2029",
+    "rotulo": "premissa_pdf"
+   },
+   "nao_encontrado": [
+    "Cotação setembro [07/09, resolvida em 03/10]",
+    "Lucro 2016-22 e DPA 2016-20",
+    "WACC regulatório da Agepar",
+    "Participação total do Estado/tag along",
+    "Decisão judicial sobre o precatório"
+   ],
+   "fontes_03_10": [
+    "ri_sanepar_2t26",
+    "terra_agepar_nega_recurso",
+    "band_desconto_25_tarifa_minima",
+    "seudinheiro_xp_rebaixa_sapr11",
+    "gazetadoparana_candidatos",
+    "yahoo_SAPR11"
+   ]
+  },
+  "CSMG3": {
+   "nome": "Copasa (Cia de Saneamento de Minas Gerais)",
+   "segmento": "saneamento",
+   "controlador": {
+    "nome": "Equatorial (30% via Gerais Saneamento); privatizada jun/26",
+    "participacao": "Equatorial 30%; Estado de MG ~5% [07/09] com golden share (1 conselheiro) [03/10]; free float 64,6% [07/09]",
+    "fonte": "PDF 03/10 e 07/09"
+   },
+   "tag_along": null,
+   "free_float": "64,6% [07/09]",
+   "composicao_unit": null,
+   "preco_02_10": 56.25,
+   "preco_obs": "Yahoo; Investidor10 confere; ficha anterior R$ 55,77 (13/08); +46% YTD [07/09]",
+   "veredito": {
+    "atual": "JUSTA",
+    "anterior": "JUSTA",
+    "justo": 57.0,
+    "justo_anterior": 55.0,
+    "compra_menos30": 40.0,
+    "compra_anterior": 38.5,
+    "saida": 78.0,
+    "saida_anterior": 75.0,
+    "faixa": "34-82",
+    "premio": "0% -> -1%",
+    "compraria": "Não a R$ 56; aceitável R$ 49 (preço que a Equatorial pagou); cheio R$ 40"
+   },
+   "notas": {
+    "qualidade": 7.0,
+    "solidez": 5.0,
+    "renda": 3.0,
+    "preco": 5.0,
+    "geral": 5.2
+   },
+   "proventos": {
+    "dpa_12m": "2025 R$ 2,25; 2024 R$ 2,39; 2026 YTD ~0,83 [07/09]; JCP 1T26 R$ 0,4684 + 4T25 R$ 0,3659 pagos mai-jun/26",
+    "dy_12m": "~3,5% [03/10]; 3,5-3,9% [07/09]",
+    "dy_forward": "~2,6-3% (payout 50% sobre lucro ajustado ~R$ 1,1 bi ÷ ~379 mi ações ≈ R$ 1,45; HIPÓTESE cálculo próprio)",
+    "politica_payout": "50% do lucro ajustado (~61% em 2025); sem restrição a dividendos (Equatorial)",
+    "extraordinarios": null,
+    "jcp_declarado": "R$ 0,2556/ação (R$ 96,9 mi), data-com 21/09, pagamento 09/11",
+    "defasagem_declaracao_pagamento": "~7 semanas",
+    "cobertura": "Parcial: dívida sobe; parte do dividendo financiada por dívida",
+    "proximo_provento": "JCP R$ 0,2556 em 09/11 (data-com 21/09, passada)"
+   },
+   "regulatorio": {
+    "regulador": "Arsae-MG",
+    "rap": null,
+    "brr_base_remuneracao": "BRR atual n.e. [07/09]; +R$ 3,3 bi potenciais na BRR; PL 8,6 bi + 3,3 bi ≈ R$ 31/ação (reprodução); BRR cresce ~R$ 2,5 bi/ano [07/09]",
+    "wacc_regulatorio_real": "13,7% pré-imposto fixo por 4 anos (nominal/pré-imposto) [07/09]; mudança pela Arsae = gatilho",
+    "ciclo_revisao_tarifaria": "3a RTP concluída (reajuste 6,56%) [07/09]; próxima n.e.; eficiências compartilhadas até 2042",
+    "renovacao_concessoes": "49 contratos municipais renovados até 2073 (37,5% da receita 2025); 43 de 636 municípios segundo agenciainfra; prazo de adesão acabou em 28/09; balanço final não encontrado",
+    "privatizacao_federalizacao": "Privatizada jun/26; oferta secundária a R$ 49,03 (R$ 8,38 bi), sem diluição; eleição MG: Cleitinho lidera, só candidata nanica (Indira Xavier) fala em reestatizar",
+    "golden_share": "Sim, Estado de MG mantém golden share (1 conselheiro); perde veto sobre investimentos e dividendos (acordo rescindido, R$ 50 mi pagos ao Estado)",
+    "decisoes_regulador": [
+     "WACC 13,7% pré-imposto travado 4 anos",
+     "Reajuste 6,56% na 3a RTP"
+    ],
+    "tir_real_citada": "Casas ~14% (XP 88,30 com TIR real 14%; Itaú BBA 55,90->82,50 em 19/08; BTG 81 jun; BBI 81; Safra 80); WACC ~13,7% pré-imposto; premissa_pdf: casas supõem eficiência da Equatorial, PDF só aceita via gatilho margem > 42% (central R$ 65)",
+    "premissas_tir": "retorno esperado PDF: yield 2,6-3% + g ~9% (BRR +2,5 bi/ano a ≈12%) = ~12% nominal, ~7,7% real (+0,6 p.p.) Empate"
+   },
+   "divida_capex": {
+    "divida_liquida": "R$ 8,18 bi [07/09] (+R$ 2,3 bi em 12m)",
+    "dl_ebitda": "2,8x (2T26; era 2,0x); StatusInvest mostra 1,91x (critério diferente)",
+    "custo_divida": "cupom médio 9,5% [07/09]",
+    "capex": "R$ 1,95 bi (+8,9%) [07/09]; plano 2025-29 novo, valor n.e.; plano de capex não publicado [03/10]",
+    "cobertura_juros": "2,5 [07/09, comparativo]"
+   },
+   "controlador_interferencia": {
+    "consumadas": [
+     {
+      "fato": "Governança Equatorial: AGE de 28/09 elegeu CEO Augusto Dantas Borges e conselho; acordo com MG rescindido (Estado perde veto)",
+      "ano": 2026,
+      "fonte": "cenarioenergia 30/09; cordisnoticias"
+     }
+    ],
+    "risco_prospectivo": "Eleição MG (04/10; Cleitinho lidera); plano de capex e margem ainda não apareceram",
+    "desconto_aplicado_pdf": "Nenhum desconto de controlador; 'regulatório/controlador' 4->4,5 no qualitativo (peso 2x -> 8/10 em 07/09)"
+   },
+   "gatilhos": [
+    {
+     "gatilho": "DL/EBITDA > 3,5x",
+     "status": "Não acionado (2,8x)"
+    },
+    {
+     "gatilho": "Aumento de capital primário",
+     "status": "Não acionado (não encontrado)"
+    },
+    {
+     "gatilho": "Payout < 25%",
+     "status": "Não acionado (50%)"
+    },
+    {
+     "gatilho": "Margem EBITDA ajustada < 38% por 2 tri",
+     "status": "Não verificável (3T26 em nov)"
+    },
+    {
+     "gatilho": "Mudança do WACC pela Arsae",
+     "status": "Não acionado"
+    },
+    {
+     "gatilho": "Mudaria: margem > 42% e dívida estável por 2 tri -> central R$ 65",
+     "status": "Não verificável"
+    },
+    {
+     "gatilho": "Mudaria: plano de capex publicado sem equity",
+     "status": "Não verificável"
+    },
+    {
+     "gatilho": "Mudaria: preço < R$ 49 sem piora -> RADAR",
+     "status": "Não acionado"
+    }
+   ],
+   "eventos_datas": [
+    "28/09/2026 AGE governança Equatorial",
+    "21/09 data-com JCP",
+    "09/11 pagamento JCP",
+    "nov/2026 3T26",
+    "04/10 e 25/10 eleição MG",
+    "2042 fim eficiências compartilhadas",
+    "2073 vencimento contratos renovados"
+   ],
+   "riscos": [
+    "Alavancagem 2,8x subindo com payout 50-61%",
+    "Custos acima do esperado 1o tri privado",
+    "Múltiplo já igual ao da Sabesp sem entregar eficiência",
+    "Reestatização (risco baixo, só candidata nanica)"
+   ],
+   "retorno_vs_rf": {
+    "yield_fwd": "~2,6-3%",
+    "g_nominal": "~9%",
+    "retorno_nominal": "~12%",
+    "retorno_real": "~7,7%",
+    "vs_ipca_mais": "+0,6 p.p.",
+    "vence_rf": "Empate"
+   },
+   "metricas_07_09": {
+    "pl": "16,6 (LPA 3,37); 2T26 lucro aj. R$ 275,5 mi (-4,8%)",
+    "pvp": "2,47 (VPA 22,56)",
+    "ev_ebitda": "9,8x (= Sabesp); 9,5x EBITDA 2027e",
+    "roe_roic": "15,5% / 8,6% (< WACC hoje)",
+    "ebitda_aj_2t26": "R$ 762 mi (+11,7%), margem 39,0%",
+    "receita": "R$ 1,95 bi (+8,9%)",
+    "graham_numero": "R$ 41,4 (preço 35% acima)",
+    "graham_7_criterios": "3/7",
+    "epv": "R$ 5 (WACC 12,4%)",
+    "bazin": "R$ 38,7 (2024-25) / 28 (fwd)",
+    "dcf_brr_2030": "pess. 33/37 · base 51/58 · otim. 69/80 (Ke 16,8% / 12,35%)",
+    "referencia_dura": "Equatorial pagou R$ 49,03 com due diligence (preço 14% acima em set)"
+   },
+   "valuation_premissas_pdf": {
+    "ke": "12,35% -> 12,06% real",
+    "g": "~9%",
+    "justo_03_10": 57.0,
+    "decomposicao": "Ke +R$ 2 (DCF por BRR, duration longa); governança R$ 0; renovações municipais R$ 0",
+    "faixa": "R$ 34-82",
+    "rotulo": "premissa_pdf"
+   },
+   "nao_encontrado": [
+    "BRR atual",
+    "capex 2025 e plano 25-29",
+    "DPA 2016-23",
+    "covenants",
+    "balanço final das renovações municipais",
+    "plano de capex e de margem da Equatorial"
+   ],
+   "fontes_03_10": [
+    "cenarioenergia_equatorial_governanca",
+    "cordisnoticias_encerra_acordo",
+    "agenciainfra_renovacao_43_municipios",
+    "infomoney_csmg3_proventos",
+    "infomoney_csmg3_2t26",
+    "investidor10_itau_bba",
+    "otempo_indira_reestatizar"
+   ]
+  },
+  "SBSP3": {
+   "nome": "Sabesp",
+   "segmento": "saneamento",
+   "controlador": {
+    "nome": "Equatorial 15% (referência); Estado de SP 18% com golden share",
+    "participacao": "Equatorial 15%; Estado SP 18% + golden share; Sabesp já tinha 79% da EMAE",
+    "fonte": "PDF 03/10"
+   },
+   "tag_along": null,
+   "free_float": null,
+   "composicao_unit": null,
+   "preco_02_10": 28.23,
+   "preco_obs": "Yahoo; 04/09 R$ 26,53 (+6,4% desde então: chuvas Cantareira, correção pós-2T); ficha anterior R$ 28,50",
+   "evento_5_1": "Bonificação 5:1 (dez/25) segundo ficha anterior; Yahoo registra desdobramento em 29/04/26; conferir no RI [03/10]",
+   "veredito": {
+    "atual": "JUSTA",
+    "anterior": "JUSTA",
+    "justo": 31.0,
+    "justo_anterior": 30.0,
+    "compra_menos30": 21.7,
+    "compra_anterior": 21.0,
+    "saida": 37.0,
+    "saida_anterior": 36.0,
+    "faixa": "18-41",
+    "premio": "-5% -> -9% (borda RADAR)",
+    "compraria": "Não a R$ 28; aceitável R$ 24 (TIR real > 13%); cheio R$ 21,70; não é ação de renda até 2030"
+   },
+   "notas": {
+    "qualidade": 8.0,
+    "solidez": 5.0,
+    "renda": 2.0,
+    "preco": 5.0,
+    "geral": 5.3
+   },
+   "proventos": {
+    "dpa_12m": "exercício 2025 ≈ R$ 0,70/ação pós-bonificação (JCP 0,5288 dez/25 + 0,1667 mar/26); valores ajustados divergem (Yahoo 0,528/0,167 vs Dados de Mercado 0,106/0,033); 2024 R$ 2,55 bi (~0,72 ajustado)",
+    "dy_12m": "~2-2,4% real (agregadores mostram 12-13% por erro de base da bonificação)",
+    "dy_forward": "~2-3%",
+    "politica_payout": "mínimo 25% até 2029",
+    "extraordinarios": "'12% de yield em 2025' foi extraordinário/pré-bonificação",
+    "jcp_recentes": "data-com dez/25 e mar/26, ambos pagos em 30/04/26",
+    "declarado_desde_05_09": "Nada",
+    "defasagem_declaracao_pagamento": "~1-4 meses",
+    "cobertura": "Coberto (payout baixo)",
+    "proximo_provento": "Nada declarado"
+   },
+   "regulatorio": {
+    "regulador": "Arsesp",
+    "rap": null,
+    "brr_base_remuneracao": "RAB R$ 70 bi (base de ativos 55->70 bi em 12m, +27%); EV R$ 134 bi = 1,9x RAB; eficiências retidas até 2029",
+    "wacc_regulatorio_real": "nao_encontrado (WACC nominal ~13,7% usado em EPV [07/09])",
+    "ciclo_revisao_tarifaria": "Reajuste 2026 +6,11% (sem ganho real); reajuste 2027 sai em dez/26 (Goldman projeta ~+16%; JPM R$ 1,2 bi de investimento reconhecido em jan/27)",
+    "renovacao_concessoes": "universalização até 2029",
+    "privatizacao_federalizacao": "Privatizada em 2024; eleição SP: Tarcísio lidera (Datafolha 50x30), risco de reversão baixo",
+    "golden_share": "Sim, Estado de SP (18% + golden share)",
+    "decisoes_regulador": [
+     "Tarifa social como fator de custo (2T26)"
+    ],
+    "tir_real_citada": "XP 11,5% · Safra 12,6% (≈ Ke real 12,35%) [07/09]; aceitável a R$ 24 = TIR real > 13% (PDF)",
+    "premissas_tir": "retorno PDF: yield ~2,4% + g 10-12% (base de ativos +27% em 12m) = ~12,5-14,5% nominal, ~8,5-10% real (+1,4 a +2,9 p.p.) Empate"
+   },
+   "divida_capex": {
+    "divida_liquida": "R$ 34 bi (≈2,4x) [07/09]; fontes: INV 1,9x · HG 3,1x · Renova 43,7 bi/2,8x; DL era 23 bi 12m antes; indexada ao CDI",
+    "dl_ebitda": "2,4-2,5x (Safra 2,5x); JPM: pico 2,8x (antes 3,2x)",
+    "custo_divida": "CDI (dívida CDI + Selic); financeiro -R$ 1,08 bi no trimestre",
+    "capex": "R$ 15 bi/ano; 1S26 R$ 7,5 bi (+15,6%); 2T26 R$ 3,73 bi; JPM (08/09, após falar com CFO): R$ 75 bi em 2026-29 (antes R$ 89 bi), R$ 20 bi/ano em 27-28 - estimativa de banco, não guidance",
+    "custos_2t26": "+36% (ERP, Jaguaré, tarifa social); Itaú BBA: só R$ 170-200 mi dos R$ 800 mi de custo extra são recorrentes; EBITDA subjacente voltaria a ~R$ 3,9 bi/tri",
+    "inadimplencia": "2,5%",
+    "emae": "Incorporação aprovada em 16/09: 1,3195 SBSP3 por ação EMAE; retirada até 19/10 a R$ 18,18; diluição pequena"
+   },
+   "controlador_interferencia": {
+    "consumadas": [],
+    "risco_prospectivo": "Eleição SP (Tarcísio lidera); Arsesp/tarifa social/WACC; reajuste 2027 em dez/26",
+    "desconto_aplicado_pdf": "Nenhum; regulatório 7/10 [07/09]"
+   },
+   "gatilhos": [
+    {
+     "gatilho": "DL/EBITDA > 3,5x",
+     "status": "Não acionado (~2,5x)"
+    },
+    {
+     "gatilho": "Custos ex-construção > R$ 2,7 bi/tri por mais 2 tri",
+     "status": "Não verificável (contagem começa no 3T26, nov)"
+    },
+    {
+     "gatilho": "Inadimplência > 3,5%",
+     "status": "Não acionado (2,5%)"
+    },
+    {
+     "gatilho": "Revisão da Arsesp reduzindo WACC/BRR",
+     "status": "Não acionado"
+    },
+    {
+     "gatilho": "Mudaria: EBITDA > R$ 3,9 bi/tri confirmado por 2 tri -> central R$ 36",
+     "status": "Não verificável"
+    },
+    {
+     "gatilho": "Mudaria: Selic < 12%",
+     "status": "Não acionado (13,75%; Focus 12% fim 2027)"
+    },
+    {
+     "gatilho": "Mudaria: preço < R$ 24 -> RADAR",
+     "status": "Não acionado"
+    }
+   ],
+   "eventos_datas": [
+    "08/09 JPM capex",
+    "16/09 EMAE aprovada",
+    "19/10 fim retirada EMAE",
+    "nov/2026 3T26",
+    "dez/2026 reajuste 2027",
+    "2029 universalização"
+   ],
+   "casas": {
+    "JPM": 35,
+    "Goldman": "~34",
+    "Itau_BBA": 33.1,
+    "XP": 36.8,
+    "BBI": 41,
+    "recomendacao": "todas Compra"
+   },
+   "riscos": [
+    "Custos +36% 2T26 e lucro aj. -41%",
+    "Dívida CDI R$ 34 bi",
+    "Yield real ~2% (agregadores enganam com 12%)",
+    "Preço subiu 6% sem resultado novo"
+   ],
+   "retorno_vs_rf": {
+    "yield_fwd": "~2,4%",
+    "g_nominal": "10-12%",
+    "retorno_nominal": "~12,5-14,5%",
+    "retorno_real": "~8,5-10%",
+    "vs_ipca_mais": "+1,4 a +2,9 p.p.",
+    "vence_rf": "Empate"
+   },
+   "metricas_07_09": {
+    "pl": "11,6 (LPA 12m 2,46, com não recorrentes)",
+    "pvp": "2,37 (VPA 12,03 pós-bonificação)",
+    "ev_ebitda": "9,7x (máx 13x em 2023); EV/RAB ~1,9x",
+    "roe_roic": "ROE aj. 19,9% / ROIC 9,5% (INV 12,1%)",
+    "lucro_aj_2t26": "R$ 1,15 bi (-41%)",
+    "ebitda_aj_2t26": "R$ 3,49-3,50 bi (-3 a -10%)",
+    "receita_liq_aj": "R$ 6,01 bi (+6,7%)",
+    "graham_numero": "R$ 25,8 (LPA 2,46) / R$ 20 normalizado",
+    "graham_7_criterios": "4/7",
+    "epv": "R$ 8,5 (WACC 13,7%) / 14 (10,5%)",
+    "bazin": "R$ 11,6 (2025) / 8 (fwd)",
+    "dcf_rab_2029": "EV/RAB 1,5x -> R$ 18,5 · 2,0x -> R$ 28 · 2,3x -> R$ 34 (Ke 12,35%)",
+    "piotroski": "5/9"
+   },
+   "valuation_premissas_pdf": {
+    "ke": "12,35% -> 12,06% real",
+    "g": "10-12%",
+    "justo_03_10": 31.0,
+    "decomposicao": "Ke +R$ 1; capex menor JPM R$ 0; custos não recorrentes R$ 0 até 3T26; sell side (R$ 33-41) já paga eficiência, PDF entra via gatilho (R$ 36)",
+    "rotulo": "premissa_pdf"
+   },
+   "nao_encontrado": [
+    "Release 2T26 do RI (usou espelhos)",
+    "DPA 2016-23 ajustado",
+    "Plano de capex total até 2029 oficial",
+    "Covenants",
+    "Participação exata do Estado e termos da golden share",
+    "Diluição da EMAE",
+    "Evento 5:1 (bonificação vs desdobramento) a conferir no RI"
+   ],
+   "fontes_03_10": [
+    "infomoney_jpm_sbsp3_cfo",
+    "moneytimes_itau_bba_corta_alvo",
+    "safra_sabesp_2t26_custos",
+    "cvm_ipe_1568917",
+    "infomoney_sbsp3_recupera_2t",
+    "ndmais_sp_tarcisio_haddad",
+    "dadosdemercado_sbsp3_dividendos",
+    "yahoo_SBSP3"
+   ]
+  },
+  "TAEE11": {
+   "nome": "Taesa (Transmissora Aliança de Energia Elétrica)",
+   "segmento": "transmissão",
+   "controlador": {
+    "nome": "Cemig + ISA (co-controladores)",
+    "participacao": "n.e. no PDF; ex-VP da Cemig assumiu presidência do conselho [03/10]",
+    "fonte": "PDF 03/10"
+   },
+   "tag_along": null,
+   "free_float": null,
+   "composicao_unit": "1 ON + 2 PN",
+   "concessoes": "36 concessões [07/09]",
+   "preco_02_10": 42.85,
+   "preco_obs": "Yahoo; 04/09 R$ 41,53; ficha anterior R$ 40,00 (04/08); +7%",
+   "veredito": {
+    "atual": "CARA",
+    "anterior": "CARA",
+    "justo": 28.0,
+    "compra_menos30": 19.6,
+    "saida": "33-35 (preço já acima)",
+    "faixa": "15-35",
+    "premio": "+43% (corrigido; ficha anterior escreveu +30%) -> +53%",
+    "compraria": "Não; quem tem: trocar por Tesouro IPCA+ ou transmissora com TIR de dois dígitos e menos dívida; só a R$ 19,60"
+   },
+   "notas": {
+    "qualidade": 5.0,
+    "solidez": "3.0 -> 2.5",
+    "renda": 6.0,
+    "preco": "2.0 -> 1.5",
+    "geral": "4.2 -> 4.1"
+   },
+   "proventos": {
+    "dpa_12m": "R$ 3,01/unit (4 tri, cálculo próprio); HG R$ 3,28; Renova R$ 4,14; 2025: proposta R$ 390 mi (~1,13/unit) + intercalares",
+    "dy_12m": "~7,0% (R$ 3,01 ÷ 42,85) [03/10]; 8,2% HG / 10,4% Renova / 7,8% Nord (3 fontes divergem) [07/09]",
+    "dy_forward": "~5,8% (DPA ~R$ 2,5 a payout 100%)",
+    "politica_payout": "100% do lucro regulatório",
+    "extraordinarios": null,
+    "declarado_desde_05_09": "Nada; os R$ 0,60/unit (2T26, data-com 14/08) serão pagos em 26/11",
+    "defasagem_declaracao_pagamento": "~3,5 meses",
+    "cobertura": "Não: payout 100% com dívida subindo para ~4,8x; parte do provento é dívida rolada e devolução de capital (concessões vencendo)",
+    "proximo_provento": "R$ 0,60/unit em 26/11 (data-com 14/08, passada)"
+   },
+   "regulatorio": {
+    "regulador": "ANEEL",
+    "rap": "RAP ciclo 2026/27 R$ 4,6 bi (+1,95% IGP-M; +4,72% IPCA) + R$ 305 mi das 5 transmissoras Energisa (Despacho ANEEL 2.268/2026); margem EBITDA regulatório 85%",
+    "rap_cronograma_vencimentos": "nao_encontrado (cronograma de vencimentos listado como não encontrado [07/09])",
+    "brr_base_remuneracao": "Base regulatória n.e.; PL 7,6 bi (R$ 22/unit)",
+    "wacc_regulatorio_real": null,
+    "ciclo_revisao_tarifaria": "Reajuste anual de RAP (julho); metodologia de indenização/renovação prevista para 2S26",
+    "renovacao_concessoes": "Concessões finitas, vencimentos 'nos próximos anos'; regra de renovação final não publicada; metodologia de indenização prevista 2S26; residual ~R$ 3,6 bi",
+    "rbse": null,
+    "privatizacao_federalizacao": null,
+    "golden_share": null,
+    "decisoes_regulador": [
+     "Despacho ANEEL 2.268/2026 (RAP)"
+    ],
+    "tir_real_citada": "XP 6,5% a R$ 40; a R$ 42,85 menor [HIPÓTESE do PDF: ~6%]",
+    "premissas_tir": "retorno PDF: yield 5,8-7% + g 0-2% = ~6-9% nominal, ~2-4,5% real (-2,5 a -5 p.p.) Não"
+   },
+   "aquisicao_energisa": "Compra das 5 transmissoras da Energisa fechada em 12/08/2026: R$ 1,638 bi caixa + R$ 747 mi DL; RAP R$ 305 mi (~12,8% sobre EV); financiada com debênture-ponte R$ 1,7 bi CDI+0,40% (18 meses), sem equity",
+   "divida_capex": {
+    "divida_liquida": "R$ 10,4 bi proporcional [07/09]",
+    "dl_ebitda": "4,2x (2T26, pré-aquisição; a maior do setor) -> ~4,8x fim 2026 (UBS); pró-forma oficial não encontrado",
+    "custo_divida": "Ponte CDI + 0,40% (18 meses)",
+    "capex": "Sem greenfield; crescimento via aquisição com dívida",
+    "cobertura_juros": "≈1,4x regulatória [07/09]"
+   },
+   "controlador_interferencia": {
+    "consumadas": [],
+    "risco_prospectivo": "Cemig mais presente no conselho [INFERÊNCIA PDF: permanência, não venda]; concessões finitas sem regra de renovação",
+    "desconto_aplicado_pdf": "Nenhum explícito; regulatório 6/10 (controlador estatal Cemig)"
+   },
+   "gatilhos": [
+    {
+     "gatilho": "(Invalida CARA) renovação em termos próximos aos atuais",
+     "status": "Não acionado (regra final não publicada)"
+    },
+    {
+     "gatilho": "(Invalida CARA) DL/EBITDA < 3x",
+     "status": "Não acionado (sobe ~4,8x)"
+    },
+    {
+     "gatilho": "(Invalida CARA) IRR real > 10% por queda de preço",
+     "status": "Não acionado (preço subiu)"
+    },
+    {
+     "gatilho": "Mudaria: Energisa fechada com equity e RAP incremental > 8%",
+     "status": "Não acionado (RAP ~12,8% sobre EV, mas com dívida)"
+    },
+    {
+     "gatilho": "Mudaria: preço < R$ 25 sem corte de dividendo -> RADAR",
+     "status": "Não acionado"
+    }
+   ],
+   "eventos_datas": [
+    "12/08 fechamento Energisa",
+    "26/11 pagamento R$ 0,60",
+    "11/11 3T26",
+    "2S26 metodologia indenização/renovação"
+   ],
+   "casas": {
+    "BBI": "venda 40",
+    "UBS": "venda 35 (DL/EBITDA 4,8x)",
+    "Morgan_Stanley": "venda 36,50",
+    "XP": "neutra 40,50 (antes 32,70-35)",
+    "Itau_BBA": "neutra 44,88",
+    "resumo": "3 de 5 em venda"
+   },
+   "riscos": [
+    "Alavancagem ~4,8x",
+    "Payout 100% com dívida",
+    "Concessões finitas sem regra de renovação",
+    "TIR real implícita < Tesouro IPCA+",
+    "Juros: lucro regulatório 2T26 -28,5%"
+   ],
+   "retorno_vs_rf": {
+    "yield_fwd": "~5,8-7%",
+    "g_nominal": "0-2%",
+    "retorno_nominal": "~6-9%",
+    "retorno_real": "~2-4,5%",
+    "vs_ipca_mais": "-2,5 a -5 p.p.",
+    "vence_rf": "Não"
+   },
+   "metricas_07_09": {
+    "pl": "8,5 (IFRS não-caixa) / ~17 regulatório",
+    "pvp": "1,8 (VPA/unit 22,1)",
+    "roe": "IFRS 20% (alavancagem) / regulatório ~10%",
+    "lucro_regulatorio_2t26": "R$ 206,8 mi (-28,5%)",
+    "ebitda_regulatorio_2t26": "R$ 577 mi (+10,6%), margem 85%",
+    "graham_numero": "IFRS R$ 48 (inútil) / regulatório R$ 34,5",
+    "graham_7_criterios": "4/7",
+    "epv": "≈ R$ 0 (WACC 11,4%) / 6,4 (9,5%)",
+    "bazin": "R$ 54,7 (HG 12m) / 41 (fwd)",
+    "ddm_3_cenarios": "pess. 15/21 · base 17,5/25 · otim. 20/29 (Ke 16,8%/12,35%)",
+    "gordon_g4": "R$ 20 / 31",
+    "altman": "≈1,6 (cinzenta baixa)"
+   },
+   "valuation_premissas_pdf": {
+    "ke": "12,35% -> 12,06% real",
+    "g": "0-2%",
+    "justo_03_10": 28.0,
+    "decomposicao": "Ke +R$ 0,50; alavancagem 4,2x->4,8x -R$ 0,50; RAP Energisa ≈ R$ 0 líquido",
+    "rotulo": "premissa_pdf"
+   },
+   "nao_encontrado": [
+    "RAP total e cronograma de vencimentos das concessões",
+    "Lucro regulatório anual e DPA por ano",
+    "Regra final de renovação",
+    "Covenants",
+    "DL/EBITDA pró-forma oficial pós-Energisa",
+    "Participação exata de Cemig e ISA"
+   ],
+   "fontes_03_10": [
+    "cvm_ipe_1556473",
+    "cvm_ipe_1543201",
+    "taesa_release_2t26",
+    "infomoney_taesa_tese_dividendos",
+    "infomoney_bbi_revisa_isa_alupar_taesa",
+    "cvm_ipe_1568852",
+    "dadosdemercado_taee11_dividendos",
+    "yahoo_TAEE11"
+   ]
+  },
+  "ISAE4": {
+   "nome": "ISA Energia Brasil (ex-CTEEP)",
+   "segmento": "transmissão",
+   "controlador": {
+    "nome": "ISA / Ecopetrol (estatal colombiana)",
+    "participacao": "n.e.; Axia detém 21,6% do capital e 31% das PN (overhang)",
+    "fonte": "PDF 03/10"
+   },
+   "tag_along": "PN sem tag along",
+   "free_float": null,
+   "composicao_unit": null,
+   "concessoes": "35 concessões (~30% da energia transmitida)",
+   "preco_02_10": 28.19,
+   "preco_obs": "Yahoo; 04/09 R$ 27,70; alta de 3,3% em 30/09 com volume 10x a média (motivo não encontrado, talvez bloco da Axia); follow-on R$ 1,2 bi a R$ 27 em jul/26 (~6,7% diluição)",
+   "veredito": {
+    "atual": "JUSTA",
+    "anterior": "JUSTA",
+    "justo": 26.0,
+    "justo_anterior": 25.0,
+    "compra_menos30": 18.2,
+    "compra_anterior": 17.5,
+    "saida": 33.0,
+    "saida_anterior": 32.0,
+    "faixa": "18-33",
+    "premio": "+12% -> +8%",
+    "compraria": "Não a R$ 28; aceitável R$ 22 (Ke de mercado); cheio R$ 18,20; única transmissora no radar, horizonte 2027"
+   },
+   "notas": {
+    "qualidade": 6.0,
+    "solidez": 5.0,
+    "renda": 5.0,
+    "preco": 5.0,
+    "geral": 5.3
+   },
+   "proventos": {
+    "dpa_12m": "R$ 1,85 (12m) [07/09]; 2026 YTD 0,42 (abr) + JCP 1S26",
+    "dy_12m": "~6,6% (da ficha anterior, inclui anos de RBSE)",
+    "dy_forward": "~4% (2026e ~R$ 1,1-1,2; R$ 0,567 no semestre ≈ 2,0%); ~3,3% líquido de IRRF 17,5%",
+    "politica_payout": "75% do lucro regulatório",
+    "extraordinarios": "anos de RBSE pagaram muito mais (ROE médio 10a 19,5%)",
+    "jcp_declarado": "R$ 0,566877/ação (R$ 398,7 mi, ~703 mi ações implícitas) 1S26; datas-com 08/10, 09/11 e 25/11; pagamento 07/12",
+    "defasagem_declaracao_pagamento": "1-2 meses",
+    "cobertura": "Coberto pelo caixa regulatório, não pelo FCF (capex R$ 14 bi)",
+    "proximo_provento": "JCP R$ 0,566877; 1a data-com 08/10 (capturável)"
+   },
+   "regulatorio": {
+    "regulador": "ANEEL",
+    "rap": "R$ 7,08 bi no ciclo 2026/27 (+11%) [07/09: + R$ 306 mi IE Madeira + R$ 359 mi Piraquê]; RAP +45% ex-RBSE; R$ 665 mi adicionados em 2026",
+    "rap_cronograma": "Greenfields no prazo: Serra Dourada 49%, Itatiaia 33%, meta mar/2029; pipeline R$ 14 bi até 2029; backlog de reforços R$ 5,7 bi sem leilão; novo reforço de R$ 122 mi",
+    "brr_base_remuneracao": null,
+    "wacc_regulatorio_real": null,
+    "ciclo_revisao_tarifaria": "Reajuste anual de RAP (ciclo julho); lucro regulatório vira em 2027-28 com RBSE zerado",
+    "renovacao_concessoes": null,
+    "rbse": "RBSE em queda (-10%) e acabando em ~2028 [07/09]; ANEEL cortou R$ 275 mi de RBSE; receita ex-RBSE +52%; P/VP 0,85 e PL 22 bi incluem RBSE a receber até ~2028",
+    "privatizacao_federalizacao": null,
+    "golden_share": null,
+    "decisoes_regulador": [
+     "ANEEL cortou R$ 275 mi de RBSE [07/09]"
+    ],
+    "leilao": "ISA não venceu lote no leilão de transmissão de jul/26",
+    "tir_real_citada": "Ágora 9% (setor ~12%) [07/09, 03/10]; média de 15 casas R$ 30,70 (26,50-35) em 14/09; JPM rebaixou para neutro R$ 26,50; Genial compra (2T25); Ágora compra DY 7,5%",
+    "premissas_tir": "retorno PDF: yield ~4% + g 8-10% (RAP +45% ex-RBSE) = ~12-14% nominal, ~8-10% real (+0,9 a +2,9 p.p.) Empate; vira Sim a R$ 22 ou em 2028 com RBSE zerado"
+   },
+   "divida_capex": {
+    "divida_liquida": "valor n.e. no texto (título arevista cita 'dívida de R$ 16 bilhões'); 91% da dívida vence a partir de 2030",
+    "dl_ebitda": "3,78x (2T26)",
+    "custo_divida": "nao_encontrado",
+    "capex": "R$ 16,3 bi (+27% a/a) [07/09]; pipeline R$ 14 bi até 2029; R$ 1,05 bi/tri",
+    "cobertura_juros": "≈1,9x [07/09]",
+    "acoes": "~703 mi (implícito no JCP) pós-follow-on"
+   },
+   "controlador_interferencia": {
+    "consumadas": [],
+    "risco_prospectivo": "Overhang Axia (21,6% capital, 31% das PN); PN sem tag along; Sefaz-SP sem acordo; follow-on a 0,85x book",
+    "desconto_aplicado_pdf": "Nenhum explícito; regulatório 6/10 (controlador estatal colombiano)"
+   },
+   "gatilhos": [
+    {
+     "gatilho": "Novo follow-on em 12 meses",
+     "status": "Não acionado"
+    },
+    {
+     "gatilho": "DL/EBITDA > 4,5x",
+     "status": "Não acionado (3,78x)"
+    },
+    {
+     "gatilho": "Atraso > 12 meses nos greenfields",
+     "status": "Não acionado (no prazo)"
+    },
+    {
+     "gatilho": "Corte do payout < 50%",
+     "status": "Não acionado (75%)"
+    },
+    {
+     "gatilho": "Mudaria: 2 tri com lucro regulatório > R$ 400 mi e dívida estável -> central R$ 30",
+     "status": "Não verificável"
+    },
+    {
+     "gatilho": "Mudaria: tag along para a PN",
+     "status": "Não acionado"
+    },
+    {
+     "gatilho": "Mudaria: preço < R$ 22 -> RADAR",
+     "status": "Não acionado"
+    }
+   ],
+   "eventos_datas": [
+    "08/10, 09/11, 25/11 datas-com JCP",
+    "07/12 pagamento JCP",
+    "mar/2029 meta greenfields",
+    "2027-28 inflexão lucro regulatório",
+    "2028 RBSE zerado"
+   ],
+   "riscos": [
+    "Lucro regulatório 2T26 -32% (financeiro +82%)",
+    "Diluição (follow-on jul/26)",
+    "TIR 9% < Ke 12,35%",
+    "Overhang Axia",
+    "PN sem tag along"
+   ],
+   "retorno_vs_rf": {
+    "yield_fwd": "~4%",
+    "g_nominal": "8-10%",
+    "retorno_nominal": "~12-14%",
+    "retorno_real": "~8-10%",
+    "vs_ipca_mais": "+0,9 a +2,9 p.p.",
+    "vence_rf": "Empate"
+   },
+   "metricas_07_09": {
+    "pl": "7,9 IFRS / ~19 regulatório",
+    "pvp": "0,85 (book inclui RBSE)",
+    "roe_roic": "IFRS 11% / regulatório 9,8%",
+    "ebitda_regulatorio_2t26": "R$ 967 mi (+22,5%), margem 77,8%",
+    "lucro_regulatorio_2t26": "R$ 174 mi (-32%)",
+    "graham_numero": "IFRS R$ 50,6 (inflado) / regulatório R$ 32,9",
+    "graham_7_criterios": "4/7",
+    "epv": "R$ 1,3 (WACC 12,2%) / 7 (9,9%)",
+    "bazin": "R$ 30,8 (12m) / 18,7 (fwd)",
+    "ddm_3_cenarios": "Ke 12,35%/16,8%/mercado 10%: pess. 17/13/20 · base 20/15/24 · otim. 27/20/32",
+    "reproducao": "PL 22 bi (R$ 32)"
+   },
+   "valuation_premissas_pdf": {
+    "ke": "12,35% -> 12,06% real",
+    "g": "8-10%",
+    "justo_03_10": 26.0,
+    "decomposicao": "Ke +R$ 1 (DDM em 3 cenários); fatos operacionais R$ 0",
+    "rotulo": "premissa_pdf"
+   },
+   "nao_encontrado": [
+    "Release 2T26 do RI",
+    "Série anual de lucro regulatório e DPA",
+    "Composição do controle",
+    "Vencimentos/covenants",
+    "Motivo da alta de 30/09",
+    "Custo da dívida"
+   ],
+   "fontes_03_10": [
+    "cteep_aviso_jcp_2026-09-29",
+    "arevista_isae4_divida",
+    "diariodocomercio_projeto_itatiaia",
+    "abcagora_isa_rede_eletrica_sp",
+    "canalsolar_leilao_transmissao",
+    "moneytimes_axia_despacha_acoes",
+    "infomoney_jpm_rebaixa_isae4",
+    "yahoo_ISAE4"
+   ]
+  },
+  "CMIG4": {
+   "nome": "Cemig (Cia Energética de Minas Gerais)",
+   "segmento": "integrada (distribuição + geração + transmissão + Gasmig)",
+   "controlador": {
+    "nome": "Estado de Minas Gerais",
+    "participacao": "n.e. (participação do Estado e tag along da PN listados como não encontrados [07/09])",
+    "fonte": "PDF 03/10 e 07/09"
+   },
+   "tag_along": "nao_encontrado (PN Nível 1)",
+   "free_float": null,
+   "composicao_unit": null,
+   "preco_02_10": 11.41,
+   "preco_obs": "Yahoo; 04/09 R$ 11,26; ficha anterior R$ 10,30 (14/08); +11%",
+   "veredito": {
+    "atual": "JUSTA",
+    "anterior": "JUSTA (07/09: RADAR->JUSTA)",
+    "justo": 10.6,
+    "justo_anterior": 10.3,
+    "compra_menos30": 7.4,
+    "compra_anterior": 7.3,
+    "saida": 15.5,
+    "saida_anterior": 15.0,
+    "faixa": "7-15,50",
+    "premio": "0% -> +8%",
+    "compraria": "Não a R$ 11,41; entrada única a R$ 7,40; antes disso só depois da eleição e com payout preservado"
+   },
+   "notas": {
+    "qualidade": 7.0,
+    "solidez": 6.0,
+    "renda": "7.0 -> 6.5",
+    "preco": 4.0,
+    "geral": "6.2 -> 6.1"
+   },
+   "proventos": {
+    "dpa_12m": "JCP declarado em 2026 até set: R$ 658 mi (mar) + R$ 630,5 mi (jun) + R$ 200 mi (set) ≈ R$ 1,49 bi ≈ R$ ~0,52/ação; 2024 R$ 0,66; 2025 ~1,28 (c/ extras; adicionais propostos R$ 1,8 bi ≈ 0,65/ação) [07/09]",
+    "dy_12m": "~4,6% (só JCP 2026 até set; falta 4T) [03/10]; 11,45% HG c/ extraordinários / 8,0% Renova [07/09]",
+    "dy_forward": "~7,4% (DPA ~R$ 0,84 a payout 50%)",
+    "politica_payout": "50% (limite até 2028); 2025 53,9%",
+    "extraordinarios": "extras dependem de venda de ativos (travadas por 'complexidades')",
+    "jcp_set26": "R$ 0,0699/ação (R$ 200 mi), data-com 22/09; pagamento até 30/06/27 e até 30/12/27; 67% menor que set/25 (R$ 0,2113)",
+    "defasagem_declaracao_pagamento": "9-15 meses (antes 1-2 meses)",
+    "cobertura": "Lucro cobre payout de 50%, mas defasagem longa reduz valor presente (IPCA ~4-5%)",
+    "proximo_provento": "JCP R$ 0,0699 até jun e dez/27 (data-com 22/09, passada)",
+    "irrf": "17,5% sobre JCP"
+   },
+   "regulatorio": {
+    "regulador": "ANEEL",
+    "rap": null,
+    "brr_base_remuneracao": "RAB crescendo com programa de capex R$ 44 bi até 2030; virada quando RAB nova entra na tarifa (2027-29)",
+    "wacc_regulatorio_real": null,
+    "ciclo_revisao_tarifaria": "Revisão tarifária da Cemig D em 2028 (RTP); gatilho: corte relevante da Parcela B",
+    "renovacao_concessoes": "Sá Carvalho renovada por 30 anos (31/08/2026); hidrelétricas",
+    "rbse": null,
+    "privatizacao_federalizacao": "Propag: União ainda não definiu os ativos (Tesouro: 'não há prazo geral'); Cemig só entra se virar corporation com aval da ALMG; SEF-MG fala em 31/12/26; privatização saiu do radar (candidatos competitivos contra; Simões descarta privatizar mas quer discutir venda da Gasmig); federalização menos provável",
+    "golden_share": null,
+    "decisoes_regulador": [],
+    "tir_real_citada": "XP positivo, TIR real 15,3% (única utility acima do Ke; não desconta Propag) [07/09]; BBI neutro 13 (era 15; TIR 12,3%); Safra neutro 11,90 (era 12,50); JPM UW 13; BTG prefere Copasa",
+    "premissas_tir": "retorno PDF: yield ~7,4% + g 6-8% = ~13,5-15,5% nominal; real 9,5-11,5% puro, ~8-9% ponderado por cenário (40% federalização): Empate"
+   },
+   "divida_capex": {
+    "divida_liquida": "R$ 19,4 bi [07/09]",
+    "dl_ebitda": "2,6x (era 0,92x em 2024); rating brAAA (S&P elevou em ago/26)",
+    "custo_divida": "Debênture GT de R$ 1-1,25 bi liquidada em 04/09 (custo n.e.)",
+    "capex": "1S26 R$ 3,28 bi; programa R$ 44 bi até 2030",
+    "liquidez_corrente": "0,93; cobertura de juros ≈1,9x [07/09]",
+    "financeiro": "-R$ 796 mi (+155%) [07/09]"
+   },
+   "controlador_interferencia": {
+    "consumadas": [
+     {
+      "fato": "MP 579 (renovação antecipada das concessões, perda de receita)",
+      "ano": 2012,
+      "fonte": "PDF 07/09"
+     },
+     {
+      "fato": "Corte de dividendo e venda de ativos forçada",
+      "ano": 2016,
+      "fonte": "PDF 07/09"
+     }
+    ],
+    "risco_prospectivo": "Propag/federalização; Cleitinho (lidera 37-42%; vence 2o turno 60x24 Datafolha) diz que lucro da Cemig deve 'subsidiar a conta' -> risco de uso político de payout/tarifa; promessa de campanha não é evento consumado",
+    "desconto_aplicado_pdf": "Cenários: 40% federalização/uso político (R$ 7,00 -> 7,20) + 60% base (R$ 12,50 -> 12,90) = R$ 10,62 -> R$ 10,60; em 07/09 desconto de 30% no central; controlador nota 3/10; risco entra uma vez só nos cenários, Ke sem prêmio extra [premissa_pdf]"
+   },
+   "gatilhos": [
+    {
+     "gatilho": "Decisão de federalização via Propag",
+     "status": "Não acionado"
+    },
+    {
+     "gatilho": "DL/EBITDA > 3,5x",
+     "status": "Não acionado (2,6x)"
+    },
+    {
+     "gatilho": "Revisão Cemig D com corte relevante de Parcela B",
+     "status": "Não acionado (RTP 2028)"
+    },
+    {
+     "gatilho": "Payout < 50%",
+     "status": "Não verificável até 4T26 (sinal amarelo: JCP set -67%)"
+    },
+    {
+     "gatilho": "Mudaria: Propag definido sem transferência de controle -> central R$ 15",
+     "status": "Não acionado"
+    },
+    {
+     "gatilho": "Mudaria: preço < R$ 9 sem novidade política -> BARATA",
+     "status": "Não acionado"
+    }
+   ],
+   "eventos_datas": [
+    "04/10 eleição MG",
+    "25/10 2o turno",
+    "12/11 3T26",
+    "25/11 Cemig Day",
+    "31/12/2026 prazo citado SEF-MG Propag",
+    "2028 RTP Cemig D e fim do limite de payout",
+    "04/09 debênture liquidada",
+    "31/08 Sá Carvalho 30 anos"
+   ],
+   "riscos": [
+    "Federalização OU uso político de payout/tarifa (peso 40%)",
+    "Defasagem de pagamento 9-15 meses",
+    "Alavancagem 0,9x -> 2,6x com capex R$ 44 bi",
+    "Financeiro +155%",
+    "Viés de corte das casas"
+   ],
+   "retorno_vs_rf": {
+    "yield_fwd": "~7,4% (se payout mantido)",
+    "g_nominal": "6-8%",
+    "retorno_nominal": "~13,5-15,5%",
+    "retorno_real": "9,5-11,5% puro; ~8-9% ponderado",
+    "vs_ipca_mais": "+1 a +2 p.p. (ponderado)",
+    "vence_rf": "Empate (corrigido; ficha anterior marcava Sim c/ ressalva)"
+   },
+   "metricas_07_09": {
+    "pl": "6,1 (LPA 12m ~1,69)",
+    "pvp": "1,03 (VPA 9,99)",
+    "roe_roic": "16,7% / 11,1% (ROE médio 10a 15,8%; 2024 inflado 26%)",
+    "ebitda_aj_2t26": "R$ 2,47 bi (+9,3%)",
+    "lucro_2t26": "R$ 945 mi (-20%); ajustado R$ 1,12 bi",
+    "graham_numero": "R$ 19,5 (preço 47% abaixo)",
+    "graham_7_criterios": "5/7",
+    "epv": "R$ 3,7 (WACC 13,3%) / 6,5 (10,5%)",
+    "reproducao": "PL 28,6 bi (R$ 10) ≈ preço",
+    "bazin": "R$ 21,3 (12m) / 14 (fwd)",
+    "ddm_3_cenarios": "Ke 12,35%/16,8%/mercado 10%: pess. 7,7/6,6/9 · base 12,6/10,6/13,8 · otim. 15,1/12,7/17",
+    "formula_magica": "EV/EBIT 8,3x; ROIC 11,1%"
+   },
+   "valuation_premissas_pdf": {
+    "ke": "12,35% -> 12,06% real",
+    "g": "6-8%",
+    "justo_03_10": 10.6,
+    "decomposicao": "0,4 x 7,20 + 0,6 x 12,90 = R$ 10,62",
+    "cenarios": {
+     "ruim": {
+      "peso": 0.4,
+      "valor": 7.2
+     },
+     "base": {
+      "peso": 0.6,
+      "valor": 12.9
+     }
+    },
+    "rotulo": "premissa_pdf"
+   },
+   "nao_encontrado": [
+    "Participação do Estado e tag along da PN",
+    "DPA anual 2016-23",
+    "Detalhes do Propag",
+    "Release 2T26 do RI",
+    "Custo da debênture GT",
+    "Múltiplos dos pares"
+   ],
+   "fontes_03_10": [
+    "otempo_propag_contrato_adesao",
+    "ofator_tesouro_responde_almg",
+    "em_simoes_descarta_privatizar_cemig",
+    "investidor10_privatizacao_cemig_sai_do_radar",
+    "latibex_aviso_acionistas_cemig_2026-09-17",
+    "investidor10_cemig_distribuir_600mi",
+    "moneytimes_bbi_corta_alvo_cemig",
+    "investalk_bb_credito_privado_cemig_set26",
+    "cnn_datafolha_cleitinho",
+    "yahoo_CMIG4"
+   ]
+  },
+  "CPFE3": {
+   "nome": "CPFL Energia",
+   "segmento": "distribuição (4 concessões maduras SP/RS: Paulista, Piratininga, RGE e Santa Cruz)",
+   "controlador": {
+    "nome": "State Grid (China) + ESC",
+    "participacao": "State Grid 63,4% + ESC 20,3%",
+    "fonte": "PDF 03/10 e 07/09"
+   },
+   "tag_along": "Novo Mercado (tag along 100% implícito; valor n.e. no PDF)",
+   "free_float": "~16%",
+   "composicao_unit": null,
+   "preco_02_10": 48.09,
+   "preco_obs": "Yahoo; 04/09 R$ 46,83; mín. 28/09 R$ 43,90; ficha anterior R$ 46,87; +2,6%",
+   "veredito": {
+    "atual": "RADAR",
+    "anterior": "JUSTA",
+    "justo": 54.0,
+    "justo_anterior": 47.0,
+    "compra_menos30": 37.8,
+    "compra_anterior": 33.0,
+    "saida": 66.0,
+    "saida_anterior": 58.0,
+    "faixa": "30-68",
+    "premio": "0% -> desconto de 11%",
+    "compraria": "Ainda não; aceitável R$ 43 (-20%, yield fwd ~9,5%); cheio R$ 37,80; a mais perto de compra entre as 8"
+   },
+   "notas": {
+    "qualidade": 8.0,
+    "solidez": 6.0,
+    "renda": 8.0,
+    "preco": "5.0 -> 6.0",
+    "geral": "7.0 -> 7.2"
+   },
+   "proventos": {
+    "dpa_12m": "2026 declarado R$ 3,73/ação (R$ 6,6 bi: 1,30 em mai + parcelas + saldo dez); 4a parcela R$ 0,6075 paga 24/09; saldo R$ 1,6487 em 31/12",
+    "dy_12m": "~7,8% (R$ 3,73 ÷ 48,09) [03/10]; 7,9-8,2% [07/09]",
+    "dy_forward": "~8-8,5% (DPA ~R$ 4,1 a payout 70%; BBI 8,5-11% até 2030; Itaú ~8%); ~9,5% a R$ 43",
+    "politica_payout": "~70-75% (2025 ~75%)",
+    "historico": "cortes em 2016-19; pagamentos relevantes 2020-22, modestos em 2023 [07/09]",
+    "extraordinarios": null,
+    "defasagem_declaracao_pagamento": "até 8 meses (data-com abr -> saldo em dez)",
+    "cobertura": "FCF negativo no ciclo e dívida +19%: parte do dividendo é dívida",
+    "proximo_provento": "Saldo R$ 1,6487 em 31/12 (data-com 29/04, passada: quem compra hoje não recebe)",
+    "alerta": "Renovação traz cláusula de restrição de dividendos por falha de qualidade (DEC/FEC); nova retenção de IR sobre dividendos em 2026 (avisada pela empresa)"
+   },
+   "regulatorio": {
+    "regulador": "ANEEL",
+    "rap": null,
+    "brr_base_remuneracao": "RAB cresce +51% a +83% por distribuidora (Itaú); capex R$ 31 bi no plano 2026-30 (R$ 25,3 bi distribuição); MME prevê R$ 26,2 bi de investimento em SP",
+    "wacc_regulatorio_real": null,
+    "ciclo_revisao_tarifaria": "Fator X: consulta pública 020/2026 encerrada em 31/08 (revisão da metodologia); BofA vê CPFL entre as maiores beneficiárias; datas das próximas revisões n.e.",
+    "renovacao_concessoes": "Termos aditivos de Paulista, Piratininga e RGE assinados por 30 anos, anunciados em 08/05/2026 (Decreto 12.068), início entre nov/27 e out/28; Santa Cruz ficou fora do pacote (vencimento n.e.); contrapartidas específicas da CPFL não encontradas; cláusulas gerais: metas de qualidade, restrição de dividendos se descumprir, caducidade após 2 anos de falha",
+    "rbse": null,
+    "privatizacao_federalizacao": null,
+    "golden_share": null,
+    "decisoes_regulador": [
+     "Decreto 12.068 (regra geral de renovação)",
+     "Consulta pública 020/2026 Fator X"
+    ],
+    "tir_real_citada": "n.e. como TIR; casas: Itaú BBA 45,90->52,50 (upside 60,80); BBI 45->53; consenso 49,60; Nord compra (<40,50); Ágora DY 9-10%; 1 compra/8 neutros/4 vendas (25/09)",
+    "premissas_tir": "retorno PDF: yield 8-8,5% + g 5-7% (RAB, data centers) = ~13,5-15,5% nominal, ~9-11% real (+2 a +4 p.p.) Sim (marginal)"
+   },
+   "divida_capex": {
+    "divida_liquida": "R$ 32,5 bi (+19%)",
+    "dl_ebitda": "2,36x (HG 1,99x; Renova 3,16x perímetro); covenant 3,2x não verificado na fonte",
+    "custo_divida": "nao_encontrado; financeiro -R$ 986 mi (-48%)",
+    "capex": "R$ 31,1 bi 2026-30 (25,3 bi distribuição); pico de capex",
+    "liquidez_corrente": "0,93; cobertura de juros ≈2,6x; rating AAA.br"
+   },
+   "controlador_interferencia": {
+    "consumadas": [],
+    "risco_prospectivo": "Free float 16% (risco de OPA de fechamento sem prêmio; nenhuma OPA em 2026); cláusula de restrição de dividendos por qualidade; abertura do mercado livre baixa tensão (nov/27 e nov/28), distribuidora supridora última instância até 2030",
+    "desconto_aplicado_pdf": "Nenhum desconto de controlador; regulatório/controlador 7/10 (State Grid sem interferência em 9 anos; payout 70-75%); desconto de R$ 2 pela cláusula de restrição de dividendos e contrapartidas não verificadas"
+   },
+   "gatilhos": [
+    {
+     "gatilho": "Termos de renovação que cortem o retorno da RAB",
+     "status": "Não acionado (regra geral; termos específicos n.e.)"
+    },
+    {
+     "gatilho": "DL/EBITDA > 3,2x",
+     "status": "Não acionado (2,36x)"
+    },
+    {
+     "gatilho": "Payout < 50%",
+     "status": "Não acionado (~75%)"
+    },
+    {
+     "gatilho": "OPA de fechamento sem prêmio",
+     "status": "Não acionado"
+    },
+    {
+     "gatilho": "Mudaria: renovação publicada em termos neutros/positivos -> central R$ 55",
+     "status": "ACIONADO desde 08/05/26 (PDF não tinha visto: erro de coleta)"
+    },
+    {
+     "gatilho": "Mudaria: preço < R$ 38 -> RADAR/BARATA",
+     "status": "Não acionado"
+    }
+   ],
+   "eventos_datas": [
+    "08/05/2026 renovação anunciada",
+    "24/09 4a parcela paga",
+    "12/11 3T26",
+    "31/12 saldo R$ 1,6487",
+    "nov/2027 e nov/2028 abertura mercado livre baixa tensão",
+    "nov/27-out/28 início dos novos contratos"
+   ],
+   "riscos": [
+    "Restrição de dividendos por falha de qualidade (eventos climáticos extremos)",
+    "FCF negativo e dívida +19%",
+    "Free float 16%",
+    "Fator X"
+   ],
+   "retorno_vs_rf": {
+    "yield_fwd": "~8-8,5%",
+    "g_nominal": "5-7%",
+    "retorno_nominal": "~13,5-15,5%",
+    "retorno_real": "~9-11%",
+    "vs_ipca_mais": "+2 a +4 p.p.",
+    "vence_rf": "Sim (marginal) - única do lote"
+   },
+   "metricas_07_09": {
+    "pl": "8,6 (LPA 12m ~5,46)",
+    "pvp": "2,3 (VPA 20,40)",
+    "roe_roic": "24,5% / 12,8% (ROE médio 10a 22,1%)",
+    "ebitda_2t26": "R$ 3,56 bi (+17,4%) (atribuição de coluna inferida do texto extraído)",
+    "lucro_2t26": "R$ 1,44 bi (+21,3%; alíquota 25,5%)",
+    "graham_numero": "R$ 50 (preço 6% abaixo)",
+    "graham_7_criterios": "4/7",
+    "epv": "R$ 20 (WACC 12,2%) / 31 (9,9%)",
+    "bazin": "R$ 62 (12m) / 68 (fwd)",
+    "dcf_3_cenarios": "Ke 16,8%/12,35%: pess. 26/30 · base 43/51 · otim. 52/62",
+    "pl_fwd": "P/L 9 sobre LPA fwd 5,5 -> R$ 50",
+    "piotroski": "4/7",
+    "pares": "CMIG4 P/L 6,1 P/VP 1,03 ROE 16,7% DY 8-11% | CPLE3 P/L 16 P/VP 1,85 ROE 11,4% DY 7,2%"
+   },
+   "valuation_premissas_pdf": {
+    "ke": "12,35% -> 12,06% real",
+    "g": "5-7%",
+    "justo_03_10": 54.0,
+    "decomposicao": "Regra pré-definida da ficha (renovação neutra/positiva) +R$ 8 (47->55); cláusula de restrição de dividendos e contrapartidas -R$ 2; Ke +R$ 1",
+    "rotulo": "premissa_pdf"
+   },
+   "nao_encontrado": [
+    "Contrapartidas específicas da CPFL na renovação",
+    "Vencimento da Santa Cruz",
+    "Covenants (3,2x não verificado)",
+    "DPA anual 2016-25",
+    "Lucro 2016-20",
+    "Múltiplos de EQTL3/ENGI11"
+   ],
+   "fontes_03_10": [
+    "visnoinvest_cpfe3_renovacao_30_anos",
+    "financenews_cpfl_renovacao_30_anos",
+    "cenarioenergia_mme_decreto_12068",
+    "dadosdemercado_cpfe3_dividendos",
+    "investing_itau_bba_eleva_alvo_cpfl",
+    "bpmoney_cpfl_bbi_alvo",
+    "arevista_cpfe3_cai_20_lucro_21",
+    "aneel_cp_fator_x",
+    "yahoo_CPFE3"
+   ]
+  },
+  "CPLE3": {
+   "nome": "Copel",
+   "segmento": "integrada (geração + distribuição + transmissão)",
+   "controlador": {
+    "nome": "Sem controlador (corporation, privatizada 2023); Estado do PR com 15,9% das ON + golden share",
+    "participacao": "Estado PR 15,9% ON + golden share",
+    "fonte": "PDF 03/10"
+   },
+   "tag_along": "Novo Mercado (PN convertidas em ON; tag along 100% implícito)",
+   "free_float": null,
+   "composicao_unit": null,
+   "preco_02_10": 16.61,
+   "preco_obs": "Yahoo; 04/09 R$ 15,85; ficha anterior R$ 15,82; +5%",
+   "veredito": {
+    "atual": "CARA (limítrofe)",
+    "anterior": "JUSTA (para CARA)",
+    "justo": 14.4,
+    "justo_anterior": 14.0,
+    "compra_menos30": 10.1,
+    "compra_anterior": 9.8,
+    "saida": 18.5,
+    "saida_anterior": 18.0,
+    "faixa": "9-20",
+    "premio": "+13% -> +15,3% (16,61 ÷ 14,40; cruzou a linha por 0,3 p.p.)",
+    "compraria": "Não; aceitável R$ 12; cheio R$ 10,10"
+   },
+   "notas": {
+    "qualidade": 7.0,
+    "solidez": 5.0,
+    "renda": 7.0,
+    "preco": "4.0 -> 3.5",
+    "geral": "6.0 -> 5.9"
+   },
+   "proventos": {
+    "dpa_12m": "R$ 1,06 (12m)",
+    "dy_12m": "~6,4% (R$ 1,06 ÷ 16,61) [03/10]; 7,2% [07/09] (I10 6,8%)",
+    "dy_forward": "~6,9% (2026e ~R$ 1,14) + extras",
+    "politica_payout": ">= 75% do lucro, 2x/ano, extras quando abaixo da alavancagem-ótima; payout 90,6% (I10) [07/09]; payout mínimo 75% mantido",
+    "extraordinarios": "Extras pagos subindo a alavancagem-alvo (2,9x); yield ~12% do Morgan Stanley inclui dívida distribuída; pagou R$ 1,35 bi (dez/25) em 30/06/26; 2021 teve extraordinários",
+    "declarado_desde_05_09": "Nada novo; JCP R$ 0,2377 pago em 30/09 (data-com 29 ou 30/04, fontes divergem)",
+    "defasagem_declaracao_pagamento": "~5 meses",
+    "cobertura": "Parcial: extras com dívida",
+    "proximo_provento": "Nada declarado após o JCP pago em 30/09",
+    "recompra": "Até 285,5 mi de ações até nov/27 (concorre com extras)",
+    "irrf": "17,5% sobre JCP"
+   },
+   "regulatorio": {
+    "regulador": "ANEEL",
+    "rap": null,
+    "brr_base_remuneracao": null,
+    "wacc_regulatorio_real": null,
+    "ciclo_revisao_tarifaria": null,
+    "renovacao_concessoes": "Hidrelétricas renovadas por 30 anos [07/09]; prazos das concessões listados como não encontrados",
+    "rbse": null,
+    "privatizacao_federalizacao": "Já privatizada em 2023 (corporation); eleição PR 04/10: Moro (~50% dos válidos) respeita contratos mas propõe que a Copel indenize quedas e critica a privatização; Requião Filho fala em 'retomar a Copel' (risco baixo de reversão)",
+    "golden_share": "Sim, Estado do PR (termos não encontrados)",
+    "decisoes_regulador": [],
+    "tir_real_citada": "n.e.; casas sem revisão em set/out: BTG 18 (mar), Safra 17,20 (mar), Goldman 14 (jan); Safra subiu peso na carteira de 8% para 10% (sem alvo); Morgan Stanley: yield ~12% c/ extras",
+    "premissas_tir": "retorno PDF: yield ~6,4-7% + g 5-6% = ~11,5-13% nominal, ~7,5-8,5% real (+0,4 a +1,4 p.p.) Empate; a R$ 12 vira Sim"
+   },
+   "divida_capex": {
+    "divida_liquida": "R$ 19,65 bi [07/09]",
+    "dl_ebitda": "2,9x (alvo; prazo de convergência esticado de 24 para 48 meses; faixa 2,6-3,2)",
+    "custo_divida": "nao_encontrado",
+    "capex": "2026 R$ 3,02 bi (incl. LRCAP R$ 318 mi); expansão hídrica até 2030",
+    "liquidez_corrente": "1,37; cobertura de juros ≈2,8x [07/09]",
+    "desinvestimento": "Venda da UHE Dona Francisca (R$ 150 mi EV)"
+   },
+   "eventos_climaticos": "Setembro/26: pior mês climático da história da empresa (2.061 postes, 6 torres, pico de 257,9 mil clientes sem energia; custo n.e.), eleva risco de qualidade e multa; El Niño é alerta para dez; BBCE set ~R$ 147/MWh; Thymos vê PLD ~R$ 170 na primavera; GSF 3T26",
+   "controlador_interferencia": {
+    "consumadas": [],
+    "risco_prospectivo": "Pressão regulatória sobre qualidade com qualquer vencedor (eleição PR 04/10); Requião Filho quer 'retomar a Copel'",
+    "desconto_aplicado_pdf": "Nenhum; regulatório 6/10 (golden share PR)"
+   },
+   "gatilhos": [
+    {
+     "gatilho": "DL/EBITDA > 3,2x",
+     "status": "Não acionado (2,9x)"
+    },
+    {
+     "gatilho": "ROIC < 8% em 2027 mesmo após eficiências",
+     "status": "Não verificável"
+    },
+    {
+     "gatilho": "M&A relevante",
+     "status": "Não acionado"
+    },
+    {
+     "gatilho": "Payout < 75%",
+     "status": "Não acionado"
+    },
+    {
+     "gatilho": "Mudaria: ROIC recorrente > 11% por 2 tri -> central R$ 17",
+     "status": "Não verificável"
+    },
+    {
+     "gatilho": "Mudaria: preço < R$ 12 sem piora -> RADAR",
+     "status": "Não acionado"
+    }
+   ],
+   "eventos_datas": [
+    "04/10 eleição PR",
+    "30/09 JCP R$ 0,2377 pago",
+    "nov/2027 fim recompra",
+    "2030 fim do capex",
+    "3T26/4T26 custo e multa do evento climático"
+   ],
+   "riscos": [
+    "Alavancagem-alvo elevada para pagar extras",
+    "ROIC 7,9% < WACC",
+    "Hidrologia favorável pode ser pico",
+    "Multa/indenização do evento climático",
+    "Ação +50% em 12m"
+   ],
+   "retorno_vs_rf": {
+    "yield_fwd": "~6,4-7%",
+    "g_nominal": "5-6%",
+    "retorno_nominal": "~11,5-13%",
+    "retorno_real": "~7,5-8,5%",
+    "vs_ipca_mais": "+0,4 a +1,4 p.p.",
+    "vence_rf": "Empate"
+   },
+   "metricas_07_09": {
+    "pl": "~16 (recorrente; LPA ~0,97)",
+    "pvp": "1,85 (VPA 7,74; Renova 8,71)",
+    "ev_ebitda": "9,3x",
+    "roe_roic": "11,4% / 7,9% (< WACC 9,9-12,2%)",
+    "ebitda_rec_2t26": "R$ 1,61 bi (+20,8%); Copel DIS +34,5% (PMSO -0,4%); GeT +10,1%",
+    "lucro_2t26": "contábil R$ 1,05 bi (UBP) / recorrente R$ 645 mi (+42,6%)",
+    "graham_numero": "R$ 12,6 (preço 25% acima)",
+    "graham_7_criterios": "3/7",
+    "epv": "R$ 2,8 (WACC 12,2%) / 4,9 (9,9%)",
+    "bazin": "R$ 17,7 (12m) / 19 (fwd)",
+    "ddm_3_cenarios": "Ke 12,35%/16,8%/mercado 10%: pess. 9,9/8,5/11 · base 14/12/15,3 · otim. 17,7/15/19,5",
+    "formula_magica": "EV/EBIT 12x; ROIC 7,9%",
+    "piotroski": "6/7"
+   },
+   "valuation_premissas_pdf": {
+    "ke": "12,35% -> 12,06% real",
+    "g": "5-6%",
+    "justo_03_10": 14.4,
+    "decomposicao": "Ke +R$ 0,40; setembro climático R$ 0 (sem número)",
+    "rotulo": "premissa_pdf"
+   },
+   "nao_encontrado": [
+    "Custo do evento climático de setembro",
+    "Lucro recorrente anual 2023-25 e DPA anual",
+    "Prazos das concessões",
+    "Termos da golden share",
+    "Covenants",
+    "Data-com do JCP de abr (fontes divergem 29 ou 30/04)"
+   ],
+   "fontes_03_10": [
+    "bemparana_pior_setembro_climatico",
+    "seudinheiro_copel_altera_parametros_financeiros",
+    "dadosdemercado_cple3_dividendos",
+    "moneytimes_safra_10_acoes_outubro",
+    "moneytimes_moro_critica_privatizacao_copel",
+    "horadopovo_requiao_filho_retomar_copel",
+    "gazetadopovo_pesquisa_parana_setembro",
+    "agenciainfra_pld_170_primavera_thymos",
+    "yahoo_CPLE3"
+   ]
+  }
+ },
+ "fontes": {
+  "nota": "Rótulos de fontes do PDF 03/10 (rótulo -> URL), reconstruídos das quebras de linha do texto extraído; URLs podem estar truncadas/quebradas pelo extrator. Colocar 'inferido' = rótulo criado por mim a partir do domínio.",
+  "ri_sanepar_2t26": "https://ri.sanepar.com.br/docs/Sanepar-2026-06-30-LhNKMDPD.pdf",
+  "terra_agepar_nega_recurso": "https://www.terra.com.br/economia/agepar-nega-recurso-da-sanepar-sobre-uso-de-recursos-de-precatorio-em-desconto-a-usuarios,27a88c302da63f251e316587ff10eeabkmhgx25c.html",
+  "band_desconto_25_tarifa_minima": "https://band.com.br/economia/sanepar-comeca-a-aplicar-desconto-de-25-na-tarifa-minima-em-outubro",
+  "seudinheiro_xp_rebaixa_sapr11": "https://www.seudinheiro.com/2026/empresas/xp-rebaixa-acao-da-sanepar-sapr11-mesmo-com-potencial-de-33-na-bolsa-o-que-esta-faltando-para-o-papel-miql/",
+  "gazetadoparana_candidatos": "https://gazetadoparana.com.br/publico/sanepar-publica-nao-significa-sanepar-100-estatal-o-que-os-oito-candidatos-propoem-para-a-companhia",
+  "yahoo_SAPR11": "https://query1.finance.yahoo.com/v8/finance/chart/SAPR11.SA",
+  "cenarioenergia_equatorial_governanca": "https://cenarioenergia.com.br/2026/09/30/grupo-equatorial-assume-governanca-copasa-augusto-dantas/",
+  "cordisnoticias_encerra_acordo": "https://www.cordisnoticias.com.br/2026/09/apos-privatizacao-equatorial-encerra.html (URL truncada na extração)",
+  "agenciainfra_renovacao_43_municipios": "https://agenciainfra.com/blog/copasa-renovou-contrato-com-43-municipios-dos-636-onde-opera-ate-2073/",
+  "infomoney_csmg3_proventos": "https://www.infomoney.com.br/mercados/copasa-csmg3-aprova-pagamento-de-r-969-mi-em-proventos-veja-quem-tem-direito/",
+  "infomoney_csmg3_2t26": "https://www.infomoney.com.br/mercados/copasa-csmg3-resultados-segundo-trimestre-2026/",
+  "investidor10_itau_bba": "https://investidor10.com.br/noticias/copasa-csmg3-apos-privatizacao-itau-bba-eleva-preco-alvo-em-50-122156/ (URL truncada)",
+  "otempo_indira_reestatizar": "https://www.otempo.com.br/eleicoes/2026/governadores/2026/9/10/indira-xavier-defende-reestatizar-a-copasa-para-nao-faltar-agua",
+  "infomoney_jpm_sbsp3_cfo": "https://www.infomoney.com.br/mercados/sabesp-sbsp3-tem-preco-alvo-elevado-pelo-jpmorgan-apos-reuniao-com-cfo-acao-sobe/",
+  "moneytimes_itau_bba_corta_alvo": "https://www.moneytimes.com.br/depois-de-perder-r-17-bilhoes-em-valor-de-mercado-itau-bba-corta-preco-alvo-apsa/ (URL truncada)",
+  "safra_sabesp_2t26_custos": "https://oespecialista.safra.com.br/sabesp-2t26-custos-inadimplencia/",
+  "cvm_ipe_1568917": "https://www.rad.cvm.gov.br/ENETWeb/frmDownloadDocumento.aspx?Tela=ext&numProtocolo=1568917&descTipo=IPE&CodigoInstituicao=1",
+  "infomoney_sbsp3_recupera_2t": "https://www.infomoney.com.br/mercados/sabesp-sbsp3-se-recupera-na-b3-apos-resultado-ruim-no-2t-chuvas-fortes-animaram/",
+  "ndmais_sp_tarcisio_haddad": "https://ndmais.com.br/politica/governo-de-sp-reta-final-entre-tarcisio-e-haddad/ (URL truncada)",
+  "dadosdemercado_sbsp3_dividendos": "https://www.dadosdemercado.com.br/acoes/sbsp3/dividendos",
+  "yahoo_SBSP3": "https://query1.finance.yahoo.com/v8/finance/chart/SBSP3.SA?range=3mo&interval=1d",
+  "cvm_ipe_1556473": "https://www.rad.cvm.gov.br/ENETWeb/frmDownloadDocumento.aspx?Tela=ext&numProtocolo=1556473&descTipo=IPE&CodigoInstituicao=1",
+  "cvm_ipe_1543201": "https://www.rad.cvm.gov.br/ENETWeb/frmDownloadDocumento.aspx?Tela=ext&numProtocolo=1543201&descTipo=IPE&CodigoInstituicao=1",
+  "taesa_release_2t26": "https://ri.taesa.com.br/wp-content/uploads/2018/11/TAESA_Release-2T26.pdf",
+  "infomoney_taesa_tese_dividendos": "https://www.infomoney.com.br/onde-investir/taesa-tese-dividendos-analise-2t2026/",
+  "infomoney_bbi_revisa_isa_alupar_taesa": "https://infomoney.com.br/mercados/bbi-revisa-precos-alvo-de-isa-alupar-e-taesa-e-destaca-perfil-defensivo-do-segmento (URL truncada)",
+  "cvm_ipe_1568852": "https://www.rad.cvm.gov.br/ENETWeb/frmDownloadDocumento.aspx?Tela=ext&numProtocolo=1568852&descTipo=IPE&CodigoInstituicao=1",
+  "dadosdemercado_taee11_dividendos": "https://www.dadosdemercado.com.br/acoes/taee11/dividendos",
+  "yahoo_TAEE11": "https://query1.finance.yahoo.com/v8/finance/chart/TAEE11.SA?range=3mo&interval=1d",
+  "cteep_aviso_jcp_2026-09-29": "https://s3.sa-east-1.amazonaws.com/static.cteep.mediagroup.com.br/Arquivos/Download/6781-2026.09.29-Aviso-aos-acionistas-JCP.pdf",
+  "arevista_isae4_divida": "https://arevista.com.br/investimentos/isae4-cresce-no-operacional-mas-divida-de-r-16-bilhoes-desafia-dividendos/",
+  "diariodocomercio_projeto_itatiaia": "https://diariodocomercio.com.br/economia/isa-energia-projeto-itatiaia/ (URL truncada)",
+  "abcagora_isa_rede_eletrica_sp": "https://abcagora.com.br/2026/10/01/isa-energia-brasil-rede-eletrica-sp/",
+  "canalsolar_leilao_transmissao": "https://canalsolar.com.br/leilao-de-transmissao-axia-alupar-vencedores/",
+  "moneytimes_axia_despacha_acoes": "https://www.moneytimes.com.br/isa-energia-isae3-axia-axia-despacha-6-milhoes-de-acoes/",
+  "infomoney_jpm_rebaixa_isae4": "https://www.infomoney.com.br/mercados/jpmorgan-rebaixa-isa-energia-isae4-para-neutra-e-ve-menos-espaco-para-valorizacao-desempenho-acoes/",
+  "yahoo_ISAE4": "https://query1.finance.yahoo.com/v8/finance/chart/ISAE4.SA?range=2mo&interval=1d",
+  "otempo_propag_contrato_adesao": "https://www.otempo.com.br/politica/2026/1/2/seis-meses-entenda-os-prazos-e-o-conteudo-do-contrato-de-adesao-de-minas-ao-propag",
+  "ofator_tesouro_responde_almg": "https://ofator.com.br/informacao/o-que-o-tesouro-respondeu-a-almg-sobre-os-bens-e-ativos-oferecidos-por-minas-no-propag/",
+  "em_simoes_descarta_privatizar_cemig": "https://www.em.com.br/politica/2026/09/7500910-simoes-descarta-privatizar-cemig-mas-quer-discutir-venda-da-gasmig.html",
+  "investidor10_privatizacao_cemig_sai_do_radar": "https://investidor10.com.br/noticias/privatizacao-da-cemig-cmig4-sai-do-radar-com-eleicao-em-minas-gerais-122742/",
+  "latibex_aviso_acionistas_cemig_2026-09-17": "https://www.latibex.com/docs/Documentos/esp/hechosrelev/2026/Aviso-aos-Acionistas-Cemig-2026-09-17-Fcp7LwWf.pdf",
+  "investidor10_cemig_distribuir_600mi": "https://investidor10.com.br/noticias/cemig-cmig4-vai-distribuir-r-600-milhoes-aos-acionistas-veja-como-receber-115620/",
+  "moneytimes_bbi_corta_alvo_cemig": "https://www.moneytimes.com.br/cemig-cmig4-bradesco-bbi-corta-preco-alvo-mesmo-com-multimos-descontados-e-dividend-yield-atrativo-veja-os-motivos-lmrs/ (URL truncada)",
+  "investalk_bb_credito_privado_cemig_set26": "https://investalk.bb.com.br/noticias/mercado/credito-privado-analise-emissores-Cemig-Set26",
+  "cnn_datafolha_cleitinho": "https://www.cnnbrasil.com.br/eleicoes/datafolha-cleitinho-tem-40-para-o-governo-de-minas-gerais-patrus-16/",
+  "yahoo_CMIG4": "https://query1.finance.yahoo.com/v8/finance/chart/CMIG4.SA?range=2mo&interval=1d",
+  "visnoinvest_cpfe3_renovacao_30_anos": "https://visnoinvest.com.br/news/13139/cpfl-energia-cpfe3-conclui-renovacao-de-concessoes-por-30-anos",
+  "financenews_cpfl_renovacao_30_anos": "https://financenews.com.br/2026/05/cpfl-concluiu-renovacao-de-concessoes-por-30-anos/ (URL truncada)",
+  "cenarioenergia_mme_decreto_12068": "https://cenarioenergia.com.br/2026/05/08/renovacao-das-distribuidoras-mme-preve-r-130-bi-em-aportes-sob-novas-regras-do-decreto-12-068/ (URL truncada)",
+  "dadosdemercado_cpfe3_dividendos": "https://www.dadosdemercado.com.br/acoes/cpfe3/dividendos",
+  "investing_itau_bba_eleva_alvo_cpfl": "https://br.investing.com/news/general-news/cpfe3-itau-bba-eleva-alvo-de-cpfl-destaca-dividendos-potencial-regulatorio-2081969",
+  "bpmoney_cpfl_bbi_alvo": "https://bpmoney.com.br/mercado/acoes/cpfl-cpfe3-itau-bba-bradesco-bbi-elevam-preco-alvo/ (URL truncada)",
+  "arevista_cpfe3_cai_20_lucro_21": "https://arevista.com.br/acoes/cpfe3-cai-mais-de-20-e-preco-alvo-indica-espaco-apos-lucro-crescer-21/",
+  "aneel_cp_fator_x": "https://www.gov.br/aneel/pt-br/assuntos/noticias/2026-defeso-eleitoral/consulta-publica-discutira-revisao-da-metodologia-do-fator-x",
+  "yahoo_CPFE3": "https://query1.finance.yahoo.com/v8/finance/chart/CPFE3.SA?range=2mo&interval=1d",
+  "bemparana_pior_setembro_climatico": "https://bemparana.com.br/noticias/parana/copel-enfrentou-o-pior-setembro-climatico-da-sua-historia-foram-mais-de-2-mil-postes-danificados",
+  "seudinheiro_copel_altera_parametros_financeiros": "https://www.seudinheiro.com/2026/empresas/copel-cple3-mexe-nas-regras-do-jogo-altera-parametros-financeiros-e-estica-prazos-o-que-acontece-com-os-dividendos-ccgg/",
+  "dadosdemercado_cple3_dividendos": "https://www.dadosdemercado.com.br/acoes/cple3/dividendos",
+  "moneytimes_safra_10_acoes_outubro": "https://moneytimes.com.br/as-10-acoes-recomendadas-pelo-safra-para-outubro-diante-da-volatilidade-eleitoral-lmrs (URL truncada)",
+  "moneytimes_moro_critica_privatizacao_copel": "https://www.moneytimes.com.br/moro-critica-privatizacao-da-copel-cple3-e-diz-o-que-vai-fazer-com-sanepar-sanb11/",
+  "horadopovo_requiao_filho_retomar_copel": "https://horadopovo.com.br/requiao-filho-defende-retomar-a-copel-e-denuncia-tarifa-alta-e-apagoes-apos-privatizacao-no-parana/",
+  "gazetadopovo_pesquisa_parana_setembro": "https://www.gazetadopovo.com.br/eleicoes/2026/pesquisa-eleitoral-2026/parana-pesquisas-governador-parana-setembro-2026-3/",
+  "agenciainfra_pld_170_primavera_thymos": "https://agenciainfra.com/blog/pld-deve-ficar-em-r-170-mwh-na-primavera-projeta-thymos/",
+  "yahoo_CPLE3": "https://query1.finance.yahoo.com/v8/finance/chart/CPLE3.SA?range=2mo&interval=1d",
+  "premissas_comuns_tesouro": "Tesouro Transparente (CSV oficial) - rótulo do PDF, sem URL",
+  "premissas_comuns_selic_ipca": "BCB; IBGE/SIDRA; BCB Focus 25/09 - rótulos do PDF, sem URL"
+ }
+}

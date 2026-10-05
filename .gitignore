@@ -1,0 +1,13 @@
+# Dados brutos reproduzíveis (CVM/StatusInvest) — não versionar
+ferramentas/dados/cvm/*.zip
+ferramentas/dados/raw/
+# Pipeline antigo (histórico, fora do fluxo atual)
+analisador/.venv/
+analisador/dados/
+# Python
+__pycache__/
+*.pyc
+.pytest_cache/
+# Segredos
+.env*
+*.key

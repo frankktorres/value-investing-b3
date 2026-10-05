@@ -1,0 +1,2077 @@
+{
+ "_meta": {
+  "origem": [
+   "Banco_Seguridade_rev_03-10-2026.txt (prevalece)",
+   "Banco_Seguridade_rev_07-09-2026.txt (historico/metricas)"
+  ],
+  "convencao": "Campos {valor, periodo, fonte, nota}. Percentuais em % (ex.: 13.5). Valores em R$ salvo indicado. null = nao encontrado nos PDFs. Extracao sem calculo proprio (exceto onde o PDF diz 'calculo').",
+  "aviso": "O PDF e uma 'ficha' compacta: NAO traz numero de acoes, valor de mercado, patrimonio liquido, free float, ADTV (exceto BRBI11), serie anual de lucro/ROE/payout (exceto pontuais) para quase nenhum ticker."
+ },
+ "comum": {
+  "data_base": "02/10/2026 (rev. 03/10/2026; reavaliacao da rev. 07/09/2026, data-base 04-06/09/2026)",
+  "tesouro_ipca_2050_real_pct": {
+   "valor": 7.08,
+   "periodo": "02/10/2026 11h49 (era 7.35 em 07/09)",
+   "fonte": "[M1]"
+  },
+  "ipca_2060_pct": {
+   "valor": 7.1,
+   "periodo": "02/10/2026",
+   "fonte": "[M1]"
+  },
+  "ipca_2040_pct": {
+   "valor": 7.24,
+   "periodo": "02/10/2026",
+   "fonte": "[M1]"
+  },
+  "ke_real_pct": {
+   "valor": 12.08,
+   "periodo": "02/10/2026 (7.08 + 5 p.p.; era 12.35)",
+   "fonte": "[M3]",
+   "nota": "premissa do PDF"
+  },
+  "ke_nominal_pct": {
+   "valor": 16.6,
+   "periodo": "02/10/2026 com IPCA 4% (hipotese do PDF)",
+   "fonte": "[M3]",
+   "nota": "premissa do PDF"
+  },
+  "focus_ipca_2026_pct": {
+   "valor": 4.99,
+   "periodo": "Focus 28/09",
+   "fonte": "[M3]"
+  },
+  "focus_ipca_2027_pct": {
+   "valor": 4.31,
+   "periodo": "Focus 28/09",
+   "fonte": "[M3]"
+  },
+  "selic_pct": {
+   "valor": 13.75,
+   "periodo": "Copom 16/09/2026, corte 0.25 p.p., 5o seguido",
+   "fonte": "[M2]"
+  },
+  "focus_selic_fim_2026_pct": {
+   "valor": 13.5,
+   "periodo": "Focus",
+   "fonte": "[M2]"
+  },
+  "regua_vence_rf": "Vence a RF se retorno real esperado >= 10.08%; Empate entre 7.08% e 10.08%; Nao abaixo de 7.08%",
+  "tributacao": "JCP com IRRF 17.5% desde jan/26 (LC 224/2025) [M4]; dividendos com retencao de 10% acima de R$ 50 mil/mes por empresa [M4]",
+  "ibovespa_02_10": {
+   "valor": 192115,
+   "periodo": "02/10/2026 (+~3.8% vs 185.1 mil em set)",
+   "fonte": "[M6]"
+  },
+  "inadimplencia_sistema_ago_2026": {
+   "valor": {
+    "total_pct": 5.0,
+    "PF_pct": 6.0,
+    "PJ_pct": 3.3,
+    "nota": "BC atribui ~40% da alta a Res. 4.966"
+   },
+   "periodo": "agosto/2026",
+   "fonte": "[M7, M8]"
+  },
+  "agenda_geral": [
+   {
+    "data": "04/10/2026",
+    "evento": "1o turno eleicoes"
+   },
+   {
+    "data": "25/10/2026",
+    "evento": "2o turno (presidente; RS)"
+   },
+   {
+    "data": "29/10/2026",
+    "evento": "ex-dividendo do SAN"
+   },
+   {
+    "data": "03/11/2026",
+    "evento": "resultado 3T26 da BBSE3"
+   },
+   {
+    "data": "03-04/11/2026",
+    "evento": "Copom"
+   },
+   {
+    "data": "~11/11/2026",
+    "evento": "resultado 3T26 do BB"
+   },
+   {
+    "data": "11/11/2026",
+    "evento": "prazo da MP 1.376"
+   }
+  ],
+  "aviso_precos": "Cotacoes de 02/10 (vespera do 1o turno) - PDF manda atualizar antes de decidir [M9]. Preco-base da ficha anterior divergiu do Yahoo em BRSR6, PSSA3, ABCB4, BRBI11 (BRBI11: 13.71 'recente' vs Yahoo 14.30 em 04/09; PSSA3: 55.03 era maxima de 52s vs Yahoo 51.66 em 04/09).",
+  "ressalva_fontes_tabelas": "No PDF de 03/10 a coluna 'Fonte' das tabelas veio desalinhada na extracao; os rotulos [Xn] por linha sao inferidos pela ordem/titulo na lista de fontes."
+ },
+ "tickers": {
+  "ITUB4": {
+   "nome": {
+    "valor": "Itau Unibanco",
+    "fonte": "PDF Banco_Seguridade rev. 03/10/2026"
+   },
+   "perfil": {
+    "valor": "banco",
+    "periodo": "Banco privado (maior da America Latina)",
+    "fonte": "PDF Banco_Seguridade rev. 03/10/2026"
+   },
+   "controlador": {
+    "valor": null,
+    "nota": "controlador e participacao ON/total nao citados nos PDFs"
+   },
+   "tag_along": {
+    "valor": "PN 80% ('unico porem')",
+    "periodo": "07/09/2026",
+    "fonte": "PDF Banco_Seguridade rev. 07/09/2026 (sem lista de fontes [M#] no PDF)"
+   },
+   "free_float": {
+    "valor": null
+   },
+   "liquidez_diaria_adtv": {
+    "valor": null
+   },
+   "preco_fechamento_02_10_2026": {
+    "valor": 44.83,
+    "periodo": "02/10/2026",
+    "fonte": "[M9]"
+   },
+   "preco_anterior": {
+    "valor": 41.99,
+    "periodo": "04/09/2026 (+6.8% no periodo; so em 30/09 +4.7% por dado macro EUA)",
+    "fonte": "[M9]"
+   },
+   "numero_acoes": {
+    "valor": null,
+    "nota": "nao citado"
+   },
+   "valor_de_mercado": {
+    "valor": null,
+    "nota": "nao citado"
+   },
+   "vpa": {
+    "valor": 19.5,
+    "periodo": "~, jun/26 (P/VP 2.15 a 41.99; 2.30 a 44.83)",
+    "fonte": "PDF 03/10 e 07/09 (calculo)",
+    "nota": "aproximado ('VPA ~19,5')"
+   },
+   "patrimonio_liquido": {
+    "valor": null
+   },
+   "lpa_12m": {
+    "valor": 4.43,
+    "periodo": "12m (~) a 04/09/2026",
+    "fonte": "PDF Banco_Seguridade rev. 07/09/2026 (sem lista de fontes [M#] no PDF)",
+    "nota": "aproximado; P/L 9.5"
+   },
+   "lucro_liquido_12m": {
+    "valor": null,
+    "nota": "nao citado 12m"
+   },
+   "lucro_2025": {
+    "valor": 46.8,
+    "periodo": "2025, R$ bi (+14.1%)",
+    "fonte": "PDF Banco_Seguridade rev. 07/09/2026 (sem lista de fontes [M#] no PDF)",
+    "nota": "tabela da ficha: 'Lucro 2025 / 2T26 R$ 46,8 bi (+14,1%) / 12,41 bi (+7,8%)'; contabil vs recorrente nao especificado"
+   },
+   "lucro_2T26": {
+    "valor": 12.41,
+    "periodo": "2T26, R$ bi (+7.8% a/a)",
+    "fonte": "PDF Banco_Seguridade rev. 07/09/2026 (sem lista de fontes [M#] no PDF)"
+   },
+   "lucro_recorrente_serie_anual": {
+    "valor": null,
+    "nota": "serie 2016-25 de lucro NAO consta; 'Nao encontrado: lucro 2016-19 e 2022'; CAGR lucro 2021-25 = 14.8%/a"
+   },
+   "cagr_lucro_2021_25_pct": {
+    "valor": 14.8,
+    "periodo": "2021-2025",
+    "fonte": "PDF Banco_Seguridade rev. 07/09/2026 (sem lista de fontes [M#] no PDF)"
+   },
+   "roe_recorrente_serie_anual": {
+    "valor": null
+   },
+   "payout_serie_anual": {
+    "valor": {
+     "2024": 69.4
+    },
+    "periodo": "2024 (com extraordinario)",
+    "fonte": "PDF Banco_Seguridade rev. 07/09/2026 (sem lista de fontes [M#] no PDF)",
+    "nota": "payout 2025 exato: nao encontrado"
+   },
+   "dy_serie_anual_pct_2016_2025": {
+    "valor": [
+     2.5,
+     0.8,
+     6.3,
+     7.6,
+     4.1,
+     4.3,
+     4.1,
+     3.7,
+     7.9,
+     11.8
+    ],
+    "periodo": "2016..2025 em ordem (2017=0.8 'artefato de calendario')",
+    "fonte": "PDF Banco_Seguridade rev. 07/09/2026 (sem lista de fontes [M#] no PDF)",
+    "nota": "e DY (nao DPA em R$); DPA em R$ 2016-22 nao encontrado; bonificacao 10% em 2025"
+   },
+   "dy_medio_10a_pct": {
+    "valor": 5.3,
+    "periodo": "10a",
+    "fonte": "PDF Banco_Seguridade rev. 07/09/2026 (sem lista de fontes [M#] no PDF)"
+   },
+   "dy_medio_5a_pct": {
+    "valor": 6.4,
+    "periodo": "5a",
+    "fonte": "PDF Banco_Seguridade rev. 07/09/2026 (sem lista de fontes [M#] no PDF)"
+   },
+   "dy_minimo_pct": {
+    "valor": 2.5,
+    "periodo": "2016",
+    "fonte": "PDF Banco_Seguridade rev. 07/09/2026 (sem lista de fontes [M#] no PDF)"
+   },
+   "dpa_serie_anual": {
+    "valor": null
+   },
+   "jcp_vs_dividendos": {
+    "valor": "JCP mensal R$ 0.018182 bruto mantido; sem intermediario/extraordinario no periodo set-out/26; dependencia do JCP (proposta de fim) = 'risco no 1 para todos os bancos'",
+    "periodo": "03/10/2026",
+    "fonte": "[I1]"
+   },
+   "extraordinarios": {
+    "valor": {
+     "2024": "R$ 12.2 bi",
+     "dez/25": "~5%"
+    },
+    "fonte": "PDF Banco_Seguridade rev. 07/09/2026 (sem lista de fontes [M#] no PDF)",
+    "nota": "extras 'nao sao politica'; ~2-5% de yield extra citado como possivel"
+   },
+   "roe_pct": {
+    "valor": 24.3,
+    "periodo": "2T26 (25.1% ajustado a CET1 11.5%)",
+    "fonte": "[I4]"
+   },
+   "roe_trimestral_outros": {
+    "valor": null,
+    "nota": "1T26, 4T25 nao citados"
+   },
+   "guidance_2026": {
+    "valor": null,
+    "nota": "citado apenas 'guidance cumprido' e servicos com guidance cortado"
+   },
+   "consenso_lucro_roe_lpa_2026_28": {
+    "valor": null
+   },
+   "banco": {
+    "basileia_pct": {
+     "valor": 15.4,
+     "periodo": "2T26",
+     "fonte": "PDF Banco_Seguridade rev. 07/09/2026 (sem lista de fontes [M#] no PDF)"
+    },
+    "cet1_pct": {
+     "valor": 12.3,
+     "periodo": "2T26 (folga de 1.3 p.p. vs gatilho 11%)",
+     "fonte": "[I4]"
+    },
+    "inadimplencia_90d_pct": {
+     "valor": 1.9,
+     "periodo": "2T26 (estavel ha 6 tri)",
+     "fonte": "[I4]"
+    },
+    "cobertura_90d": {
+     "valor": null,
+     "nota": "nao encontrada"
+    },
+    "custo_do_credito_pct": {
+     "valor": 2.7,
+     "periodo": "2T26 (leitura da tabela; rotulo desalinhado)",
+     "fonte": "PDF Banco_Seguridade rev. 07/09/2026 (sem lista de fontes [M#] no PDF)",
+     "nota": "incerto: valor '2,7%' aparece na coluna de custo de credito"
+    },
+    "eficiencia_pct": {
+     "valor": 37,
+     "periodo": "2T26 (Brasil ~35%)",
+     "fonte": "PDF Banco_Seguridade rev. 07/09/2026 (sem lista de fontes [M#] no PDF)",
+     "nota": "tabela mostra '~37% (Brasil ~35%)'; outro trecho: eficiencia 37%"
+    },
+    "carteira_credito": {
+     "valor": "R$ 1.52 tri (+9.6%)",
+     "periodo": "2T26",
+     "fonte": "PDF Banco_Seguridade rev. 07/09/2026 (sem lista de fontes [M#] no PDF)"
+    },
+    "alavancagem": {
+     "valor": null
+    },
+    "movimentos_capital": {
+     "valor": "emissao R$ 5 bi LF Nivel 2 (11/09) e resgate R$ 11 bi (18/09); CET1 inalterado",
+     "periodo": "set/2026",
+     "fonte": "[I2, I3]"
+    },
+    "recompra": {
+     "valor": "programa ate 200 mi PN vigente; execucao nao encontrada",
+     "periodo": "03/10/2026",
+     "fonte": "[I4]"
+    }
+   },
+   "multiplos": {
+    "pl_atual": {
+     "valor": 9.5,
+     "periodo": "a 41.99 (04/09)",
+     "fonte": "PDF Banco_Seguridade rev. 07/09/2026 (sem lista de fontes [M#] no PDF)"
+    },
+    "pvp_atual": {
+     "valor": 2.3,
+     "periodo": "a 44.83 (02/10)",
+     "fonte": "PDF 03/10 (calculo)"
+    },
+    "pvp_anterior": {
+     "valor": 2.15,
+     "periodo": "04/09",
+     "fonte": "PDF Banco_Seguridade rev. 07/09/2026 (sem lista de fontes [M#] no PDF)"
+    },
+    "pl_pvp_medios_historicos": {
+     "valor": null
+    },
+    "pares_citados": {
+     "valor": {
+      "BBAS3_ficha": "ITUB4 P/L 8.5, P/VP 2.03, ROE 24%, DY 7.6% (jul/set)",
+      "BBDC4": "P/VP 1.06",
+      "SANB11": "P/VP 1.21"
+     },
+     "periodo": "07/09/2026",
+     "fonte": "PDF Banco_Seguridade rev. 07/09/2026 (sem lista de fontes [M#] no PDF)"
+    }
+   },
+   "proventos": {
+    "dpa_12m": {
+     "valor": null,
+     "nota": "nao citado em R$ (DY 12m 7.6%)"
+    },
+    "dy_12m_pct": {
+     "valor": 7.6,
+     "periodo": "04/09/2026",
+     "fonte": "PDF Banco_Seguridade rev. 07/09/2026 (sem lista de fontes [M#] no PDF)",
+     "nota": "03/10: 'n.v.' (nao verificado)"
+    },
+    "dy_forward_pct": {
+     "valor": 6.6,
+     "periodo": "02/10/2026 (DPA fwd ~R$ 2.95)",
+     "fonte": "PDF 03/10; era 7.0 em 07/09"
+    },
+    "dpa_forward": {
+     "valor": 2.95,
+     "periodo": "regular",
+     "fonte": "PDF 03/10"
+    },
+    "defasagem_declaracao_pagamento": {
+     "valor": "mensal ~1 mes; intermediarios ~3-4 semanas",
+     "periodo": "03/10/2026",
+     "fonte": "PDF 03/10"
+    },
+    "politica_payout": {
+     "valor": "proventos mensais ha decadas + extraordinarios quando CET1 sobra; payout 69.4% em 2024 (com extra)",
+     "fonte": "PDF Banco_Seguridade rev. 07/09/2026 (sem lista de fontes [M#] no PDF)"
+    },
+    "cobertura_caixa": {
+     "valor": "Sim",
+     "periodo": "03/10/2026",
+     "fonte": "PDF 03/10"
+    }
+   },
+   "retorno_vs_rf": {
+    "valor": {
+     "yield_fwd_pct": 6.6,
+     "g_pct": 8,
+     "retorno_nominal_pct": 14.6,
+     "retorno_real_pct": 10.2,
+     "vs_ipca_mais_pp": 3.1,
+     "vence_rf": "Sim (marginal)",
+     "antes_07_09": "Sim (marginal) ~10.6%"
+    },
+    "periodo": "02/10/2026",
+    "fonte": "PDF 03/10",
+    "nota": "premissa do PDF"
+   },
+   "controlador_interferencias": {
+    "consumadas": {
+     "valor": "Nenhum evento",
+     "periodo": "03/10/2026",
+     "fonte": "PDF 03/10"
+    },
+    "prospectivo": {
+     "valor": "Regulatorio: proposta de fim do JCP (risco n. 1 para bancos); LC 224 so elevou IRRF a 17.5%; JCP, teto do rotativo, Pix (nota regulatoria 3/5 = 6/10)",
+     "periodo": "set-out/2026",
+     "fonte": "PDF 03/10 e 07/09"
+    }
+   },
+   "gatilhos_ficha_anterior": [
+    {
+     "gatilho": "ROE < 20% por 2 tri",
+     "status": "Nao acionado",
+     "evidencia": "24.3%"
+    },
+    {
+     "gatilho": "Inad. 90d > 2.5%",
+     "status": "Nao acionado",
+     "evidencia": "1.9%"
+    },
+    {
+     "gatilho": "CET1 < 11%",
+     "status": "Nao acionado",
+     "evidencia": "12.3% (folga 1.3 p.p.)"
+    },
+    {
+     "gatilho": "Fim do JCP sem compensacao",
+     "status": "Nao acionado",
+     "evidencia": "LC 224 so elevou o IRRF a 17.5%"
+    }
+   ],
+   "riscos_principais": [
+    "ROE no pico com Selic comecando a cair (spread tende a comprimir)",
+    "P/VP 2.3 com ROE no pico (-30% se ROE voltar a 20%, 07/09)",
+    "servicos estagnados (guidance cortado)",
+    "dependencia do JCP",
+    "justo sensivel ao Ke (g 8%)"
+   ],
+   "nao_encontrado_declarado": [
+    "cobertura 90d 2T26",
+    "lucro 2016-19 e 2022",
+    "DPA em R$ 2016-22",
+    "payout 2025 exato",
+    "recompras (execucao)"
+   ],
+   "eventos_agenda": [
+    {
+     "data": "resultado 3T26",
+     "evento": "data nao citada para ITUB4"
+    }
+   ],
+   "qualitativo_07_09": {
+    "moat": 5,
+    "fisher": 4,
+    "gestao_capital": 5,
+    "regulatorio": 3,
+    "ciclo": 2,
+    "templeton": 1,
+    "dhandho": 2,
+    "bh_resultado": "Sim",
+    "piotroski": "7/7",
+    "graham_criterios": "6/7"
+   },
+   "premissas_valuation_do_pdf": {
+    "rotulo": "premissas do PDF (nao fatos)",
+    "justo": {
+     "valor": {
+      "antes_07_09": 44.0,
+      "agora": 45.4
+     },
+     "periodo": "03/10/2026",
+     "fonte": "PDF 03/10",
+     "nota": "Ke -0.27 p.p. = +R$ 1.40; fundamentos R$ 0"
+    },
+    "compra_menos30": 31.8,
+    "saida": 57.0,
+    "faixa": "R$ 29-65",
+    "compraria": "Nao a 44.8; acumular < R$ 39 (aceitavel 37-39); cheio 31.80",
+    "veredito": "JUSTA (mantido); desconto/premio -1%; nota 8.0 (era 8.1)",
+    "g_pct": 8,
+    "ke_real_pct": 12.08,
+    "outros_modelos_07_09": {
+     "graham": 44.1,
+     "epv_ke16.8_12.35": [
+      24.8,
+      33.8
+     ],
+     "bazin_extras_regular": [
+      52.5,
+      49
+     ],
+     "dcf_base": [
+      36,
+      56
+     ],
+     "dcf_pess": [
+      29,
+      44
+     ],
+     "dcf_otim": [
+      44,
+      65
+     ],
+     "pvp_justificado": "Ke16.8%: 1.67x (32.5); Ke14%: 2.25x (44); Ke12.35%: 2.6-2.8x (50-55)"
+    },
+    "horizonte_ddm": null
+   }
+  },
+  "BRBI11": {
+   "nome": {
+    "valor": "BR Partners",
+    "fonte": "PDF Banco_Seguridade rev. 03/10/2026"
+   },
+   "perfil": {
+    "valor": "banco de investimento independente, asset-light (unit = 1 ON + 2 PN); microcap",
+    "fonte": "PDF Banco_Seguridade rev. 03/10/2026"
+   },
+   "controlador": {
+    "valor": "socios (nenhuma saida identificada); participacao nao citada",
+    "periodo": "03/10/2026",
+    "fonte": "PDF Banco_Seguridade rev. 03/10/2026"
+   },
+   "tag_along": {
+    "valor": null
+   },
+   "free_float": {
+    "valor": null
+   },
+   "liquidez_diaria_adtv": {
+    "valor": "~R$ 3 mi/dia",
+    "periodo": "07/09 e 03/10/2026",
+    "fonte": "PDF 07/09 e 03/10",
+    "nota": "07/09 cita tambem ADR na Nasdaq (leitura incerta da tabela)"
+   },
+   "preco_fechamento_02_10_2026": {
+    "valor": 15.14,
+    "periodo": "02/10/2026",
+    "fonte": "[M9]"
+   },
+   "preco_anterior": {
+    "valor": 13.71,
+    "periodo": "'recente' (minima de 52s); Yahoo 14.30 em 04/09 e 14.27 em 09/09 (ADVFN); +10.4% no periodo",
+    "fonte": "[M9]"
+   },
+   "numero_acoes": {
+    "valor": null
+   },
+   "valor_de_mercado": {
+    "valor": null
+   },
+   "vpa": {
+    "valor": 7.47,
+    "periodo": "VPA por unit (~jun/26)",
+    "fonte": "PDF 03/10 e 07/09"
+   },
+   "patrimonio_liquido": {
+    "valor": null
+   },
+   "lpa_12m": {
+    "valor": null,
+    "nota": "nao citado (P/L 9.0 a 13.71)"
+   },
+   "lucro_liquido_12m": {
+    "valor": null,
+    "nota": "nao citado; gatilho 'lucro 2026 < R$ 140 mi'"
+   },
+   "lucro_2T26": {
+    "valor": 35.1,
+    "periodo": "2T26, R$ mi (-22% a/a)",
+    "fonte": "[P2]"
+   },
+   "receita_2T26": {
+    "valor": 130,
+    "periodo": "2T26, R$ mi (-6.6% a/a)",
+    "fonte": "[P2]"
+   },
+   "lucro_recorrente_serie_anual": {
+    "valor": null
+   },
+   "roe_recorrente_serie_anual": {
+    "valor": {
+     "2021": 25.7,
+     "2025": 22,
+     "2T26": 17.5
+    },
+    "periodo": "ROAE; '>18% em todos os anos desde o IPO (2021)'",
+    "fonte": "PDF Banco_Seguridade rev. 07/09/2026 (sem lista de fontes [M#] no PDF)",
+    "nota": "valores pontuais, nao serie completa"
+   },
+   "payout_serie_anual": {
+    "valor": {
+     "2025": "~100% (antecipado pela tributacao)",
+     "sustentavel": 85
+    },
+    "fonte": "PDF Banco_Seguridade rev. 07/09/2026 (sem lista de fontes [M#] no PDF)"
+   },
+   "dpa_serie_anual": {
+    "valor": {
+     "2023 (desde ago)": 0.9,
+     "2024": 1.95,
+     "2025": 1.86,
+     "2026 YTD": 0.18
+    },
+    "periodo": "R$/unit",
+    "fonte": "PDF Banco_Seguridade rev. 07/09/2026 (sem lista de fontes [M#] no PDF)",
+    "nota": "serie 2021-22 n.e.; ultimo R$ 0.18/unit pago 28/08/2026"
+   },
+   "jcp_vs_dividendos": {
+    "valor": null
+   },
+   "roe_pct": {
+    "valor": 17.5,
+    "periodo": "2T26 (ROAE; ~22% em 2025)",
+    "fonte": "[P2]"
+   },
+   "roe_trimestral_outros": {
+    "valor": null
+   },
+   "guidance_2026": {
+    "valor": null
+   },
+   "consenso_lucro_roe_lpa_2026_28": {
+    "valor": {
+     "XP": "compra, alvo R$ 21 (fim/27)"
+    },
+    "periodo": "07/09/2026",
+    "fonte": "PDF Banco_Seguridade rev. 07/09/2026 (sem lista de fontes [M#] no PDF)",
+    "nota": "lucro 2026 'XP vendo 2026 flat'"
+   },
+   "banco": {
+    "basileia_pct": {
+     "valor": null,
+     "nota": "Basileia atual n.e. ('55%' em 2021 aparece em leitura ambigua da tabela)"
+    },
+    "cet1_pct": {
+     "valor": null
+    },
+    "inadimplencia_90d_pct": {
+     "valor": null
+    },
+    "cobertura": {
+     "valor": null
+    },
+    "custo_do_credito": {
+     "valor": null
+    },
+    "eficiencia_pct": {
+     "valor": 61.2,
+     "periodo": "2T26 (leitura da tabela: '61,2% (43,3% a/a)' - ambiguo: pode ser variacao ou nivel anterior)",
+     "fonte": "PDF 07/09",
+     "nota": "incerto"
+    },
+    "comp_ratio_pct": {
+     "valor": 38.4,
+     "periodo": "2T26 ('24,9% a/a' ao lado - ambiguo); gatilho > 40% por 2 tri; a 1.6 p.p. do gatilho",
+     "fonte": "[P2]"
+    },
+    "roae_pct": {
+     "valor": 17.5,
+     "periodo": "2T26",
+     "fonte": "[P2]"
+    },
+    "alavancagem": {
+     "valor": "sem divida liquida",
+     "periodo": "07/09/2026",
+     "fonte": "PDF Banco_Seguridade rev. 07/09/2026 (sem lista de fontes [M#] no PDF)"
+    },
+    "aporte_capital": {
+     "valor": "R$ 30 mi da holding no banco (10/09), intragrupo, sem emissao de units",
+     "periodo": "set/2026",
+     "fonte": "[P1]"
+    }
+   },
+   "multiplos": {
+    "pl_atual": {
+     "valor": 9.0,
+     "periodo": "a 13.71",
+     "fonte": "PDF Banco_Seguridade rev. 07/09/2026 (sem lista de fontes [M#] no PDF)"
+    },
+    "pvp_atual": {
+     "valor": 2.03,
+     "periodo": "a 15.14 (02/10)",
+     "fonte": "PDF 03/10 (calculo)"
+    },
+    "pvp_anterior": {
+     "valor": 1.84,
+     "periodo": "07/09",
+     "fonte": "PDF Banco_Seguridade rev. 07/09/2026 (sem lista de fontes [M#] no PDF)"
+    },
+    "pl_pvp_medios_historicos": {
+     "valor": null
+    },
+    "pares_citados": {
+     "valor": "BTG (multiplos nao encontrados); PINE4/XP como referencia em outra ficha",
+     "fonte": "PDF Banco_Seguridade rev. 07/09/2026 (sem lista de fontes [M#] no PDF)"
+    }
+   },
+   "proventos": {
+    "dpa_12m": {
+     "valor": null,
+     "nota": "nao citado em R$; DY 12m 10.5% (07/09)"
+    },
+    "dy_12m_pct": {
+     "valor": 10.5,
+     "periodo": "07/09/2026",
+     "fonte": "PDF Banco_Seguridade rev. 07/09/2026 (sem lista de fontes [M#] no PDF)",
+     "nota": "03/10: n.v."
+    },
+    "dy_forward_pct": {
+     "valor": 9.4,
+     "periodo": "02/10/2026 (DPA fwd ~R$ 1.42 a payout 85%)",
+     "fonte": "PDF 03/10; era ~10 em 07/09"
+    },
+    "dpa_forward": {
+     "valor": 1.42,
+     "periodo": "payout 85%",
+     "fonte": "PDF 03/10"
+    },
+    "defasagem_declaracao_pagamento": {
+     "valor": "curta (~3 semanas)",
+     "periodo": "03/10/2026",
+     "fonte": "PDF 03/10"
+    },
+    "politica_payout": {
+     "valor": "payout ~100% em 2025; ~85% sustentavel; fees lumpy - 2S26 precisa trazer >= R$ 1.0/unit",
+     "fonte": "PDF 03/10 e 07/09"
+    },
+    "cobertura_caixa": {
+     "valor": "Sim (sem divida, asset-light), mas fees lumpy",
+     "periodo": "03/10/2026",
+     "fonte": "PDF 03/10"
+    }
+   },
+   "retorno_vs_rf": {
+    "valor": {
+     "yield_fwd_pct": 9.4,
+     "g_pct": "5-7",
+     "retorno_nominal_pct": "14.4-16.4",
+     "retorno_real_pct": "10.0-11.9",
+     "vs_ipca_mais_pp": "2.9 a 4.8",
+     "vence_rf": "Sim (com risco)"
+    },
+    "periodo": "02/10/2026",
+    "fonte": "PDF 03/10",
+    "nota": "premissa do PDF"
+   },
+   "controlador_interferencias": {
+    "consumadas": {
+     "valor": "Nenhuma citada (socios; nenhuma saida identificada)",
+     "periodo": "03/10/2026",
+     "fonte": "PDF 03/10"
+    },
+    "prospectivo": {
+     "valor": "Saida de socio fundador (gatilho); 'socio se pagando antes' (comp. ratio 38% / payout >100% em 2025)",
+     "fonte": "PDF 07/09 e 03/10"
+    }
+   },
+   "gatilhos_ficha_anterior": [
+    {
+     "gatilho": "Comp. ratio > 40% por 2 tri",
+     "status": "Nao verificavel",
+     "evidencia": "38.4% no 2T26"
+    },
+    {
+     "gatilho": "ROE < 14%",
+     "status": "Nao verificavel",
+     "evidencia": "17.5% no 2T26"
+    },
+    {
+     "gatilho": "Saida de socio fundador",
+     "status": "Nao acionado",
+     "evidencia": "nao encontrado"
+    },
+    {
+     "gatilho": "Lucro 2026 < R$ 140 mi",
+     "status": "Nao verificavel",
+     "evidencia": "sem balanco novo"
+    },
+    {
+     "gatilho": "Aumento de capital",
+     "status": "Nao acionado",
+     "evidencia": "aporte e intragrupo"
+    }
+   ],
+   "riscos_principais": [
+    "fees de advisory lumpy (yield 10% pode ser ilusao se 2S26 < R$ 1.0/unit)",
+    "comp. ratio 38.4% proximo do gatilho 40%",
+    "eficiencia piorou (61%)",
+    "microcap com liquidez ~R$ 3 mi/dia - marcacao pode distorcer",
+    "lucro 2T26 -22%"
+   ],
+   "nao_encontrado_declarado": [
+    "release 2T26 do RI",
+    "Basileia atual",
+    "DPA 2021-22",
+    "multiplos do BTG (par)"
+   ],
+   "eventos_agenda": [
+    {
+     "data": "3T26",
+     "evento": "decide gatilho de comp. ratio; data nao citada"
+    }
+   ],
+   "qualitativo_07_09": {
+    "moat": 3,
+    "fisher": 3,
+    "gestao_capital": 3,
+    "regulatorio": 3,
+    "ciclo": 4,
+    "templeton": 4,
+    "dhandho": 4,
+    "bh_resultado": "Parcial",
+    "piotroski": "2/5",
+    "graham_criterios": "4/7"
+   },
+   "premissas_valuation_do_pdf": {
+    "rotulo": "premissas do PDF (nao fatos)",
+    "justo": {
+     "valor": {
+      "antes_07_09": 17.0,
+      "agora": 17.5
+     },
+     "periodo": "03/10/2026",
+     "fonte": "PDF 03/10",
+     "nota": "Ke -0.27 p.p. = +R$ 0.50"
+    },
+    "compra_menos30": 12.2,
+    "saida": 24.0,
+    "faixa": "R$ 9.5-30",
+    "compraria": "Manter 1a parcela (~13.7); nao adicionar acima de R$ 14; cheio 12.20; posicao <= 2%",
+    "veredito": "RADAR (mantido); desconto -13% (era -19%); nota 6.8 (era 7.0)",
+    "g_pct": "5-7",
+    "ke_real_pct": 12.08,
+    "outros_modelos_07_09": {
+     "graham": 16.0,
+     "epv_ke16.8_12.35": [
+      10.2,
+      13.9
+     ],
+     "bazin_2024-25_12m_fwd": [
+      31.8,
+      26,
+      23.7
+     ],
+     "ddm_base": [
+      18.6,
+      22
+     ],
+     "ddm_pess": [
+      9.5,
+      11
+     ],
+     "ddm_otim": [
+      25,
+      30
+     ]
+    },
+    "horizonte_ddm": null
+   }
+  },
+  "BBSE3": {
+   "nome": {
+    "valor": "BB Seguridade",
+    "fonte": "PDF Banco_Seguridade rev. 03/10/2026"
+   },
+   "perfil": {
+    "valor": "seguradora (holding de bancassurance: Brasilseg 43%, BB Corretora 40%, Brasilprev 12%)",
+    "periodo": "07/09/2026 (participacoes no lucro)",
+    "fonte": "PDF Banco_Seguridade rev. 07/09/2026 (sem lista de fontes [M#] no PDF)"
+   },
+   "controlador": {
+    "valor": "Banco do Brasil (controlador estatal); participacao nao citada ('participacao do BB' em nao encontrado)",
+    "fonte": "PDF 03/10 e 07/09"
+   },
+   "tag_along": {
+    "valor": null
+   },
+   "free_float": {
+    "valor": null
+   },
+   "liquidez_diaria_adtv": {
+    "valor": null
+   },
+   "preco_fechamento_02_10_2026": {
+    "valor": 40.45,
+    "periodo": "02/10/2026",
+    "fonte": "[M9]"
+   },
+   "preco_anterior": {
+    "valor": 41.69,
+    "periodo": "03/09/2026 (-3.0%)",
+    "fonte": "[M9]"
+   },
+   "numero_acoes": {
+    "valor": null
+   },
+   "valor_de_mercado": {
+    "valor": null,
+    "nota": "nao citado; ficha do BBAS3 diz BBSE3 = 40% do market cap do BB"
+   },
+   "vpa": {
+    "valor": 5.35,
+    "periodo": "~, 07/09/2026 (P/VP 7.8)",
+    "fonte": "PDF Banco_Seguridade rev. 07/09/2026 (sem lista de fontes [M#] no PDF)",
+    "nota": "'VPA oficial jun/26' nao encontrado"
+   },
+   "patrimonio_liquido": {
+    "valor": null
+   },
+   "lpa_12m": {
+    "valor": null,
+    "nota": "nao citado"
+   },
+   "lucro_liquido_12m": {
+    "valor": 9.0,
+    "periodo": "12m (~R$ bi) em 07/09/2026",
+    "fonte": "PDF Banco_Seguridade rev. 07/09/2026 (sem lista de fontes [M#] no PDF)",
+    "nota": "'lucro 12m ~R$ 9,0 bi'; P/L 9.0; contabil vs ajustado nao especificado"
+   },
+   "lucro_2025": {
+    "valor": 9.08,
+    "periodo": "2025, R$ bi (+11.4%)",
+    "fonte": "PDF Banco_Seguridade rev. 07/09/2026 (sem lista de fontes [M#] no PDF)"
+   },
+   "lucro_2026e": {
+    "valor": "-4% (guidance operacional -7% a -3%)",
+    "periodo": "07/09/2026",
+    "fonte": "PDF Banco_Seguridade rev. 07/09/2026 (sem lista de fontes [M#] no PDF)"
+   },
+   "lucro_recorrente_serie_anual": {
+    "valor": null,
+    "nota": "'Lucro anual 2016-22' nao encontrado"
+   },
+   "roe_recorrente_serie_anual": {
+    "valor": {
+     "2025_oficial": "~105",
+     "atual": "~87"
+    },
+    "fonte": "PDF Banco_Seguridade rev. 07/09/2026 (sem lista de fontes [M#] no PDF)",
+    "nota": "ROE ~87% / 2025 oficial ~105%; serie nao citada"
+   },
+   "payout_serie_anual": {
+    "valor": {
+     "2025": 96,
+     "1S26": "~88 (calculo R$ 3.85 bi / ~R$ 4.37 bi)"
+    },
+    "fonte": "[E5]"
+   },
+   "dpa_serie_anual": {
+    "valor": {
+     "2016": 1.71,
+     "2017": 1.64,
+     "2018": 3.11,
+     "2019": 1.59,
+     "2020": 2.79,
+     "2021": 1.0,
+     "2022": 1.97,
+     "2023": 3.49,
+     "2024": 2.65,
+     "2025": 4.26,
+     "2026_YTD": 4.59
+    },
+    "periodo": "R$/acao",
+    "fonte": "PDF Banco_Seguridade rev. 07/09/2026 (sem lista de fontes [M#] no PDF)",
+    "nota": "2018 inclui extraordinario de dez/18 (*); nao informado se ajustado ou por data-com"
+   },
+   "dy_medio_10a_pct": {
+    "valor": 7.7,
+    "periodo": "10a",
+    "fonte": "PDF Banco_Seguridade rev. 07/09/2026 (sem lista de fontes [M#] no PDF)"
+   },
+   "dy_medio_5a_pct": {
+    "valor": 8.0,
+    "periodo": "5a",
+    "fonte": "PDF Banco_Seguridade rev. 07/09/2026 (sem lista de fontes [M#] no PDF)"
+   },
+   "dy_minimo_pct": {
+    "valor": 4.2,
+    "periodo": "2019",
+    "fonte": "PDF Banco_Seguridade rev. 07/09/2026 (sem lista de fontes [M#] no PDF)"
+   },
+   "jcp_vs_dividendos": {
+    "valor": null
+   },
+   "extraordinarios": {
+    "valor": "extraordinario dez/18 (DPA 3.11)",
+    "periodo": "2018",
+    "fonte": "PDF Banco_Seguridade rev. 07/09/2026 (sem lista de fontes [M#] no PDF)"
+   },
+   "roe_pct": {
+    "valor": 87,
+    "periodo": "~ atual (2025 oficial ~105%)",
+    "fonte": "PDF Banco_Seguridade rev. 07/09/2026 (sem lista de fontes [M#] no PDF)"
+   },
+   "roe_trimestral_outros": {
+    "valor": null
+   },
+   "guidance_2026": {
+    "valor": "lucro 2026e -4%; guidance operacional -7% a -3%",
+    "periodo": "07/09/2026",
+    "fonte": "PDF Banco_Seguridade rev. 07/09/2026 (sem lista de fontes [M#] no PDF)"
+   },
+   "consenso_lucro_roe_lpa_2026_28": {
+    "valor": {
+     "12_casas": "6 venda / 5 neutro / 1 compra; alvo medio R$ 37.25",
+     "Citi": "venda; cenario R$ 19 sem renovacao (-55%)",
+     "JPM": "venda R$ 33",
+     "Genial": "manter R$ 40.40",
+     "LPA": "parado ate 2027 (JPM)"
+    },
+    "periodo": "set/2026",
+    "fonte": "[E3, E4]; Genial/JPM em PDF 07/09"
+   },
+   "seguradora": {
+    "premios_emitidos": {
+     "valor": {
+      "2T26": "R$ 3.55 bi (-4.9%); rural -42.5%",
+      "jul/26_Susep": "-23.7% a/a; rural -40.3%",
+      "7M26": "-6.7% vs mercado +7.9%"
+     },
+     "periodo": "2T26 / jul-2026 / 7M26",
+     "fonte": "[E1] (Susep jul); 2T26 PDF 07/09"
+    },
+    "sinistralidade_pct": {
+     "valor": {
+      "2T26": 21.8,
+      "jul/26": 24.6
+     },
+     "fonte": "[E2]; 2T26 PDF 07/09"
+    },
+    "indice_combinado_pct": {
+     "valor": 64.4,
+     "periodo": "2T26",
+     "fonte": "PDF Banco_Seguridade rev. 07/09/2026 (sem lista de fontes [M#] no PDF)"
+    },
+    "resultado_financeiro_vs_operacional": {
+     "valor": "financeiro ~25% do lucro (2025 foi pico, financeiro +61%); Selic em queda tira parte",
+     "fonte": "PDF Banco_Seguridade rev. 07/09/2026 (sem lista de fontes [M#] no PDF)"
+    },
+    "equivalencia_por_coligada": {
+     "valor": {
+      "Brasilseg": "43% do lucro",
+      "BB Corretora": "40%",
+      "Brasilprev": "12%"
+     },
+     "periodo": "07/09/2026",
+     "fonte": "PDF Banco_Seguridade rev. 07/09/2026 (sem lista de fontes [M#] no PDF)",
+     "nota": "Brasilprev: reservas R$ 496.5 bi, lucro -18.8% (07/09); jul/26 contribuicoes -15.8%, reservas R$ 503 bi (+10.7%) [E1]"
+    },
+    "contrato_exclusividade_bb": {
+     "valor": "vence em 2033; renegociacao 'postergada'; sem noticia oficial; DDM aplica haircut de 40% ao contrato",
+     "periodo": "03/10/2026",
+     "fonte": "PDF 03/10 / 07/09"
+    },
+    "porto_bank": {
+     "valor": null
+    }
+   },
+   "multiplos": {
+    "pl_atual": {
+     "valor": 9.0,
+     "periodo": "a 41.69",
+     "fonte": "PDF Banco_Seguridade rev. 07/09/2026 (sem lista de fontes [M#] no PDF)"
+    },
+    "pvp_atual": {
+     "valor": 7.8,
+     "periodo": "07/09/2026",
+     "fonte": "PDF Banco_Seguridade rev. 07/09/2026 (sem lista de fontes [M#] no PDF)"
+    },
+    "pl_pvp_medios_historicos": {
+     "valor": null
+    },
+    "pares_citados": {
+     "valor": {
+      "CXSE3": "P/L 13 / P/VP 4.4 vs BBSE3 P/L 8.8 e DY 11%"
+     },
+     "periodo": "07/09/2026",
+     "fonte": "PDF Banco_Seguridade rev. 07/09/2026 (sem lista de fontes [M#] no PDF)"
+    }
+   },
+   "proventos": {
+    "dpa_12m": {
+     "valor": 4.59,
+     "periodo": "12m a 02/10/2026",
+     "fonte": "[E5]"
+    },
+    "dy_12m_pct": {
+     "valor": 11.35,
+     "periodo": "02/10/2026 (era 11.0)",
+     "fonte": "[E5]"
+    },
+    "dy_forward_pct": {
+     "valor": 10.5,
+     "periodo": "02/10/2026 (era 10.2; DPA fwd ~R$ 4.25 em 07/09)",
+     "fonte": "PDF 03/10 e 07/09"
+    },
+    "defasagem_declaracao_pagamento": {
+     "valor": "~2 meses (aprovado 24/06; data-com 06/08; pago 03/09)",
+     "periodo": "2026",
+     "fonte": "[E5]"
+    },
+    "politica_payout": {
+     "valor": "payout 96% (2025), ~88% no 1S26; recompra com cancelamento; 13 anos ininterruptos desde 2013",
+     "fonte": "[E5]; PDF 07/09"
+    },
+    "cobertura_caixa": {
+     "valor": "Sim (zero divida)",
+     "fonte": "PDF 03/10"
+    },
+    "yield_sustentavel": {
+     "valor": "~10% ate 2033, principal incerto ('titulo de 7 anos com principal incerto')",
+     "fonte": "PDF 03/10 / 07/09"
+    }
+   },
+   "retorno_vs_rf": {
+    "valor": {
+     "yield_fwd_pct": 10.5,
+     "g_pct": "3-4",
+     "retorno_nominal_pct": "13.5-14.5",
+     "retorno_real_pct": "9.1-10.1",
+     "vs_ipca_mais_pp": "2.1 a 3.0",
+     "vence_rf": "Empate"
+    },
+    "periodo": "02/10/2026",
+    "fonte": "PDF 03/10",
+    "nota": "premissa do PDF"
+   },
+   "controlador_interferencias": {
+    "consumadas": {
+     "valor": "Nenhuma em 13 anos (sem interferencia estatal em preco, credito dirigido, capex politico)",
+     "periodo": "07/09/2026",
+     "fonte": "PDF Banco_Seguridade rev. 07/09/2026 (sem lista de fontes [M#] no PDF)"
+    },
+    "prospectivo": {
+     "valor": "V4: renegociacao do contrato com o BB em 2033 (comissao menor/prazo curto); BB (dono do contrato) precisa de capital (CET1 11.27%); rural em queda com credito agro travado (MP 1.376)",
+     "periodo": "set-out/2026",
+     "fonte": "PDF 03/10 / 07/09"
+    }
+   },
+   "gatilhos_ficha_anterior": [
+    {
+     "gatilho": "Renegociacao com comissao menor",
+     "status": "Nao acionado",
+     "evidencia": "sem fato; so analises de terceiros"
+    },
+    {
+     "gatilho": "Payout < 80%",
+     "status": "Nao acionado",
+     "evidencia": "~88%"
+    },
+    {
+     "gatilho": "Premios caindo 2 anos seguidos",
+     "status": "Em alerta",
+     "evidencia": "2026 YTD -6.7%; 2025 cheio nao verificado"
+    },
+    {
+     "gatilho": "Sinistralidade > 30%",
+     "status": "Nao acionado",
+     "evidencia": "24.6% (jul)"
+    },
+    {
+     "gatilho": "Financeiro > 35% do lucro",
+     "status": "Nao verificavel",
+     "evidencia": "sem balanco novo"
+    }
+   ],
+   "riscos_principais": [
+    "contrato com o BB vence em 2033 (Citi: R$ 19 sem renovacao, -55%)",
+    "premios Susep jul -23.7% (rural -40%)",
+    "lucro 2026e -4% e ~25% do lucro depende da Selic",
+    "Brasilprev contribuicoes -15.8% em jul",
+    "assimetria negativa; nota 8.2 'provavelmente superestima' (autocritica)"
+   ],
+   "nao_encontrado_declarado": [
+    "lucro anual 2016-22",
+    "VPA oficial jun/26",
+    "payout 2025 exato",
+    "participacao do BB"
+   ],
+   "eventos_agenda": [
+    {
+     "data": "03/11/2026",
+     "evento": "resultado 3T26 (testa gatilho de premios)"
+    }
+   ],
+   "qualitativo_07_09": {
+    "moat": 3,
+    "fisher": 2,
+    "gestao_capital": 3,
+    "controlador_politico": 3,
+    "ciclo": 2,
+    "templeton": 2,
+    "dhandho": 2,
+    "bh_resultado": "Parcial",
+    "piotroski": "4/6",
+    "graham_criterios": "5/7"
+   },
+   "premissas_valuation_do_pdf": {
+    "rotulo": "premissas do PDF (nao fatos)",
+    "justo": {
+     "valor": {
+      "antes_07_09": 38.0,
+      "agora": 38.4
+     },
+     "periodo": "03/10/2026",
+     "fonte": "PDF 03/10",
+     "nota": "Ke -0.27 p.p. aplicado pela metade (fluxo finito ate 2033) = +R$ 0.40; fundamentos R$ 0; se 2026 fechar com premios -7%, DDM base cai ~R$ 1-2 [HIPOTESE]"
+    },
+    "compra_menos30": 26.9,
+    "saida": 49.0,
+    "faixa": "R$ 26-50",
+    "compraria": "Nao a 40.45; interessa < R$ 34 (yield fwd 12.5%); cheio 26.90",
+    "veredito": "JUSTA (mantido, alerta operacional); desconto/premio +5% (era +10%); nota 8.2 (era 8.0)",
+    "g_pct": "3-4 (Gordon simples g 4.5% em 07/09)",
+    "ke_real_pct": 12.08,
+    "haircut_contrato_2033_pct": 40,
+    "horizonte_ddm": "ate 2033 (contrato com o BB)",
+    "outros_modelos_07_09": {
+     "ddm_2033_com_haircut_base": [
+      28,
+      38.5
+     ],
+     "ddm_pess": [
+      26,
+      37
+     ],
+     "ddm_sem_haircut": [
+      33,
+      49
+     ],
+     "ddm_otim": [
+      43,
+      75
+     ],
+     "gordon_g4.5": [
+      34.6,
+      54.1
+     ],
+     "epv": [
+      25.1,
+      34.2
+     ],
+     "graham": 23.6,
+     "bazin_5a_10a_fwd": [
+      44.6,
+      40.3,
+      70.8
+     ],
+     "nota": "pares de valores = Ke 16.8% / 12.35%"
+    }
+   }
+  },
+  "CXSE3": {
+   "nome": {
+    "valor": "Caixa Seguridade",
+    "fonte": "PDF Banco_Seguridade rev. 03/10/2026"
+   },
+   "perfil": {
+    "valor": "seguradora (holding asset-light de bancassurance; MEP de JVs + comissoes)",
+    "fonte": "PDF 03/10 / 07/09"
+   },
+   "controlador": {
+    "valor": "Caixa Economica Federal (CEF) ~80% (participacao pos-follow-on 2025 nao encontrada)",
+    "periodo": "03/10/2026",
+    "fonte": "PDF Banco_Seguridade rev. 03/10/2026",
+    "nota": "ON vs total nao detalhado"
+   },
+   "tag_along": {
+    "valor": null
+   },
+   "free_float": {
+    "valor": null,
+    "nota": "~20% implicito (CEF ~80%), nao citado explicitamente"
+   },
+   "liquidez_diaria_adtv": {
+    "valor": null
+   },
+   "preco_fechamento_02_10_2026": {
+    "valor": 20.41,
+    "periodo": "02/10/2026",
+    "fonte": "[M9]"
+   },
+   "preco_anterior": {
+    "valor": 19.77,
+    "periodo": "03/09/2026 (+3.2%)",
+    "fonte": "[M9]"
+   },
+   "numero_acoes": {
+    "valor": "~3 bi (DPA 2016-25 'com 3 bi acoes')",
+    "periodo": "07/09/2026",
+    "fonte": "PDF Banco_Seguridade rev. 07/09/2026 (sem lista de fontes [M#] no PDF)",
+    "nota": "aproximado"
+   },
+   "valor_de_mercado": {
+    "valor": null,
+    "nota": "nao citado"
+   },
+   "vpa": {
+    "valor": 4.52,
+    "periodo": "07/09/2026 (P/VP 4.37; ~4.5 em 03/10)",
+    "fonte": "PDF Banco_Seguridade rev. 07/09/2026 (sem lista de fontes [M#] no PDF)"
+   },
+   "patrimonio_liquido": {
+    "valor": null
+   },
+   "lpa_12m": {
+    "valor": 1.52,
+    "periodo": "12m (~) em 07/09/2026",
+    "fonte": "PDF Banco_Seguridade rev. 07/09/2026 (sem lista de fontes [M#] no PDF)",
+    "nota": "P/L 13.0"
+   },
+   "lucro_liquido_12m": {
+    "valor": null,
+    "nota": "nao citado 12m"
+   },
+   "lucro_2T26": {
+    "valor": 1.141,
+    "periodo": "2T26, R$ bi (+9.5% a/a)",
+    "fonte": "[C1]; PDF 07/09"
+   },
+   "lucro_1S26": {
+    "valor": 2.28,
+    "periodo": "1S26, R$ bi (+11.4%)",
+    "fonte": "PDF Banco_Seguridade rev. 07/09/2026 (sem lista de fontes [M#] no PDF)"
+   },
+   "lucro_recorrente_serie_anual": {
+    "valor": null,
+    "nota": "serie anual de lucro nao citada; CAGR lucro 2016-25 = 17.2%/a, nunca teve prejuizo"
+   },
+   "cagr_lucro_2016_25_pct": {
+    "valor": 17.2,
+    "periodo": "2016-2025",
+    "fonte": "PDF Banco_Seguridade rev. 07/09/2026 (sem lista de fontes [M#] no PDF)"
+   },
+   "roe_recorrente_serie_anual": {
+    "valor": {
+     "lucro/PL_fim": 33.6,
+     "ROE_'recorrente'_empresa": 70.9,
+     "ROIC": 31.6
+    },
+    "periodo": "07/09/2026",
+    "fonte": "PDF Banco_Seguridade rev. 07/09/2026 (sem lista de fontes [M#] no PDF)"
+   },
+   "payout_serie_anual": {
+    "valor": {
+     "geral": ">= 77% sempre; 92% desde 2022",
+     "atual": 92
+    },
+    "fonte": "PDF Banco_Seguridade rev. 07/09/2026 (sem lista de fontes [M#] no PDF)"
+   },
+   "dpa_serie_anual": {
+    "valor": {
+     "2016": 0.26,
+     "2017": 0.33,
+     "2018": 0.37,
+     "2019": 0.4,
+     "2020": 0.5,
+     "2021": 0.54,
+     "2022": 0.85,
+     "2023": 1.05,
+     "2024": 1.14,
+     "2025": 1.31,
+     "2026_YTD": 0.7
+    },
+    "periodo": "R$/acao (base 3 bi acoes)",
+    "fonte": "PDF Banco_Seguridade rev. 07/09/2026 (sem lista de fontes [M#] no PDF)",
+    "nota": "pre-IPO a CEF ate 2020; ajustado/data-com nao informado"
+   },
+   "dy_minimo_pct": {
+    "valor": 5.6,
+    "periodo": "2021 (minimo desde o IPO); medio 2021-25 ~7%",
+    "fonte": "PDF Banco_Seguridade rev. 07/09/2026 (sem lista de fontes [M#] no PDF)"
+   },
+   "jcp_vs_dividendos": {
+    "valor": null
+   },
+   "roe_pct": {
+    "valor": 33.6,
+    "periodo": "lucro/PL fim; empresa reporta 70.9% 'recorrente'",
+    "fonte": "PDF Banco_Seguridade rev. 07/09/2026 (sem lista de fontes [M#] no PDF)"
+   },
+   "roe_trimestral_outros": {
+    "valor": null
+   },
+   "guidance_2026": {
+    "valor": null
+   },
+   "consenso_lucro_roe_lpa_2026_28": {
+    "valor": {
+     "BB-BI": "compra alvo R$ 19.50",
+     "consenso": "alvo = preco (07/09)"
+    },
+    "periodo": "07/09/2026",
+    "fonte": "PDF Banco_Seguridade rev. 07/09/2026 (sem lista de fontes [M#] no PDF)"
+   },
+   "seguradora": {
+    "premios_emitidos": {
+     "valor": "jul/26: +3% a/a (mercado +5.9%); habitacional +15%; auto +33%",
+     "periodo": "jul-2026",
+     "fonte": "[C2]"
+    },
+    "motores_freios_2T26": {
+     "valor": "Habitacional +14%, Residencial +28%, Capitalizacao +23%; Prestamista -10%, consorcio -6%",
+     "periodo": "2T26",
+     "fonte": "PDF Banco_Seguridade rev. 07/09/2026 (sem lista de fontes [M#] no PDF)"
+    },
+    "sinistralidade_pct": {
+     "valor": 24.3,
+     "periodo": "jul/26 (mercado 43.5%)",
+     "fonte": "[C2]"
+    },
+    "indice_combinado": {
+     "valor": null
+    },
+    "resultado_financeiro_vs_operacional": {
+     "valor": "35% do lucro e financeiro (carteira R$ 16.2 bi a 94% do CDI); Selic em queda corta parte do crescimento",
+     "periodo": "2T26",
+     "fonte": "PDF Banco_Seguridade rev. 07/09/2026 (sem lista de fontes [M#] no PDF)"
+    },
+    "previdencia": {
+     "valor": "jul/26: contribuicoes R$ 2.6 bi; reservas R$ 217 bi (+16%); maior captacao do ano",
+     "periodo": "jul-2026",
+     "fonte": "[C3]"
+    },
+    "equivalencia_por_coligada": {
+     "valor": null,
+     "nota": "nao detalhada; parcerias CNP/Tokio citadas"
+    },
+    "contrato_exclusividade_cef": {
+     "valor": "35 anos (fonte secundaria); prazo exato nao encontrado; sem noticia de renegociacao/exclusividade/follow-on",
+     "periodo": "03/10/2026",
+     "fonte": "PDF 03/10 / 07/09"
+    }
+   },
+   "outros": {
+    "divida": "zero",
+    "funcionarios": 129,
+    "follow_on_2025": "secundario (sem diluicao)"
+   },
+   "multiplos": {
+    "pl_atual": {
+     "valor": 13.4,
+     "periodo": "~ a 20.41 (era 13.0 a 19.77)",
+     "fonte": "PDF 03/10 (calculo)"
+    },
+    "pvp_atual": {
+     "valor": 4.5,
+     "periodo": "~ a 20.41 (era 4.37)",
+     "fonte": "PDF 03/10 (calculo)"
+    },
+    "pl_pvp_medios_historicos": {
+     "valor": null
+    },
+    "pares_citados": {
+     "valor": {
+      "BBSE3": "P/L 8.8, DY 11%"
+     },
+     "periodo": "07/09/2026",
+     "fonte": "PDF Banco_Seguridade rev. 07/09/2026 (sem lista de fontes [M#] no PDF)"
+    }
+   },
+   "proventos": {
+    "dpa_12m": {
+     "valor": null,
+     "nota": "nao citado em R$ (DY 12m 6.6%)"
+    },
+    "dy_12m_pct": {
+     "valor": 6.6,
+     "periodo": "02/10/2026 (era 6.8)",
+     "fonte": "PDF 03/10"
+    },
+    "dy_forward_pct": {
+     "valor": 6.9,
+     "periodo": "02/10/2026 (DPA fwd R$ 1.40; era 7.1)",
+     "fonte": "PDF 03/10"
+    },
+    "dpa_forward": {
+     "valor": 1.4,
+     "fonte": "PDF 03/10"
+    },
+    "dividendo_2T26": {
+     "valor": {
+      "valor": 0.35,
+      "data_com": "03/11/2026",
+      "pagamento": "17/11/2026",
+      "payout_pct": 92,
+      "declarado": "11/08/2026"
+     },
+     "periodo": "2T26",
+     "fonte": "[C1]"
+    },
+    "defasagem_declaracao_pagamento": {
+     "valor": "~3 meses (declarado 11/08; pago 17/11) - 'yield de caixa atrasado'",
+     "periodo": "03/10/2026",
+     "fonte": "PDF 03/10"
+    },
+    "politica_payout": {
+     "valor": "payout >= 77% sempre, 92% desde 2022; dividendo trimestral; todos os anos desde 2015",
+     "fonte": "PDF Banco_Seguridade rev. 07/09/2026 (sem lista de fontes [M#] no PDF)"
+    },
+    "cobertura_caixa": {
+     "valor": "Sim (zero divida)",
+     "fonte": "PDF 03/10"
+    }
+   },
+   "retorno_vs_rf": {
+    "valor": {
+     "yield_fwd_pct": 6.9,
+     "g_pct": "9-10",
+     "retorno_nominal_pct": "15.9-16.9",
+     "retorno_real_pct": "11.4-12.4",
+     "vs_ipca_mais_pp": "4.4 a 5.3",
+     "vence_rf": "Sim"
+    },
+    "periodo": "02/10/2026",
+    "fonte": "PDF 03/10",
+    "nota": "premissa do PDF"
+   },
+   "controlador_interferencias": {
+    "consumadas": {
+     "valor": "Nenhuma; CEF e dona e cliente mas sem interferencia consumada",
+     "periodo": "03/10/2026 e 07/09/2026",
+     "fonte": "PDF 03/10 / 07/09"
+    },
+    "prospectivo": {
+     "valor": "V4: renegociacao de comissoes/contrato de 35 anos (baixa probabilidade); CEF define comissoes",
+     "fonte": "PDF Banco_Seguridade rev. 07/09/2026 (sem lista de fontes [M#] no PDF)"
+    }
+   },
+   "gatilhos_ficha_anterior": [
+    {
+     "gatilho": "Renegociacao de comissoes/exclusividade",
+     "status": "Nao acionado",
+     "evidencia": "sem noticia"
+    },
+    {
+     "gatilho": "Payout < 80% sem M&A",
+     "status": "Nao acionado",
+     "evidencia": "92%"
+    },
+    {
+     "gatilho": "Lucro < +5% por 2 anos",
+     "status": "Nao verificavel",
+     "evidencia": "sem balanco novo"
+    },
+    {
+     "gatilho": "Financeiro > 40% do lucro",
+     "status": "Nao verificavel",
+     "evidencia": "sem balanco novo"
+    }
+   ],
+   "riscos_principais": [
+    "35% do lucro financeiro dependente da Selic (queda de juros corta crescimento)",
+    "P/L ~13 e P/VP ~4.5 (preco cheio; acao +55% em 12m em 07/09)",
+    "justo mais sensivel ao Ke do lote (g 9-10%): +4% no justo por 0.27 p.p.",
+    "renegociacao de comissoes pela CEF"
+   ],
+   "nao_encontrado_declarado": [
+    "release 2T26 do RI",
+    "PL jun/26",
+    "prazo exato do contrato com a CEF",
+    "solvencia Susep das JVs",
+    "participacao da CEF pos-follow-on"
+   ],
+   "eventos_agenda": [
+    {
+     "data": "03/11/2026",
+     "evento": "data-com do dividendo 2T26 (R$ 0.35)"
+    },
+    {
+     "data": "17/11/2026",
+     "evento": "pagamento do dividendo 2T26"
+    }
+   ],
+   "qualitativo_07_09": {
+    "moat": 4,
+    "fisher": 4,
+    "gestao_capital": 3,
+    "controlador_politico": 3.5,
+    "ciclo": 2,
+    "templeton": 1,
+    "dhandho": 2,
+    "bh_resultado": "Parcial",
+    "piotroski": "5/6",
+    "graham_criterios": "5/7"
+   },
+   "premissas_valuation_do_pdf": {
+    "rotulo": "premissas do PDF (nao fatos)",
+    "justo": {
+     "valor": {
+      "antes_07_09": 19.0,
+      "agora": 19.8
+     },
+     "periodo": "03/10/2026",
+     "fonte": "PDF 03/10",
+     "nota": "Ke -0.27 p.p. = +R$ 0.80 (g alto: +4%); em 07/09 justo 18->19 por correcao do rotulo estatal"
+    },
+    "compra_menos30": 13.9,
+    "saida": 26.0,
+    "faixa": "R$ 10-28",
+    "compraria": "Nao a 20.4; comecar em R$ 15.5-16.5; cheio 13.90",
+    "veredito": "JUSTA (mantido); desconto/premio +3% (era +4%); nota 7.7",
+    "g_pct": "9-10",
+    "ke_real_pct": 12.08,
+    "horizonte_ddm": null,
+    "outros_modelos_07_09": {
+     "ddm_base": [
+      13.2,
+      21.3
+     ],
+     "ddm_pess": [
+      9.8,
+      14.4
+     ],
+     "ddm_otim": [
+      16.5,
+      28.5
+     ],
+     "epv": [
+      8.3,
+      11.3
+     ],
+     "graham": 12.4,
+     "bazin_5a_10a_fwd": [
+      16.3,
+      11.3,
+      23.3
+     ],
+     "teste_R$1_retido": 20,
+     "nota": "pares = Ke 16.8% / 12.35%"
+    }
+   }
+  },
+  "PSSA3": {
+   "nome": {
+    "valor": "Porto Seguro (Porto)",
+    "fonte": "PDF Banco_Seguridade rev. 03/10/2026",
+    "nota": "07/09: pedido originalmente como 'PPSA3'"
+   },
+   "perfil": {
+    "valor": "seguradora diversificada (Seguro ~51% do lucro; Saude, Bank, Servicos ~49%)",
+    "periodo": "07/09/2026",
+    "fonte": "PDF Banco_Seguridade rev. 07/09/2026 (sem lista de fontes [M#] no PDF)"
+   },
+   "controlador": {
+    "valor": "Garfinkel + Itau (Novo Mercado); participacoes nao citadas",
+    "periodo": "07/09/2026",
+    "fonte": "PDF Banco_Seguridade rev. 07/09/2026 (sem lista de fontes [M#] no PDF)"
+   },
+   "tag_along": {
+    "valor": null,
+    "nota": "Novo Mercado citado; percentual nao citado"
+   },
+   "free_float": {
+    "valor": null
+   },
+   "liquidez_diaria_adtv": {
+    "valor": null
+   },
+   "preco_fechamento_02_10_2026": {
+    "valor": 49.47,
+    "periodo": "02/10/2026",
+    "fonte": "[M9]"
+   },
+   "preco_anterior": {
+    "valor": 55.03,
+    "periodo": "04/09/2026 (maxima de 52s, nao fechamento); Yahoo fechou 51.66 -> queda real ~4% (PDF); queda nominal -10.1%",
+    "fonte": "[M9]"
+   },
+   "numero_acoes": {
+    "valor": null
+   },
+   "valor_de_mercado": {
+    "valor": null
+   },
+   "vpa": {
+    "valor": 24.55,
+    "periodo": "~jun/26 (P/VP 2.24 a 55.03; 2.02 a 49.47)",
+    "fonte": "PDF 03/10 e 07/09"
+   },
+   "patrimonio_liquido": {
+    "valor": "R$ 15.9 bi",
+    "periodo": "2025",
+    "fonte": "PDF Banco_Seguridade rev. 07/09/2026 (sem lista de fontes [M#] no PDF)",
+    "nota": "serie 2021-25: PL 9.4 -> 15.9 bi"
+   },
+   "lpa_12m": {
+    "valor": null,
+    "nota": "nao citado; P/L 10.0"
+   },
+   "lucro_liquido_12m": {
+    "valor": 3.57,
+    "periodo": "12m recorrente, R$ bi, 07/09/2026",
+    "fonte": "PDF Banco_Seguridade rev. 07/09/2026 (sem lista de fontes [M#] no PDF)",
+    "nota": "'lucro 12m rec. R$ 3,57 bi'"
+   },
+   "lucro_recorrente_serie_anual": {
+    "valor": {
+     "2021": 1.5,
+     "2025": 3.4,
+     "cagr_2021_25_pct": 22.7
+    },
+    "periodo": "R$ bi, 2021 e 2025",
+    "fonte": "PDF Banco_Seguridade rev. 07/09/2026 (sem lista de fontes [M#] no PDF)",
+    "nota": "so extremos; lucro 2016-20 nao encontrado"
+   },
+   "roe_recorrente_serie_anual": {
+    "valor": {
+     "2025": 21.6,
+     "1T26": 24.7,
+     "2T26": 22.3
+    },
+    "periodo": "ROAE %",
+    "fonte": "PDF Banco_Seguridade rev. 07/09/2026 (sem lista de fontes [M#] no PDF)",
+    "nota": "serie 2016-24 nao citada"
+   },
+   "payout_serie_anual": {
+    "valor": {
+     "atual": 68.8
+    },
+    "periodo": "07/09/2026",
+    "fonte": "PDF Banco_Seguridade rev. 07/09/2026 (sem lista de fontes [M#] no PDF)"
+   },
+   "dpa_serie_anual": {
+    "valor": {
+     "2023": 0.71,
+     "2024": 1.5,
+     "2025": 2.97,
+     "2026_declarado": 1.96
+    },
+    "periodo": "R$/acao",
+    "fonte": "PDF Banco_Seguridade rev. 07/09/2026 (sem lista de fontes [M#] no PDF)",
+    "nota": "divergencia: Renova mostra 12m 3.91 vs SI/HG 3.01; serie 2016-22 nao coletada"
+   },
+   "dy_minimo_pct": {
+    "valor": 1.4,
+    "periodo": "minimo 5a ~1.4% (2023)",
+    "fonte": "PDF Banco_Seguridade rev. 07/09/2026 (sem lista de fontes [M#] no PDF)"
+   },
+   "jcp_vs_dividendos": {
+    "valor": "JCP 3T26: R$ 0.5207/acao bruto (R$ 333.4 mi); declarado 18/09; data-com 23/09; pago ate 30/04/2027 (defasagem ate 7 meses); JCP 3T26 mantido R$ 0.52",
+    "periodo": "set/2026",
+    "fonte": "[O1]"
+   },
+   "roe_pct": {
+    "valor": 22.3,
+    "periodo": "2T26 ROAE (24.7% 1T26; 21.6% 2025)",
+    "fonte": "PDF Banco_Seguridade rev. 07/09/2026 (sem lista de fontes [M#] no PDF)"
+   },
+   "roe_trimestral_outros": {
+    "valor": {
+     "1T26": 24.7,
+     "2025": 21.6
+    },
+    "fonte": "PDF Banco_Seguridade rev. 07/09/2026 (sem lista de fontes [M#] no PDF)"
+   },
+   "guidance_2026": {
+    "valor": {
+     "sinistralidade_auto": "50-54%",
+     "perdas_Porto_Bank_2026": "R$ 3.1-3.5 bi (era 2.7-3.1) -> ~R$ 0.8-0.9 bi/tri no 2S"
+    },
+    "periodo": "03/10/2026",
+    "fonte": "[O3]; PDF 07/09"
+   },
+   "consenso_lucro_roe_lpa_2026_28": {
+    "valor": {
+     "Safra": "compra",
+     "BTG": "ve oportunidade na queda (titulo de [O3])"
+    },
+    "fonte": "PDF 07/09; [O3]"
+   },
+   "seguradora": {
+    "premios_emitidos": {
+     "valor": "Auto jul/26: R$ 1.57 bi (+13.7%)",
+     "periodo": "jul-2026",
+     "fonte": "[O2]"
+    },
+    "sinistralidade_pct": {
+     "valor": {
+      "auto_2T26": 56.7,
+      "auto_jul26_mensal": 60.9,
+      "auto_jul_var": "+3 p.p.",
+      "guidance_auto": "50-54",
+      "gatilho_consolidada": ">58% por 2 tri",
+      "consolidada_ultima": 22.3
+     },
+     "periodo": "2T26 / jul-2026",
+     "fonte": "[O2]; PDF 03/10",
+     "nota": "'ultimo 22,3%' do quadro de gatilhos e ROAE do Seguro, nao sinistralidade - leitura incerta"
+    },
+    "indice_combinado": {
+     "valor": null
+    },
+    "resultado_financeiro_vs_operacional": {
+     "valor": "financeiro R$ 694 mi (-8.5%) em 2T26; cede com a Selic",
+     "periodo": "2T26",
+     "fonte": "PDF Banco_Seguridade rev. 07/09/2026 (sem lista de fontes [M#] no PDF)"
+    },
+    "segmentos_2T26": {
+     "valor": {
+      "Seguro": "lucro R$ 455.8 mi, ROAE 32.9%",
+      "Saude": "lucro R$ 143.9 mi (+36%), ROAE 24%",
+      "Porto Bank": "lucro R$ 137.8 mi (-32.5%), perdas de credito R$ 868 mi (+67%), NIM ajustado ao risco ~0.1%"
+     },
+     "periodo": "2T26",
+     "fonte": "PDF Banco_Seguridade rev. 07/09/2026 (sem lista de fontes [M#] no PDF)",
+     "nota": "ordem inferida da tabela: Seguro / Saude / Porto Bank"
+    },
+    "equivalencia_por_coligada": {
+     "valor": null
+    },
+    "contrato_exclusividade": {
+     "valor": null,
+     "nota": "nao aplicavel (nao ha banco controlador); acionistas Itau + Garfinkel"
+    },
+    "porto_bank": {
+     "valor": {
+      "perdas_2T26_R$mi": 868,
+      "guidance_perdas_2026": "R$ 3.1-3.5 bi",
+      "gatilho": "perdas do Bank > R$ 1 bi/tri ou aporte na vertical",
+      "solvencia/inad": "nao encontrado"
+     },
+     "periodo": "2T26 / 03/10/2026",
+     "fonte": "[O3]; PDF 07/09"
+    },
+    "porto_servico": {
+     "valor": "pediu cancelamento de registro na CVM (03/10); reorganizacao, sem efeito na PSSA3",
+     "periodo": "03/10/2026",
+     "fonte": "[O4]"
+    }
+   },
+   "outros": {
+    "alavancagem_ativos_PL": 3.6,
+    "caixa_R$bi": 13,
+    "divida_liquida": "~0"
+   },
+   "multiplos": {
+    "pl_atual": {
+     "valor": 10.0,
+     "periodo": "07/09/2026 (a 55.03)",
+     "fonte": "PDF Banco_Seguridade rev. 07/09/2026 (sem lista de fontes [M#] no PDF)"
+    },
+    "pvp_atual": {
+     "valor": 2.02,
+     "periodo": "a 49.47 (02/10)",
+     "fonte": "PDF 03/10"
+    },
+    "pvp_anterior": {
+     "valor": 2.24,
+     "periodo": "07/09",
+     "fonte": "PDF Banco_Seguridade rev. 07/09/2026 (sem lista de fontes [M#] no PDF)"
+    },
+    "pl_pvp_medios_historicos": {
+     "valor": null
+    },
+    "pares_citados": {
+     "valor": null
+    }
+   },
+   "proventos": {
+    "dpa_12m": {
+     "valor": null,
+     "nota": "divergente: 3.91 (Renova) vs 3.01 (SI/HG), 07/09"
+    },
+    "dy_12m_pct": {
+     "valor": 5.5,
+     "periodo": "07/09/2026",
+     "fonte": "PDF Banco_Seguridade rev. 07/09/2026 (sem lista de fontes [M#] no PDF)",
+     "nota": "03/10: n.v."
+    },
+    "dy_forward_pct": {
+     "valor": 7.3,
+     "periodo": "02/10/2026 (DPA ~R$ 3.6; era 6.6 em 07/09)",
+     "fonte": "PDF 03/10"
+    },
+    "dpa_forward": {
+     "valor": 3.6,
+     "fonte": "PDF 03/10 / 07/09"
+    },
+    "defasagem_declaracao_pagamento": {
+     "valor": "longa: JCP declarado 18/09, pago ate 30/04/2027 (ate 7 meses)",
+     "periodo": "03/10/2026",
+     "fonte": "[O1]"
+    },
+    "politica_payout": {
+     "valor": "payout ~69%; JCP R$ 333 mi vs 329 mi anterior (sem corte)",
+     "fonte": "PDF 03/10 / 07/09"
+    },
+    "cobertura_caixa": {
+     "valor": "Sim (caixa R$ 13 bi; payout ~69%)",
+     "fonte": "PDF 03/10"
+    }
+   },
+   "retorno_vs_rf": {
+    "valor": {
+     "yield_fwd_pct": 7.3,
+     "g_pct": "6-8 (antes 8)",
+     "retorno_nominal_pct": "13.3-15.3",
+     "retorno_real_pct": "8.9-10.9",
+     "vs_ipca_mais_pp": "1.9 a 3.8",
+     "vence_rf": "Empate"
+    },
+    "periodo": "02/10/2026",
+    "fonte": "PDF 03/10",
+    "nota": "premissa do PDF"
+   },
+   "controlador_interferencias": {
+    "consumadas": {
+     "valor": "Novo Mercado; nenhum evento",
+     "periodo": "03/10/2026",
+     "fonte": "PDF 03/10"
+    },
+    "prospectivo": {
+     "valor": "Regulatorio: Susep + CMN; tributacao de dividendos (nota 6/10)",
+     "periodo": "07/09/2026",
+     "fonte": "PDF Banco_Seguridade rev. 07/09/2026 (sem lista de fontes [M#] no PDF)"
+    }
+   },
+   "gatilhos_ficha_anterior": [
+    {
+     "gatilho": "Sinistralidade consolidada > 58% por 2 tri",
+     "status": "Em alerta",
+     "evidencia": "jul 60.9% (mensal); 2T26 56.7%"
+    },
+    {
+     "gatilho": "Perdas do Bank > R$ 1 bi/tri",
+     "status": "Nao acionado",
+     "evidencia": "guidance implica ~0.8-0.9 bi/tri"
+    },
+    {
+     "gatilho": "ROAE < 18%",
+     "status": "Nao verificavel",
+     "evidencia": "ultimo 22.3% (2T26)"
+    },
+    {
+     "gatilho": "Corte de payout",
+     "status": "Nao acionado",
+     "evidencia": "JCP R$ 333 mi vs 329 mi"
+    }
+   ],
+   "riscos_principais": [
+    "sinistralidade auto subindo (60.9% jul)",
+    "Porto Bank com perdas +67% e NIM ajustado ao risco ~0.1%",
+    "financeiro em queda com a Selic",
+    "JCP com pagamento ate 7 meses depois",
+    "P/VP 2.0 = queda forte se ROE for a 18% (07/09: -40%)"
+   ],
+   "nao_encontrado_declarado": [
+    "solvencia Susep e Basileia do Bank",
+    "inadimplencia do Bank",
+    "DPA 2016-22",
+    "lucro 2016-20",
+    "D&A",
+    "recompras"
+   ],
+   "eventos_agenda": [
+    {
+     "data": "3T26",
+     "evento": "testa sinistralidade ~60% (se persistir, justo ~R$ 46 [HIPOTESE]); data nao citada"
+    }
+   ],
+   "qualitativo_07_09": {
+    "moat": 4,
+    "fisher": 4,
+    "gestao_capital": 4,
+    "regulatorio": 3,
+    "ciclo": 3,
+    "templeton": 1,
+    "dhandho": 2,
+    "bh_resultado": "Sim (falha no preco)",
+    "piotroski": "4/7",
+    "graham_criterios": "6/7"
+   },
+   "premissas_valuation_do_pdf": {
+    "rotulo": "premissas do PDF (nao fatos)",
+    "justo": {
+     "valor": {
+      "antes_07_09": 48.0,
+      "agora": 49.6
+     },
+     "periodo": "03/10/2026",
+     "fonte": "PDF 03/10",
+     "nota": "Ke -0.27 p.p. (g 8%) = +R$ 1.60; fundamentos R$ 0; se sinistralidade ~60% persistir no 3T26, justo ~R$ 46 [HIPOTESE]"
+    },
+    "compra_menos30": 34.7,
+    "saida": 62.0,
+    "faixa": "R$ 30-75",
+    "compraria": "Nao a 49.5; aceitavel ~R$ 43; cheio 34.70; esperar 3T26",
+    "veredito": "JUSTA (antes JUSTA para CARA); desconto/premio ~0% (era +15%); nota 7.1 (era 6.5)",
+    "g_pct": "6-8",
+    "ke_real_pct": 12.08,
+    "horizonte_ddm": null,
+    "outros_modelos_07_09": {
+     "dcf_base": [
+      38.5,
+      64
+     ],
+     "dcf_pess": [
+      30,
+      45
+     ],
+     "dcf_otim": [
+      48,
+      75
+     ],
+     "epv": [
+      30.4,
+      41.3
+     ],
+     "graham": 55.2,
+     "bazin_2023-25_12m_fwd": [
+      28.8,
+      50,
+      60
+     ],
+     "pvp_justificado": "Ke16.8%: 1.43x (35); 14%: 2.0x (49); 12.35%: 2.4-2.6x (58-64)",
+     "nota": "pares = Ke 16.8% / 12.35%"
+    }
+   }
+  }
+ },
+ "fontes": {
+  "M1": "https://infomoney.com.br/onde-investir/taxas-do-tesouro-sobem-as-vesperas-do-1o-turno-seguindo-titulos-americanos",
+  "M2": "https://gazetamercantil.com/selic-1375-copom-corta-juros-setembro-2026",
+  "M3": "https://www.infomoney.com.br/economia/boletim-focus-projecoes-28092026/",
+  "M4": "https://www.soutocorrea.com.br/client-alerts/lei-complementar-n-224-2025-cortes-em-beneficios-fiscais-e-novas-regras-para-fintechs-bets-e-jcp/",
+  "M5": "https://www.jb.com.br/brasil/politica/2026/10/1061086-datafolha-aponta-lula-com-45-dos-votos-validos-e-flavio-bolsonaro-com-40.html",
+  "M6": "https://www.brasilemfolhas.com.br/2026/10/ibovespa-sobe-2-63-e-fecha-aos-192-mil-pontos-na-vespera-da-eleicao/",
+  "M7": "https://www.poder360.com.br/poder-economia/credito-no-brasil-atinge-r-74-trilhoes-em-agosto-diz-banco-central/",
+  "M8": "https://www.poder360.com.br/poder-economia/bc-diz-que-40-da-alta-da-inadimplencia-vem-de-nova-regra-contabil/",
+  "M9": "https://query1.finance.yahoo.com/v8/finance/chart/ITUB4.SA (padrao <TICKER>.SA; conferido em Dados de Mercado / Google Finance / StatusInvest)",
+  "B1": "https://www.infomoney.com.br/mercados/banco-do-brasil-bbas3-atualiza-valor-de-proventos-confira-valor-por-acao/",
+  "B2": "https://arevista.com.br/acoes/bbas3-sobe-mas-novos-numeros-mudam-a-leitura-sobre-as-acoes-do-banco-do-brasil/",
+  "B3": "https://www.suno.com.br/noticias/banco-do-brasil-bbas3-acoes-recuperacao-credito-mt/",
+  "B4": "https://www.congressonacional.leg.br/materias/medidas-provisorias/-/mpv/175190",
+  "B5": "https://www.infomoney.com.br/mercados/bbas3-eleicoes-historico-banco-do-brasil-2026/",
+  "S1": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?Tela=99&numSequencia=1094973&numVersao=1&numProtocolo=1570267&descTipo=IPE&CodigoInstituicao=1",
+  "S2": "https://gazetamercantil.com/santander-opa-santander-brasil-cvm-b3",
+  "S3": "https://query1.finance.yahoo.com/v8/finance/chart/SAN.MC",
+  "S4": "https://www.merca2.es/2026/09/29/santander-eleva-dividendo-2026-2464347/",
+  "S5": "https://www.tradingkey.com/news/market-movers/262196455-market-movers-san-20261001",
+  "R2b": "https://www.dadosdemercado.com.br/acoes/sanb11/dividendos",
+  "R1": "https://www.ativovirtual.com.br/avnews/artigos/fato-relevante-banrisul-brsr3-jscp-de-r-90-milhoes-no-3t26",
+  "R2": "https://www.dadosdemercado.com.br/acoes/brsr6/dividendos",
+  "R3": "https://www.cnnbrasil.com.br/eleicoes/a-cnn-gabriel-souza-se-contrapoe-a-venda-do-banrisul-cenario-diferente/",
+  "R4": "https://www.gazetadopovo.com.br/eleicoes/2026/pesquisa-eleitoral-2026/atlasintel-governador-rio-grande-do-sul-setembro-2026-2/",
+  "R5": "https://jovempan.com.br/politica/zucco-propoe-novo-sistema-contra-enchentes-no-rs-e-descarta-venda-do-banrisul/",
+  "R6": "https://www.brasildefato.com.br/2026/09/30/candidatos-ao-governo-do-estado-tem-embates-sobre-educacao-seguranca-e-reconstrucao-em-debate-na-rbs-tv/",
+  "A1": "https://br.advfn.com/jornal/2026/09/banco-abc-brasil-levara-sobras-de-aumento-de-capital-a-leilao-na-b3",
+  "A2": "https://investidor10.com.br/noticias/banco-abre-caixa-e-libera-recompra-de-8-3-milhoes-de-acoes-122841/",
+  "A3": "https://br.advfn.com/jornal/2026/09/banco-abc-brasil-emite-r-600-9-milhoes-em-letras-financeiras-subordinadas-perpetuas",
+  "A4": "https://ri.abcbrasil.com.br/resultados/operacoes-com-atraso-acima-de-90-dias/",
+  "D1": "https://timesbrasil.com.br/brasil/apos-levantar-r-65-bilhoes-bradesco-fara-nova-distribuicao-de-acoes-remanescentes/",
+  "D2": "https://timesbrasil.com.br/empresas-e-negocios/bradesco-leva-16-milhoes-de-acoes-a-leilao-na-bolsa-apos-captar-r-97-bilhoes/",
+  "D3": "https://www.seudinheiro.com/2026/empresas/dia-cheio-no-bradesco-bbdc4-de-r-38-bilhoes-em-jcp-a-leilao-de-sobras-de-acoes-ate-o-pix-internacional-ccgg/",
+  "D4": "https://br.advfn.com/jornal/2026/10/bradesco-aprova-r-3-8-bilhoes-em-jcp-veja-quem-tem-direito",
+  "D5": "https://www.infomoney.com.br/mercados/bradesco-bbdc4-resultados-segundo-trimestre-2026/",
+  "I1": "https://migr-itau.mz-customers.com/relacoes-com-investidores/en/market-information/dividends-and-interest-on-capital/",
+  "I2": "https://br.advfn.com/jornal/2026/09/itau-unibanco-emite-r-5-bilhoes-em-letras-financeiras-e-reforca-capital",
+  "I3": "https://br.advfn.com/jornal/2026/09/itau-unibanco-anuncia-recompra-de-r-11-bilhoes-em-letras-financeiras",
+  "I4": "https://www.infomoney.com.br/mercados/itau-itub4-resultados-segundo-trimestre-2026/",
+  "P1": "https://br.advfn.com/jornal/2026/09/brbi-br-partners-aprova-aporte-de-r-30-milhoes-para-reforcar-capital-do-banco-br-partners",
+  "P2": "https://euqueroinvestir.com/acoes/br-partners-acao-desaba-apos-balanco-considerado-fraco",
+  "E1": "https://www.bbseguridaderi.com.br/docs/bb-seguridade-2026-09-21-jHtqRhbJ.pdf",
+  "E2": "https://www.infomoney.com.br/mercados/bb-seguridade-bbse3-cai-mais-de-2-com-dados-da-susep-reforcando-cautela-para-acoes/",
+  "E3": "https://www.moneytimes.com.br/citi-rebaixa-bb-seguridade-bbse3-para-venda-e-alerta-para-queda-de-ate-55-jcav/",
+  "E4": "https://arevista.com.br/acoes/bbse3-divide-bancos-e-expoe-risco-que-o-mercado-tenta-precificar/",
+  "E5": "https://www.bbseguridaderi.com.br/servicos-aos-acionistas/dividendos-e-recompras",
+  "C1": "https://www.moneytimes.com.br/caixa-seguridade-cxse3-anuncia-lucro-de-r-114-bilhao-no-2t26-e-dividendos-de-r-105-bilhao-fets/",
+  "C2": "https://arevista.com.br/acoes/caixa-seguridade-cxse3-numeros-de-julho-reforcam-dividendos/",
+  "C3": "https://www.ativovirtual.com.br/avnews/artigos/cxse3-vale-a-pena-o-que-o-resultado-de-julho-muda-na-tese-em-5-numeros",
+  "O1": "https://www.infomoney.com.br/mercados/porto-seguro-pssa3-pagara-r-3334-milhoes-em-juros-sobre-capital-proprio/",
+  "O2": "https://visnoinvest.com.br/news/15343/porto-seguro-pssa3-registra-r-157-bi-em-premios-de-auto-em-jul-26",
+  "O3": "https://www.seudinheiro.com/2026/empresas/banco-da-porto-pssa3-tropeca-no-credito-derruba-as-acoes-e-reacende-alerta-btg-ve-oportunidade-na-queda-miql/",
+  "O4": "https://bpmoney.com.br/mercado/porto-seguro-pssa3-pede-a-cvm-cancelamento-de-registro-de-companhia-aberta/",
+  "_nota": "Lista do fim do PDF de 03/10/2026 (URLs reconstruidas de linhas quebradas; M3, M4 e outras podem ter trechos truncados na extracao). O PDF de 07/09/2026 nao traz lista de fontes."
+ }
+}

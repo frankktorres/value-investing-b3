@@ -1,0 +1,2853 @@
+{
+ "meta": {
+  "lote": "Lote 5 - Petróleo, Gás e Combustíveis (PETR4, PRIO3, RECV3, UGPA3, VBBR3)",
+  "fonte_principal": "Petroleo_Gas_rev_03-10-2026.txt (PDF Reavaliação, data-base 03/10/2026, cotações de 02/10/2026) - PREVALECE",
+  "fonte_complementar": "Petroleo_Gas_rev_06-09-2026.txt (PDF data-base 05-06/09/2026, ficha 'rev. 07/09'; cotações de 31/07 a agosto; mais completo em métricas e histórico)",
+  "legenda_src": "Campo src = '03/10' ou '06/09' (qual PDF) + seção/ficha + rótulo da fonte que o PDF cita. Valores são fatos extraídos; sem opinião nem cálculo próprio salvo marcado 'Derivado'. 'colunas quebradas' = pdftotext -layout embaralhou a tabela; reconstruído pela ordem e conferido por aritmética quando possível.",
+  "aviso_geral": "Nenhuma DRE nova em 03/10 (3T26 em novembro): revisão de preço, premissa (Ke, ciclo) e fatos. Resultados/endividamento por ticker vêm do 2T26 (PDF de 06/09). Texto extraído com encoding UTF-8; setas e símbolos (->, >=) foram perdidos pelo pdftotext e substituídos pela leitura do contexto.",
+  "regua_do_pdf_03_10": {
+   "titulo_ancora": {
+    "v": 7.08,
+    "un": "% real a.a.",
+    "per": "02/10/2026",
+    "nota": "Tesouro IPCA+ mais longo (2060 c/ juros); 6,99% em 30/09; 7,09% em 01-02/10; ficha 07/09 usava 7,35% (2050); 06/09: 7,28% (StatusInvest) / 7,42% (Investidor10), 7,35% usado",
+    "src": "03/10 premissas comuns (infomoney.com.br 30/09; investidor10.com.br 02/10; 'régua da casa') | 06/09 premissas comuns"
+   },
+   "ke_real": {
+    "v": 12.08,
+    "un": "% real",
+    "per": "03/10",
+    "nota": "7,08% + 5 p.p.; em 06/09: 12,35% (7,35% + 5)",
+    "src": "03/10 premissas comuns (cálculo) | 06/09"
+   },
+   "ke_nominal": {
+    "v": 16.56,
+    "un": "%",
+    "per": "03/10",
+    "nota": "IPCA 4% (hipótese); em 06/09: ~16,8%",
+    "src": "03/10 premissas comuns | 06/09"
+   },
+   "regua_renda_fixa": "Vence >= 10,08% real (RF + 3 p.p.); Empate entre 7,08% e 10,08%; Não < 7,08% (em 06/09: 10,35% / 7,35%)",
+   "selic": {
+    "v": 14.25,
+    "un": "% nominal (9,9% real)",
+    "per": "06/09 (data-base 05/09)",
+    "nota": "NÃO consta no PDF de 03/10; Copom 16/09 (13,75%) não aparece neste PDF",
+    "src": "06/09 referência de renda fixa"
+   },
+   "ipca": {
+    "v": 4,
+    "un": "% (hipótese)",
+    "per": "03/10 e 06/09",
+    "nota": "IPCA 4% usado como hipótese; IPCA 12m efetivo não consta",
+    "src": "03/10 premissas comuns | 06/09"
+   },
+   "cambio_usd_brl": null,
+   "brent_spot": {
+    "v": "~99-102",
+    "un": "US$/bbl",
+    "per": "02/10/2026",
+    "nota": "ficha 07/09: US$ 104,5 (média 2T26); 'estável no topo'",
+    "src": "03/10 premissas comuns (advfn.com; euribor.com.es)"
+   },
+   "brent_meio_de_ciclo": {
+    "v": 70,
+    "un": "US$/bbl",
+    "per": "premissa do lote",
+    "nota": "margem de distribuição meio de ciclo R$ 170-220/m3",
+    "src": "03/10 e 06/09 premissas comuns"
+   },
+   "ibovespa": {
+    "v": "~192 mil",
+    "un": "pontos",
+    "per": "último pregão (02/10/2026)",
+    "nota": "'Ibovespa 192 mil pts no último pregão'",
+    "src": "03/10 premissas comuns (eventos binários)"
+   },
+   "contexto_risco": "1º turno da eleição 04/10; 2º turno 25/10; guerra (Irã) leva Brent a ~US$ 100; 7 meses de topo",
+   "imposto_exportacao": "12% prorrogado 60 dias desde 08/09 (vence ~07/11); TRF-1 restabeleceu a cobrança",
+   "subvencao_diesel": "+R$ 1,00/l (MP 1.391, revisão mensal), total R$ 2,12/l (ficha 07/09: R$ 1,12/l)",
+   "regra_efeito_ke": "Queda de 0,27 p.p. do Ke; no 03/10 'mudanças por preço, não por narrativa'; a cada ticker a autocrítica traz a sensibilidade ao Ke de mercado (~10,5%): PETR4 -> ~R$ 48; PRIO3 -> ~R$ 70; UGPA3 -> ~R$ 35; VBBR3 -> ~R$ 33; RECV3 irrelevante"
+  },
+  "escala_nota_preco_03_10": "desconto 10-30% = 6-8; <= 10% = 4-5; prêmio 10-20% = 3; 20-30% = 2; > 30% = 1 (declarada após admitir incoerência na PETR4)",
+  "quadro_resumo_03_10": {
+   "leitura_do_lote": "Rali pré-eleitoral levou o setor acima do valor normalizado. Três CARAs (PETR4 e UGPA3 novas, VBBR3 mantida), duas JUSTAs (PRIO3, RECV3). Nenhuma das cinco vence o IPCA+ 7,08% pelo critério de renda; PETR4 deixou de empatar. Saídas de PETR4 (48), UGPA3 (36) e VBBR3 (32) foram ultrapassadas. Próximas 4 semanas movidas por decisão política (eleição, subvenção, imposto de exportação), não por DRE."
+  },
+  "hall_linhas_03_10": "Linhas p/ 03-hall-de-acoes.md (ordem do PDF, reconstruída; colunas quebradas): PETR4 JUSTA(para CARA)->CARA (preço +18%; justo 37->39); UGPA3 JUSTA->CARA (preço +17%; justo 30->31); RECV3 RADAR->JUSTA aviso ARMADILHA (preço +7%; produção 23,8k estável); PRIO3 JUSTA mantida (justo 55->58); VBBR3 CARA mantida (prêmio 25%->30%; JCP set pago 16/11/2027); Lote 5 reavaliação mensal."
+ },
+ "tickers": {
+  "PETR4": {
+   "identificacao": {
+    "nome": {
+     "v": "Petróleo Brasileiro S.A. - Petrobras",
+     "un": null,
+     "per": null,
+     "nota": "PDF usa 'Petrobras'",
+     "src": "03/10 ficha PETR4"
+    },
+    "segmento": {
+     "v": "Petróleo integrada, estatal (União); commodity + controlador com poder discricionário (peso 2x)",
+     "un": null,
+     "per": null,
+     "nota": "06/09: 'PN em Nível 2'; 'peso dobrado de risco político'",
+     "src": "03/10 ficha PETR4 setor/perfil | 06/09 ficha PETR4"
+    },
+    "controlador": {
+     "v": "União",
+     "un": null,
+     "per": null,
+     "nota": "% de participação NÃO consta (06/09 lista 'participação da União' em não encontrado)",
+     "src": "06/09 ficha PETR4 não encontrado"
+    },
+    "tag_along": null,
+    "free_float": null,
+    "numero_acoes": null,
+    "classes_ON_PN": {
+     "v": "PETR4 = PN (Nível 2); PETR3 = ON, R$ 56,62 em 02/10",
+     "un": null,
+     "per": "02/10/2026",
+     "nota": "Qtd de ações de cada classe não consta",
+     "src": "03/10 ficha PETR4 preço (Investidor10)"
+    }
+   },
+   "mercado": {
+    "preco": {
+     "v": 51.17,
+     "un": "R$",
+     "per": "fech. 02/10/2026",
+     "nota": "+2,81% no dia; PETR3 R$ 56,62",
+     "src": "03/10 ficha PETR4 - investidor10.com.br/acoes/petr4"
+    },
+    "preco_ficha_anterior": {
+     "v": 43.43,
+     "un": "R$",
+     "per": "31/07/2026",
+     "nota": "cotação HG usada na ficha de 06/09 (setembro não coletada); variação +17,8%",
+     "src": "06/09 ficha PETR4 - HG Brasil | 03/10 §1"
+    },
+    "valor_mercado": {
+     "v": 700,
+     "un": "R$ bi (>)",
+     "per": "02/10/2026",
+     "nota": "'> R$ 700 bi (recorde)'; ficha 07/09: ~R$ 560 bi; +25%",
+     "src": "03/10 ficha PETR4 §1 - seudinheiro.com 03/10/2026"
+    },
+    "ev": null,
+    "p_l": {
+     "v": 5.2,
+     "un": "x",
+     "per": "12m, Brent 104 (06/09)",
+     "nota": "LPA 8,35; normalizado a Brent 70: 7-8 (06/09). Sem P/L novo em 03/10",
+     "src": "06/09 ficha PETR4 quantitativo"
+    },
+    "p_vp": {
+     "v": "1,25-1,34",
+     "un": "x",
+     "per": "06/09",
+     "nota": "VPA 32,4-34,5; faixa histórica 1,25-1,54; sem P/VP novo em 03/10 [colunas quebradas na extração; reconstruído pela ordem]",
+     "src": "06/09 ficha PETR4 quantitativo"
+    },
+    "ev_ebitda": {
+     "v": "3,9x pico; 3,7x normalizado",
+     "un": "x",
+     "per": "06/09",
+     "nota": "normalizado: EBITDA ~US$ 45 bi, lucro R$ 70-80 bi, FCFE ~R$ 60 bi; 'EV 880 bi (par)' na linha Reprodução [colunas quebradas na extração; reconstruído pela ordem]",
+     "src": "06/09 ficha PETR4 quantitativo/valuation"
+    },
+    "dy": {
+     "v": 7.07,
+     "un": "% (12m, agregador)",
+     "per": "03/10",
+     "nota": "R$ 3,69 (Investidor10). Em 06/09: 6,9% (HG, R$ 2,98) / 8,3% (Renova)",
+     "src": "03/10 ficha PETR4 §1 - investidor10.com.br/acoes/petr4 | 06/09 proventos"
+    },
+    "dy_forward_normalizado": {
+     "v": "~7,2%",
+     "un": "% ao preço de 02/10",
+     "per": "03/10",
+     "nota": "R$ 3,7 a Brent 70; era 8-9% a R$ 43; Bazin fwd normalizado R$ 3,7/6% = R$ 62 'inflado pelo Brent; não usar isolado'",
+     "src": "03/10 §4 e §5"
+    }
+   },
+   "endividamento": {
+    "divida_liquida": {
+     "v": 60.4,
+     "un": "US$ bi",
+     "per": "2T26 (06/09)",
+     "nota": "03/10 sem DRE nova",
+     "src": "06/09 ficha PETR4 quantitativo"
+    },
+    "divida_bruta": {
+     "v": 70.8,
+     "un": "US$ bi",
+     "per": "2T26",
+     "nota": "gatilho 'dívida bruta > US$ 75 bi' = Não verificável/não acionado em 03/10; 06/09 grafa 'teto 75 65' (seta perdida; leitura 75 -> 65 não confirmada)",
+     "src": "03/10 ficha PETR4 §2 | 06/09 quantitativo"
+    },
+    "caixa": null,
+    "dl_ebitda": {
+     "v": 1.14,
+     "un": "x",
+     "per": "2T26",
+     "nota": "dívida de ~12 anos a 6,8%",
+     "src": "03/10 ficha PETR4 §7 | 06/09 quantitativo"
+    },
+    "parcela_em_usd": null,
+    "custo_medio": {
+     "v": 6.8,
+     "un": "% a.a.",
+     "per": "06/09",
+     "nota": null,
+     "src": "06/09 ficha PETR4 quantitativo"
+    },
+    "prazo_medio": {
+     "v": 11.9,
+     "un": "anos",
+     "per": "06/09",
+     "nota": null,
+     "src": "06/09 ficha PETR4 quantitativo"
+    }
+   },
+   "resultados": {
+    "receita": null,
+    "ebitda": {
+     "v": 93.8,
+     "un": "R$ bi",
+     "per": "2T26",
+     "nota": "+79,6%; 'US$ 19 bi já com imposto de exportação'; 12m ≈ R$ 225 bi [colunas quebradas na extração; reconstruído pela ordem]",
+     "src": "06/09 ficha PETR4 quantitativo"
+    },
+    "lucro_contabil": {
+     "v": 52.4,
+     "un": "R$ bi",
+     "per": "2T26",
+     "nota": "+96,8%",
+     "src": "06/09 ficha PETR4 quantitativo"
+    },
+    "lucro_ajustado": {
+     "v": 55.8,
+     "un": "R$ bi",
+     "per": "2T26",
+     "nota": null,
+     "src": "06/09 ficha PETR4 quantitativo"
+    },
+    "fco": {
+     "v": 61.8,
+     "un": "R$ bi",
+     "per": "2T26",
+     "nota": null,
+     "src": "06/09 ficha PETR4 quantitativo"
+    },
+    "fcf": {
+     "v": 38.6,
+     "un": "R$ bi (US$ 7,7 bi)",
+     "per": "2T26",
+     "nota": "vs R$ 17,4 bi declarados como proventos (45%)",
+     "src": "03/10 §4 | 06/09 quantitativo"
+    },
+    "margens": null,
+    "roic": {
+     "v": "10,1% (12m) / 24% (pico)",
+     "un": "%",
+     "per": "06/09",
+     "nota": "bloco ROIC/ROE [colunas quebradas na extração; reconstruído pela ordem]; ROIC>Ke 'Parcial': 10% no ciclo médio vs WACC 13% nominal; 14% no pico; 8% a Brent 70",
+     "src": "06/09 quantitativo e B&H"
+    },
+    "roe": null,
+    "lpa": {
+     "v": 8.35,
+     "un": "R$",
+     "per": "12m (06/09)",
+     "nota": null,
+     "src": "06/09 quantitativo"
+    }
+   },
+   "capex": {
+    "total": {
+     "v": 5.3,
+     "un": "US$ bi/tri",
+     "per": "2T26",
+     "nota": "+19%",
+     "src": "06/09 ficha PETR4 quantitativo"
+    },
+    "plano_2026_30": {
+     "v": 110,
+     "un": "US$ bi (~)",
+     "per": "PN 2026-30",
+     "nota": "E&P + refino/fertilizantes/eólica; 'fatia crescente em baixo retorno'",
+     "src": "06/09 ficha PETR4 quantitativo e riscos"
+    },
+    "manutencao_vs_crescimento": null,
+    "guidance": null
+   },
+   "premissas_de_ciclo_declaradas_no_pdf": {
+    "brent_2T26": {
+     "v": 104.52,
+     "un": "US$/bbl",
+     "per": "média 2T26",
+     "nota": "67,82 a/a",
+     "src": "06/09 ficha PETR4 quantitativo"
+    },
+    "brent_spot": {
+     "v": "~99-102",
+     "un": "US$/bbl",
+     "per": "02/10/2026",
+     "nota": "'estável no topo'",
+     "src": "03/10 §1 e premissas comuns - advfn / euribor.com.es (02/10)"
+    },
+    "brent_meio_de_ciclo": {
+     "v": 70,
+     "un": "US$/bbl",
+     "per": "premissa declarada antes do veredito",
+     "nota": "'7 meses de guerra não provam novo patamar; o topo mais longo entra só como caixa extra no curto prazo'",
+     "src": "03/10 premissas comuns | 06/09 premissas comuns"
+    },
+    "cambio": null,
+    "margem_distribuicao_meio_de_ciclo": {
+     "v": "170-220",
+     "un": "R$/m3",
+     "per": "premissa do lote",
+     "nota": null,
+     "src": "03/10 premissas comuns | 06/09 premissas comuns"
+    },
+    "diesel_realizacao": {
+     "v": 5.45,
+     "un": "R$/l",
+     "per": "desde 17/09/2026",
+     "nota": "+R$ 1,00 via subvenção da União; refinaria R$ 3,33/l",
+     "src": "03/10 §1 - poder360.com.br (03/09); conteudos.xpi.com.br (17/09)"
+    },
+    "diesel_realizacao_refinaria": {
+     "v": 3.33,
+     "un": "R$/l",
+     "per": "17/09/2026",
+     "nota": null,
+     "src": "03/10 §1"
+    },
+    "subvencao_diesel": {
+     "v": "+R$ 1,00/l (MP 1.391, revisão mensal); total R$ 2,12/l",
+     "un": "R$/l",
+     "per": "03/10",
+     "nota": "ficha 07/09: R$ 1,12/l [colunas quebradas na extração; reconstruído pela ordem]",
+     "src": "03/10 premissas comuns - seudinheiro.com (03/10)"
+    },
+    "defasagem_vs_paridade_importacao": {
+     "v": "-53% ex-subsídio; -33% c/ subsídios (XP 17/09)",
+     "un": null,
+     "per": "03/10",
+     "nota": "DIVERGÊNCIA interna: §2 diz 'realização efetiva -23% vs PPI'; diesel abaixo do PPI desde mar/26 (>2 tri). Registro os dois. [colunas quebradas na extração; reconstruído pela ordem]",
+     "src": "03/10 §1 e §2 - conteudos.xpi.com.br 17/09; agencia.petrobras.com.br 06/08"
+    },
+    "crack_spread": null,
+    "lifting_cost": {
+     "v": 9,
+     "un": "US$/bbl (~)",
+     "per": "06/09 e 03/10",
+     "nota": "'Lifting cost ~US$ 9' como número que sustenta",
+     "src": "03/10 §7 | 06/09 quantitativo"
+    },
+    "break_even": null,
+    "producao_boe_d": null,
+    "reservas_1P_2P": {
+     "v": "~11 bi boe",
+     "un": "boe",
+     "per": "06/09",
+     "nota": "citado só na linha Reprodução (US$ 10-15/boe + refino = R$ 700-950 bi); não distingue 1P/2P",
+     "src": "06/09 ficha PETR4 valuation"
+    },
+    "vida_util_reservas": null
+   },
+   "operacional_setor": {
+    "imposto_exportacao": {
+     "v": "12% sobre exportação de petróleo; prorrogado 60 dias desde 08/09 (Gecex), vence ~07/11; TRF-1 restabeleceu a cobrança",
+     "un": null,
+     "per": "03/10",
+     "nota": "ficha 07/09: 'vigente; vencia set'",
+     "src": "03/10 premissas comuns e §1 - poder360.com.br 27/08 e 03/09"
+    },
+    "china": {
+     "v": "China suspendeu exportação de combustíveis em out",
+     "un": null,
+     "per": "03/10",
+     "nota": "linha da tabela de premissas [colunas quebradas na extração; reconstruído pela ordem]",
+     "src": "03/10 premissas comuns"
+    },
+    "elasticidade_realizacao": {
+     "v": "Brent estrutural > 85 ou extraordinários para vencer a RF",
+     "un": null,
+     "per": null,
+     "nota": null,
+     "src": "03/10 §5"
+    }
+   },
+   "proventos": {
+    "politica": {
+     "v": "45% do FCF (quando dívida bruta < US$ 75 bi) + extraordinários (políticos)",
+     "un": null,
+     "per": "03/10",
+     "nota": "2T26 declarado 'alinhado à política' (06/08); gatilho 'mudança na política' = Não acionado",
+     "src": "03/10 §2 e §4 - agencia.petrobras.com.br 06/08 | 06/09 proventos"
+    },
+    "proventos_1T26": {
+     "v": 0.7,
+     "un": "R$/ação",
+     "per": "1T26",
+     "nota": "pago 20/08 e 21/09",
+     "src": "03/10 §4"
+    },
+    "proventos_2T26": {
+     "v": 1.348,
+     "un": "R$/ação",
+     "per": "2T26",
+     "nota": "ficha 07/09: R$ 1,35 (datas n.e.); data-com 21/08; pagto 23/11 e 21/12/2026; total R$ 17,4 bi vs FCF R$ 38,6 bi",
+     "src": "03/10 §1 e §4 - agencia.petrobras.com.br 06/08"
+    },
+    "defasagem_datacom_pagamento": {
+     "v": "3-4 meses",
+     "un": null,
+     "per": null,
+     "nota": "aceitável",
+     "src": "03/10 §4"
+    },
+    "dy_12m": {
+     "v": 7.07,
+     "un": "%",
+     "per": "03/10",
+     "nota": "R$ 3,69 (Investidor10)",
+     "src": "03/10 §1"
+    },
+    "dy_historico": {
+     "v": "2015-17 sem dividendos; 2021-24 yields de 13-30% com extraordinários; média 5a 25,7% (inflada por 2022); mínimo 0% em 2015-17",
+     "un": null,
+     "per": "06/09",
+     "nota": null,
+     "src": "06/09 proventos"
+    },
+    "serie_dpa": {
+     "v": "2025: ago 0,68 + dez 0,77 + 1S25 = 2,98; 2026 por data-com ~R$ 2,25 em 2 tri (1T ~0,9; 2T 1,35); 2021-24: R$ 7-19,5/ação c/ extraordinários",
+     "un": "R$/ação",
+     "per": "06/09",
+     "nota": "colunas quebradas; leitura aproximada",
+     "src": "06/09 proventos"
+    },
+    "payout": {
+     "v": "45% do FCF + extraordinários (políticos)",
+     "un": null,
+     "per": null,
+     "nota": null,
+     "src": "06/09 proventos"
+    },
+    "cobertura_caixa": {
+     "v": "Sim",
+     "un": null,
+     "per": "03/10",
+     "nota": "FCF 2T26 R$ 38,6 bi vs R$ 17,4 bi declarados [EVIDÊNCIA FORTE]",
+     "src": "03/10 §4"
+    }
+   },
+   "multiplos_retornos_pares": {
+    "yield_fwd": {
+     "v": "~7,2% (R$ 3,7 a Brent 70)",
+     "un": null,
+     "per": "03/10",
+     "nota": "g 2-3%; nominal 9,4-10,4%; real 5,2-6,2%; vs IPCA+ 7,08%: -1,9 a -0,9 p.p.; Vence RF? Não (era Empate)",
+     "src": "03/10 §5"
+    },
+    "yield_fwd_anterior": {
+     "v": "8-9% (45% do FCF a Brent 70; BTG ~10% em 2027)",
+     "un": null,
+     "per": "06/09",
+     "nota": "real 6,5-8%; vs IPCA+ 7,35%: -0,8 a +0,6 p.p.; Empate",
+     "src": "06/09 comparativo RF"
+    },
+    "graham": {
+     "v": "R$ 78 (pico) / R$ 65 (LPA normalizado 5,8); 4/7 critérios",
+     "un": null,
+     "per": "06/09",
+     "nota": "'inflado'",
+     "src": "06/09 valuation"
+    },
+    "epv": {
+     "v": "R$ 37 / 53,5 (WACC 13,3% / 10,5%, Brent 70)",
+     "un": null,
+     "per": "06/09",
+     "nota": "03/10: EPV (WACC 13,3%, Brent 70) R$ 37 -> R$ 38",
+     "src": "06/09 valuation | 03/10 §3"
+    },
+    "ev_ebitda_norm": {
+     "v": "3,5-4x x EBITDA normalizado R$ 240 bi - DL R$ 320 bi = R$ 40-50",
+     "un": null,
+     "per": "06/09",
+     "nota": null,
+     "src": "06/09 valuation"
+    },
+    "bazin": {
+     "v": "R$ 50 (12m) / R$ 62 (fwd normalizado); 5a inflada por 2022: R$ 147",
+     "un": null,
+     "per": "06/09",
+     "nota": null,
+     "src": "06/09 valuation"
+    },
+    "dcf_fcfe": {
+     "v": "pess. (Brent 60 + intervenção) 21/31/26; base (Brent 70) 32/46/39,5; otim. (Brent 85) 45/65/55 (Ke 16,8% / 12,35% / 14%)",
+     "un": "R$/ação",
+     "per": "06/09",
+     "nota": "03/10 recalculou só os 3 cenários ponderados (ver premissas_pdf_valuation)",
+     "src": "06/09 valuation"
+    },
+    "pares_referencias": {
+     "v": "BTG DY ~10% 2027 a Brent 70; Goldman e Citi (alvos, sentido perdido na extração); Safra positivo",
+     "un": null,
+     "per": "06/09",
+     "nota": null,
+     "src": "06/09 valuation referências"
+    },
+    "teste_R1_retido": {
+     "v": "Passa com folga (DL US$ 100 -> 60 bi; R$ 400 bi devolvidos; market cap 180 -> 560 bi)",
+     "un": null,
+     "per": "2016-25",
+     "nota": null,
+     "src": "06/09 valuation"
+    }
+   },
+   "governanca_riscos": {
+    "interferencia_estatal": {
+     "v": "Consumada: controle de preços 2011-14; imposto de exportação 2026; extraordinários eleitorais; subvenção ao diesel paga pela União",
+     "un": null,
+     "per": "03/10",
+     "nota": "'Dono do lado do minoritário: Não'",
+     "src": "03/10 §7 | 06/09 B&H e qualitativo"
+    },
+    "eleicao_2026": {
+     "v": "1º turno 04/10/2026; 2º turno 25/10",
+     "un": null,
+     "per": null,
+     "nota": "pesos de cenário mantidos 'porque eleição ainda não ocorreu'; hipótese de pesos 25/60/15 (central ≈ R$ 41) mudaria a opinião",
+     "src": "03/10 §3 e §7, eventos"
+    },
+    "politica_de_precos": {
+     "v": "Diesel abaixo do PPI desde mar/26; realização efetiva com subvenção",
+     "un": null,
+     "per": "03/10",
+     "nota": "gatilho reescrito (ver gatilhos)",
+     "src": "03/10 §2"
+    },
+    "margem_equatorial": {
+     "v": "Nova descoberta em 02/10; falta comercialidade; 5-10 anos até óleo (Ativa); fora do valor (opcionalidade, HIPÓTESE)",
+     "un": null,
+     "per": "02/10/2026",
+     "nota": null,
+     "src": "03/10 §1 e §3"
+    },
+    "riscos": {
+     "v": "Brent/guerra; imposto de exportação + eleição com histórico de intervenção; capex ~US$ 110 bi com fatia crescente em baixo retorno",
+     "un": null,
+     "per": null,
+     "nota": "'3 que ameaçam' (03/10): prêmio de 31% sobre valor ponderado; eleição 04/10 e 25/10 (V1/V5); imposto e subvenção são decisões mensais/bimestrais do governo",
+     "src": "03/10 §7 | 06/09 riscos"
+    },
+    "buy_and_hold": {
+     "v": "Não",
+     "un": null,
+     "per": "06/09",
+     "nota": "moat Sim; ROIC>Ke Parcial; balanço Sim; dono Não; lucro previsível Não; sem diluição Sim; preço com margem Não",
+     "src": "06/09 B&H"
+    },
+    "qualitativo_0a5_06_09": {
+     "v": "Moat 3; Fisher 2; Gestão/capital 2; Controlador (2x) rev. 1,5; Ciclo 2; Templeton 1; Dhandho 2",
+     "un": null,
+     "per": "06/09",
+     "nota": "colunas quebradas",
+     "src": "06/09 qualitativo"
+    }
+   },
+   "gatilhos_da_ficha": [
+    {
+     "gatilho": "Dívida bruta > US$ 75 bi",
+     "status": "Não verificável",
+     "evidencia": "Sem DRE nova; US$ 70,8 bi no 2T26",
+     "src": "03/10 §2 [colunas quebradas na extração; reconstruído pela ordem]"
+    },
+    {
+     "gatilho": "Mudança na política de 45% do FCF",
+     "status": "Não acionado",
+     "evidencia": "2T26 declarado 'alinhado à política' (06/08)",
+     "src": "03/10 §2 [colunas quebradas na extração; reconstruído pela ordem]"
+    },
+    {
+     "gatilho": "Preços abaixo da paridade por > 2 tri",
+     "status": "Acionado na letra",
+     "evidencia": "Diesel abaixo do PPI desde mar/26 (> 2 tri). Mas a União paga a subvenção: realização efetiva -23% vs PPI. Erro próprio: o gatilho já estava no limite em 07/09 - mal calibrado",
+     "src": "03/10 §2 [colunas quebradas na extração; reconstruído pela ordem]"
+    },
+    {
+     "gatilho": "Ampliação do imposto de exportação",
+     "status": "Não acionado",
+     "evidencia": "Prorrogado, mesma alíquota (12%)",
+     "src": "03/10 §2 [colunas quebradas na extração; reconstruído pela ordem]"
+    },
+    {
+     "gatilho": "REESCRITO em 03/10",
+     "status": "novo",
+     "evidencia": "(i) realização efetiva (com subvenção) > 30% abaixo do PPI por 2 tri após o fim da guerra; (ii) fim da subvenção sem reajuste equivalente; (iii) imposto de exportação > 12% ou prorrogado com Brent < 80",
+     "src": "03/10 §2"
+    },
+    {
+     "gatilho": "Invalidação 06/09 (original)",
+     "status": "-",
+     "evidencia": "Dívida bruta > US$ 75 bi; mudança na política de 45% do FCF; preços abaixo da paridade por > 2 tri; ampliação do imposto de exportação",
+     "src": "06/09 ficha PETR4 riscos"
+    }
+   ],
+   "eventos_com_data": [
+    {
+     "data": "04/10/2026",
+     "evento": "Eleição 1º turno (PETR4 pesos de cenário; todo o lote via prêmio de risco)",
+     "src": "03/10 eventos com data"
+    },
+    {
+     "data": "25/10/2026",
+     "evento": "Eleição 2º turno, se houver",
+     "src": "03/10 eventos com data"
+    },
+    {
+     "data": "mensal",
+     "evento": "Revisão da subvenção ao diesel (MP 1.391) - PETR4 (realização), UGPA3/VBBR3 (vantagem de suprimento)",
+     "src": "03/10 eventos com data"
+    },
+    {
+     "data": "~07/11/2026",
+     "evento": "Fim da prorrogação do imposto de exportação de 12%",
+     "src": "03/10 eventos com data"
+    },
+    {
+     "data": "nov/2026",
+     "evento": "Resultados 3T26 (datas não encontradas)",
+     "src": "03/10 eventos com data"
+    },
+    {
+     "data": "23/11 e 21/12/2026",
+     "evento": "Pagamento dos proventos 2T26 (R$ 1,348/ação)",
+     "src": "03/10 §1"
+    }
+   ],
+   "premissas_pdf_valuation": {
+    "ke_usado": {
+     "v": 12.08,
+     "un": "% real",
+     "per": "03/10",
+     "nota": "7,08% + 5 p.p.; nominal 16,56% (IPCA 4%); em 06/09: 12,35% / 16,8%. Autocrítica: ao Ke de mercado (~10,5%) o central iria a ~R$ 48 - ainda abaixo do preço",
+     "src": "03/10 premissas comuns e §7"
+    },
+    "preco_justo": {
+     "v": 39.0,
+     "un": "R$",
+     "per": "03/10",
+     "nota": "06/09: R$ 37,00; ficha 06/09 no caderno citava justo R$ 40 (revisão 40 -> 37)",
+     "src": "03/10 quadro-resumo e ficha PETR4 | 06/09 ficha PETR4"
+    },
+    "preco_compra_menos_30": {
+     "v": 27.3,
+     "un": "R$",
+     "per": "03/10",
+     "nota": "06/09: R$ 26,00",
+     "src": "03/10 quadro-resumo"
+    },
+    "preco_saida": {
+     "v": 48.0,
+     "un": "R$",
+     "per": "03/10",
+     "nota": "06/09: R$ 46,00 (ficha) / R$ 50 (linha 'para o caderno'); preço de 51,17 ultrapassou a saída",
+     "src": "03/10 quadro-resumo | 06/09 ficha PETR4"
+    },
+    "premio_desconto": {
+     "v": 31,
+     "un": "% (prêmio)",
+     "per": "03/10",
+     "nota": "06/09: +17%",
+     "src": "03/10 quadro-resumo"
+    },
+    "faixa": {
+     "v": "R$ 21-55",
+     "un": null,
+     "per": "06/09",
+     "nota": "03/10 não traz faixa PETR4 explícita",
+     "src": "06/09 ficha PETR4"
+    },
+    "cenarios_ponderados_03_10": {
+     "v": "Intervenção 35%: R$ 27 (era 26) | Base 50%: R$ 41,50 (era 39) | Otimista 15%: R$ 57 (era 55) | Central ponderado R$ 39 (era 37)",
+     "un": "R$/ação",
+     "per": "03/10",
+     "nota": "Derivado: 0,35x27 + 0,5x41,5 + 0,15x57 = 38,75. Por quê: Intervenção - Ke -27 bp, caixa do 3T26 a Brent ~100 já realizado; Base - +1 tri de topo (~R$ 1,8/ação de FCFE extra, HIPÓTESE) + subvenção + Ke; pesos mantidos porque a eleição não ocorreu. Pesos 35/50/15 são HIPÓTESE. [colunas quebradas na extração; reconstruído pela ordem]",
+     "src": "03/10 §3"
+    },
+    "cenarios_06_09": {
+     "v": "Intervenção 35%: R$ 26 + Base 50%: R$ 39 + Otimista 15%: R$ 55 = R$ 37",
+     "un": "R$/ação",
+     "per": "07/09",
+     "nota": "risco V1/V5 antes só no gatilho; agora entra no valor por cenários ponderados",
+     "src": "06/09 ficha PETR4 revisão"
+    },
+    "desconto_controlador": {
+     "v": "embutido nos cenários ponderados (35% de peso para 'intervenção'); NÃO está no Ke",
+     "un": null,
+     "per": "03/10",
+     "nota": "Percentual de ~8% NÃO consta nos PDFs: checklist diz 'Desconto da PETR4 só nos cenários ponderados (pesos mantidos); não está no Ke'. 06/09: 'Brent US$ 70 + desconto de controlador'; Controlador (2x) nota rev. 1,5; preço com margem '+8% sobre normalizado' (B&H 06/09) - esse +8% é prêmio sobre o normalizado, não desconto de controlador",
+     "src": "03/10 checklist bloco E/H | 06/09 B&H 'Preço com margem'"
+    },
+    "metodo_ancora": {
+     "v": "Cenários ponderados de DCF FCFE (Ke real 12,08%) com Brent 70; EPV de apoio (WACC 13,3%, Brent 70) R$ 38",
+     "un": null,
+     "per": "03/10",
+     "nota": null,
+     "src": "03/10 §3"
+    },
+    "veredito": {
+     "v": "CARA (antes JUSTA, para CARA)",
+     "un": null,
+     "per": "03/10",
+     "nota": "veredito muda por preço, não por narrativa",
+     "src": "03/10 quadro-resumo"
+    },
+    "nota_Q_S_R_P_geral": {
+     "v": "Qualidade 6 -> 6; Solidez 7 -> 7; Renda 8 -> 7; Preço 4 -> 1; Geral 6,3 -> 5,5",
+     "un": "0-10",
+     "per": "03/10",
+     "nota": "Reconstruído da tabela quebrada ('66 77 87 41'); confere: 0,35x6 + 0,2x7 + 0,25x7 + 0,2x1 = 5,45. Ponderação 35/20/25/20. Nota de preço antiga (4) era incoerente com a régua",
+     "src": "03/10 §6 [colunas quebradas na extração; reconstruído pela ordem]"
+    },
+    "preco_de_compra_regra": {
+     "v": "Compra cheia R$ 27,30 (-30%); nota: aceitável abaixo de R$ 34 com Brent <=70 -> JUSTA; < R$ 27,30 -> BARATA",
+     "un": null,
+     "per": "03/10",
+     "nota": "'Compraria agora? Não (proventos e capital); acima da saída R$ 48; quem tem: zona de realização parcial'",
+     "src": "03/10 §7"
+    },
+    "o_que_mudaria": {
+     "v": "Preço < R$ 34 com Brent <= 70 = JUSTA; < R$ 27,30 = BARATA; resultado eleitoral que reduza chance de intervenção (pesos 25/60/15, central ≈ R$ 41)",
+     "un": null,
+     "per": "03/10",
+     "nota": null,
+     "src": "03/10 §7"
+    }
+   },
+   "nao_encontrado": [
+    "participação da União (% do capital)",
+    "tag along / free float / número de ações por classe",
+    "EV de mercado (só 'EV 880 bi par' na reprodução)",
+    "caixa",
+    "% da dívida em USD",
+    "câmbio R$/US$ no corpo do PDF",
+    "crack spread/margem de refino",
+    "break-even",
+    "produção boe/d e guidance de produção",
+    "reservas 1P/2P e vida útil",
+    "capex manutenção vs crescimento",
+    "receita e margens",
+    "P/L e P/VP de 03/10",
+    "desconto de controlador de ~8% (não existe como número no PDF)",
+    "data do 3T26",
+    "cotação de 05/09 (isolar variação)",
+    "release 2T26 do RI",
+    "média exata do Brent no 3T26"
+   ],
+   "lacunas_importantes": "Sem DRE nova em 03/10 (todos os números de resultado/endividamento vêm do PDF de 06/09, 2T26). Sem câmbio, reservas, produção, break-even, % USD da dívida, receita e margens. O PDF de 03/10 cita 'desconto de controlador' só como parte dos cenários ponderados (35% de intervenção), sem percentual de ~8%. Divergência interna sobre defasagem do diesel vs PPI (-53%/-33% XP vs -23% efetivo)."
+  },
+  "PRIO3": {
+   "identificacao": {
+    "nome": {
+     "v": "PRIO S.A.",
+     "un": null,
+     "per": null,
+     "nota": "PDF usa 'PRIO'",
+     "src": "03/10 ficha PRIO3"
+    },
+    "segmento": {
+     "v": "E&P independente; offshore em campos maduros redesenvolvidos (Peregrino, Frade/Wahoo [Valente], Albacora Leste, Polvo/TBMT); Novo Mercado; corporação",
+     "un": null,
+     "per": null,
+     "nota": "ativos listados em 06/09",
+     "src": "03/10 ficha PRIO3 setor/perfil | 06/09 ficha PRIO3"
+    },
+    "controlador": {
+     "v": "Sem controlador (corporação); Tanure como referência",
+     "un": null,
+     "per": "06/09",
+     "nota": "participação de Tanure não encontrada",
+     "src": "06/09 ficha PRIO3 setor; não encontrado"
+    },
+    "tag_along": null,
+    "free_float": null,
+    "numero_acoes": null
+   },
+   "mercado": {
+    "preco": {
+     "v": 63.35,
+     "un": "R$",
+     "per": "fech. 02/10/2026",
+     "nota": "+3,08% no dia",
+     "src": "03/10 ficha PRIO3 - investidor10.com.br/acoes/prio3"
+    },
+    "preco_ficha_anterior": {
+     "v": 60.0,
+     "un": "R$",
+     "per": "31/07/2026",
+     "nota": "Renova 59,96; SI 61,58; 52s 33,59-72,10; +47-67% em 12m; variação +5,6%",
+     "src": "06/09 ficha PRIO3 | 03/10 §1"
+    },
+    "valor_mercado": null,
+    "ev": null,
+    "p_l": {
+     "v": "~13 (12m, c/ 4T25 negativo); run-rate 2T26 (Brent 104) ~6; normalizado (Brent 70) ~9,4",
+     "un": "x",
+     "per": "06/09",
+     "nota": null,
+     "src": "06/09 quantitativo"
+    },
+    "p_vp": {
+     "v": "~2,0",
+     "un": "x",
+     "per": "06/09",
+     "nota": "VPA 29,5-30,5",
+     "src": "06/09 quantitativo"
+    },
+    "ev_ebitda": {
+     "v": "4,0x run-rate; 5,2x normalizado",
+     "un": "x",
+     "per": "06/09",
+     "nota": "03/10: EV/EBITDA normalizado 5x -> R$ 52-67/ação; EBITDA normalizado ~US$ 2,9 bi [colunas quebradas na extração; reconstruído pela ordem]",
+     "src": "06/09 quantitativo | 03/10 §3"
+    },
+    "dy": {
+     "v": 0,
+     "un": "%",
+     "per": "03/10",
+     "nota": "DY 12m 0%; recompra ~4%/ano",
+     "src": "03/10 §1"
+    }
+   },
+   "endividamento": {
+    "divida_liquida": {
+     "v": 4.05,
+     "un": "US$ bi",
+     "per": "2T26",
+     "nota": "DIVERGÊNCIA: ficha 06/09 usava ~US$ 3,6 bi (R$ 18-19 bi); 03/10 adota US$ 4,05 bi (XP) - 'a divergência pode ser de perímetro (leasing); usei a fonte mais conservadora'. Tabela de valuation cita 'dívida -R$ 3/ação' como efeito",
+     "src": "03/10 §1 e §3 e autocrítica - conteudos.xpi.com.br 2T26 | 06/09 quantitativo"
+    },
+    "divida_bruta": null,
+    "caixa": null,
+    "dl_ebitda": {
+     "v": 1.5,
+     "un": "x",
+     "per": "2T26",
+     "nota": "2,0x no 1T26; 06/09 já citava 1,5x; bond 2021 quitado",
+     "src": "03/10 §2 e §7 | 06/09 quantitativo"
+    },
+    "parcela_em_usd": null,
+    "custo_prazo": null
+   },
+   "resultados": {
+    "receita": null,
+    "ebitda": {
+     "v": 879,
+     "un": "US$ mi",
+     "per": "2T26",
+     "nota": "+218%; margem 72%; run-rate US$ 3,5 bi; normalizado ~US$ 2,7 bi",
+     "src": "06/09 quantitativo"
+    },
+    "lucro_contabil": {
+     "v": 413,
+     "un": "US$ mi",
+     "per": "2T26",
+     "nota": "+169%; 12m R$ 2,1 bi; 4T25: -R$ 851 mi [colunas quebradas na extração; reconstruído pela ordem]",
+     "src": "06/09 quantitativo"
+    },
+    "lucro_ajustado": null,
+    "fcfe": {
+     "v": 482,
+     "un": "US$ mi",
+     "per": "2T26",
+     "nota": "19,4% anualizado",
+     "src": "06/09 quantitativo"
+    },
+    "margens": {
+     "v": 72,
+     "un": "% (margem EBITDA)",
+     "per": "2T26",
+     "nota": null,
+     "src": "06/09 quantitativo"
+    },
+    "roic": {
+     "v": "~20% run-rate; ~13% normalizado",
+     "un": "%",
+     "per": "06/09",
+     "nota": "vs WACC 13,9% -> Parcial",
+     "src": "06/09 B&H e Fórmula Mágica"
+    },
+    "roe": null
+   },
+   "capex": {
+    "total": {
+     "v": "US$ 258-285 mi/tri (pós-Wahoo)",
+     "un": "US$ mi/tri",
+     "per": "06/09",
+     "nota": "linha ambígua ('Capex ... US$ 258-285 mi/tri D&A') [colunas quebradas na extração; reconstruído pela ordem]",
+     "src": "06/09 quantitativo"
+    },
+    "manutencao_vs_crescimento": null,
+    "guidance": null
+   },
+   "premissas_de_ciclo_declaradas_no_pdf": {
+    "brent_meio_de_ciclo": {
+     "v": 70,
+     "un": "US$/bbl",
+     "per": "premissa do lote",
+     "nota": "DCF base com Brent 70 e Ke 12,08%; pess. Brent 60 (06/09); otim. Brent 85",
+     "src": "03/10 §3 e premissas comuns | 06/09 valuation"
+    },
+    "brent_spot": {
+     "v": "~99-102",
+     "un": "US$/bbl",
+     "per": "02/10/2026",
+     "nota": "Brent 100 citado como risco",
+     "src": "03/10 premissas comuns; §7"
+    },
+    "cambio": null,
+    "crack_spread": null,
+    "lifting_cost": {
+     "v": 8.9,
+     "un": "US$/bbl",
+     "per": "2T26",
+     "nota": "13,8 a/a; abaixo da Petrobras; '~US$ 9' em 03/10",
+     "src": "06/09 quantitativo | 03/10 §7"
+    },
+    "break_even": null,
+    "producao_boe_d": {
+     "v": "179,9 kbpd (ago); ~187 kbpd (set, prévia XP)",
+     "un": "kbpd",
+     "per": "ago-set/2026",
+     "nota": "premissa base subiu de 172 para ~180-187 kbpd; 2T26 = 172 kbpd (+72%): Peregrino 74,5k + Valente (Frade+Wahoo) 61,1k; 'produção oficial de setembro' não encontrada",
+     "src": "03/10 §1 e §3 - conteudos.xpi.com.br 01/10 | 06/09 quantitativo"
+    },
+    "peregrino": {
+     "v": "~82 kbpd em set (poço parado em ago, recuperado)",
+     "un": "kbpd",
+     "per": "set/2026",
+     "nota": "ficha 07/09: 74,5 kbpd; +10%",
+     "src": "03/10 §1 - conteudos.xpi.com.br 01/10"
+    },
+    "guidance_producao": null,
+    "reservas_1P_2P": {
+     "v": null,
+     "un": null,
+     "per": null,
+     "nota": "reservas 2P/1P não encontradas",
+     "src": null
+    },
+    "vida_util_reservas": null,
+    "hedges": {
+     "v": null,
+     "un": null,
+     "per": null,
+     "nota": "não encontrados",
+     "src": null
+    }
+   },
+   "operacional_setor": {
+    "imposto_exportacao": {
+     "v": "Prorrogado até ~nov (PRIO exporta quase tudo); mesma alíquota",
+     "un": null,
+     "per": "03/10",
+     "nota": "tratado como regulatório nas privadas, sem desconto adicional",
+     "src": "03/10 §1 e checklist - poder360.com.br 03/09"
+    },
+    "recompra": {
+     "v": 9.3,
+     "un": "mi ações",
+     "per": "2T26",
+     "nota": "~1,1% do capital",
+     "src": "03/10 §4 | 06/09 quantitativo"
+    },
+    "portfolio_reproducao": {
+     "v": "Custo de aquisição do portfólio US$ 7-8 bi (~R$ 38 bi) vs EV ~R$ 70 bi = 1,8x",
+     "un": null,
+     "per": "06/09",
+     "nota": null,
+     "src": "06/09 valuation"
+    }
+   },
+   "proventos": {
+    "politica": {
+     "v": "Adiada: CEO aguarda melhora geopolítica; sem data",
+     "un": null,
+     "per": "ago/03-10",
+     "nota": "ficha 07/09: 'próxima parada'; XP: dividendos são a próxima etapa",
+     "src": "03/10 §1 e §4 - investidor10.com.br/noticias ago"
+    },
+    "dy_historico": {
+     "v": "Nunca pagou relevante (R$ 0,07 em 2023)",
+     "un": null,
+     "per": null,
+     "nota": null,
+     "src": "03/10 §4 | 06/09 proventos"
+    },
+    "payout": {
+     "v": 0,
+     "un": "%",
+     "per": null,
+     "nota": "recompra ~4%/ano; se iniciar dividendos em 2027 com FCFE normalizado R$ 5,6 bi (payout 50%) yield ~5%",
+     "src": "06/09 proventos"
+    },
+    "serie_dpa": {
+     "v": "2023: 0,07; demais anos 0",
+     "un": "R$/ação",
+     "per": null,
+     "nota": null,
+     "src": "06/09 proventos"
+    },
+    "cobertura_caixa": {
+     "v": "N/A (não paga)",
+     "un": null,
+     "per": null,
+     "nota": "recompra de 9,3 mi ações no 2T26",
+     "src": "03/10 §4"
+    }
+   },
+   "multiplos_retornos_pares": {
+    "yield_fwd": {
+     "v": "0% (recompra ~4%)",
+     "un": null,
+     "per": "03/10",
+     "nota": "g 5-10%; nominal 9-14%; real 5-10%; vs IPCA+ 7,08%: -2,1 a +2,9 p.p.; Vence RF? Não (sem provento); 'como compounder, empata a Brent 70'",
+     "src": "03/10 §5"
+    },
+    "graham": {
+     "v": "R$ 55,7 (LPA 12m 4,6) / R$ 65,7 (normalizado 6,4); 3/7 critérios",
+     "un": null,
+     "per": "06/09",
+     "nota": null,
+     "src": "06/09 valuation"
+    },
+    "epv": {
+     "v": "R$ 28 / 44 (WACC 13,9% / 10,5%, Brent 70)",
+     "un": null,
+     "per": "06/09",
+     "nota": null,
+     "src": "06/09 valuation"
+    },
+    "formula_magica": {
+     "v": "EV/EBIT run-rate 5,7x + ROIC ~20% (topo); normalizado 7,5x / 13%",
+     "un": null,
+     "per": "06/09",
+     "nota": null,
+     "src": "06/09 valuation"
+    },
+    "pares": {
+     "v": "Nord upside ~50% (~R$ 90); Genial 'não caro (ainda)'; XP: dividendos a caminho",
+     "un": null,
+     "per": "06/09",
+     "nota": null,
+     "src": "06/09 valuation referências"
+    },
+    "teste_R1_retido": {
+     "v": "Passa com folga (> R$ 2 por R$ 1): PL ~3 -> 26 bi; market cap ~5 -> 52 bi",
+     "un": null,
+     "per": "2017-25",
+     "nota": null,
+     "src": "06/09 valuation"
+    }
+   },
+   "governanca_riscos": {
+    "interferencia_estatal": {
+     "v": "Imposto de exportação de 12% sobre exportadora pura; REPETRO; royalties",
+     "un": null,
+     "per": "03/10",
+     "nota": "regulatório (2x)",
+     "src": "03/10 §7 | 06/09 qualitativo"
+    },
+    "aquisicoes": {
+     "v": "Wahoo, Peregrino otimizado, Isolado, Arapuçu; pipeline de M&A; gatilho DL/EBITDA > 2x por M&A caro; 'sem M&A anunciado'",
+     "un": null,
+     "per": "03/10",
+     "nota": "nova aquisição < US$ 10/boe seria positiva (06/09)",
+     "src": "03/10 §2 | 06/09 qualitativo e mudaria"
+    },
+    "peregrino_albacora": {
+     "v": "Peregrino parado em agosto (poço) e recuperado em setembro; Albacora Leste citado como ativo",
+     "un": null,
+     "per": "ago-set/2026",
+     "nota": null,
+     "src": "03/10 §1 e §2"
+    },
+    "riscos": {
+     "v": "Zero dividendo e política adiada; Brent 100/guerra; imposto de exportação; portfólio em declínio natural sem M&A",
+     "un": null,
+     "per": "03/10",
+     "nota": "autocrítica: 'produção subindo junto com Brent no topo mistura dois ciclos favoráveis'",
+     "src": "03/10 §7"
+    },
+    "buy_and_hold": {
+     "v": "Parcial",
+     "un": null,
+     "per": "06/09",
+     "nota": "moat Sim (gestão); ROIC>Ke Parcial; balanço Parcial; dono Sim; lucro previsível Não; sem diluição Sim; preço com margem Não (+9%)",
+     "src": "06/09 B&H"
+    }
+   },
+   "gatilhos_da_ficha": [
+    {
+     "gatilho": "Produção < 150 kbpd por 2 tri",
+     "status": "Não acionado",
+     "evidencia": "179,9 kbpd em agosto",
+     "src": "03/10 §2 [colunas quebradas na extração; reconstruído pela ordem]"
+    },
+    {
+     "gatilho": "DL/EBITDA > 2x por M&A caro",
+     "status": "Não acionado",
+     "evidencia": "1,5x no 2T26; sem M&A anunciado",
+     "src": "03/10 §2 [colunas quebradas na extração; reconstruído pela ordem]"
+    },
+    {
+     "gatilho": "Parada não programada relevante",
+     "status": "Não acionado",
+     "evidencia": "Poço de Peregrino parado em agosto; recuperado em setembro",
+     "src": "03/10 §2 [colunas quebradas na extração; reconstruído pela ordem]"
+    },
+    {
+     "gatilho": "Imposto de exportação ampliado",
+     "status": "Não acionado",
+     "evidencia": "Prorrogado na mesma alíquota",
+     "src": "03/10 §2 [colunas quebradas na extração; reconstruído pela ordem]"
+    }
+   ],
+   "eventos_com_data": [
+    {
+     "data": "out/2026",
+     "evento": "Produção de setembro (PRIO3, RECV3) - oficial ainda não divulgada",
+     "src": "03/10 eventos com data"
+    },
+    {
+     "data": "~07/11/2026 (~nov)",
+     "evento": "Fim da prorrogação do imposto de exportação",
+     "src": "03/10 eventos com data; §1"
+    },
+    {
+     "data": "nov/2026",
+     "evento": "Resultados 3T26 (data não encontrada)",
+     "src": "03/10 eventos com data"
+    }
+   ],
+   "premissas_pdf_valuation": {
+    "ke_usado": {
+     "v": 12.08,
+     "un": "% real",
+     "per": "03/10",
+     "nota": "autocrítica: ao Ke de mercado (10,5%) o central iria a ~R$ 70; em 06/09: 12,35%",
+     "src": "03/10 §3 e §7"
+    },
+    "preco_justo": {
+     "v": 58.0,
+     "un": "R$",
+     "per": "03/10",
+     "nota": "06/09: R$ 55,00 (+R$ 3 por produção acima da premissa 172 -> ~180-187 kbpd e Ke menor, compensados por dívida líquida maior)",
+     "src": "03/10 quadro-resumo e ficha PRIO3"
+    },
+    "preco_compra_menos_30": {
+     "v": 40.6,
+     "un": "R$",
+     "per": "03/10",
+     "nota": "06/09: R$ 38,50",
+     "src": "03/10 quadro-resumo"
+    },
+    "preco_saida": {
+     "v": 72.0,
+     "un": "R$",
+     "per": "03/10",
+     "nota": "06/09: R$ 70,00",
+     "src": "03/10 quadro-resumo"
+    },
+    "premio_desconto": {
+     "v": 9,
+     "un": "% (prêmio)",
+     "per": "03/10",
+     "nota": "mesmo prêmio de 06/09 (+9%)",
+     "src": "03/10 quadro-resumo"
+    },
+    "faixa": {
+     "v": "R$ 25-78",
+     "un": null,
+     "per": "03/10",
+     "nota": "06/09: R$ 18-90",
+     "src": "03/10 §3 | 06/09 ficha PRIO3"
+    },
+    "cenarios": {
+     "v": "DCF base (Brent 70, Ke 12,08%) R$ 56 (185 kbpd; era R$ 52 a 172 kbpd) | DCF pess./otim. R$ 25 / 78 (era R$ 23,5 / 74) | EV/EBITDA normalizado 5x R$ 52-67 (era R$ 49-64; EBITDA normalizado ~US$ 2,9 bi) | Central R$ 58 (era 55), faixa R$ 25-78",
+     "un": "R$/ação",
+     "per": "03/10",
+     "nota": "Sem pesos de cenário: central 'R$ 58' é 'Central' declarado, não média ponderada. [colunas quebradas na extração; reconstruído pela ordem]",
+     "src": "03/10 §3"
+    },
+    "metodo_ancora": {
+     "v": "DCF base (Brent 70) + EV/EBITDA normalizado 5x; central R$ 58",
+     "un": null,
+     "per": "03/10",
+     "nota": null,
+     "src": "03/10 §3"
+    },
+    "veredito": {
+     "v": "JUSTA (mantida)",
+     "un": null,
+     "per": "03/10",
+     "nota": null,
+     "src": "03/10 quadro-resumo"
+    },
+    "nota_Q_S_R_P_geral": {
+     "v": "Qualidade 8 -> 8; Solidez 6 -> 6,5; Renda 0 -> 0; Preço 4 -> 4; Geral 4,8 -> 4,9",
+     "un": "0-10",
+     "per": "03/10",
+     "nota": "Reconstruído ('88 6 6.5 00 44'); confere: 0,35x8 + 0,2x6,5 + 0 + 0,2x4 = 4,9",
+     "src": "03/10 §6 [colunas quebradas na extração; reconstruído pela ordem]"
+    },
+    "o_que_mudaria": {
+     "v": "Preço < R$ 52 = RADAR; política com payout >= 40% entra na lista de renda e central ~R$ 64",
+     "un": null,
+     "per": "03/10",
+     "nota": "'aceitável < R$ 52, cheio a R$ 40,60'",
+     "src": "03/10 §7"
+    }
+   },
+   "nao_encontrado": [
+    "controlador/% (Tanure)",
+    "tag along/free float/nº de ações",
+    "valor de mercado e EV",
+    "dívida bruta e caixa",
+    "custo/prazo da dívida e % USD",
+    "receita",
+    "capex manutenção vs crescimento e guidance",
+    "câmbio",
+    "break-even",
+    "reservas 2P/1P",
+    "hedges",
+    "produção oficial de setembro",
+    "release 2T26 do RI",
+    "data do 3T26",
+    "lucro ajustado"
+   ],
+   "lacunas_importantes": "Dívida líquida diverge (US$ 3,6 bi na ficha de 06/09 vs US$ 4,05 bi/1,5x adotado em 03/10 pela XP); a ficha anterior subestimou em ~US$ 0,45 bi (erro nº 3 admitido). Reservas, hedges, dívida bruta/caixa e dados de resultado novos ausentes (3T26 só em nov)."
+  },
+  "RECV3": {
+   "identificacao": {
+    "nome": {
+     "v": "PetroReconcavo",
+     "un": null,
+     "per": null,
+     "nota": "PDF grafa 'PetroReconcavo'",
+     "src": "03/10 ficha RECV3"
+    },
+    "segmento": {
+     "v": "E&P onshore; campos maduros (Bahia e Potiguar); small cap; Novo Mercado",
+     "un": null,
+     "per": null,
+     "nota": null,
+     "src": "03/10 ficha RECV3 | 06/09 ficha RECV3"
+    },
+    "controlador": {
+     "v": null,
+     "un": null,
+     "per": null,
+     "nota": "acionistas de referência: não encontrado",
+     "src": "06/09 não encontrado"
+    },
+    "tag_along": null,
+    "free_float": {
+     "v": 93.6,
+     "un": "%",
+     "per": "06/09",
+     "nota": null,
+     "src": "06/09 ficha RECV3 setor"
+    },
+    "numero_acoes": null
+   },
+   "mercado": {
+    "preco": {
+     "v": 11.2,
+     "un": "R$",
+     "per": "02/10/2026",
+     "nota": "Investidor10; Dados de Mercado: R$ 10,67 em 30/09 - divergência registrada",
+     "src": "03/10 ficha RECV3 - investidor10.com.br/acoes/recv3"
+    },
+    "preco_ficha_anterior": {
+     "v": 10.5,
+     "un": "R$",
+     "per": "31/07/2026",
+     "nota": "Renova; I10 11,46 em ago; 52s 9,24-13,98; -16 a -27% em 12m; variação +6,7%",
+     "src": "06/09 ficha RECV3 | 03/10 §1"
+    },
+    "valor_mercado": null,
+    "ev": null,
+    "p_l": {
+     "v": "~6 (LPA ~1,70; c/ câmbio e MtM de hedges); normalizado ~7,7",
+     "un": "x",
+     "per": "06/09",
+     "nota": null,
+     "src": "06/09 quantitativo"
+    },
+    "p_vp": {
+     "v": "0,71-0,73 (~0,74 em 03/10)",
+     "un": "x",
+     "per": "06/09 e 03/10",
+     "nota": "VPA 14,3-14,8; book R$ 4,3 bi (R$ 14,8); 03/10 cita 'P/VP ~0,74' como número que sustenta",
+     "src": "06/09 quantitativo | 03/10 §7"
+    },
+    "ev_ebitda": {
+     "v": "2,9x (06/09); ~3,5x (03/10)",
+     "un": "x",
+     "per": null,
+     "nota": "06/09 também '2,9x (3,2x normalizado)' e '3,5x x EBITDA normalizado R$ 1,45 bi - DL R$ 1,6 bi = R$ 11,9': dentro de 06/09 há 3,2x e 3,5x para o normalizado; 03/10 usa EV/EBITDA 3,5x normalizado",
+     "src": "06/09 quantitativo/valuation | 03/10 §3 e §7"
+    },
+    "dy": {
+     "v": "12-15% (Renova, I10 - por data-com, inclui parcelas futuras; NÃO usar)",
+     "un": "%",
+     "per": "03/10",
+     "nota": "06/09: 13,2% (HG por data-com, inclui parcelado até 2028) / 6,7-7,2% (SI, pago) / caixa 2026 ~6,5%",
+     "src": "03/10 §4 | 06/09 proventos"
+    }
+   },
+   "endividamento": {
+    "divida_liquida": {
+     "v": 1.6,
+     "un": "R$ bi",
+     "per": "2T26",
+     "nota": "06/09; caixa ~R$ 1,7 bi; liquidez corrente 2,2-3,5",
+     "src": "06/09 quantitativo"
+    },
+    "divida_bruta": null,
+    "caixa": {
+     "v": 1.7,
+     "un": "R$ bi (~)",
+     "per": "2T26",
+     "nota": null,
+     "src": "06/09 quantitativo"
+    },
+    "dl_ebitda": {
+     "v": "1,01x (0,78x a/a); Renova mostra 1,70x (base diferente - divergência)",
+     "un": "x",
+     "per": "2T26",
+     "nota": "gatilho DL/EBITDA > 1,5x = Não verificável em 03/10",
+     "src": "06/09 quantitativo | 03/10 §2"
+    },
+    "parcela_em_usd": null,
+    "custo_prazo": null
+   },
+   "resultados": {
+    "receita": null,
+    "ebitda": {
+     "v": 396,
+     "un": "R$ mi",
+     "per": "2T26",
+     "nota": "+6%; margem 49% (+2,6 pp); 12m >= R$ 1,6 bi [colunas quebradas na extração; reconstruído pela ordem]",
+     "src": "06/09 quantitativo"
+    },
+    "lucro_contabil": {
+     "v": 202.7,
+     "un": "R$ mi",
+     "per": "2T26",
+     "nota": "-15%; ganhos cambiais e MtM de hedges",
+     "src": "06/09 quantitativo"
+    },
+    "lucro_ajustado": null,
+    "fcfe": {
+     "v": 64,
+     "un": "R$ mi",
+     "per": "2T26",
+     "nota": "8,6% anualizado; limitado pelos hedges",
+     "src": "06/09 quantitativo"
+    },
+    "margem_ebitda": {
+     "v": 49,
+     "un": "%",
+     "per": "2T26",
+     "nota": null,
+     "src": "06/09 quantitativo"
+    },
+    "roic": {
+     "v": 6.6,
+     "un": "% (12m)",
+     "per": "06/09",
+     "nota": "21% em 2022; ROIC 6,6% vs WACC 13% = N",
+     "src": "06/09 quantitativo e B&H"
+    },
+    "roe": {
+     "v": "12,7-14,7",
+     "un": "%",
+     "per": "06/09",
+     "nota": "faixa; bloco ROIC/ROE com colunas quebradas [colunas quebradas na extração; reconstruído pela ordem]",
+     "src": "06/09 quantitativo"
+    }
+   },
+   "capex": {
+    "total": null,
+    "manutencao_vs_crescimento": null,
+    "guidance": null
+   },
+   "premissas_de_ciclo_declaradas_no_pdf": {
+    "brent_meio_de_ciclo": {
+     "v": 70,
+     "un": "US$/bbl",
+     "per": "premissa do lote",
+     "nota": "DCF base: 24k boe/d estável, Brent 70; otim.: 27k, hedges vencem, Brent 85; pess.: declínio -5%/a, Brent 60",
+     "src": "03/10 §3 | 06/09 valuation"
+    },
+    "brent_spot": {
+     "v": "~99-102",
+     "un": "US$/bbl",
+     "per": "02/10",
+     "nota": "'Brent alto ajuda pouco porque a produção está hedgeada'",
+     "src": "03/10 premissas; autocrítica"
+    },
+    "cambio": null,
+    "crack_spread": null,
+    "lifting_cost": {
+     "v": null,
+     "un": null,
+     "per": null,
+     "nota": "lifting cost US$/boe não encontrado (06/09: 'subindo')",
+     "src": "06/09 não encontrado"
+    },
+    "break_even": null,
+    "producao_boe_d": {
+     "v": 23.8,
+     "un": "kboed",
+     "per": "ago/2026",
+     "nota": "jul 23,7k; 2T26 24,1k (-11% a/a); premissa base 24k; gatilhos: <23k por 2 meses (armadilha) / >=25k por 2 meses (central R$ 15); produção de setembro não encontrada",
+     "src": "03/10 §1 e §2 - infomoney.com.br 09/09 | 06/09 quantitativo"
+    },
+    "guidance_producao": null,
+    "reservas_1P_2P": {
+     "v": "1P certificada assumia 27 kboed; produção YTD ~5% abaixo da 1P (Itaú BBA)",
+     "un": "kboed",
+     "per": "03/10",
+     "nota": "reservas 2P não encontradas",
+     "src": "03/10 §1 - moneytimes.com.br 09/09 | 06/09 ficha RECV3"
+    },
+    "vida_util_reservas": null,
+    "hedges": {
+     "v": "limitam FCFE; 'hedges mal calibrados' (06/09); detalhes não encontrados",
+     "un": null,
+     "per": null,
+     "nota": "otimista pressupõe hedges vencendo com Brent > 75",
+     "src": "06/09 proventos/qualitativo e mudaria"
+    }
+   },
+   "operacional_setor": {
+    "acordo_gas": {
+     "v": "Acordo de processamento de gás com a Petrobras (20/08); saída de diretor após 26 anos",
+     "un": null,
+     "per": "ago/2026",
+     "nota": null,
+     "src": "03/10 §1 - investidor10.com.br"
+    },
+    "potiguar": {
+     "v": "Óleo do Potiguar vendido à Brava; descontos comerciais reduzidos (acordos com a Brava); dependência de Brava/Guamaré",
+     "un": null,
+     "per": "06/09",
+     "nota": "teste do R$ 1 retido falha: cada real no Potiguar virou ~R$ 0,40",
+     "src": "06/09 quantitativo/B&H"
+    },
+    "prod_queda_aa": {
+     "v": -11,
+     "un": "% a/a",
+     "per": "2T26",
+     "nota": null,
+     "src": "06/09 ficha RECV3"
+    }
+   },
+   "proventos": {
+    "politica": {
+     "v": "JCP/dividendos; dividendo de dez/25 parcelado em 3 vezes",
+     "un": null,
+     "per": "03/10",
+     "nota": null,
+     "src": "03/10 §4"
+    },
+    "jcp_2T26": {
+     "v": 0.3407,
+     "un": "R$/ação",
+     "per": "2T26",
+     "nota": "data-com 17/08; pago 27/08 (ficha 07/09: 'R$ 0,34; pagto n.e.'); fonte renovainvest 06/08",
+     "src": "03/10 §1 - renovainvest.com.br 06/08"
+    },
+    "parcelado_dez25": {
+     "v": 1.02,
+     "un": "R$/ação (R$ 300 mi)",
+     "per": "dez/25",
+     "nota": "pago em dez/26, dez/27, dez/28, sem correção",
+     "src": "03/10 §4 | 06/09 proventos"
+    },
+    "caixa_2026": {
+     "v": 0.68,
+     "un": "R$/ação (~)",
+     "per": "2026",
+     "nota": "JCP 0,34 (pago 27/08) + parcela dez/26 0,34; ~6,1% (03/10) / ~6,5% (06/09)",
+     "src": "03/10 §4 | 06/09 proventos"
+    },
+    "dy_historico": {
+     "v": "2022 ~18,6% (HG)",
+     "un": "%",
+     "per": "06/09",
+     "nota": "série completa n.e.",
+     "src": "06/09 proventos alertas"
+    },
+    "payout": {
+     "v": 56,
+     "un": "%",
+     "per": "06/09",
+     "nota": "Renova",
+     "src": "06/09 proventos"
+    },
+    "cobertura_caixa": {
+     "v": "Parcial - FCFE limitado por hedges; parcelamento é sinal de caixa curto [EVIDÊNCIA LIMITADA]",
+     "un": null,
+     "per": "03/10",
+     "nota": null,
+     "src": "03/10 §4"
+    },
+    "recompra": {
+     "v": "até 1,5 mi ações (0,5%)",
+     "un": null,
+     "per": "06/09",
+     "nota": null,
+     "src": "06/09 proventos"
+    }
+   },
+   "multiplos_retornos_pares": {
+    "yield_fwd": {
+     "v": "~6,1% em caixa (2026)",
+     "un": null,
+     "per": "03/10",
+     "nota": "g negativo (declínio); nominal 4-6%; real 0-2%; vs IPCA+ 7,08%: -7 a -5 p.p.; Vence RF? Não",
+     "src": "03/10 §5"
+    },
+    "graham": {
+     "v": "R$ 23,8 (book em declínio vale menos); 4/7",
+     "un": null,
+     "per": "06/09",
+     "nota": null,
+     "src": "06/09 valuation"
+    },
+    "epv": {
+     "v": "R$ 5,5 / 8,2 (WACC 13% / 10,5%)",
+     "un": null,
+     "per": "06/09",
+     "nota": null,
+     "src": "06/09 valuation"
+    },
+    "bazin": {
+     "v": "R$ 22,8 (data-com) / 11,3 (pago) / 12,7 (fwd)",
+     "un": null,
+     "per": "06/09",
+     "nota": null,
+     "src": "06/09 valuation"
+    },
+    "pares": {
+     "v": "XP (dez/24) compra R$ 22 - não realizado; Genial neutra",
+     "un": null,
+     "per": "06/09",
+     "nota": null,
+     "src": "06/09 valuation"
+    },
+    "piotroski_altman": {
+     "v": "Piotroski 6/9; Altman Z 1,6",
+     "un": null,
+     "per": "06/09",
+     "nota": "colunas quebradas",
+     "src": "06/09 quantitativo"
+    },
+    "teste_R1_retido": {
+     "v": "Falha clara (2021-25); IPO a 1,6x book -> 0,7x; Potiguar (2022) não entregou volume",
+     "un": null,
+     "per": null,
+     "nota": null,
+     "src": "06/09 quantitativo/valuation"
+    }
+   },
+   "governanca_riscos": {
+    "interferencia_estatal": {
+     "v": "ANP; imposto de exportação (regulatório 2x)",
+     "un": null,
+     "per": "06/09",
+     "nota": null,
+     "src": "06/09 qualitativo"
+    },
+    "recv3_divida_declinio": {
+     "v": "Alavancagem baixa (1,0x) mas produção -11% a/a e 23,7k em julho vs 27k da certificação: 'o book pode não valer o que diz'; ROIC 6,6% < Ke",
+     "un": null,
+     "per": "03/10 e 06/09",
+     "nota": "'ARMADILHA' se produção < 23k por 2 meses ou certificação revista para baixo ou DL/EBITDA > 1,5x ou corte/adiamento das parcelas 2027-28",
+     "src": "03/10 §7 | 06/09 riscos"
+    },
+    "buy_and_hold": {
+     "v": "Não",
+     "un": null,
+     "per": "06/09",
+     "nota": "moat Não; ROIC>Ke Não; balanço Sim; dono Parcial; lucro previsível Não; sem diluição Sim; preço com margem Sim (-12%)",
+     "src": "06/09 B&H"
+    },
+    "riscos": {
+     "v": "ROIC < Ke; produção abaixo da certificação; dividendo parcelado em 3 anos",
+     "un": null,
+     "per": "03/10",
+     "nota": null,
+     "src": "03/10 §7"
+    }
+   },
+   "gatilhos_da_ficha": [
+    {
+     "gatilho": "Produção < 23k por 2 meses",
+     "status": "Não acionado",
+     "evidencia": "23,7k (jul) e 23,8k (ago)",
+     "src": "03/10 §2 [colunas quebradas na extração; reconstruído pela ordem]"
+    },
+    {
+     "gatilho": "Revisão da certificação para baixo",
+     "status": "Não verificável",
+     "evidencia": "Sem nova certificação; YTD 5% abaixo da 1P",
+     "src": "03/10 §2 [colunas quebradas na extração; reconstruído pela ordem]"
+    },
+    {
+     "gatilho": "DL/EBITDA > 1,5x",
+     "status": "Não verificável",
+     "evidencia": "Sem DRE nova (Renova mostra 1,70x, base diferente, divergência)",
+     "src": "03/10 §2 [colunas quebradas na extração; reconstruído pela ordem]"
+    },
+    {
+     "gatilho": "Corte/adiamento das parcelas 2027-28",
+     "status": "Não acionado",
+     "evidencia": "Nenhum comunicado",
+     "src": "03/10 §2 [colunas quebradas na extração; reconstruído pela ordem]"
+    }
+   ],
+   "eventos_com_data": [
+    {
+     "data": "out/2026",
+     "evento": "Produção de setembro (RECV3)",
+     "src": "03/10 eventos com data"
+    },
+    {
+     "data": "nov/2026",
+     "evento": "Resultados 3T26 (data não encontrada)",
+     "src": "03/10 eventos com data"
+    },
+    {
+     "data": "dez/2026, dez/2027, dez/2028",
+     "evento": "Parcelas do dividendo de dez/25 (R$ 1,02/ação em 3 vezes)",
+     "src": "03/10 §4"
+    }
+   ],
+   "premissas_pdf_valuation": {
+    "ke_usado": {
+     "v": 12.08,
+     "un": "% real",
+     "per": "03/10",
+     "nota": "autocrítica: 'Ke irrelevante aqui - o problema é volume, não taxa'",
+     "src": "03/10 premissas comuns e autocrítica"
+    },
+    "preco_justo": {
+     "v": 12.3,
+     "un": "R$",
+     "per": "03/10",
+     "nota": "06/09: R$ 12,00; central na tabela de valuation = R$ 12,30 (faixa R$ 3-19,5).",
+     "src": "03/10 quadro-resumo e §3 [colunas quebradas na extração; reconstruído pela ordem]"
+    },
+    "preco_compra_menos_30": {
+     "v": 8.61,
+     "un": "R$",
+     "per": "03/10",
+     "nota": "06/09: R$ 8,40; 'só R$ 8,60 e posição <= 1%'",
+     "src": "03/10 quadro-resumo e §7"
+    },
+    "preco_saida": {
+     "v": 16.0,
+     "un": "R$",
+     "per": "03/10",
+     "nota": "06/09: R$ 16,00",
+     "src": "03/10 quadro-resumo"
+    },
+    "premio_desconto": {
+     "v": -9,
+     "un": "% (desconto)",
+     "per": "03/10",
+     "nota": "06/09: -12%",
+     "src": "03/10 quadro-resumo"
+    },
+    "faixa": {
+     "v": "R$ 3-19,5",
+     "un": null,
+     "per": "03/10",
+     "nota": "06/09: R$ 3-19",
+     "src": "03/10 §3 | 06/09 ficha"
+    },
+    "cenarios": {
+     "v": "DCF base (24k estável, Brent 70) R$ 10 (era 9,70) | EV/EBITDA 3,5x normalizado R$ 12 (era 11,90) | DCF otimista (27k) R$ 19,50 (era 19) | Central R$ 12,30 (era 12). Pessimista (06/09): R$ 3 / 4",
+     "un": "R$/ação",
+     "per": "03/10",
+     "nota": "Sem pesos; mudança de Ke no base e otimista [colunas quebradas na extração; reconstruído pela ordem]",
+     "src": "03/10 §3 | 06/09 valuation"
+    },
+    "metodo_ancora": {
+     "v": "DCF base 24k + EV/EBITDA 3,5x normalizado; central R$ 12,30",
+     "un": null,
+     "per": "03/10",
+     "nota": null,
+     "src": "03/10 §3"
+    },
+    "veredito": {
+     "v": "JUSTA (aviso ARMADILHA) (antes RADAR (aviso ARMADILHA))",
+     "un": null,
+     "per": "03/10",
+     "nota": "'JUSTA não é melhora: só o preço subiu'",
+     "src": "03/10 quadro-resumo e autocrítica"
+    },
+    "nota_Q_S_R_P_geral": {
+     "v": "Qualidade 3 -> 3; Solidez 6 -> 6; Renda 5 -> 5; Preço 6 -> 4; Geral 4,7 -> 4,3",
+     "un": "0-10",
+     "per": "03/10",
+     "nota": "Reconstruído ('33 66 55 64'); confere: 1,05 + 1,2 + 1,25 + 0,8 = 4,3",
+     "src": "03/10 §6 [colunas quebradas na extração; reconstruído pela ordem]"
+    },
+    "o_que_mudaria": {
+     "v": "2 meses >= 25k = central R$ 15; < 23k = ARMADILHA; preço <= R$ 8,60 com produção estável = compra",
+     "un": null,
+     "per": "03/10",
+     "nota": null,
+     "src": "03/10 §7"
+    }
+   },
+   "nao_encontrado": [
+    "controlador/acionistas de referência",
+    "tag along; nº de ações",
+    "valor de mercado e EV em R$",
+    "dívida bruta",
+    "% USD e custo/prazo da dívida",
+    "receita",
+    "lucro ajustado",
+    "capex",
+    "lifting cost US$/boe",
+    "break-even",
+    "reservas 2P",
+    "hedges (volumes/preços)",
+    "produção de setembro",
+    "release 2T26 do RI",
+    "data do 3T26",
+    "câmbio"
+   ],
+   "lacunas_importantes": "Sem DRE nova (3T26 em nov); resultados/endividamento vêm do 2T26 via PDF de 06/09. Sem reservas 2P, lifting cost e hedges. DL/EBITDA diverge entre ficha (1,01x) e Renova (1,70x). Preço diverge entre fontes (I10 R$ 11,20 vs Dados de Mercado R$ 10,67 em 30/09)."
+  },
+  "UGPA3": {
+   "identificacao": {
+    "nome": {
+     "v": "Ultrapar",
+     "un": null,
+     "per": null,
+     "nota": null,
+     "src": "03/10 ficha UGPA3"
+    },
+    "segmento": {
+     "v": "Holding: Ipiranga (76% do EBITDA, cíclica de margem) + Ultragaz (GLP, #1) + Ultracargo (#1 tancagem) + Hidrovias; Novo Mercado",
+     "un": null,
+     "per": null,
+     "nota": "24% do EBITDA fora de combustíveis",
+     "src": "03/10 ficha UGPA3 | 06/09 ficha UGPA3"
+    },
+    "controlador": {
+     "v": "Ultra S.A. (famílias fundadoras); % não informado",
+     "un": null,
+     "per": "06/09",
+     "nota": "participação do controlador e na Hidrovias não encontradas",
+     "src": "06/09 ficha UGPA3 setor; não encontrado"
+    },
+    "tag_along": null,
+    "free_float": null,
+    "numero_acoes": null
+   },
+   "mercado": {
+    "preco": {
+     "v": 38.51,
+     "un": "R$",
+     "per": "02/10/2026",
+     "nota": "HG Brasil; Dados de Mercado R$ 38,09 em 01/10; máxima histórica R$ 39,13 em ~21/09",
+     "src": "03/10 ficha UGPA3 - hgbrasil.com/finance/tickers/B3:UGPA3"
+    },
+    "preco_ficha_anterior": {
+     "v": 33.0,
+     "un": "R$",
+     "per": "01/08/2026",
+     "nota": "HG 32,97; Renova 33,05; ~+70% desde dez/25; variação +16,7%",
+     "src": "06/09 ficha UGPA3 | 03/10 §1"
+    },
+    "valor_mercado": null,
+    "ev": null,
+    "p_l": {
+     "v": "~10 (LPA ~3,2) / ~14 (LPA 2,4 normalizado)",
+     "un": "x",
+     "per": "06/09",
+     "nota": null,
+     "src": "06/09 quantitativo"
+    },
+    "p_vp": {
+     "v": 2.1,
+     "un": "x",
+     "per": "06/09",
+     "nota": "VPA 15,9; book R$ 17,3 bi",
+     "src": "06/09 quantitativo"
+    },
+    "ev_ebitda": {
+     "v": "4,6x pico; 5,3-6,1x normalizado (EBITDA 7,3-8,4 bi)",
+     "un": "x",
+     "per": "06/09",
+     "nota": null,
+     "src": "06/09 quantitativo"
+    },
+    "dy": {
+     "v": "5,19 (HG, R$ 2,00, pagos) vs 3,9 (R$ 1,30)",
+     "un": "% (12m)",
+     "per": "03/10",
+     "nota": "divergência de base 'pago' vs 'declarado' [EVIDÊNCIA LIMITADA]; 06/09: 3,9% (HG 12m R$ 1,30), declarado 2026 R$ 1,00 (~3%), fwd 2026e ~R$ 1,8 (5,5%)",
+     "src": "03/10 §1 e §4 | 06/09 proventos"
+    }
+   },
+   "endividamento": {
+    "divida_liquida": {
+     "v": 8.8,
+     "un": "R$ bi",
+     "per": "2T26",
+     "nota": "reconstruído: 'R$ 8,8 bi / 0,9x - menor desde 2008'",
+     "src": "06/09 quantitativo [colunas quebradas na extração; reconstruído pela ordem]"
+    },
+    "divida_bruta": null,
+    "caixa": null,
+    "dl_ebitda": {
+     "v": "0,9x (Renova: 2,17x com leases e Hidrovias)",
+     "un": "x",
+     "per": "2T26",
+     "nota": "menor desde 2008 (1,9x a/a); 03/10 repete 0,9x",
+     "src": "06/09 quantitativo | 03/10 §2 e §7"
+    },
+    "parcela_em_usd": null,
+    "custo_prazo": null
+   },
+   "resultados": {
+    "receita": null,
+    "ebitda": {
+     "v": 3.66,
+     "un": "R$ bi (EBITDA aj. rec.)",
+     "per": "2T26",
+     "nota": "+70%; 2,5x a/a: Ipiranga 2,8 bi (margem ~R$ 451/m3), Ultragaz 468 mi, Ultracargo 159 mi, Hidrovias 322 mi [colunas quebradas na extração; reconstruído pela ordem]",
+     "src": "06/09 quantitativo"
+    },
+    "lucro_contabil": {
+     "v": 1.68,
+     "un": "R$ bi",
+     "per": "2T26",
+     "nota": "+46% a/a; +83% t/t [colunas quebradas na extração; reconstruído pela ordem]",
+     "src": "06/09 quantitativo"
+    },
+    "lucro_ajustado": null,
+    "fco_fcf": {
+     "v": "FCO R$ 4,8 bi (recorde) / FCF ex-aquisições R$ 4,38 bi",
+     "un": "R$ bi",
+     "per": "2T26",
+     "nota": null,
+     "src": "06/09 quantitativo"
+    },
+    "roic": {
+     "v": "11,4% (12m; ~9-10% normalizado; 18% no pico)",
+     "un": "%",
+     "per": "06/09",
+     "nota": null,
+     "src": "06/09 quantitativo/B&H"
+    },
+    "roe": {
+     "v": "16-19",
+     "un": "%",
+     "per": "06/09",
+     "nota": null,
+     "src": "06/09 quantitativo"
+    },
+    "margens": null
+   },
+   "capex": {
+    "total": {
+     "v": 2.62,
+     "un": "R$ bi",
+     "per": "2026",
+     "nota": "1,7x D&A: Ultracargo/Hidrovias",
+     "src": "06/09 quantitativo"
+    },
+    "manutencao_vs_crescimento": null,
+    "guidance": null
+   },
+   "premissas_de_ciclo_declaradas_no_pdf": {
+    "margem_distribuicao_meio_de_ciclo": {
+     "v": "170-220",
+     "un": "R$/m3",
+     "per": "premissa",
+     "nota": "EBITDA normalizado R$ 7,3-8,4 bi; lucro R$ 2,3-2,8 bi",
+     "src": "06/09 quantitativo | 03/10 checklist"
+    },
+    "margem_ipiranga_2T26": {
+     "v": 451,
+     "un": "R$/m3",
+     "per": "2T26",
+     "nota": "pico; 3T26 não divulgado; XP/BTG: 3T26 ainda forte, sem sinal claro de normalização; margem estrutural de R$ 280/m3 levaria o central a R$ 36 (sem prova)",
+     "src": "03/10 §1 e §2 e autocrítica - conteudos.xpi.com.br; euqueroinvestir.com"
+    },
+    "margem_3T26_efeito": {
+     "v": "'Subvenção nova ao diesel' reduz parte da vantagem das grandes distribuidoras (XP) - negativo marginal",
+     "un": null,
+     "per": "17/09",
+     "nota": null,
+     "src": "03/10 §1 - conteudos.xpi.com.br 17/09 [colunas quebradas na extração; reconstruído pela ordem]"
+    },
+    "brent_spot": {
+     "v": "~99-102",
+     "un": "US$/bbl",
+     "per": "02/10",
+     "nota": null,
+     "src": "03/10 premissas comuns"
+    },
+    "cambio": null,
+    "crack_spread": null,
+    "lifting_cost": null,
+    "break_even": null,
+    "producao_boe_d": null,
+    "reservas_1P_2P": null,
+    "vida_util_reservas": null,
+    "volume_ipiranga": {
+     "v": null,
+     "un": null,
+     "per": null,
+     "nota": "volume da Ipiranga em m3 não encontrado (06/09 e 03/10 [set])",
+     "src": null
+    }
+   },
+   "operacional_setor": {
+    "ipiranga": {
+     "v": "6,8 mil postos",
+     "un": null,
+     "per": "06/09",
+     "nota": null,
+     "src": "06/09 valuation reprodução"
+    },
+    "recompra": {
+     "v": "até 18 mi ações (~1,7%)",
+     "un": null,
+     "per": "06/09",
+     "nota": "recompras R$ 149-267 mi/ano em 2022-24",
+     "src": "06/09 quantitativo/proventos"
+    },
+    "chevron": {
+     "v": "Rumor de venda de ~30% da Ipiranga à Chevron - sem confirmação desde mar/26; fonte braziljournal.com; advfn (mar)",
+     "un": null,
+     "per": "03/10",
+     "nota": "alta se concretizada a >= 7x EBITDA: central ~R$ 35 (Ipiranga > R$ 25 bi)",
+     "src": "03/10 §1 e §2 e §7 | 06/09 estratégia"
+    },
+    "rating_sell_side": {
+     "v": "Scotiabank rebaixa para Sector Perform (17/09)",
+     "un": null,
+     "per": "17/09/2026",
+     "nota": "06/09: Safra positivo; BB-BI positivo; Nord sem recomendação",
+     "src": "03/10 §1 - finance.yahoo.com/quote/UGP | 06/09 referências"
+    },
+    "glp": {
+     "v": "GLP sensível a preço controlado (gatilho)",
+     "un": null,
+     "per": null,
+     "nota": null,
+     "src": "06/09 riscos"
+    }
+   },
+   "proventos": {
+    "politica": {
+     "v": "Dividendo pago no ano, sem diferimento; recompras recorrentes; payout ~47% (Renova)",
+     "un": null,
+     "per": "03/10",
+     "nota": "FCF recorde no 2T26 [EVIDÊNCIA FORTE]",
+     "src": "03/10 §4 | 06/09 proventos"
+    },
+    "dy_12m": {
+     "v": "5,19 (HG R$ 2,00 pagos) / 3,9 (R$ 1,30 ficha)",
+     "un": "%",
+     "per": "03/10",
+     "nota": null,
+     "src": "03/10 §1"
+    },
+    "serie_dpa": {
+     "v": "2021 ~0,45 | 2022 ~0,30 | 2023 ~0,50 | 2024 0,70 (R$ 769 mi; DY 3%) | 2025 1,30 (R$ 1,4 bi; DY 7%) | 2026 1,00 aprovado no 2T26",
+     "un": "R$/ação",
+     "per": "06/09",
+     "nota": "DY 2021-24 entre 0,3% e 3%; 2025 7%; histórico recorrente desde o IPO (1999)",
+     "src": "06/09 proventos"
+    },
+    "payout": {
+     "v": 47,
+     "un": "%",
+     "per": null,
+     "nota": "Renova",
+     "src": "03/10 §4 | 06/09 proventos"
+    },
+    "cobertura_caixa": {
+     "v": "Sim",
+     "un": null,
+     "per": "03/10",
+     "nota": "FCF recorde 2T26",
+     "src": "03/10 §4"
+    }
+   },
+   "multiplos_retornos_pares": {
+    "yield_fwd": {
+     "v": "~4,7% (2026e R$ 1,8)",
+     "un": null,
+     "per": "03/10",
+     "nota": "g 4%; nominal 8,7%; real 4,5%; vs IPCA+ 7,08%: -2,6 p.p.; Vence RF? Não; yield normalizado ~4-5% ao preço de hoje. 06/09: ~5,5% (R$ 1,8; -2 p.p. vs 7,35%)",
+     "src": "03/10 §5 | 06/09 comparativo RF"
+    },
+    "graham": {
+     "v": "R$ 33,8 (pico) / R$ 29,3 (normalizado); 5/7",
+     "un": null,
+     "per": "06/09",
+     "nota": null,
+     "src": "06/09 valuation"
+    },
+    "epv": {
+     "v": "R$ 23 / 30 (WACC 12,9% / 10,5%)",
+     "un": null,
+     "per": "06/09",
+     "nota": "03/10: EPV (WACC 12,9%) R$ 23,50",
+     "src": "06/09 valuation | 03/10 §3"
+    },
+    "bazin": {
+     "v": "R$ 10,8 (5a) / R$ 21,7 (12m) / R$ 30 (2026e)",
+     "un": null,
+     "per": "06/09",
+     "nota": null,
+     "src": "06/09 valuation"
+    },
+    "sotp_ev_ebitda": {
+     "v": "6x x R$ 7,8 bi - 8,8 = R$ 35; 5,5x = R$ 31",
+     "un": null,
+     "per": "06/09",
+     "nota": null,
+     "src": "06/09 valuation"
+    },
+    "dcf": {
+     "v": "pess. 13/19/16; base (pico -> 2,6 bi em 2028) 19,6/28,4/24; otim. (250/m3 + Chevron) 28/40/34 (Ke 16,8/12,35/14)",
+     "un": "R$/ação",
+     "per": "06/09",
+     "nota": null,
+     "src": "06/09 valuation"
+    },
+    "pares": {
+     "v": "Safra positivo; BB-BI positivo; Nord sem recomendação; Scotiabank Sector Perform (17/09)",
+     "un": null,
+     "per": null,
+     "nota": null,
+     "src": "06/09 referências | 03/10 §1"
+    },
+    "teste_R1_retido": {
+     "v": "Passa: Oxiteno/Extrafarma vendidas, Hidrovias comprada, P/L 41 -> 10, preço +135% (2021-25)",
+     "un": null,
+     "per": null,
+     "nota": null,
+     "src": "06/09 valuation"
+    }
+   },
+   "governanca_riscos": {
+    "interferencia_estatal": {
+     "v": "ANP; GLP com preço controlado (gatilho); combate à fraude a favor",
+     "un": null,
+     "per": "06/09",
+     "nota": "'Nenhuma nova' interferência (checklist 03/10)",
+     "src": "06/09 qualitativo"
+    },
+    "ipiranga_ultragaz_ultracargo_hidrovias": {
+     "v": "Ipiranga #2, Ultragaz #1 GLP, Ultracargo #1 tancagem (ramp-up), Hidrovias no fundo do ciclo; 76% do EBITDA é combustível",
+     "un": null,
+     "per": "06/09",
+     "nota": "'Mesmo defeito da VBBR3 (margem de guerra), mesmo tratamento'",
+     "src": "06/09 qualitativo | 03/10 autocrítica"
+    },
+    "riscos": {
+     "v": "Prêmio de 24% sobre o normalizado; margem 2-3x acima da média; Chevron segue rumor",
+     "un": null,
+     "per": "03/10",
+     "nota": null,
+     "src": "03/10 §7"
+    },
+    "buy_and_hold": {
+     "v": "Parcial",
+     "un": null,
+     "per": "06/09",
+     "nota": "moat Parcial; ROIC>Ke Parcial (9-10% normalizado < WACC 12,9%); balanço Sim; dono Sim; lucro previsível Não; sem diluição Sim; preço com margem Não (+10%)",
+     "src": "06/09 B&H"
+    }
+   },
+   "gatilhos_da_ficha": [
+    {
+     "gatilho": "Margem Ipiranga < R$ 200/m3 por 2 tri",
+     "status": "Não acionado",
+     "evidencia": "R$ 451/m3 no 2T26; 3T26 não divulgado",
+     "src": "03/10 §2 [colunas quebradas na extração; reconstruído pela ordem]"
+    },
+    {
+     "gatilho": "DL/EBITDA > 2x por M&A",
+     "status": "Não acionado",
+     "evidencia": "0,9x no 2T26; sem M&A",
+     "src": "03/10 §2 [colunas quebradas na extração; reconstruído pela ordem]"
+    },
+    {
+     "gatilho": "GLP com preço controlado",
+     "status": "Não acionado",
+     "evidencia": "Nada identificado",
+     "src": "03/10 §2 [colunas quebradas na extração; reconstruído pela ordem]"
+    },
+    {
+     "gatilho": "(alta) Chevron >= 7x EBITDA",
+     "status": "Não acionado",
+     "evidencia": "Sem fato relevante",
+     "src": "03/10 §2 [colunas quebradas na extração; reconstruído pela ordem]"
+    }
+   ],
+   "eventos_com_data": [
+    {
+     "data": "nov/2026",
+     "evento": "Resultados 3T26 (data não encontrada)",
+     "src": "03/10 eventos com data"
+    },
+    {
+     "data": "mensal",
+     "evento": "Subvenção ao diesel (efeito na vantagem de suprimento das grandes)",
+     "src": "03/10 eventos com data"
+    }
+   ],
+   "premissas_pdf_valuation": {
+    "ke_usado": {
+     "v": 12.08,
+     "un": "% real",
+     "per": "03/10",
+     "nota": "autocrítica: ao Ke de mercado o central iria a ~R$ 35 - ainda abaixo do preço; 06/09: 12,35%",
+     "src": "03/10 autocrítica"
+    },
+    "preco_justo": {
+     "v": 31.0,
+     "un": "R$",
+     "per": "03/10",
+     "nota": "06/09: R$ 30,00; +R$ 1 'só pelo Ke'",
+     "src": "03/10 quadro-resumo e ficha"
+    },
+    "preco_compra_menos_30": {
+     "v": 21.7,
+     "un": "R$",
+     "per": "03/10",
+     "nota": "06/09: R$ 21,00",
+     "src": "03/10 quadro-resumo"
+    },
+    "preco_saida": {
+     "v": 36.0,
+     "un": "R$",
+     "per": "03/10",
+     "nota": "inalterado; preço de 38,51 ultrapassou a saída",
+     "src": "03/10 quadro-resumo"
+    },
+    "premio_desconto": {
+     "v": 24,
+     "un": "% (prêmio)",
+     "per": "03/10",
+     "nota": "06/09: +10%",
+     "src": "03/10 quadro-resumo"
+    },
+    "faixa": {
+     "v": "R$ 13-41",
+     "un": null,
+     "per": "03/10",
+     "nota": "06/09: R$ 13-40",
+     "src": "03/10 §3 | 06/09 ficha"
+    },
+    "cenarios": {
+     "v": "DCF base (pico -> 2,6 bi em 2028) R$ 29,30 (era 28,40) | EV/EBITDA normalizado 5,5-6x R$ 31-35 (inalterado; sem DRE nova) | EPV (WACC 12,9%) R$ 23,50 (era 23) | Central R$ 31 (era 30), faixa R$ 13-41",
+     "un": "R$/ação",
+     "per": "03/10",
+     "nota": "Sem pesos explícitos [colunas quebradas na extração; reconstruído pela ordem]",
+     "src": "03/10 §3"
+    },
+    "metodo_ancora": {
+     "v": "DCF base + EV/EBITDA normalizado 5,5-6x; margem Ipiranga normalizada R$ 170-220/m3",
+     "un": null,
+     "per": "03/10",
+     "nota": null,
+     "src": "03/10 §3 | 06/09 quantitativo"
+    },
+    "veredito": {
+     "v": "CARA (antes JUSTA)",
+     "un": null,
+     "per": "03/10",
+     "nota": null,
+     "src": "03/10 quadro-resumo"
+    },
+    "nota_Q_S_R_P_geral": {
+     "v": "Qualidade 6 -> 6; Solidez 8 -> 8; Renda 5 -> 5; Preço 5 -> 2; Geral 5,9 -> 5,3",
+     "un": "0-10",
+     "per": "03/10",
+     "nota": "Reconstruído ('66 88 55 52'); confere: 2,1 + 1,6 + 1,25 + 0,4 = 5,35",
+     "src": "03/10 §6 [colunas quebradas na extração; reconstruído pela ordem]"
+    },
+    "o_que_mudaria": {
+     "v": "Preço < R$ 28 = JUSTA; < R$ 21,70 = BARATA; Chevron concretizada a múltiplo cheio = central ~R$ 35",
+     "un": null,
+     "per": "03/10",
+     "nota": null,
+     "src": "03/10 §7"
+    }
+   },
+   "nao_encontrado": [
+    "% do controlador e da Hidrovias",
+    "tag along; free float; nº de ações",
+    "valor de mercado e EV",
+    "dívida bruta/caixa; % USD; custo/prazo",
+    "receita",
+    "lucro ajustado/12m exato",
+    "margens (%)",
+    "capex manutenção vs crescimento",
+    "volume Ipiranga (m3)",
+    "status/valor da Chevron",
+    "release 2T26 do RI",
+    "data do 3T26",
+    "câmbio",
+    "DPA 2021-23 em R$ exato"
+   ],
+   "lacunas_importantes": "Bloco quantitativo de 06/09 vem com colunas quebradas (DL R$ 3,66 bi vs R$ 8,8 bi: leitura pela ordem sugere EBITDA aj. rec. R$ 3,66 bi e DL R$ 8,8 bi). Sem DRE nova; sem status da Chevron; sem 3T26 (margem). DY diverge: HG R$ 2,00 (5,19%) vs ficha R$ 1,30 (3,9%)."
+  },
+  "VBBR3": {
+   "identificacao": {
+    "nome": {
+     "v": "Vibra Energia",
+     "un": null,
+     "per": null,
+     "nota": null,
+     "src": "03/10 ficha VBBR3"
+    },
+    "segmento": {
+     "v": "Distribuição de combustíveis (8 mil postos, marca Petrobras licenciada) + Comerc (energia); corporação sem controlador; Novo Mercado",
+     "un": null,
+     "per": null,
+     "nota": null,
+     "src": "03/10 ficha VBBR3 | 06/09 ficha VBBR3"
+    },
+    "controlador": {
+     "v": "Sem controlador (corporação)",
+     "un": null,
+     "per": "06/09",
+     "nota": null,
+     "src": "06/09 ficha VBBR3 setor"
+    },
+    "tag_along": null,
+    "free_float": {
+     "v": 99.5,
+     "un": "%",
+     "per": "06/09",
+     "nota": null,
+     "src": "06/09 ficha VBBR3 setor"
+    },
+    "numero_acoes": null,
+    "bonificacao": {
+     "v": "7,11% (1:14,06 em nov/25)",
+     "un": null,
+     "per": "nov/2025",
+     "nota": "junto do JCP de R$ 850 mi (pagto 16/12/2026); séries anteriores de DPA precisam do fator 1,0711 (ajuste não verificado nos agregadores)",
+     "src": "03/10 §1 e §4"
+    }
+   },
+   "mercado": {
+    "preco": {
+     "v": 37.66,
+     "un": "R$",
+     "per": "02/10/2026",
+     "nota": "Investing: R$ 37,16 em 01/10",
+     "src": "03/10 ficha VBBR3 - investidor10.com.br/acoes/vbbr3"
+    },
+    "preco_ficha_anterior": {
+     "v": 35.0,
+     "un": "R$",
+     "per": "ago/2026",
+     "nota": "XP: JCP 0,42 = 1,2%; MD 34,50; HG 35,99 em 31/07; +82-97% em 12m; variação +7,6%",
+     "src": "06/09 ficha VBBR3 | 03/10 §1"
+    },
+    "valor_mercado": null,
+    "ev": {
+     "v": "R$ 24,7 bi (EV/EBITDA 3,51x, perímetro)",
+     "un": "R$ bi",
+     "per": "06/09",
+     "nota": null,
+     "src": "06/09 quantitativo"
+    },
+    "p_l": {
+     "v": "~9,5 (LPA ~3,7) / ~16 (LPA 2,2 normalizado)",
+     "un": "x",
+     "per": "06/09",
+     "nota": null,
+     "src": "06/09 quantitativo"
+    },
+    "p_vp": {
+     "v": 2.0,
+     "un": "x",
+     "per": "06/09",
+     "nota": "VPA 17,3-18,1; book R$ 20,7 bi (R$ 17,3)",
+     "src": "06/09 quantitativo"
+    },
+    "ev_ebitda": {
+     "v": "3,51x (perímetro); 4,9x pico; 6,3-8,2x normalizado (EBITDA 7-9 bi)",
+     "un": "x",
+     "per": "06/09",
+     "nota": null,
+     "src": "06/09 quantitativo"
+    },
+    "dy": {
+     "v": "4,3 (HG, pago) / 7,3 (Renova, data-com) / 3,6 (XP, declarado 2026)",
+     "un": "%",
+     "per": "06/09",
+     "nota": "03/10: yield fwd ~3,2% (2026: R$ 1,22 pago em 2027)",
+     "src": "06/09 proventos | 03/10 §5"
+    }
+   },
+   "endividamento": {
+    "divida_liquida": {
+     "v": 15.1,
+     "un": "R$ bi",
+     "per": "2T26",
+     "nota": null,
+     "src": "06/09 quantitativo"
+    },
+    "divida_bruta": null,
+    "caixa": null,
+    "dl_ebitda": {
+     "v": "1,3x (era 2,0x); ~2,2x sobre EBITDA normalizado",
+     "un": "x",
+     "per": "2T26",
+     "nota": "03/10: 'FCF forte e alavancagem 1,3x'",
+     "src": "06/09 quantitativo | 03/10 §7"
+    },
+    "parcela_em_usd": null,
+    "custo_prazo": null
+   },
+   "resultados": {
+    "receita": null,
+    "ebitda": {
+     "v": 4.5,
+     "un": "R$ bi (EBITDA aj.)",
+     "per": "2T26",
+     "nota": "+206% (rec. R$ 4,35 bi); margem de distribuição R$ 436-456/m3 (+300% a/a) - XP: 'dificilmente se repete' [colunas quebradas na extração; reconstruído pela ordem]",
+     "src": "06/09 quantitativo"
+    },
+    "lucro_contabil": {
+     "v": 2.35,
+     "un": "R$ bi",
+     "per": "2T26",
+     "nota": "+705%",
+     "src": "06/09 quantitativo [colunas quebradas na extração; reconstruído pela ordem]"
+    },
+    "lucro_ajustado": {
+     "v": 2.29,
+     "un": "R$ bi",
+     "per": "2T26",
+     "nota": "+365%",
+     "src": "06/09 quantitativo [colunas quebradas na extração; reconstruído pela ordem]"
+    },
+    "volume": {
+     "v": 9.05,
+     "un": "mi m3",
+     "per": "2T26",
+     "nota": "+4%; 230 novos postos (recorde)",
+     "src": "06/09 quantitativo [colunas quebradas na extração; reconstruído pela ordem]"
+    },
+    "fcf": {
+     "v": 3.7,
+     "un": "R$ bi",
+     "per": "2T26",
+     "nota": "R$ 3,65-3,7 bi (+565%); FCFE rec. R$ 2,8 bi; 03/10: FCF 2T26 R$ 3,7 bi",
+     "src": "06/09 quantitativo | 03/10 §4"
+    },
+    "comerc": {
+     "v": "EBITDA R$ 188-228 mi (-16%; curtailment); lucro ajustado -R$ 109 mi",
+     "un": null,
+     "per": "2T26",
+     "nota": null,
+     "src": "06/09 quantitativo [colunas quebradas na extração; reconstruído pela ordem]"
+    },
+    "roic": {
+     "v": "9,8% (HG); normalizado ~8%; 2T26 anualizado ~25%",
+     "un": "%",
+     "per": "06/09",
+     "nota": null,
+     "src": "06/09 quantitativo"
+    },
+    "roe": {
+     "v": 13.8,
+     "un": "% (12m)",
+     "per": "06/09",
+     "nota": null,
+     "src": "06/09 quantitativo"
+    },
+    "margens": null
+   },
+   "capex": {
+    "total": null,
+    "manutencao_vs_crescimento": null,
+    "guidance": null
+   },
+   "premissas_de_ciclo_declaradas_no_pdf": {
+    "margem_distribuicao_2T26": {
+     "v": "436-456",
+     "un": "R$/m3",
+     "per": "2T26",
+     "nota": "03/10 cita R$ 456/m3 (2T); BTG: sem sinal claro de normalização no 3T26; média 2022-24: 150-180/m3",
+     "src": "03/10 §1 - euqueroinvestir.com | 06/09 quantitativo e B&H"
+    },
+    "margem_normalizada": {
+     "v": "170-220",
+     "un": "R$/m3",
+     "per": "premissa",
+     "nota": "36 mi m3 x R$ 170-220 = R$ 6,1-7,9 bi + Comerc 0,9 = EBITDA R$ 7-9 bi; lucro 2,6-3,5 bi",
+     "src": "06/09 quantitativo"
+    },
+    "brent_spot": {
+     "v": "~99-102",
+     "un": "US$/bbl",
+     "per": "02/10",
+     "nota": null,
+     "src": "03/10 premissas comuns"
+    },
+    "cambio": null,
+    "crack_spread": null,
+    "lifting_cost": null,
+    "break_even": null,
+    "producao_boe_d": null,
+    "reservas_1P_2P": null,
+    "vida_util_reservas": null
+   },
+   "operacional_setor": {
+    "oferta_global": {
+     "v": "Oferta global ainda não normalizada",
+     "un": null,
+     "per": "03/10",
+     "nota": "gatilho de margem <= R$ 300/m3 por 4 tri com oferta normalizada invalidaria a tese de CARA",
+     "src": "03/10 §2"
+    },
+    "comunicados_02_10": {
+     "v": "Mudança de auditor; encerramento de oferta (debêntures) - teor da mudança de auditor NÃO lido (HIPÓTESE neutra: rotação obrigatória)",
+     "un": null,
+     "per": "02/10/2026",
+     "nota": null,
+     "src": "03/10 §1 e autocrítica"
+    },
+    "comerc": {
+     "v": "Perde dinheiro: lucro ajustado -R$ 109 mi no 2T26; 'Comerc negativa' e destrói valor",
+     "un": null,
+     "per": "06/09 e 03/10",
+     "nota": null,
+     "src": "06/09 quantitativo/qualitativo | 03/10 §7"
+    }
+   },
+   "proventos": {
+    "politica": {
+     "v": "JCP declarado em 2026 e pago só em 2027: mar/26 -> 15/09/2027 (18 meses); jun/26 -> out/27; set/26 -> 16/11/2027 (14 meses); sem correção",
+     "un": null,
+     "per": "03/10",
+     "nota": "'custo real ~6% do valor a IPCA 4%'; 'o diferimento financia a empresa com o caixa do acionista'",
+     "src": "03/10 §1 e §4 | 06/09 proventos"
+    },
+    "jcp_set26": {
+     "v": 0.417,
+     "un": "R$/ação",
+     "per": "set/2026",
+     "nota": "data-com 21/09; pagto 16/11/2027 (14 meses); ficha 07/09: R$ 0,42 (datas n.e.)",
+     "src": "03/10 §1 - portalradarenergia.com.br; financenews.com.br"
+    },
+    "jcp_mar26": {
+     "v": 0.33,
+     "un": "R$/ação",
+     "per": "mar/2026",
+     "nota": "pagto 15/09/2027 (18 meses); cnnbrasil.com.br (24/03)",
+     "src": "03/10 §1"
+    },
+    "jcp_jun26": {
+     "v": 0.47,
+     "un": "R$/ação",
+     "per": "jun/2026",
+     "nota": "pagto out/27",
+     "src": "06/09 proventos | 03/10 §4"
+    },
+    "total_2026_declarado": {
+     "v": 1.22,
+     "un": "R$/ação",
+     "per": "2026",
+     "nota": "0,33 (mar) + 0,47 (jun) + 0,417 (set); tudo pago em 2027",
+     "src": "03/10 §4"
+    },
+    "jcp_nov25": {
+     "v": "R$ 850 mi",
+     "un": "R$",
+     "per": "nov/2025",
+     "nota": "pagto 16/12/2026; junto bonificação de 7,11%",
+     "src": "03/10 §1"
+    },
+    "serie_dpa": {
+     "v": "2019 0,47 | 2020 0,94 | 2021 2,04 | 2022 0,86 | 2023 0,83 | 2024 1,57 | 2025 1,58 | 2026 YTD 1,22 (0,33 mar + 0,47 jun + 0,42 set)",
+     "un": "R$/ação",
+     "per": "06/09",
+     "nota": "média 5a 1,38 (ex-2021: 1,21); série anterior a nov/25 precisa ajuste da bonificação 7,11%",
+     "src": "06/09 proventos"
+    },
+    "payout": {
+     "v": 95,
+     "un": "% (2025)",
+     "per": "06/09",
+     "nota": null,
+     "src": "06/09 proventos"
+    },
+    "cobertura_caixa": {
+     "v": "Sim, declarado hoje (FCF 2T26 R$ 3,7 bi) - mas diferido",
+     "un": null,
+     "per": "03/10",
+     "nota": null,
+     "src": "03/10 §4"
+    }
+   },
+   "multiplos_retornos_pares": {
+    "yield_fwd": {
+     "v": "~3,2% (2026: R$ 1,22, pago em 2027)",
+     "un": null,
+     "per": "03/10",
+     "nota": "g 3%; nominal 6,3%; real 2,2%; vs IPCA+ 7,08%: -4,9 p.p.; Vence RF? Não; 'pior desenho de renda do lote'. 06/09: 3,5-4,3% (-4,4 p.p. vs 7,35%)",
+     "src": "03/10 §5 | 06/09 comparativo RF"
+    },
+    "graham": {
+     "v": "R$ 38 (pico) / R$ 29 (LPA normalizado 2,2); 3/7",
+     "un": null,
+     "per": "06/09",
+     "nota": null,
+     "src": "06/09 valuation"
+    },
+    "epv": {
+     "v": "R$ 11 / 16 (WACC 12,9% / 10,5%) - EPV < book",
+     "un": null,
+     "per": "06/09",
+     "nota": null,
+     "src": "06/09 valuation"
+    },
+    "bazin": {
+     "v": "R$ 23 (5a) / R$ 20 (ex-2021) / R$ 20 (2026 declarado)",
+     "un": null,
+     "per": "06/09",
+     "nota": null,
+     "src": "06/09 valuation"
+    },
+    "ev_ebitda_norm": {
+     "v": "6x x R$ 7 bi - 15 = R$ 22,7; 6x x 9 - 15 = R$ 32,8",
+     "un": null,
+     "per": "06/09",
+     "nota": null,
+     "src": "06/09 valuation"
+    },
+    "dcf": {
+     "v": "pess. (150/m3, Comerc negativa) 12/19/15; base (pico -> 3 bi em 2028) 21/31/26; otim. (250/m3 novo normal) 32/48/40",
+     "un": "R$/ação",
+     "per": "06/09",
+     "nota": null,
+     "src": "06/09 valuation"
+    },
+    "pares": {
+     "v": "BB-BI cauteloso (sustentabilidade das margens); XP: excepcional/margens não se repetem; Safra positivo",
+     "un": null,
+     "per": "06/09",
+     "nota": null,
+     "src": "06/09 referências"
+    },
+    "teste_R1_retido": {
+     "v": "Inconclusivo/fraco: Comerc gera lucro negativo; ação só recuperou 2021 após +97%",
+     "un": null,
+     "per": "2021-25",
+     "nota": null,
+     "src": "06/09 valuation"
+    }
+   },
+   "governanca_riscos": {
+    "interferencia_estatal": {
+     "v": "ANP; subvenção à gasolina; CBIO; licença da marca Petrobras (termos não encontrados)",
+     "un": null,
+     "per": "06/09",
+     "nota": null,
+     "src": "06/09 qualitativo"
+    },
+    "vibra": {
+     "v": "Maior rede; embandeiramentos recorde; Comerc destrói valor; JCP diferido 14-18 meses; mudança de auditor (02/10)",
+     "un": null,
+     "per": "03/10",
+     "nota": null,
+     "src": "03/10 §1 e §7 | 06/09 qualitativo"
+    },
+    "riscos": {
+     "v": "Prêmio de 30%; JCP com 14-18 meses de atraso; Comerc negativa",
+     "un": null,
+     "per": "03/10",
+     "nota": "'Fora do hall (redundante com UGPA3)'; quem tem: acima da saída (R$ 32)",
+     "src": "03/10 §7"
+    },
+    "buy_and_hold": {
+     "v": "Não",
+     "un": null,
+     "per": "06/09",
+     "nota": "moat Parcial; ROIC>Ke Não (~8% vs 12,9%); balanço Parcial; dono Não; lucro previsível Não; sem diluição Sim; preço com margem Não (+25%)",
+     "src": "06/09 B&H"
+    }
+   },
+   "gatilhos_da_ficha": [
+    {
+     "gatilho": "(invalida CARA) margem <= R$ 300/m3 por 4 tri com oferta normalizada",
+     "status": "Não acionado",
+     "evidencia": "Oferta global ainda não normalizada",
+     "src": "03/10 §2 [colunas quebradas na extração; reconstruído pela ordem]"
+    },
+    {
+     "gatilho": "Comerc com lucro ajustado positivo por 2 tri",
+     "status": "Não verificável",
+     "evidencia": "Sem DRE nova",
+     "src": "03/10 §2 [colunas quebradas na extração; reconstruído pela ordem]"
+    }
+   ],
+   "eventos_com_data": [
+    {
+     "data": "15/09/2027",
+     "evento": "Pagamento do JCP de mar/26 (18 meses)",
+     "src": "03/10 §1"
+    },
+    {
+     "data": "16/11/2027",
+     "evento": "Pagamento do JCP set/26 (R$ 0,417; data-com 21/09)",
+     "src": "03/10 §1"
+    },
+    {
+     "data": "16/12/2026",
+     "evento": "Pagamento do JCP nov/25 (R$ 850 mi) junto da bonificação de 7,11%",
+     "src": "03/10 §1"
+    },
+    {
+     "data": "nov/2026",
+     "evento": "Resultados 3T26 (data não encontrada)",
+     "src": "03/10 eventos com data"
+    }
+   ],
+   "premissas_pdf_valuation": {
+    "ke_usado": {
+     "v": 12.08,
+     "un": "% real",
+     "per": "03/10",
+     "nota": "autocrítica: ao Ke de mercado o central iria a ~R$ 33 - ainda CARA; 06/09: 12,35% (DCF base R$ 31)",
+     "src": "03/10 autocrítica"
+    },
+    "preco_justo": {
+     "v": 29.0,
+     "un": "R$",
+     "per": "03/10",
+     "nota": "06/09: R$ 28,00; +R$ 1 'só pelo Ke'",
+     "src": "03/10 quadro-resumo e ficha"
+    },
+    "preco_compra_menos_30": {
+     "v": 20.3,
+     "un": "R$",
+     "per": "03/10",
+     "nota": "06/09: R$ 19,60",
+     "src": "03/10 quadro-resumo"
+    },
+    "preco_saida": {
+     "v": 32.0,
+     "un": "R$",
+     "per": "03/10",
+     "nota": "06/09: 'agora (> 32)'; preço 37,66 ultrapassou",
+     "src": "03/10 quadro-resumo | 06/09 ficha"
+    },
+    "premio_desconto": {
+     "v": 30,
+     "un": "% (prêmio)",
+     "per": "03/10",
+     "nota": "06/09: +25%",
+     "src": "03/10 quadro-resumo"
+    },
+    "faixa": {
+     "v": "R$ 12-48",
+     "un": null,
+     "per": "03/10",
+     "nota": "06/09: R$ 12-48",
+     "src": "03/10 §3 | 06/09 ficha"
+    },
+    "cenarios": {
+     "v": "DCF base (pico -> 3 bi em 2028) R$ 32 (era 31 a Ke 12,35%) | EV/EBITDA 6x normalizado R$ 22,7-32,8 (inalterado) | EPV (WACC 12,9%) R$ 11-16 (ROIC normalizado < WACC) | Central R$ 29 (era 28), faixa R$ 12-48",
+     "un": "R$/ação",
+     "per": "03/10",
+     "nota": "Sem pesos explícitos [colunas quebradas na extração; reconstruído pela ordem]",
+     "src": "03/10 §3"
+    },
+    "metodo_ancora": {
+     "v": "DCF base + EV/EBITDA normalizado 6x; margem 170-220/m3",
+     "un": null,
+     "per": "03/10",
+     "nota": null,
+     "src": "03/10 §3 | 06/09 quantitativo"
+    },
+    "veredito": {
+     "v": "CARA (mantida)",
+     "un": null,
+     "per": "03/10",
+     "nota": "Fora do hall (redundante com UGPA3)",
+     "src": "03/10 quadro-resumo e §7"
+    },
+    "nota_Q_S_R_P_geral": {
+     "v": "Qualidade 5 -> 5; Solidez 6 -> 6; Renda 3 -> 3; Preço 2 -> 1; Geral 4,1 -> 3,9",
+     "un": "0-10",
+     "per": "03/10",
+     "nota": "Reconstruído ('55 66 33 21'); confere: 1,75 + 1,2 + 0,75 + 0,2 = 3,9",
+     "src": "03/10 §6 [colunas quebradas na extração; reconstruído pela ordem]"
+    },
+    "o_que_mudaria": {
+     "v": "Preço < R$ 26 = JUSTA; margem 2027 > R$ 250/m3 sustentada = central ~R$ 34",
+     "un": null,
+     "per": "03/10",
+     "nota": "06/09: preço < R$ 24 (P/VP 1,4) = RADAR; venda/cisão da Comerc",
+     "src": "03/10 §7 | 06/09 mudaria"
+    }
+   },
+   "nao_encontrado": [
+    "controlador (n/a - corporação); nº de ações; tag along",
+    "valor de mercado",
+    "dívida bruta, caixa, % USD, custo/prazo",
+    "receita",
+    "margens (%)",
+    "capex",
+    "teor da mudança de auditor",
+    "release 2T26 do RI",
+    "data do 3T26",
+    "lucro 1T26 e 12m ajustado exato",
+    "margem histórica por m3 em R$",
+    "valor pago pela Comerc",
+    "termos da licença da marca Petrobras",
+    "múltiplos UGPA3/RAIZ4",
+    "câmbio"
+   ],
+   "lacunas_importantes": "Sem DRE nova; sem margem do 3T26; sem teor do comunicado de mudança de auditor; série de DPA anterior a nov/25 não ajustada pela bonificação de 7,11% (não verificada). Valor de mercado/receita/capex ausentes."
+  }
+ },
+ "eventos_binarios_agenda_pdf_03_10": [
+  {
+   "data": "04/10/2026",
+   "evento": "Eleição - 1º turno",
+   "olhar": "PETR4 (pesos de cenário), todo o lote via prêmio de risco",
+   "src": "03/10 eventos com data"
+  },
+  {
+   "data": "25/10/2026",
+   "evento": "Eleição - 2º turno (se houver)",
+   "olhar": "idem",
+   "src": "03/10 eventos com data"
+  },
+  {
+   "data": "out/2026",
+   "evento": "Produção de setembro (PRIO3, RECV3)",
+   "olhar": "gatilhos de volume",
+   "src": "03/10 eventos com data"
+  },
+  {
+   "data": "mensal",
+   "evento": "Revisão da subvenção ao diesel (MP 1.391)",
+   "olhar": "PETR4 (realização), UGPA3/VBBR3 (vantagem de suprimento)",
+   "src": "03/10 eventos com data"
+  },
+  {
+   "data": "~07/11/2026",
+   "evento": "Fim da prorrogação do imposto de exportação de 12%",
+   "olhar": "PETR4, PRIO3, RECV3",
+   "src": "03/10 eventos com data"
+  },
+  {
+   "data": "nov/2026",
+   "evento": "Resultados 3T26 (datas não encontradas)",
+   "olhar": "todas - primeira margem pós-pico?",
+   "src": "03/10 eventos com data"
+  }
+ ],
+ "erros_proprios_da_ficha_anterior_corrigidos_em_03_10": {
+  "quatro_erros_proprios_do_lote_anterior_razao_c": {
+   "1_cotacoes": "As 5 fichas de 06/09 usaram cotações de 31/07 a agosto - 'erro nº 4 repetido, declarado mas não corrigido'. PETR4 43,43 (31/07) -> 51,17 (+17,8%); PRIO3 60,00 -> 63,35 (+5,6%); RECV3 10,50 -> 11,20 (+6,7%); UGPA3 33,00 (01/08) -> 38,51 (+16,7%); VBBR3 35,00 (ago) -> 37,66 (+7,6%)",
+   "2_gatilho_paridade_PETR4": "Gatilho de paridade da PETR4 redigido quando já estava no limite (diesel abaixo do PPI desde mar/26, >2 tri); reescrito em 03/10 em termos de realização efetiva (com subvenção).",
+   "3_divida_liquida_PRIO3": "Dívida líquida da PRIO3 usada na ficha anterior (~US$ 3,6 bi) estava ~US$ 0,45 bi abaixo da XP (US$ 4,05 bi, 1,5x); 03/10 adota a XP (fonte mais conservadora).",
+   "4_nota_preco_PETR4": "Nota de preço 4 para a PETR4 com prêmio de 17% era incoerente com a régua (deveria ser 3). Nova escala declarada; nota de preço da PETR4 passa a 1 com prêmio de 31%."
+  },
+  "outros_ajustes_citados_no_03_10": {
+   "RECV3_DY": "DY de 12-15% dos agregadores (Renova, I10) conta parcelas que só caem até 2028 - descartado; usa ~6,1% em caixa",
+   "UGPA3_DY": "HG soma R$ 2,00 em 12m (5,19%) vs R$ 1,30 (3,9%) da ficha - base 'pago' vs 'declarado'",
+   "VBBR3_serie_DPA": "Série anterior a nov/25 precisa de ajuste pela bonificação de 7,11% (ajuste não verificado nos agregadores)",
+   "PETR4_gatilho_paridade": "'Acionado na letra' mas redação original mal calibrada"
+  },
+  "divergencias_entre_pdfs": {
+   "PETR4_justo": "06/09: R$ 37,00 (linha 'para o caderno' cita justo R$ 40, saída R$ 50, cheio a R$ 28) | 03/10: R$ 39,00; saída R$ 48 (06/09: ficha R$ 46)",
+   "PRIO3_divida_liquida": "06/09: ~US$ 3,6 bi | 03/10: US$ 4,05 bi (XP)",
+   "RECV3_preco_justo": "06/09: R$ 12,00 | 03/10: R$ 12,30",
+   "PETR4_defasagem": "03/10 dentro do próprio PDF: -53% ex-subsídio / -33% c/ subsídios (XP 17/09) vs 'realização efetiva -23% vs PPI'",
+   "PETR4_texto_9x": "03/10 afirma 'o preço andou 9x mais que o valor' (preço +17,8% vs justo +5,4% = ~3,3x, derivado): inconsistência numérica do PDF",
+   "RECV3_EV_EBITDA": "06/09: 2,9x (e '3,2x normalizado') vs '3,5x normalizado' na tabela de valuation"
+  },
+  "nota_metodo": "O PDF de 03/10 não lista erros adicionais além dos quatro acima. Os demais itens de 'outros_ajustes' e 'divergencias' são extraídos do texto ou da comparação entre os PDFs."
+ },
+ "fontes": {
+  "_nota": "PDF de 03/10 traz lista 'Fontes' ao final (p. 8) e uma coluna 'Fonte' por tabela; PDF de 06/09 só lista a categoria 'Espelhos de resultados' (Safra, XP, Genial, Nord, InfoMoney, Seu Dinheiro, Visno; HG Brasil / Renova / Dados de Mercado para séries). URLs reconstruídas de texto quebrado são marcadas.",
+  "premissas_comuns": {
+   "InfoMoney Tesouro 30/09": "infomoney.com.br/onde-investir/tesouro-direto-abertura-fechamento-30092026",
+   "Investidor10 notícias Tesouro 01-02/10": "investidor10.com.br/noticias",
+   "Brent 02/10": "advfn.com; euribor.com.es"
+  },
+  "cotacoes_02_10": {
+   "PETR4/PRIO3/RECV3/VBBR3": "investidor10.com.br/acoes/petr4 /prio3 /recv3 /vbbr3",
+   "UGPA3": "hgbrasil.com/finance/tickers/B3:UGPA3; dadosdemercado.com.br/acoes/ugpa3 e /recv3"
+  },
+  "PETR4": [
+   "seudinheiro.com (Petrobras supera R$ 700 bi, 03/10/2026)",
+   "conteudos.xpi.com.br (Petrobras aumenta realização do diesel, 17/09)",
+   "poder360.com.br (prorrogação do imposto de exportação, 27/08 e 03/09/2026)",
+   "agencia.petrobras.com.br (remuneração de R$ 17,4 bi, 06/08/2026)"
+  ],
+  "PRIO3": [
+   "conteudos.xpi.com.br (PRIO e Brava prévia set/26, 01/10; PRIO 2T26)",
+   "investidor10.com.br/noticias (ago)",
+   "poder360.com.br"
+  ],
+  "RECV3": [
+   "infomoney.com.br; moneytimes.com.br (produção de agosto, 09/09/2026)",
+   "renovainvest.com.br (JCP RECV3, 06/08)",
+   "dadosdemercado.com.br/acoes/recv3"
+  ],
+  "UGPA3": [
+   "hgbrasil.com",
+   "braziljournal.com; advfn (Chevron-Ipiranga, mar/2026)",
+   "finance.yahoo.com/quote/UGP (Scotiabank, 17/09)",
+   "euqueroinvestir.com (BTG: margens das distribuidoras 3T26)",
+   "conteudos.xpi.com.br (17/09)"
+  ],
+  "VBBR3": [
+   "portalradarenergia.com.br; financenews.com.br (JCP Vibra set/26)",
+   "cnnbrasil.com.br (JCP mar/26, 24/03)",
+   "conteudos.xpi.com.br (Vibra 2T26)",
+   "euqueroinvestir.com (BTG 3T26)"
+  ],
+  "PDF_06_09_fontes_declaradas": "Espelhos de resultados (Safra, XP, Genial, Nord, InfoMoney, Seu Dinheiro, Visno); HG Brasil / Renova / Dados de Mercado para séries; Tesouro IPCA+ 2050 7,28% (StatusInvest) / 7,42% (Investidor10), 7,35% usado"
+ }
+}

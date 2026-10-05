@@ -1,0 +1,2545 @@
+{
+ "meta": {
+  "lote": "Lote 4 - Saúde/Farmácia, Telecom e Blue Chips (HYPE3, FLRY3, TIMS3, VIVT3, ABEV3, WEGE3, ITSA4). Nenhum outro ticker analisado (apenas citados: ITUB4/ITUB3 como proxy da Itaúsa; CPFE3 e EGIE3 como comparação de controlador na TIMS3; Oi Móvel).",
+  "fonte_principal": "Saúde_Telecom_Bluechips_rev_03-10-2026.pdf (reavaliação mensal, data-base 03/10/2026, cotações de 02/10/2026, véspera do 1º turno) - PREVALECE",
+  "fonte_complementar": "Saúde_Telecom_Bluechips_rev_06-09-2026.pdf (data-base 05-06/09/2026; cotações de jul-ago; mais completo em histórico DPA, qualitativo e quantitativo 2T26)",
+  "legenda_src": "Campo src = '03/10' ou '06/09' + seção/ficha + fonte citada pelo PDF. Valores são fatos extraídos; sem opinião nem cálculo próprio salvo marcado 'Derivado'. Valores 'central/justo/compra/saída/notas' são VALORES DO PDF, não verificados. Setas e símbolos (->, >=, <=) foram perdidos pelo pdftotext; reconstruídos pelo contexto.",
+  "aviso_geral": "Nenhuma DRE nova em 03/10 (3T26 de 21/10 a 10/11); o 03/10 é reavaliação de preço, Ke e fatos de setembro. Central de 03/10 = central de 06/09 reescalado pelo Ke (12,35% -> 12,08% real; +2,3% a +3,8%) [EL], exceto ABEV3 (erro corrigido). O PDF 06/09 não traz lista de fontes. O PDF 03/10 NÃO traz lista de participações da Itaúsa com % e valores (só Itaú ~37% e Aegea 14%), nem custo da holding. Proposta Hypera/EMS NÃO aparece em nenhum PDF; Oi aparece só como Oi Móvel (TIMS3, teste do R$ 1 retido); incentivos fiscais da Ambev só como risco genérico (JCP/ICMS/IPI/IS).",
+  "regua_do_pdf_03_10": {
+   "titulo_ancora": {
+    "v": 7.08,
+    "un": "% real a.a.",
+    "per": "02/10/2026",
+    "nota": "Tesouro IPCA+ c/ juros semestrais 2060 (CSV Tesouro Transparente); 2050 = 7,06%; InfoMoney 2050 7,08% intradiário; em 30/09 o 2050 tocou 6,93%; era 7,34% em 04/09; ficha 06/09 usava 7,35% (IPCA+ 2050; StatusInvest 7,28% / Investidor10 7,42%)",
+    "src": "03/10 premissas comuns"
+   },
+   "ke_real": {
+    "v": 12.08,
+    "un": "% real",
+    "per": "03/10",
+    "nota": "7,08% + 5 p.p.; 06/09: 12,35%",
+    "src": "03/10 premissas comuns"
+   },
+   "ke_nominal": {
+    "v": 16.56,
+    "un": "%",
+    "per": "03/10",
+    "nota": "IPCA 4% (hipótese da casa); Focus 28/09: 2026 4,99% / 2027 4,31% / 2029 3,50%; 06/09: ~16,8%",
+    "src": "03/10 premissas comuns"
+   },
+   "regua_RF": {
+    "v": "Vence >= 10,08% real; Empate 7,08-10,08%; Não < 7,08% (título + 3 p.p.)",
+    "un": null,
+    "per": "03/10",
+    "nota": "06/09: 10,35% / 7,35%",
+    "src": "03/10 premissas comuns"
+   },
+   "macro": {
+    "v": "Selic 13,75% (corte de 0,25 p.p. em 16/09; era 14,25%; próximo Copom 3-4/11); Ibovespa 192.115 pts em 02/10 (+5,03% em setembro); 1º turno da eleição 04/10",
+    "un": null,
+    "per": "02/10/2026",
+    "nota": null,
+    "src": "03/10 premissas comuns"
+   },
+   "tributacao": {
+    "v": "IRRF sobre JCP 17,5% (LC 224/2025); IRRF 10% sobre dividendos acima de R$ 50 mil/mês por empresa (Lei 15.270/2025), ADIs no STF sem julgamento; fim do JCP: nenhum projeto novo em set-out/26; Imposto Seletivo sobre bebidas: sem alíquota, MP depois da eleição",
+    "un": null,
+    "per": "03/10",
+    "nota": null,
+    "src": "03/10 premissas comuns"
+   },
+   "metodo_recalculo": {
+    "v": "Valores centrais recalculados pela sensibilidade ao Ke: fator (Ke antigo - g)/(Ke novo - g) com g real por empresa; não houve DRE nova para refazer fluxos [EL]",
+    "un": null,
+    "per": "03/10",
+    "nota": null,
+    "src": "03/10 como ler as fichas"
+   },
+   "regua_veredito": {
+    "v": "desconto >= 30% BARATA; 10-30% RADAR; +-10% JUSTA; prêmio > 15% CARA (10-15%: JUSTA para CARA); ARMADILHA = barata só no múltiplo; ponderação nota: qualidade 35% / solidez 20% / renda 25% / preço 20%",
+    "un": null,
+    "per": null,
+    "nota": null,
+    "src": "03/10 e 06/09 como ler as fichas"
+   }
+  },
+  "quadro_resumo_03_10": {
+   "HYPE3": "JUSTA (era RADAR) | 25,16 | justo 24,70 | compra 17,30 | DY 4,3%/4,2% | RF Não (limite) | nota 5,6",
+   "FLRY3": "JUSTA (era RADAR) | 23,50 | 23,70 | 16,60 | 5,5%/5,3% | Empate | 6,5",
+   "TIMS3": "RADAR (mantido) | 18,55 | 22,50 | 15,75 | 7,9%/12,0-12,5% total (10% caixa) | Sim (marginal em caixa) | 7,6",
+   "VIVT3": "JUSTA -> RADAR (limite) | 30,14 | 33,80 | 23,65 | 4,3% rec. (8,5% c/ redução)/6,8% | Empate | 7,0",
+   "ABEV3": "JUSTA -> CARA (limite) | 15,84 | 13,75 | 9,60 | 5,3%/4,5% | Não | 6,6",
+   "WEGE3": "CARA (mantido) | 51,45 | 33,20 | 23,25 | 1,5% rec. (3,9% c/ extra) | Empate | 6,1",
+   "ITSA4": "JUSTA (mantido) | 14,67 | 15,45 | 10,80 | 7,7%/7,0-8,2% | Sim (limite) | 7,3"
+  }
+ },
+ "tickers": {
+  "HYPE3": {
+   "identificacao": {
+    "nome": {
+     "v": "Hypera Pharma",
+     "un": null,
+     "per": null,
+     "nota": null,
+     "src": "03/10 ficha HYPE3"
+    },
+    "segmento": {
+     "v": "Saúde/Farmácia - indústria farmacêutica de marca (OTC/similares/prescrição); preço regulado pela CMED; Novo Mercado",
+     "un": null,
+     "per": null,
+     "nota": null,
+     "src": "03/10 ficha HYPE3 perfil"
+    },
+    "controlador": {
+     "v": "João Alves de Queiroz Filho",
+     "un": null,
+     "per": null,
+     "nota": "participação exata do controlador: NÃO encontrada nos dois PDFs",
+     "src": "03/10 ficha HYPE3 perfil | 06/09 ficha HYPE3 'não encontrado'"
+    },
+    "numero_acoes": {
+     "v": 704,
+     "un": "mi de ações",
+     "per": "03/10",
+     "nota": "[EL] derivado: JCP R$ 185,2 mi / R$ 0,26304",
+     "src": "03/10 ficha HYPE3 §4"
+    }
+   },
+   "mercado": {
+    "preco": {
+     "v": 25.16,
+     "un": "R$",
+     "per": "02/10/2026",
+     "nota": "Yahoo e StatusInvest batem; Suno 24,69 (cache defasado)",
+     "src": "03/10 ficha HYPE3 cabeçalho"
+    },
+    "preco_04_09_real": {
+     "v": 23.16,
+     "un": "R$",
+     "per": "04/09/2026",
+     "nota": "fechamento real; a ficha 06/09 usava 20,10 (fechamento de 18/06 e 23/07)",
+     "src": "03/10 ficha HYPE3 §1"
+    },
+    "preco_ficha_anterior": {
+     "v": 20.1,
+     "un": "R$",
+     "per": "18/06 e 23/07",
+     "nota": "ficha 06/09 dizia 'recente' (mínima 52s)",
+     "src": "06/09 ficha HYPE3 cabeçalho"
+    },
+    "faixa_52s": {
+     "v": "R$ 19,88 (18/06) - 27,79 (05/12/25) Yahoo; StatusInvest 19,89-26,46",
+     "un": "R$",
+     "per": "03/10",
+     "nota": null,
+     "src": "03/10 ficha HYPE3 §4"
+    },
+    "p_l": {
+     "v": 10.1,
+     "un": "x",
+     "per": "03/10",
+     "nota": "LPA 12m R$ 2,48 (StatusInvest); ficha 06/09: 8,1 (LPA ~2,49) com preço errado; histórico 12-16",
+     "src": "03/10 ficha HYPE3 §4"
+    },
+    "p_vp": {
+     "v": 1.4,
+     "un": "x",
+     "per": "03/10",
+     "nota": "VPA 17,8 derivado da ficha; 06/09: 1,13 (intangível R$ 12 bi = ágios)",
+     "src": "03/10 ficha HYPE3 §4"
+    },
+    "ev_ebitda": {
+     "v": 8.5,
+     "un": "x",
+     "per": "03/10",
+     "nota": "EV ~R$ 23,6 bi (calc.); 06/09: 7,2x - só preço",
+     "src": "03/10 ficha HYPE3 §4"
+    },
+    "dy_12m": {
+     "v": 4.3,
+     "un": "%",
+     "per": "03/10",
+     "nota": "4 JCPs por data-com: R$ 1,08/25,16; nenhum pago em caixa; 06/09: 4,2% (SI) / 5,2-5,4% (HG)",
+     "src": "03/10 ficha HYPE3 §8"
+    },
+    "numero_graham": {
+     "v": 31.6,
+     "un": "R$",
+     "per": "03/10",
+     "nota": "sem DRE nova",
+     "src": "03/10 ficha HYPE3 §6"
+    }
+   },
+   "endividamento": {
+    "divida_liquida": {
+     "v": 5.9,
+     "un": "R$ bi",
+     "per": "2T26",
+     "nota": "bruta R$ 7,5 bi",
+     "src": "03/10 ficha HYPE3 §4"
+    },
+    "dl_ebitda": {
+     "v": 2.1,
+     "un": "x",
+     "per": "2T26",
+     "nota": "release 2T26; StatusInvest 2,28x; ~3x em 2024 (06/09)",
+     "src": "03/10 ficha HYPE3 §1/§4"
+    },
+    "gatilho_dl_ebitda": {
+     "v": 2.8,
+     "un": "x",
+     "per": null,
+     "nota": "gatilho de invalidação da tese",
+     "src": "03/10 ficha HYPE3 §2"
+    }
+   },
+   "resultados": {
+    "receita_2T26": {
+     "v": 2.34,
+     "un": "R$ bi",
+     "per": "2T26",
+     "nota": "+8,5%; sell-out +7,6% (+1,4 pp vs mercado)",
+     "src": "03/10 ficha HYPE3 §4"
+    },
+    "margem_bruta": {
+     "v": 61.8,
+     "un": "%",
+     "per": "2T26",
+     "nota": "+1,7 pp (06/09)",
+     "src": "03/10 ficha HYPE3 §4"
+    },
+    "ebitda_2T26": {
+     "v": 755,
+     "un": "R$ mi",
+     "per": "2T26",
+     "nota": "margem 32,3%; EBITDA 2T26 06/09 também cita lucro R$ 490 mi (+15%) / 837 mi 1S (+194% sobre base reestruturada 2025)",
+     "src": "03/10 ficha HYPE3 §4 | 06/09 ficha HYPE3 quantitativo"
+    },
+    "lpa_12m": {
+     "v": 2.48,
+     "un": "R$",
+     "per": "12m",
+     "nota": "StatusInvest",
+     "src": "03/10 ficha HYPE3 §4"
+    },
+    "roe": {
+     "v": "12-13%",
+     "un": "%",
+     "per": "03/10",
+     "nota": "sem DRE nova",
+     "src": "03/10 ficha HYPE3 §4"
+    },
+    "roic": {
+     "v": "11,6-12,4% c/ ágio; ex-ágio ~25-30% (06/09)",
+     "un": "%",
+     "per": "03/10",
+     "nota": null,
+     "src": "03/10 ficha HYPE3 §4 | 06/09 quantitativo"
+    },
+    "fcf_12m": {
+     "v": 1.4,
+     "un": "R$ bi",
+     "per": "12m",
+     "nota": "FCF 108% do EBITDA; caixa operacional R$ 819 mi no tri (06/09: FCF R$ 638 mi no tri)",
+     "src": "03/10 ficha HYPE3 §4"
+    },
+    "lpa_2025_vs_2016": {
+     "v": "LPA 2016 1,86 vs ~1,7 (2025): flat em 10 anos; teste do R$ 1 retido falha",
+     "un": null,
+     "per": null,
+     "nota": null,
+     "src": "06/09 ficha HYPE3 quantitativo"
+    },
+    "piotroski": {
+     "v": "9/9",
+     "un": null,
+     "per": null,
+     "nota": null,
+     "src": "03/10 ficha HYPE3 §4"
+    }
+   },
+   "proventos": {
+    "jcp_ultimo": {
+     "v": 0.26304,
+     "un": "R$/ação (R$ 185,2 mi)",
+     "per": "aprovado 23/09/2026",
+     "nota": "data-com 28/09, ex 29/09; pagamento até 31/12/2027 sem correção monetária",
+     "src": "03/10 ficha HYPE3 §1/§8 - InfoMoney 'aprova R$ 185,2 mi'"
+    },
+    "defasagem_pagamento": {
+     "v": "15-21 meses (data-com 31/03, 26/06 e 28/09/2026 -> até 31/12/2027)",
+     "un": null,
+     "per": null,
+     "nota": "ficha 06/09 dizia 12-18 meses; 'a 13,75% de Selic, 18 meses de espera custam 20% do valor do JCP'",
+     "src": "03/10 ficha HYPE3 §1/§8"
+    },
+    "jcp_2025": {
+     "v": "4 x R$ 0,2925 com pagamento 'até o fim de 2026', sem data fixada",
+     "un": null,
+     "per": null,
+     "nota": null,
+     "src": "03/10 ficha HYPE3 §2/§8"
+    },
+    "dy_forward": {
+     "v": 4.2,
+     "un": "%",
+     "per": null,
+     "nota": "4 x R$ 0,263",
+     "src": "03/10 ficha HYPE3 §5/§8"
+    },
+    "payout": {
+     "v": 40,
+     "un": "%",
+     "per": "2026e",
+     "nota": "2025 ~69% (06/09); FCF R$ 1,4 bi vs R$ 0,74 bi/ano de JCP",
+     "src": "03/10 ficha HYPE3 §8 | 06/09 proventos"
+    },
+    "serie_dpa_06_09": {
+     "v": "2016-25: 0,50 / 1,57 / 0,61 / 0,56 / 1,17 / 1,23 / 1,23 / 1,23 / 1,17 / 1,17; 2026 YTD 0,53 (2 x 0,263)",
+     "un": "R$/ação",
+     "per": null,
+     "nota": "yield médio 10a 3,5%, 5a 4,4%, mínimo 1,6% (2019)",
+     "src": "06/09 ficha HYPE3 proventos"
+    },
+    "recompras": {
+     "v": "não encontrado",
+     "un": null,
+     "per": null,
+     "nota": null,
+     "src": "03/10 ficha HYPE3 §10 'Não encontrado'"
+    }
+   },
+   "eventos": {
+    "semavy": {
+     "v": "Lançado 04/09 (caneta 1 mg R$ 333, preço congelado); Anvisa proibiu a propaganda em 28/09; vendas: não encontrado; fora do central (+R$ 0,6/ação [H] XP: R$ 400 mi receita e R$ 60 mi EBITDA em 2027)",
+     "un": null,
+     "per": "04/09-28/09/2026",
+     "nota": null,
+     "src": "03/10 ficha HYPE3 §1/§3 - Exame; Seu Dinheiro"
+    },
+    "cmed_2026": {
+     "v": "Reajuste 3,81% / 2,47% / 1,13% (média 2,47%, menor em 20 anos) desde 01/04; Fator Y negativo para 2027",
+     "un": null,
+     "per": "2026",
+     "nota": "a ficha 06/09 não registrou (erro admitido)",
+     "src": "03/10 ficha HYPE3 §2/§7 - Agência Brasil"
+    },
+    "sell_side": {
+     "v": "Itaú BBA outperform R$ 33 (fim 27); BBI R$ 30; BB-BI R$ 30; XP R$ 27; Citi/BTG neutro R$ 26 (abr)",
+     "un": "R$",
+     "per": "set/2026",
+     "nota": null,
+     "src": "03/10 ficha HYPE3 §1/§6 - Money Times"
+    },
+    "ma_hypera_ems_proposta": {
+     "v": "NÃO consta em nenhum dos dois PDFs (só 'aquisições sem LPA' e 'Astellas' em 06/09 Fisher)",
+     "un": null,
+     "per": null,
+     "nota": null,
+     "src": "ausência"
+    },
+    "astellas": {
+     "v": "citada apenas como lançamento/M&A no Fisher",
+     "un": null,
+     "per": null,
+     "nota": null,
+     "src": "06/09 ficha HYPE3 qualitativo"
+    }
+   },
+   "valuation_do_pdf": {
+    "central_03_10": {
+     "v": 24.7,
+     "un": "R$",
+     "per": "03/10",
+     "nota": "era 24,00; +R$ 0,70 = 100% Ke; veredito JUSTA (era RADAR); compra -30% R$ 17,30; saída R$ 30,90; faixa 12,4-35; aceitável <= R$ 21; VALOR DO PDF, não verificado",
+     "src": "03/10 ficha HYPE3 topo/§3"
+    },
+    "central_06_09": {
+     "v": 24.0,
+     "un": "R$",
+     "per": "05/09",
+     "nota": "RADAR a R$ 20,10 (-16%); compra R$ 16,80; saída R$ 30; nota 6,3",
+     "src": "06/09 ficha HYPE3 topo"
+    },
+    "dcf_fcfe": {
+     "v": "pess. 9,2/13,4/11 | base 16,9/26,2/21 | otim. 22,0/35,5/27 (Ke 16,56% / 12,08% / 14%)",
+     "un": "R$",
+     "per": "03/10",
+     "nota": "g real 3%",
+     "src": "03/10 ficha HYPE3 §3/§6"
+    },
+    "epv": {
+     "v": "10,7 / 15,9 (WACC 14,2% / 11,1%)",
+     "un": "R$",
+     "per": null,
+     "nota": null,
+     "src": "03/10 ficha HYPE3 §6"
+    },
+    "bazin": {
+     "v": "5a/10a/fwd: 20,1 / 17,4 / 17,5",
+     "un": "R$",
+     "per": null,
+     "nota": null,
+     "src": "03/10 ficha HYPE3 §6"
+    },
+    "p_l_historico": {
+     "v": "11-13x x LPA normalizado 2,6 = R$ 28-34",
+     "un": null,
+     "per": null,
+     "nota": null,
+     "src": "03/10 ficha HYPE3 §6"
+    },
+    "retorno_real_esperado": {
+     "v": "6,0-7,9% (g 6-8%); vence RF? Não (limite) - era Empate",
+     "un": "% real",
+     "per": "03/10",
+     "nota": "yield 4,2% pago 15-21m depois",
+     "src": "03/10 ficha HYPE3 §5"
+    },
+    "notas": {
+     "v": "qualidade 7,0 | solidez 6,0 | renda 4,5 | preço 4,0 | geral 5,6 (era 6,3)",
+     "un": null,
+     "per": "03/10",
+     "nota": null,
+     "src": "03/10 ficha HYPE3"
+    }
+   },
+   "gatilhos_e_agenda": {
+    "gatilhos": {
+     "v": "sell-out abaixo do mercado 2 tri; prazo de recebimento > 75 dias; DL/EBITDA > 2,8x; suspensão/novo adiamento de JCP; CMED < 3% com custos > 6%",
+     "un": null,
+     "per": null,
+     "nota": null,
+     "src": "03/10 ficha HYPE3 §2/§10"
+    },
+    "mudaria_opiniao": {
+     "v": "preço <= R$ 21 -> RADAR; Semavy > R$ 200 mi/ano com margem -> central 25-26 (a ficha dizia 28: efeito em EBITDA é ~2%) [H]; JCP pago no ano da declaração -> renda +1 ponto",
+     "un": null,
+     "per": null,
+     "nota": null,
+     "src": "03/10 ficha HYPE3 §10"
+    },
+    "eventos_datas": {
+     "v": "27/10 ITR 3T26 (1º dado de Semavy; teleconferência 28/10); 31/12/2026 prazo JCP 2025; 31/12/2027 prazo JCP 2026",
+     "un": null,
+     "per": null,
+     "nota": null,
+     "src": "03/10 ficha HYPE3 §4/§10"
+    },
+    "nao_encontrado": {
+     "v": "vendas do Semavy; data de pagamento do JCP 2025; recompras; participação do controlador; vencimentos/covenants; release 2T26 completo",
+     "un": null,
+     "per": null,
+     "nota": null,
+     "src": "03/10 ficha HYPE3 §10"
+    }
+   }
+  },
+  "FLRY3": {
+   "identificacao": {
+    "nome": {
+     "v": "Grupo Fleury",
+     "un": null,
+     "per": null,
+     "nota": null,
+     "src": "03/10 ficha FLRY3"
+    },
+    "segmento": {
+     "v": "Saúde - medicina diagnóstica; Novo Mercado",
+     "un": null,
+     "per": null,
+     "nota": null,
+     "src": "03/10 ficha FLRY3 perfil"
+    },
+    "controlador": {
+     "v": "Controle compartilhado: Bradesco (Bradseg) + Core Participações (médicos)",
+     "un": null,
+     "per": null,
+     "nota": "percentuais e composição exata: NÃO encontrados ('composição exata do controle' em 06/09 não encontrado); Bradesco é controlador e maior pagador (conflito)",
+     "src": "03/10 ficha FLRY3 perfil/§9"
+    },
+    "numero_acoes": {
+     "v": 543,
+     "un": "mi de ações",
+     "per": "03/10",
+     "nota": "[EL] derivado: JCP R$ 217,8 mi / R$ 0,40073; valor de mercado R$ 12,86 bi",
+     "src": "03/10 ficha FLRY3 §4"
+    }
+   },
+   "mercado": {
+    "preco": {
+     "v": 23.5,
+     "un": "R$",
+     "per": "02/10/2026",
+     "nota": "Yahoo, StatusInvest e Dados de Mercado batem; máxima de 12 meses; alvo médio do consenso R$ 20,39",
+     "src": "03/10 ficha FLRY3 cabeçalho"
+    },
+    "preco_04_09_real": {
+     "v": 20.17,
+     "un": "R$",
+     "per": "04/09/2026",
+     "nota": "+16,5% até 02/10",
+     "src": "03/10 ficha FLRY3 §1"
+    },
+    "preco_ficha_anterior": {
+     "v": 19.14,
+     "un": "R$",
+     "per": "07/08/2026 intradiário",
+     "nota": "fechamento do dia 18,95; sem data na ficha",
+     "src": "06/09 ficha FLRY3 cabeçalho"
+    },
+    "faixa_52s": {
+     "v": "R$ 13,90 (09/12/25) - 23,95 (02/10/26) Yahoo",
+     "un": "R$",
+     "per": "03/10",
+     "nota": null,
+     "src": "03/10 ficha FLRY3 §4"
+    },
+    "p_l": {
+     "v": 18.2,
+     "un": "x",
+     "per": "03/10",
+     "nota": "LPA 12m 1,29; histórico 14-29; 06/09: ~15 (LPA 1,25)",
+     "src": "03/10 ficha FLRY3 §1/§4"
+    },
+    "p_vp": {
+     "v": 2.37,
+     "un": "x",
+     "per": "03/10",
+     "nota": "Dados de Mercado; 06/09: ~2,0 (intangível R$ 6 bi = ágio Pardini)",
+     "src": "03/10 ficha FLRY3 §4"
+    },
+    "valor_mercado": {
+     "v": 12.86,
+     "un": "R$ bi",
+     "per": "03/10",
+     "nota": null,
+     "src": "03/10 ficha FLRY3 §4"
+    },
+    "ev_ebitda": {
+     "v": 6.8,
+     "un": "x",
+     "per": "03/10",
+     "nota": "calc.; era 5,7x (6,6x c/ arrendamentos em 06/09)",
+     "src": "03/10 ficha FLRY3 §4"
+    },
+    "dy_12m": {
+     "v": 5.5,
+     "un": "%",
+     "per": "03/10",
+     "nota": "data-com 12m: 0,2349+0,4037+0,1303+0,1303+0,4007 = R$ 1,30; StatusInvest por pagamento 4,98%",
+     "src": "03/10 ficha FLRY3 §8"
+    },
+    "numero_graham": {
+     "v": 16.2,
+     "un": "R$",
+     "per": "03/10",
+     "nota": "preço 45% acima",
+     "src": "03/10 ficha FLRY3 §6"
+    }
+   },
+   "endividamento": {
+    "dl_ebitda": {
+     "v": 1.1,
+     "un": "x",
+     "per": "2T26",
+     "nota": "cia; covenant 3,0x; StatusInvest 1,25x; Dados de Mercado 1,5x c/ arrendamentos; 06/09: DL R$ 2,42 bi (2,0x c/ arrendamentos)",
+     "src": "03/10 ficha FLRY3 §1/§4 | 06/09 quantitativo"
+    },
+    "debentures_agosto": {
+     "v": 1.825,
+     "un": "R$ bi",
+     "per": "ago/2026",
+     "nota": "emissão de dívida (não de ações)",
+     "src": "03/10 ficha FLRY3 §1"
+    }
+   },
+   "resultados": {
+    "receita_2T26": {
+     "v": 2.32,
+     "un": "R$ bi",
+     "per": "2T26",
+     "nota": "+14,4%; orgânica 12%; marca Fleury +12% (share)",
+     "src": "03/10 ficha FLRY3 §4 | 06/09 quantitativo"
+    },
+    "ebitda_2T26": {
+     "v": 612.9,
+     "un": "R$ mi",
+     "per": "2T26",
+     "nota": "margem 26,5% (+18 bps); +15,2% (06/09)",
+     "src": "03/10 ficha FLRY3 §4"
+    },
+    "lucro_2T26": {
+     "v": 221.9,
+     "un": "R$ mi",
+     "per": "2T26",
+     "nota": "+45,7% (consenso 172); ajudado por D&A e alíquota 22%",
+     "src": "03/10 ficha FLRY3 §4 | 06/09"
+    },
+    "lpa_12m": {
+     "v": 1.29,
+     "un": "R$",
+     "per": "12m",
+     "nota": "StatusInvest e Dados de Mercado",
+     "src": "03/10 ficha FLRY3 §4"
+    },
+    "roe": {
+     "v": 12.6,
+     "un": "%",
+     "per": "03/10",
+     "nota": null,
+     "src": "03/10 ficha FLRY3 §4"
+    },
+    "roic": {
+     "v": 9.3,
+     "un": "%",
+     "per": "03/10",
+     "nota": "c/ ágio vs WACC 14,6%; ágio R$ 6 bi",
+     "src": "03/10 ficha FLRY3 §4/§9"
+    },
+    "cfo_fcf": {
+     "v": "CFO R$ 696 mi / FCF R$ 430 mi no tri; FCF R$ 1,2-1,4 bi 12m",
+     "un": "R$",
+     "per": "2T26",
+     "nota": null,
+     "src": "03/10 ficha FLRY3 §4"
+    },
+    "crescimento_historico": {
+     "v": "~7% (XP) vs 12% no 1S26; 2S26 com base difícil",
+     "un": null,
+     "per": null,
+     "nota": null,
+     "src": "06/09 ficha FLRY3 quantitativo"
+    },
+    "piotroski": {
+     "v": "9/9",
+     "un": null,
+     "per": null,
+     "nota": null,
+     "src": "03/10 ficha FLRY3 §4"
+    }
+   },
+   "proventos": {
+    "jcp_2t26": {
+     "v": 0.40073,
+     "un": "R$/ação (R$ 217,8 mi)",
+     "per": "data-com 11/08/2026",
+     "nota": "antecipado para 28/09 (era 02/10); imputado ao mínimo de 2026",
+     "src": "03/10 ficha FLRY3 §1/§8 - Money Times"
+    },
+    "dividendo_dez25": {
+     "v": "2ª parcela R$ 0,13027 paga 02/09/2026; 3ª parcela R$ 0,13027 em 02/09/2027",
+     "un": "R$/ação",
+     "per": null,
+     "nota": "06/09: dez/25 parcelado em mai/26, set/26 e set/27; DPA 2025 total 1,55*",
+     "src": "03/10 ficha FLRY3 §1/§8 | 06/09 proventos"
+    },
+    "dy_forward": {
+     "v": 5.3,
+     "un": "%",
+     "per": null,
+     "nota": "DPA 1,24 (payout ~85-90%); 06/09: ~6,5%",
+     "src": "03/10 ficha FLRY3 §5/§8"
+    },
+    "payout": {
+     "v": "86-93% histórico; payout 90%",
+     "un": "%",
+     "per": null,
+     "nota": "[EF] desde o IPO (2009)",
+     "src": "03/10 ficha FLRY3 §8"
+    },
+    "serie_dpa_06_09": {
+     "v": "2021 0,72 | 2022 1,00 | 2023 0,43 | 2024 0,70 | 2025 1,55* | 2026 YTD 0,40; bonificação 5% em 2023; média 5a 0,88",
+     "un": "R$/ação",
+     "per": null,
+     "nota": null,
+     "src": "06/09 ficha FLRY3 proventos"
+    },
+    "irrf_jcp": {
+     "v": 17.5,
+     "un": "%",
+     "per": null,
+     "nota": "LC 224; Suno fala em 15% (desatualizada)",
+     "src": "03/10 ficha FLRY3 §8"
+    },
+    "recompra": {
+     "v": "nova: não encontrada",
+     "un": null,
+     "per": null,
+     "nota": null,
+     "src": "03/10 ficha FLRY3 §10"
+    }
+   },
+   "eventos": {
+    "unilab": {
+     "v": "Aquisição Unilab (Atibaia/SP): EV R$ 55 mi, 4,3x EBITDA (3,5x c/ sinergias), sem emissão de ações; aprovada 01-02/10; 0,5% do market cap",
+     "un": null,
+     "per": "01-02/10/2026",
+     "nota": "fato relevante no RI não encontrado",
+     "src": "03/10 ficha FLRY3 §1/§2 - Exame"
+    },
+    "pardini": {
+     "v": "Pardini (2023) via emissão: +70% de ações; ágio R$ 6 bi; Femme concluída 29/05 (06/09: 3T26); Confiance, LSL, Hemolab integradas",
+     "un": null,
+     "per": "2023",
+     "nota": null,
+     "src": "03/10 ficha FLRY3 §1/§6/§9 | 06/09 quantitativo"
+    },
+    "sell_side": {
+     "v": "Itaú BBA R$ 25; UBS R$ 23,30; MS R$ 23,20; GS R$ 20; XP R$ 18; JPM R$ 18 (venda); média R$ 20,39 (12 casas); 06/09: Safra R$ 21,50, XP neutra",
+     "un": "R$",
+     "per": null,
+     "nota": null,
+     "src": "03/10 ficha FLRY3 §1/§6"
+    }
+   },
+   "valuation_do_pdf": {
+    "central_03_10": {
+     "v": 23.7,
+     "un": "R$",
+     "per": "03/10",
+     "nota": "era 23,00; só Ke; JUSTA (era RADAR); compra R$ 16,60; saída R$ 29,90; faixa 12,4-36; aceitável <= R$ 20; VALOR DO PDF",
+     "src": "03/10 ficha FLRY3 topo/§3"
+    },
+    "central_06_09": {
+     "v": 23.0,
+     "un": "R$",
+     "per": "05/09",
+     "nota": "RADAR a R$ 19,14 (-17%); compra R$ 16,10; saída R$ 29; nota 7,0",
+     "src": "06/09 ficha FLRY3 topo"
+    },
+    "dcf_fcfe": {
+     "v": "pess. 12,3/18,6/15 | base 21,1/33,0/26 | otim. 26,7/44,4/33 (Ke 16,56%/12,08%/14%)",
+     "un": "R$",
+     "per": "03/10",
+     "nota": "g real 3,5%",
+     "src": "03/10 ficha FLRY3 §3/§6"
+    },
+    "epv": {
+     "v": "8,2 / 13 (WACC 14,6% / 10,6%)",
+     "un": "R$",
+     "per": null,
+     "nota": null,
+     "src": "03/10 ficha FLRY3 §6"
+    },
+    "bazin": {
+     "v": "5a/12m/fwd: 14,7 / 21,7 / 20,7",
+     "un": "R$",
+     "per": null,
+     "nota": null,
+     "src": "03/10 ficha FLRY3 §6"
+    },
+    "p_l_fwd": {
+     "v": "15x x LPA 2027e 1,6 = R$ 24",
+     "un": null,
+     "per": null,
+     "nota": null,
+     "src": "03/10 ficha FLRY3 §6"
+    },
+    "retorno_real_esperado": {
+     "v": "8,0-8,9% (g 7-8%); Empate (limite)",
+     "un": "% real",
+     "per": "03/10",
+     "nota": null,
+     "src": "03/10 ficha FLRY3 §5"
+    },
+    "notas": {
+     "v": "qualidade 7,5 | solidez 7,0 | renda 6,5 | preço 4,0 | geral 6,5 (era 7,0)",
+     "un": null,
+     "per": null,
+     "nota": null,
+     "src": "03/10 ficha FLRY3"
+    }
+   },
+   "gatilhos_e_agenda": {
+    "gatilhos": {
+     "v": "orgânico < 7% por 2 tri; margem EBITDA < 24%; DL/EBITDA > 2x por M&A; nova emissão p/ aquisição; payout < 50%",
+     "un": null,
+     "per": null,
+     "nota": null,
+     "src": "03/10 ficha FLRY3 §2/§10"
+    },
+    "eventos_datas": {
+     "v": "05/11 3T26 (Investing; não confirmado pela cia); 02/09/2027 3ª parcela do dividendo; fechamento da Unilab; sem JCP do 3T26 declarado até 03/10",
+     "un": null,
+     "per": null,
+     "nota": null,
+     "src": "03/10 ficha FLRY3 §2/§8/§10"
+    },
+    "nao_encontrado": {
+     "v": "fato relevante da Unilab; recompra nova; guidance; recomendação Safra 2026; lista de comunicados do RI",
+     "un": null,
+     "per": null,
+     "nota": null,
+     "src": "03/10 ficha FLRY3 §10"
+    }
+   }
+  },
+  "TIMS3": {
+   "identificacao": {
+    "nome": {
+     "v": "TIM Brasil",
+     "un": null,
+     "per": null,
+     "nota": null,
+     "src": "03/10 ficha TIMS3"
+    },
+    "segmento": {
+     "v": "Telecomunicações - móvel + fibra + B2B (oligopólio de 3); Novo Mercado",
+     "un": null,
+     "per": null,
+     "nota": null,
+     "src": "03/10 ficha TIMS3 perfil"
+    },
+    "controlador": {
+     "v": "TIM S.p.A./Telecom Italia",
+     "un": null,
+     "per": "03/10",
+     "nota": "~67%; controlada indiretamente pela Poste Italiane desde 18/09/2026 (OPA sobre a TI liquidada); 06/09: '~67%, sob Poste Italiane' / 'em reestruturação'",
+     "src": "03/10 ficha TIMS3 perfil/§1 | 06/09 perfil"
+    },
+    "tag_along": {
+     "v": "sem posição da cia/CVM; 'tag along pendente'; OPA a minoritários = evento binário positivo",
+     "un": null,
+     "per": null,
+     "nota": null,
+     "src": "03/10 ficha TIMS3 topo/§10"
+    },
+    "numero_acoes": {
+     "v": 2378925889,
+     "un": "ON",
+     "per": "17/09/2026",
+     "nota": "após cancelar 13,2 mi; grupamento 100:1 + desdobramento 1:100 em 07/2025 (neutro)",
+     "src": "03/10 ficha TIMS3 §1"
+    }
+   },
+   "mercado": {
+    "preco": {
+     "v": 18.55,
+     "un": "R$",
+     "per": "02/10/2026",
+     "nota": "Yahoo, Fundamentus, Dados de Mercado batem",
+     "src": "03/10 ficha TIMS3 cabeçalho"
+    },
+    "preco_04_09_real": {
+     "v": 18.99,
+     "un": "R$",
+     "per": "04/09/2026",
+     "nota": null,
+     "src": "03/10 ficha TIMS3 §1"
+    },
+    "preco_ficha_anterior": {
+     "v": 18.76,
+     "un": "R$",
+     "per": "07/08",
+     "nota": "'recente'; mínima 52s 18,70",
+     "src": "06/09 ficha TIMS3 cabeçalho"
+    },
+    "faixa_52s": {
+     "v": "R$ 17,85 - 28,74 (Yahoo); Fundamentus 17,77-27,78; fechamento mínimo 17,94 (18/08); -35% da máxima",
+     "un": "R$",
+     "per": "03/10",
+     "nota": null,
+     "src": "03/10 ficha TIMS3 §4/§7"
+    },
+    "p_l": {
+     "v": 12.4,
+     "un": "x",
+     "per": "03/10",
+     "nota": "LPA normalizado 1,50 da ficha; agregadores divergem de 0,01 a 0,83 (quebrados); [EL]",
+     "src": "03/10 ficha TIMS3 §4"
+    },
+    "p_vp": {
+     "v": 1.82,
+     "un": "x",
+     "per": "03/10",
+     "nota": "VPA 10,21",
+     "src": "03/10 ficha TIMS3 §4"
+    },
+    "ev_ebitda": {
+     "v": 4.2,
+     "un": "x",
+     "per": "03/10",
+     "nota": "c/ leases (4,0x ex-leases, 06/09)",
+     "src": "03/10 ficha TIMS3 §4"
+    },
+    "dy_12m": {
+     "v": 7.9,
+     "un": "%",
+     "per": "03/10",
+     "nota": "data-ex 12m: 0,749+0,176+0,163+0,168+0,217 = R$ 1,47; 06/09: 7,0-10,7% (fontes divergem)",
+     "src": "03/10 ficha TIMS3 §8"
+    },
+    "queda_pos_2T26": {
+     "v": "R$ 21,50 -> 20,25 (28/07, -5,2%)",
+     "un": null,
+     "per": "28/07/2026",
+     "nota": null,
+     "src": "03/10 ficha TIMS3 §4"
+    }
+   },
+   "endividamento": {
+    "divida_liquida": {
+     "v": 12.5,
+     "un": "R$ bi",
+     "per": "2T26",
+     "nota": "total c/ leases = 0,89x DL/EBITDA; ex-leases CAIXA LÍQUIDO R$ 1,1 bi",
+     "src": "03/10 ficha TIMS3 §4 | 06/09 quantitativo"
+    },
+    "dl_ebitda": {
+     "v": 0.89,
+     "un": "x",
+     "per": "2T26",
+     "nota": "gatilho > 1,3x",
+     "src": "03/10 ficha TIMS3 §2/§4"
+    }
+   },
+   "resultados": {
+    "receita_2T26": {
+     "v": 6.97,
+     "un": "R$ bi",
+     "per": "2T26",
+     "nota": "+5,5%; móvel +4,6% (ARPU R$ 34,3, +5%); fixo +27%; base móvel -108 mil no tri; pós-pago +247 mil (desacelerando)",
+     "src": "03/10 ficha TIMS3 §4 | 06/09 quantitativo"
+    },
+    "ebitda_norm": {
+     "v": 3.59,
+     "un": "R$ bi",
+     "per": "2T26",
+     "nota": "margem 51,5% (+70 bps); +7%; EBITDA-AL - capex R$ 1,87 bi (+8,7%)",
+     "src": "03/10 ficha TIMS3 §4 | 06/09"
+    },
+    "capex": {
+     "v": 13.4,
+     "un": "% da receita",
+     "per": "2T26",
+     "nota": "capex 3,7 bi vs D&A ~8 bi (0,45x); gatilho > 16%",
+     "src": "03/10 ficha TIMS3 §2 | 06/09 quantitativo"
+    },
+    "roe_roic": {
+     "v": "ROE 14-15% / ROIC 10-15% (sem DRE nova); ROIC ~10% c/ leases, ~15% ex-leases",
+     "un": "%",
+     "per": "03/10",
+     "nota": null,
+     "src": "03/10 ficha TIMS3 §4/§9"
+    },
+    "fcfe": {
+     "v": "BBI: yield 13% em 2026 (~R$ 6 bi); FCF operacional 12m ~R$ 7 bi (06/09)",
+     "un": null,
+     "per": "2026",
+     "nota": null,
+     "src": "03/10 ficha TIMS3 §4 | 06/09 quantitativo"
+    }
+   },
+   "proventos": {
+    "remuneracao_2026_guidance": {
+     "v": "R$ 5,3-5,5 bi = R$ 2,19-2,27/ação (11,7-12,1%), mantida (imprensa 18/09, não confirmada no RI); INCLUI recompra: dividendos+JCP+recompra R$ 2,23-2,31/ação (12,0-12,5%); em caixa R$ 1,81-1,89 se recompra = R$ 1 bi [H] (~10%)",
+     "un": null,
+     "per": "2026",
+     "nota": "2023 R$ 2,3 bi -> 2024 R$ 4,1 bi -> 2026 R$ 5,3-5,5 bi (06/09); 4T26 precisa concentrar R$ 1,3/ação (em dez/25 foram R$ 0,93) [H]; YTD 2026 por data-ex R$ 0,55",
+     "src": "03/10 ficha TIMS3 §1/§8 | 06/09 proventos"
+    },
+    "jcp_ultimo": {
+     "v": 0.21668,
+     "un": "R$/ação (R$ 515 mi)",
+     "per": "aprovado 17/09/2026",
+     "nota": "data-com 22/09; pagamento até 22/01/2027 (4 meses, não 12)",
+     "src": "03/10 ficha TIMS3 §1/§8"
+    },
+    "payout": {
+     "v": "~150% do lucro; ~100% do FCFE",
+     "un": null,
+     "per": null,
+     "nota": "FCFE 13% do market cap (BBI)",
+     "src": "03/10 ficha TIMS3 §8"
+    },
+    "recompra": {
+     "v": "Novo programa (19/08): até 55,2 mi ações / R$ 1 bi até 19/02/2028; anterior executou 46,9 mi ações (R$ 1 bi); 13,2 mi ações canceladas em 17/09",
+     "un": null,
+     "per": "19/08/2026",
+     "nota": "executa, ao contrário da Vivo",
+     "src": "03/10 ficha TIMS3 §1"
+    },
+    "serie_dpa_06_09": {
+     "v": "2023 ~1,0 | 2024 ~1,4 | 2025 ~1,7 (derivados) | 2026e 2,19-2,27",
+     "un": "R$/ação",
+     "per": null,
+     "nota": null,
+     "src": "06/09 ficha TIMS3 proventos"
+    }
+   },
+   "eventos": {
+    "poste_italiane": {
+     "v": "Poste Italiane liquidou a OPA sobre a TI em 18/09/2026; controladora indireta (estatal italiana [EL]); nenhuma interferência consumada -> desconto de controlador zero (mesmo tratamento de CPFE3/State Grid e EGIE3/França); vetores V5 (payout) e V6 (mudança de controle)",
+     "un": null,
+     "per": "18/09/2026",
+     "nota": null,
+     "src": "03/10 ficha TIMS3 §1/§3 - Teletime 18/09"
+    },
+    "anatel_6ghz": {
+     "v": "Consulta do edital de 6 GHz (08/09): 2 blocos nacionais para 3 operadoras - risco de espectro regional",
+     "un": null,
+     "per": "08/09/2026",
+     "nota": null,
+     "src": "03/10 ficha TIMS3 §1 - Teletime 08/09"
+    },
+    "tim_oi": {
+     "v": "Oi Móvel: 'teste do R$ 1 retido passa' (P/L 27,8 -> 12,5 com preço +45%); 'Oi integrada' (06/09 gestão). Detalhes da aquisição não constam",
+     "un": null,
+     "per": null,
+     "nota": null,
+     "src": "03/10 ficha TIMS3 §6 | 06/09 qualitativo"
+    },
+    "sell_side": {
+     "v": "BBA R$ 30; BBI R$ 26; UBS R$ 25; Citi R$ 24 (neutros); BTG tirou da carteira de dividendos de outubro; XP, Safra, BB-BI: não encontrado",
+     "un": "R$",
+     "per": "set/2026",
+     "nota": null,
+     "src": "03/10 ficha TIMS3 §1/§6"
+    }
+   },
+   "valuation_do_pdf": {
+    "central_03_10": {
+     "v": 22.5,
+     "un": "R$",
+     "per": "03/10",
+     "nota": "era 22,00; só Ke; RADAR mantido (-17,6%); compra R$ 15,75; saída R$ 27,60; faixa 13,3-31,7; 1ª parcela 18,5; VALOR DO PDF",
+     "src": "03/10 ficha TIMS3 topo/§3"
+    },
+    "central_06_09": {
+     "v": 22.0,
+     "un": "R$",
+     "per": "05/09",
+     "nota": "RADAR a 18,76 (-15%); compra 15,40; saída 27; nota 7,7",
+     "src": "06/09 ficha TIMS3 topo"
+    },
+    "dcf_fcfe": {
+     "v": "pess. 13,7/19,4/16 | base 17,7/26,5/22 | otim. 22,7/31,5/26 (Ke 16,56%/12,08%/14%)",
+     "un": "R$",
+     "per": "03/10",
+     "nota": "g real 0,5%",
+     "src": "03/10 ficha TIMS3 §3/§6"
+    },
+    "epv": {
+     "v": "16,5 / 19,3 / 23,2 (WACC 14,2% / 12,08% / 10%)",
+     "un": "R$",
+     "per": null,
+     "nota": null,
+     "src": "03/10 ficha TIMS3 §6"
+    },
+    "bazin": {
+     "v": "12m (R$ 1,47) 24,5 | fwd caixa 30-31,5 | fwd total 37-38,5",
+     "un": "R$",
+     "per": null,
+     "nota": null,
+     "src": "03/10 ficha TIMS3 §6"
+    },
+    "retorno_real_esperado": {
+     "v": "11,5-13,0% total (caixa 9,3-10,8%); Sim (marginal em caixa)",
+     "un": "% real",
+     "per": "03/10",
+     "nota": null,
+     "src": "03/10 ficha TIMS3 §5"
+    },
+    "notas": {
+     "v": "qualidade 7,0 | solidez 8,0 | renda 8,5 | preço 7,0 | geral 7,6 (era 7,7)",
+     "un": null,
+     "per": null,
+     "nota": null,
+     "src": "03/10 ficha TIMS3"
+    }
+   },
+   "gatilhos_e_agenda": {
+    "gatilhos": {
+     "v": "MSR < 3% por 2 tri; corte do guidance de remuneração; capex > 16%; DL/EBITDA total > 1,3x; ARPU caindo a/a",
+     "un": null,
+     "per": null,
+     "nota": null,
+     "src": "03/10 ficha TIMS3 §2/§10"
+    },
+    "eventos_datas": {
+     "v": "03/11 3T26 (StatusInvest; não confirmado); dez/26 declaração do 4T (cumprimento do guidance); 22/01/2027 pagamento do JCP; edital de 6 GHz (consulta aberta); 19/02/2028 fim da recompra",
+     "un": null,
+     "per": null,
+     "nota": null,
+     "src": "03/10 ficha TIMS3 §10"
+    },
+    "nao_encontrado": {
+     "v": "posição da cia/CVM sobre tag along; confirmação do guidance no RI; LPA oficial 12m; alvos XP/Safra/BB-BI",
+     "un": null,
+     "per": null,
+     "nota": null,
+     "src": "03/10 ficha TIMS3 §10"
+    }
+   }
+  },
+  "VIVT3": {
+   "identificacao": {
+    "nome": {
+     "v": "Telefônica Brasil (Vivo)",
+     "un": null,
+     "per": null,
+     "nota": null,
+     "src": "03/10 ficha VIVT3"
+    },
+    "segmento": {
+     "v": "Telecomunicações - móvel líder + maior fibra + B2B; Novo Mercado; concessão migrada para autorização",
+     "un": null,
+     "per": null,
+     "nota": null,
+     "src": "03/10 ficha VIVT3 perfil"
+    },
+    "controlador": {
+     "v": "Telefónica S.A.",
+     "un": "%",
+     "per": "03/10",
+     "nota": "76% (03/10) vs ~75% (06/09); participação exata: não encontrada",
+     "src": "03/10 ficha VIVT3 perfil | 06/09 perfil"
+    },
+    "numero_acoes": {
+     "v": "3,227 bi totais (Fundamentus); 3,196 bi em circulação [H]",
+     "un": "ações",
+     "per": "03/10",
+     "nota": null,
+     "src": "03/10 ficha VIVT3 §4"
+    }
+   },
+   "mercado": {
+    "preco": {
+     "v": 30.14,
+     "un": "R$",
+     "per": "02/10/2026",
+     "nota": "Yahoo e Fundamentus; RI Vivo e StatusInvest bloquearam (403)",
+     "src": "03/10 ficha VIVT3 cabeçalho"
+    },
+    "preco_04_09_real": {
+     "v": 30.06,
+     "un": "R$",
+     "per": "04/09/2026",
+     "nota": null,
+     "src": "03/10 ficha VIVT3 §1"
+    },
+    "preco_ficha_anterior": {
+     "v": 29.79,
+     "un": "R$",
+     "per": "19/08/2026",
+     "nota": "'datado'",
+     "src": "06/09 ficha VIVT3 cabeçalho"
+    },
+    "faixa_52s": {
+     "v": "R$ 28,99 (24/08) - 43,47 (27/02) Yahoo; -31% da máxima",
+     "un": "R$",
+     "per": "03/10",
+     "nota": null,
+     "src": "03/10 ficha VIVT3 §4/§7"
+    },
+    "p_l": {
+     "v": 14.7,
+     "un": "x",
+     "per": "03/10",
+     "nota": "LPA 12m 2,05; lucro 12m R$ 6,6 bi (Fundamentus)",
+     "src": "03/10 ficha VIVT3 §4"
+    },
+    "p_vp": {
+     "v": 1.41,
+     "un": "x",
+     "per": "03/10",
+     "nota": "VPA 21,4 (06/09: 1,39)",
+     "src": "03/10 ficha VIVT3 §4"
+    },
+    "ev_ebitda": {
+     "v": 4.3,
+     "un": "x",
+     "per": "03/10",
+     "nota": "c/ leases; 4,7x ex-leases sobre EBITDA-AL (06/09)",
+     "src": "03/10 ficha VIVT3 §4"
+    },
+    "dy_12m": {
+     "v": 8.45,
+     "un": "%",
+     "per": "03/10",
+     "nota": "data-com R$ 2,547 incl. redução de capital R$ 1,25; 4,3% sem a redução (R$ 1,295); agregadores 8,4% Fundamentus / 11,4% Renova inflados",
+     "src": "03/10 ficha VIVT3 §8"
+    },
+    "numero_graham": {
+     "v": 31.4,
+     "un": "R$",
+     "per": "03/10",
+     "nota": "preço 4% abaixo; Graham 6/7",
+     "src": "03/10 ficha VIVT3 §6"
+    }
+   },
+   "endividamento": {
+    "divida_liquida": {
+     "v": 11.0,
+     "un": "R$ bi",
+     "per": "2T26",
+     "nota": "c/ IFRS 16 = 1,06x; ex-leases CAIXA LÍQUIDO R$ 3,79 bi",
+     "src": "03/10 ficha VIVT3 §4"
+    },
+    "dl_ebitda": {
+     "v": 1.06,
+     "un": "x",
+     "per": "2T26",
+     "nota": "c/ leases; gatilho > 1,5x",
+     "src": "03/10 ficha VIVT3 §2/§4"
+    }
+   },
+   "resultados": {
+    "receita_2T26": {
+     "v": 15.76,
+     "un": "R$ bi",
+     "per": "2T26",
+     "nota": "+7,6%; móvel +6,6% (pós-pago +7,9%); fixo +6%; única big telco sem desaceleração",
+     "src": "03/10 ficha VIVT3 §4 | 06/09"
+    },
+    "ebitda_2T26": {
+     "v": 6.58,
+     "un": "R$ bi",
+     "per": "2T26",
+     "nota": "margem 41,8%; +10,9%",
+     "src": "03/10 ficha VIVT3 §4 | 06/09"
+    },
+    "lucro_2T26": {
+     "v": 1.57,
+     "un": "R$ bi",
+     "per": "2T26",
+     "nota": "+17%; benefícios tributários na comparação; ex-não recorrentes abaixo do consenso (06/09)",
+     "src": "06/09 ficha VIVT3 quantitativo"
+    },
+    "lpa_12m": {
+     "v": 2.05,
+     "un": "R$",
+     "per": "12m",
+     "nota": null,
+     "src": "03/10 ficha VIVT3 §4"
+    },
+    "roe_roic": {
+     "v": "ROE 9,2% / ROIC 8,4-9,2% (book legado deprime); CROIC 13%",
+     "un": "%",
+     "per": null,
+     "nota": "ROIC cont. 9% vs WACC 14%",
+     "src": "03/10 ficha VIVT3 §4/§9"
+    },
+    "fcf": {
+     "v": "FCF operacional R$ 3,99 bi / livre R$ 2,66 bi (-10,7%); FCFE ~11% do market cap",
+     "un": null,
+     "per": "2T26",
+     "nota": null,
+     "src": "03/10 ficha VIVT3 §4/§8"
+    },
+    "capex": {
+     "v": 16.4,
+     "un": "% da receita",
+     "per": "2T26",
+     "nota": "R$ 2,59 bi (+14,3%); gatilho > 18%",
+     "src": "03/10 ficha VIVT3 §2 | 06/09"
+    }
+   },
+   "proventos": {
+    "jcp_2026": {
+     "v": "+R$ 350 mi (R$ 0,1095; data-com 26/08) e +R$ 500 mi (R$ 0,1565; data-com 25/09); todos pagos até 30/04/2027; 06/09: JCP aprovados R$ 2,22 bi",
+     "un": null,
+     "per": "ago-set/2026",
+     "nota": "defasagem 7-14 meses",
+     "src": "03/10 ficha VIVT3 §1/§8"
+    },
+    "reducao_de_capital": {
+     "v": "R$ 1,25/ação paga em 14/07/2026; nenhuma nova; NÃO recorrente",
+     "un": "R$/ação",
+     "per": "14/07/2026",
+     "nota": null,
+     "src": "03/10 ficha VIVT3 §1"
+    },
+    "recompra": {
+     "v": "Programa 'até R$ 1 bi' até 22/02/2027; ZERO ações recompradas jan-jul/2026 (Fundamentus); aprovada e não executada",
+     "un": null,
+     "per": null,
+     "nota": null,
+     "src": "03/10 ficha VIVT3 §1/§2"
+    },
+    "payout_politica": {
+     "v": "100% do lucro até 2026 (reafirmada para 2024-2026 no release 2T26); política 2027 NÃO encontrada",
+     "un": null,
+     "per": null,
+     "nota": "risco de renda a partir de 2027",
+     "src": "03/10 ficha VIVT3 §1/§8"
+    },
+    "yield_recorrente": {
+     "v": "4,3% (12m sem a redução) a 6,8% (100% do LPA 2,05 em 2026)",
+     "un": "%",
+     "per": null,
+     "nota": "ficha 06/09 contava yield total ~9,5% (somando redução e recompra) - erro admitido",
+     "src": "03/10 ficha VIVT3 §5"
+    },
+    "pagos_jan_jul": {
+     "v": 6.99,
+     "un": "R$ bi",
+     "per": "jan-jul/2026",
+     "nota": "+31,6%",
+     "src": "06/09 ficha VIVT3 quantitativo"
+    },
+    "serie_dpa_06_09": {
+     "v": "2023 ~1,3 | 2024 1,26 | 2025 1,51 + 1,25 redução = 2,76 | 2026 YTD 1,83 (incl. redução)",
+     "un": "R$/ação",
+     "per": null,
+     "nota": null,
+     "src": "06/09 ficha VIVT3 proventos"
+    }
+   },
+   "eventos": {
+    "fibrasil": {
+     "v": "Fibrasil incorporada (FR 31/07)",
+     "un": null,
+     "per": "31/07/2026",
+     "nota": null,
+     "src": "03/10 ficha VIVT3 §1"
+    },
+    "700mhz": {
+     "v": "Decisão judicial pode alterar o leilão de 700 MHz (Teletime 17/09); 700 MHz em disputa judicial",
+     "un": null,
+     "per": "17/09/2026",
+     "nota": null,
+     "src": "03/10 ficha VIVT3 §1/§7 - Teletime"
+    },
+    "tim_oi_vivo": {
+     "v": "Não constam em nenhum dos PDFs operações Vivo/Oi",
+     "un": null,
+     "per": null,
+     "nota": null,
+     "src": "ausência"
+    },
+    "sell_side": {
+     "v": "28/07: BTG R$ 31 (compra); BBI 39; Safra 42; BBA 38; Citi 37 - nada novo em set; 06/09: Empiricus compra, Nord preferida do setor",
+     "un": "R$",
+     "per": "jul/2026",
+     "nota": null,
+     "src": "03/10 ficha VIVT3 §1/§6"
+    }
+   },
+   "valuation_do_pdf": {
+    "central_03_10": {
+     "v": 33.8,
+     "un": "R$",
+     "per": "03/10",
+     "nota": "era 33,00; só Ke (+0,80); JUSTA -> RADAR (limite, -10,8%); compra R$ 23,65; saída R$ 41; faixa 19,5-46; aceitável < R$ 27; VALOR DO PDF",
+     "src": "03/10 ficha VIVT3 topo/§3"
+    },
+    "central_06_09": {
+     "v": 33.0,
+     "un": "R$",
+     "per": "05/09",
+     "nota": "JUSTA (-10% a R$ 29,79); compra 23; saída 40; nota 7,2",
+     "src": "06/09 ficha VIVT3 topo"
+    },
+    "dcf_fcfe": {
+     "v": "pess. 19,4/27,7/23 | base 26,9/39,6/33 | otim. 30,6/46,6/38 (Ke 16,56%/12,08%/14%)",
+     "un": "R$",
+     "per": "03/10",
+     "nota": "g real 1%",
+     "src": "03/10 ficha VIVT3 §3/§6"
+    },
+    "epv": {
+     "v": "FCFE 23,3 / 26,9 (14% / 12,08%); NOPAT contábil 16,7",
+     "un": "R$",
+     "per": null,
+     "nota": null,
+     "src": "03/10 ficha VIVT3 §6"
+    },
+    "bazin": {
+     "v": "12m s/ redução 21,6 | 12m c/ redução 42,5 | fwd 100% LPA 34,2 (só 1º e 3º recorrentes)",
+     "un": "R$",
+     "per": null,
+     "nota": null,
+     "src": "03/10 ficha VIVT3 §6"
+    },
+    "retorno_real_esperado": {
+     "v": "7,5% (yield rec. 6,8% + g 5%); Empate (no piso); só vence a RF abaixo de R$ 21,60",
+     "un": "% real",
+     "per": "03/10",
+     "nota": "era 10-11% somando redução e recompra",
+     "src": "03/10 ficha VIVT3 §5"
+    },
+    "notas": {
+     "v": "qualidade 8,0 | solidez 7,0 | renda 6,5 | preço 6,0 | geral 7,0 (era 7,2)",
+     "un": null,
+     "per": null,
+     "nota": null,
+     "src": "03/10 ficha VIVT3"
+    }
+   },
+   "gatilhos_e_agenda": {
+    "gatilhos": {
+     "v": "receita móvel < 4% por 2 tri; capex > 18%; corte de payout sem recompra equivalente; DL/EBITDA c/ leases > 1,5x",
+     "un": null,
+     "per": null,
+     "nota": null,
+     "src": "03/10 ficha VIVT3 §2/§10"
+    },
+    "eventos_datas": {
+     "v": "10/11 3T26 (Investing; não confirmado); 12/11 Telefónica 9M26; política 2027 (data não encontrada); 30/04/2027 pagamento dos JCPs de 2026",
+     "un": null,
+     "per": null,
+     "nota": null,
+     "src": "03/10 ficha VIVT3 §10"
+    },
+    "nao_encontrado": {
+     "v": "release no RI (403); política 2027; participação exata da Telefónica; recompras ago-set; alvos publicados em setembro",
+     "un": null,
+     "per": null,
+     "nota": null,
+     "src": "03/10 ficha VIVT3 §10"
+    }
+   }
+  },
+  "ABEV3": {
+   "identificacao": {
+    "nome": {
+     "v": "Ambev",
+     "un": null,
+     "per": null,
+     "nota": null,
+     "src": "03/10 ficha ABEV3"
+    },
+    "segmento": {
+     "v": "Bebidas (blue chip) - consumo não cíclico, marca/escala; não é Novo Mercado",
+     "un": null,
+     "per": null,
+     "nota": null,
+     "src": "03/10 ficha ABEV3 perfil"
+    },
+    "controlador": {
+     "v": "AB InBev",
+     "un": "%",
+     "per": "03/10",
+     "nota": "62% (03/10) / ~62% (06/09); participação exata: não encontrada",
+     "src": "03/10 ficha ABEV3 perfil"
+    },
+    "tag_along": {
+     "v": 80,
+     "un": "%",
+     "per": null,
+     "nota": "ON com tag along 80% (não é Novo Mercado)",
+     "src": "03/10 ficha ABEV3 perfil/§9"
+    },
+    "numero_acoes": {
+     "v": 15.484,
+     "un": "bi",
+     "per": "14/08/2026",
+     "nota": "após cancelar 279 mi de ações em tesouraria",
+     "src": "03/10 ficha ABEV3 §4/§1"
+    }
+   },
+   "mercado": {
+    "preco": {
+     "v": 15.84,
+     "un": "R$",
+     "per": "02/10/2026",
+     "nota": "Yahoo, StatusInvest e Investidor10 batem",
+     "src": "03/10 ficha ABEV3 cabeçalho"
+    },
+    "preco_04_09_real": {
+     "v": 15.74,
+     "un": "R$",
+     "per": "04/09/2026",
+     "nota": null,
+     "src": "03/10 ficha ABEV3 §1"
+    },
+    "preco_ficha_anterior": {
+     "v": 15.83,
+     "un": "R$",
+     "per": "'recente'",
+     "nota": "52s 10,58-16,95; +33% em 12m (06/09)",
+     "src": "06/09 ficha ABEV3 cabeçalho"
+    },
+    "faixa_52s": {
+     "v": "R$ 11,68 (09/10/25) - 17,04 (07/05/26) Yahoo sem ajuste",
+     "un": "R$",
+     "per": "03/10",
+     "nota": null,
+     "src": "03/10 ficha ABEV3 §4"
+    },
+    "p_l": {
+     "v": 15.1,
+     "un": "x",
+     "per": "03/10",
+     "nota": "LPA 12m 1,05 (StatusInvest e Investidor10); PEG 2,5-3,0",
+     "src": "03/10 ficha ABEV3 §4"
+    },
+    "p_vp": {
+     "v": 2.78,
+     "un": "x",
+     "per": "03/10",
+     "nota": "VPA 5,63 (06/09); book 5,6",
+     "src": "03/10 ficha ABEV3 §4"
+    },
+    "ev_ebitda": {
+     "v": 8.0,
+     "un": "x",
+     "per": "03/10",
+     "nota": null,
+     "src": "03/10 ficha ABEV3 §4"
+    },
+    "dy_12m": {
+     "v": 5.3,
+     "un": "%",
+     "per": "03/10",
+     "nota": "data-com 0,7302 + 0,0449 + 0,0713 = R$ 0,846 (Investidor10 bate); StatusInvest 7,89% usa 0,449 (erro de vírgula); 06/09 dizia 8,3% (SI) / 5,7% (HG)",
+     "src": "03/10 ficha ABEV3 §8"
+    },
+    "numero_graham": {
+     "v": 11.6,
+     "un": "R$",
+     "per": "03/10",
+     "nota": "preço 37% acima; Graham 4/7",
+     "src": "03/10 ficha ABEV3 §6"
+    }
+   },
+   "endividamento": {
+    "caixa_liquido": {
+     "v": 8,
+     "un": "R$ bi",
+     "per": "03/10",
+     "nota": "bruto 18,6-19,6 bi (06/09); liquidez corrente 0,96-1,03 (estrutural: fornecedores)",
+     "src": "03/10 ficha ABEV3 §4 | 06/09 quantitativo"
+    }
+   },
+   "resultados": {
+    "receita_2T26": {
+     "v": 20.14,
+     "un": "R$ bi",
+     "per": "2T26",
+     "nota": "+0,3%; ~R$ 88 bi/ano desde 2023",
+     "src": "03/10 ficha ABEV3 §4"
+    },
+    "ebitda_aj_2T26": {
+     "v": 6.37,
+     "un": "R$ bi",
+     "per": "2T26",
+     "nota": "margem 31,6% (+100 bps); +3,6% (06/09); gatilho < 30%",
+     "src": "03/10 ficha ABEV3 §2/§4"
+    },
+    "lucro_2T26": {
+     "v": 3.47,
+     "un": "R$ bi",
+     "per": "2T26",
+     "nota": "+24,5% (06/09: beat por ganhos cambiais e créditos tributários; 4 casas céticas); 1T26 R$ 3,886 bi; 1S26 R$ 7,36 bi",
+     "src": "03/10 ficha ABEV3 §4 | 06/09"
+    },
+    "roe_roic": {
+     "v": "ROE 18,4% / ROIC 17-19%",
+     "un": "%",
+     "per": "03/10",
+     "nota": "ROIC 19% vs Ke nominal 16,56%",
+     "src": "03/10 ficha ABEV3 §4/§9"
+    },
+    "projecoes_3T26": {
+     "v": "BBI lucro +20% (R$ 3,9 bi); Safra -6% (divergência); XP volume +4%, Safra +3%",
+     "un": null,
+     "per": null,
+     "nota": null,
+     "src": "03/10 ficha ABEV3 §2/§4"
+    },
+    "volumes_06_09": {
+     "v": "Cerveja Brasil +5% (Copa); 1S26 total +0,7%; NAB/LAS/CAC fracos",
+     "un": null,
+     "per": "2T26",
+     "nota": null,
+     "src": "06/09 ficha ABEV3 quantitativo"
+    }
+   },
+   "proventos": {
+    "jcp_1t26_jun": {
+     "v": 0.0449,
+     "un": "R$/ação (R$ 700 mi)",
+     "per": "data-com 22/06/2026",
+     "nota": "pago até 31/12/2026; ficha 06/09 e StatusInvest tinham 0,449 (erro de vírgula 10x)",
+     "src": "03/10 ficha ABEV3 §1"
+    },
+    "jcp_2t26": {
+     "v": 0.0713,
+     "un": "R$/ação (R$ 1,1 bi)",
+     "per": "data-com 21/09/2026",
+     "nota": "pago até 31/12/2026",
+     "src": "03/10 ficha ABEV3 §1"
+    },
+    "jcp_2025_terceira_parcela": {
+     "v": 0.1185,
+     "un": "R$/ação",
+     "per": "pago 06/10/2026",
+     "nota": null,
+     "src": "03/10 ficha ABEV3 §8"
+    },
+    "proventos_2026": {
+     "v": "R$ 0,116/ação = R$ 1,8 bi = 24% do lucro do 1S26 (R$ 7,36 bi); Ambev concentra em dezembro",
+     "un": null,
+     "per": null,
+     "nota": "ALERTA gatilho 'payout < 50% com caixa parado'",
+     "src": "03/10 ficha ABEV3 §1/§2"
+    },
+    "yield_recorrente": {
+     "v": "4,0-4,7% (DPA 0,63-0,74 = payout 60-70% sobre LPA 1,05); 4,5%",
+     "un": "%",
+     "per": null,
+     "nota": "ficha 06/09: 6,3% (DPA 1,0 de 2025, inflado pela antecipação) - erro admitido",
+     "src": "03/10 ficha ABEV3 §1/§5"
+    },
+    "serie_dpa": {
+     "v": "2021 0,13 | 2022 0,76 | 2023 0,73 | 2024 0,67 | 2025 1,11 (antecipado; payout 98%) | 2026 YTD 0,116",
+     "un": "R$/ação",
+     "per": null,
+     "nota": "payout histórico ~60%",
+     "src": "03/10 ficha ABEV3 §8"
+    },
+    "recompra": {
+     "v": "279 mi de ações canceladas; programa encerrado em 14/08/2026; nenhum novo",
+     "un": null,
+     "per": "14/08/2026",
+     "nota": "caixa segue ocioso",
+     "src": "03/10 ficha ABEV3 §1"
+    }
+   },
+   "eventos": {
+    "imposto_seletivo": {
+     "v": "Sem alíquota; MP fica para depois da eleição; cobrança fev-mar/2027 (noventena); BofA: cada 5 p.p. de IS = -4,2% no EBITDA 2027 de Cerveja Brasil",
+     "un": null,
+     "per": "2027",
+     "nota": null,
+     "src": "03/10 ficha ABEV3 §1/§10 - Seu Dinheiro; Contábeis"
+    },
+    "incentivos_fiscais_jcp": {
+     "v": "Risco 'fim do JCP' (Ambev é grande usuária) e IRRF de 17,5% sobre JCP (LC 224/2025); IR sobre dividendos 10% acima de R$ 50 mil/mês/empresa (Lei 15.270/2025) com ADIs no STF; 'ICMS/IPI' citado em 06/09. Incentivos fiscais estaduais NÃO detalhados",
+     "un": null,
+     "per": null,
+     "nota": null,
+     "src": "03/10 premissas comuns/ficha ABEV3 §7 | 06/09 ficha ABEV3 qualitativo"
+    },
+    "sell_side": {
+     "v": "Safra venda (29/09); BBI neutro R$ 15; BBA neutro R$ 17; XP corta volume de 5% para 4%",
+     "un": "R$",
+     "per": "set/2026",
+     "nota": "rating de terceiros não entra na conta",
+     "src": "03/10 ficha ABEV3 §1"
+    }
+   },
+   "valuation_do_pdf": {
+    "central_03_10": {
+     "v": 13.75,
+     "un": "R$",
+     "per": "03/10",
+     "nota": "era 14,00 (+0,36 Ke; -0,61 erro próprio); CARA no limite (+15,2%); compra R$ 9,60; saída R$ 17,70; faixa 7,9-18,7; aceitável < R$ 11,70; VALOR DO PDF",
+     "src": "03/10 ficha ABEV3 topo/§3"
+    },
+    "central_06_09": {
+     "v": 14.0,
+     "un": "R$",
+     "per": "05/09",
+     "nota": "JUSTA (+13% a 15,83); compra 9,80; saída 18; nota 7,3",
+     "src": "06/09 ficha ABEV3 topo"
+    },
+    "dcf_fcfe": {
+     "v": "pess. 5,9/8,4/7 | base 8,7/13,7/11,5 | otim. 11,6/19,3/15 (Ke 16,56%/12,08%/14%)",
+     "un": "R$",
+     "per": "03/10",
+     "nota": "g real 1,5%",
+     "src": "03/10 ficha ABEV3 §3/§6"
+    },
+    "epv": {
+     "v": "8,6 / 9,8 (14% / 12,08%)",
+     "un": "R$",
+     "per": null,
+     "nota": null,
+     "src": "03/10 ficha ABEV3 §6"
+    },
+    "p_l_justo_gordon": {
+     "v": "real: 1/(12,08%-1,5%) = 9,5x = R$ 9,9; nominal: 1/(16,56%-5,5%) = 9,0x = R$ 9,5",
+     "un": null,
+     "per": "03/10",
+     "nota": "ficha 06/09 dava 15,7x (R$ 16,7) misturando Ke real e g nominal - erro admitido",
+     "src": "03/10 ficha ABEV3 §1/§6"
+    },
+    "bazin": {
+     "v": "5a/12m/fwd rec.: 11,3 / 14,1 / 10,5-12,3",
+     "un": "R$",
+     "per": null,
+     "nota": null,
+     "src": "03/10 ficha ABEV3 §6"
+    },
+    "retorno_real_esperado": {
+     "v": "4,8-6,4% (yield 4,5% + g 5-6%); Não vence a RF",
+     "un": "% real",
+     "per": "03/10",
+     "nota": "era Empate",
+     "src": "03/10 ficha ABEV3 §5"
+    },
+    "teste_r1_retido": {
+     "v": "Falha: LPA +30% em 10 anos, ação abaixo de 2016",
+     "un": null,
+     "per": null,
+     "nota": null,
+     "src": "03/10 ficha ABEV3 §6"
+    },
+    "notas": {
+     "v": "qualidade 9,0 | solidez 9,0 | renda 5,0 | preço 2,0 | geral 6,6 (era 7,3)",
+     "un": null,
+     "per": null,
+     "nota": null,
+     "src": "03/10 ficha ABEV3"
+    }
+   },
+   "gatilhos_e_agenda": {
+    "gatilhos": {
+     "v": "volume Cerveja Brasil negativo por 2 tri; margem EBITDA < 30%; alíquota efetiva > 25%; payout < 50% com caixa parado (ALERTA)",
+     "un": null,
+     "per": null,
+     "nota": null,
+     "src": "03/10 ficha ABEV3 §2/§10"
+    },
+    "eventos_datas": {
+     "v": "06/10 3ª parcela JCP 2025; 29/10 3T26; out-nov MP do IS (pós-eleição); dez/26 declaração anual; fev-mar/27 início da cobrança do IS",
+     "un": null,
+     "per": null,
+     "nota": null,
+     "src": "03/10 ficha ABEV3 §10"
+    },
+    "nao_encontrado": {
+     "v": "alíquota do IS; novo programa de recompra; FCF oficial 12m; participação exata da AB InBev",
+     "un": null,
+     "per": null,
+     "nota": null,
+     "src": "03/10 ficha ABEV3 §10"
+    }
+   }
+  },
+  "WEGE3": {
+   "identificacao": {
+    "nome": {
+     "v": "WEG",
+     "un": null,
+     "per": null,
+     "nota": null,
+     "src": "03/10 ficha WEGE3"
+    },
+    "segmento": {
+     "v": "Bens de capital - motores, T&D, automação, tintas; ~60% da receita fora do Brasil; Novo Mercado",
+     "un": null,
+     "per": null,
+     "nota": null,
+     "src": "03/10 ficha WEGE3 perfil"
+    },
+    "controlador": {
+     "v": "Famílias fundadoras via WPA",
+     "un": null,
+     "per": null,
+     "nota": "percentual não consta nos PDFs",
+     "src": "03/10 ficha WEGE3 perfil"
+    }
+   },
+   "mercado": {
+    "preco": {
+     "v": 51.45,
+     "un": "R$",
+     "per": "02/10/2026",
+     "nota": "dia do WEG Day, +3,8%; Yahoo e Fundamentus batem",
+     "src": "03/10 ficha WEGE3 cabeçalho"
+    },
+    "preco_04_09_real": {
+     "v": 51.74,
+     "un": "R$",
+     "per": "04/09/2026",
+     "nota": null,
+     "src": "03/10 ficha WEGE3 §1"
+    },
+    "preco_ficha_anterior": {
+     "v": 43.63,
+     "un": "R$",
+     "per": "17/07/2026",
+     "nota": "'recente'; HG 45,83 em 24/07; 52s 35,25-54,53 (06/09); defasagem de 18,6%",
+     "src": "06/09 ficha WEGE3 cabeçalho"
+    },
+    "faixa_52s": {
+     "v": "R$ 35,41 (08/10/25) - 54,53 (18/02/26) Yahoo",
+     "un": "R$",
+     "per": "03/10",
+     "nota": null,
+     "src": "03/10 ficha WEGE3 §4"
+    },
+    "p_l": {
+     "v": 34.5,
+     "un": "x",
+     "per": "03/10",
+     "nota": "LPA 12m 1,49 (lucro 12m R$ 6,25 bi); 06/09: ~27 (LPA 1,61 = LPA de 2025); 23x 2027E (Empiricus)",
+     "src": "03/10 ficha WEGE3 §1/§4"
+    },
+    "p_vp": {
+     "v": 11.5,
+     "un": "x",
+     "per": "03/10",
+     "nota": "Fundamentus; 06/09: 9,9 (VPA 4,42)",
+     "src": "03/10 ficha WEGE3 §4"
+    },
+    "ev_ebitda": {
+     "v": 22.5,
+     "un": "x",
+     "per": "03/10",
+     "nota": "Fundamentus; 06/09: ~20x; EV/EBIT ~24x",
+     "src": "03/10 ficha WEGE3 §4"
+    },
+    "dy_12m": {
+     "v": 1.5,
+     "un": "%",
+     "per": "03/10",
+     "nota": "recorrente (JCPs 12m R$ 0,76); 3,9% c/ extraordinário (R$ 2,00 por data-ex); 1,9% por caixa pago (R$ 0,98)",
+     "src": "03/10 ficha WEGE3 §1/§8"
+    },
+    "premio_na_data_da_ficha": {
+     "v": "+62% (preço real de 04/09), não +36%",
+     "un": null,
+     "per": null,
+     "nota": null,
+     "src": "03/10 ficha WEGE3 §1"
+    },
+    "numero_graham": {
+     "v": 12.3,
+     "un": "R$",
+     "per": "03/10",
+     "nota": "irrelevante p/ compounder; Graham 4/7",
+     "src": "03/10 ficha WEGE3 §6"
+    }
+   },
+   "endividamento": {
+    "caixa_liquido": {
+     "v": 2,
+     "un": "R$ bi",
+     "per": "03/10",
+     "nota": "DL/EBITDA -0,2x; Altman ~7 (06/09)",
+     "src": "03/10 ficha WEGE3 §4 | 06/09"
+    }
+   },
+   "resultados": {
+    "receita_2T26": {
+     "v": 10.14,
+     "un": "R$ bi",
+     "per": "2T26",
+     "nota": "-0,6% a/a; Brasil -4,9% (GTD/solar -22,9%); externo +dois dígitos em USD (câmbio 5,67 -> 5,05)",
+     "src": "03/10 ficha WEGE3 §4 | 06/09"
+    },
+    "ebitda_2T26": {
+     "v": 2.21,
+     "un": "R$ bi",
+     "per": "2T26",
+     "nota": "margem 21,8% ('patamar estrutural ~22%')",
+     "src": "03/10 ficha WEGE3 §4 | 06/09"
+    },
+    "lucro_2T26": {
+     "v": 1.56,
+     "un": "R$ bi",
+     "per": "2T26",
+     "nota": "-2,1% (acima do consenso, 06/09); 2025: R$ 6,8 bi",
+     "src": "03/10 ficha WEGE3 §4 | 06/09"
+    },
+    "lpa_12m": {
+     "v": 1.49,
+     "un": "R$",
+     "per": "12m",
+     "nota": "ficha 06/09 usava 1,61 (LPA de 2025)",
+     "src": "03/10 ficha WEGE3 §1"
+    },
+    "roe_roic": {
+     "v": "ROE 33,2% / ROIC 33,6% (cia, 2T26); agregadores 24-26%",
+     "un": "%",
+     "per": "2T26",
+     "nota": null,
+     "src": "03/10 ficha WEGE3 §4"
+    },
+    "teste_r1_retido": {
+     "v": "> R$ 5 por R$ 1 (LPA 6x, preço 10x em 10 anos) - o melhor do hall",
+     "un": null,
+     "per": null,
+     "nota": null,
+     "src": "03/10 ficha WEGE3 §6 | 06/09"
+    }
+   },
+   "proventos": {
+    "extraordinario_dez25": {
+     "v": 1.2385,
+     "un": "R$/ação",
+     "per": "dez/2025",
+     "nota": "parcelas: 12/08/26 pago R$ 0,4128 (R$ 1,73 bi); 11/08/27; 16/08/28; 06/09: 'dez/25 R$ 1,9 bi (0,34 div + JCP)'",
+     "src": "03/10 ficha WEGE3 §1/§8 | 06/09 proventos"
+    },
+    "jcps_2026": {
+     "v": "0,1001 + 0,1044 + 0,1072 (data-com 18/09 o último), todos pagos em 10/03/2027 (defasagem 6-12 meses); R$ 449,8 mi (bpmoney)",
+     "un": "R$/ação",
+     "per": "2026",
+     "nota": null,
+     "src": "03/10 ficha WEGE3 §1/§8"
+    },
+    "payout": {
+     "v": "55-60% [EL]; dividendos semestrais + JCP trimestrais",
+     "un": "%",
+     "per": null,
+     "nota": null,
+     "src": "03/10 ficha WEGE3 §8"
+    },
+    "bazin": {
+     "v": 12.7,
+     "un": "R$",
+     "per": null,
+     "nota": "DPA recorrente 0,76 (06/09: R$ 15-17 com DPA 0,9-1,0)",
+     "src": "03/10 ficha WEGE3 §6"
+    },
+    "capital_social": {
+     "v": "R$ 7,5 bi -> 12,5 bi por reservas (sem novas ações)",
+     "un": null,
+     "per": null,
+     "nota": null,
+     "src": "06/09 ficha WEGE3 proventos"
+    }
+   },
+   "eventos": {
+    "expansao_geradores_na": {
+     "v": "+US$ 165 mi em geradores na América do Norte (28/09; data centers; capacidade 10 -> 50 unidades/dia); BESS Itajaí R$ 330 mi; transformadores EUA/México",
+     "un": null,
+     "per": "28/09/2026",
+     "nota": "'crescimento comprado'",
+     "src": "03/10 ficha WEGE3 §1 - Seu Dinheiro; Exame"
+    },
+    "weg_day": {
+     "v": "02/10: CFO diz que crescimento volta no 2S26; capacidade é o gargalo; 2026 'ano de transição'",
+     "un": null,
+     "per": "02/10/2026",
+     "nota": null,
+     "src": "03/10 ficha WEGE3 §1 - Money Times"
+    },
+    "tarifas_eua": {
+     "v": "Tarifa de 37,5% EUA/México pressiona margem; Goldman espera 3T26 8% abaixo do consenso (25/09)",
+     "un": null,
+     "per": "25/09/2026",
+     "nota": null,
+     "src": "03/10 ficha WEGE3 §1/§7 - InfoMoney"
+    },
+    "sell_side": {
+     "v": "BTG 65; Ativa 63; BBI 60; Safra 59,20; JPM 56; BBA 50; Citi 49 (neutro); GS 44,10",
+     "un": "R$",
+     "per": null,
+     "nota": "consenso de compra",
+     "src": "03/10 ficha WEGE3 §1"
+    }
+   },
+   "valuation_do_pdf": {
+    "central_03_10": {
+     "v": 33.2,
+     "un": "R$",
+     "per": "03/10",
+     "nota": "era 32,00; só Ke; CARA mantido (+55%); compra R$ 23,25; saída: agora (> 41,50); faixa 20,8-49,8; aceitável <= R$ 30 (P/L 20 s/ LPA 1,49); ao Ke de mercado 10% real central 48 (JUSTA +7%); VALOR DO PDF",
+     "src": "03/10 ficha WEGE3 topo/§3/§11"
+    },
+    "central_06_09": {
+     "v": 32.0,
+     "un": "R$",
+     "per": "05/09",
+     "nota": "CARA (+36% a 43,63); compra 22,40; saída agora (> 40); nota 6,5",
+     "src": "06/09 ficha WEGE3 topo"
+    },
+    "dcf_2_estagios": {
+     "v": "pess. (g 8%) 22,8/13,4/30 | base (g 12%) 36,3/19,6/48 | otim. (g 15%) 45,7/24,8/62 (Ke 12,08%/16,56%/10%)",
+     "un": "R$",
+     "per": "03/10",
+     "nota": "g real LP 5%",
+     "src": "03/10 ficha WEGE3 §3/§6"
+    },
+    "epv": {
+     "v": "12,3 / 9,1 - 76% do preço é crescimento (06/09: 75%)",
+     "un": "R$",
+     "per": null,
+     "nota": null,
+     "src": "03/10 ficha WEGE3 §6"
+    },
+    "crescimento_implicito": {
+     "v": "> 15%/a por 10 anos (WEG entregou 18%/a em 2020-25, 06/09)",
+     "un": null,
+     "per": null,
+     "nota": null,
+     "src": "03/10 ficha WEGE3 §3 | 06/09"
+    },
+    "retorno_real_esperado": {
+     "v": "9,1% (yield 1,5% + g 12%); Empate",
+     "un": "% real",
+     "per": "03/10",
+     "nota": null,
+     "src": "03/10 ficha WEGE3 §5"
+    },
+    "notas": {
+     "v": "qualidade 10,0 | solidez 9,0 | renda 2,5 | preço 1,0 | geral 6,1 (era 6,5)",
+     "un": null,
+     "per": null,
+     "nota": null,
+     "src": "03/10 ficha WEGE3"
+    }
+   },
+   "gatilhos_e_agenda": {
+    "gatilhos": {
+     "v": "(invalida CARA) receita > 15% por 2 tri com margem >= 22%; preço < R$ 30 sem piora estrutural",
+     "un": null,
+     "per": null,
+     "nota": null,
+     "src": "03/10 ficha WEGE3 §2/§10"
+    },
+    "eventos_datas": {
+     "v": "21/10 3T26 (StatusInvest; não confirmado); 10/03/2027 JCPs de 2026; 11/08/2027 2ª parcela do extraordinário; 16/08/2028 3ª",
+     "un": null,
+     "per": null,
+     "nota": null,
+     "src": "03/10 ficha WEGE3 §10"
+    },
+    "nao_encontrado": {
+     "v": "carteira de pedidos; FCF/CFO oficiais; investimento em transformadores no México em 2026; data do 3T26 no RI",
+     "un": null,
+     "per": null,
+     "nota": null,
+     "src": "03/10 ficha WEGE3 §10"
+    }
+   }
+  },
+  "ITSA4": {
+   "identificacao": {
+    "nome": {
+     "v": "Itaúsa",
+     "un": null,
+     "per": null,
+     "nota": null,
+     "src": "03/10 ficha ITSA4"
+    },
+    "segmento": {
+     "v": "Holding de participações; PN Nível 1; controle famílias Setubal/Villela",
+     "un": null,
+     "per": null,
+     "nota": null,
+     "src": "03/10 ficha ITSA4 perfil"
+    },
+    "participacoes_citadas": {
+     "v": "~37% do Itaú Unibanco (= ~90% do lucro); Alpargatas, Dexco, Motiva (CCR), Aegea 14%, NTS, Copa Energia",
+     "un": null,
+     "per": "03/10",
+     "nota": "SÓ Itaú (~37%) e Aegea (14%) têm % nos PDFs; percentuais/valores de Alpargatas, Dexco, Motiva, NTS, Copa NÃO constam",
+     "src": "03/10 ficha ITSA4 perfil | 06/09 perfil"
+    },
+    "tag_along": {
+     "v": "PN sem voto; tag along da PN: não encontrado",
+     "un": null,
+     "per": null,
+     "nota": null,
+     "src": "03/10 ficha ITSA4 §9 | 06/09 não encontrado"
+    },
+    "numero_acoes": {
+     "v": 11.245,
+     "un": "bi",
+     "per": "03/10",
+     "nota": "derivado: market cap R$ 164,97 bi / R$ 14,67",
+     "src": "03/10 ficha ITSA4 §3/§4"
+    }
+   },
+   "mercado": {
+    "preco": {
+     "v": 14.67,
+     "un": "R$",
+     "per": "02/10/2026",
+     "nota": "Yahoo e StatusInvest batem",
+     "src": "03/10 ficha ITSA4 cabeçalho"
+    },
+    "preco_04_09_real": {
+     "v": 13.95,
+     "un": "R$",
+     "per": "04/09/2026",
+     "nota": null,
+     "src": "03/10 ficha ITSA4 §1"
+    },
+    "preco_ficha_anterior": {
+     "v": 13.44,
+     "un": "R$",
+     "per": "ago/2026",
+     "nota": "Suno; 11/08: 12,88; HG 13,87 em 31/07; sem dia",
+     "src": "06/09 ficha ITSA4 cabeçalho"
+    },
+    "faixa_52s": {
+     "v": "R$ 10,74 - 15,07 (fechamentos, Yahoo ajustado)",
+     "un": "R$",
+     "per": "03/10",
+     "nota": null,
+     "src": "03/10 ficha ITSA4 §4"
+    },
+    "p_l": {
+     "v": 9.1,
+     "un": "x",
+     "per": "03/10",
+     "nota": "LPA 1,62 (StatusInvest); Itaú 10,6; 06/09: 8,7 (LPA ~1,55; lucro rec. 12m ~R$ 17,4 bi)",
+     "src": "03/10 ficha ITSA4 §4/§10"
+    },
+    "p_vp": {
+     "v": 1.75,
+     "un": "x",
+     "per": "03/10",
+     "nota": "VPA 8,36; 06/09: 1,61 (VPA 8,33)",
+     "src": "03/10 ficha ITSA4 §4"
+    },
+    "valor_mercado": {
+     "v": 164.97,
+     "un": "R$ bi",
+     "per": "02/10/2026",
+     "nota": "derivado (11,245 bi ações); 06/09: R$ 150 bi",
+     "src": "03/10 ficha ITSA4 §4"
+    },
+    "dy_12m": {
+     "v": 7.7,
+     "un": "%",
+     "per": "03/10",
+     "nota": "data-ex R$ 1,128 incl. R$ 0,78 do dividendo de dez/25; recorrente 7%; fwd 8,2% (Genial); 06/09: 9,6-9,8% 12m, fwd 9,0% Genial",
+     "src": "03/10 ficha ITSA4 §8"
+    },
+    "numero_graham": {
+     "v": 17.5,
+     "un": "R$",
+     "per": "03/10",
+     "nota": "preço 16% abaixo; Graham 6/7",
+     "src": "03/10 ficha ITSA4 §6"
+    }
+   },
+   "endividamento": {
+    "divida_liquida_holding": {
+     "v": 1.2,
+     "un": "R$ bi",
+     "per": "2T26",
+     "nota": "era R$ 1,0 bi no 1T26 (subiu); dívida bruta oficial: não encontrada",
+     "src": "03/10 ficha ITSA4 §1/§4"
+    },
+    "perimetro_06_09": {
+     "v": "Renova DL R$ 8,4 bi (D/E 0,17); HG caixa líquido - 'divergência de perímetro'; cobertura 17-20x",
+     "un": null,
+     "per": "06/09",
+     "nota": "NÃO reconciliado com os R$ 1,2 bi da holding de 03/10",
+     "src": "06/09 ficha ITSA4 quantitativo/§B&H"
+    }
+   },
+   "resultados": {
+    "lucro_rec_1S26": {
+     "v": 8.8,
+     "un": "R$ bi",
+     "per": "1S26",
+     "nota": "+12% (06/09: +11,9%; 2T26 R$ 4,31 bi +7,1%; Itaú contribuiu R$ 4,47 bi)",
+     "src": "03/10 ficha ITSA4 §4 | 06/09"
+    },
+    "roe_recorrente": {
+     "v": 18.7,
+     "un": "%",
+     "per": "03/10",
+     "nota": "vs 24%/24,3% do Itaú (diluído por não-financeiras e dívida); n/f custam 5,6 pp",
+     "src": "03/10 ficha ITSA4 §4 | 06/09"
+    },
+    "nao_financeiras": {
+     "v": "lucro -26,7% a/a no 1S26 (-27%): Dexco +2 mi; NTS -68 mi; Aegea -14 mi",
+     "un": "R$",
+     "per": "1S26",
+     "nota": null,
+     "src": "06/09 ficha ITSA4 quantitativo"
+    },
+    "itau_market_cap": {
+     "v": 517.3,
+     "un": "R$ bi",
+     "per": "02/10/2026",
+     "nota": "ITUB4 R$ 44,83; justo ITUB4 Lote 1 rev. 03/10 R$ 45,40",
+     "src": "03/10 ficha ITSA4 §1/§4"
+    }
+   },
+   "participacoes_valor": {
+    "itau_valor_participacao": {
+     "v": 163.4,
+     "un": "R$ bi",
+     "per": "31/08/2026",
+     "nota": "RI Itaúsa, ITUB4 R$ 39,50; estimado R$ 185 bi em 02/10 [H]; 06/09: look-through 37% x R$ 463 bi = R$ 171 bi",
+     "src": "03/10 ficha ITSA4 §1/§4 - ri.itausa.com.br portfolio-value-and-discount | 06/09 quantitativo"
+    },
+    "sotp_ri_31_08": {
+     "v": 179.96,
+     "un": "R$ bi",
+     "per": "31/08/2026",
+     "nota": "SOTP do RI; demais ativos (não-financeiras) R$ 16,6 bi constantes [H]",
+     "src": "03/10 ficha ITSA4 §1/§3"
+    },
+    "sotp_estimativa_02_10": {
+     "v": "R$ 202 bi = R$ 17,96/ação; desconto implícito 18,3%; com 15% -> R$ 15,27; com 10% -> R$ 16,17",
+     "un": null,
+     "per": "02/10/2026",
+     "nota": "[H] estimativa própria usando ITUB4 como proxy da perna Itaú (majoritariamente ON/ITUB3)",
+     "src": "03/10 ficha ITSA4 §6/§11"
+    },
+    "sotp_06_09": {
+     "v": "R$ 186-195 bi = R$ 16,6-17,4/ação; desconto 19,3% (era > 25%); 15% -> 14,1-14,8; 10% -> 14,9-15,7; 0% -> 16,6-17,4",
+     "un": null,
+     "per": "05/09",
+     "nota": null,
+     "src": "06/09 ficha ITSA4 valuation"
+    },
+    "aegea": {
+     "v": "Participação 14% (aporte de R$ 732 mi em ago, InfoMoney); IPO adiado para 2027; Fitch B+ (jun)",
+     "un": null,
+     "per": "ago-set/2026",
+     "nota": "capital parado em ativo rebaixado; Desist. da Copasa citada (detalhe não encontrado, 403)",
+     "src": "03/10 ficha ITSA4 §1/§10"
+    },
+    "pis_cofins": {
+     "v": "Fim da ineficiência em 2027: R$ 860 mi/ano a favor (call 2T26)",
+     "un": null,
+     "per": "2027",
+     "nota": "positivo fora do número",
+     "src": "03/10 ficha ITSA4 §1"
+    },
+    "alpargatas_dexco_motiva_nts_copa": {
+     "v": "Apenas nomeadas; NÃO há %, valor contábil ou de mercado de cada uma nos PDFs; 'Copa/Aegea IPO' como gatilhos de destravamento",
+     "un": null,
+     "per": null,
+     "nota": null,
+     "src": "03/10 ficha ITSA4 perfil/§10 | 06/09 perfil"
+    }
+   },
+   "holding_desconto_custo": {
+    "desconto_holding": {
+     "v": 18.4,
+     "un": "%",
+     "per": "31/08/2026",
+     "nota": "RI; comprimiu de 23,9% (jan); 18% em 02/10 [H]; 06/09: 19,3% vs SOTP (era > 25%); gatilho > 25% por 2 tri",
+     "src": "03/10 ficha ITSA4 §1/§2 | 06/09"
+    },
+    "custo_holding": {
+     "v": "NÃO consta em nenhum dos PDFs",
+     "un": null,
+     "per": null,
+     "nota": null,
+     "src": "ausência"
+    }
+   },
+   "proventos": {
+    "jcp_2026": {
+     "v": "R$ 0,116 (data-com 19/03) + R$ 0,138 (18/06), pagos 28/08 (R$ 0,254); trimestral R$ 0,0242 (data-com 31/08, pago 01/10); próximo data-com 30/11, pago 04/01/2027; sem bonificação em 2026 (2% em dez/25)",
+     "un": "R$/ação",
+     "per": "2026",
+     "nota": "StatusInvest rotula JCP do 3T como 0,0182 e o do 4T como 'dividendo' - prevalece o RI; 06/09 falava em JCP 'mensal' R$ 0,02",
+     "src": "03/10 ficha ITSA4 §1/§8 - ri.itausa.com.br shareholders-remuneration | 06/09 proventos"
+    },
+    "dividendo_dez25": {
+     "v": 0.78,
+     "un": "R$/ação",
+     "per": "dez/2025",
+     "nota": "extraordinário do Itaú",
+     "src": "03/10 ficha ITSA4 §8 | 06/09"
+    },
+    "dy_recorrente": {
+     "v": 7.0,
+     "un": "%",
+     "per": null,
+     "nota": "fwd 7,0-8,2% (Genial 8,2%); 06/09 dizia fwd 9,0%/recorrente 7,5-8%",
+     "src": "03/10 ficha ITSA4 §5/§8"
+    },
+    "payout": {
+     "v": 95,
+     "un": "%",
+     "per": null,
+     "nota": "dividendos recebidos do Itaú > proventos pagos [EF]",
+     "src": "03/10 ficha ITSA4 §8"
+    },
+    "recompra": {
+     "v": "até 5 mi PN até 13/11/2027 (imaterial)",
+     "un": null,
+     "per": null,
+     "nota": null,
+     "src": "03/10 ficha ITSA4 §1/§10"
+    },
+    "irrf_jcp": {
+     "v": 17.5,
+     "un": "%",
+     "per": null,
+     "nota": "fim do JCP = risco nº 1 (atinge banco e holding)",
+     "src": "03/10 ficha ITSA4 §5 | 06/09"
+    }
+   },
+   "valuation_do_pdf": {
+    "central_03_10": {
+     "v": 15.45,
+     "un": "R$",
+     "per": "03/10",
+     "nota": "era 15,00; = SOTP no justo do Itaú R$ 204,4 bi (ITUB4 45,40) x 0,85 / 11,245 bi ações; JUSTA mantido (-5%); compra R$ 10,80; saída R$ 18,00; faixa 9,7-19,5; aceitável < R$ 13,10; VALOR DO PDF",
+     "src": "03/10 ficha ITSA4 topo/§3"
+    },
+    "central_06_09": {
+     "v": 15.0,
+     "un": "R$",
+     "per": "05/09",
+     "nota": "JUSTA (-10% a 13,44); compra 10,50; saída 17,40; nota 7,9",
+     "src": "06/09 ficha ITSA4 topo"
+    },
+    "cenarios": {
+     "v": "pess. (ITUB 29, desc. 20%) 9,7 | base (ITUB 45,4, 15%) 15,45 | otim. (ITUB 55, 10%) 19,5 (03/10); 06/09: 9,1 / 14,8 (ITUB 44) / 19,6",
+     "un": "R$",
+     "per": null,
+     "nota": null,
+     "src": "03/10 ficha ITSA4 §3/§6 | 06/09"
+    },
+    "epv": {
+     "v": "9,3 / 11,1 / 12,9 (Ke 16,56% / 14% / 12,08%)",
+     "un": "R$",
+     "per": null,
+     "nota": null,
+     "src": "03/10 ficha ITSA4 §6"
+    },
+    "bazin": {
+     "v": "12m 18,8 | recorrente 17,2-17,8 | fwd Genial 20,2",
+     "un": "R$",
+     "per": null,
+     "nota": null,
+     "src": "03/10 ficha ITSA4 §6"
+    },
+    "premissas_declaradas": {
+     "v": "Ke herdado via ITUB4; perna Itaú no justo do ITUB4 (Lote 1 rev. 03/10, Ke 12,08%); desconto 15% (inalterado)",
+     "un": null,
+     "per": null,
+     "nota": null,
+     "src": "03/10 ficha ITSA4 §3/§11"
+    },
+    "retorno_real_esperado": {
+     "v": "9,6-10,8% (yield 7% + g 7%); Sim (limite) - era Sim (11,5%)",
+     "un": "% real",
+     "per": "03/10",
+     "nota": null,
+     "src": "03/10 ficha ITSA4 §5"
+    },
+    "sell_side": {
+     "v": "Média R$ 16,71 (8 casas, todas compra): JPM 18,50; Safra 18; Genial 17,95; Santander 17; UBS 16,30; GS 16,20; Jefferies 16; BBI 15,40",
+     "un": "R$",
+     "per": "03/10",
+     "nota": null,
+     "src": "03/10 ficha ITSA4 §6"
+    },
+    "notas": {
+     "v": "qualidade 8,0 | solidez 8,0 | renda 8,0 | preço 4,5 | geral 7,3 (era 7,9)",
+     "un": null,
+     "per": null,
+     "nota": null,
+     "src": "03/10 ficha ITSA4"
+    }
+   },
+   "gatilhos_e_agenda": {
+    "gatilhos": {
+     "v": "fim do JCP sem compensação; desconto de holding > 25% por 2 tri; novo aporte relevante em não-financeira deficitária; payout < 80%",
+     "un": null,
+     "per": null,
+     "nota": null,
+     "src": "03/10 ficha ITSA4 §2/§10"
+    },
+    "eventos_datas": {
+     "v": "03/11 Itaú 3T26; 09/11 Itaúsa 3T26 (agenda StatusInvest; não confirmado); 30/11 data-com JCP trimestral; 13/11/2027 fim da recompra; IPO da Aegea (2027)",
+     "un": null,
+     "per": null,
+     "nota": null,
+     "src": "03/10 ficha ITSA4 §10"
+    },
+    "nao_encontrado": {
+     "v": "dívida bruta oficial da holding; participação exata no Itaú; SOTP de setembro no RI; preço do ITUB3; alvos XP/BTG; custo da holding",
+     "un": null,
+     "per": null,
+     "nota": null,
+     "src": "03/10 ficha ITSA4 §10 | 06/09"
+    }
+   }
+  }
+ },
+ "eventos_binarios_agenda_pdf_03_10": [
+  {
+   "data": "27/10/2026",
+   "evento": "ITR 3T26 Hypera (1º dado do Semavy); teleconferência 28/10",
+   "olhar": "HYPE3",
+   "src": "03/10 ficha HYPE3 §4/§10"
+  },
+  {
+   "data": "21/10/2026 (não confirmado)",
+   "evento": "3T26 WEG",
+   "olhar": "WEGE3",
+   "src": "03/10 ficha WEGE3 §10"
+  },
+  {
+   "data": "29/10/2026",
+   "evento": "3T26 Ambev",
+   "olhar": "ABEV3",
+   "src": "03/10 ficha ABEV3 §10"
+  },
+  {
+   "data": "03/11/2026",
+   "evento": "3T26 TIM (não confirmado no RI); 3T26 Itaú",
+   "olhar": "TIMS3, ITSA4",
+   "src": "03/10 fichas TIMS3 §10, ITSA4 §10"
+  },
+  {
+   "data": "3-4/11/2026",
+   "evento": "Copom (Selic 13,75%); 'se o ciclo de corte pausar, a alta de setembro devolve antes do lucro'",
+   "olhar": "FLRY3, HYPE3, ITSA4",
+   "src": "03/10 premissas comuns / autocrítica do lote"
+  },
+  {
+   "data": "05/11/2026 (não confirmado)",
+   "evento": "3T26 Fleury",
+   "olhar": "FLRY3",
+   "src": "03/10 ficha FLRY3 §2/§10"
+  },
+  {
+   "data": "09/11/2026 (não confirmado)",
+   "evento": "3T26 Itaúsa",
+   "olhar": "ITSA4",
+   "src": "03/10 ficha ITSA4 §10"
+  },
+  {
+   "data": "10/11/2026 (não confirmado); 12/11 Telefónica 9M26",
+   "evento": "3T26 Vivo",
+   "olhar": "VIVT3",
+   "src": "03/10 ficha VIVT3 §10"
+  },
+  {
+   "data": "04/10/2026",
+   "evento": "1º turno da eleição (cotações de 02/10 são da véspera; atualizar preço e IPCA+ antes de decidir; Ke pode andar > 27 bps numa semana)",
+   "olhar": "todos",
+   "src": "03/10 premissas comuns / autocrítica do lote 5"
+  },
+  {
+   "data": "06/10/2026",
+   "evento": "3ª parcela do JCP 2025 da Ambev (R$ 0,1185)",
+   "olhar": "ABEV3",
+   "src": "03/10 ficha ABEV3 §8"
+  },
+  {
+   "data": "out-nov/2026",
+   "evento": "MP do Imposto Seletivo sobre bebidas (pós-eleição); cobrança fev-mar/2027",
+   "olhar": "ABEV3",
+   "src": "03/10 ficha ABEV3 §1/§10"
+  },
+  {
+   "data": "dez/2026",
+   "evento": "Declaração do 4T da TIM (cumprimento do guidance de R$ 5,3-5,5 bi, precisa concentrar R$ 1,3/ação) e declaração anual da Ambev (payout)",
+   "olhar": "TIMS3, ABEV3",
+   "src": "03/10 fichas TIMS3 §8/§10, ABEV3 §10"
+  },
+  {
+   "data": "30/11/2026",
+   "evento": "Data-com do JCP trimestral da Itaúsa (pago 04/01/2027)",
+   "olhar": "ITSA4",
+   "src": "03/10 ficha ITSA4 §8/§10"
+  },
+  {
+   "data": "31/12/2026",
+   "evento": "Prazo de pagamento JCP 2025 Hypera e JCPs 2026 Ambev",
+   "olhar": "HYPE3, ABEV3",
+   "src": "03/10 fichas HYPE3 §10, ABEV3 §1"
+  },
+  {
+   "data": "22/01/2027",
+   "evento": "Pagamento do JCP da TIM (R$ 0,21668)",
+   "olhar": "TIMS3",
+   "src": "03/10 ficha TIMS3 §10"
+  },
+  {
+   "data": "10/03/2027",
+   "evento": "Pagamento dos 3 JCPs de 2026 da WEG",
+   "olhar": "WEGE3",
+   "src": "03/10 ficha WEGE3 §10"
+  },
+  {
+   "data": "30/04/2027",
+   "evento": "Pagamento dos JCPs de 2026 da Vivo",
+   "olhar": "VIVT3",
+   "src": "03/10 ficha VIVT3 §10"
+  },
+  {
+   "data": "2027",
+   "evento": "IPO da Aegea (adiado); fim da ineficiência PIS/Cofins da Itaúsa (+R$ 860 mi/ano); política de payout 2027 da Vivo indefinida; 11/08/2027 2ª parcela extraordinário WEG; 02/09/2027 3ª parcela dividendo Fleury; 31/12/2027 prazo JCP 2026 Hypera",
+   "olhar": "ITSA4, VIVT3, WEGE3, FLRY3, HYPE3",
+   "src": "03/10 fichas"
+  },
+  {
+   "data": "sem data",
+   "evento": "Tag along/OPA a minoritários da TIM (sem posição da cia/CVM); edital Anatel 6 GHz (consulta aberta); decisão judicial 700 MHz (Vivo); vendas do Semavy; alíquota do IS",
+   "olhar": "TIMS3, VIVT3, HYPE3, ABEV3",
+   "src": "03/10 fichas TIMS3 §1/§10, VIVT3 §1, HYPE3 §1, ABEV3 §1"
+  }
+ ],
+ "erros_proprios_da_ficha_anterior_corrigidos_em_03_10": {
+  "HYPE3": {
+   "v": "Preço da ficha 06/09 (R$ 20,10) era de 18/06 e 23/07; ao preço real de 04/09 (R$ 23,16) já era JUSTA, não RADAR (erro nº 4). CMED 2026 (média 2,47%) já valia desde 01/04 e a ficha não registrou. JCP defasado 15-21 meses, não 12-18. Premissa 'Semavy -> central 28' refeita: efeito em EBITDA ~2% -> central 25-26",
+   "un": null,
+   "per": null,
+   "nota": null,
+   "src": "03/10 ficha HYPE3 §1/§2/§10"
+  },
+  "FLRY3": {
+   "v": "Cotação intradiária de 07/08 sem data; ao fechamento de 04/09 (20,17) o RADAR estava certo naquele dia (parcial). JCP antecipado para 28/09 (a favor)",
+   "un": null,
+   "per": null,
+   "nota": null,
+   "src": "03/10 ficha FLRY3 §1"
+  },
+  "TIMS3": {
+   "v": "Yield guiado de 12% inclui recompra: em caixa é ~10%. JCP pago em 4 meses, não 12 (a favor). Diagnóstico 'agregadores quebrados pelo grupamento' corrigido: o defeito é dos agregadores (grupamento 100:1 + desdobramento 1:100 neutro)",
+   "un": null,
+   "per": null,
+   "nota": null,
+   "src": "03/10 ficha TIMS3 §1"
+  },
+  "VIVT3": {
+   "v": "Yield total 9,5% somava redução de capital (não recorrente) e recompra não executada (zero jan-jul); retorno real esperado cai de 10-11% para 7,5% (recorrente 6,8%); comparativo com a RF refeito. Erro nº 1 da Sabesp 'em outra roupa'",
+   "un": null,
+   "per": null,
+   "nota": null,
+   "src": "03/10 ficha VIVT3 §1/§11"
+  },
+  "ABEV3": {
+   "v": "(1) P/L justo misturava Ke real 12,35% com g nominal 6% (15,7x/R$ 16,7) -> corrigido 9,5x real / 9,0x nominal; Bazin usava DPA 2025 (1,0) inflado; central 14,00 -> 13,75 (Ke +0,36; erro -0,61). (2) JCP de junho era R$ 0,0449, não 0,449 (erro de vírgula, igual ao StatusInvest); yield recorrente 6,3% -> 4,5%; RF Empate -> Não",
+   "un": null,
+   "per": null,
+   "nota": null,
+   "src": "03/10 ficha ABEV3 §1/§3"
+  },
+  "WEGE3": {
+   "v": "Preço da ficha (R$ 43,63 de 17/07) vs R$ 51,74 em 04/09: prêmio era 62%, não 36%; LPA 12m 1,49 (não 1,61 = LPA 2025); P/L 34,5, não 27; DY recorrente 1,5% (não 2,2%)",
+   "un": null,
+   "per": null,
+   "nota": null,
+   "src": "03/10 ficha WEGE3 §1/§11"
+  },
+  "ITSA4": {
+   "v": "Preço de ago sem dia (13,44) vs 13,95 em 04/09: veredito JUSTA sobrevive. DY 12m inflado pelo dividendo de dez/25 (recorrente 7%). SOTP de 02/10 é estimativa própria [H] usando ITUB4 como proxy (perna Itaú majoritariamente ITUB3)",
+   "un": null,
+   "per": null,
+   "nota": null,
+   "src": "03/10 ficha ITSA4 §1/§8/§11"
+  },
+  "geral": {
+   "v": "Erro nº 4 (cotação defasada) em 6 das 7 fichas (HYPE3, WEGE3 materiais; FLRY3, TIMS3, VIVT3, ITSA4 não mudam o veredito; ABEV3 imaterial); erro nº 1/bloco D (yield não sustentável na RF) em ABEV3, VIVT3, WEGE3 e TIMS3 (4 de 7); erro nº 5 (Ke real x g nominal) em ABEV3. Vereditos que mudam: HYPE3 RADAR->JUSTA; FLRY3 RADAR->JUSTA; ABEV3 JUSTA->CARA; VIVT3 JUSTA->RADAR (fronteira). Vencem a RF só TIMS3 e ITSA4 (limite). Correção de processo: cotação sempre de série diária com data",
+   "un": null,
+   "per": null,
+   "nota": null,
+   "src": "03/10 'O que mudou no lote' e autocrítica do lote"
+  }
+ },
+ "fontes": {
+  "_nota": "Lista de fontes por ficha ao final de cada seção do PDF 03/10; o PDF 06/09 NÃO traz lista de fontes. Truncamentos de URL completados pelo texto.",
+  "03_10": [
+   "HYPE3: statusinvest.com.br/acoes/hype3; finance.yahoo.com/quote/HYPE3.SA; infomoney (hypera aprova R$ 185,2 mi); exame (Semavy R$ 333); seudinheiro (Anvisa Semavy); infomoney (Semavy não está no preço); moneytimes (Itaú BBA eleva alvo); investidor10 calendário HYPE3; agenciabrasil (CMED 3,81%)",
+   "FLRY3: Yahoo FLRY3.SA; statusinvest; dadosdemercado; bpmoney (lucro +45,7% 2T26); moneytimes (antecipa R$ 217,8 mi JCP); exame (Fleury compra Unilab); gazetamercantil; investing.com consenso",
+   "TIMS3: Yahoo TIMS3.SA; fundamentus; minhaoperadora (R$ 515 mi); guiadoinvestidor (cancela 13,2 mi); moneytimes (recompra R$ 1 bi); teletime 18/09 (Poste Italiane); teletime 08/09 (Anatel 6 GHz); seudinheiro 2025 (grupamento); moneytimes (despenca 5% após 2T26)",
+   "VIVT3: Yahoo VIVT3.SA; fundamentus detalhes e recompras; api.mziq.com (release 2T26); seudinheiro (R$ 500 mi JCP); financenews (R$ 350 mi JCP); teletime 17/09 (700 MHz); moneytimes (2T26)",
+   "ABEV3: Yahoo ABEV3.SA; investidor10; statusinvest; investidor10 (1T26 R$ 3,886 bi); bpmoney (JCP R$ 1,1 bi); forbes (cancela 279 mi ações); oespecialista.safra (venda); contabeis (IS pós-eleição); seudinheiro (BofA risco IS)",
+   "WEGE3: Yahoo WEGE3.SA; fundamentus; statusinvest; ri.weg.net dividendos; bpmoney (JCP R$ 449,8 mi); seudinheiro (US$ 165 mi geradores); moneytimes (CFO 2S26); infomoney (Goldman); exame (data centers)",
+   "ITSA4: Yahoo ITSA4.SA e ITUB4.SA; statusinvest itsa4/itub4; ri.itausa.com.br portfolio-value-and-discount e shareholders-remuneration; investing.com ITUB4 histórico (31/08: 39,50); infomoney (Itaúsa R$ 732 mi Aegea 14%); arevista (alvo até R$ 18,50); oespecialista.safra (Itaúsa 2T26)",
+   "Comuns: Tesouro Transparente (precotaxatesourodireto.csv); InfoMoney tesouro abertura/fechamento 30/09 e 28/09; Investidor10 tesouro; Focus 28/09; Yahoo, StatusInvest, Fundamentus, Dados de Mercado, Investidor10"
+  ],
+  "06_09": [
+   "Sem lista de fontes; texto cita 'RI quando acessível (Hypera parcial, Vivo release); casas XP, BTG, Safra, BBI, Genial, Empiricus, Nord; HG Brasil / Renova / StatusInvest / Dados de Mercado'"
+  ]
+ }
+}

@@ -1,0 +1,913 @@
+{
+  "meta": {
+    "lote": "Lote 3 - Papel & Celulose, Infraestrutura e Agronegocio",
+    "fonte_principal": "Infra_Agro_rev_03-10-2026.txt (PDF Reavaliacao, data-base 03/10/2026, cotacoes de 02/10/2026) - PREVALECE",
+    "fonte_complementar": "Infra_Agro_rev_06-09-2026.txt (PDF data-base 04-06/09/2026; mais completo em metricas e historico; cotacoes de jul-ago em 5 das 7 empresas, reconhecidas como erradas pelo proprio PDF de 03/10)",
+    "legenda_src": "Campo src = '03/10' ou '06/09' (qual PDF) + secao/ficha + rotulo da fonte que o PDF cita. Valores v: numero (ponto decimal); un = unidade; per = periodo/data. 'derivado' = conta simples feita aqui, nao esta no PDF. 'colunas quebradas' = mapeamento linha-a-valor reconstruido pela ordem das linhas (extração de PDF embaralhou a tabela).",
+    "aviso_geral": "Nenhuma ficha traz DRE nova: a revisao de 03/10 e de preco/premissa/correcao; ultimos resultados citados sao do 2T26 (jun/26), 1T27 SMTO3 e 1S26. 3T26 so entre 28/10 e 12/11.",
+    "regua_do_pdf_03_10": {
+      "titulo_ancora": {"v": 7.08, "un": "% real a.a.", "per": "02/10/2026 manha", "nota": "Tesouro IPCA+ c/ juros semestrais 2060, taxa de compra; IPCA+ 2050 sem cupom 7,06%; em 04/09 o 2060 estava em 7,34%; equivalente nominal ~11,4%", "src": "03/10 premissas comuns (Tesouro Transparente CSV precotaxatesourodireto.csv)"},
+      "ke_real": {"v": 12.08, "un": "% real", "nota": "7,08% + 5 p.p.; em set era 12,35% (7,35%+5)", "src": "03/10 premissas comuns (calculo)"},
+      "ke_nominal": {"v": 16.6, "un": "%", "nota": "IPCA 4% mantido para comparabilidade; em set ~16,8%", "src": "03/10 premissas comuns"},
+      "regua_renda_fixa": "Vence >= 10,08% real; Empate 7,08-10,08%; Nao < 7,08% (em set: 10,35% / 7,35%)",
+      "selic": {"v": 13.75, "un": "% a.a.", "per": "Copom 16/09/2026 (-0,25 p.p.)", "nota": "Focus fim-2026 13,50%, fim-2027 12,00%; em set era 14,25% citado (14,00% real)", "src": "03/10 premissas comuns (InfoMoney infomoney.com.br/economia/taxa-selic-copom-corta-juros-13-75-set-2026/ - URL reconstruida de texto quebrado)"},
+      "ipca_12m": {"v": 4.22, "un": "%", "per": "ago/2026", "nota": "Focus 2026 4,99%; Focus 2027 4,31%; PDF usa IPCA 4% para comparabilidade", "src": "03/10 premissas comuns (IBGE/SIDRA t.1737; Focus 25/09 BCB Olinda)"},
+      "usd_brl": {"v": 5.216, "un": "R$/US$", "per": "02/10/2026 comercial", "nota": "PTAX 5,2238; em 03/09 ~5,10", "src": "03/10 premissas comuns (BCB Olinda)"},
+      "ibovespa": {"v": 192115, "un": "pontos", "per": "02/10/2026", "nota": "+3,8% vs 185.147 em 04/09", "src": "03/10 premissas comuns (InfoMoney 02/10)"},
+      "contexto_risco": "1o turno da eleicao 04/10/2026; VIX Brasil recorde 32,8 em 02/10",
+      "regra_efeito_ke": "Queda de 0,27 p.p. do Ke eleva ~2-3% valores DCF/EPV: +3% onde central e DCF/EPV (B3SA3, SMTO3); nas ciclicas ancoradas em multiplo de meio de ciclo ou NAV, efeito (<=2%) absorvido ou compensado por fato novo"
+    }
+  },
+
+  "tickers": {
+
+    "SUZB3": {
+      "identificacao": {
+        "nome": "Suzano",
+        "segmento": "Papel & Celulose - commodity: maior produtora mundial de celulose de eucalipto; papel, tissue (JV Kimberly-Clark), embalagens EUA",
+        "controlador": {"v": "Suzano Holding (familia Feffer)", "participacao_pct": null, "src": "03/10 ficha SUZB3; 06/09 ficha SUZB3"},
+        "tag_along": null,
+        "free_float": null,
+        "liquidez_diaria": null,
+        "numero_acoes": {"v": 1264, "un": "milhoes", "per": "03/10/2026", "nota": "'1,264 bi acoes x 44,35 + DL 66,1' (calculo do EV no PDF)", "src": "03/10 ficha SUZB3 tabela 1 (calculo)"},
+        "composicao_unit": null
+      },
+      "mercado": {
+        "preco": {"v": 44.35, "un": "R$", "per": "02/10/2026", "nota": "-5,4% vs 04/09 (R$ 46,89); maxima 48,58 (22/09); minima 52s 39,68 (06/09)", "src": "03/10 ficha SUZB3 (Yahoo; Investing.com confirma)"},
+        "preco_ficha_anterior": {"v": 41.72, "un": "R$", "per": "ago/2026", "nota": "cotacao defasada; real em 04/09 = 46,89 (+12%)", "src": "03/10 erro proprio"},
+        "valor_mercado": {"v": 56.06, "un": "R$ bilhoes", "per": "02/10/2026", "nota": "DERIVADO (1,264 bi acoes x 44,35); PDF nao cita valor de mercado explicito", "src": "derivado de 03/10"},
+        "ev": {"v": 122, "un": "R$ bilhoes", "per": "03/10", "nota": "EV/EBITDA ~6,1x pre-Arbex; pro-forma ~134 bi. Em 06/09: EV 119 bi / 5,9x", "src": "03/10 ficha SUZB3 (calculo; DL do 2T26)"},
+        "p_l": {"v": 4.8, "nota": "contabil, ilusorio: lucro dominado por cambio/derivativos (2024 prejuizo; 4T25 negativo)", "per": "set/2026", "src": "06/09 ficha SUZB3"},
+        "p_vp": {"v": 1.2, "nota": "VPA 34,77 (HG); agregadores divergem 0,69-1,50", "src": "06/09 ficha SUZB3"},
+        "ev_ebitda": {"v": 5.9, "nota": "historico ~6x; 4,9x sobre EBITDA de meio de ciclo (24 bi); 03/10: ~6,1x pre-Arbex", "src": "06/09 e 03/10 ficha SUZB3"}
+      },
+      "endividamento": {
+        "divida_liquida": {"v": 66.1, "un": "R$ bilhoes (US$ 12,77 bi)", "per": "30/06/2026", "src": "06/09 e 03/10 ficha SUZB3 (DL do 2T26)"},
+        "divida_liquida_pro_forma_arbex": {"v": null, "nota": "+ pagamento Arbex US$ 1,3 bi (fechamento 01/07/2026) + divida da JV ~US$ 1,0 bi = ~+R$ 12 bi; EBITDA da Arbex NAO encontrado; PDF estima DL/EBITDA pro-forma ~3,8-4x como HIPOTESE", "src": "03/10 ficha SUZB3 (Money Times fechamento 01/07)"},
+        "divida_bruta": null,
+        "caixa": {"v": null, "nota": "'caixa 15-22 bi' citado como mitigante; sem data exata", "src": "06/09 ficha SUZB3 (Altman)"},
+        "dl_ebitda": {"v": 3.4, "un": "x (em US$)", "per": "30/06/2026", "nota": "3,3x em R$; politica 2,5x para retorno agressivo; gatilho > 4x USD", "src": "06/09 e 03/10 ficha SUZB3"},
+        "custo_medio_divida": null,
+        "prazo_medio_divida": null,
+        "parcela_em_usd": {"v": null, "nota": "PDF diz apenas 'divida longa em USD'; sem percentual", "src": "06/09 ficha SUZB3"}
+      },
+      "resultados": {
+        "receita": null,
+        "ebitda": {"v": 4.7, "un": "R$ bilhoes", "per": "2T26 ajustado", "nota": "+3% t/t; -23% a/a; margem 40,6%", "src": "06/09 ficha SUZB3 (colunas quebradas)"},
+        "ebit": null,
+        "lucro_liquido_contabil": null,
+        "lucro_liquido_ajustado": {"v": null, "nota": "LPA normalizado ~4 (06/09, base do Graham R$ 56)", "src": "06/09 ficha SUZB3"},
+        "margem_ebitda": {"v": 40.6, "un": "%", "per": "2T26", "src": "06/09 ficha SUZB3"},
+        "fcf_ajustado_12m": {"v": 10, "un": "R$ bilhoes", "nota": "yield 19,2%; inclui derivativos e giro; recorrente ~5-6 bi", "src": "06/09 ficha SUZB3"},
+        "roic": {"v": 4.5, "un": "%", "nota": "no fundo (HG); ~9-11% no meio de ciclo ~ WACC 10%", "src": "06/09 e 03/10 ficha SUZB3"},
+        "roe": {"v": null, "nota": "24-31% (efeito de cambio + alavancagem)", "src": "06/09 ficha SUZB3"},
+        "da": null
+      },
+      "capex": {
+        "total": {"v": 2.5, "un": "R$ bilhoes por trimestre", "nota": "~ D&A, pos-Cerrado (rotulo de linha ambiguo - colunas quebradas)", "src": "06/09 ficha SUZB3"},
+        "manutencao": null,
+        "expansao": null,
+        "guidance": null
+      },
+      "premissas_de_ciclo_declaradas_no_pdf": {
+        "ebitda_meio_de_ciclo": {"v": 24, "un": "R$ bilhoes", "nota": "mantido em 03/10 com vies de baixa (coerente com DL/EBITDA 2,8x em 2027 projetado pelo BBI)", "src": "03/10 ficha SUZB3 sec.2; 06/09 ficha SUZB3"},
+        "ebitda_de_fundo": {"v": 19, "un": "R$ bilhoes", "nota": "usado em 'fundo 6x x 19 - 66 = R$ 38'", "src": "06/09 ficha SUZB3 valuation"},
+        "multiplo_saida": {"v": 6.5, "un": "x EBITDA", "nota": "6,5x x 24 bi - DL = R$ 71 (06/09); pro-forma ~R$ 62 (03/10); fundo 6x", "src": "06/09 e 03/10 ficha SUZB3"},
+        "celulose_meio_de_ciclo_usd_t": {"v": null, "nota": "PDF nao declara numero de meio de ciclo; gatilhos: celulose > US$ 650 sustentada e cambio > 5,4 -> central R$ 65; celulose < US$ 550 por 2 tri com custo > R$ 900/t invalida", "src": "03/10 ficha SUZB3"},
+        "celulose_LP_das_casas": {"v": "564-584", "un": "US$/t", "nota": "BBI/BofA; com US$ 570 o central cairia a ~R$ 50 (desconto vira 11%, ainda RADAR por pouco) - autocritica do PDF", "src": "03/10 ficha SUZB3 (Seu Dinheiro BBI 22/09)"},
+        "cambio_meio_de_ciclo": null,
+        "spot_citado": {
+          "celulose_BHKP_China": {"v": "570-580", "un": "US$/t", "per": "liquido fim/set; reajuste de out +US$ 20 -> 590-600; 'China ~US$ 580 e subindo'", "src": "03/10 ficha SUZB3 (CNN Brasil 22/09; XP 28/09)"},
+          "celulose_Europa_lista": {"v": 1360, "un": "US$/t", "per": "out/2026 (+US$ 50)", "nota": "transacoes -10% jun-set; mercado ainda cede", "src": "03/10 ficha SUZB3 (PapNews 24/09; Newspulpaper 01/10) - colunas quebradas"},
+          "celulose_realizada_2T26": {"v": 601, "un": "US$/t", "src": "06/09 ficha SUZB3"},
+          "usd_brl": {"v": 5.22, "per": "02/10/2026", "nota": "+2,4% - favorece receita em USD", "src": "03/10 ficha SUZB3 (BCB PTAX)"}
+        }
+      },
+      "operacional_setor": {
+        "custo_caixa": {"v": 843, "un": "R$/t", "per": "2T26", "nota": "menor do mundo; +5% t/t; gatilho invalida > R$ 900/t com celulose < US$ 550", "src": "06/09 e 03/10 ficha SUZB3"},
+        "capacidade_Mt": {"v": 13, "un": "Mt", "nota": "'13 Mt' integrado pos-Cerrado (base do custo de reproducao)", "src": "06/09 ficha SUZB3"},
+        "custo_reproducao": {"v": 140, "un": "R$ bilhoes + florestas", "nota": "13 Mt x ~US$ 2.000/t; EV 119 bi (06/09) / ~122 (~134 pro-forma) em 03/10 ficam abaixo", "src": "06/09 e 03/10 ficha SUZB3"},
+        "projetos": {
+          "Cerrado": "concluido no prazo; R$ 22 bi do capital retido foi para Cerrado e M&A (teste do R$ 1 retido: falha; P/VP 3,6 -> 1,2)",
+          "Arbex": "'pagamento Arbex US$ 1,3 bi (01/07)' + divida JV ~US$ 1,0 bi; JV tissue Kimberly-Clark 51% por US$ 1,3 bi; EBITDA nao encontrado; consolidacao no 3T26",
+          "Puma": "nao citado na ficha SUZB3 (Puma e da Klabin)"
+        },
+        "capacidade_nova_China": "~6,8 Mt de capacidade integrada nova na China ate 2027 (risco)"
+      },
+      "proventos": {
+        "dpa_12m": {"v": 1.12114, "un": "R$/acao", "nota": "SOMA DERIVADA de 1,11659 (data-com 18/12/25, pago 04/02/26) + 0,00455 (data-com 29/04/26, pagamento ate 31/12/26, nao confirmado)", "src": "03/10 ficha SUZB3 sec.5"},
+        "dy_12m_pct": {"v": 2.53, "nota": "2,52% por pagamento; a R$ 44,35; forward 2-3%", "src": "03/10 ficha SUZB3"},
+        "serie_dpa": "2022 0,48 | 2023 0* | 2024 0* | 2025 1,12 (*dados HG possivelmente incompletos)",
+        "politica": "payout ~12% (06/09 e 03/10); prioridade e desalavancar ate 2,5x; nao e acao de proventos",
+        "extraordinarios": "dividendo dez/25 (R$ 1,12/acao) e R$ 0,48 em dez/22; anos sem provento relevante 2021, 2023, 2024 (fontes divergem)",
+        "recompra": "retomada a R$ 42,68 (~preco de 06/09); 'recompra na minima'; recompras executadas no 3T = nao encontrado",
+        "defasagem": "~1,5 mes no dividendo principal",
+        "declarado_no_periodo_05_09_a_03_10": "Nada",
+        "coberto_por_caixa": "Sim no nivel atual (payout ~12%) - nivel irrelevante para renda"
+      },
+      "multiplos_retornos_pares": {
+        "yield_fwd_pct": "2-3", "retorno_esperado_nominal": "5-7% por proventos", "retorno_esperado_real": "1-3%", "vs_ipca_mais_708": "-4 a -6 p.p.", "vence_rf": "Nao",
+        "nota_geral": {"antes": 5.2, "agora": 5.0, "src": "03/10 ficha SUZB3"},
+        "pares": "UBS favorita na AL; XP neutra/cetica 2S26; Nord fora a 5,5x (06/09). Alvos: BBI Compra 73 -> 59 (22/09), BofA Compra 66, XP Compra 60, BTG prefere SUZB3. Pares Klabin/Arauco/CMPC em multiplos = nao encontrado",
+        "src": "03/10 e 06/09 ficha SUZB3"
+      },
+      "governanca_riscos": {
+        "interferencias_consumadas": "Nenhuma nova (checklist 03/10: sem controlador com poder discricionario adverso no lote)",
+        "riscos": ["DL/EBITDA > 4x pro-forma com Arbex no 3T26", "celulose LP US$ 564-584/t nas casas", "~6,8 Mt capacidade nova na China ate 2027", "lucro = cambio, EBITDA = celulose", "ROIC 4,5% no fundo < Ke", "Altman ~1,15"],
+        "buy_and_hold": "Nao (inalterado): moat Sim; ROIC>Ke Nao; balanco Nao; dono Parcial; lucro previsivel Nao; diluicao Sim (aumento de R$ 5 bi era capitalizacao de reservas, sem emissao); preco Parcial (-19%)"
+      },
+      "gatilhos_da_ficha": [
+        {"gatilho": "DL/EBITDA > 4x USD", "status": "Nao verificavel (3,4x em 30/06 antes da Arbex; pro-forma ~3,8-4x HIPOTESE) ate 3T26 05/11"},
+        {"gatilho": "Celulose < US$ 550 por 2 tri com custo > R$ 900/t", "status": "Nao acionado (China ~US$ 580 e subindo)"},
+        {"gatilho": "Emissao de acoes", "status": "Nao acionado (R$ 5 bi foi capitalizacao de reservas)"},
+        {"gatilho": "Novo M&A grande antes de 2,5x", "status": "Nao acionado (Arbex fechada 01/07, antes da ficha)"},
+        {"gatilho": "Celulose > US$ 650 sustentada e cambio > 5,4 -> central R$ 65", "status": "ativo, nao acionado"},
+        {"gatilho": "Preco < R$ 36 -> BARATA", "status": "ativo"},
+        {"gatilho": "3T26 com DL/EBITDA > 4x -> sai do RADAR", "status": "ativo"}
+      ],
+      "eventos_com_data": [
+        {"data": "05/11/2026", "evento": "3T26 (DL/EBITDA pro-forma com Arbex, gatilho 4x)", "src": "03/10 agenda; ri.suzano.com.br"},
+        {"data": "01/07/2026", "evento": "Fechamento Arbex (JV tissue KC)", "src": "03/10"},
+        {"data": "22/09/2026", "evento": "BBI corta alvo 73 -> 59", "src": "03/10"}
+      ],
+      "premissas_pdf_valuation": {
+        "marcador": "PREMISSA DO PDF (nao verificada)",
+        "veredito": "RADAR (antes RADAR)", "justo": 55.00, "compra_menos_30pct": 38.50, "saida": 70.00, "desconto_pct": -19, "faixa": "27-90",
+        "dcf_fcfe_base_nominal_sens": "~48 / 73 (antes 47 / 71) - 12,08% / Ke de mercado; Ke 16,6%; rotulo 'nominal/sens.'",
+        "multiplo": "6,5x x 24 bi - DL = ~R$ 62 pro-forma (R$ 71 antes)",
+        "epv_wacc_10pct": "fundo R$ 19 / meio de ciclo R$ 43",
+        "graham": "R$ 84 (LPA contabil ~9) / R$ 56 (LPA normalizado ~4); 4/7 criterios",
+        "dcf_3_cenarios_set": "pess. 19/27 | base 47/71 | otim. 63/97",
+        "valor_central": "R$ 55 (mantido; Ke +3% compensado por celulose LP sob pressao e alavancagem pro-forma)",
+        "notas": {"qualidade": 7.0, "solidez": 4.0, "renda": 2.0, "preco": "7,0 -> 6,0"}
+      },
+      "nao_encontrado": ["EBITDA da Arbex", "recompras executadas no 3T", "rating no periodo", "spot FOEX/PIX Europa", "confirmacao do pagamento de R$ 0,00455", "release 2T26 do RI", "VPA/PL oficial jun/26", "lucro 2016-20", "vencimentos da divida", "pares Klabin/Arauco/CMPC em multiplos", "tag along", "free float", "liquidez diaria", "participacao do controlador"],
+      "lacunas_importantes": "Sem EBITDA/receita/lucro absolutos e sem custo/prazo da divida; EBITDA da Arbex nao encontrado (DL/EBITDA pro-forma e HIPOTESE); sem cambio de meio de ciclo."
+    },
+
+    "KLBN11": {
+      "identificacao": {
+        "nome": "Klabin",
+        "segmento": "Papel & Celulose - industrial/commodity integrado (celulose + papeis + embalagens ~60%); Nivel 2 (06/09)",
+        "controlador": {"v": "familiar (Klabin/Lafer)", "participacao_pct": null, "src": "03/10 e 06/09 ficha KLBN11; controlador (%) = nao encontrado"},
+        "tag_along": null,
+        "free_float": null,
+        "liquidez_diaria": null,
+        "numero_acoes": null,
+        "composicao_unit": {"v": "1 ON + 4 PN", "src": "03/10 e 06/09 ficha KLBN11"}
+      },
+      "mercado": {
+        "preco": {"v": 18.62, "un": "R$/unit", "per": "02/10/2026", "nota": "-4,4% vs 04/09 (19,47); maxima 19,63 (17/09)", "src": "03/10 ficha KLBN11 (Yahoo; StatusInvest)"},
+        "preco_ficha_anterior": {"v": 18.05, "per": "ago/2026 (real 04/09: 19,47, +8%)", "src": "03/10 erro proprio"},
+        "valor_mercado": null,
+        "ev": null,
+        "p_l": {"v": 51, "nota": "(06/09) inflado por cambio sobre divida em USD; LPA normalizado ~1,6/unit -> P/L ~11", "src": "06/09 ficha KLBN11"},
+        "p_vp": {"v": 1.56, "nota": "VPA/unit 11,55; HG 2,41 (divergencia)", "src": "06/09 ficha KLBN11"},
+        "ev_ebitda": {"v": 5.9, "nota": "Acta 6,5-7x; sobre EBITDA de meio de ciclo (9 bi) = 5,2x; 03/10: ~6x com Puma II madura", "src": "06/09 e 03/10 ficha KLBN11"}
+      },
+      "endividamento": {
+        "divida_liquida": {"v": 24.0, "un": "R$ bilhoes", "per": "2T26 (jun/2026)", "nota": "queda financiada por venda de ativos florestais", "src": "06/09 ficha KLBN11"},
+        "divida_bruta": null,
+        "caixa": {"v": 10.1, "un": "R$ bilhoes", "per": "2T26", "src": "06/09 ficha KLBN11"},
+        "dl_ebitda": {"v": 3.2, "un": "x (USD)", "per": "2T26", "nota": "3,9x a/a; sem dado novo em 03/10; gatilho > 3,7x; cobertura de juros 1,7x", "src": "06/09 e 03/10 ficha KLBN11"},
+        "custo_medio_divida": {"v": 5.1, "un": "% a.a. em USD", "src": "06/09 ficha KLBN11"},
+        "prazo_medio_divida": {"v": 84, "un": "meses", "nota": "'divida longa (84 meses) e barata'", "src": "06/09 e 03/10 ficha KLBN11"},
+        "parcela_em_usd": {"v": null, "nota": "DL/EBITDA apontado em USD e FX sobre divida em USD; percentual nao dado", "src": "06/09"}
+      },
+      "resultados": {
+        "receita": null,
+        "ebitda": {"v": 2.0, "un": "R$ bilhoes", "per": "2T26 ajustado", "nota": "+18% t/t; -7% limpo a/a; inclui venda de terras R$ 64 mi", "src": "06/09 ficha KLBN11 (colunas quebradas)"},
+        "ebit": null,
+        "lucro_liquido_contabil": null,
+        "lucro_liquido_ajustado": {"v": null, "nota": "LPA 12m 0,35; LPA normalizado ~1,6/unit", "src": "06/09"},
+        "margem_ebitda": null,
+        "fcf": {"v": null, "nota": "2T26 -R$ 236 mi; ajustado 12m +R$ 704 mi (yield 3,1%); 12m negativo (Genial); 03/10: FCF 12m negativo, sem dado novo", "src": "06/09 e 03/10 ficha KLBN11"},
+        "roic": {"v": 9.0, "un": "%", "nota": "empresa 12m; HG 5,5%; vs WACC ~10% -> ROIC<Ke", "src": "06/09 e 03/10"},
+        "roe": {"v": null, "nota": "4,7-8%", "src": "06/09"},
+        "da": {"v": 4.5, "un": "R$ bilhoes (rotulo ambiguo - colunas quebradas)", "src": "06/09 ficha KLBN11"}
+      },
+      "capex": {"total": null, "manutencao": "subindo (qualitativo)", "expansao": "Puma II concluido", "guidance": null},
+      "premissas_de_ciclo_declaradas_no_pdf": {
+        "ebitda_meio_de_ciclo": {"v": 9, "un": "R$ bilhoes", "nota": "06/09: 5,2x; central usa 6x x EBITDA R$ 8 bi (03/10: EBITDA 2027 BBI R$ 8,0 bi confirma a premissa)", "src": "06/09 e 03/10 ficha KLBN11"},
+        "cenarios_de_saida": "6,5x x 9 - 24 = R$ 27,6 | 6x x 8 - 24 = R$ 19,2 (central) | 5,5x x 7,5 - 24 = R$ 13,6",
+        "celulose_meio_de_ciclo_usd_t": null,
+        "cambio_meio_de_ciclo": null,
+        "spot_citado": {
+          "celulose_BHKP_China": {"v": 578, "un": "US$/t", "per": "28/09/2026", "src": "03/10 ficha KLBN11 (XP 28/09)"},
+          "celulose_domestica": "Brasil -3,5% m/m em set (Newspulpaper 01/10)",
+          "fluff": {"v": 742, "un": "US$/t", "per": "ficha anterior; fluff n.e. em 03/10", "src": "06/09"}
+        }
+      },
+      "operacional_setor": {
+        "custo_caixa_celulose": {"v": 1397, "un": "R$/t", "nota": "+8%; 65% maior que Suzano; gatilho > R$ 1.500/t", "src": "06/09 e 03/10 ficha KLBN11"},
+        "venda_de_terras": "restam ~20 mil ha para 2026-27, R$ 2-3 bi esperados; DY pago com venda de terras",
+        "Puma": "Puma II concluido (~R$ 12,9 bi / 1,4 Mt como referencia de reproducao; EV de reposicao ~ EV atual)",
+        "mix": "embalagens ~60%",
+        "custo_reproducao_capex_por_t": "Puma II ~R$ 12,9 bi / 1,4 Mt (PDF nao calcula R$/t)"
+      },
+      "proventos": {
+        "dpa_12m": {"v": 1.173, "un": "R$/unit", "nota": "DERIVADO: 0,261 (07/11/25) + 0,912 (declarado 08/12/25, data-com 15/12/25, pagos em 4 parcelas de R$ 0,228 em 2026)", "src": "03/10 ficha KLBN11 sec.5"},
+        "dy_12m_pct": {"v": 6.3, "nota": "data-com; 5,1% por pagamento (03/10/25-02/10/26). Ficha anterior 7,8% (HG, R$ 1,42/unit) superestimava", "src": "03/10 ficha KLBN11"},
+        "dy_sustentavel": {"v": 3, "un": "%", "nota": "pelo FCF; 'yield 5-6% reportado'", "src": "03/10 ficha KLBN11"},
+        "politica": "politica oficial de dividendos = nao encontrada; payout 125,7% (Renova) / ~126% do lucro 2025",
+        "serie_dpa": "por unit: 2024 ~1,20 | 2025 ~1,70 por data-com (inclui 0,912 declarados em dez/25)",
+        "extraordinarios": null,
+        "recompra": "ate 31,25 mi units; bonificacao em acoes (dez/25; 1% em 03/10) - nao dilui",
+        "defasagem": "ate 11 meses (declaracao 08/12/25 -> ultima parcela 12/11/26)",
+        "declarado_no_periodo": "Nenhum novo; 4a parcela R$ 0,228/unit em 12/11/2026",
+        "coberto_por_caixa": "Nao - pago com venda de terras; FCF 12m negativo; Bazin nao se aplica"
+      },
+      "multiplos_retornos_pares": {
+        "yield_fwd": "5-6% reportado; ~3% sustentavel", "retorno_esperado_nominal": "8-11%", "retorno_esperado_real": "~4-6,5%", "vs_ipca_mais_708": "-0,6 a -3 p.p.", "vence_rf": "Nao",
+        "nota_geral": {"antes": 4.9, "agora": 4.7},
+        "pares": "BBI Compra -> Neutro, alvo 24 -> 21 (22/09), EBITDA 2027 -11% para R$ 8,0 bi; XP Compra 25; Acta positiva (re-rating com FCF); Monte Bravo neutra; Genial cautela. Custo celulose 65% acima da Suzano; ROIC 9% vs 4,5% da Suzano",
+        "src": "03/10 e 06/09 ficha KLBN11"
+      },
+      "governanca_riscos": {
+        "interferencias_consumadas": "Nenhuma nova",
+        "riscos": ["dividendo nao coberto por caixa/FCF", "rebaixamento BBI por desalavancagem lenta", "celulose domestica em queda", "cobertura de juros 1,7x", "payout ~126%", "Altman ~1,0"],
+        "buy_and_hold": "Nao: moat Parcial; ROIC>Ke Nao; balanco Nao; dono Nao; lucro Nao; diluicao Sim; preco Nao (-2%)"
+      },
+      "gatilhos_da_ficha": [
+        {"gatilho": "Corte do dividendo < R$ 0,8/unit", "status": "Nao verificavel (sem declaracao nova; dezembro e a janela historica)"},
+        {"gatilho": "DL/EBITDA > 3,7x", "status": "Nao verificavel (3T26 em 28/10, StatusInvest; nao confirmado no RI)"},
+        {"gatilho": "FCF negativo mais 2 tri sem venda de ativos", "status": "Nao verificavel"},
+        {"gatilho": "Custo caixa celulose > R$ 1.500/t", "status": "Nao verificavel"},
+        {"gatilho": "2 tri FCF aj. > R$ 500 mi/tri sem venda de ativos -> central R$ 23 e RADAR", "status": "ativo"},
+        {"gatilho": "Preco < R$ 14 sem corte de dividendo", "status": "ativo"}
+      ],
+      "eventos_com_data": [
+        {"data": "28/10/2026", "evento": "3T26 (StatusInvest; nao confirmado no RI)"},
+        {"data": "12/11/2026", "evento": "4a parcela R$ 0,228/unit (declarada 08/12/25)"},
+        {"data": "dez/2026", "evento": "janela historica de declaracao de dividendos"}
+      ],
+      "premissas_pdf_valuation": {
+        "marcador": "PREMISSA DO PDF (nao verificada)",
+        "veredito": "JUSTA (antes JUSTA)", "justo": 19.00, "compra_menos_30pct": 13.30, "saida": 25.00, "desconto_pct": -2, "faixa": "10-31",
+        "multiplo": "6x x 8 bi - 24 = R$ 19,2 (mantido)",
+        "dcf_fcfe_base_sens": "~13,8 / 21,3 (antes 13,5 / 20,8)",
+        "dcf_3_cenarios_set": "pess. 6,7/9,9 | base 13,5/20,8 | otim. 19,6/30,8",
+        "epv_wacc_10pct": "hoje ~R$ 0; meio de ciclo R$ 8,8",
+        "graham": "LPA normalizado 1,6 -> R$ 20,4; 4/7 criterios; Bazin 12m R$ 23,7 / fwd 20-23 (exige dividendo coberto)",
+        "valor_central": "R$ 19 (mantido; Ke ~+2% absorvido)",
+        "notas": {"qualidade": 6.0, "solidez": 4.0, "renda": "4,0 -> 3,0", "preco": 5.0}
+      },
+      "nao_encontrado": ["release 2T26 do RI (pagina de comunicados deu 404)", "politica oficial de dividendos", "PL/VPA oficial jun/26", "capex/D&A exatos", "covenants", "controlador (%)", "numero de acoes/units", "preco do fluff set/out", "custo caixa atualizado", "reajuste proprio de outubro", "tag along", "free float", "liquidez diaria"],
+      "lacunas_importantes": "Sem receita/EBIT/lucro/capex absolutos; numero de units e participacao do controlador nao encontrados; RI nao abriu (espelhos StatusInvest/Yahoo/imprensa)."
+    },
+
+    "RANI3": {
+      "identificacao": {
+        "nome": "Irani Papel e Embalagem",
+        "segmento": "Papel & Celulose (embalagem) - industrial ciclico integrado (florestas -> papel -> papelao ondulado); unica listada de embalagem; Novo Mercado",
+        "controlador": {"v": "familiar (Habitasul)", "participacao_pct": null, "src": "03/10 e 06/09 ficha RANI3; participacao do controlador = nao encontrada"},
+        "tag_along": null,
+        "free_float": null,
+        "liquidez_diaria": null,
+        "numero_acoes": {"v": null, "nota": "tesouraria 743,6 mil acoes (07/08); ILP: alvo 3,41 mi acoes, maximo 5,12 mi (~2,2% do capital)", "src": "03/10 ficha RANI3 (FR 17/09; ata CA 17/09)"},
+        "composicao_unit": null
+      },
+      "mercado": {
+        "preco": {"v": 7.94, "un": "R$", "per": "02/10/2026", "nota": "+3,7% vs 04/09 (7,66)", "src": "03/10 ficha RANI3 (Yahoo; StatusInvest)"},
+        "preco_ficha_anterior": {"v": 7.95, "nota": "real em 04/09: 7,66 (-4%)", "src": "03/10 erro proprio"},
+        "valor_mercado": null, "ev": null,
+        "p_l": {"v": 14.4, "nota": "12m; 7,6 em 2025; lucro 12m esmagado por D&A da fabrica nova e juros", "src": "06/09 ficha RANI3"},
+        "p_vp": {"v": 1.26, "nota": "VPA 6,30", "src": "06/09 ficha RANI3"},
+        "ev_ebitda": {"v": 5.8, "src": "06/09 e 03/10 ficha RANI3 ('~5,8x com margem 30,5%')"}
+      },
+      "endividamento": {
+        "divida_liquida": {"v": 1.07, "un": "R$ bilhoes", "per": "2T26", "src": "06/09 ficha RANI3 (colunas quebradas)"},
+        "divida_bruta": {"v": 1.9, "un": "R$ bilhoes", "nota": "'~R$ 1,9 bi' citado como risco com Selic alta", "src": "06/09 ficha RANI3"},
+        "caixa": {"v": 0.832, "un": "R$ bilhoes", "per": "2T26", "src": "06/09 e 03/10"},
+        "dl_ebitda": {"v": 2.07, "un": "x", "per": "2T26", "nota": "2,30x a/a; politica <= 2,5x; troca de divida de R$ 750 mi em julho", "src": "06/09 e 03/10 ficha RANI3"},
+        "custo_medio_divida": {"v": 9.2, "un": "% pos-IR", "src": "06/09 ficha RANI3"},
+        "prazo_medio_divida": null,
+        "parcela_em_usd": null
+      },
+      "resultados": {
+        "receita": null,
+        "ebitda": {"v": 131.6, "un": "R$ milhoes", "per": "2T26 ajustado", "nota": "+8,2%; margem 30,5% (+1,9 pp); 12m ~R$ 500 mi", "src": "06/09 ficha RANI3"},
+        "ebit": null,
+        "lucro_liquido_contabil": {"v": null, "nota": "lucro contabil -70% em 12m; LPA 12m 0,55; LPA norm. 0,70", "src": "06/09"},
+        "lucro_liquido_ajustado": null,
+        "margem_ebitda": {"v": 30.5, "un": "%", "per": "2T26", "src": "06/09"},
+        "fcf": {"v": null, "nota": "FCF yield 12m 18,7% (RI) pos-capex Gaia XI; ~19% em 03/10", "src": "06/09 e 03/10"},
+        "roic": {"v": 12.5, "un": "%", "nota": "RI; HG 9,3%; ~ WACC nominal 13%", "src": "06/09 e 03/10"},
+        "roe": null,
+        "da": {"v": null, "nota": "D&A elevado pos-Gaia XI; 'manutencao < D&A (~200 mi/ano)' (rotulo ambiguo)", "src": "06/09"}
+      },
+      "capex": {"total": null, "manutencao": "< D&A (~R$ 200 mi/ano) apos Gaia XI (rotulo ambiguo)", "expansao": "Gaia XII R$ 514 mi (FR 27/05) - nao e bilionario, mas consome FCF; Gaia XI/MP#5 concluidos em ramp-up", "guidance": "capex 2026 = nao encontrado"},
+      "premissas_de_ciclo_declaradas_no_pdf": {
+        "ebitda_meio_de_ciclo": {"v": null, "nota": "gatilho de alta: 2 tri com MP#5 plena e EBITDA > R$ 140 mi/tri -> central R$ 12", "src": "03/10 ficha RANI3"},
+        "margem_ebitda_piso": "gatilho: margem EBITDA < 25% por 2 tri",
+        "spot_citado": {
+          "papelao_ondulado_expedicao": "ago -1,5% a/a; Empapel elevou 2026 de 0,6% para 1,9% (Newspulpaper; Brasil em Folhas 16/09)",
+          "precos_papel_aparas": "kraft estavel abr-set; aparas mistas (texto truncado) - Newspulpaper 01/10"
+        }
+      },
+      "operacional_setor": {
+        "volume": {"v": 81.6, "un": "mil t de papel", "per": "2T26", "nota": "recorde; MP#5/Gaia XI em ramp-up; share papelao 4,1%", "src": "06/09 ficha RANI3"},
+        "preco_papelao": null,
+        "tesouraria": "743,6 mil acoes (07/08); recompras feitas mai-ago",
+        "ILP_diretoria": "alvo 3,41 mi acoes; max 5,12 mi (~2,2% do capital), pago com tesouraria, depende da AGO 2027; efeito -1,5% (alvo) a -2,2% (max) - consome a recompra (FR 17/09/2026)"
+      },
+      "proventos": {
+        "dpa_12m": {"v": 0.4023, "un": "R$/acao", "nota": "3T25 0,0448 + 4T25 0,0416 + exercicio 2025 0,2591 (extra) + 1T26 0,0224 + 2T26 0,0344", "src": "03/10 ficha RANI3 sec.5 (avisos do RI)"},
+        "dy_12m_pct": {"v": 5.07, "nota": "data-com = pagamento; recorrente ~1,8% sem o extra. Ficha anterior 6,0% (R$ 0,48) superestimava", "src": "03/10 ficha RANI3"},
+        "politica": "25% do lucro trimestral + extras",
+        "serie_dpa": "2T26 0,0343 (06/09; 0,0344 em 03/10) | 4T25 0,0416 | 2022 0,2846 (abr)",
+        "extraordinarios": "R$ 0,2591 exercicio 2025 (extra)",
+        "recompra": "recompras mai-ago; tesouraria 743,6 mil acoes; sem recompra de setembro encontrada",
+        "defasagem": "~15 dias",
+        "declarado_no_periodo": "Nenhum provento novo",
+        "coberto_por_caixa": "Sim - FCF yield ~19% cobre com folga; questao e quanto sera devolvido"
+      },
+      "multiplos_retornos_pares": {
+        "yield_fwd": "~2% base + extras", "retorno_esperado_nominal": "7-10%", "retorno_esperado_real": "3-6% (provento); FCF yield ~19%", "vs_ipca_mais_708": "-4 a -1 p.p.", "vence_rf": "Empate (via FCF)",
+        "nota_geral": {"antes": 5.4, "agora": 5.4},
+        "pares": "XP Compra 10 (13/08); BTG Compra 14 (agosto); sem revisao no periodo. Pares KLBN11/SUZB3 em multiplos = nao encontrado",
+        "src": "03/10 e 06/09 ficha RANI3"
+      },
+      "governanca_riscos": {
+        "interferencias_consumadas": "Nenhuma",
+        "riscos": ["dividendo-base de so 25%", "expedicao de papelao fraca (ago -1,5%)", "ILP consumindo a recompra (custo ao minoritario)", "Altman ~1,6 (cinzenta)", "divida bruta ~R$ 1,9 bi com Selic alta", "share 4% sem poder de preco", "creditos IPI podem virar disputa"],
+        "buy_and_hold": "Parcial: moat Parcial; ROIC>Ke Parcial; balanco Sim; dono Sim (ILP vigiar); lucro Nao; diluicao Parcial; preco Parcial (-21%)"
+      },
+      "gatilhos_da_ficha": [
+        {"gatilho": "Margem EBITDA < 25% por 2 tri", "status": "Nao verificavel (3T26 em 30/10)"},
+        {"gatilho": "DL/EBITDA > 2,5x", "status": "Nao acionado (2,07x no 2T26)"},
+        {"gatilho": "Novo ciclo de capex bilionario", "status": "Nao acionado (Gaia XII R$ 514 mi ja existia)"},
+        {"gatilho": "FCF yield < 8%", "status": "Nao verificavel"},
+        {"gatilho": "2 tri MP#5 plena e EBITDA > R$ 140 mi/tri -> central R$ 12", "status": "ativo"},
+        {"gatilho": "Selic < 12% / retomada de extras e recompras", "status": "ativo"}
+      ],
+      "eventos_com_data": [
+        {"data": "30/10/2026", "evento": "3T26 (ri.irani.com.br calendario); segunda parcela da posicao so apos o 3T26"},
+        {"data": "17/09/2026", "evento": "FR do ILP e ata do CA"}
+      ],
+      "premissas_pdf_valuation": {
+        "marcador": "PREMISSA DO PDF (nao verificada)",
+        "veredito": "RADAR (antes RADAR)", "justo": 10.00, "compra_menos_30pct": 7.00, "saida": 13.00, "desconto_pct": -21, "faixa": "5-15,5",
+        "dcf_fcfe_base_sens": "~8,7 / 12,8 (antes 8,5 / 12,5)",
+        "dcf_3_cenarios_set": "pess. 5,0/7,2 | base 8,5/12,5 | otim. 11,4/15,5",
+        "epv": "sobre OE 270 mi: R$ 7,0 (16,8%) / 9,5 (12,35%)",
+        "graham": "R$ 8,8 (LPA 0,55) / R$ 10 (LPA norm. 0,70); 3/7; Bazin 12m R$ 8,0",
+        "reproducao": "imobilizado 1,73 bi + florestas + giro = R$ 8-10/acao",
+        "valor_central": "R$ 10 (mantido; Ke +2,5% - ILP ~ 0)",
+        "g": "5%",
+        "notas": {"qualidade": 5.0, "solidez": 6.0, "renda": 4.0, "preco": 7.0}
+      },
+      "nao_encontrado": ["participacao do controlador", "capex 2026", "lucro anual 2016-24 e DPA anual", "atualizacao do ramp-up da MP#5", "expedicao Empapel de setembro", "recompras de setembro", "numero total de acoes", "preco do papelao em R$/t", "tag along", "free float", "liquidez diaria", "pares em multiplos"],
+      "lacunas_importantes": "Sem receita/EBIT/lucro/capex totais; numero de acoes, % do controlador e preco do papelao nao encontrados; DL/EBITDA 2,07x e ROIC sao do 2T26."
+    },
+
+    "B3SA3": {
+      "identificacao": {
+        "nome": "B3",
+        "segmento": "Infraestrutura de mercado - servicos regulados (bolsa, clearing, depositaria, registro, dados); Novo Mercado",
+        "controlador": {"v": "sem controlador (corporation)", "participacao_pct": null, "src": "03/10 e 06/09 ficha B3SA3"},
+        "tag_along": null,
+        "free_float": null,
+        "liquidez_diaria": {"v": null, "nota": "PDF cita apenas ADTV de mercado (ver operacional_setor)", "src": ""},
+        "numero_acoes": null,
+        "composicao_unit": null
+      },
+      "mercado": {
+        "preco": {"v": 19.00, "un": "R$", "per": "02/10/2026", "nota": "+9,4% vs 04/09 (17,37); +21% vs ficha (15,72)", "src": "03/10 ficha B3SA3 (Yahoo; StatusInvest)"},
+        "preco_ficha_anterior": {"v": 15.72, "per": "27/07/2026 (real 04/09: 17,37, +10%)", "src": "03/10 erro proprio"},
+        "valor_mercado": null, "ev": null,
+        "p_l": {"v": 17.8, "nota": "recorrente (LPA ~1,07); StatusInvest P/L 18,0; historico 17-19; em 06/09 era 14,7", "src": "03/10 e 06/09 ficha B3SA3"},
+        "p_vp": {"v": 4.5, "nota": "book = agio da Cetip; irrelevante", "src": "06/09 ficha B3SA3"},
+        "ev_ebitda": null
+      },
+      "endividamento": {
+        "divida_liquida": {"v": null, "nota": "DL/EBITDA 0,97x ('liquida 0,97x'; bruta 2,0x - rotulo ambiguo)", "src": "03/10 e 06/09"},
+        "divida_bruta": null,
+        "caixa": {"v": 15.6, "un": "R$ bilhoes", "per": "2T26", "src": "03/10 e 06/09 ficha B3SA3"},
+        "dl_ebitda": {"v": 0.97, "un": "x", "src": "03/10 ficha B3SA3 ('Divida liquida 0,97x')"},
+        "custo_medio_divida": null, "prazo_medio_divida": null, "parcela_em_usd": null
+      },
+      "resultados": {
+        "receita": {"v": 3.08, "un": "R$ bilhoes", "per": "2T26", "nota": "+12,2%; recorrentes +17,3% vs pro-ciclicas +7,9%", "src": "06/09 ficha B3SA3"},
+        "ebitda": {"v": 1.94, "un": "R$ bilhoes", "per": "2T26 recorrente", "nota": "+13%; margem 70,2% (+47 bps)", "src": "06/09 ficha B3SA3"},
+        "ebit": null,
+        "lucro_liquido_contabil": null,
+        "lucro_liquido_ajustado": {"v": null, "nota": "LPA recorrente ~1,07; LPA +12,3%; lucro recorrente anual 2016-25 = nao encontrado", "src": "06/09"},
+        "margem_ebitda": {"v": 70, "un": "%", "src": "03/10 e 06/09"},
+        "despesas": {"v": 975.6, "un": "R$ milhoes", "per": "2T26", "nota": "+15,5% (troca de Diretoria); ajustadas +6,2%; guidance 2026 R$ 2,4-2,6 bi mantido", "src": "06/09 e 03/10"},
+        "roic": {"v": 12, "un": "% c/ agio", "nota": "ex-agio muito acima do Ke", "src": "06/09 e 03/10"},
+        "roe": {"v": 28, "un": "%", "src": "06/09 e 03/10"},
+        "da": null
+      },
+      "capex": {"total": null, "manutencao": null, "expansao": null, "guidance": "guidance de despesas 2026 R$ 2,4-2,6 bi (nao e capex)"},
+      "premissas_de_ciclo_declaradas_no_pdf": {
+        "adtv_gatilho_baixa": "ADTV < R$ 25 bi por 2 tri invalida",
+        "adtv_gatilho_alta": "Selic < 12% com ADTV > R$ 35 bi -> central R$ 18",
+        "spot_citado": {
+          "adtv_2T26": {"v": 31.3, "un": "R$ bilhoes", "nota": "-15% t/t; 'caindo desde junho'; BDRs +42%, ETFs +74%", "src": "06/09 ficha B3SA3"},
+          "adtv_agosto": {"v": 30.3, "un": "R$ bilhoes", "nota": "+26% a/a; +34% m/m", "src": "03/10 ficha B3SA3 (InfoMoney; XP; Itau BBA via Investing)"},
+          "adtv_setembro_parcial": {"v": 32.8, "un": "R$ bilhoes", "per": "ate 18/09", "src": "03/10"}
+        },
+        "ke_de_mercado": "ao Ke de mercado (~10% real) o valor seria ~R$ 19-20 (veredito JUSTA) - sensibilidade registrada, regua mantida"
+      },
+      "operacional_setor": {
+        "adtv_acoes": "ver spot_citado",
+        "receitas_por_segmento": "NAO encontrado segmentado; so total 2T26 R$ 3,08 bi, recorrentes +17,3%, pro-ciclicas +7,9%",
+        "recompra": "R$ 197 mi no 2T26; premissa da ficha ~R$ 1,0/acao/ano; antidiluicao (LPA basico +33% vs lucro +28%); recompras do 3T = nao encontrado",
+        "agio_intangivel": "P/VP 4,5 distorcido pelo agio da Cetip; ROIC 12% c/ agio",
+        "retorno_acionista_2T26": "R$ 1,3 bi = JCP 356 mi + JCP extra 750 mi + recompra 197 mi (~94% do lucro recorrente)",
+        "concorrencia": "A5X captou R$ 360 mi, preve operar no 2T27; CSD BR aguarda licenca; Cade restringe compra de registradoras ate 2029",
+        "outros": "Dimensa vendida; CEO novo (Egan) desde junho; troca de Diretoria 2026; IRRF JCP 17,5% (LC 224/2025); IN RFB 2.296/2025 limita a base - risco ao JCP extra (HIPOTESE)"
+      },
+      "proventos": {
+        "dpa_12m": {"v": 0.9026, "un": "R$/acao bruto", "per": "ex-datas", "nota": "JCP 3T26 R$ 0,07594 + extra R$ 0,15068 brutos (data-com 22/09, pgto 07/10); liquidos de IRRF 17,5%: 0,0627 + 0,1243", "src": "03/10 ficha B3SA3 sec.5"},
+        "dy_12m_pct": {"v": 4.75, "nota": "bruto a R$ 19,00; sem os dois extras ~3,2%; retorno total ~5,3% com recompra (~R$ 1,0/acao/ano)", "src": "03/10"},
+        "politica": "payout 90-110% via JCP + extras + recompra; 'extra depende de saldo passado: nao e recorrente'",
+        "extraordinarios": "JCP extra R$ 750 mi no 2T26 e novamente no 3T26 (saldos de exercicios anteriores)",
+        "recompra": "ver operacional_setor",
+        "defasagem": "JCP de dez/25 parcelado ate 07/10/26 (~9 meses); o do 3T26 sai em 15 dias",
+        "declarado_no_periodo": "JCP R$ 378 mi + extra R$ 750 mi (data-com 22/09; pagamento 07/10)",
+        "coberto_por_caixa": "Sim - payout 90-110% com caixa liquido"
+      },
+      "multiplos_retornos_pares": {
+        "yield_fwd": "5,3% total (JCP + recompra)", "retorno_esperado_nominal": "~11,3%", "retorno_esperado_real": "~7,0%", "vs_ipca_mais_708": "-0,1 p.p.", "vence_rf": "Nao (limite); vence so abaixo de ~R$ 11,80 (yield total 8,5%)",
+        "g": "6%",
+        "nota_geral": {"antes": 7.0, "agora": 6.7},
+        "pares": "Itau BBA Compra 21 -> 23 ('multiplo ja nao da razao obvia'); BTG Neutro 19; BBI Compra 20; Goldman Compra 21 (BPMoney 25/09; Seu Dinheiro 02/10)",
+        "src": "03/10 e 06/09 ficha B3SA3"
+      },
+      "governanca_riscos": {
+        "interferencias_consumadas": "Nenhuma consumada; risco regulatorio/tributario sobre o JCP (usuaria pesada)",
+        "riscos": ["P/L 17,8 ja na media historica", "A5X/CSD BR em licenciamento (2T27)", "JCP extra pode nao se repetir", "fim do JCP sem compensacao", "despesas +15,5% vs receita +12%", "ADTV < R$ 25 bi"],
+        "buy_and_hold": "Sim (falha no preco): moat Sim; ROIC>Ke Sim; balanco Sim; dono Sim; lucro Parcial; diluicao Sim; preco Nao (+19%)"
+      },
+      "gatilhos_da_ficha": [
+        {"gatilho": "Licenca de bolsa/CSD concorrente com tarifa menor", "status": "Nao acionado (A5X em autorizacao; inicio previsto 2T27)"},
+        {"gatilho": "Fim do JCP sem compensacao", "status": "Nao acionado (IRRF 17,5% vigente; risco ao JCP extra HIPOTESE)"},
+        {"gatilho": "ADTV < R$ 25 bi por 2 tri", "status": "Nao acionado (acelerando)"},
+        {"gatilho": "Despesas ajustadas > 10% a/a", "status": "Nao verificavel (guidance 2026 mantido)"},
+        {"gatilho": "Preco <= R$ 13,30 sem mudanca regulatoria -> RADAR", "status": "ativo"},
+        {"gatilho": "Selic < 12% com ADTV > R$ 35 bi -> central R$ 18", "status": "ativo"}
+      ],
+      "eventos_com_data": [
+        {"data": "07/10/2026", "evento": "pagamento JCP 3T26 + extra"},
+        {"data": "12/11/2026", "evento": "3T26 (StatusInvest) - data inferida pela ordem do quadro de agenda (colunas quebradas)"},
+        {"data": "2T27", "evento": "A5X previsto para operar"}
+      ],
+      "premissas_pdf_valuation": {
+        "marcador": "PREMISSA DO PDF (nao verificada)",
+        "veredito": "CARA (antes JUSTA +5%, preco errado)", "justo": 16.00, "compra_menos_30pct": 11.20, "saida": 21.00, "desconto_pct": 19, "faixa": "9-21",
+        "aceitavel_ate": 13.30,
+        "dcf_fcfe_base_sens": "~14,8 / 17,5 (antes 14 / 16,6)",
+        "epv_nominal_sens": "~6,6 / 9,0 (antes 6,4 / 8,7)",
+        "dcf_3_cenarios_set": "pess. 8,7/10 | base 14/16,6 | otim. 17/20",
+        "bazin": "R$ 8,8-12,5 / 16,7; Graham R$ 9,1 (irrelevante); PEG 1,2; Graham 5/7",
+        "valor_central": "R$ 16 (antes 15; volume + Ke); nota: Ke da casa e severo para monopolio com caixa liquido",
+        "notas": {"qualidade": 9.0, "solidez": 8.0, "renda": 6.0, "preco": "4,0 -> 2,0"}
+      },
+      "nao_encontrado": ["ADTV de setembro fechado", "recompras do 3T", "tramitacao de fim do JCP", "pagina de dados operacionais do RI (404)", "numero de acoes", "receitas por segmento", "VPA oficial", "lucro recorrente anual 2016-25", "DPA e recompras por ano", "nomes da nova Diretoria", "tag along", "free float", "liquidez diaria da acao"],
+      "lacunas_importantes": "Sem receita por segmento, numero de acoes e divida em R$; ADTV citado e do mercado (nao liquidez da acao); lucro liquido absoluto ausente."
+    },
+
+    "SMTO3": {
+      "identificacao": {
+        "nome": "Sao Martinho",
+        "segmento": "Agronegocio (acucar e etanol) - commodity agro integrada (cana, milho, cogeracao); ano-safra abr-mar; Novo Mercado",
+        "controlador": {"v": "familia Ometto (LJN)", "participacao_pct": null, "src": "03/10 e 06/09 ficha SMTO3"},
+        "tag_along": null,
+        "free_float": null,
+        "liquidez_diaria": null,
+        "numero_acoes": {"v": 334, "un": "milhoes (~)", "nota": "'Recalculado com ~334 mi de acoes' (multiplo de saida)", "src": "03/10 ficha SMTO3 sec.4"},
+        "composicao_unit": null
+      },
+      "mercado": {
+        "preco": {"v": 19.34, "un": "R$", "per": "02/10/2026", "nota": "-6% vs 04/09 (20,60); +32% vs ficha (14,70)", "src": "03/10 ficha SMTO3 (Yahoo)"},
+        "preco_ficha_anterior": {"v": 14.70, "per": "jul/2026 (real 04/09: 20,60, +40%)", "src": "03/10 erro proprio"},
+        "valor_mercado": null, "ev": null,
+        "p_l": {"v": 5.8, "nota": "safra 25/26 (LPA 2,52) a R$ 14,70; fwd 26/27 ~12 (Nord: lucro -50%)", "src": "06/09 ficha SMTO3"},
+        "p_vp": {"v": 0.87, "nota": "VPA 22,15 (era 0,66 em 06/09; menor em 5 anos)", "src": "03/10 e 06/09 ficha SMTO3 (StatusInvest)"},
+        "ev_ebitda": {"v": 3.6, "nota": "financeira; 5,4x c/ arrendamentos (EBITDA 12m R$ 3,28 bi); antes 3,1x / 4,9x", "src": "03/10 ficha SMTO3 (calculo)"}
+      },
+      "endividamento": {
+        "divida_liquida": {"v": 5.2, "un": "R$ bilhoes", "nota": "financeira; sem dolar; BNDES R$ 2,34 bi; c/ arrendamentos ~R$ 11,1 bi (Renova)", "per": "fim 1T27 / jun-set 2026 (data exata n.e.)", "src": "06/09 ficha SMTO3"},
+        "divida_bruta": null, "caixa": null,
+        "dl_ebitda": {"v": 1.59, "un": "x", "per": "1T27", "nota": "financeira; sem dolar; gatilho > 2,5x; liquidez corrente 2,87; cobertura de juros ~3,6x", "src": "03/10 e 06/09 ficha SMTO3"},
+        "custo_medio_divida": null, "prazo_medio_divida": null,
+        "parcela_em_usd": {"v": 0, "nota": "'sem dolar'/'1,59x sem dolar'; hedge disciplinado", "src": "03/10 e 06/09"}
+      },
+      "resultados": {
+        "receita": null,
+        "ebitda": {"v": 3.50, "un": "R$ bilhoes", "per": "safra 25/26", "nota": "1T27 R$ 582 mi (-27,7%); 12m R$ 3,28 bi; margem EBITDA ~50%", "src": "06/09 ficha SMTO3 (colunas quebradas)"},
+        "ebit": null,
+        "lucro_liquido_contabil": {"v": null, "nota": "LPA safra 25/26 R$ 2,52; lucro 26/27 projetado -50% (Nord); 1T27 lucro -39%", "src": "06/09 e 03/10"},
+        "lucro_liquido_ajustado": null,
+        "margem_ebitda": {"v": 50, "un": "% (~)", "src": "06/09 buy&hold"},
+        "roic": {"v": 10.5, "un": "%", "nota": "~ WACC 11-13,7%", "src": "06/09 e 03/10"},
+        "roe": {"v": null, "nota": "11-13% (ROE medio 10a n.e.)", "src": "06/09"},
+        "da": null
+      },
+      "capex": {"total": null, "manutencao": null, "expansao": null, "guidance": "capex 26/27 e D&A = nao encontrado"},
+      "premissas_de_ciclo_declaradas_no_pdf": {
+        "ebitda_meio_de_ciclo": {"v": 3.5, "un": "R$ bilhoes", "nota": "multiplo de saida 5,5x x 3,5 bi - 11,1 (DL c/ arrend.) = R$ 24,7 (06/09), recalculado R$ 24,4 com ~334 mi acoes (03/10)", "src": "06/09 e 03/10 ficha SMTO3"},
+        "acucar_meio_de_ciclo": {"v": null, "nota": "PDF nao declara; gatilho de invalidacao: acucar < 15 US c/lb por 2 safras com etanol < R$ 1.800/m3", "src": "03/10"},
+        "politica_meio_de_ciclo": "NAO sobe o meio de ciclo antes do 2T27 (09/11); gatilho de alta: EBITDA 2T27 > R$ 900 mi -> central R$ 22-24 (HIPOTESE); premissa de fundo de ciclo 'enfraquecida'",
+        "spot_citado": {
+          "acucar_ICE_n11": {"v": 19.93, "un": "US c/lb (mar/27)", "per": "02/10/2026", "nota": "maxima de 18 meses; +21% a/a; +5,8% desde 31/08; em 06/09: -25,7% a/a", "src": "03/10 ficha SMTO3 (Forbes Agro 02/10; Yahoo)"},
+          "etanol_hidratado_CEPEA": {"v": 2564, "un": "R$/m3", "per": "02/10/2026", "nota": "R$ 2.399 em 04/09; +7% no periodo. Dado de R$ 1.779/m3 da ficha anterior era incompativel/errado", "src": "03/10 ficha SMTO3 (CEPEA/ESALQ via Noticias Agricolas)"},
+          "politica_combustiveis": "subvencao de R$ 0,44 a gasolina venceu 09-10/09; PIS/Cofins gasolina -R$ 0,63 e etanol zerado (-R$ 0,19) ate 05/10; paridade 63%; etanol acumulado +8,7% (demanda respondendo)",
+          "UNICA_1a_quinzena_set": "moagem -34% a/a; acumulado -1,5% (1a queda); acucar acumulado -14%; >35 Mt de cana bisada (Forbes Agro 01/10)"
+        }
+      },
+      "operacional_setor": {
+        "moagem_guidance_26_27": {"v": 23.7, "un": "Mt de cana", "nota": "3,37 Mt ATR (recuperacao agricola)", "src": "06/09 ficha SMTO3"},
+        "ATR": "3,37 Mt (guidance 26/27); 'quebra de ATR por clima' e gatilho",
+        "mix_acucar_etanol": null,
+        "safra": "ano-safra abr-mar; 1T27 = abr-jun/26; 2T27 = jul-set/26, divulgacao 09/11/2026",
+        "hedge": "hedge disciplinado; hedge de acucar 26/27 = nao encontrado",
+        "etanol_de_milho": "citado como atividade (milho)"
+      },
+      "proventos": {
+        "dpa_12m": {"v": 0.6153, "un": "R$/acao", "nota": "exercicio 25/26 = JCP R$ 0,4565 (ex 30/07/25) + dividendo R$ 0,2166 (data-com 03/07/26, pago 21/07/26). ATENCAO: a soma bruta 0,4565+0,2166 = 0,6731 (06/09 usava R$ 0,67 / DY 4,6%); PDF 03/10 cita 0,6153 - possivel liquido de IR sobre JCP; inconsistencia nao explicada", "src": "03/10 ficha SMTO3 sec.5"},
+        "dy_12m_pct": {"v": 1.1, "nota": "por data-com 12m; exercicio 25/26 sobre preco atual = 3,2%; forward ~3%", "src": "03/10"},
+        "politica": "payout minimo 25% (~27% efetivo); dividendo todo ano desde o IPO 2007",
+        "serie_dpa": "2016-25: 0,49 | 0,28 | 0,51 | 0,66 | 0,54 | 2,33 | 1,13 | 1,24 | 1,35 | 0,46 | 2026 YTD 0,22; DY medio 10a 3,6%, 5a 4,8%, minimo 1,4% (2017)",
+        "extraordinarios": null,
+        "recompra": null,
+        "defasagem": "~18 dias",
+        "declarado_no_periodo": "Nada",
+        "coberto_por_caixa": "Sim - payout minimo 25%, alavancagem 1,59x"
+      },
+      "multiplos_retornos_pares": {
+        "yield_fwd": "~3%", "retorno_esperado_nominal": "6-8%", "retorno_esperado_real": "2-4%", "vs_ipca_mais_708": "-3 a -5 p.p.", "vence_rf": "Nao",
+        "g": "3-5%",
+        "nota_geral": {"antes": 6.3, "agora": 5.5},
+        "pares": "XP Compra 22,40 (26/08); Itau BBA neutro 21; BTG neutro 25; BBI rebaixou (EBITDA 2027 R$ 8,0 bi - ver KLBN11); Nord: 5x 'abaixo da media'. Raizen/Jalles/Adecoagro = nao encontrado",
+        "src": "03/10 e 06/09 ficha SMTO3"
+      },
+      "governanca_riscos": {
+        "interferencias_consumadas": "Nenhuma nova; risco politico (subvencao a gasolina, CBIO, ICMS, tarifas EUA)",
+        "riscos": ["corte de tributo do etanol vence 05/10", "lucro 26/27 ainda baixo (1T27 -39%)", "cana bisada pode virar excesso de oferta em 27/28", "price-taker em 2 commodities", "'maior necessidade de investimentos' com alavancagem subindo"],
+        "buy_and_hold": "Parcial: moat Parcial; ROIC>Ke Parcial; balanco Sim; dono Sim; lucro Nao; diluicao Sim; preco Nao (-6%)"
+      },
+      "gatilhos_da_ficha": [
+        {"gatilho": "DL/EBITDA > 2,5x", "status": "Nao acionado (1,59x no 1T27)"},
+        {"gatilho": "Acucar < 15 US c/lb por 2 safras com etanol < R$ 1.800/m3", "status": "Nao acionado (ao contrario)"},
+        {"gatilho": "Corte de dividendo abaixo do minimo", "status": "Nao acionado (R$ 0,2166 pago em 21/07)"},
+        {"gatilho": "Fim da subvencao / paridade > 70%", "status": "Parcial (subvencao trocada por corte de tributo - neutro; paridade 63%)"},
+        {"gatilho": "2T27 EBITDA > R$ 900 mi -> central R$ 22-24", "status": "ativo (gatilho de alta)"},
+        {"gatilho": "Preco <= R$ 14,40 -> RADAR/BARATA", "status": "ativo"}
+      ],
+      "eventos_com_data": [
+        {"data": "05/10/2026", "evento": "Fim do corte PIS/Cofins gasolina/etanol (se nao prorrogado) - preco relativo do etanol"},
+        {"data": "09/11/2026", "evento": "2T27 (ri.saomartinho.com.br)"},
+        {"data": "21/07/2026", "evento": "pagamento do dividendo R$ 0,2166"}
+      ],
+      "premissas_pdf_valuation": {
+        "marcador": "PREMISSA DO PDF (nao verificada)",
+        "veredito": "JUSTA (antes RADAR, preco errado)", "justo": 20.60, "compra_menos_30pct": 14.40, "saida": 27.80, "desconto_pct": -6, "faixa": "9-33",
+        "dcf_fcfe_base_sens": "~21,1 / 32 (antes 20,5 / 31)",
+        "multiplo": "5,5x x 3,5 bi - 11,1 = R$ 24,4 (~334 mi acoes; antes 24,7)",
+        "epv_wacc_13_7_e_11": "~14,3 / 21,5 (antes 14 / 21)",
+        "dcf_3_cenarios_set": "pess. 8,7/12,4 | base 20,5/31 | otim. 31,6/50",
+        "graham": "R$ 35,4 (LPA 2,52) / R$ 25,4 (LPA fwd 1,3); 6/7; Bazin 5a R$ 21,7 / 10a 15 / fwd 6-12",
+        "valor_central": "R$ 20,60 (antes 20; so o Ke; se 2T27 confirmar, R$ 22-24 HIPOTESE)",
+        "notas": {"qualidade": 6.0, "solidez": 7.0, "renda": "5,0 -> 4,0", "preco": "8,0 -> 5,0"}
+      },
+      "nao_encontrado": ["hedge de acucar 26/27", "revisao da projecao da Nord", "ATR realizado", "CBIO de setembro", "UNICA 2a quinzena de setembro", "capex 26/27 e D&A", "custo caixa/t", "mix acucar/etanol", "lucro 2016-21", "pares (Raizen/Jalles/Adecoagro)", "tag along", "free float", "liquidez diaria", "participacao do controlador", "receita"],
+      "lacunas_importantes": "Sem receita/lucro absolutos, mix acucar/etanol, custo caixa, capex/D&A e % do controlador; DPA 12m do PDF (0,6153) diverge da soma 0,4565+0,2166."
+    },
+
+    "KEPL3": {
+      "identificacao": {
+        "nome": "Kepler Weber",
+        "segmento": "Agronegocio (bens de capital) - industrial ciclico (silos/pos-colheita); Novo Mercado; lider LatAm",
+        "controlador": {"v": "sem controlador", "participacao_pct": null, "nota": "Trigono 14,94% (19/08/2026; comunicado RI); Heller n.e. (conjunto Trigono + Heller era 26,8% em 06/09); governanca fragmentada (Trigono x conselho)", "src": "03/10 e 06/09 ficha KEPL3"},
+        "tag_along": null,
+        "free_float": null,
+        "liquidez_diaria": {"v": 30, "un": "R$ milhoes/dia", "per": "06/09", "src": "06/09 ficha KEPL3 (colunas quebradas)"},
+        "numero_acoes": null,
+        "composicao_unit": null
+      },
+      "mercado": {
+        "preco": {"v": 6.78, "un": "R$", "per": "02/10/2026", "nota": "+1,5% vs 04/09 (6,68; 06/09 usou 6,66 de 04/09); faixa do mes 6,41-6,77", "src": "03/10 ficha KEPL3 (Yahoo; Investidor10)"},
+        "preco_ficha_anterior": {"v": 6.66, "per": "04/09/2026", "src": "03/10"},
+        "valor_mercado": null, "ev": null,
+        "p_l": {"v": 8.2, "nota": "12m (06/09); 2026E ~20x (Citi lucro R$ 60 mi), 2027E ~14x (R$ 85 mi) em 03/10", "src": "06/09 e 03/10"},
+        "p_vp": {"v": 1.45, "nota": "VPA 4,59 (06/09)", "src": "06/09"},
+        "ev_ebitda": {"v": 5.6, "nota": "EV/EBIT 7,1x + ROIC 15% (Formula Magica)", "src": "06/09"}
+      },
+      "endividamento": {
+        "divida_liquida": {"v": -0.0293, "un": "R$ bilhoes (caixa liquido +R$ 29,3 mi)", "nota": "caixa liquido positivo de R$ 29,3 mi; divida com IFC citada qualitativamente", "per": "2T26 (jun/2026)", "src": "06/09 ficha KEPL3 (colunas quebradas)"},
+        "divida_bruta": null, "caixa": null,
+        "dl_ebitda": null,
+        "custo_medio_divida": null, "prazo_medio_divida": null, "parcela_em_usd": null
+      },
+      "resultados": {
+        "receita": {"v": null, "nota": "'receita -11% e -4%' (variacoes; Fisher) - valor absoluto n.e.", "src": "06/09"},
+        "ebitda": {"v": 25.9, "un": "R$ milhoes", "per": "2T26 ajustado", "nota": "-31,7%; margem 8,7%; 12m ~R$ 200 mi", "src": "06/09 ficha KEPL3"},
+        "ebit": null,
+        "lucro_liquido_contabil": {"v": 23, "un": "R$ milhoes", "per": "1S26", "nota": "Citi 2026E R$ 60 mi (-30%), 2027E R$ 85 mi; 27 trimestres consecutivos de lucro", "src": "06/09 e 03/10"},
+        "lucro_liquido_ajustado": null,
+        "margem_ebitda": {"v": 8.7, "un": "%", "per": "2T26", "nota": "Citi projeta 9,4% em 2026; gatilho de alta: > 14% por 2 tri", "src": "06/09 e 03/10"},
+        "margem_bruta": {"v": 23, "un": "%", "per": "2T26", "nota": "era 36% em 2022; gatilho < 20%", "src": "06/09 e 03/10"},
+        "roic": {"v": 15, "un": "%", "nota": "empresa 19,7%; vs Ke nominal 16,8%", "src": "06/09"},
+        "roe": {"v": 17.6, "un": "%", "src": "06/09"},
+        "da": null
+      },
+      "capex": {"total": null, "manutencao": null, "expansao": null, "guidance": "capex 3T25/4T25 = nao encontrado"},
+      "premissas_de_ciclo_declaradas_no_pdf": {
+        "lucro_normalizado": "payout 75% sobre lucro de meio de ciclo -> yield ~7% normalizado (R$ 0,48/acao); lucro normalizado ~-8% pelas revisoes (HIPOTESE)",
+        "margem_ebitda_meio_de_ciclo": {"v": 14, "un": "% (gatilho de BARATA: margem EBITDA > 14% por 2 tri)", "src": "03/10 ficha KEPL3 - gatilho, nao premissa explicita de meio de ciclo"},
+        "spot_citado": "Plano Safra 26/27: PCA R$ 3,4 bi + R$ 2,5 bi; juros 8-9,5%; BNDES sem data de abertura (demanda reprimida pelo credito); deficit de armazenagem 361 vs 234 mi t",
+        "cambio_meio_de_ciclo": null
+      },
+      "operacional_setor": {
+        "backlog": {"v": null, "nota": "valor absoluto NAO encontrado ('Backlog atualizado' consta como nao encontrado); 06/09: +9,3% t/t; -13,8% a/a", "src": "06/09 ficha KEPL3"},
+        "segmentos": "Fazendas -34%/-13%; Agroindustrias +18% (variacoes, 06/09)",
+        "inadimplencia_propria": "1% (vs 7-8% do agro); gatilho > 3%",
+        "M&A": "oferta da GPT (dona da GSI) a R$ 11 + 1 em fev/26, caiu em mar/26 por impasse com a Trigono; 'nada novo' em 03/10; '03/10: oferta estrategica de R$ 11-12 ha 7 meses'",
+        "recompra": "programa de ate 2,1 mi acoes ate fev/27; nenhuma operacao em agosto (CVM 44) - parado"
+      },
+      "proventos": {
+        "dpa_12m": {"v": 0.29, "un": "R$/acao", "per": "2025 retroativo", "nota": "ultima data-com 15/12/25 (pago 26/12/25); 2026 YTD zero (antecipado em dez/25)", "src": "06/09 e 03/10 ficha KEPL3"},
+        "dy_12m_pct": {"v": 4.3, "nota": "retroativo (2025); 0% em 2026; ~7% normalizado (R$ 0,48, payout 75%)", "src": "03/10"},
+        "politica": "payout 2023 62% | 2024 75% | 2025 93% (c/ antecipacao)",
+        "serie_dpa": "ajustado: 2019 0,06 | 2020 0,09 | 2021 0,28 (+ reducao de capital) | 2022 1,00 | 2023 0,86 | 2024 0,84 | 2025 0,84 | 2026 YTD 0",
+        "extraordinarios": null,
+        "recompra": "ver operacional_setor",
+        "defasagem": "~11 dias",
+        "declarado_no_periodo": "Nada",
+        "coberto_por_caixa": "Sim - caixa liquido; payout de 93% em 2025 consumiu o excedente"
+      },
+      "multiplos_retornos_pares": {
+        "yield_fwd": "0% (2026); ~7% normalizado", "retorno_esperado_nominal": "~12%", "retorno_esperado_real": "~7,8% (normalizado)", "vs_ipca_mais_708": "+0,7 p.p.", "vence_rf": "Empate",
+        "g": "5%",
+        "nota_geral": {"antes": 6.3, "agora": 6.2},
+        "pares": "Citi Venda 5,60; XP Neutra 7,00 (fim 2027); Citi e XP cortaram lucro 2026-27 (consenso em queda)",
+        "src": "03/10 e 06/09 ficha KEPL3"
+      },
+      "governanca_riscos": {
+        "interferencias_consumadas": "Trigono travou a venda a R$ 11 (mar/26) - impasse entre Trigono e conselho; sem controlador",
+        "riscos": ["lucro 2026E R$ 60 mi (P/L ~20x)", "margem bruta caindo (36% -> 23%)", "credito do PCA sem data", "backlog -13,8% a/a", "DY 2026 zero"],
+        "buy_and_hold": "Parcial: moat Parcial; ROIC>Ke Parcial; balanco Sim; dono Parcial (Trigono reduziu para 14,94%); lucro Nao; diluicao Sim; preco Parcial (-15%)"
+      },
+      "gatilhos_da_ficha": [
+        {"gatilho": "EBITDA < R$ 20 mi por 2 tri", "status": "Nao verificavel (2T26 R$ 25,9 mi; 3T26 em 11/11)"},
+        {"gatilho": "Caixa liquido negativo sem capex de expansao", "status": "Nao verificavel"},
+        {"gatilho": "Inadimplencia propria > 3%", "status": "Nao verificavel"},
+        {"gatilho": "Margem bruta < 20%", "status": "Nao verificavel (23% no 2T26)"},
+        {"gatilho": "Backlog crescendo a/a ou margem EBITDA > 14% por 2 tri -> BARATA; nova proposta de M&A", "status": "ativo"}
+      ],
+      "eventos_com_data": [
+        {"data": "11/11/2026", "evento": "3T26 (calendario RI)"},
+        {"data": "19/08/2026", "evento": "comunicado: Trigono 14,94%"},
+        {"data": "fev/2027", "evento": "fim do programa de recompra (parado)"}
+      ],
+      "premissas_pdf_valuation": {
+        "marcador": "PREMISSA DO PDF (nao verificada)",
+        "veredito": "RADAR (antes RADAR)", "justo": 8.00, "compra_menos_30pct": 5.60, "saida": 11.00, "desconto_pct": -15, "faixa": "4,9-11",
+        "dcf_fcfe_base_sens": "~6,0 / 9,2 (antes 5,8 / 8,9)",
+        "epv_nominal_sens": "~5,0 / 6,8 (antes 5,4 / 7,3)",
+        "dcf_3_cenarios_set": "pess. 3,3/4,9 | base 5,8/8,9 | otim. 8,8/14,1",
+        "graham": "R$ 9,15; 5/7; Bazin 5a R$ 12,7 (11,8 ex-2022) / fwd 8,0; reproducao PL 792 mi + rede/marca = R$ 5,2-5,8",
+        "referencia_dura": "GPT R$ 11 + 1 (fev/26) - preco 40% abaixo",
+        "valor_central": "R$ 8 (mantido; Ke +3% ~ recuperacao adiada)",
+        "notas": {"qualidade": 6.0, "solidez": 8.0, "renda": 5.0, "preco": "7,0 -> 6,0"}
+      },
+      "nao_encontrado": ["backlog atualizado (valor absoluto)", "fatia atual da Heller", "data do PCA no BNDES", "motivo da alta de 02/10", "numero de acoes", "lucro anual 2016-20", "balanco jun/26 completo", "capex 3T25/4T25", "insiders", "valor da reducao de capital de 2021", "tag along", "free float", "receita", "participacao exata do controlador (inexistente)"],
+      "lacunas_importantes": "Backlog em R$ nao encontrado (so variacoes); sem receita, divida bruta, capex e numero de acoes; fatia da Heller n.e."
+    },
+
+    "SLCE3": {
+      "identificacao": {
+        "nome": "SLC Agricola",
+        "segmento": "Agronegocio (graos e algodao) - commodity agro com lastro em terra; maior produtora listada; Novo Mercado",
+        "controlador": {"v": "familia Logemann", "participacao_pct": 53.7, "src": "03/10 e 06/09 ficha SLCE3"},
+        "tag_along": null,
+        "free_float": null,
+        "liquidez_diaria": null,
+        "numero_acoes": null,
+        "composicao_unit": null
+      },
+      "mercado": {
+        "preco": {"v": 17.20, "un": "R$", "per": "02/10/2026", "nota": "+4,8% vs 04/09 (16,41); maxima 18,43 (10/09); +28% vs ficha (13,40); saiu do Ibovespa em 08/09", "src": "03/10 ficha SLCE3 (Yahoo; StatusInvest; Dados de Mercado)"},
+        "preco_ficha_anterior": {"v": 13.40, "per": "jul/2026 (real 04/09: 16,41, +22%)", "src": "03/10 erro proprio"},
+        "valor_mercado": null, "ev": null,
+        "p_l": {"v": "19-20", "nota": "12m; ~8 normalizado (06/09)", "src": "06/09"},
+        "p_vp": {"v": 1.18, "nota": "VPA 11,34 (06/09)", "src": "06/09"},
+        "p_nav": {"v": 0.63, "nota": "NAV R$ 27,12/acao (Itau BBA/empresa, terras a mercado + operacao); desconto de 37%; era 0,49 em 06/09 a R$ 13,40 (artefato de cotacao velha)", "src": "03/10 ficha SLCE3 (Money Times 13/08)"},
+        "ev_ebitda": {"v": 5.8, "nota": "7,0x c/ arrendamentos (06/09)", "src": "06/09"}
+      },
+      "endividamento": {
+        "divida_liquida": {"v": 7.54, "un": "R$ bilhoes", "per": "2T26 (ajustada; pico sazonal)", "src": "06/09 ficha SLCE3 (colunas quebradas)"},
+        "divida_bruta": null, "caixa": null,
+        "dl_ebitda": {"v": 3.09, "un": "x", "per": "2T26", "nota": "5,4x c/ arrendamentos; 1,97x dez/25; guidance ~2,4x fim do ano (Genial cetica); casas projetam 2,3-2,4x dez/26; gatilho > 3,5x dez/26", "src": "06/09 e 03/10 ficha SLCE3"},
+        "custo_medio_divida": null, "prazo_medio_divida": null,
+        "parcela_em_usd": {"v": null, "nota": "CPR-F R$ 515,5 mi, 7 anos, swap p/ USD + 6,15% a.a. (alonga mas aumenta exposicao a dolar); divida em USD via CPR-F", "src": "03/10 ficha SLCE3 (Monitor do Mercado; Seu Dinheiro)"}
+      },
+      "resultados": {
+        "receita": null,
+        "ebitda": {"v": 580.6, "un": "R$ milhoes", "per": "2T26 ajustado", "nota": "-13% vs consenso; margem 26,7% (-3,2 pp); 12m R$ 2,44 bi", "src": "06/09 ficha SLCE3"},
+        "ebit": null,
+        "lucro_liquido_contabil": {"v": 245, "un": "R$ milhoes", "per": "2T26", "nota": "+75%; inclui R$ 278 mi de ativo biologico (nao-caixa)", "src": "06/09 ficha SLCE3"},
+        "lucro_liquido_ajustado": {"v": null, "nota": "LPA 12m ~0,7; normalizado 1,6", "src": "06/09"},
+        "margem_ebitda": {"v": 26.7, "un": "%", "per": "2T26", "src": "06/09"},
+        "fcf": {"v": -805, "un": "R$ milhoes", "per": "2T26", "nota": "1S26 -R$ 2,16 bi (plantio, arrendamentos, Sierentz)", "src": "06/09"},
+        "roic": {"v": 9.3, "un": "%", "nota": "vs WACC 12,9%", "src": "03/10 buy&hold"},
+        "roe": {"v": null, "nota": "5-10% (ROE medio 10a 15,5%)", "src": "06/09"},
+        "da": null
+      },
+      "capex": {"total": null, "manutencao": null, "expansao": "expansao alavancada (Radar, Sierentz); valores das aquisicoes = nao encontrados", "guidance": "capex 2026 = nao encontrado"},
+      "premissas_de_ciclo_declaradas_no_pdf": {
+        "nav": "NAV R$ 27,12/acao; com desconto de holding 25-35% -> R$ 17,6-20,3; 'sem reavaliacao de terras nova' em 03/10",
+        "terra": "terra valorizando +8,4% real/ano em 5 anos (Genial); PDF projeta ~8% real/ano",
+        "spot_citado": {
+          "algodao_ICE_dez26": {"v": 78.88, "un": "US c/lb", "per": "02/10/2026", "nota": "86,33 em 04/09; -9% no mes; ~ preco do hedge (55% do algodao 26/27 a 78,88); 06/09: hedge abaixo do spot (84,4)", "src": "03/10 ficha SLCE3 (Yahoo; Noticias Agricolas; Suno)"},
+          "soja_CBOT_nov26": {"v": 12.78, "un": "US$/bu", "per": "02/10/2026", "nota": "13,10 em 04/09; -2,4% no mes; 'soja ~11,5' da ficha anterior era errada", "src": "03/10 (Yahoo ZSX26)"},
+          "milho_CBOT_dez26": {"v": 4.98, "un": "US$/bu", "per": "02/10/2026", "nota": "-7% no mes; '0% com hedge'", "src": "03/10"}
+        },
+        "cambio_meio_de_ciclo": null
+      },
+      "operacional_setor": {
+        "area_propria_ha": null,
+        "valor_das_terras": {"v": null, "nota": "valor total de terras em R$ bi/R$ por acao NAO encontrado separado; so NAV total R$ 27,12/acao (terras a mercado + operacao)", "src": "03/10 e 06/09"},
+        "insumos": "insumos 26/27 quase todos comprados; ureia em queda contratada; plantio 26/27 comecando, area nao divulgada",
+        "aquisicoes": "Radar: 2a parcela R$ 413,8 mi ate 30/10 (pressiona caixa do 4T); Radar reduzida em julho; Sierentz",
+        "recompra": "ri.slcagricola.com.br (recompra) citado; dados nao extraidos",
+        "bonificacao": "12,5% em dez/25 (decisao fiscal)",
+        "ILP": null
+      },
+      "proventos": {
+        "dpa_12m": {"v": 0.9058, "un": "R$/acao", "nota": "DERIVADO: dividendo R$ 0,8605 + JCP R$ 0,0453 (data-com 12/12/25, pagos 22-23/12/25 - antecipacao fiscal)", "src": "03/10 ficha SLCE3 sec.5"},
+        "dy_12m_pct": {"v": 5.3, "nota": "retroativo (so dez/25); 0% em 2026; 2027 R$ 0,5-0,7 (3-4% a R$ 17,20); 06/09 usava 6,75% (HG, R$ 0,91)", "src": "03/10 e 06/09"},
+        "politica": "minimo 25% (oficial n.e.); payout 2025 > 100% (~R$ 640 mi vs lucro 565 mi)",
+        "serie_dpa": "2018 0,53 | 2019 0,24 | 2020 0,49 | 2021 0,53 | 2022 1,39 | 2023 1,35 | 2024 0,83 | 2025 1,45 | 2026 0 (pre-bonificacao nao ajustada)",
+        "extraordinarios": null,
+        "recompra": "ver operacional_setor",
+        "defasagem": null,
+        "declarado_no_periodo": "Nada; 2026 sera o 1o ano sem provento",
+        "coberto_por_caixa": "Nao em 2025 (payout > 100% com divida subindo); 2026 sem provento"
+      },
+      "multiplos_retornos_pares": {
+        "yield_fwd": "0% em 2026; 3-4% em 2027", "retorno_esperado_nominal": "~3-4% (2027)", "retorno_esperado_real": "~0-1% em 2026", "vs_ipca_mais_708": "-7 p.p. (caixa)", "vence_rf": "Nao",
+        "nota_geral": {"antes": 4.7, "agora": 4.3},
+        "pares": "JPM Overweight 23; Itau BBA Outperform 19; Safra Neutro 21; Citi Neutro 18; BofA Neutro 14,50 (03/10); em 06/09: BTG 20, BBA 19, XP 17. Pares AGRO3/LAND3 = nao encontrado",
+        "src": "03/10 e 06/09 ficha SLCE3"
+      },
+      "governanca_riscos": {
+        "interferencias_consumadas": "Nenhuma; controlador estavel; ILP da diretoria nao citado para SLCE3 (o ILP de 'ate 2,2% do capital em acoes de tesouraria' do painel refere-se a RANI3)",
+        "riscos": ["DL/EBITDA 3,09x com FCF negativo no 1S26", "parcela de R$ 414 mi da Radar ate 30/10", "exposicao a dolar via CPR-F", "NAV e de casa (Itau BBA), nao auditado - EVIDENCIA LIMITADA", "ROIC 9% < WACC", "saiu do Ibovespa (fluxo passivo menor)"],
+        "buy_and_hold": "Nao: moat Parcial; ROIC>Ke Nao (9,3% vs 12,9%); balanco Nao; dono Parcial; lucro Nao; diluicao Sim; preco Nao (-4%)"
+      },
+      "gatilhos_da_ficha": [
+        {"gatilho": "DL/EBITDA > 3,5x em dez/26", "status": "Nao verificavel (parcela R$ 414 mi em 30/10 pressiona; casas 2,3-2,4x)"},
+        {"gatilho": "Quebra de safra", "status": "Nao acionado (plantio 26/27 comecando)"},
+        {"gatilho": "Venda de terras abaixo do NAV", "status": "Nao acionado (nenhuma venda)"},
+        {"gatilho": "Nova aquisicao antes de 2x", "status": "Nao acionado (Radar reduzida em julho, antes da ficha)"},
+        {"gatilho": "DL/EBITDA <= 2,5x dez/26 com FCF positivo no 2S -> central R$ 20", "status": "ativo"},
+        {"gatilho": "Preco <= R$ 12,60 (com DL <= 2,5x dez/26)", "status": "ativo"}
+      ],
+      "eventos_com_data": [
+        {"data": "30/10/2026", "evento": "2a parcela da Radar R$ 413,8 mi"},
+        {"data": "11/11/2026", "evento": "3T26 (Investing; nao confirmado no RI)"},
+        {"data": "08/09/2026", "evento": "saida do Ibovespa"},
+        {"data": "dez/2026", "evento": "reavaliar DL/EBITDA"}
+      ],
+      "premissas_pdf_valuation": {
+        "marcador": "PREMISSA DO PDF (nao verificada)",
+        "veredito": "JUSTA (antes RADAR, preco errado)", "justo": 18.00, "compra_menos_30pct": 12.60, "saida": 23.00, "desconto_pct": -4, "faixa": "8-23",
+        "nav_com_desconto_holding_25_35": "R$ 27,12 -> R$ 17,6-20,3 (igual a set)",
+        "dcf_fcfe_base_sens": "~9,4 / 14,9 (antes 9,2 / 14,5)",
+        "epv_wacc_12_9_e_10_7": "R$ 5 / 9 (~igual)",
+        "dcf_3_cenarios_set": "pess. 5/8 | base 9,2/14,5 | otim. 15/22",
+        "graham": "R$ 13,4 (LPA 12m ~0,7) / R$ 20 (LPA normalizado 1,6); 4/7; Bazin 5a R$ 18,5",
+        "valor_central": "R$ 18 (mantido; algodao -9% compensa o Ke; hedge protege 55%)",
+        "notas": {"qualidade": 5.0, "solidez": 4.0, "renda": 3.0, "preco": "7,0 -> 5,0"}
+      },
+      "nao_encontrado": ["area plantada 26/27", "recompras", "hedge pos-2T26", "politica de dividendos 2027", "data do 3T26 no RI", "area propria (ha)", "valor das terras isolado (R$ bi e R$/acao)", "numero de acoes", "valores das aquisicoes Sierentz/Radar", "capex 2026", "covenants", "pares AGRO3/LAND3", "receita", "tag along", "free float", "liquidez diaria"],
+      "lacunas_importantes": "Area propria em ha e valor das terras (R$ bi / R$ por acao) NAO constam: so NAV total R$ 27,12/acao (Itau BBA, nao auditado); sem receita, caixa/divida bruta, capex e numero de acoes."
+    }
+  },
+
+  "eventos_binarios_agenda_pdf_03_10": [
+    {"data": "04/10 e 25/10/2026", "evento": "Eleicao (1o e eventual 2o turno)", "olhar": "IPCA+ longo, cambio, Ke de toda a mesa"},
+    {"data": "05/10/2026", "evento": "Fim do corte de PIS/Cofins da gasolina (se nao prorrogado)", "olhar": "SMTO3: preco relativo do etanol"},
+    {"data": "28/10/2026", "evento": "KLBN11 3T26 (StatusInvest; nao confirmado no RI)", "olhar": "FCF sem venda de terras; DL/EBITDA; declaracao de dividendo"},
+    {"data": "30/10/2026", "evento": "RANI3 3T26; SLCE3 parcela de R$ 414 mi da Radar", "olhar": "Margem >= 25%; FCF; alavancagem da SLC"},
+    {"data": "05/11/2026", "evento": "SUZB3 3T26", "olhar": "DL/EBITDA pro-forma com Arbex (gatilho 4x)"},
+    {"data": "09/11/2026", "evento": "SMTO3 2T27", "olhar": "EBITDA > R$ 900 mi -> gatilho de alta"},
+    {"data": "11/11/2026", "evento": "KEPL3 3T26; SLCE3 3T26 (Investing; nao confirmado)", "olhar": "EBITDA < R$ 20 mi; margem bruta < 20%; backlog"},
+    {"data": "12/11/2026", "evento": "B3SA3 3T26 (StatusInvest); tambem 4a parcela KLBN11 R$ 0,228/unit", "olhar": "Despesas; recompras; ADTV de setembro"}
+  ],
+  "nota_mapeamento_agenda": "As datas da agenda no texto extraido vieram em colunas quebradas; o pareamento data->evento seguiu a ordem das linhas e foi cruzado com datas citadas nas fichas (05/10, 28/10, 30/10, 05/11, 09/11, 11/11). 12/11 para B3SA3 e inferencia pela ordem.",
+
+  "erros_proprios_da_ficha_anterior_corrigidos_em_03_10": {
+    "cotacoes": {"SMTO3": "14,70 (jul) -> real 04/09 20,60 (+40%)", "SLCE3": "13,40 (jul) -> 16,41 (+22%)", "B3SA3": "15,72 (27/07) -> 17,37 (+10%)", "SUZB3": "41,72 (ago) -> 46,89 (+12%)", "KLBN11": "18,05 (ago) -> 19,47 (+8%)", "RANI3": "7,95 -> 7,66 (-4%)", "KEPL3": "6,66 -> 6,68 (0%)"},
+    "outros_dados": {
+      "KLBN11_DY": "7,8% (HG) -> 6,3% data-com / 5,1% pagamento (StatusInvest; avisos de dividendos dez/25)",
+      "RANI3_DY": "6,0% -> 5,07% (R$ 0,4023); recorrente sem o extra ~1,8% (ri.irani.com.br/comunicados-e-atas/)",
+      "SMTO3_DY": "4,6% -> 1,1% por data-com 12m; exercicio 25/26 R$ 0,6153 -> 3,2% (FinanceNews 07/2026; Yahoo)",
+      "SMTO3_etanol": "R$ 1.779/m3 incompativel com CEPEA: R$ 2.399 em 04/09; R$ 2.564 em 02/10",
+      "SLCE3_soja": "~11,5 -> CBOT nov/26 US$ 13,10/bu em 04/09; 12,78 em 02/10 (Yahoo ZSX26)",
+      "SUZB3_aumento_capital": "'aumento de capital de R$ 5 bi' = capitalizacao de reservas, sem emissao de acoes, sem diluicao (InfoMoney 11/12/2025)",
+      "B3SA3_regra_RF": "'a R$ 12,5 passa a vencer com folga' errado: 8% + 6% = 14% nominal ~9,6% real -> Empate; so vence abaixo de ~R$ 11,80"
+    },
+    "nota_metodo": "A coluna '12,35%' dos DCF das fichas antigas passa a ser tratada como sensibilidade ao Ke de mercado, nao valor central."
+  },
+
+  "fontes": {
+    "_nota": "O PDF de 03/10 NAO traz lista consolidada de fontes no fim; traz uma linha 'Fontes:' ao final de cada ficha (reproduzidas abaixo, rotulo -> URL/descricao como no PDF) mais fontes na tabela de premissas comuns. Muitas sao so dominio; rotulos sem URL completa ficam como estao. Quadro-resumo e checklist declaram que RI de Klabin, B3 e Suzano nao abriram a pagina de comunicados - usados espelhos: StatusInvest, Dados de Mercado, Yahoo, imprensa.",
+    "premissas_comuns": {
+      "Tesouro Transparente (CSV oficial)": "precotaxatesourodireto.csv",
+      "Focus 25/09 (BCB Olinda)": "BCB Olinda (Focus)",
+      "InfoMoney Selic Copom 16/09": "infomoney.com.br/economia/taxa-selic-copom-corta-juros-13-75-set-2026/ (URL reconstruida a partir de texto quebrado em tres linhas)",
+      "IBGE/SIDRA t.1737": "IBGE SIDRA tabela 1737 (IPCA)",
+      "InfoMoney 02/10 e 04/09": "infomoney.com.br (Ibovespa; cambio)",
+      "BCB PTAX": "BCB PTAX (5,2238)",
+      "Yahoo Finance (fechamentos diarios)": "query1.finance.yahoo.com/v8/finance/chart/<TICKER>.SA (conferida com StatusInvest / Investidor10)"
+    },
+    "SUZB3": {
+      "Yahoo": "query1.finance.yahoo.com/v8/finance/chart/SUZB3.SA",
+      "Investing.com": "investing.com/equities/suzano-papel-celulose",
+      "CNN Brasil 22/09": "cnnbrasil.com.br/agro/suzano-confirma-novo-aumento-no-preco-da-celulose/",
+      "PapNews 24/09": "papnews.com/suzano-october-2026-pulp-price-increases/",
+      "Newspulpaper 01/10": "newspulpaper.com/indicadores-preco-setembro26/",
+      "Money Times (JV Kimberly-Clark, 01/07)": "moneytimes.com.br",
+      "InfoMoney 11/12/2025": "infomoney.com.br/mercados/suzano-suzb3-aprova-r-138-bi-em-dividendos-e-aumento-de-capital-de-r-5-bi/",
+      "Seu Dinheiro (BBI 22/09)": "seudinheiro.com",
+      "XP (celulose China 28/09; XPI)": "conteudos.xpi.com.br/acoes/suzb3/",
+      "RI Suzano (3T26 em 05/11)": "ri.suzano.com.br"
+    },
+    "KLBN11": {
+      "Yahoo": "query1.finance.yahoo.com/v8/finance/chart/KLBN11.SA",
+      "StatusInvest": "statusinvest.com.br/acoes/klbn11",
+      "AUVP (dividendos e bonificacao 2026)": "analitica.auvp.com.br",
+      "A Revista 08/09": "arevista.com.br/investimentos/klbn11-ainda-pode-pagar-novos-dividendos-veja-o-que-mudou/",
+      "XP (celulose China 28/09)": "conteudos.xpi.com.br",
+      "Newspulpaper 01/10": "newspulpaper.com/indicadores-preco-setembro26/",
+      "Seu Dinheiro (BBI 22/09)": "seudinheiro.com",
+      "StatusInvest agenda de resultados": "statusinvest.com.br/acoes/agenda-de-resultados"
+    },
+    "RANI3": {
+      "Yahoo": "query1.finance.yahoo.com/v8/finance/chart/RANI3.SA",
+      "StatusInvest": "statusinvest.com.br/acoes/rani3",
+      "RI Irani (avisos de proventos; FR 17/09 ILP; ata CA 17/09; calendario 3T26 30/10)": "ri.irani.com.br/comunicados-e-atas/",
+      "Newspulpaper expedicao papelao ago": "newspulpaper.com/expedicao-papelao-ondulado-agosto/",
+      "Brasil em Folhas (projecao Empapel 16/09)": "brasilemfolhas.com.br",
+      "Newspulpaper 01/10": "newspulpaper.com/indicadores-preco-setembro26/",
+      "XPI (13/08)": "conteudos.xpi.com.br",
+      "Money Times 03/08": "moneytimes.com.br"
+    },
+    "B3SA3": {
+      "Yahoo": "query1.finance.yahoo.com/v8/finance/chart/B3SA3.SA",
+      "StatusInvest": "statusinvest.com.br/acoes/b3sa3",
+      "FinanceNews (JCP 17/09)": "financenews.com.br",
+      "Money Times (JCP ajustado 22/09)": "moneytimes.com.br",
+      "Dados de Mercado": "dadosdemercado.com.br/acoes/b3sa3/dividendos",
+      "InfoMoney (volumes ago; Selic 16/09)": "infomoney.com.br",
+      "XPI": "conteudos.xpi.com.br",
+      "Investing BR (Itau BBA)": "br.investing.com",
+      "BPMoney (Itau BBA 25/09)": "bpmoney.com.br",
+      "Seu Dinheiro (A5X 14/09; BTG 02/10)": "seudinheiro.com",
+      "DGABC (Cade 02/09)": "dgabc.com.br"
+    },
+    "SMTO3": {
+      "Yahoo": "query1.finance.yahoo.com/v8/finance/chart/SMTO3.SA",
+      "StatusInvest": "statusinvest.com.br/acoes/smto3",
+      "FinanceNews (dividendo jul/26; alta de agosto)": "financenews.com.br",
+      "Forbes Agro (acucar 02/10; UNICA 01/10)": "forbes.com.br/forbes-agro",
+      "Noticias Agricolas (CEPEA etanol)": "noticiasagricolas.com.br",
+      "Exame": "exame.com",
+      "O Tempo": "otempo.com.br",
+      "DGABC (ANP 02/10)": "dgabc.com.br",
+      "Seu Dinheiro (XP 26/08)": "seudinheiro.com",
+      "InfoMoney (Itau BBA 11/06)": "infomoney.com.br",
+      "RI Sao Martinho (2T27 em 09/11)": "ri.saomartinho.com.br"
+    },
+    "KEPL3": {
+      "Yahoo": "query1.finance.yahoo.com/v8/finance/chart/KEPL3.SA",
+      "Investidor10": "investidor10.com.br/acoes/kepl3/",
+      "RI Kepler Weber via api.mziq.com (comunicados 19/08, 08/09, 14/09, 30/09; CVM 44 ago/26; calendario 3T26 11/11)": "api.mziq.com",
+      "Money Times (Citi 14/09; Trigono 21/08)": "moneytimes.com.br",
+      "FinanceNews (XP 22/09)": "financenews.com.br",
+      "Agrishow": "digital.agrishow.com.br",
+      "Agrolink": "agrolink.com.br",
+      "Sou Agro": "souagro.net"
+    },
+    "SLCE3": {
+      "Yahoo": "query1.finance.yahoo.com/v8/finance/chart/SLCE3.SA",
+      "StatusInvest": "statusinvest.com.br/acoes/slce3",
+      "Dados de Mercado": "dadosdemercado.com.br/acoes/slce3/dividendos",
+      "RI SLC (recompra)": "ri.slcagricola.com.br",
+      "Brasil em Folhas": "brasilemfolhas.com.br",
+      "The Agribiz": "theagribiz.com",
+      "Monitor do Mercado (CPR-F)": "monitordomercado.com.br",
+      "Seu Dinheiro (Radar)": "seudinheiro.com",
+      "Suno (Ibovespa)": "suno.com.br",
+      "Noticias Agricolas (algodao, soja)": "noticiasagricolas.com.br",
+      "Money Times (JPM 09/09; Citi 17/09; Safra 18/09; Itau BBA 22/09; BofA 25/09; NAV 13/08)": "moneytimes.com.br",
+      "Investing (3T26)": "investing.com"
+    },
+    "PDF_06_09_fontes_declaradas": "RI quando acessivel (Irani via ABRE, Sao Martinho via espelhos); casas (Genial, XP, Nord, BTG via imprensa); HG Brasil / Renova / StatusInvest / Dados de Mercado para series. Sem URLs."
+  }
+}

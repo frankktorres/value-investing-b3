@@ -1,0 +1,2286 @@
+{
+ "meta": {
+  "lote": "Lote 6 - Química e Metalurgia / autopeças e geração (LEVE3, EGIE3, UNIP6, GGBR4). Nenhum outro ticker nos PDFs (UNIP6 = PNB; GOAU4 só citado).",
+  "fonte_principal": "Química_Metalúrgia_rev_03-10-2026.pdf (Reavaliação mensal, data-base 03/10/2026, cotações de 02/10/2026) - PREVALECE",
+  "fonte_complementar": "Química_Metalúrgia_rev_07-09-2026.pdf (ampliação do hall, data-base 07/09/2026; cotações de 27/07 a início de setembro; mais completo em métricas e histórico)",
+  "legenda_src": "Campo src = '03/10' ou '07/09' + seção/ficha + rótulo da fonte citada pelo PDF. Valores são fatos extraídos; sem opinião nem cálculo próprio salvo marcado 'Derivado'. 'colunas quebradas' = pdftotext -layout embaralhou a tabela; reconstruído pela ordem.",
+  "aviso_geral": "Nenhuma DRE nova em 03/10 (3T26 em novembro) exceto UNIP6 (2T26 incorporado). Os dois PDFs NÃO trazem preços de commodity (aço, PVC, soda, cloro, ECU, spread) nem volumes por operação: ver lacunas_importantes. Setas e símbolos (->, >=, <=) foram perdidos pelo pdftotext; reconstruídos pelo contexto.",
+  "regua_do_pdf_03_10": {
+   "titulo_ancora": {
+    "v": 7.08,
+    "un": "% real a.a.",
+    "per": "02/10/2026",
+    "nota": "Tesouro IPCA+ 2060 c/ juros; 6,99% em 30/09; 7,22% em 28/09; 7,11% (Investidor10); ficha 07/09 usava 7,35% (IPCA+ 2050; StatusInvest 7,28% / Investidor10 7,42%)",
+    "src": "03/10 premissas comuns (infomoney.com.br tesouro-direto-abertura-fechamento-30092026; investidor10.com.br/tesouro-direto) | 07/09 premissas comuns"
+   },
+   "ke_real": {
+    "v": 12.08,
+    "un": "% real",
+    "per": "03/10",
+    "nota": "07/09: 12,35% (7,35% + 5 p.p.)",
+    "src": "03/10 premissas comuns"
+   },
+   "ke_nominal": {
+    "v": 16.56,
+    "un": "%",
+    "per": "03/10",
+    "nota": "(1,1208 × 1,04) - 1; 07/09: 16,84%",
+    "src": "03/10 premissas comuns"
+   },
+   "ipca_longo_prazo": {
+    "v": 4.0,
+    "un": "%",
+    "per": "03/10",
+    "nota": "mantido; Focus 2026 em 4,99% (curto prazo)",
+    "src": "03/10 premissas comuns"
+   },
+   "regua_RF": {
+    "v": "Vence ≥ 10,08% real; Empate 7,08-10,08%; Não < 7,08% (título + 3 p.p. de prêmio)",
+    "un": null,
+    "per": "03/10",
+    "nota": "07/09: 10,35% / 7,35%",
+    "src": "03/10 | 07/09 premissas comuns"
+   },
+   "metodo_recalculo": {
+    "v": "Sem DRE nova, central reescalado por sensibilidade de Gordon (Ke ant - g)/(Ke novo - g), g nominal da ficha: +2,4% a +2,7% nos justos. Aproximação, não DCF refeito; EVIDÊNCIA LIMITADA",
+    "un": null,
+    "per": "03/10",
+    "nota": "Exceção: UNIP6 recebeu 2T26",
+    "src": "03/10 premissas comuns"
+   },
+   "risco_controlador": {
+    "v": "R$ 0 nas 4",
+    "un": null,
+    "per": "03/10",
+    "nota": null,
+    "src": "03/10 premissas comuns"
+   }
+  },
+  "regua_veredito_07_09": {
+   "v": "desconto ≥ 30% BARATA; 10-30% RADAR; ±10% JUSTA; prêmio > 15% CARA; ARMADILHA = barata só no múltiplo",
+   "un": null,
+   "per": "07/09",
+   "nota": null,
+   "src": "07/09 como ler as fichas"
+  },
+  "renda_fixa_07_09": {
+   "v": "IPCA+ 2050 7,35% real (11,6% nominal); Selic 14,25% nominal (9,9% real); IR do Tesouro 15% -> 6,2% real líquido; comparação bruta contra bruta",
+   "un": null,
+   "per": "07/09",
+   "nota": null,
+   "src": "07/09 refer. de renda fixa"
+  },
+  "paginas": "03/10: 10 págs; 07/09: 14 págs (incl. quadro-resumo; quadro-resumo de 07/09 veio com colunas quebradas)"
+ },
+ "tickers": {
+  "LEVE3": {
+   "identificacao": {
+    "nome": {
+     "v": "Mahle Metal Leve",
+     "un": null,
+     "per": null,
+     "nota": null,
+     "src": "03/10 ficha LEVE3"
+    },
+    "segmento": {
+     "v": "Autopeças; industrial cíclico de bens intermediários (componentes de motor, filtros, gerenciamento térmico); Novo Mercado",
+     "un": null,
+     "per": null,
+     "nota": null,
+     "src": "03/10 ficha LEVE3 perfil | 07/09 ficha LEVE3 perfil"
+    },
+    "controlador": {
+     "v": "Grupo MAHLE (Alemanha)",
+     "un": "%",
+     "per": null,
+     "nota": "61,0%",
+     "src": "03/10 ficha LEVE3 perfil"
+    },
+    "participacao_controlador": {
+     "v": 61.0,
+     "un": "%",
+     "per": null,
+     "nota": null,
+     "src": "03/10 ficha LEVE3 perfil | 07/09 ficha LEVE3"
+    },
+    "free_float": {
+     "v": 39.0,
+     "un": "%",
+     "per": null,
+     "nota": null,
+     "src": "03/10 ficha LEVE3 perfil"
+    },
+    "tag_along": {
+     "v": 100,
+     "un": "%",
+     "per": null,
+     "nota": "Novo Mercado; 03/10 diz 'resolve item não encontrado' via StatusInvest",
+     "src": "03/10 ficha LEVE3 perfil (StatusInvest) | 07/09 ficha LEVE3"
+    },
+    "liquidez_media_30d": {
+     "v": 6.9,
+     "un": "R$ mi",
+     "per": "30d até 02/10/2026",
+     "nota": null,
+     "src": "03/10 ficha LEVE3 perfil (StatusInvest)"
+    },
+    "numero_acoes": null,
+    "classes_ON_PN": null
+   },
+   "mercado": {
+    "preco": {
+     "v": 34.43,
+     "un": "R$",
+     "per": "fech. 02/10/2026",
+     "nota": "Yahoo mostrava 34,08 em 28/09",
+     "src": "03/10 ficha LEVE3 preço - statusinvest.com.br/acoes/leve3"
+    },
+    "preco_ficha_anterior": {
+     "v": 32.69,
+     "un": "R$",
+     "per": "02/09/2026",
+     "nota": "variação +5,3%; 07/09 marcava 'atualizar antes de decidir'",
+     "src": "03/10 ficha LEVE3 §1 (StatusInvest) | 07/09 ficha LEVE3 preço usado"
+    },
+    "max_52s": {
+     "v": 35.6,
+     "un": "R$",
+     "per": "02/10/2026",
+     "nota": "+37,7% em 12 meses",
+     "src": "03/10 ficha LEVE3 preço"
+    },
+    "variacao_12m_ficha_anterior": {
+     "v": 18,
+     "un": "%",
+     "per": "07/09/2026",
+     "nota": "'+18% em 12m, ponto médio-alto da faixa de 52s'",
+     "src": "07/09 ficha LEVE3 qualitativo Templeton"
+    },
+    "p_l": {
+     "v": 6.7,
+     "un": "x",
+     "per": "12m, 02/10/2026",
+     "nota": "ficha 07/09: 6,4 (LPA 12m ~5,14)",
+     "src": "03/10 ficha LEVE3 §1 - StatusInvest | 07/09 ficha LEVE3 quantitativo"
+    },
+    "p_vp": {
+     "v": 4.84,
+     "un": "x",
+     "per": "02/10/2026",
+     "nota": "VPA 7,11; 07/09: 4,60",
+     "src": "03/10 ficha LEVE3 §1 - StatusInvest"
+    },
+    "dy_12m": {
+     "v": 8.28,
+     "un": "% (R$ 2,85, data-com)",
+     "per": "02/10/2026",
+     "nota": "07/09: 8,71% (Investidor10) / 8,31% (HG), por pagamento",
+     "src": "03/10 ficha LEVE3 §1/§6 - StatusInvest | 07/09 ficha LEVE3 proventos"
+    },
+    "numero_graham": {
+     "v": 28.7,
+     "un": "R$",
+     "per": "03/10",
+     "nota": "22,5 × 5,14 × 7,11; preço 20% acima (07/09: 28,7, preço 14% acima)",
+     "src": "03/10 ficha LEVE3 §1 | 07/09 ficha LEVE3 valuation"
+    },
+    "ev_ebit_formula_magica": {
+     "v": "6,1x (earnings yield 16,3%) + ROIC 30%",
+     "un": null,
+     "per": "07/09",
+     "nota": null,
+     "src": "07/09 ficha LEVE3 valuation"
+    },
+    "peg_lynch": {
+     "v": "0,8-1,0; cyclical + slow grower de alto payout",
+     "un": null,
+     "per": "07/09",
+     "nota": null,
+     "src": "07/09 ficha LEVE3 valuation"
+    }
+   },
+   "endividamento": {
+    "dl_ebitda": {
+     "v": 1.05,
+     "un": "x",
+     "per": "2T26",
+     "nota": "RI; StatusInvest usa EBITDA 12m mais alto: 0,81x (SI). 0,96x em dez/25. Mantida a oficial",
+     "src": "03/10 ficha LEVE3 §1 (RI/StatusInvest) | 07/09 ficha LEVE3 quantitativo"
+    },
+    "dl_ebitda_statusinvest": {
+     "v": 0.81,
+     "un": "x",
+     "per": "02/10/2026",
+     "nota": null,
+     "src": "03/10 ficha LEVE3 §1 [colunas quebradas na extração; reconstruído pela ordem]"
+    },
+    "custo_medio_divida": {
+     "v": 6.0,
+     "un": "% a.a.",
+     "per": "2T26",
+     "nota": null,
+     "src": "07/09 ficha LEVE3 quantitativo"
+    },
+    "caixa": {
+     "v": 499.7,
+     "un": "R$ mi",
+     "per": "2T26",
+     "nota": null,
+     "src": "07/09 ficha LEVE3 quantitativo"
+    },
+    "cobertura_juros": {
+     "v": "30x (EBIT 462,4 / juros 15,3)",
+     "un": null,
+     "per": "07/09",
+     "nota": null,
+     "src": "07/09 ficha LEVE3 quantitativo"
+    },
+    "altman_z_piotroski": {
+     "v": "4,0 (zona segura) / 7 de 9",
+     "un": null,
+     "per": "07/09",
+     "nota": null,
+     "src": "07/09 ficha LEVE3 quantitativo"
+    },
+    "novos_financiamentos_1S26": {
+     "v": 383,
+     "un": "R$ mi",
+     "per": "1S26",
+     "nota": "enquanto pagava R$ 299 mi em proventos: 'dividendo com giro de dívida'",
+     "src": "07/09 ficha LEVE3 proventos"
+    }
+   },
+   "resultados": {
+    "receita_2T26": {
+     "v": 1332.2,
+     "un": "R$ mi",
+     "per": "2T26",
+     "nota": "-2,7%; 1S26 R$ 2.588,6 mi (-1,8%)",
+     "src": "07/09 ficha LEVE3 quantitativo"
+    },
+    "ebitda_aj_2T26": {
+     "v": 273.8,
+     "un": "R$ mi",
+     "per": "2T26",
+     "nota": "margem 20,5% (recorde da série; +1,4 pp a/a)",
+     "src": "07/09 ficha LEVE3 quantitativo | 03/10 ficha LEVE3 §2-3 margem 20,5%"
+    },
+    "margem_ebitda": {
+     "v": 20.5,
+     "un": "%",
+     "per": "2T26",
+     "nota": "vs ~10% do setor (07/09)",
+     "src": "03/10 ficha LEVE3 §2-3 | 07/09 ficha LEVE3 B&H"
+    },
+    "lucro_2T26": {
+     "v": "R$ 159,6 mi contábil (+26,0%) / R$ 141,3 mi ajustado (ex-IAS 29 e ex-aquisições)",
+     "un": null,
+     "per": "2T26",
+     "nota": null,
+     "src": "07/09 ficha LEVE3 quantitativo"
+    },
+    "lpa_12m": {
+     "v": 5.14,
+     "un": null,
+     "per": "02/10/2026",
+     "nota": "VPA 7,11; HG mostra 5,14 como P/VP (divergência registrada em 07/09)",
+     "src": "03/10 ficha LEVE3 §1"
+    },
+    "accruals_sloan_1S26": {
+     "v": "+4,6% - R$ 121 mi não-caixa (câmbio 84,8 + IAS 29 36,2)",
+     "un": null,
+     "per": "1S26",
+     "nota": null,
+     "src": "07/09 ficha LEVE3 quantitativo"
+    },
+    "roic": {
+     "v": "30,5% (HG 36,0%) vs WACC nominal 13,8% (spread 17 pp)",
+     "un": null,
+     "per": "07/09",
+     "nota": null,
+     "src": "07/09 ficha LEVE3 quantitativo"
+    },
+    "roe_dupont": {
+     "v": "76,9% = margem 12,3% × giro 1,34 × alavancagem 4,00x",
+     "un": null,
+     "per": "07/09",
+     "nota": "ROE alto = alavancagem, não retorno operacional",
+     "src": "07/09 ficha LEVE3 quantitativo"
+    },
+    "lucro_normalizado_ciclo": {
+     "v": "margem normalizada 19%; receita 5,2 bi",
+     "un": null,
+     "per": "07/09",
+     "nota": null,
+     "src": "07/09 ficha LEVE3 quantitativo normalização"
+    },
+    "fcfe_1S26": {
+     "v": 138.4,
+     "un": "R$ mi",
+     "per": "1S26",
+     "nota": "anualizado = R$ 2,04/ação; ~50% do dividendo (03/10); 216% do FCFE no 1S26 (07/09)",
+     "src": "03/10 ficha LEVE3 §6-7 | 07/09 ficha LEVE3 quantitativo/proventos"
+    }
+   },
+   "capex": {
+    "capex_vs_da": {
+     "v": "R$ 34,0 mi vs D&A R$ 53,2 mi = 0,64x (capex 1,3% da receita)",
+     "un": null,
+     "per": "1S26",
+     "nota": null,
+     "src": "07/09 ficha LEVE3 quantitativo"
+    }
+   },
+   "premissas_de_ciclo_declaradas_no_pdf": {
+    "meio_de_ciclo": {
+     "v": "margem EBITDA normalizada 19%; receita 5,2 bi; LPA normalizado 4,3",
+     "un": null,
+     "per": "07/09 e 03/10 (mantida)",
+     "nota": "03/10: 'Ciclo (produção BR acima da média 10a; margem normalizada 19%)' = VÁLIDA, sem dado novo; Anfavea não reavaliada",
+     "src": "03/10 ficha LEVE3 §2-3 | 07/09 ficha LEVE3 quantitativo"
+    },
+    "topo_do_ciclo": {
+     "v": "Produção BR 2,8 mi de veículos em 2026 (melhor desde 2019), já acima da média de 10 anos; exportações projetadas -12,8%; eletrificados 20,9% das vendas",
+     "un": null,
+     "per": "07/09",
+     "nota": "receita da LEVE caiu 1,8% no melhor ano de produção desde 2019",
+     "src": "07/09 ficha LEVE3 quantitativo/qualitativo"
+    }
+   },
+   "operacional_setor": {
+    "reposicao_aftermarket": {
+     "v": "36% de reposição; nenhum cliente > 10% da receita",
+     "un": null,
+     "per": "07/09",
+     "nota": null,
+     "src": "07/09 ficha LEVE3 qualitativo Fisher"
+    },
+    "volumes_OEM_reposicao_exportacao": null,
+    "partes_relacionadas": {
+     "v": "R$ 569 mi + marca R$ 7,9 mi (MAHLE é fornecedor, cliente e licenciador)",
+     "un": null,
+     "per": "07/09",
+     "nota": null,
+     "src": "07/09 ficha LEVE3 qualitativo controlador"
+    },
+    "pd_rota2030": {
+     "v": "P&D com 90% financiado por Rota 2030/Embrapii; fora de estrada convertendo > R$ 300 mi/ano é gatilho de alta",
+     "un": null,
+     "per": "07/09",
+     "nota": null,
+     "src": "07/09 ficha LEVE3 qualitativo/gatilhos"
+    },
+    "aquisicoes_2024": {
+     "v": "entregando EBIT acima do valuation; ciclo financeiro -8 dias; troca de CEO em 2026",
+     "un": null,
+     "per": "07/09",
+     "nota": null,
+     "src": "07/09 ficha LEVE3 qualitativo Dhandho"
+    }
+   },
+   "proventos": {
+    "dpa_12m_data_com": {
+     "v": 2.85,
+     "un": "R$/ação",
+     "per": "03/10",
+     "nota": "Inclui 2,03 de dividendos 29/04/26 + JCP 0,21 (dez/25) + 0,61 (nov/25). JCP de 16/12/25 pago em 27/05/26 (5 meses). Defasagem 1 a 6 meses",
+     "src": "03/10 ficha LEVE3 §6-7"
+    },
+    "serie_dpa_data_com": {
+     "v": "2017 0,57; 2018 1,24; 2019 2,16; 2020 0,09; 2021 0,93; 2022 4,20; 2023 9,06 (inclui 5,54 extraordinário pré-oferta); 2024 1,80; 2025 0,82; 2026 YTD 2,04",
+     "un": "R$/ação",
+     "per": "07/09",
+     "nota": "DPA por exercício: R$ 2,85 (2025), R$ 2,64 (2024)",
+     "src": "07/09 ficha LEVE3 proventos"
+    },
+    "payout": {
+     "v": 63.5,
+     "un": "% do lucro (2025: R$ 386,5 mi)",
+     "per": "07/09",
+     "nota": "× LPA normalizado 4,3 = R$ 2,73 (03/10 corrige yield forward: 07/09 dizia 7,0%, não reproduzível)",
+     "src": "03/10 ficha LEVE3 §6-7 | 07/09 ficha LEVE3 proventos"
+    },
+    "yield_sustentavel": {
+     "v": "5,9% (piso, caixa/FCFE) a 7,9% (teto, lucro)",
+     "un": null,
+     "per": "03/10",
+     "nota": "yield forward de 07/09 (7,0%) corrigido para esta faixa",
+     "src": "03/10 ficha LEVE3 §6-7"
+    },
+    "retorno_real_bogle": {
+     "v": 7.6,
+     "un": "% real (faixa 6,6-8,6)",
+     "per": "03/10",
+     "nota": "yield 6,9% + g 5% nominal = 11,9% nominal; vs 7,08%: +0,5 p.p.; vs 10,08%: -2,5 p.p.; 07/09 era 7,7% (yield 7,0% + g 5% = 12,0%)",
+     "src": "03/10 ficha LEVE3 §6-7 | 07/09 ficha LEVE3 comparativo RF"
+    },
+    "proventos_novos_apos_07_09": {
+     "v": "Nenhum declarado",
+     "un": null,
+     "per": "03/10",
+     "nota": null,
+     "src": "03/10 ficha LEVE3 §1 - Investidor10"
+    },
+    "historico": {
+     "v": "Sim - série ininterrupta desde ao menos 2014, sem desdobramentos/bonificações",
+     "un": null,
+     "per": "07/09",
+     "nota": null,
+     "src": "07/09 ficha LEVE3 proventos"
+    },
+    "oferta_primaria_2023": {
+     "v": "7,23 mi de ações em nov/2023 (+5,6%); única em 10 anos",
+     "un": null,
+     "per": "07/09",
+     "nota": "oferta de 2023 foi secundária (aumentou float)",
+     "src": "07/09 ficha LEVE3 B&H"
+    }
+   },
+   "multiplos_retornos_pares": {
+    "epv": {
+     "v": "R$ 24,9 (WACC nominal 13,8%) / 33,4 (real 11,0%)",
+     "un": null,
+     "per": "07/09",
+     "nota": "03/10: 25,5 / 34,2 (WACC escalado pela queda do Ke); texto EPV 31,7 na linha seguinte [colunas quebradas na extração; reconstruído pela ordem]",
+     "src": "07/09 ficha LEVE3 valuation | 03/10 ficha LEVE3 §4"
+    },
+    "valor_reproducao": {
+     "v": "Imobilizado + intangível R$ 1,13 bi (R$ 8,4/ação); EPV vs reprodução: franchise real de ~R$ 16/ação",
+     "un": null,
+     "per": "07/09",
+     "nota": null,
+     "src": "07/09 ficha LEVE3 valuation"
+    },
+    "bazin": {
+     "v": "R$ 37,6 (5a) / 31,7 (ex-extraordinários)",
+     "un": null,
+     "per": "07/09",
+     "nota": "03/10: 'Bazin ex-extraordinários +R$ 0,70: 100% efeito Ke' [colunas quebradas na extração; reconstruído pela ordem]",
+     "src": "07/09 ficha LEVE3 valuation | 03/10 ficha LEVE3 §4"
+    },
+    "graham_7_criterios": {
+     "v": "4/7 (liq. corrente 1,43; P/VP 4,60; produto 29,4 > 22,5 reprovam)",
+     "un": null,
+     "per": "07/09",
+     "nota": null,
+     "src": "07/09 ficha LEVE3 valuation"
+    },
+    "teste_1_real_retido": {
+     "v": "R$ 2,7 por R$ 1 (2016-26); R$ 1 mil viraram R$ 3.889 vs 3.629 do Ibovespa",
+     "un": null,
+     "per": "07/09",
+     "nota": null,
+     "src": "07/09 ficha LEVE3 valuation"
+    },
+    "pares_nao_verificados": {
+     "v": "TUPY3 e FRAS3 - múltiplos não verificados",
+     "un": null,
+     "per": "07/09",
+     "nota": null,
+     "src": "07/09 ficha LEVE3 não encontrado"
+    }
+   },
+   "governanca_riscos": {
+    "interferencia_controlador": {
+     "v": "Nenhuma em 15 anos; desconto R$ 0,00",
+     "un": null,
+     "per": "07/09 e 03/10",
+     "nota": "Gatilho OPA de fechamento pela MAHLE: não acionado, nenhuma notícia",
+     "src": "03/10 ficha LEVE3 §2-3 | 07/09 ficha LEVE3 qualitativo"
+    },
+    "tres_numeros_que_sustentam": {
+     "v": "ROIC 30-36% com dívida 1,05x e cobertura 30x; margem EBITDA 20,5% vs ~10% do setor; 20 anos de proventos, payout 63,5%, Altman 4,0",
+     "un": null,
+     "per": null,
+     "nota": null,
+     "src": "07/09 ficha LEVE3 riscos"
+    },
+    "tres_numeros_que_ameacam": {
+     "v": "Retorno real 7,7% perde para IPCA+ com prêmio; receita -1,8% no melhor ano da produção; lucro com R$ 121 mi não-caixa e dividendo financiado por giro de dívida",
+     "un": null,
+     "per": null,
+     "nota": null,
+     "src": "07/09 ficha LEVE3 riscos"
+    }
+   },
+   "gatilhos_da_ficha": {
+    "invalidam_tese": {
+     "v": "Margem EBITDA < 17% por 2 tri; aftermarket caindo > 8% a/a por 2 tri; DL/EBITDA > 1,8x; payout > 100% do lucro ajustado; OPA de fechamento pela MAHLE",
+     "un": null,
+     "per": null,
+     "nota": null,
+     "src": "07/09 ficha LEVE3 gatilhos | 03/10 ficha LEVE3 §2-3 (status: nenhum acionado; aftermarket não verificável sem trimestre novo)"
+    },
+    "mudaria_opiniao": {
+     "v": "Receita voltando a crescer ≥ 5% a/a com margem ≥ 20% por 2 tri -> central R$ 34 e RADAR; preço ≤ R$ 24 sem deterioração -> BARATA e entra na carteira de proventos; fora de estrada convertendo > R$ 300 mi/ano",
+     "un": null,
+     "per": null,
+     "nota": null,
+     "src": "07/09 ficha LEVE3 gatilhos"
+    },
+    "autocritica_ciclo": {
+     "v": "Se o ciclo automotivo estiver no meio e a produção sustentar, central vai a 34; 3T26 testa",
+     "un": null,
+     "per": null,
+     "nota": null,
+     "src": "03/10 ficha LEVE3 §8-9"
+    },
+    "autocritica_ke": {
+     "v": "Se IPCA+ voltar a 7,35%, veredito continua CARA (+18,7%)",
+     "un": null,
+     "per": null,
+     "nota": null,
+     "src": "03/10 ficha LEVE3 §8-9"
+    }
+   },
+   "eventos_com_data": {
+    "3T26": {
+     "v": "Data não verificada (sai fim de out./início nov.)",
+     "un": null,
+     "per": null,
+     "nota": null,
+     "src": "03/10 premissas comuns"
+    },
+    "relatorio_sustentabilidade": {
+     "v": "22/09/2026 - fato relevante não material",
+     "un": null,
+     "per": "22/09/2026",
+     "nota": null,
+     "src": "03/10 ficha LEVE3 §1"
+    },
+    "dividendo_29_04_26": {
+     "v": "R$ 2,03",
+     "un": null,
+     "per": "29/04/2026",
+     "nota": null,
+     "src": "03/10 ficha LEVE3 §6-7"
+    },
+    "jcp_16_12_25": {
+     "v": "declarado 16/12/25; pago 27/05/26",
+     "un": null,
+     "per": "16/12/2025",
+     "nota": null,
+     "src": "03/10 ficha LEVE3 §6-7"
+    }
+   },
+   "premissas_pdf_valuation": {
+    "palavra_03_10": {
+     "v": "CARA (de JUSTA, p/ CARA)",
+     "un": null,
+     "per": "03/10",
+     "nota": "Razão (a): preço +5,3% (32,69 -> 34,43) contra +2,4% do justo; prêmio cruzou os 15% da régua",
+     "src": "03/10 quadro-resumo / ficha LEVE3"
+    },
+    "palavra_07_09": {
+     "v": "JUSTA (para CARA)",
+     "un": null,
+     "per": "07/09",
+     "nota": null,
+     "src": "07/09 quadro-resumo"
+    },
+    "central_03_10": {
+     "v": 29.7,
+     "un": "R$",
+     "per": "03/10",
+     "nota": "faixa R$ 19,5-41,0; compra (-30%) 20,80; saída 38,00; prêmio +15,9%; compra de renda < 24",
+     "src": "03/10 quadro-resumo"
+    },
+    "central_07_09": {
+     "v": 29.0,
+     "un": "R$",
+     "per": "07/09",
+     "nota": "faixa 19,0-40,0; compra 20,30; saída 38,00; prêmio +12,7%",
+     "src": "07/09 quadro-resumo"
+    },
+    "metodo_03_10": {
+     "v": "Sem DRE nova: central 29,00 reescalado por Gordon (Ke antigo - g)/(Ke novo - g), g nominal 5%, fator 11,84/11,56 = +2,4%. Aproximação, não DCF refeito (EVIDÊNCIA LIMITADA no justo; FORTE no preço/múltiplo)",
+     "un": null,
+     "per": null,
+     "nota": null,
+     "src": "03/10 premissas comuns método do recálculo / ficha LEVE3 §4"
+    },
+    "dcf_fcfe_ke_nominal": {
+     "v": "07/09: 19,0 / 27,5 / 36,0 (Ke nominal 16,84%); 03/10: 19,5 / 28,2 / 36,9 (Ke 16,56%)",
+     "un": "R$ pess/base/otim",
+     "per": null,
+     "nota": null,
+     "src": "03/10 ficha LEVE3 §4 | 07/09 ficha LEVE3 valuation"
+    },
+    "dcf_ke_real": {
+     "v": "07/09: 23 / 37 / 49; 03/10: 24 / 38 / 50 (Ke real 12,08%)",
+     "un": "R$",
+     "per": null,
+     "nota": null,
+     "src": "03/10 ficha LEVE3 §4 | 07/09 ficha LEVE3 valuation"
+    },
+    "ke_real_nominal": {
+     "v": "07/09: 12,35% real / 16,84% nominal; 03/10: 12,08% real / 16,56% nominal (IPCA 4%)",
+     "un": null,
+     "per": null,
+     "nota": null,
+     "src": "03/10 premissas comuns"
+    },
+    "vence_rf": {
+     "v": "Empate (r. real 7,6% entre 7,08% e 10,08%); 07/09 marcava 'Não' (7,7%) - erro de rótulo corrigido",
+     "un": null,
+     "per": "03/10",
+     "nota": null,
+     "src": "03/10 quadro-resumo e ficha LEVE3"
+    },
+    "nota_geral": {
+     "v": "6,3/10 (07/09: 6,5); qualidade 7,5, solidez 8,0, renda 6,0, preço 3,0 (07/09: 4,0)",
+     "un": null,
+     "per": null,
+     "nota": "ponderação 35/20/25/20",
+     "src": "03/10 ficha LEVE3 avaliação numérica | 07/09 ficha LEVE3"
+    },
+    "compraria": {
+     "v": "Não; renda só < R$ 24 (yield sustentável 8,5% + g 5%); posição máx. 3%; ganho de capital: não (assimetria piorou: cara R$ 38-41 +10-19% vs coroa R$ 23 -33%)",
+     "un": null,
+     "per": null,
+     "nota": null,
+     "src": "03/10 ficha LEVE3 §8-9"
+    }
+   },
+   "nao_encontrado": {
+    "03_10": {
+     "v": "Datas do 3T26",
+     "un": null,
+     "per": null,
+     "nota": null,
+     "src": "03/10 Não encontrado"
+    },
+    "07_09": {
+     "v": "Covenants; remuneração e insiders; liquidez média diária exata (resolvida em 03/10: R$ 6,9 mi); DPA e lucro auditados 2014-2016; market cap 2016; múltiplos verificados de TUPY3 e FRAS3; % da receita exposta a eletrificados",
+     "un": null,
+     "per": null,
+     "nota": null,
+     "src": "07/09 ficha LEVE3 não encontrado"
+    }
+   },
+   "lacunas_importantes": [
+    "Volumes OEM/reposição/exportação NÃO constam em nenhum dos PDFs; só 36% de reposição (07/09) e exportações projetadas -12,8%.",
+    "Número de ações não consta (LPA 5,14 e VPA 7,11 apenas).",
+    "DL/EBITDA: RI 1,05x vs StatusInvest 0,81x (divergência registrada)."
+   ]
+  },
+  "EGIE3": {
+   "identificacao": {
+    "nome": {
+     "v": "Engie Brasil Energia",
+     "un": null,
+     "per": null,
+     "nota": null,
+     "src": "03/10 ficha EGIE3"
+    },
+    "segmento": {
+     "v": "Energia elétrica - geração e transmissão; concessão/utility; Novo Mercado",
+     "un": null,
+     "per": null,
+     "nota": null,
+     "src": "03/10 ficha EGIE3 perfil"
+    },
+    "controlador": {
+     "v": "ENGIE S.A. (França)",
+     "un": null,
+     "per": null,
+     "nota": "~68% (07/09); ~68,7% derivado do free float de 31,28% (03/10); participação exata pós-follow-on não encontrada",
+     "src": "03/10 ficha EGIE3 perfil | 07/09 ficha EGIE3"
+    },
+    "free_float": {
+     "v": 31.28,
+     "un": "%",
+     "per": "03/10",
+     "nota": null,
+     "src": "03/10 ficha EGIE3 perfil"
+    },
+    "tag_along": {
+     "v": 100,
+     "un": "%",
+     "per": null,
+     "nota": null,
+     "src": "03/10 ficha EGIE3 perfil | 07/09 ficha EGIE3"
+    },
+    "numero_acoes": {
+     "v": 1416.4,
+     "un": "mi de ações",
+     "per": "03/10",
+     "nota": "confere com R$ 770,8 mi ÷ R$ 0,5442 (dividendo intercalar); 'resolve não encontrado' do 07/09. Follow-on de jul/26: 274,1 mi de ações (+24%)",
+     "src": "03/10 ficha EGIE3 perfil | 07/09 ficha EGIE3 proventos/quantitativo"
+    },
+    "liquidez_media_30d": {
+     "v": 95.8,
+     "un": "R$ mi",
+     "per": "30d até 02/10/2026",
+     "nota": null,
+     "src": "03/10 ficha EGIE3 perfil"
+    },
+    "ativos": {
+     "v": "7.040 MW hídricos, 4.226 MW complementares (11.266 MW pró­prios), 3.205 km de transmissão, 17,5% da TAG, 40% de Jirau",
+     "un": null,
+     "per": "07/09",
+     "nota": null,
+     "src": "07/09 ficha EGIE3 perfil"
+    }
+   },
+   "mercado": {
+    "preco": {
+     "v": 30.7,
+     "un": "R$",
+     "per": "fech. 02/10/2026",
+     "nota": "faixa 52s R$ 27,05-37,12; +4,0% só em out/26",
+     "src": "03/10 ficha EGIE3 preço - statusinvest.com.br/acoes/egie3"
+    },
+    "preco_ficha_anterior": {
+     "v": 29.9,
+     "un": "R$",
+     "per": "início set/2026",
+     "nota": "INV 29,73; I10 30,14; SI 30,04; +2,7%",
+     "src": "07/09 ficha EGIE3 preço usado | 03/10 ficha EGIE3 §1"
+    },
+    "p_l": {
+     "v": "15,0 ajustado (LPA 2,05) / 10,98 contábil (LPA contábil 2,80)",
+     "un": "x",
+     "per": "02/10/2026",
+     "nota": "07/09: 14,6 (lucro ajustado 12m ~R$ 2,9 bi). Contábil inclui R$ 1,3 bi do UBP",
+     "src": "03/10 ficha EGIE3 §1 StatusInvest | 07/09 ficha EGIE3 quantitativo"
+    },
+    "p_vp": {
+     "v": 2.9,
+     "un": "x",
+     "per": "02/10/2026",
+     "nota": "VPA 10,60; 07/09: 2,94 (INV) / 3,12 (Num) / 2,84 (I10)",
+     "src": "03/10 ficha EGIE3 §1"
+    },
+    "dy_12m": {
+     "v": 3.65,
+     "un": "% (R$ 1,12)",
+     "per": "02/10/2026",
+     "nota": "07/09: 3,4% (cálculo próprio por data-com); agregadores divergiam 3,2% a 8,84% por não ajustar a bonificação de 40% (01/12/25). Agora janela toda pós-bonificação",
+     "src": "03/10 ficha EGIE3 §1 | 07/09 ficha EGIE3 proventos"
+    },
+    "faixa_52s": {
+     "v": "27,05 - 37,12",
+     "un": "R$",
+     "per": "02/10/2026",
+     "nota": "07/09: -22% da máxima, +6,2% em 12m",
+     "src": "03/10 ficha EGIE3 preço | 07/09 ficha EGIE3 qualitativo"
+    },
+    "numero_graham": {
+     "v": 22.1,
+     "un": "R$",
+     "per": "03/10",
+     "nota": "22,5 × 2,05 × 10,60; preço 39% acima (07/09: 21,7; Num 19,78)",
+     "src": "03/10 ficha EGIE3 §4"
+    },
+    "peg_lynch": {
+     "v": "2,1 - slow grower/utility, caro para a categoria",
+     "un": null,
+     "per": "07/09",
+     "nota": null,
+     "src": "07/09 ficha EGIE3 valuation"
+    },
+    "ev_ebit_formula_magica": {
+     "v": "EV/EBIT 9,6x (Num 11,2-11,8x); ROIC 10,8-13,9%",
+     "un": null,
+     "per": "07/09",
+     "nota": null,
+     "src": "07/09 ficha EGIE3 valuation"
+    }
+   },
+   "endividamento": {
+    "divida_liquida": {
+     "v": 25.2,
+     "un": "R$ bi",
+     "per": "2T26",
+     "nota": null,
+     "src": "07/09 ficha EGIE3 quantitativo"
+    },
+    "dl_ebitda": {
+     "v": 3.1,
+     "un": "x",
+     "per": "2T26",
+     "nota": "RI; StatusInvest 2,71x (SI). 3,3x no 4T25. Mantida a oficial",
+     "src": "03/10 ficha EGIE3 §1/§2-3 | 07/09 ficha EGIE3 quantitativo"
+    },
+    "custo_divida": {
+     "v": "11,3% nominal = IPCA+6,4%; prazo 7,1 anos; rating AAA; 100% moeda local",
+     "un": null,
+     "per": "07/09",
+     "nota": null,
+     "src": "07/09 ficha EGIE3 quantitativo"
+    },
+    "cobertura_juros": {
+     "v": 2.6,
+     "un": "x",
+     "per": "07/09",
+     "nota": null,
+     "src": "07/09 ficha EGIE3 quantitativo"
+    },
+    "altman_z_piotroski": {
+     "v": "1,46 (zona de risco; penaliza utility em construção) / 5 de 9",
+     "un": null,
+     "per": "07/09",
+     "nota": null,
+     "src": "07/09 ficha EGIE3 quantitativo"
+    },
+    "roic_aj_vs_wacc": {
+     "v": "ROIC aj. 13,9% (era 15,4%) vs WACC nominal 13,6%; real 9,5% vs 9,3%. ROE aj. 18,3% (era 23,1%)",
+     "un": null,
+     "per": "LTM 07/09",
+     "nota": "SI mostra 9,8% com método diferente (capital total) - não comparável",
+     "src": "07/09 ficha EGIE3 quantitativo | 03/10 ficha EGIE3 §2-3"
+    }
+   },
+   "resultados": {
+    "ebitda_aj_2T26": {
+     "v": 2179,
+     "un": "R$ mi",
+     "per": "2T26",
+     "nota": "+16,8%; 6M26 R$ 4.423 mi (+13,2%); margem 62,1% (59,6% citada em outros pontos)",
+     "src": "07/09 ficha EGIE3 quantitativo/riscos"
+    },
+    "lucro_2T26": {
+     "v": "R$ 1.962 mi contábil (+246%) / R$ 694 mi ajustado (+23%)",
+     "un": null,
+     "per": "2T26",
+     "nota": "R$ 1,3 bi de ganho do UBP",
+     "src": "07/09 ficha EGIE3 quantitativo"
+    },
+    "ubp": {
+     "v": "Saldo R$ 4,2 bi liquidado por R$ 2,2 bi; ganho R$ 1,3 bi; encerra R$ 773 mi/ano de obrigação perpétua",
+     "un": null,
+     "per": "2T26",
+     "nota": null,
+     "src": "07/09 ficha EGIE3 quantitativo"
+    },
+    "lpa": {
+     "v": "2,05 ajustado / 2,80 contábil",
+     "un": "R$",
+     "per": "03/10",
+     "nota": null,
+     "src": "03/10 ficha EGIE3 §1"
+    },
+    "teste_1_real_retido": {
+     "v": "Inconclusivo/fraco (2016-25): EBITDA +141%, lucro +74%, mas R$ 44,2 bi investidos com 79% de alavancagem e payout 55-100%",
+     "un": null,
+     "per": "07/09",
+     "nota": null,
+     "src": "07/09 ficha EGIE3 valuation"
+    }
+   },
+   "capex": {
+    "capex_anual": {
+     "v": "~R$ 4 bi/ano vs D&A 1,8 bi = 2,2x até 2030",
+     "un": null,
+     "per": "07/09",
+     "nota": "Asa Branca 2,93 bi, Graça 2,67 bi, Colibri 1,57 bi, Jaguara 1,2 bi",
+     "src": "07/09 ficha EGIE3 quantitativo"
+    },
+    "capex_em_construcao": {
+     "v": 8.4,
+     "un": "R$ bi (ANEEL)",
+     "per": "07/09",
+     "nota": "RAP integral Asa Branca/Graçã: +R$ 577 mi/ano",
+     "src": "07/09 ficha EGIE3 valuation/gatilhos"
+    },
+    "follow_on": {
+     "v": "R$ 8,36 bi (274,1 mi de ações, jul/26) para 40% de Jirau: diluição ~24%",
+     "un": null,
+     "per": "jul/2026",
+     "nota": null,
+     "src": "07/09 ficha EGIE3 quantitativo/B&H"
+    }
+   },
+   "premissas_de_ciclo_declaradas_no_pdf": {
+    "ciclo": {
+     "v": "Ciclo de investimento, não de commodity: veredito depende de Asa Branca/Graçã entrarem no prazo",
+     "un": null,
+     "per": "03/10",
+     "nota": null,
+     "src": "03/10 ficha EGIE3 §8-9 autocrítica 2"
+    }
+   },
+   "operacional_setor": {
+    "capacidade_instalada": {
+     "v": "11.266 MW (7.040 hídricos + 4.226 complementares)",
+     "un": "MW",
+     "per": "07/09",
+     "nota": null,
+     "src": "07/09 ficha EGIE3 perfil/B&H"
+    },
+    "transmissao": {
+     "v": "3.205 km; 17,5% da TAG (gasodutos); TAG -35% citado em contra",
+     "un": null,
+     "per": "07/09",
+     "nota": null,
+     "src": "07/09 ficha EGIE3 perfil/qualitativo"
+    },
+    "jirau": {
+     "v": "40% (comitê independente com aprovação exclusiva dos minoritários); follow-on financia compra",
+     "un": null,
+     "per": "07/09",
+     "nota": null,
+     "src": "07/09 ficha EGIE3 qualitativo"
+    },
+    "preco_medio_venda": {
+     "v": 208.28,
+     "un": "R$/MWh",
+     "per": "2T26",
+     "nota": "-4,0%",
+     "src": "07/09 ficha EGIE3 quantitativo [colunas quebradas na extração; reconstruído pela ordem]"
+    },
+    "curtailment": {
+     "v": 20,
+     "un": "%",
+     "per": "2T26",
+     "nota": "era 16% (+4 pp); gatilho > 25%; 03/10: não verificável sem DRE; Portaria MME 140/2026 (ressarcimento) pendente",
+     "src": "07/09 ficha EGIE3 quantitativo/riscos | 03/10 ficha EGIE3 §2-3"
+    },
+    "contratos": {
+     "v": "Contratos ACR de ~13 anos; clientes livres +42%; 1.624 MWm descontratados em 2030",
+     "un": null,
+     "per": "07/09",
+     "nota": null,
+     "src": "07/09 ficha EGIE3 qualitativo/riscos"
+    },
+    "pipeline": {
+     "v": "Asa Branca, Graçã, Colibri, Jaguara (+232 MW), Jirau 40%",
+     "un": null,
+     "per": "07/09",
+     "nota": null,
+     "src": "07/09 ficha EGIE3 qualitativo"
+    },
+    "GSF_renovacao_concessoes_PPA_detalhe": null
+   },
+   "proventos": {
+    "dividendo_data_com_20_08_26": {
+     "v": 0.5442,
+     "un": "R$/ação (R$ 770,8 mi)",
+     "per": "data-com 20/08/2026 (07/09 cita 05/08/2026 como data do comunicado)",
+     "nota": "data de pagamento a definir (44 dias em 03/10); 'provisionado'",
+     "src": "03/10 ficha EGIE3 §1 - moneytimes.com.br 05/08; investidor10.com.br/acoes/egie3"
+    },
+    "payout": {
+     "v": 55,
+     "un": "% do lucro distribuível ex-UBP (1S26)",
+     "per": "03/10",
+     "nota": "100% até 2022 -> 55% desde 2023 (mínimo estatutário 30%); 'pelo menos' 55% em 2026 (diretor não prevê aumentar); ~400% do FCFE",
+     "src": "03/10 ficha EGIE3 §1/§2-3 | 07/09 ficha EGIE3 proventos"
+    },
+    "yield_forward": {
+     "v": 3.7,
+     "un": "%",
+     "per": "03/10",
+     "nota": "2 × R$ 0,544 = R$ 1,09-1,15/ano; 07/09: 3,8%",
+     "src": "03/10 ficha EGIE3 §6-7 | 07/09 ficha EGIE3 comparativo RF"
+    },
+    "defasagem": {
+     "v": "Data-com 21/08/25 -> pago 23/12/25 (4 meses); 07/09 citava 21/08/2024 -> 27/05/2025 (9 meses); 20/08/26 sem data em 03/10",
+     "un": null,
+     "per": "03/10",
+     "nota": null,
+     "src": "03/10 ficha EGIE3 §6-7 | 07/09 ficha EGIE3 proventos"
+    },
+    "serie_dpa_ajustada_bonificacao": {
+     "v": "2018 3,13; 2019 1,16; 2020 1,23; 2021 1,42; 2022 1,96; 2023 2,12; 2024 1,72; 2025 1,26; 2026 YTD 1,03 (0,49 mai + 0,544 ago)",
+     "un": "R$/ação",
+     "per": "07/09",
+     "nota": "Bazin 5a ajustado: média R$ 1,70 -> teto R$ 28,3",
+     "src": "07/09 ficha EGIE3 proventos"
+    },
+    "bonificacao": {
+     "v": "40% em 01/12/2025",
+     "un": null,
+     "per": "01/12/2025",
+     "nota": "janela 12m de 03/10 é toda pós-bonificação",
+     "src": "03/10 ficha EGIE3 §1 + checklist"
+    },
+    "coberto_por_caixa": {
+     "v": "Não (capex ~R$ 4 bi/ano + follow-on R$ 8,36 bi + 3,1x; payout sobre FCFE ~400%)",
+     "un": null,
+     "per": "03/10",
+     "nota": null,
+     "src": "03/10 ficha EGIE3 §6-7"
+    },
+    "retorno_real": {
+     "v": "Bogle 5,5% (3,7% + g 6% nominal = 9,7%); TIR real implícita 9,0-9,4% (07/09: 9,0-9,5%, 5,8% Bogle)",
+     "un": null,
+     "per": "03/10",
+     "nota": "vs 7,08%: -1,6 p.p. (Bogle, 'Não'); TIR: +2 p.p. vs 7,08%, -0,7 a -1,1 vs 10,08% = 'Empate'. 07/09 marcava 'Não' - rótulo corrigido",
+     "src": "03/10 ficha EGIE3 §6-7 | 07/09 ficha EGIE3 comparativo RF"
+    }
+   },
+   "multiplos_retornos_pares": {
+    "epv": {
+     "v": "R$ 6,07 (WACC nominal 13,6%) / 17,2 (real 9,3%)",
+     "un": null,
+     "per": "07/09",
+     "nota": "EPV < reprodução: mercado paga por crescimento futuro",
+     "src": "07/09 ficha EGIE3 valuation"
+    },
+    "bazin": {
+     "v": 28.3,
+     "un": "R$",
+     "per": "03/10",
+     "nota": "não habilitado: dividendo não coberto por caixa",
+     "src": "03/10 ficha EGIE3 §4"
+    },
+    "graham_7_criterios": {
+     "v": "3/7",
+     "un": null,
+     "per": "07/09",
+     "nota": null,
+     "src": "07/09 ficha EGIE3 valuation"
+    },
+    "pares_nao_verificados": {
+     "v": "AURE3",
+     "un": null,
+     "per": "07/09",
+     "nota": null,
+     "src": "07/09 ficha EGIE3 não encontrado"
+    }
+   },
+   "governanca_riscos": {
+    "interferencia_controlador": {
+     "v": "Nenhuma em 15 anos; desconto R$ 0,00 ('o oposto do caso Cemig/Sanepar')",
+     "un": null,
+     "per": "07/09 e 03/10",
+     "nota": null,
+     "src": "07/09 ficha EGIE3 qualitativo | 03/10 premissas comuns"
+    },
+    "diluicao": {
+     "v": "Follow-on 274,1 mi de ações (+24%) em jul/2026",
+     "un": null,
+     "per": "jul/2026",
+     "nota": null,
+     "src": "07/09 ficha EGIE3 B&H"
+    },
+    "riscos_ameacam": {
+     "v": "DY 3,4% com payout cortado e dividendo pago 4-9 meses depois; ROIC 13,9% vs WACC 13,6%, caindo, com 3,1x e capex R$ 4 bi/ano até 2030; curtailment 20% com preço médio -4% e 1.624 MWm descontratados em 2030",
+     "un": null,
+     "per": null,
+     "nota": null,
+     "src": "07/09 ficha EGIE3 riscos"
+    }
+   },
+   "gatilhos_da_ficha": {
+    "invalidam_tese": {
+     "v": "Nova emissão primária em 24 meses; payout < 55%; DL/EBITDA > 3,8x; curtailment > 25%; ROIC ajustado < 12%",
+     "un": null,
+     "per": null,
+     "nota": null,
+     "src": "07/09 ficha EGIE3 gatilhos | 03/10 ficha EGIE3 §2-3 (nenhum acionado; curtailment e ROIC não verificáveis)"
+    },
+    "mudaria_opiniao": {
+     "v": "Payout de volta a 80-100% -> yield fwd 5,5-6,9% e central R$ 31; Asa Branca e Graçã no prazo com RAP integral (+R$ 577 mi/ano); preço ≤ R$ 24 RADAR; ≤ R$ 21 compra (03/10: capital ≤ 24, compra cheia 18,70); definição de ressarcimento de curtailment (Portaria MME 140/2026)",
+     "un": null,
+     "per": null,
+     "nota": null,
+     "src": "07/09 ficha EGIE3 gatilhos | 03/10 ficha EGIE3 §8-9"
+    },
+    "autocritica_ke": {
+     "v": "Ao Ke de mercado (~9-10% real) central iria a 33 e a ação seria JUSTA; registrado, régua não alterada",
+     "un": null,
+     "per": null,
+     "nota": null,
+     "src": "03/10 ficha EGIE3 §8-9"
+    }
+   },
+   "eventos_com_data": {
+    "3T26": {
+     "v": "Data não verificada",
+     "un": null,
+     "per": null,
+     "nota": null,
+     "src": "03/10 premissas comuns"
+    },
+    "dividendo_agosto_2026": {
+     "v": "data-com 20/08/26, pagamento a definir; comunicado 05/08/2026",
+     "un": null,
+     "per": "05/08/2026",
+     "nota": null,
+     "src": "03/10 ficha EGIE3 §1"
+    },
+    "portaria_mme_140_2026": {
+     "v": "Pendente (ressarcimento de curtailment)",
+     "un": null,
+     "per": null,
+     "nota": null,
+     "src": "03/10 ficha EGIE3 §2-3"
+    }
+   },
+   "premissas_pdf_valuation": {
+    "palavra_03_10": {
+     "v": "CARA (mantido)",
+     "un": null,
+     "per": "03/10",
+     "nota": "preço +2,7% e justo +2,7% (só Ke); prêmio +15,0% igual",
+     "src": "03/10 quadro-resumo / ficha EGIE3"
+    },
+    "palavra_07_09": {
+     "v": "CARA",
+     "un": null,
+     "per": "07/09",
+     "nota": null,
+     "src": "07/09 quadro-resumo"
+    },
+    "central_03_10": {
+     "v": 26.7,
+     "un": "R$",
+     "per": "03/10",
+     "nota": "faixa 16,9-43,0; compra 18,70; saída 34,00; capital ≤ 24",
+     "src": "03/10 quadro-resumo"
+    },
+    "central_07_09": {
+     "v": 26.0,
+     "un": "R$",
+     "per": "07/09",
+     "nota": "faixa 16,5-43,0; compra 18,20; saída 34,00",
+     "src": "07/09 quadro-resumo"
+    },
+    "metodo_03_10": {
+     "v": "Reescala por Gordon, g nominal 6%, fator 10,84/10,56 = +2,7%; +R$ 0,70 = 100% Ke",
+     "un": null,
+     "per": null,
+     "nota": null,
+     "src": "03/10 ficha EGIE3 §4"
+    },
+    "dcf_fcfe_ke_nominal": {
+     "v": "07/09: 16,5 / 24,0 / 32,0; 03/10: 16,9 / 24,6 / 32,8",
+     "un": "R$",
+     "per": null,
+     "nota": null,
+     "src": "03/10 ficha EGIE3 §4 | 07/09 ficha EGIE3 valuation"
+    },
+    "dcf_ke_real": {
+     "v": "07/09: 22 / 32 / 43; 03/10: 23 / 33 / 44",
+     "un": "R$",
+     "per": null,
+     "nota": null,
+     "src": "03/10 ficha EGIE3 §4 | 07/09 ficha EGIE3 valuation"
+    },
+    "vence_rf": {
+     "v": "Não (Bogle) / Empate pela TIR (9,0-9,5%)",
+     "un": null,
+     "per": "03/10",
+     "nota": null,
+     "src": "03/10 quadro-resumo"
+    },
+    "nota_geral": {
+     "v": "5,3/10 (idem 07/09); qualidade 8,0, solidez 6,0, renda 3,0, preço 3,0",
+     "un": null,
+     "per": null,
+     "nota": null,
+     "src": "03/10 ficha EGIE3 avaliação numérica"
+    }
+   },
+   "nao_encontrado": {
+    "03_10": {
+     "v": "Data do 3T26; data de pagamento do dividendo de 20/08; definição da Portaria MME 140/2026; curtailment após junho",
+     "un": null,
+     "per": null,
+     "nota": null,
+     "src": "03/10 Não encontrado"
+    },
+    "07_09": {
+     "v": "Participação exata da ENGIE S.A. pós-follow-on; nº de ações pós-oferta (resolvido 03/10); PL e ativo do 2T26; cronograma de vencimentos; covenants; remuneração/insiders; capex 2026 em R$; DPA 2016-17; data de pagamento do dividendo de 05/08/2026; múltiplos de AURE3",
+     "un": null,
+     "per": null,
+     "nota": null,
+     "src": "07/09 ficha EGIE3 não encontrado"
+    }
+   },
+   "lacunas_importantes": [
+    "Sem GSF, renovação de concessões, PPA por contrato e preço médio por contrato: só R$ 208,28/MWh (2T26, -4,0%) e curtailment 20%.",
+    "Volume vendido (MWm/GWh) não consta; 'TAG' é participação de 17,5% (gasodutos), sem detalhe."
+   ]
+  },
+  "UNIP6": {
+   "identificacao": {
+    "nome": {
+     "v": "Unipar Carbocloro (PNB)",
+     "un": null,
+     "per": null,
+     "nota": null,
+     "src": "03/10 ficha UNIP6"
+    },
+    "segmento": {
+     "v": "Química (cloro-soda e PVC); commodity cíclica; líder do Mercosul; plantas no Brasil e Argentina (Indupa)",
+     "un": null,
+     "per": null,
+     "nota": null,
+     "src": "03/10 ficha UNIP6 perfil | 07/09 ficha UNIP6 perfil"
+    },
+    "controlador": {
+     "v": "Vila Velha S.A. (família Geyer)",
+     "un": "% do ON",
+     "per": null,
+     "nota": "57% do ON",
+     "src": "03/10 ficha UNIP6 perfil"
+    },
+    "free_float": {
+     "v": 68.6,
+     "un": "% (PNB)",
+     "per": "03/10",
+     "nota": null,
+     "src": "03/10 ficha UNIP6 perfil"
+    },
+    "tag_along": {
+     "v": "PNB: StatusInvest mostra '--'; 07/09: 0% das PN indicado por duas fontes; NÃO CONFIRMADO no formulário de referência",
+     "un": null,
+     "per": "03/10 e 07/09",
+     "nota": "gatilho, não haircut; 'Tag along 0% das PN' = não verificável",
+     "src": "03/10 ficha UNIP6 perfil / §2-3 | 07/09 ficha UNIP6 perfil"
+    },
+    "liquidez_media_30d": {
+     "v": 16.7,
+     "un": "R$ mi",
+     "per": "30d até 02/10/2026",
+     "nota": null,
+     "src": "03/10 ficha UNIP6 perfil"
+    },
+    "numero_acoes": null,
+    "classes_ON_PN": {
+     "v": "ON (Vila Velha 57%), PNA, PNB (UNIP6)",
+     "un": null,
+     "per": null,
+     "nota": "Só consta 'PNB' e 'PN'; PNA/ON quantidades NÃO constam",
+     "src": "03/10 ficha UNIP6 perfil"
+    }
+   },
+   "mercado": {
+    "preco": {
+     "v": 56.78,
+     "un": "R$",
+     "per": "fech. 02/10/2026",
+     "nota": "faixa 52s R$ 53,05-71,62; -15,1% em 12m; corrige aviso da ficha anterior",
+     "src": "03/10 ficha UNIP6 preço - statusinvest.com.br/acoes/unip6"
+    },
+    "preco_ficha_anterior": {
+     "v": 58.0,
+     "un": "R$",
+     "per": "referência de trabalho 07/09 (cotação mais recente 27/07/2026: R$ 61,84)",
+     "nota": "07/09 diz 'mais de 15 dias, atualizar'; variação -2,1%",
+     "src": "07/09 ficha UNIP6 preço usado | 03/10 ficha UNIP6 preço"
+    },
+    "p_l": {
+     "v": "18,1-18,7 (07/09, 1T26) / 24,1 (03/10, lucro 12m R$ 260 mi)",
+     "un": "x",
+     "per": null,
+     "nota": "03/10: P/L 12m 24,1 / P/VP 3,21 [colunas quebradas na extração; reconstruído pela ordem]",
+     "src": "03/10 ficha UNIP6 §1 | 07/09 ficha UNIP6 quantitativo"
+    },
+    "p_vp": {
+     "v": "3,62 (VPA 16,05) em 07/09 -> 3,21 (VPA 17,66) em 03/10",
+     "un": "x",
+     "per": null,
+     "nota": "contra 3,4 em 2021 e 5,1 em 2022 (07/09) [colunas quebradas na extração; reconstruído pela ordem]",
+     "src": "03/10 ficha UNIP6 §1 | 07/09 ficha UNIP6 quantitativo"
+    },
+    "dy_12m_vitrine": {
+     "v": 11.41,
+     "un": "% (R$ 6,48)",
+     "per": "03/10",
+     "nota": "tudo de 05/12/2025; janela 12m zera em dez/26 se nada declarado. 07/09: 16,46-17,00% (HG) / 11,58% (I10)",
+     "src": "03/10 ficha UNIP6 §6-7 | 07/09 ficha UNIP6 proventos"
+    },
+    "numero_graham": {
+     "v": "30,6 (atual) / 41,0 (normalizado); 07/09: 33,7 / 39,1",
+     "un": "R$",
+     "per": "03/10",
+     "nota": "VPA 16,05 -> 17,66; LPA 12m 2,36",
+     "src": "03/10 ficha UNIP6 §4"
+    },
+    "ev_ebit_formula_magica": {
+     "v": "EV/EBIT 18,6x; ROIC 7,7%",
+     "un": null,
+     "per": "07/09",
+     "nota": null,
+     "src": "07/09 ficha UNIP6 valuation"
+    },
+    "pares_nao_verificados": {
+     "v": "Olin / Westlake",
+     "un": null,
+     "per": "07/09",
+     "nota": null,
+     "src": "07/09 ficha UNIP6 não encontrado"
+    }
+   },
+   "endividamento": {
+    "divida_liquida": {
+     "v": 2.31,
+     "un": "R$ bi",
+     "per": "2T26",
+     "nota": "-R$ 0,12 bi vs 4T25 (2,43 bi); Slides 2T26",
+     "src": "03/10 ficha UNIP6 §1 (ng.investing.com)"
+    },
+    "dl_ebitda": {
+     "v": 2.5,
+     "un": "x",
+     "per": "2T26",
+     "nota": "07/09: 2,6x (RI 1T26) / 3,18-3,24x (HG TTM); era 2,2x no 4T25 e caixa líquido em 2022; gatilho > 3,5x não acionado",
+     "src": "03/10 ficha UNIP6 §1/§2-3 | 07/09 ficha UNIP6 quantitativo"
+    },
+    "caixa": {
+     "v": "RI 2T26: R$ 1,4 bi (SI: R$ 1,37 bi) vs ficha 07/09: R$ 653 mi (TTM) vs R$ 1,34 bi em 2023",
+     "un": "R$",
+     "per": "2T26",
+     "nota": "ERRO PRÓPRIO POSSÍVEL, não reconciliado (captação nova vs diferença de métrica); passa a medir pela dívida líquida",
+     "src": "03/10 ficha UNIP6 §1/§2 aviso | 07/09 ficha UNIP6 quantitativo"
+    },
+    "cobertura_juros": {
+     "v": "~1,5x (07/09, dívida em CDI, Selic 15%); despesa financeira do 2T26 NÃO encontrada",
+     "un": null,
+     "per": "07/09",
+     "nota": null,
+     "src": "07/09 ficha UNIP6 quantitativo | 03/10 ficha UNIP6 §2-3"
+    },
+    "altman_z_piotroski": {
+     "v": "Altman 2,0-2,5 (cinzenta, estimado) / Piotroski 4 de 9",
+     "un": null,
+     "per": "07/09",
+     "nota": null,
+     "src": "07/09 ficha UNIP6 quantitativo"
+    }
+   },
+   "resultados": {
+    "receita_2T26": {
+     "v": 1.496,
+     "un": "R$ bi",
+     "per": "2T26",
+     "nota": "+17% a/a; +21% t/t; 1T26: R$ 1,23 bi (-10%)",
+     "src": "03/10 ficha UNIP6 §1 - infomoney.com.br 2T26 | 07/09 ficha UNIP6 quantitativo"
+    },
+    "ebitda_aj_2T26": {
+     "v": 402,
+     "un": "R$ mi",
+     "per": "2T26",
+     "nota": "margem 27%; +177% t/t; +31% a/a; 1T26: R$ 145 mi (12%, -59%). 'veio de preço puxado por tensão no Oriente Médio, com câmbio contra'",
+     "src": "03/10 ficha UNIP6 §1/§2-3 - Release 2T26 via br.investing.com, cn1.com.br"
+    },
+    "lucro_2T26": {
+     "v": 123,
+     "un": "R$ mi",
+     "per": "2T26",
+     "nota": "+232% t/t; -47% a/a; 1T26: R$ 37 mi (-75%). Lucro 12m R$ 260 mi vs normalizado R$ 480 mi",
+     "src": "03/10 ficha UNIP6 §1 - InfoMoney/Investidor10"
+    },
+    "geracao_operacional_caixa": {
+     "v": "R$ 347 mi (2T) / R$ 663 mi (1S)",
+     "un": null,
+     "per": "2T26/1S26",
+     "nota": "FCF +R$ 132 mi no 1T26 [colunas quebradas na extração; reconstruído pela ordem]",
+     "src": "03/10 ficha UNIP6 §1 - Release 2T26 | 07/09 ficha UNIP6 quantitativo"
+    },
+    "margem_12m": {
+     "v": "margem 19,3%; receita 5,23 bi (12m)",
+     "un": null,
+     "per": "03/10",
+     "nota": "convergindo para o meio, não acima",
+     "src": "03/10 ficha UNIP6 §2-3"
+    },
+    "roic_roe": {
+     "v": "ROIC 7,7-7,8% vs WACC nominal 14,3%; normalizado ~12,6%; ROE 19,9% = margem 7,48% × giro 0,73 × alavancagem 3,6x",
+     "un": null,
+     "per": "07/09 (1T26)",
+     "nota": null,
+     "src": "07/09 ficha UNIP6 quantitativo"
+    },
+    "indicadores_1T26": {
+     "v": "soda cáustica -11% a/a; PVC -13% a/a (VOLUME/PREÇO não especificado)",
+     "un": null,
+     "per": "1T26 (07/09)",
+     "nota": null,
+     "src": "07/09 ficha UNIP6 quantitativo"
+    },
+    "teste_1_real_retido": {
+     "v": "R$ 1 mil viraram R$ 48,8 mil em 10 anos (Ibov R$ 3,4 mil) - quase todo gerado até 2022",
+     "un": null,
+     "per": "07/09",
+     "nota": null,
+     "src": "07/09 ficha UNIP6 quantitativo/valuation"
+    }
+   },
+   "capex": {
+    "projetos": {
+     "v": "Expansão em curso: nova fábrica na Bahia R$ 140 mi; energia travada por 15 anos; autoprodução de energia 63%",
+     "un": null,
+     "per": "07/09",
+     "nota": "Cubatão e energia renovável NÃO citados",
+     "src": "07/09 ficha UNIP6 quantitativo/qualitativo"
+    },
+    "recompras": {
+     "v": "R$ 37,9 mi em 12m; R$ 163 mi em 3 anos",
+     "un": null,
+     "per": "07/09",
+     "nota": null,
+     "src": "07/09 ficha UNIP6 quantitativo/qualitativo"
+    },
+    "capex_2026_DA": null
+   },
+   "premissas_de_ciclo_declaradas_no_pdf": {
+    "meio_de_ciclo": {
+     "v": "Margem EBITDA 22%; receita R$ 5,0 bi; EBITDA R$ 1,1 bi; lucro R$ 480 mi (LPA 4,24); P/L normalizado 13,7",
+     "un": null,
+     "per": "07/09 e 03/10 (mantida)",
+     "nota": "vs 43% em 2022 e 12% no 1T26; 2T26 (27%) tratado como pico de preço geopolítico, não novo meio. Se for virada, central ~50",
+     "src": "03/10 ficha UNIP6 §2-3/§8-9 | 07/09 ficha UNIP6 quantitativo"
+    },
+    "valor_reproducao": {
+     "v": "Plantas de cloro-soda estimadas em R$ 3-4 bi = R$ 27-35/ação; EPV < reprodução = excesso de capacidade",
+     "un": null,
+     "per": "07/09 e 03/10",
+     "nota": null,
+     "src": "07/09 ficha UNIP6 valuation | 03/10 ficha UNIP6 §4"
+    }
+   },
+   "operacional_setor": {
+    "precos_commodity": null,
+    "volumes_Brasil_Argentina_energia": null,
+    "autoproducao_energia": {
+     "v": 63,
+     "un": "%",
+     "per": "07/09",
+     "nota": "'Custo, localização e autoprodução de energia (63%)'",
+     "src": "07/09 ficha UNIP6 qualitativo"
+    },
+    "preco_referencia": {
+     "v": "Commodity com preço em Rotterdam",
+     "un": null,
+     "per": "07/09",
+     "nota": "preço de soda e PVC no 2T26 NÃO encontrado (07/09)",
+     "src": "07/09 ficha UNIP6 B&H / não encontrado"
+    },
+    "spread_cloro_soda": {
+     "v": "Recuperação do spread por 1 de 2 tri -> central R$ 50 (gatilho); 03/10: 'só o 2T26 e por choque de preço, não por oferta/demanda'",
+     "un": null,
+     "per": null,
+     "nota": "SEM valor numérico de ECU, PVC ou soda nos PDFs",
+     "src": "07/09 ficha UNIP6 gatilhos | 03/10 ficha UNIP6 §2-3"
+    }
+   },
+   "proventos": {
+    "dividendos_2026": {
+     "v": "R$ 0,00 (nenhuma data-com em 2026 até 02/10)",
+     "un": null,
+     "per": "02/10/2026",
+     "nota": "GATILHO 'corte ou suspensão do dividendo' ACIONADO; política mínima 25% do lucro anual; excedente sob análise condicionado a liquidez e alavancagem (call 2T26, br.investing.com)",
+     "src": "03/10 ficha UNIP6 §1/§2-3 - StatusInvest"
+    },
+    "dividendos_2025": {
+     "v": "R$ 10,18/ação (11/08: 3,56+0,14; 04/12 ou 05/12: 6,03+0,45)",
+     "un": null,
+     "per": "2025",
+     "nota": "payout ~240% do lucro e ~255% do FCFE (2025); excesso 2023-25 payout ~240-266%",
+     "src": "07/09 ficha UNIP6 proventos | 03/10 ficha UNIP6 §6-7"
+    },
+    "serie_dpa": {
+     "v": "2021 ~7,5; 2022 ~12,0; 2023 ~8,0; 2024 ~7,0; 2025 10,18; 2026 YTD zero",
+     "un": "R$/ação",
+     "per": null,
+     "nota": "Bazin 5a (R$ 8,9) = teto R$ 148, 'número inútil e perigoso'",
+     "src": "07/09 ficha UNIP6 proventos"
+    },
+    "yield_prospectivo": {
+     "v": "1,9-4,5%: 25% × LPA normalizado 4,24 = R$ 1,06 (1,9%); 60% = R$ 2,54 (4,5%)",
+     "un": null,
+     "per": "03/10",
+     "nota": null,
+     "src": "03/10 ficha UNIP6 §6-7"
+    },
+    "yield_sustentavel_07_09": {
+     "v": 4.4,
+     "un": "% (payout 60% do lucro normalizado)",
+     "per": "07/09",
+     "nota": null,
+     "src": "07/09 ficha UNIP6 proventos"
+    },
+    "defasagem": {
+     "v": "9 a 11 dias da data-com (quando paga)",
+     "un": null,
+     "per": null,
+     "nota": "melhor prática do hall",
+     "src": "03/10 ficha UNIP6 §6-7 | 07/09 ficha UNIP6 proventos"
+    },
+    "retorno_real": {
+     "v": "4,7% (yield ~3,2% + g real 1,5%); vs 7,08%: -2,4 p.p.; 07/09: 5,5-6,4% (yield 4,4% + g 1-2%, vs 7,35%: -1,0 a -1,9 p.p.)",
+     "un": null,
+     "per": "03/10 e 07/09",
+     "nota": null,
+     "src": "03/10 ficha UNIP6 §6-7 | 07/09 ficha UNIP6 comparativo RF"
+    },
+    "cobertura_caixa": {
+     "v": "Hoje sim, porque não paga; excesso de 2023-25 levou dívida líquida a R$ 2,3 bi. 07/09: caixa 1,34 bi -> 653 mi; variação líquida -498 mi (2024) e -325 mi (2025)",
+     "un": null,
+     "per": null,
+     "nota": null,
+     "src": "03/10 ficha UNIP6 §6-7 | 07/09 ficha UNIP6 proventos"
+    }
+   },
+   "multiplos_retornos_pares": {
+    "epv": {
+     "v": "R$ 11,4 (WACC nominal 14,3%) / 23,2 (real 10,5%) normalizado",
+     "un": null,
+     "per": "07/09",
+     "nota": null,
+     "src": "07/09 ficha UNIP6 valuation"
+    },
+    "bazin": {
+     "v": "17,7 (política 25%) / 42,4 (60%) - 03/10; 07/09: 42 sustentável (148 inútil)",
+     "un": "R$",
+     "per": null,
+     "nota": "'não habilitado: dividendo não coberto e agora suspenso'",
+     "src": "03/10 ficha UNIP6 §4 | 07/09 ficha UNIP6 valuation"
+    },
+    "graham_7_criterios": {
+     "v": "3/7 (dívida, crescimento de LPA, P/L 18, P/VP 3,62, produto 65 reprovam)",
+     "un": null,
+     "per": "07/09",
+     "nota": null,
+     "src": "07/09 ficha UNIP6 valuation"
+    }
+   },
+   "governanca_riscos": {
+    "interferencia_controlador": {
+     "v": "Nenhuma consumada; desconto R$ 0,00",
+     "un": null,
+     "per": "07/09 e 03/10",
+     "nota": null,
+     "src": "07/09 ficha UNIP6 qualitativo | 03/10 premissas comuns"
+    },
+    "tres_numeros_que_ameacam": {
+     "v": "ROIC 7,7% vs WACC 14,3% com P/VP 3,62; payout 240% com caixa 1,34 bi -> 653 mi e alavancagem 2,2x -> 2,6x; cobertura juros ~1,5x, dívida em CDI, Selic 15%, EBITDA -59% no 1T26",
+     "un": null,
+     "per": null,
+     "nota": null,
+     "src": "07/09 ficha UNIP6 riscos"
+    },
+    "erro_proprio_possivel": {
+     "v": "Caixa de R$ 653 mi na ficha vs R$ 1,4 bi no RI 2T26; não reconciliado",
+     "un": null,
+     "per": null,
+     "nota": null,
+     "src": "03/10 ficha UNIP6 aviso/registro de revisões"
+    }
+   },
+   "gatilhos_da_ficha": {
+    "invalidam_tese": {
+     "v": "DL/EBITDA > 3,5x (não acionado, 2,50x); corte ou suspensão do dividendo (ACIONADO); cobertura de juros < 1,2x (não verificável); tag along 0% em evento de venda de controle (não verificável); margem EBITDA < 10% por 2 tri (não acionado)",
+     "un": null,
+     "per": null,
+     "nota": null,
+     "src": "07/09 ficha UNIP6 gatilhos | 03/10 ficha UNIP6 §2-3"
+    },
+    "mudaria_opiniao": {
+     "v": "Corte do dividendo para ~60% + DL < 2x -> central R$ 40 (corte feito, mais fundo; 2,50x ainda > 2x); spread de cloro-soda recuperado por 1 de 2 tri -> central R$ 50 (só 2T26, por choque); preço ≤ R$ 36 RADAR; ≤ R$ 32 compra escalonada",
+     "un": null,
+     "per": null,
+     "nota": null,
+     "src": "07/09 ficha UNIP6 gatilhos | 03/10 ficha UNIP6 §2-3"
+    }
+   },
+   "eventos_com_data": {
+    "3T26": {
+     "v": "Primeiro teste das 'dois trimestres que decidem'; data não verificada",
+     "un": null,
+     "per": null,
+     "nota": null,
+     "src": "03/10 premissas comuns / ficha UNIP6 §8-9"
+    },
+    "dividendo_05_12_2025": {
+     "v": "R$ 6,48 total (data-com 05/12/2025)",
+     "un": null,
+     "per": "05/12/2025",
+     "nota": null,
+     "src": "03/10 ficha UNIP6 §6-7"
+    },
+    "janela_dy_zera": {
+     "v": "dez/2026 se nada declarado",
+     "un": null,
+     "per": "dez/2026",
+     "nota": null,
+     "src": "03/10 ficha UNIP6 §6-7"
+    }
+   },
+   "premissas_pdf_valuation": {
+    "palavra_03_10": {
+     "v": "ARMADILHA (mantido, com mecanismo trocado: antes dividendo não coberto, agora dividendo que não virá)",
+     "un": null,
+     "per": "03/10",
+     "nota": null,
+     "src": "03/10 quadro-resumo / ficha UNIP6"
+    },
+    "palavra_07_09": {
+     "v": "ARMADILHA",
+     "un": null,
+     "per": "07/09",
+     "nota": null,
+     "src": "07/09 quadro-resumo"
+    },
+    "central_03_10": {
+     "v": 37.0,
+     "un": "R$",
+     "per": "03/10",
+     "nota": "faixa 16,4-74,0; compra 25,90; saída 75,00; prêmio +53% (era +61%); RADAR ≤ 37, compra escalonada ≤ 32; +R$ 1,00 = Ke +0,9 e arredondamento",
+     "src": "03/10 quadro-resumo"
+    },
+    "central_07_09": {
+     "v": 36.0,
+     "un": "R$",
+     "per": "07/09",
+     "nota": "faixa 16,0-74,0; compra 25,20; saída 75,00; prêmio +61%",
+     "src": "07/09 quadro-resumo"
+    },
+    "metodo_03_10": {
+     "v": "DCF FCFE ciclo normalizado mantido, fator Ke +2,5%; 2T26 incorporado mas não muda o meio de ciclo",
+     "un": null,
+     "per": null,
+     "nota": null,
+     "src": "03/10 ficha UNIP6 §4"
+    },
+    "dcf_fcfe_ke_nominal": {
+     "v": "07/09: 16,0 / 33,0 / 55,0; 03/10: 16,4 / 33,8 / 56,4",
+     "un": "R$",
+     "per": null,
+     "nota": null,
+     "src": "03/10 ficha UNIP6 §4 | 07/09 ficha UNIP6 valuation"
+    },
+    "dcf_ke_real": {
+     "v": "07/09: 22 / 45 / 74; 03/10: 23 / 46 / 76",
+     "un": "R$",
+     "per": null,
+     "nota": null,
+     "src": "03/10 ficha UNIP6 §4 | 07/09 ficha UNIP6 valuation"
+    },
+    "vence_rf": {
+     "v": "Não (categórico)",
+     "un": null,
+     "per": "03/10",
+     "nota": null,
+     "src": "03/10 quadro-resumo"
+    },
+    "nota_geral": {
+     "v": "2,9/10 (idem 07/09); qualidade 4,0, solidez 4,5 (07/09: 4,0), renda 1,5 (07/09: 2,0), preço 1,0",
+     "un": null,
+     "per": null,
+     "nota": null,
+     "src": "03/10 ficha UNIP6 avaliação numérica | 07/09 ficha UNIP6"
+    },
+    "compraria": {
+     "v": "Não / não; posição máx. 2%",
+     "un": null,
+     "per": null,
+     "nota": null,
+     "src": "03/10 ficha UNIP6 §8-9"
+    }
+   },
+   "nao_encontrado": {
+    "03_10": {
+     "v": "Datas do 3T26; despesa financeira e cobertura de juros no 2T26; reconciliação do caixa (653 mi vs 1,4 bi); tag along das PN no formulário de referência",
+     "un": null,
+     "per": null,
+     "nota": null,
+     "src": "03/10 Não encontrado"
+    },
+    "07_09": {
+     "v": "Resultado do 2T26 (incorporado em 03/10); release RI/ITR; balanço completo; Altman/Beneish integrais; capex 2026 e D&A; vencimentos e covenants; tag along PN; peso da Indupa (Argentina); preços de soda e PVC no 2T26; DPA 2016-2020; múltiplos de Olin/Westlake; liquidez diária",
+     "un": null,
+     "per": null,
+     "nota": null,
+     "src": "07/09 ficha UNIP6 não encontrado"
+    }
+   },
+   "lacunas_importantes": [
+    "NENHUM preço de PVC, soda cáustica, cloro, ECU, eteno nem spread PVC-eteno em qualquer dos PDFs; só variação a/a no 1T26 (soda -11%, PVC -13%) e o spread como gatilho qualitativo.",
+    "Sem volumes (t) de Brasil, Argentina ou energia; sem Cubatão/energia renovável; só Bahia R$ 140 mi e 63% de autoprodução.",
+    "Sem número de ações PNA/PNB/ON."
+   ]
+  },
+  "GGBR4": {
+   "identificacao": {
+    "nome": {
+     "v": "Gerdau (PN)",
+     "un": null,
+     "per": null,
+     "nota": null,
+     "src": "03/10 ficha GGBR4"
+    },
+    "segmento": {
+     "v": "Siderurgia; commodity cíclica (aços longos, especiais e planos; Brasil, América do Norte, América do Sul); Nível 1",
+     "un": null,
+     "per": null,
+     "nota": null,
+     "src": "03/10 ficha GGBR4 perfil | 07/09 ficha GGBR4 perfil"
+    },
+    "controlador": {
+     "v": "Metalúrgica Gerdau (GOAU4), família Gerdau Johannpeter",
+     "un": null,
+     "per": null,
+     "nota": "GOAU4 negocia a P/VP 0,27 (07/09); holding pura remunerada pelos mesmos dividendos; participação exata não encontrada",
+     "src": "03/10 ficha GGBR4 perfil | 07/09 ficha GGBR4 valuation/não encontrado"
+    },
+    "free_float": {
+     "v": 28,
+     "un": "%",
+     "per": "07/09",
+     "nota": null,
+     "src": "07/09 ficha GGBR4 perfil"
+    },
+    "tag_along": {
+     "v": "PN: StatusInvest mostra 100% (03/10), não confirmado no estatuto; 07/09: 'não confirmado'",
+     "un": null,
+     "per": "03/10",
+     "nota": null,
+     "src": "03/10 ficha GGBR4 perfil | 07/09 ficha GGBR4 qualitativo"
+    },
+    "liquidez_media_30d": {
+     "v": 224,
+     "un": "R$ mi",
+     "per": "30d até 02/10/2026",
+     "nota": null,
+     "src": "03/10 ficha GGBR4 perfil"
+    },
+    "numero_acoes": null,
+    "classes_ON_PN": null
+   },
+   "mercado": {
+    "preco": {
+     "v": 26.1,
+     "un": "R$",
+     "per": "fech. 02/10/2026",
+     "nota": "máxima de 52 semanas; +55% em 12m; caiu ~10% em ago. (tarifa EUA-Canadá) e recuperou",
+     "src": "03/10 ficha GGBR4 preço - statusinvest.com.br/acoes/ggbr4"
+    },
+    "preco_ficha_anterior": {
+     "v": 25.0,
+     "un": "R$",
+     "per": "25/08/2026",
+     "nota": "HG; +4,4%",
+     "src": "07/09 ficha GGBR4 preço usado | 03/10 ficha GGBR4 §1"
+    },
+    "p_l": {
+     "v": "23,1 (LPA 12m 1,13), 03/10 - corrige erro; 07/09 dizia ~14,6 (LPA 1,71), provavelmente 1S26 anualizado rotulado como 12m",
+     "un": "x",
+     "per": "02/10/2026",
+     "nota": "caía de 26,7 em 2025; chegou a 34",
+     "src": "03/10 ficha GGBR4 §1 / erro próprio (c) | 07/09 ficha GGBR4 quantitativo"
+    },
+    "p_vp": {
+     "v": 0.96,
+     "un": "x",
+     "per": "02/10/2026",
+     "nota": "VPA 27,07; 07/09: 0,92 (VPA 27,20; Renova mostra 2,13 com base de ações diferente - divergência); 2024: 0,65",
+     "src": "03/10 ficha GGBR4 §1 | 07/09 ficha GGBR4 quantitativo"
+    },
+    "dy_12m": {
+     "v": 3.03,
+     "un": "% (R$ 0,79)",
+     "per": "02/10/2026",
+     "nota": "DY real 3,0% (fonte oficial RI); StatusInvest mostra 2,15% por omitir o dividendo de agosto; 07/09: 4,13% (HG, 25/08)",
+     "src": "03/10 ficha GGBR4 §1/§6-7 | 07/09 ficha GGBR4 proventos"
+    },
+    "numero_graham": {
+     "v": "26,2 (atual) / 37,1 (normalizado); 07/09: 32,3 / 37,2",
+     "un": "R$",
+     "per": "03/10",
+     "nota": "Graham 5/7 (era 6/7); produto P/L×P/VP 22,2 no limite de 22,5",
+     "src": "03/10 ficha GGBR4 §4"
+    },
+    "ev_ebit_formula_magica": {
+     "v": "EV/EBIT 6,8x (earnings yield 14,7%); ROIC normalizado 9%",
+     "un": null,
+     "per": "07/09",
+     "nota": null,
+     "src": "07/09 ficha GGBR4 valuation"
+    },
+    "peg_lynch": {
+     "v": 0.21,
+     "un": null,
+     "per": "07/09",
+     "nota": null,
+     "src": "07/09 ficha GGBR4 valuation"
+    }
+   },
+   "endividamento": {
+    "divida_liquida": {
+     "v": 8.118,
+     "un": "R$ bi",
+     "per": "2T26",
+     "nota": "-11% em 12 meses",
+     "src": "07/09 ficha GGBR4 quantitativo"
+    },
+    "dl_ebitda": {
+     "v": 0.69,
+     "un": "x",
+     "per": "2T26",
+     "nota": "RI; SI 0,94x; 0,85x a/a; gatilho > 1,5x não acionado",
+     "src": "03/10 ficha GGBR4 §1/§2-3 | 07/09 ficha GGBR4 quantitativo"
+    },
+    "caixa": {
+     "v": 5.4,
+     "un": "R$ bi",
+     "per": "2T26",
+     "nota": null,
+     "src": "07/09 ficha GGBR4 quantitativo | 03/10 ficha GGBR4 §6-7"
+    },
+    "cobertura_juros": {
+     "v": "5,5x (normalizada ~9x)",
+     "un": null,
+     "per": "07/09",
+     "nota": null,
+     "src": "07/09 ficha GGBR4 quantitativo"
+    },
+    "altman_piotroski": {
+     "v": "Altman 2,16 (cinzenta, EBIT deprimido) / Piotroski 7 de 9; liquidez corrente 2,76",
+     "un": null,
+     "per": "07/09",
+     "nota": null,
+     "src": "07/09 ficha GGBR4 quantitativo"
+    },
+    "roic_roe": {
+     "v": "ROE 4,16-4,18% / ROIC 4,17% (12m); ROE médio 10a 9,5%; ROIC normalizado 9% vs WACC nominal 15,3%",
+     "un": null,
+     "per": "07/09 e 03/10",
+     "nota": "ROE 2,6% em 2025 (pior da década)",
+     "src": "07/09 ficha GGBR4 quantitativo | 03/10 ficha GGBR4 §1"
+    }
+   },
+   "resultados": {
+    "receita_2T26": {
+     "v": 17.87,
+     "un": "R$ bi",
+     "per": "2T26",
+     "nota": "+2,0%",
+     "src": "07/09 ficha GGBR4 quantitativo"
+    },
+    "vendas_2T26": {
+     "v": 2.908,
+     "un": "Mt",
+     "per": "2T26",
+     "nota": "+3,0%; TOTAL; SEM abertura por operação (Brasil/Am. Norte/Am. Sul/especiais) em nenhum PDF",
+     "src": "07/09 ficha GGBR4 quantitativo"
+    },
+    "ebitda_aj_2T26": {
+     "v": 3.43,
+     "un": "R$ bi",
+     "per": "2T26",
+     "nota": "+33,9%; margem 19,2% (+4,6 pp); guidance/release: 'EBITDA ajustado de R$ 3,4 bi'",
+     "src": "07/09 ficha GGBR4 quantitativo | 03/10 ficha GGBR4 §2-3 + fonte www2.gerdau.com.br"
+    },
+    "ebitda_por_regiao_2T26": {
+     "v": "América do Norte R$ 2,6 bi (76% do total) / Brasil R$ 705 mi (-19,6%) / América do Sul R$ 205 mi",
+     "un": null,
+     "per": "2T26",
+     "nota": "aços especiais não abertos",
+     "src": "07/09 ficha GGBR4 quantitativo [colunas quebradas na extração; reconstruído pela ordem]"
+    },
+    "lucro_2T26": {
+     "v": "R$ 1,45 bi contábil / R$ 1,46 bi ajustado",
+     "un": null,
+     "per": "2T26",
+     "nota": "lucro +69,7%; dobrou em dois trimestres",
+     "src": "07/09 ficha GGBR4 quantitativo/revisão"
+    },
+    "lpa_12m": {
+     "v": 1.13,
+     "un": "R$",
+     "per": "03/10",
+     "nota": "coerente com ROE 4,2% × VPA 27,07; 07/09 usava 1,71 (erro)",
+     "src": "03/10 ficha GGBR4 §1"
+    },
+    "carteira_de_pedidos": {
+     "v": "Aços longos comuns > 100 dias - maior nível desde 2021",
+     "un": null,
+     "per": "07/09",
+     "nota": null,
+     "src": "07/09 ficha GGBR4 quantitativo"
+    },
+    "utilizacao_capacidade": null
+   },
+   "capex": {
+    "capex_2T26": {
+     "v": 1.01,
+     "un": "R$ bi",
+     "per": "2T26",
+     "nota": "-37,0%; 45% do guidance de R$ 4,7 bi executado no semestre (56% competitividade, 44% manutenção)",
+     "src": "07/09 ficha GGBR4 quantitativo"
+    },
+    "guidance_2026": {
+     "v": 4.7,
+     "un": "R$ bi",
+     "per": "2026",
+     "nota": "gatilho: capex > R$ 5,5 bi sem retorno visível (não acionado)",
+     "src": "07/09 ficha GGBR4 quantitativo | 03/10 ficha GGBR4 §2-3 'Guidance 2026: R$ 4,7 bi'"
+    },
+    "recompra": {
+     "v": "R$ 210,7 mi até 10/04/26; programa de até 56,4 mi de ações (6-K SEC, Exhibit 99.1); 07/09 dizia 'R$ 21 mi, 22% do programa' (provável erro de digitação)",
+     "un": null,
+     "per": "2026",
+     "nota": "Programa 2026 ativo; gatilho 'suspensão da recompra' não acionado",
+     "src": "03/10 ficha GGBR4 §1/§2-3 - www2.gerdau.com.br release 2T26; sec.gov 6-K | 07/09 ficha GGBR4 B&H"
+    }
+   },
+   "premissas_de_ciclo_declaradas_no_pdf": {
+    "meio_de_ciclo": {
+     "v": "Margem EBITDA 17% (média 2016-26); vendas 11,6 Mt; receita R$ 70 bi; EBITDA R$ 11,9 bi; lucro R$ 4,5 bi (LPA 2,26); câmbio R$ 5,40",
+     "un": null,
+     "per": "07/09 e 03/10 (mantida)",
+     "nota": "03/10: 'não verificável, 3T26 pendente'",
+     "src": "07/09 ficha GGBR4 quantitativo normalização | 03/10 ficha GGBR4 §2-3"
+    },
+    "precos_aco_spread": null,
+    "tese_ciclica": {
+     "v": "Ação na máxima de 52s e +55% em 12m: parte da virada já precificada; se 3T26 não repetir R$ 3,4 bi de EBITDA, mercado volta a tratar fundo como permanente",
+     "un": null,
+     "per": null,
+     "nota": null,
+     "src": "03/10 ficha GGBR4 §8-9 autocrítica 2"
+    }
+   },
+   "operacional_setor": {
+    "precos_aco": null,
+    "volumes_por_operacao": null,
+    "utilizacao": null,
+    "tarifas_eua": {
+     "v": "Tarifa EUA-Canadá: queda de ~10% em agosto; negociação de cota a 25% (4 Mt) sem acordo; Canadá retaliou a partir de 08/09; Gerdau tem usinas no Canadá (efeito ambíguo, HIPÓTESE quanto ao impacto líquido). Seção 232 e antidumping do aço brasileiro: NÃO citados",
+     "un": null,
+     "per": "ago-set/2026",
+     "nota": null,
+     "src": "03/10 ficha GGBR4 §1/§2-3 - euqueroinvestir.com 20/08; forbes.com.br 12/09 | 07/09 ficha GGBR4 gatilhos"
+    },
+    "importacoes": {
+     "v": "Importações caindo em especiais (07/09)",
+     "un": null,
+     "per": "07/09",
+     "nota": null,
+     "src": "07/09 ficha GGBR4 qualitativo"
+    }
+   },
+   "proventos": {
+    "serie_data_com": {
+     "v": "10/08/2025 R$ 0,12; 09/11/2025 0,28; 09/03/2026 0,10; 12/05/2026 0,18; 18-19/08/2026 0,23 (pago 10 ou 11/09)",
+     "un": "R$/ação",
+     "per": null,
+     "nota": "07/09: 'pago 10/09'; 03/10: 'pago 11/09/2026' (divergência de 1 dia); 03/10: 0,28 (nov/25) + 0,10 + 0,18 + 0,23 (ago/26) = 0,79",
+     "src": "07/09 ficha GGBR4 proventos | 03/10 ficha GGBR4 §1"
+    },
+    "payout": {
+     "v": "83,1% sobre lucro deprimido 2025; ~30-35% sobre normalizado (mínimo estatutário 30%)",
+     "un": null,
+     "per": "07/09",
+     "nota": null,
+     "src": "07/09 ficha GGBR4 proventos"
+    },
+    "defasagem": {
+     "v": "7 a 31 dias (agosto: 23 dias)",
+     "un": null,
+     "per": null,
+     "nota": "melhor prática do hall",
+     "src": "03/10 ficha GGBR4 §6-7 | 07/09 ficha GGBR4 proventos"
+    },
+    "retorno_real": {
+     "v": "Dividendo 5,0% real (3,0% + g 2% - vs 7,08%: -2,1 p.p. 'Não'); total (valor) 7-11% real (vs 10,08%: -3,1 a +0,9 p.p. 'Empate')",
+     "un": null,
+     "per": "03/10",
+     "nota": "07/09: 5,2% (div.) / 7,5-11,5% (total); yield fwd 3,2%",
+     "src": "03/10 ficha GGBR4 §6-7 | 07/09 ficha GGBR4 comparativo RF"
+    },
+    "coberto_por_caixa": {
+     "v": "Sim",
+     "un": null,
+     "per": "03/10",
+     "nota": "dívida líquida caindo com dividendo + recompra",
+     "src": "03/10 ficha GGBR4 §6-7"
+    }
+   },
+   "multiplos_retornos_pares": {
+    "epv": {
+     "v": "R$ 14,3 (WACC nominal 15,3%) / 21,1 (real 11,2%)",
+     "un": null,
+     "per": "07/09",
+     "nota": "EPV < reprodução (VPA 27,20) confirma excesso de capacidade global",
+     "src": "07/09 ficha GGBR4 valuation"
+    },
+    "bazin": {
+     "v": "R$ 22,7 (5a) / 13,2 (normalizado)",
+     "un": null,
+     "per": "03/10 e 07/09",
+     "nota": "reprova ao preço atual",
+     "src": "03/10 ficha GGBR4 §4 | 07/09 ficha GGBR4 valuation"
+    },
+    "graham_7_criterios": {
+     "v": "5/7 (03/10; P/L 23x reprova) vs 6/7 (07/09)",
+     "un": null,
+     "per": "03/10",
+     "nota": "03/10 deixa de ser 'o melhor score de Graham do hall'",
+     "src": "03/10 ficha GGBR4 §4 | 07/09 ficha GGBR4 valuation"
+    },
+    "teste_1_real_retido": {
+     "v": "Ação de ~R$ 8 para R$ 25 (+213%) mais dividendos 2021-22 (distorcido: 2016 foi o fundo)",
+     "un": null,
+     "per": "07/09",
+     "nota": null,
+     "src": "07/09 ficha GGBR4 valuation"
+    },
+    "pares_nao_verificados": {
+     "v": "CSNA3, USIM5, Nucor",
+     "un": null,
+     "per": "07/09",
+     "nota": null,
+     "src": "07/09 ficha GGBR4 não encontrado"
+    }
+   },
+   "governanca_riscos": {
+    "interferencia_controlador": {
+     "v": "Nenhuma em 15 anos; desconto R$ 0,00",
+     "un": null,
+     "per": "07/09 e 03/10",
+     "nota": null,
+     "src": "07/09 ficha GGBR4 qualitativo | 03/10 premissas comuns"
+    },
+    "dependencia_america_norte": {
+     "v": "76% do EBITDA vem da América do Norte (tarifas, recessão americana, real forte)",
+     "un": null,
+     "per": "2T26",
+     "nota": null,
+     "src": "07/09 ficha GGBR4 riscos"
+    },
+    "autocritica_roic": {
+     "v": "ROIC normalizado (9%) não cobre custo de capital ao Ke da casa; tese é de valor patrimonial (P/VP 0,96), não de retorno",
+     "un": null,
+     "per": null,
+     "nota": null,
+     "src": "03/10 ficha GGBR4 §8-9"
+    }
+   },
+   "gatilhos_da_ficha": {
+    "invalidam_tese": {
+     "v": "EBITDA América do Norte -25% em 2 tri (não acionado; margem EBITDA 19,2% no 2T26); DL/EBITDA > 1,5x (0,69x); margem EBITDA < 14% por 2 tri; capex > R$ 5,5 bi sem retorno; suspensão da recompra; tarifas EUA sobre aço (evento sem data, em curso sem desfecho)",
+     "un": null,
+     "per": null,
+     "nota": null,
+     "src": "07/09 ficha GGBR4 gatilhos | 03/10 ficha GGBR4 §2-3 [colunas quebradas na extração; reconstruído pela ordem]"
+    },
+    "mudaria_opiniao": {
+     "v": "Dois trimestres com EBITDA ≥ R$ 3,4 bi e Brasil voltando a crescer -> central R$ 35 e BARATA a 25; alteração nas tarifas dos EUA; preço ≤ R$ 21,60 compra cheia; ≥ R$ 42 saída; 03/10: 1ª parcela até ~26; 2ª após 3T26 ou ≤ 23",
+     "un": null,
+     "per": null,
+     "nota": null,
+     "src": "07/09 ficha GGBR4 gatilhos | 03/10 ficha GGBR4 §8-9"
+    }
+   },
+   "eventos_com_data": {
+    "3T26": {
+     "v": "EBITDA ≥ R$ 3,4 bi como teste; data não verificada",
+     "un": null,
+     "per": null,
+     "nota": null,
+     "src": "03/10 premissas comuns / ficha GGBR4"
+    },
+    "tarifa_eua_canada": {
+     "v": "Canadá retaliou a partir de 08/09/2026; cota de 4 Mt a 25% sem acordo",
+     "un": null,
+     "per": "08/09/2026",
+     "nota": null,
+     "src": "03/10 ficha GGBR4 §1 - forbes.com.br 12/09"
+    },
+    "dividendo_ago_2026": {
+     "v": "R$ 0,23, data-com 19/08 (07/09 diz 18/08), pago 11/09/2026",
+     "un": null,
+     "per": "08-09/2026",
+     "nota": null,
+     "src": "03/10 ficha GGBR4 §1"
+    },
+    "recompra_ate_10_04_26": {
+     "v": "R$ 210,7 mi",
+     "un": null,
+     "per": "10/04/2026",
+     "nota": null,
+     "src": "03/10 ficha GGBR4 §1 6-K"
+    }
+   },
+   "premissas_pdf_valuation": {
+    "palavra_03_10": {
+     "v": "RADAR (mantido)",
+     "un": null,
+     "per": "03/10",
+     "nota": "desconto encolheu de -16,7% para -15,3% (preço +4,4% vs justo +2,7%)",
+     "src": "03/10 quadro-resumo / ficha GGBR4"
+    },
+    "palavra_07_09": {
+     "v": "RADAR",
+     "un": null,
+     "per": "07/09",
+     "nota": null,
+     "src": "07/09 quadro-resumo"
+    },
+    "central_03_10": {
+     "v": 30.8,
+     "un": "R$",
+     "per": "03/10",
+     "nota": "faixa 14,4-46,0; compra 21,60; saída 42,00; +R$ 0,80 = 100% Ke; erro do P/L não toca o central (ancorado em LPA normalizado 2,26 e DCF)",
+     "src": "03/10 quadro-resumo"
+    },
+    "central_07_09": {
+     "v": 30.0,
+     "un": "R$",
+     "per": "07/09",
+     "nota": "faixa 14,0-45,0; compra 21,00; saída 42,00; desconto -16,7%",
+     "src": "07/09 quadro-resumo"
+    },
+    "metodo_03_10": {
+     "v": "Reescala por Gordon: g real 2% (6,08% nominal); fator 10,76/10,48 = +2,7%",
+     "un": null,
+     "per": null,
+     "nota": null,
+     "src": "03/10 ficha GGBR4 §4"
+    },
+    "dcf_fcfe_ke_nominal": {
+     "v": "07/09: 17,0 / 27,5 / 42,0; 03/10: 17,5 / 28,2 / 43,1",
+     "un": "R$",
+     "per": null,
+     "nota": null,
+     "src": "03/10 ficha GGBR4 §4 | 07/09 ficha GGBR4 valuation"
+    },
+    "dcf_ke_real": {
+     "v": "07/09: 23 / 37 / 57; 03/10: 24 / 38 / 59",
+     "un": "R$",
+     "per": null,
+     "nota": null,
+     "src": "03/10 ficha GGBR4 §4 | 07/09 ficha GGBR4 valuation"
+    },
+    "vence_rf": {
+     "v": "Não (dividendo) / Empate (valor)",
+     "un": null,
+     "per": "03/10",
+     "nota": null,
+     "src": "03/10 quadro-resumo"
+    },
+    "nota_geral": {
+     "v": "6,6/10 (07/09: 6,7); qualidade 7,0, solidez 8,5, renda 4,0, preço 7,0 (07/09: 7,5)",
+     "un": null,
+     "per": null,
+     "nota": null,
+     "src": "03/10 ficha GGBR4 avaliação numérica | 07/09 ficha GGBR4"
+    },
+    "compraria": {
+     "v": "Ganho de capital: Sim, escalonado (1ª parcela até ~26; 2ª após 3T26 ou ≤ 23; compra cheia ≤ 21,60); posição máx. 4%; proventos: Não",
+     "un": null,
+     "per": null,
+     "nota": null,
+     "src": "03/10 ficha GGBR4 §8-9"
+    }
+   },
+   "nao_encontrado": {
+    "03_10": {
+     "v": "Data do 3T26; tag along PN no estatuto; desfecho EUA-Canadá sobre aço",
+     "un": null,
+     "per": null,
+     "nota": null,
+     "src": "03/10 Não encontrado"
+    },
+    "07_09": {
+     "v": "Balanço completo do 2T26; D&A; vencimentos e covenants; tag along da PN; múltiplos de CSNA3, USIM5 e Nucor; DPA anual 2016-2024; remuneração/insiders; participação exata da Metalúrgica; EBITDA por geografia em 12 meses",
+     "un": null,
+     "per": null,
+     "nota": null,
+     "src": "07/09 ficha GGBR4 não encontrado"
+    }
+   },
+   "lacunas_importantes": [
+    "NENHUM preço de aço (vergalhão, bobina, HRC, US$/t), spread aço-sucata/minério nem 'meio de ciclo' em US$/t em qualquer PDF; meio de ciclo declarado só em margem EBITDA 17% / vendas 11,6 Mt / câmbio 5,40.",
+    "Volume total 2T26 = 2,908 Mt; sem abertura por Brasil, América do Norte, América do Sul ou aços especiais; sem utilização de capacidade.",
+    "Seção 232 e antidumping do aço brasileiro não são citados; apenas tarifa EUA-Canadá e cota de 4 Mt."
+   ]
+  }
+ },
+ "eventos_binarios_agenda_pdf_03_10": [
+  {
+   "data": "fim out./início nov./2026",
+   "evento": "3T26 (datas não verificadas)",
+   "olhar": "LEVE3 (margem EBITDA/ciclo), UNIP6 (2º tri que decide spread; dividendos), GGBR4 (EBITDA ≥ R$ 3,4 bi, Brasil), EGIE3",
+   "src": "03/10 premissas comuns / autocríticas"
+  },
+  {
+   "data": "dez/2026",
+   "evento": "Janela 12m do DY da UNIP6 zera se nada declarado",
+   "olhar": "UNIP6",
+   "src": "03/10 ficha UNIP6 §6-7"
+  },
+  {
+   "data": "sem data",
+   "evento": "Pagamento do dividendo EGIE3 (data-com 20/08/26)",
+   "olhar": "EGIE3",
+   "src": "03/10 ficha EGIE3"
+  },
+  {
+   "data": "sem data",
+   "evento": "Portaria MME 140/2026 (ressarcimento de curtailment)",
+   "olhar": "EGIE3",
+   "src": "03/10 ficha EGIE3 §2-3"
+  },
+  {
+   "data": "sem data",
+   "evento": "Tarifas EUA sobre aço / cota 4 Mt Canadá",
+   "olhar": "GGBR4",
+   "src": "03/10 ficha GGBR4 §1; 07/09 gatilhos"
+  },
+  {
+   "data": "Copom / Seção 232 / antidumping aço",
+   "evento": "NÃO citados em nenhum dos PDFs",
+   "olhar": "-",
+   "src": "ausência (conferido nos dois textos)"
+  }
+ ],
+ "erros_proprios_da_ficha_anterior_corrigidos_em_03_10": {
+  "LEVE3": {
+   "v": "Yield forward 7,0% (payout 63,5% × LPA normalizado 4,3) não reproduzível: conta dá R$ 2,73 e 8,4% a R$ 32,69. Corrigido para faixa 5,9-7,9% (DPA 2,73 e FCFE anualizado 2,04). Rótulo RF 'Não' -> 'Empate'",
+   "un": null,
+   "per": null,
+   "nota": null,
+   "src": "03/10 ficha LEVE3 reavaliação"
+  },
+  "EGIE3": {
+   "v": "Rótulo RF 'Não' com TIR real 9,0-9,5% -> 'Empate pela TIR' (Não por Bogle). Erro de rótulo, não de substância",
+   "un": null,
+   "per": null,
+   "nota": null,
+   "src": "03/10 ficha EGIE3 reavaliação"
+  },
+  "UNIP6": {
+   "v": "Possível erro: caixa R$ 653 mi (ficha) vs R$ 1,4 bi (RI 2T26) - não reconciliado. Preço de referência 58,00 usava cotação de 27/07",
+   "un": null,
+   "per": null,
+   "nota": null,
+   "src": "03/10 ficha UNIP6 reavaliação"
+  },
+  "GGBR4": {
+   "v": "P/L 12m ~14,6 (LPA 1,71) era erro: correto 23,1 (LPA 1,13). Graham 6/7 -> 5/7; número de Graham 32,3 -> 26,2. Recompra 'R$ 21 mi' -> R$ 210,7 mi; DY 4,13% (HG) -> 3,0% real",
+   "un": null,
+   "per": null,
+   "nota": null,
+   "src": "03/10 ficha GGBR4 reavaliação"
+  },
+  "geral": {
+   "v": "Três erros próprios nas fichas de 07/09 (LEVE3, GGBR4, rótulos EGIE3/LEVE3) + UNIP6 não reconciliado; um gatilho acionado (UNIP6 dividendo), um cruzamento de régua (LEVE3 -> CARA)",
+   "un": null,
+   "per": null,
+   "nota": null,
+   "src": "03/10 premissas comuns / registro de revisões"
+  }
+ },
+ "fontes": {
+  "_nota": "Lista de fontes ao final do PDF 03/10 (p. 10). URLs truncadas na quebra de linha foram completadas pelo texto; o PDF 07/09 NÃO traz lista de fontes (diz 'fontes citadas na análise original').",
+  "03_10": [
+   "statusinvest.com.br/acoes/leve3, /egie3, /unip6, /ggbr4 (acesso 03/10/2026, fechamento 02/10)",
+   "infomoney.com.br/onde-investir/tesouro-direto-abertura-fechamento-30092026/ ; .../tesouro-direto-abertura-fechamento-28092026/ ; investidor10.com.br/tesouro-direto",
+   "LEVE3: finance.yahoo.com/quote/LEVE3.SA/ ; investidor10.com.br/acoes/leve3/ ; renovainvest.com.br/blog/mahle-metal-leve-resultado-2t26/",
+   "EGIE3: moneytimes.com.br/engie-egie3-aprova-r-7708-milhoes-em-dividendos-intercalares-pads/ ; investidor10.com.br/acoes/egie3/ ; infomoney.com.br/mercados/engie-egie3-nao-preve-aumentar-payout-de-dividendos-em-2026-diz-diretor/",
+   "UNIP6: infomoney.com.br/mercados/unipar-unip6-resultados-segundo-trimestre-2026/ ; br.investing.com/news/transcripts/lucro-da-unipar-dispara-no-2o-tri-mas-acoes-recuam-14-93CH-2032025 ; ng.investing.com/news/company-news/unipar-q2-2026-slides-ebitda-surges-177-on-pricing-plant-upgrade-93CH-2648723 ; investidor10.com.br/acoes/unip6/",
+   "GGBR4: www2.gerdau.com.br/noticias/gerdau-encerra-2o-trimestre-de-2026-com-ebitda-ajustado-de-r-34-bilhoe/ ; sec.gov/Archives/edgar/data/0001073404/000110465926049841/tm2612822d3_ex99-1.htm ; euqueroinvestir.com/acoes/gerdau-queda-das-acoes-apos-possivel-mudanca-nas-tarifas-dos-eua-pode-ter-sido-exagerada ; forbes.com.br/forbes-money/2026/09/trump-acordo-comercial-canada-tarifas/",
+   "Também citadas no corpo: cn1.com.br (release UNIP6 2T26); RI das empresas 'não acessado diretamente; espelhos: StatusInvest, Investidor10, InfoMoney, release Gerdau, SEC 6-K'"
+  ],
+  "07_09": "Sem lista; fontes por categoria: StatusInvest, Investidor10, HG Brasil, Renova Invest, Num (Dados de Mercado), RI das empresas. Cotações: LEVE3 02/09 (StatusInvest), EGIE3 início set (INV/I10/SI), UNIP6 27/07, GGBR4 25/08 (HG)."
+ }
+}

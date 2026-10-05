@@ -1,0 +1,493 @@
+{
+  "_meta": {
+    "arquivos": ["Banco_Seguridade_rev_03-10-2026.txt (PDF03, prevalece)", "Banco_Seguridade_rev_07-09-2026.txt (PDF07)"],
+    "convencao_fonte": "PDF03 = ficha rev. 03/10/2026 (data-base 02/10/2026); PDF07 = ficha rev. 07/09/2026 (data-base 04-06/09/2026). Rotulos [M#]/[B#]/etc. sao os do PDF03. PDF07 nao traz lista de fontes: diz apenas 'fontes citadas na analise original' (RI/CVM quando acessivel; espelhos Genial, XP, InfoMoney, Nord, Visno; HG Brasil, StatusInvest, Investidor10, Dados de Mercado).",
+    "avisos": [
+      "PDF03 e uma reavaliacao SEM balanco novo (3T26 ainda nao saiu); metricas de balanco continuam as do 2T26/1T26 vistas no PDF07.",
+      "Nenhum dos dois PDFs traz serie anual 2014-2025 de lucro recorrente/ROE/payout; so DPA anual (BBAS3 2016-25, ABCB4 2016-25, BRSR6 so 2025) e DY medio. Series 10a de varios tickers marcadas 'nao coletada' no PDF.",
+      "Nenhum PDF traz participacao ON/total do controlador (exceto ABCB4 Bahrein 60,6%), free float (exceto ABCB4 32% e SANB11 ~10%), ADTV, numero de acoes (exceto BBDC4 11,2 bi pos-aporte), valor de mercado ou PL em R$.",
+      "Valores 'derivado' foram calculados por mim a partir de numeros do PDF e estao marcados como tal; 'premissa do PDF' = numero usado no valuation do PDF, registrado so como fato.",
+      "URLs da lista de fontes foram reconstruidas juntando as linhas quebradas do PDF; podem estar truncadas na origem."
+    ],
+    "premissas_comuns_PDF03": {
+      "data_base": "2026-10-02",
+      "tesouro_ipca_2050_real_pct": {"valor": 7.08, "periodo": "02/10/2026 11h49 (era 7,35% em set)", "fonte": "M1"},
+      "tesouro_ipca_2060_pct": {"valor": 7.10, "periodo": "02/10/2026", "fonte": "M1"},
+      "tesouro_ipca_2040_pct": {"valor": 7.24, "periodo": "02/10/2026", "fonte": "M1"},
+      "ke_real_pct_premissa_do_PDF": {"valor": 12.08, "periodo": "regra = IPCA+2050 + 5 p.p.; era 12,35%", "fonte": "M3"},
+      "ke_nominal_pct_premissa_do_PDF": {"valor": 16.6, "periodo": "com IPCA 4% (hipotese mantida; era 16,8%)", "fonte": "M3"},
+      "ipca_focus": "4,99% em 2026; 4,31% em 2027 (Focus 28/09) [M3]",
+      "selic_pct": {"valor": 13.75, "periodo": "Copom 16/09/2026, corte de 0,25 p.p., 5o seguido; proximo Copom 03-04/11; Focus fim 2026 = 13,50%", "fonte": "M2"},
+      "regua_renda_fixa": "Vence a RF se retorno real esperado >= 10,08%; Empate entre 7,08% e 10,08%; Nao abaixo de 7,08%",
+      "regua_veredito": "desconto >= 30% BARATA; 10-30% RADAR; +-10% JUSTA; premio > 15% CARA; ARMADILHA = barata so no multiplo",
+      "jcp_div_tributacao": "JCP com IRRF 17,5% desde jan/2026 (LC 224/2025) [M4]; dividendos com retencao de 10% acima de R$ 50 mil/mes por empresa [M4]; nada novo entre set e out",
+      "mercado": "Ibovespa 192.115 pts em 02/10 (~+3,8% no mes; 185,1 -> 192,1 mil) [M6]; cotacoes fechamento 02/10 Yahoo Finance conferidas em Dados de Mercado/Google Finance/StatusInvest [M9]; 02/10 = vespera do 1o turno (04/10)",
+      "credito_sistema": "Inadimplencia total 5,0% em agosto (PF 6,0%; PJ 3,3%); BC atribui ~40% da alta a Res. 4.966 [M7, M8]",
+      "agenda_geral": [
+        {"data": "2026-10-04", "evento": "1o turno (presidente; RS)"},
+        {"data": "2026-10-25", "evento": "2o turno (presidente; RS)"},
+        {"data": "2026-10-29", "evento": "ex-dividendo do SAN (Madri) - dividendo interino EUR 0,127/acao, pagto 02/11"},
+        {"data": "2026-11-03", "evento": "resultado 3T26 BBSE3"},
+        {"data": "2026-11-03/04", "evento": "Copom"},
+        {"data": "~2026-11-11", "evento": "resultado 3T26 do BB (BBAS3)"},
+        {"data": "2026-11-11", "evento": "prazo da MP 1.376"}
+      ],
+      "pesquisa_eleitoral": "Datafolha presidente (28/09-01/10): Lula 45% dos validos, Flavio Bolsonaro 40% [M5]",
+      "o_que_mudou_em_um_mes": "Nenhum veredito mudou por fundamento; SANB11 e PSSA3 mudaram por preco; nota do BRSR6 corrigida (erro proprio: nota de preco 7,0 -> 1,0). Bancos subiram na vespera da eleicao sem dado novo: BBAS3 +5,7%, ITUB4 +6,8%, BBDC4 +7,8%, BRBI11 +10,4%, BRSR6 +14,5% [M6]. Ke caiu 0,27 p.p. e elevou os justos em 1-4%.",
+      "autocritica_lote": "Se IPCA+2050 voltar a 7,35% os justos voltam (-1% a -4%); ROEs normalizados mantidos sem DRE nova; 4 precos-base da ficha anterior nao batem com historico (BRSR6, PSSA3, ABCB4, BRBI11)."
+    }
+  },
+  "tickers": {
+    "BBAS3": {
+      "nome": "Banco do Brasil",
+      "perfil": "Banco estatal (Uniao controladora); BB Seguridade = ~40% do market cap; banco core ROE ~4,6% (PDF07)",
+      "controlador": {"valor": "Uniao", "participacao_on_pct": null, "participacao_total_pct": null, "periodo": null, "fonte": "PDF03/PDF07: participacao nao informada"},
+      "tag_along_pct": null,
+      "free_float_pct": null,
+      "liquidez_adtv_rs": null,
+      "preco_fechamento_rs": {"valor": 23.72, "periodo": "2026-10-02 (anterior 22,45 em 04/09)", "fonte": "M9"},
+      "numero_acoes_total": null,
+      "valor_de_mercado_rs": null,
+      "vpa_rs": {"valor": 31.76, "periodo": "data nao explicita (usado em ambas as fichas; base 2T26 presumida)", "fonte": "PDF03 secao 1 (P/VP 0,75)"},
+      "patrimonio_liquido_rs": null,
+      "pl_obs": "PDF07: PL -2,9% t/q por OCI; 'surpresa de -R$ 9,3 bi no PL'; creditos tributarios = 52% do PL",
+      "lpa_12m_rs": {"valor": 2.95, "periodo": "LPA ajustado usado no Numero de Graham (R$ 45,9)", "fonte": "PDF07"},
+      "lucro_liquido_12m": {
+        "contabil": null,
+        "recorrente_ajustado": null,
+        "obs": "Lucro ajustado 2T26 R$ 3,9 bi; 1S26 R$ 7,3 bi (-34% a/a) [PDF07]; P/L ajustado/contabil = 7,6 / 8,8 (data-base 04/09) [PDF07]"
+      },
+      "serie_anual": {
+        "lucro_recorrente": null,
+        "roe_recorrente": {"valor": null, "obs": "ROE oficial 2016 e 2019-22 'nao encontrado'; so ROE 2T26 8,3% e 1S26 7,9% (PDF07)"},
+        "payout": {"atual_pct": 30, "anterior_pct": 40, "obs": "payout cortado de 40% para 30%; sem extraordinarios por 3 anos [PDF07]"},
+        "dpa_rs_por_ano": {"2016": 0.37, "2017": 0.47, "2018": 0.76, "2019": 1.28, "2020": 0.74, "2021": 1.13, "2022": 2.09, "2023": 2.29, "2024": 2.61, "2025": 1.18, "2026_YTD": 0.57, "ajustado": "sim, ajustado ao desdobramento", "por_data_com": "nao informado", "fonte": "PDF07"},
+        "jcp_vs_dividendos": "Nao discriminado por ano; 2026 predominantemente JCP trimestral (ver proventos)"
+      },
+      "roe_trimestral": [
+        {"periodo": "2T26", "valor_pct": 8.3, "fonte": "PDF07/PDF03"},
+        {"periodo": "1S26", "valor_pct": 7.9, "fonte": "PDF07"}
+      ],
+      "roe_2026e_casas": {"valor": 9, "periodo": "JPMorgan 16/09/2026 (~9%); lucro 2027e cortado ~12%; alvo R$ 24 -> R$ 22", "fonte": "B2"},
+      "guidance_2026": {
+        "lucro_ajustado_rs_bi": "18-22 (cortado 2x) [PDF07]",
+        "custo_de_credito_rs_bi": "65-70 [PDF03]; Itau BBA projeta 73,6 (21/09) [B3]",
+        "carteira": null,
+        "margem": null
+      },
+      "consenso_2026_2028": {"lucro": "JPMorgan: lucro 2027e -12%", "roe": "~9% 2026e (JPMorgan)", "lpa": null, "fonte": "B2"},
+      "prudencial": {
+        "basileia_pct": {"valor": 13.91, "periodo": "2T26", "fonte": "PDF07"},
+        "cet1_pct": {"valor": 11.27, "periodo": "2T26; sem dado novo em 03/10 (3T26 ~11/11)", "fonte": "PDF03/PDF07"},
+        "inadimplencia_90d_pct": {"valor": 5.61, "periodo": "2T26 (PF 8,4%; agro 6,3%)", "fonte": "PDF07"},
+        "cobertura_90d_pct": {"valor": 148.5, "periodo": "2T26 (era 183%); cobertura do New NPL 86,9%", "fonte": "PDF07/PDF03"},
+        "custo_do_credito": {"valor": 5.9, "obs": "% a.a. da carteira [PDF07]; guidance R$ 65-70 bi", "periodo": "2T26"},
+        "eficiencia_pct": {"valor": 28.0, "periodo": "2T26 (melhor do lote)", "fonte": "PDF07"}
+      },
+      "proventos": {
+        "dpa_12m_rs": null,
+        "dy_12m_pct": {"valor": 2.9, "periodo": "PDF03 (era 3,1% no PDF07)", "fonte": "PDF03 quadro-resumo"},
+        "dy_forward_pct": {"valor": 4.4, "periodo": "DPA fwd ~R$ 1,05 (era 4,7%)", "fonte": "PDF03 / B2 calculo"},
+        "defasagem_declaracao_pagamento": "Curta: JCP trimestral, ~1 mes (declarado 12/08 -> pago 11/09)",
+        "eventos_recentes": "JCP 2T26 corrigido p/ R$ 0,1053/acao + JCP 3T26 R$ 0,0345/acao; declarados antes de 05/09, pagos 11/09 [B1]",
+        "extraordinarios": "nenhum nos ultimos 3 anos [PDF07]",
+        "politica_de_payout": "30% do lucro (era 40%); limite e o capital (CET1 11,3%), nao o caixa; volta a ~7% de yield so com ROE 13% e payout 40%",
+        "yield_medio_10a_pct": 6.2, "yield_medio_5a_pct": 8.9, "yield_minimo_pct": "2,6 (2016)", "fonte_yields": "PDF07"
+      },
+      "multiplos": {
+        "p_l_ajustado": 7.6, "p_l_contabil": 8.8, "p_l_periodo": "04/09/2026 (PDF07)",
+        "p_vp_atual": {"valor": 0.75, "periodo": "02/10/2026 (era 0,71)", "fonte": "PDF03 calculo"},
+        "medias_historicas_5a_10a": null,
+        "pares_PDF07": "ITUB4 P/L 8,5 | P/VP 2,03 | ROE 24% | DY 7,6%; BBDC4 6,7 | 1,06 | 16% | 8,7%; SANB11 6,9 | 1,21 | 17,6% | 7,6%"
+      },
+      "controlador_interferencias_consumadas": [
+        {"fato": "MP 1.314 (renegociacao de dividas rurais; R$ 39 bi renegociados)", "ano": "nao explicitado (citada no PDF07 como consumada/ja no ROE normalizado)", "fonte": "PDF07"},
+        {"fato": "MP 1.376 (sucessora da 1.314): em tramitacao, relator rejeitou emendas da FPA, prazo 11/11, R$ 5,27 bi renegociados ate aqui; PDF03 trata como continuacao ja no ROE normalizado, 'nao e evento novo consumado'", "ano": 2026, "fonte": "B4"}
+      ],
+      "risco_prospectivo_citado": "Intervencao politica explicita (gatilho: nao acionado); eleicao 10/2026; BBAS3 sobe em anos eleitorais (5 de 6 eleicoes) [B5]; capital: CET1 11,27% com creditos tributarios = 52% do PL; ROE 2027 abaixo de 10% invalidaria ROE normalizado de 13%",
+      "gatilhos_ficha_anterior": [
+        {"gatilho": "CET1 < 10,5%", "status": "Nao verificavel", "evidencia": "ultimo 11,27% (2T26)"},
+        {"gatilho": "Cobertura 90d < 130%", "status": "Nao verificavel", "evidencia": "ultimo 148,5%"},
+        {"gatilho": "Inad. agro 90d > 8%", "status": "Nao verificavel", "evidencia": "ultimo 6,3%"},
+        {"gatilho": "Payout 30% com ROE < 10% em 2027", "status": "Nao verificavel", "evidencia": "evento de 2027"},
+        {"gatilho": "Intervencao politica explicita", "status": "Nao acionado", "evidencia": "MP 1.376 e continuacao da MP 1.314, ja no valor"}
+      ],
+      "eventos_agenda": [
+        {"data": "~2026-11-11", "evento": "resultado 3T26"},
+        {"data": "2026-11-11", "evento": "prazo MP 1.376"},
+        {"data": "2026-10-04/25", "evento": "eleicoes"}
+      ],
+      "riscos_principais": "ROE 8-9% vs Ke; guidance cortado 2x; custo de credito acima do guidance; cobertura caindo (183%->148%); inad agro/PF subindo; CET1 11,27% com DTA 52% do PL; risco de controlador",
+      "nao_encontrado_declarado_PDF07": "Capex/TI; insiders; ROE oficial 2016 e 2019-22; eficiencia/inad. de Itau e Bradesco; IPCA Focus",
+      "premissas_valuation_PDF": {
+        "rotulo": "premissa do PDF",
+        "roe_normalizado_pct": 13, "g_pct": 4, "ke_real_pct": 12.08, "ke_nominal_pct": 16.6, "payout_pct": "30 (cenario 40)",
+        "p_vp_justificado": "0,71 (era 0,70) -> R$ 22,3 no PDF07 (ROE 13%, Ke 16,8%)",
+        "justo_rs": 23.50, "justo_anterior_rs": 23.00, "compra_rs": 16.40, "saida_rs": 31, "faixa_rs": "14-32",
+        "veredito": "JUSTA / RADAR (mantido)", "nota_geral": 5.8, "ret_real_esperado_pct": 4.3, "vence_rf": "Nao"
+      }
+    },
+    "SANB11": {
+      "nome": "Santander Brasil (unit)",
+      "perfil": "Banco privado; OPA de permuta do controlador (Santander Espanha) em curso",
+      "controlador": {"valor": "Banco Santander S.A. (Espanha) - SAN", "participacao_on_pct": null, "participacao_total_pct": null, "periodo": null, "fonte": "PDF nao informa participacao"},
+      "tag_along_pct": null,
+      "free_float_pct": {"valor": 10, "periodo": "~10% (PDF07)", "fonte": "PDF07"},
+      "liquidez_adtv_rs": null,
+      "preco_fechamento_rs": {"valor": 28.09, "periodo": "2026-10-02 (unit; anterior 30,37 em 04/09, -7,5%)", "fonte": "M9"},
+      "numero_acoes_total": null,
+      "valor_de_mercado_rs": null,
+      "vpa_rs": {"valor": 26.4, "periodo": "VPA/unit ~26,4 (PDF07; 'VPA oficial jun/26' listado como nao encontrado)", "fonte": "PDF07"},
+      "patrimonio_liquido_rs": null,
+      "lpa_12m_rs": null,
+      "lucro_liquido_12m": {"contabil": null, "recorrente_ajustado": null, "obs": "Lucro -17,6% (PDF07); em fundo de PDD; P/L 12m 7,6 / anualizado 2T26 9,5"},
+      "serie_anual": {
+        "lucro_recorrente": null,
+        "roe_recorrente": {"2025": 17.2, "obs": "ROE 2025 17,2%; serie anterior nao coletada (PDF07: 'ROE oscila 11-17%')"},
+        "payout": {"atual_pct": 50, "obs": "~50% (limitado) [PDF07]; cobertura de caixa 'Sim (payout ~50%)' [PDF03]"},
+        "dpa_rs_por_ano": {"2026": "2 JCP de R$ 2 bi (~R$ 0,53/unit cada) - fev e ago/26 (PDF07)", "obs": "Serie 10a 'nao coletada'"},
+        "jcp_vs_dividendos": "JCP semestral"
+      },
+      "roe_trimestral": [{"periodo": "2T26", "valor_pct": 12.5, "fonte": "PDF07/PDF03"}, {"periodo": "2025", "valor_pct": 17.2, "fonte": "PDF07"}],
+      "guidance_2026": {"carteira": null, "margem": null, "custo_de_credito": "PDD ~R$ 7,65 bi/tri (~4,3% a.a.); CEO: PDD so melhora em 2027; meta de ROE 20% p/ 2028 [PDF07]", "lucro": null},
+      "consenso_2026_2028": {"referencias_de_mercado_PDF07": "Goldman venda 27 | BBI 29 | BBA 32 | BB-BI 31,60 | permuta ~29-30; RBC cortou alvo do SAN em 01/10 [PDF03]"},
+      "prudencial": {
+        "basileia_pct": {"valor": 15.3, "periodo": "2T26", "fonte": "PDF07"},
+        "cet1_pct": {"valor": 11.2, "periodo": "2T26", "fonte": "PDF07/PDF03"},
+        "inadimplencia_90d_pct": {"valor": 3.3, "periodo": "2T26 (~3,6% sem nova politica de baixas)", "fonte": "PDF07"},
+        "cobertura_estagio3_pct": {"valor": 65, "periodo": "2T26 (67,6% no 1T26); cobertura 90d 2T26 nao encontrada", "fonte": "PDF07"},
+        "custo_do_credito_pct": {"valor": 4.3, "periodo": "a.a. aprox.", "fonte": "PDF07"},
+        "eficiencia_pct": {"valor": 38.8, "periodo": "2025; -6,5 mil funcionarios, -178 agencias a/a", "fonte": "PDF07"}
+      },
+      "proventos": {
+        "dpa_12m_rs": null,
+        "dy_12m_pct": {"valor": 8.2, "periodo": "PDF03 (era 7,6% no PDF07)", "fonte": "PDF03"},
+        "dy_forward_pct": {"valor": null, "obs": "n.a. - ativo tende a virar BDR do SAN (dividendo em euro)"},
+        "defasagem_declaracao_pagamento": "JCP semestral, ~2 semanas entre data-com e pagamento",
+        "eventos_recentes": "Nenhum provento SANB11 declarado entre 04/09 e 02/10; ultimo JCP: data-com 21/07 [R2b] (obs: PDF07 cita JCP em fev e ago/26 - divergencia entre fichas). Dividendo interino do SAN (matriz): EUR 0,127/acao (+10%), ex 29/10, pagto 02/11 [S4]",
+        "extraordinarios": null,
+        "politica_de_payout": "~50% (limitado)"
+      },
+      "multiplos": {
+        "p_l_12m": 7.6, "p_l_anualizado_2T26": 9.5, "p_l_periodo": "04/09/2026 (PDF07)",
+        "p_vp_atual": {"valor": null, "obs": "PDF07: 1,15 com VPA/unit ~26,4 a R$ 30,37; PDF03 nao recalcula (calculo: 28,09/26,4 = 1,06, derivado)"},
+        "medias_historicas_5a_10a": null,
+        "pares": "PDF07 (na ficha do BBAS3): SANB11 P/L 6,9 | P/VP 1,21 | ROE 17,6% | DY 7,6%"
+      },
+      "opa_permuta": {
+        "relacao_de_troca": "0,4056 acao SAN por unit SANB11 [PDF07]",
+        "papel_recebido": "BDR do SAN na B3 (contrapartida 'parece ser' BDR - EVIDENCIA LIMITADA, edital nao lido) [PDF03 S1/S2]; PDF07 tambem cita aderir e vender o BDR (mais liquido)",
+        "preco_implicito_rs": {"valor": 28.11, "calculo": "0,4056 x SAN EUR 11,808 x EURBRL 5,8702 (02/10); unit com desconto de 0,1% vs permuta", "fonte": "S3 / calculo PDF03"},
+        "preco_implicito_anterior": "~R$ 29-30 (quadro); R$ 30,9 em 04/09; R$ 29,04 em 30/07 [PDF07/PDF03]",
+        "prazos": "21/09/2026: pedidos de registro do SAN como emissor estrangeiro, programa de BDRs na B3, registro da oferta (CVM/B3) e F-4 na SEC [S1, S2]; sem aprovacao da CVM nem leilao marcado; conclusao prevista 1S27; laudo UBS BB (data-base 17/09) sem faixa encontrada",
+        "condicoes": "Sem adesao minima e sem resgate compulsorio (risco de stub iliquido); sem piso em dinheiro, sem 2a oferta [PDF07]; adesao desenhada p/ o controlador",
+        "ex_dividendo_SAN": "29/10/2026; EUR 0,127/acao; pagto 02/11 [S4]",
+        "movimento_SAN": "SAN Madri -8,2% no periodo (EUR 11,808 em 02/10); -4,1% em 01/10 [S5]"
+      },
+      "controlador_interferencias_consumadas": [
+        {"fato": "OPA desenhada para o controlador: sem adesao minima, sem piso em dinheiro, sem 2a oferta (PDF07); 'pessimismo maximo foi 30/07 e o controlador capturou'", "ano": 2026, "fonte": "PDF07"}
+      ],
+      "risco_prospectivo_citado": "Stub iliquido se nao aderir; risco de liquidez do BDR nao precificado; risco euro/Espanha; aprovacao CVM/Espanha; preco indexado a SAN x EUR",
+      "gatilhos_ficha_anterior": [
+        {"gatilho": "Retirada/reprovacao da OPA (unit volta a ~25)", "status": "Nao acionado", "evidencia": "processo avancou (protocolos de 21/09)"},
+        {"gatilho": "SAN -15%", "status": "Nao acionado", "evidencia": "SAN -8,2% no periodo"},
+        {"gatilho": "NPL real > 4%", "status": "Nao verificavel", "evidencia": "sem balanco novo"}
+      ],
+      "eventos_agenda": [
+        {"data": "2026-10-29", "evento": "ex-dividendo do SAN (EUR 0,127; pagto 02/11)"},
+        {"data": "1S27", "evento": "conclusao prevista da OPA"}
+      ],
+      "riscos_principais": "ROE 12,5% < Ke; stub iliquido; cobertura estagio 3 em 65%; lucro em fundo de PDD; preco indexado a SAN/EUR",
+      "nao_encontrado_declarado": "Serie DPA; cobertura 90d 2T26; VPA oficial jun/26; cronograma final da OPA; edital nao lido; laudo UBS BB sem faixa; Santander RI retornou 403",
+      "premissas_valuation_PDF": {
+        "rotulo": "premissa do PDF",
+        "roe_normalizado_pct": 15, "g_pct": 3, "ke_real_pct": 12.08, "ke_nominal_pct": 16.6,
+        "p_vp_justificado": "0,86 -> R$ 22,7 (PDF07, ROE 15%)",
+        "justo_standalone_rs": 27.60, "justo_anterior_rs": 27.00, "compra_rs": 19.30, "saida_rs": 32, "faixa_rs": "17,5-35",
+        "veredito": "JUSTA (stub) (era JUSTA / ARMADILHA)", "nota_geral": 5.2, "ret_real_esperado_pct": 6.9, "vence_rf": "Nao",
+        "referencia_valor_da_permuta_rs": 28.11
+      }
+    },
+    "BRSR6": {
+      "nome": "Banrisul (Banco do Estado do Rio Grande do Sul)",
+      "perfil": "Banco estatal estadual (RS)",
+      "controlador": {"valor": "Estado do Rio Grande do Sul", "participacao_on_pct": null, "participacao_total_pct": null, "periodo": null, "fonte": "PDF07: 'participacao do Estado' listada como nao encontrada"},
+      "tag_along_pct": null,
+      "free_float_pct": null,
+      "liquidez_adtv_rs": null,
+      "preco_fechamento_rs": {"valor": 15.92, "periodo": "2026-10-02 (anterior 13,91 em 04/09; PDF03 nota: Yahoo/Dados de Mercado dao 14,88 em 04/09, variacao real pode ser +7%)", "fonte": "M9"},
+      "numero_acoes_total": {"valor": null, "obs": "nao informado; derivado: JCP 3T26 R$ 90 mi / R$ 0,2201 por acao = ~409 mi acoes (derivado, so referencia)"},
+      "valor_de_mercado_rs": null,
+      "vpa_rs": {"valor": 28.51, "periodo": "base 2T26 presumida (nao datado)", "fonte": "PDF03/PDF07"},
+      "patrimonio_liquido_rs": null,
+      "lpa_12m_rs": null,
+      "lucro_liquido_12m": {"contabil": null, "recorrente_ajustado": null, "obs": "P/L 12m 3,7 'ilusorio: reversoes' (fiscal no 4T25, civeis no 2T26); P/L 2026e 4,5-6,6; lucro 2026e -22% [PDF07]"},
+      "serie_anual": {
+        "lucro_recorrente": null,
+        "roe_recorrente": {"obs": "Serie nao coletada (lucro anual 2016-23 'nao encontrado')"},
+        "payout": {"atual_pct": 41, "obs": "~41% (lucro depende de reversoes: coberto, nao sustentavel)"},
+        "dpa_rs_por_ano": {"2025": 1.60, "2025_parcelas": [0.22, 0.09, 0.22, 0.27, 0.37, 0.44], "2026_YTD_PDF07": 0.51, "2026_YTD_PDF03": 0.731, "2016_2023": null, "ajustado": "nao informado", "fonte": "PDF07 / R2"},
+        "jcp_vs_dividendos": "JCP predominante (JCP 3T26 R$ 90 mi)"
+      },
+      "roe_trimestral": [{"periodo": "2T26", "valor_pct": 11.3, "fonte": "PDF07/PDF03"}, {"periodo": "1T26", "valor_pct": 7.8, "fonte": "PDF07"}],
+      "guidance_2026": {"carteira": "cortado (valor nao informado; 'carteira > 5%' citada como gatilho de mudanca)", "margem": "cortado (valor nao informado)", "custo_de_credito": "1,5-2,5% (cortado)", "lucro": "guidance mid ~11% de ROE; piso do guidance implica DY 4,4% [PDF03] / ~5% [PDF07]"},
+      "consenso_2026_2028": {"genial": "MANTER, alvo R$ 16,20 (0,63x P/VP); Bazin 13,4 sobre lucro Genial 2026e [PDF07]"},
+      "prudencial": {
+        "basileia_pct": {"valor": 15.9, "periodo": "2T26", "fonte": "PDF07"},
+        "cet1_pct": {"valor": 12.4, "periodo": "2T26 (-1,7 p.p.: folha do RS comprada por R$ 1,23 bi)", "fonte": "PDF07/PDF03"},
+        "inadimplencia_90d_pct": {"valor": 4.62, "periodo": "2T26 (caiu com transferencia de ativo)", "fonte": "PDF07"},
+        "cobertura_90d_pct": {"valor": 149.5, "periodo": "2T26; cobertura estagio 3 = 66,5%", "fonte": "PDF07"},
+        "custo_do_credito_pct": {"valor": 1.9, "periodo": "2T26", "fonte": "PDF07"},
+        "eficiencia_pct": {"valor": 68.7, "periodo": "2T26 (pior do lote; jaws negativo)", "fonte": "PDF07/PDF03"},
+        "nim_pct": 4.9, "captacao_pct_selic": 84.9, "tesouraria": "50% dos ativos rentaveis"
+      },
+      "proventos": {
+        "dpa_12m_rs": null,
+        "dy_12m_pct": {"valor": 11.4, "periodo": "PDF07 (04/09); PDF03: n.v.; agregador mostra DY 4,6% so YTD", "fonte": "PDF07"},
+        "dy_forward_pct": {"valor": 7.7, "periodo": "DPA fwd ~R$ 1,22 a R$ 15,92 (era 8,8%); piso do guidance 4,4%", "fonte": "PDF03 calculo"},
+        "defasagem_declaracao_pagamento": "Curta: aprovado 08/09, pago 28/09",
+        "eventos_recentes": "JCP 3T26 R$ 0,2201/acao (R$ 90 mi); data-com 11/09; pago 28/09 [R1]; proventos 2026 acumulados R$ 0,731 [R2]",
+        "extraordinarios": null,
+        "politica_de_payout": "~41% do lucro"
+      },
+      "multiplos": {
+        "p_l_12m": 3.7, "p_l_2026e": "4,5-6,6", "p_l_periodo": "04/09/2026 (PDF07)",
+        "p_vp_atual": {"valor": 0.56, "periodo": "02/10/2026 (era 0,49)", "fonte": "PDF03 calculo"},
+        "medias_historicas_5a_10a": null,
+        "pares": null
+      },
+      "controlador_interferencias_consumadas": [
+        {"fato": "Compra da folha de pagamento do proprio Estado do RS por R$ 1,23 bi (consumada); capital 'excedente' gasto com o controlador; consignado -10,8% a/a", "ano": "2026 (data exata nao informada; reflete no CET1 2T26)", "fonte": "PDF07"},
+        {"fato": "Desconto de controlador de 35% aplicado uma unica vez no valor central", "ano": "-", "fonte": "PDF03/PDF07 (premissa do PDF)"},
+        {"fato": "Nenhuma nova operacao com o Estado identificada entre set e out", "ano": 2026, "fonte": "PDF03"}
+      ],
+      "risco_prospectivo_citado": "Eleicao RS 2026: Zucco (PL) lidera (Quaest 29%; AtlasIntel 45,2% dos validos), descarta venda e quer o banco como 'motor do agro' [R4, R5]; Brizola e Maranata assinaram compromisso de nao privatizar; Maranata propos o banco como fundo garantidor de dividas do agro [R6] (EVIDENCIA LIMITADA); Gabriel Souza contra a venda [R3]; se vencedor usar o banco como fundo garantidor, desconto de 35% pode ser pouco",
+      "gatilhos_ficha_anterior": [
+        {"gatilho": "Eficiencia > 72%", "status": "Nao verificavel", "evidencia": "sem balanco novo"},
+        {"gatilho": "Inad. 90d > 5,5%", "status": "Nao verificavel", "evidencia": "ultimo 4,62%"},
+        {"gatilho": "ROE < 8% por 2 tri", "status": "Nao verificavel", "evidencia": "ultimo 11,3%"},
+        {"gatilho": "CET1 < 11%", "status": "Nao verificavel", "evidencia": "ultimo 12,4%"},
+        {"gatilho": "Nova operacao com o Estado fora de mercado", "status": "Nao acionado", "evidencia": "so propostas de campanha"}
+      ],
+      "eventos_agenda": [
+        {"data": "2026-10-04", "evento": "1o turno RS"},
+        {"data": "2026-10-25", "evento": "2o turno RS"},
+        {"data": "3T26 (data nao informada)", "evento": "resultado: se vier sem reversoes e ROE < 9%, PDF07 reclassifica (ja ARMADILHA)"}
+      ],
+      "riscos_principais": "Eficiencia 68,7% com jaws negativo; lucro sustentado por reversoes; guidance cortado nas 3 linhas; receitas -2,3% e custos +10%; capital gasto com controlador; risco politico RS",
+      "nao_encontrado_declarado_PDF07": "Serie DPA/DY 2016-23; lucro anual 2016-23; participacao do Estado; recompras; release 2T26 do RI. Site RI do Banrisul nao abriu (usados espelhos)",
+      "inconsistencia_interna_PDF07": "Linha 'Para o caderno' do BRSR6 no PDF07 diz 'comprar so a R$ 11,20' e 'barata no papel, justa no valor' (texto da versao anterior), enquanto o veredito e o corpo dizem ARMADILHA com compra a R$ 7,30; PDF03 usa compra R$ 7,40.",
+      "premissas_valuation_PDF": {
+        "rotulo": "premissa do PDF",
+        "roe_normalizado_pct": 11, "g_pct": 2, "ke_real_pct": 12.08, "desconto_controlador_pct": 35,
+        "p_vp_justificado": "0,58 -> R$ 16,5 (PDF07, ROE 11%) antes do desconto de 35%",
+        "justo_rs": 10.60, "justo_anterior_rs": 10.40, "compra_rs": 7.40, "saida_rs": 16, "faixa_rs": "6-16",
+        "veredito": "ARMADILHA (mantido; nota 4,7 -> 3,5 por erro proprio na nota de preco)", "nota_geral": 3.5, "ret_real_esperado_pct": 5.5, "vence_rf": "Nao",
+        "premio_vs_justo_pct": 50
+      }
+    },
+    "ABCB4": {
+      "nome": "Banco ABC Brasil",
+      "perfil": "Banco privado de atacado (corporate); controlado pelo Bank ABC (Bahrein)",
+      "controlador": {"valor": "Bank ABC (Bahrein)", "participacao_on_pct": null, "participacao_total_pct": 60.6, "periodo": "PDF03/PDF07", "fonte": "PDF03/PDF07"},
+      "tag_along_pct": {"valor": 100, "periodo": "PDF07", "fonte": "PDF07"},
+      "free_float_pct": {"valor": 32, "periodo": "PDF07", "fonte": "PDF07"},
+      "liquidez_adtv_rs": {"valor": null, "obs": "'liquidez baixa' (qualitativo, PDF07)"},
+      "preco_fechamento_rs": {"valor": 26.15, "periodo": "2026-10-02 (anterior 25,19 em 04/09; Yahoo da 24,58 em 04/09, divergencia registrada)", "fonte": "M9"},
+      "numero_acoes_total": null,
+      "valor_de_mercado_rs": null,
+      "vpa_rs": {"valor": 25.94, "periodo": "data nao explicita; PDF07: 'derivado ~27,6'; PL jun/26 listado como nao encontrado", "fonte": "PDF03/PDF07"},
+      "patrimonio_liquido_rs": null,
+      "lpa_12m_rs": null,
+      "lucro_liquido_12m": {"contabil": null, "recorrente_ajustado": null, "obs": "P/L 6,4 (04/09) [PDF07]; lucro anual 2016-23 nao encontrado"},
+      "serie_anual": {
+        "lucro_recorrente": null,
+        "roe_recorrente": {"obs": "ROAE 14,3% (13,5-16,3% nos ultimos 3 tri); serie anual nao coletada"},
+        "payout": {"atual_pct": "65-70 (2025)", "fonte": "PDF07"},
+        "dpa_rs_por_ano": {"2016": 1.09, "2017": 1.09, "2018": 0.54, "2019": 1.05, "2020": 0.16, "2021": 1.25, "2022": 1.40, "2023": 1.58, "2024": 1.65, "2025": 2.62, "2026_YTD": 1.17, "obs": "2018 com possivel lacuna na fonte; 2020 reduzido pela restricao do BCB; ajustado? nao informado; por data-com? nao informado", "fonte": "PDF07"},
+        "jcp_vs_dividendos": "JCP todo ano desde 2010; parte do JCP e recapitalizada via aumento de capital semestral (R$ 19,52/acao)"
+      },
+      "roe_trimestral": [{"periodo": "ultimos 3 tri (ate 2T26)", "valor_pct": "13,5-16,3 (ROAE 14,3% mais recente)", "fonte": "PDF07/PDF03"}],
+      "guidance_2026": null,
+      "consenso_2026_2028": null,
+      "prudencial": {
+        "basileia_pct": {"valor": 16.2, "periodo": "ultimo (PDF03: 'sem novo'); +1,05 p.p. no Nivel 1 com LF perpetuas base jun/26", "fonte": "PDF07/PDF03"},
+        "cet1_pct": {"valor": 11.9, "periodo": "PDF07", "fonte": "PDF07"},
+        "inadimplencia_90d_pct": {"valor": 0.6, "periodo": "2T26 (era 0,5% no 1T26)", "fonte": "A4"},
+        "cobertura_pct": {"valor": 460, "periodo": "PDF07 (provisao 2,3% da carteira)", "fonte": "PDF07"},
+        "custo_do_credito": null,
+        "eficiencia_pct": null,
+        "alavancagem": "~9x (vs 13x dos grandes); carteira R$ 56,5 bi (+8,3% a/a)"
+      },
+      "proventos": {
+        "dpa_12m_rs": null,
+        "dy_12m_pct": {"valor": 10.4, "periodo": "bruto, PDF07 (04/09); PDF03: n.v.", "fonte": "PDF07"},
+        "dy_forward_pct": {"valor": 9.1, "periodo": "bruto (~7,7% em caixa p/ quem nao subscreve; PDF03 quadro: 7,8-9,7% retorno real)", "fonte": "PDF03"},
+        "defasagem_declaracao_pagamento": "JCP semestral; declarado jun -> pago ago; proximo esperado em dez/26",
+        "eventos_recentes": "Aumento de capital com JCP a R$ 19,52/acao (diluicao ~3,4% p/ quem nao subscreve); sobras de 0,5% a leilao em 21/09, homologacao nao encontrada [A1]; recompra de ate 8,3 mi acoes por 18 meses (ate mar/28), 25/09 [A2]; LF subordinadas perpetuas R$ 600,9 mi (+1,05 p.p. no Nivel 1) [A3]",
+        "extraordinarios": null,
+        "politica_de_payout": "JCP semestral; ~65-70% em 2025; parte volta como capital"
+      },
+      "multiplos": {
+        "p_l": 6.4, "p_l_periodo": "04/09/2026 (PDF07)",
+        "p_vp_atual": {"valor": 1.01, "periodo": "02/10/2026 (era 0,97 no calculo do PDF03; 0,95 no PDF07)", "fonte": "PDF03 calculo"},
+        "medias_historicas_5a_10a": {"bazin_dpa_medio_5a_rs": 1.70, "yield_minimo_10a": "~1% (2020)"},
+        "pares": "PINE4 ROE 30% a P/VP 1,9; BBDC4 P/VP 1,06 / ROE 16% (PDF07)"
+      },
+      "controlador_interferencias_consumadas": [
+        {"fato": "Controlador prefere capital a retorno: JCP capitalizado via aumento de capital; nenhum evento novo no periodo", "ano": 2026, "fonte": "PDF07/PDF03"}
+      ],
+      "risco_prospectivo_citado": "JCP recapitalizado (yield bruto != caixa); ROE 14,3% < Ke nominal; liquidez baixa + controlador estrangeiro; eventual fim do JCP",
+      "gatilhos_ficha_anterior": [
+        {"gatilho": "Inad. 90d > 1,5%", "status": "Nao acionado", "evidencia": "0,6% (2T26)"},
+        {"gatilho": "ROE < 12% por 2 tri", "status": "Nao acionado", "evidencia": "14,3%"},
+        {"gatilho": "Basileia < 14%", "status": "Nao acionado", "evidencia": "16,2% + LF perpetua"},
+        {"gatilho": "Fim da politica de JCP semestral", "status": "Nao acionado", "evidencia": "sem noticia"}
+      ],
+      "eventos_agenda": [
+        {"data": "dez/2026", "evento": "proximo JCP semestral esperado"},
+        {"data": "ate mar/2028", "evento": "janela do programa de recompra (8,3 mi acoes)"}
+      ],
+      "riscos_principais": "ROE preso em 13-16% abaixo do Ke nominal; diluicao por subscricao; LF perpetua e capital caro (melhora indice, nao ROE); credito PJ commodity",
+      "nao_encontrado_declarado": "Eficiencia; custo de credito em R$; inad. exata 2T26 (PDF07); PL jun/26; lucro anual 2016-23; % de diluicao; DY anual; homologacao do leilao de sobras; PDF03: DY 12m n.v.",
+      "premissas_valuation_PDF": {
+        "rotulo": "premissa do PDF",
+        "roe_normalizado_pct": 15, "g_pct": "5-7", "ke_real_pct": 12.08, "ke_nominal_pct": 16.6,
+        "p_vp_justificado": "0,85 -> R$ 22 (PDF07, ROE 15%, Ke 16,8%)",
+        "yield_liquido_recap_pct": "~2 p.p. de recapitalizacao do JCP descontados no retorno",
+        "justo_rs": 24.60, "justo_anterior_rs": 24.00, "compra_rs": 17.20, "saida_rs": 31, "faixa_rs": "17-34", "aceitavel_rs": "19,5-20,5",
+        "veredito": "JUSTA (mantido)", "nota_geral": 6.8, "ret_real_esperado_pct": "7,8-9,7", "vence_rf": "Empate"
+      }
+    },
+    "BBDC4": {
+      "nome": "Bradesco (PN)",
+      "perfil": "Banco privado em turnaround; seguradora = 41% do lucro (ROAE 22,8%) [PDF07]",
+      "controlador": {"valor": "Controladores (nome nao detalhado no PDF); garantiram R$ 8 bi do aumento de capital", "participacao_on_pct": null, "participacao_total_pct": null, "periodo": null, "fonte": "PDF07/PDF03"},
+      "tag_along_pct": {"valor": null, "obs": "'tag along exato' listado como nao encontrado; PN recebe 10% a mais de dividendos; minimo estatutario 30%"},
+      "free_float_pct": null,
+      "liquidez_adtv_rs": null,
+      "preco_fechamento_rs": {"valor": 19.23, "periodo": "2026-10-02 (anterior 17,84 em 04/09, +7,8%)", "fonte": "M9"},
+      "numero_acoes_total": {"valor": 11.2e9, "periodo": "pos-aporte (PDF07, projetado antes da conclusao do aumento de capital)", "fonte": "PDF07"},
+      "valor_de_mercado_rs": null,
+      "vpa_rs": {"valor": 16.89, "periodo": "pre-aporte (2T26 presumido); VPA pos-aporte nao encontrado", "fonte": "PDF07/PDF03"},
+      "patrimonio_liquido_rs": null,
+      "lpa_12m_rs": null,
+      "lucro_liquido_12m": {"contabil": null, "recorrente_ajustado": null, "obs": "P/L recorrente 6,7 / contabil 7,7 (04/09); 2025 ~R$ 13 bi de proventos [PDF07]; serie lucro recorrente 2016-22 nao encontrada"},
+      "serie_anual": {
+        "lucro_recorrente": null,
+        "roe_recorrente": {"obs": "ROE 2T26 16% (10 trimestres seguidos de alta); serie anual nao coletada"},
+        "payout": {"atual_pct": 50, "obs": "~50%; minimo estatutario 30%"},
+        "dpa_rs_por_ano": {"2025": "proventos ~R$ 13 bi (por acao nao informado)", "12m_PDF07": 1.56, "2026_JCP_declarado_PDF07": 0.644, "serie_10a": null, "obs": "serie 2016-25 'nao coletada (fonte bloqueada)'"},
+        "jcp_vs_dividendos": "Pagamento mensal de JCP (R$ 0,01897/PN bruto) + JCP intermediario"
+      },
+      "roe_trimestral": [{"periodo": "2T26", "valor_pct": 16, "fonte": "PDF07/PDF03 (D5)"}],
+      "guidance_2026": null,
+      "consenso_2026_2028": {"genial": "COMPRA, alvo R$ 25 (PDF07); gestao diz que 2027 e 'mais desafiador'"},
+      "prudencial": {
+        "basileia_pct": {"valor": 15.5, "periodo": "2T26 (PDF07)", "fonte": "PDF07"},
+        "cet1_pct": {"valor": 11.3, "periodo": "2T26; 13,6% pro forma (aporte + BradSaude)", "fonte": "PDF07/PDF03 (D5)"},
+        "inadimplencia_90d_pct": {"valor": 4.3, "periodo": "2T26 (4,3-4,4%)", "fonte": "D5"},
+        "cobertura_90d_pct": {"valor": 152.3, "periodo": "2T26 (caindo)", "fonte": "PDF07/PDF03"},
+        "custo_do_credito_pct": {"valor": 3.5, "periodo": "massificado 5,9%", "fonte": "PDF07"},
+        "eficiencia_pct": {"valor": 46.5, "periodo": "2T26 (-3,4 p.p. a/a)", "fonte": "PDF07"},
+        "carteira": "R$ 1,137 tri (+11,6% a/a) em ano eleitoral"
+      },
+      "proventos": {
+        "dpa_12m_rs": {"valor": 1.56, "periodo": "12m ate 04/09 (PDF07)", "fonte": "PDF07"},
+        "dy_12m_pct": {"valor": 8.7, "periodo": "PDF07 (04/09); PDF03 n.v.", "fonte": "PDF07"},
+        "dy_forward_pct": {"valor": 6.5, "periodo": "DPA fwd ~R$ 1,25 (era ~7% no PDF07, liquido do aporte ~4% em 2026)", "fonte": "PDF03"},
+        "defasagem_declaracao_pagamento": "Mensal: ~1 mes. JCP intermediario: ate 7 meses (aprovado 30/09, pago ate 30/04/27)",
+        "eventos_recentes": "JCP intermediario R$ 3,8 bi = R$ 0,376629/PN bruto; data-com 13/10/2026; pagto ate 30/04/2027; aprovado 30/09 [D3, D4]. JCP mensal R$ 0,01897/PN mantido. Aumento de capital: R$ 9,7 bi subscritos (97% do teto de ~R$ 10 bi) a R$ 17,64/PN, diluicao efetiva ~5,5% (previsto ate 5,7%; PDF07 max 3,4%/5,7% divergem por base); sobras 2,65% leiloadas em 02/10, resultado nao encontrado [D1, D2]; 1a fase R$ 6,5 bi",
+        "extraordinarios": null,
+        "politica_de_payout": "~50%; minimo estatutario 30%; PN com +10%; em 2026 paga JCP e pede capital de volta (circular); a partir de 2027 yield sem o vaivem"
+      },
+      "multiplos": {
+        "p_l_recorrente": 6.7, "p_l_contabil": 7.7, "p_l_periodo": "04/09/2026 (PDF07)",
+        "p_vp_atual": {"valor": 1.14, "periodo": "02/10/2026 aproximado (VPA pre-aporte 16,89 -> ~1,14; era 1,06)", "fonte": "PDF03 calculo"},
+        "medias_historicas_5a_10a": null,
+        "pares": "ITUB4 P/VP ~2,3; SANB11/BBAS3 ver outros tickers; PDF07 ficha: eficiencia 46,5% 'ainda pior que Santander'"
+      },
+      "controlador_interferencias_consumadas": [
+        {"fato": "Nenhuma interferencia citada; aporte concluido com garantia dos controladores (R$ 8 bi), aporte com desagio e preferencia aos minoritarios", "ano": 2026, "fonte": "PDF03/PDF07"}
+      ],
+      "risco_prospectivo_citado": "Realavancagem +11,6% em ano eleitoral com cobertura caindo; Res. 4.966; inad PF do sistema subindo; 2027 'mais desafiador'; novo aumento de capital em 12 meses (gatilho nao acionado)",
+      "gatilhos_ficha_anterior": [
+        {"gatilho": "Cobertura < 130%", "status": "Nao verificavel", "evidencia": "ultimo 152,3%"},
+        {"gatilho": "Inad. 90d > 5%", "status": "Nao acionado", "evidencia": "4,3% (2T26)"},
+        {"gatilho": "ROE caindo por 2 tri", "status": "Nao verificavel", "evidencia": "sem balanco novo"},
+        {"gatilho": "Novo aumento de capital em 12 meses", "status": "Nao acionado", "evidencia": "nenhum"},
+        {"gatilho": "Custo de credito > 4,5%", "status": "Nao verificavel", "evidencia": "sem balanco novo"}
+      ],
+      "eventos_agenda": [
+        {"data": "2026-10-02", "evento": "leilao de sobras do aumento de capital (resultado nao encontrado)"},
+        {"data": "2026-10-13", "evento": "data-com do JCP intermediario R$ 0,376629/PN"},
+        {"data": "ate 2027-04-30", "evento": "pagamento do JCP intermediario"}
+      ],
+      "riscos_principais": "Turnaround ja no preco (P/VP ~1,14 com ROE 16%); cobertura 152% caindo com massificado a 5,9%; carteira +11,6% em ano eleitoral; diluicao ~5,5% do aporte",
+      "nao_encontrado_declarado": "Serie DPA 2016-25; lucro recorrente 2016-22; participacao em BradSaude/Cielo; tag along exato; insiders; VPA pos-aporte; resultado do leilao de sobras",
+      "premissas_valuation_PDF": {
+        "rotulo": "premissa do PDF",
+        "roe_normalizado_pct": "16-18 (PDF07; 'ROE normalizado 14%' tambem citado na linha de reproducao)", "g_pct": "8-10", "ke_real_pct": 12.08, "ke_nominal_pct": 16.6,
+        "p_vp_justificado": "0,93-1,10 -> R$ 15,7-18,6 (PDF07)",
+        "justo_rs": 19.20, "justo_anterior_rs": 18.50, "compra_rs": 13.40, "saida_rs": 25, "faixa_rs": "11-25", "aceitavel_rs": "< 15,5",
+        "veredito": "JUSTA (mantido)", "nota_geral": 6.7, "ret_real_esperado_pct": "10,1-12,0", "vence_rf": "Sim (marginal)"
+      }
+    }
+  },
+  "fontes": {
+    "M1": "https://infomoney.com.br/onde-investir/taxas-do-tesouro-sobem-as-vesperas-do-1o-turno-seguindo-titulos-americanos",
+    "M2": "https://gazetamercantil.com/selic-1375-copom-corta-juros-setembro-2026",
+    "M3": "https://www.infomoney.com.br/economia/boletim-focus-projecoes-28092026/",
+    "M4": "https://www.soutocorrea.com.br/client-alerts/lei-complementar-n-224-2025-cortes-em-beneficios-fiscais-e-novas-regras-para-fintechs-bets-e-jcp/",
+    "M5": "https://www.jb.com.br/brasil/politica/2026/10/1061086-datafolha-aponta-lula-com-45-dos-votos-validos-e-flavio-bolsonaro-com-40.html",
+    "M6": "https://www.brasilemfolhas.com.br/2026/10/ibovespa-sobe-2-63-e-fecha-aos-192-mil-pontos-na-vespera-da-eleicao/",
+    "M7": "https://www.poder360.com.br/poder-economia/credito-no-brasil-atinge-r-74-trilhoes-em-agosto-diz-banco-central/",
+    "M8": "https://www.poder360.com.br/poder-economia/bc-diz-que-40-da-alta-da-inadimplencia-vem-de-nova-regra-contabil/",
+    "M9": "https://query1.finance.yahoo.com/v8/finance/chart/ITUB4.SA (padrao <TICKER>.SA; conferido em Dados de Mercado / Google Finance / StatusInvest)",
+    "B1": "https://www.infomoney.com.br/mercados/banco-do-brasil-bbas3-atualiza-valor-de-proventos-confira-valor-por-acao/",
+    "B2": "https://arevista.com.br/acoes/bbas3-sobe-mas-novos-numeros-mudam-a-leitura-sobre-as-acoes-do-banco-do-brasil/",
+    "B3": "https://www.suno.com.br/noticias/banco-do-brasil-bbas3-acoes-recuperacao-credito-mt/",
+    "B4": "https://www.congressonacional.leg.br/materias/medidas-provisorias/-/mpv/175190",
+    "B5": "https://www.infomoney.com.br/mercados/bbas3-eleicoes-historico-banco-do-brasil-2026/",
+    "S1": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?Tela=99&numSequencia=1094973&numVersao=1&numProtocolo=1570267&descTipo=IPE&CodigoInstituicao=1",
+    "S2": "https://gazetamercantil.com/santander-opa-santander-brasil-cvm-b3",
+    "S3": "https://query1.finance.yahoo.com/v8/finance/chart/SAN.MC",
+    "S4": "https://www.merca2.es/2026/09/29/santander-eleva-dividendo-2026-2464347/",
+    "S5": "https://www.tradingkey.com/news/market-movers/262196455-market-movers-san-20261001",
+    "R2b": "https://www.dadosdemercado.com.br/acoes/sanb11/dividendos",
+    "R1": "https://www.ativovirtual.com.br/avnews/artigos/fato-relevante-banrisul-brsr3-jscp-de-r-90-milhoes-no-3t26",
+    "R2": "https://www.dadosdemercado.com.br/acoes/brsr6/dividendos",
+    "R3": "https://www.cnnbrasil.com.br/eleicoes/a-cnn-gabriel-souza-se-contrapoe-a-venda-do-banrisul-cenario-diferente/",
+    "R4": "https://www.gazetadopovo.com.br/eleicoes/2026/pesquisa-eleitoral-2026/atlasintel-governador-rio-grande-do-sul-setembro-2026-2/",
+    "R5": "https://jovempan.com.br/politica/zucco-propoe-novo-sistema-contra-enchentes-no-rs-e-descarta-venda-do-banrisul/",
+    "R6": "https://www.brasildefato.com.br/2026/09/30/candidatos-ao-governo-do-estado-tem-embates-sobre-educacao-seguranca-e-reconstrucao-em-debate-na-rbs-tv/",
+    "A1": "https://br.advfn.com/jornal/2026/09/banco-abc-brasil-levara-sobras-de-aumento-de-capital-a-leilao-na-b3",
+    "A2": "https://investidor10.com.br/noticias/banco-abre-caixa-e-libera-recompra-de-8-3-milhoes-de-acoes-122841/",
+    "A3": "https://br.advfn.com/jornal/2026/09/banco-abc-brasil-emite-r-600-9-milhoes-em-letras-financeiras-subordinadas-perpetuas",
+    "A4": "https://ri.abcbrasil.com.br/resultados/operacoes-com-atraso-acima-de-90-dias/",
+    "D1": "https://timesbrasil.com.br/brasil/apos-levantar-r-65-bilhoes-bradesco-fara-nova-distribuicao-de-acoes-remanescentes/",
+    "D2": "https://timesbrasil.com.br/empresas-e-negocios/bradesco-leva-16-milhoes-de-acoes-a-leilao-na-bolsa-apos-captar-r-97-bilhoes/",
+    "D3": "https://www.seudinheiro.com/2026/empresas/dia-cheio-no-bradesco-bbdc4-de-r-38-bilhoes-em-jcp-a-leilao-de-sobras-de-acoes-ate-o-pix-internacional-ccgg/",
+    "D4": "https://br.advfn.com/jornal/2026/10/bradesco-aprova-r-3-8-bilhoes-em-jcp-veja-quem-tem-direito",
+    "D5": "https://www.infomoney.com.br/mercados/bradesco-bbdc4-resultados-segundo-trimestre-2026/",
+    "I1": "https://migr-itau.mz-customers.com/relacoes-com-investidores/en/market-information/dividends-and-interest-on-capital/",
+    "I2": "https://br.advfn.com/jornal/2026/09/itau-unibanco-emite-r-5-bilhoes-em-letras-financeiras-e-reforca-capital",
+    "I3": "https://br.advfn.com/jornal/2026/09/itau-unibanco-anuncia-recompra-de-r-11-bilhoes-em-letras-financeiras",
+    "I4": "https://www.infomoney.com.br/mercados/itau-itub4-resultados-segundo-trimestre-2026/",
+    "P1": "https://br.advfn.com/jornal/2026/09/brbi-br-partners-aprova-aporte-de-r-30-milhoes-para-reforcar-capital-do-banco-br-partners",
+    "P2": "https://euqueroinvestir.com/acoes/br-partners-acao-desaba-apos-balanco-considerado-fraco",
+    "E1": "https://www.bbseguridaderi.com.br/docs/bb-seguridade-2026-09-21-jHtqRhbJ.pdf",
+    "E2": "https://www.infomoney.com.br/mercados/bb-seguridade-bbse3-cai-mais-de-2-com-dados-da-susep-reforcando-cautela-para-acoes/",
+    "E3": "https://www.moneytimes.com.br/citi-rebaixa-bb-seguridade-bbse3-para-venda-e-alerta-para-queda-de-ate-55-jcav/",
+    "E4": "https://arevista.com.br/acoes/bbse3-divide-bancos-e-expoe-risco-que-o-mercado-tenta-precificar/",
+    "E5": "https://www.bbseguridaderi.com.br/servicos-aos-acionistas/dividendos-e-recompras",
+    "C1": "https://www.moneytimes.com.br/caixa-seguridade-cxse3-anuncia-lucro-de-r-114-bilhao-no-2t26-e-dividendos-de-r-105-bilhao-fets/",
+    "C2": "https://arevista.com.br/acoes/caixa-seguridade-cxse3-numeros-de-julho-reforcam-dividendos/",
+    "C3": "https://www.ativovirtual.com.br/avnews/artigos/cxse3-vale-a-pena-o-que-o-resultado-de-julho-muda-na-tese-em-5-numeros",
+    "O1": "https://www.infomoney.com.br/mercados/porto-seguro-pssa3-pagara-r-3334-milhoes-em-juros-sobre-capital-proprio/",
+    "O2": "https://visnoinvest.com.br/news/15343/porto-seguro-pssa3-registra-r-157-bi-em-premios-de-auto-em-jul-26",
+    "O3": "https://www.seudinheiro.com/2026/empresas/banco-da-porto-pssa3-tropeca-no-credito-derruba-as-acoes-e-reacende-alerta-btg-ve-oportunidade-na-queda-miql/",
+    "O4": "https://bpmoney.com.br/mercado/porto-seguro-pssa3-pede-a-cvm-cancelamento-de-registro-de-companhia-aberta/",
+    "_nota_PDF07": "O PDF de 07/09 nao traz lista de fontes com rotulos/URLs (apenas menciona 'fontes citadas na analise original': RI/CVM, Genial, XP, InfoMoney, Nord, Visno, HG Brasil, StatusInvest, Investidor10, Dados de Mercado)."
+  }
+}
