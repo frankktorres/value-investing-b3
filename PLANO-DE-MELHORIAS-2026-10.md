@@ -180,8 +180,8 @@ Cada frente: **objetivo · o que fazer (técnico) · pronto quando · modelo/eff
 |---|---|---|---|
 | ~~1~~ ✅ | F1 Fundação + F7 diário — **CONCLUÍDA em 05/10/2026** (golden dos 41 tickers, pytest, defasagem a VP, cobertura por juros pagos, diário 09) | Sonnet · medium · não |
 | ~~2~~ ✅ | F2 Coerência do método — **CONCLUÍDA em 05/10/2026**, doutrina **v2.2**: D8 janela do ciclo (§11.4 nova), D9 capex de manutenção com Δreceita real, D10 ROIC a custo de reposição travando o crescimento, D7 saída por qualidade (aprovada; só a LEVE3 elegível), mais as duas pendências da Etapa 1 (aluguel no OE e defasagem do Lote 4). Revisão adversarial corrigiu 6 defeitos. 76 testes verdes | Opus · high · **sim** |
-| 3 | F3 Backtest | Valida (ou recalibra) a régua antes de sair procurando compra | Opus · high · **sim** (desenho) → Sonnet · medium (execução) |
-| 4 | F4 Universo + monitor | Com a régua validada, varrer toda a B3 | Opus · high · **sim** (critérios) → Sonnet · medium |
+| ~~3~~ ⛔ | F3 Backtest — **PARADA em 06/10/2026 no portão do proxy** (70,7% / ΔP/C 0,34; ver F3 "Resultado"): D5 segue aberta; validação passa a ser prospectiva (`registro_prospectivo.py` a cada rodada aprovada) | Opus · high · **sim** |
+| 4 | F4 Universo + monitor | Varrer toda a B3 com a régua v2.2 — **sem validação empírica** (D5 aberta): todo veredito novo entra no registro prospectivo | Opus · high · **sim** (critérios) → Sonnet · medium |
 | 5 | F5 Dossiês (saúde primeiro) | Profundidade só nas finalistas | Opus · high · sim no template |
 | 6 | F6 Carteira | Depende de saber o que há para comprar | Opus · high · **sim** + respostas do Frank |
 | 7 | F8 Temporada 3T26 | Data externa (out–nov) | Sonnet · medium · não |
