@@ -57,7 +57,9 @@ class Exercicio:
     estado: str
     conjunto: str                       # "con" (consolidado) ou "ind"
     contas: dict[str, float] = field(default_factory=dict)
-    dfc: tuple[tuple[str, float], ...] = ()      # (descrição, valor) — D&A/capex saem daqui
+    # (código, descrição, valor) — D&A/capex/dividendos saem daqui. O código separa
+    # "amortização" de D&A (6.01) da "amortização de empréstimos" (6.03).
+    dfc: tuple[tuple[str, str, float], ...] = ()
     # Período dos fluxos. CRÍTICO no ITR: lá cada conta de fluxo tem DUAS linhas ULTIMO, a
     # acumulada no ano (01/01 -> T) e a do trimestre isolado, com os MESMOS nomes de campo dos
     # anuais. Sem registrar o período, quem montar LTM a partir de um ITR erra por ~4x sem sinal.
@@ -87,6 +89,10 @@ class LedgerPIT:
     acoes_fonte: str
     acoes_ambiguo: bool
     mes_ipca: str                       # último mês de IPCA público em T
+    # Data da autorização de capital que deu `acoes`. Evento em ações com data ex em
+    # (acoes_aprovacao, T] tem de multiplicar a contagem antes de combinar com o preço de T
+    # (eventos.fator_entre). "" quando o FRE não trazia aprovação utilizável (aí acoes_ambiguo).
+    acoes_aprovacao: str = ""
 
     @property
     def n_exercicios(self) -> int:
@@ -118,6 +124,7 @@ class LedgerPIT:
                 "acoes": self.acoes, "acoes_fonte": self.acoes_fonte,
                 "acoes_ambiguo": self.acoes_ambiguo,
                 "acoes_dt_refer": self.acoes_dt_refer, "acoes_dt_receb": self.acoes_dt_receb,
+                "acoes_aprovacao": self.acoes_aprovacao,
                 "itr_dt_refer": self.ultimo_itr.dt_refer if self.ultimo_itr else "",
                 "exercicios": tuple(e.dt_refer for e in self.anuais)}
 
@@ -248,21 +255,24 @@ def _meses(ini: str, fim: str) -> int:
         return 12
 
 
-def _dfc_de(g: pd.DataFrame, dt_refer: str) -> tuple[tuple[str, float], ...]:
+def _dfc_de(g: pd.DataFrame, dt_refer: str) -> tuple[tuple[str, str, float], ...]:
     """Linhas inteiras da DFC do exercício: D&A, capex, dividendo e juros pagos saem por descrição."""
     d = g[(g["dt_refer"] == dt_refer) & (g["bloco"].isin(("DFC_MI", "DFC_MD")))
           & (g["ordem_exerc"] == "ULTIMO")]
     if d.empty:
         return ()
     for conjunto in ("con", "ind"):
-        dd = d[d["conjunto"] == conjunto]
+        # O CSV da CVM repete linha idêntica em ~33 companhia-anos (adversario, 06/10/2026):
+        # sem isto D&A, capex e dividendos saem 2x ou 3x.
+        dd = d[d["conjunto"] == conjunto].drop_duplicates(["codigo", "descricao", "valor"])
         if not dd.empty:
-            return tuple(zip(dd["descricao"].astype(str), dd["valor"].astype(float)))
+            return tuple(zip(dd["codigo"].astype(str), dd["descricao"].astype(str),
+                             dd["valor"].astype(float)))
     return ()
 
 
-def _acoes_em(cd_cvm: int, data_corte: str) -> tuple[float | None, str, str, str, bool]:
-    """Contagem de ações como se via em T. (acoes, dt_refer, dt_receb, fonte, ambiguo).
+def _acoes_em(cd_cvm: int, data_corte: str) -> tuple[float | None, str, str, str, bool, str]:
+    """Contagem de ações como se via em T. (acoes, dt_refer, dt_receb, fonte, ambiguo, aprovacao).
 
     Duas filtragens, as duas por data que está no próprio dado:
       · `dt_receb <= T` — o documento tinha de estar entregue;
@@ -281,19 +291,20 @@ def _acoes_em(cd_cvm: int, data_corte: str) -> tuple[float | None, str, str, str
     a = _acoes()
     d = a[(a["cd_cvm"] == cd_cvm) & (a["dt_receb"] <= data_corte)]
     if d.empty:
-        return None, "", "", "", False
+        return None, "", "", "", False, ""
     aprov = d["aprovacao"].fillna("")
     valido = d[(aprov <= data_corte) & (aprov != "")]
     if valido.empty:                       # sem data de aprovação utilizável: declara ambíguo
         r = d.sort_values(["dt_refer", "versao"]).iloc[-1]
-        return float(r["acoes_total"]), str(r["dt_refer"]), str(r["dt_receb"]), str(r["fonte_acoes"]), True
+        return (float(r["acoes_total"]), str(r["dt_refer"]), str(r["dt_receb"]), str(r["fonte_acoes"]),
+                True, "")
     # Ordem por APROVAÇÃO primeiro — era o bug: ordenar por `dt_refer` antes fazia ganhar a linha
     # do documento mais recente mesmo carregando autorização velha, descartando a autorização nova
     # que estava num FRE anterior. Medido: 206 de 22.241 companhia-datas mudam de valor, com casos
     # de 30x, 481x e 1000x de erro na contagem de ações — e portanto no valor de mercado e no P/C.
     r = valido.sort_values(["aprovacao", "dt_refer", "versao"]).iloc[-1]
     return (float(r["acoes_total"]), str(r["dt_refer"]), str(r["dt_receb"]),
-            str(r["fonte_acoes"]), bool(r.get("acoes_ambiguo", False)))
+            str(r["fonte_acoes"]), bool(r.get("acoes_ambiguo", False)), str(r["aprovacao"]))
 
 
 def ledger_em(cd_cvm: int, data_corte: str, plano: str = INDUSTRIAL,
@@ -343,12 +354,12 @@ def ledger_em(cd_cvm: int, data_corte: str, plano: str = INDUSTRIAL,
                     dfc=_dfc_de(gi, r["dt_refer"]),
                     dt_ini_exerc=ini, periodo_meses=meses, ambiguo=amb)
 
-    acoes, a_refer, a_receb, a_fonte, a_ambiguo = _acoes_em(cd_cvm, data_corte)
+    acoes, a_refer, a_receb, a_fonte, a_ambiguo, a_aprov = _acoes_em(cd_cvm, data_corte)
     return LedgerPIT(cd_cvm=cd_cvm, data_corte=data_corte, plano=plano,
                      anuais=tuple(anuais), ultimo_itr=itr,
                      acoes=acoes, acoes_dt_refer=a_refer, acoes_dt_receb=a_receb,
                      acoes_fonte=a_fonte, acoes_ambiguo=a_ambiguo,
-                     mes_ipca=mes_ipca_disponivel(data_corte))
+                     mes_ipca=mes_ipca_disponivel(data_corte), acoes_aprovacao=a_aprov)
 
 
 def auditoria(l: LedgerPIT) -> list[str]:

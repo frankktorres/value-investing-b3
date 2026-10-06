@@ -114,6 +114,54 @@ class Config:
     pib_real_lp: float = 0.02
     notas: tuple[str, ...] = field(default=(), repr=False)
 
+    # ---- motor reduzido (fatia 11). Congelado em 06/10/2026 ANTES da 1ª rodada do proxy.
+    # Perfil por Setor_Atividade do FCA (PIT). Chave = setor sem acento, minúsculo e sem o prefixo
+    # "Emp. Adm. Part. -" (a holding segue o setor declarado). Escrito a partir da lista de setores
+    # distintos do FCA 2010-2026 e do §11.2 da doutrina, sem olhar o golden ticker a ticker:
+    #   cíclica = produtor de commodity (preço formado fora da empresa); utility = energia e
+    #   saneamento; banco = intermediação/crédito; holding sem setor = excluída com motivo.
+    perfil_por_setor: tuple[tuple[str, str], ...] = (
+        ("agricultura (acucar, alcool e cana)", "ciclica"),
+        ("extracao mineral", "ciclica"),
+        ("metalurgia e siderurgia", "ciclica"),
+        ("papel e celulose", "ciclica"),
+        ("petroleo e gas", "ciclica"),
+        ("petroquimicos e borracha", "ciclica"),
+        ("reflorestamento", "ciclica"),
+        ("pesca", "ciclica"),
+        ("energia eletrica", "utility"),
+        ("saneamento, serv. agua e gas", "utility"),
+        ("bancos", "banco"),
+        ("intermediacao financeira", "banco"),
+        ("arrendamento mercantil", "banco"),
+        ("credito imobiliario", "banco"),
+        ("factoring", "banco"),
+        ("cooperativas", "banco"),
+        ("securitizacao de recebiveis", "banco"),
+        ("seguradoras e corretoras", "seguradora"),
+        ("sem setor principal", "holding"),
+    )
+    perfil_padrao: str = "servicos"         # industrial / serviços / consumo (§11.2)
+    perfis_excluidos: tuple[str, ...] = ("holding",)
+    ciclicidade_razao_margem: float = 2.5   # max/min margem EBIT: só cross-check, nunca troca perfil
+    g_real_oe: float = 0.01                 # g real do Owner Earnings capitalizado (default do motor)
+    # Linhas da DFC, sobre a descrição sem acento e minúscula, restritas ao grupo do código.
+    # Só contas-folha entram na soma (pai e filho com o mesmo nome não somam duas vezes).
+    dfc_da: tuple[str, str, str] = ("6.01", r"deprecia|amortiza|exaust",
+                                    r"agio|capta|emprestim|financiam|debentur|juros|transac|amortizad")
+    dfc_capex: tuple[str, str, str] = ("6.02", r"imobiliz|intangiv",
+                                       r"vend|alien|baix|receb|ingress|resgat|juros|capitaliz")
+    dfc_dividendos: tuple[str, str, str] = ("6.03", r"dividend|juros sobre (o )?capital",
+                                            r"receb|a pagar")
+    dfc_arrendamento: tuple[str, str, str] = ("6.03", r"arrendament|direito de uso|ifrs ?16|cpc ?06",
+                                              r"receb|capta")
+
+    # ---- proxy (fatia 12): mesmo mercado do golden (lote1_bancos.py:14), para que o erro medido
+    # seja só do motor. O preço é pc × central do próprio golden.
+    proxy_data: str = "2026-10-05"
+    proxy_rf_real: float = 0.0706
+    proxy_pi: float = 0.0646
+
 
 # ---------------------------------------------------------------------------- liquidez em R$ reais
 # Por que o limite de liquidez NÃO é nominal: R$ 500 mil/dia em 2014 é um filtro muito mais

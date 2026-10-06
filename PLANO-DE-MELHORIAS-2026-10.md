@@ -96,6 +96,18 @@ Cada frente: **objetivo · o que fazer (técnico) · pronto quando · modelo/eff
   (calibrar em 2014–20 e validar em 2021–25).
 - **Pronto quando:** relatório `BACKTEST-2014-2025.pdf` com a tabela de retornos por palavra e a recomendação para a doutrina.
 - **Modelo:** Opus high, plan mode (desenho), depois Sonnet medium (coleta/execução).
+- **Resultado (06/10/2026): PARADO no portão do proxy — a D5 não é testável no passado com dado público.** O backtest não pode
+  reusar os `lote*.py` (insumos digitados em 2026 = look-ahead), então precisa de um motor mecânico. Declarado antes de medir: ele
+  tinha de reproduzir a palavra (exata ou ±1 nível) em ≥ 80% dos 41 do golden **e** mediana |ΔP/C| ≤ 0,15. Medido (1 consulta,
+  `ferramentas/backtest/dados/proxy_consultas.log`): **70,7% e 0,34** — falhou nos dois; mesmo contando como acerto os 5 bancos com
+  dado faltante, a mediana fica em 0,26. A régua depende de julgamento que o motor mecânico não reproduz; um backtest com ele testaria
+  outra régua. Pela regra declarada, o motor **não** foi enriquecido (seria calibrar no golden) e as fatias 13–15 (grade, estatística,
+  PDF) não rodam. Ficam prontos e testados em `ferramentas/backtest/`: ledger point-in-time, COTAHIST, retorno total, motor reduzido.
+- **No lugar: validação prospectiva.** Cada rodada aprovada vai para `ferramentas/prospectivo/registro.jsonl` (append-only, no git)
+  com `python ferramentas/registro_prospectivo.py --data-preco AAAA-MM-DD --doutrina vX`. Métrica declarada no próprio script antes
+  de existir resultado: retorno total a 1 ano (direção a 3) por palavra contra o Ibovespa total; leitura só com ≥ 4 datas de registro
+  com 1 ano vencido. 1º registro: 41 vereditos, preços de 02/10/2026, doutrina v2.2. A recalibração do prêmio de 5 p.p. e da margem
+  de 30% fica **sem base empírica** até lá — e isso é declarado, não escondido.
 
 ### F4 — Universo e triagem de toda a B3 (D1, D12)
 **Objetivo:** pescar onde estão os peixes — médias e pequenas, pouco cobertas.

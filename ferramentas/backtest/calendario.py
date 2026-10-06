@@ -76,12 +76,17 @@ def mes_de(data: str) -> str:
 def mes_ipca_disponivel(data_corte: str) -> str:
     """Último mês de IPCA já publicado em T.
 
-    O IPCA do mês m sai por volta do dia 10 de m+1. Os cortes são sempre fim de mês (30/06 e
-    31/12), então em T conhece-se até o mês ANTERIOR: em 30/06/2014, o IPCA de maio/2014.
-    Usar o do próprio mês do corte é look-ahead de ~10 dias — pequeno, silencioso e fácil.
+    O IPCA do mês m sai por volta do dia 8–12 de m+1. Regra conservadora: m é público em T ⟺
+    T >= dia 15 de m+1. Nos cortes de fim de mês (30/06 e 31/12) isso dá o mês ANTERIOR: em
+    30/06/2014, o IPCA de maio/2014. Em data no começo do mês (o proxy roda em 05/10/2026) dá DOIS
+    meses antes — em 05/10 o IPCA de setembro ainda não saiu. A regra antiga supunha fim de mês e
+    entregava o mês anterior a qualquer data: look-ahead de ~10 dias, pequeno, silencioso e fácil.
     """
     d = _d(data_corte)
-    ano, mes = (d.year - 1, 12) if d.month == 1 else (d.year, d.month - 1)
+    recua = 1 if d.day >= 15 else 2
+    ano, mes = d.year, d.month - recua
+    if mes < 1:
+        ano, mes = ano - 1, mes + 12
     return f"{ano}-{mes:02d}"
 
 

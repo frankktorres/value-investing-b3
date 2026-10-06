@@ -85,3 +85,15 @@ def test_limite_de_liquidez_nao_depende_de_quando_foi_calculado() -> None:
         assert pit.indice_mes(base, corte) == pytest.approx(
             pit.indice_mes(base, "2025-11"), rel=1e-12), \
             "o índice do mês-âncora é um número fixo; se variar com o corte, a base não é estável"
+
+
+def test_ipca_publico_regra_do_dia_15():
+    """Fim de mês: o mês anterior (igual à regra antiga nos 24 cortes). Começo de mês: dois antes —
+    em 05/10/2026 o IPCA de setembro ainda não saiu (IBGE divulga ~dia 8-12)."""
+    for d in PADRAO.datas_corte:
+        a, m = int(d[:4]), int(d[5:7]) - 1
+        assert mes_ipca_disponivel(d) == f"{a}-{m:02d}"
+    assert mes_ipca_disponivel("2026-10-05") == "2026-08"
+    assert mes_ipca_disponivel("2026-10-15") == "2026-09"
+    assert mes_ipca_disponivel("2027-01-10") == "2026-11"
+    assert mes_ipca_disponivel("2027-02-10") == "2026-12"
