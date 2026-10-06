@@ -1,6 +1,8 @@
 # Dados brutos reproduzíveis (CVM/StatusInvest) — não versionar
 ferramentas/dados/cvm/*.zip
 ferramentas/dados/raw/
+# Derivados do backtest (reconstruíveis dos ZIPs da CVM por backtest/ledger/*)
+ferramentas/backtest/dados/
 # Pipeline antigo (histórico, fora do fluxo atual)
 analisador/.venv/
 analisador/dados/

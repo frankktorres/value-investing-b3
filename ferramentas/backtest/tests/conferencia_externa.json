@@ -1,0 +1,74 @@
+{
+ "fonte": "Yahoo Finance, Adj Close (nota C; só conferência, nunca insumo)",
+ "consultado_em": "2026-10-06",
+ "tolerancia_pp": 1.0,
+ "casos": [
+  {
+   "ticker": "ITSA4",
+   "corte": "2016-06-30",
+   "h": 1,
+   "yahoo": 0.2795
+  },
+  {
+   "ticker": "ITSA4",
+   "corte": "2019-12-31",
+   "h": 3,
+   "yahoo": -0.183
+  },
+  {
+   "ticker": "ITSA4",
+   "corte": "2021-06-30",
+   "h": 1,
+   "yahoo": -0.1724
+  },
+  {
+   "ticker": "MGLU3",
+   "corte": "2019-06-30",
+   "h": 1,
+   "yahoo": 1.7223
+  },
+  {
+   "ticker": "MGLU3",
+   "corte": "2020-06-30",
+   "h": 1,
+   "yahoo": 0.1833
+  },
+  {
+   "ticker": "PETR4",
+   "corte": "2017-12-31",
+   "h": 1,
+   "yahoo": 0.4696
+  },
+  {
+   "ticker": "TAEE11",
+   "corte": "2018-06-30",
+   "h": 3,
+   "yahoo": 1.7204
+  }
+ ],
+ "relativos": [
+  {
+   "ticker": "MGLU3",
+   "corte": "2016-06-30",
+   "h": 3,
+   "yahoo": 43.7152,
+   "tolerancia_rel": 0.001
+  }
+ ],
+ "divergencias_explicadas": [
+  {
+   "ticker": "PETR4",
+   "corte": "2021-12-31",
+   "h": 1,
+   "yahoo": 0.3794,
+   "motivo": "Yahoo omite a 2a parcela do 3T22 (R$ 1,600192 em 22/11/2022); a B3 traz R$ 3,3489/acao no total"
+  },
+  {
+   "ticker": "BBAS3",
+   "corte": "2019-12-31",
+   "h": 5,
+   "yahoo": 0.3558,
+   "motivo": "Yahoo omite o provento de 22/11/2023 (R$ 0,101989 + 0,686222)"
+  }
+ ]
+}
