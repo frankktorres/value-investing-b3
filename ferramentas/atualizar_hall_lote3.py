@@ -14,6 +14,11 @@ SETOR = {"SUZB3": "Celulose", "KLBN11": "Papel", "RANI3": "Embalagem", "B3SA3": 
 CAB = {"BARATA": "### BARATA", "RADAR": "### RADAR", "JUSTA": "### JUSTA", "CARA": "### CARA"}
 
 
+def pct_ou_nd(x):
+    """ROIC pode ser None (sem capital investido positivo) — não derruba o hall."""
+    return "n.d." if x is None else br(100 * x, 1) + "%"
+
+
 def br(x, c=2):
     return f"{x:,.{c}f}".replace(",", "X").replace(".", ",").replace("X", ".")
 
@@ -25,7 +30,7 @@ def main():
     for tk in sorted(SETOR, key=lambda k: -res[k][1]["pc"]):
         e, r = res[tk]
         p = r["palavra"]
-        motivo = (f"**recalculado v2.0 (04/10)**; Ke implícito {br(100 * r['ke_implicito'], 1)}%; ROIC {br(100 * r['roic'], 1)}% × WACC "
+        motivo = (f"**recalculado v2.2 (05/10; base 04/10)**; Ke implícito {br(100 * r['ke_implicito'], 1)}%; ROIC {pct_ou_nd(r['roic'])} contábil / {pct_ou_nd(r['roic_reposicao'])} a reposição × WACC "
                   f"{br(100 * r['wacc'], 1)}%; confiança {r['confianca']}")
         if tk == "SLCE3":
             motivo += "; CARA mesmo com o NAV de terras de terceiro; arrendamento de terras (IFRS 16) na dívida"

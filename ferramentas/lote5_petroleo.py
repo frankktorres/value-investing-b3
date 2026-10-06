@@ -1,4 +1,4 @@
-"""Lote 5 — Petróleo, gás e combustíveis · data-base 02/10/2026 (preços do PDF rev. 03/10) · doutrina v2.1.
+"""Lote 5 — Petróleo, gás e combustíveis · data-base 02/10/2026 (preços do PDF rev. 03/10) · doutrina v2.2.
 
 Demonstrações: CVM (DFP 2016–25 + ITR, 12m até jun/2026). Preço: PDF rev. 03/10 (fechamento de 02/10). Ações, proventos: CVM/StatusInvest.
 Ciclo declarado ANTES do veredito (doutrina §2, regra 4):
@@ -119,15 +119,19 @@ EMPRESAS = [
                qualitativo=QUAL(4, 2, 1, 2, 2)),
     Industrial("PRIO3", "PRIO", "ciclica", preco=63.35, n_acoes=acoes("PRIO3"), spread_kd=0.02, g_real=0.01, jcp_share=jcp("PRIO3"),
                anos_ciclo=[str(a) for a in range(2019, 2026)], anos_outras=[str(a) for a in range(2016, 2026)],
+               janela_razao="perímetro operado atual: Frade a partir de 2019 (receita de R$ 849 mi em 2018 para R$ 1,64 bi em 2019); antes de 2019 a escala e os ativos são de outra empresa",
                receita_meio=receita_ep("PRIO3"), da_receita=da_ep("PRIO3"), outras_liquidas=True, qualitativo=QUAL(3, 4, 4, 1, 3)),
     Industrial("RECV3", "PetroReconcavo", "ciclica", preco=11.20, n_acoes=acoes("RECV3"), spread_kd=0.025, g_real=-0.03, jcp_share=jcp("RECV3"),
                anos_ciclo=[str(a) for a in range(2020, 2026)], receita_meio=receita_ep("RECV3"), da_receita=da_ep("RECV3"), declinio_sem_liberacao=True,
+               janela_razao="a série da CVM começa em 2020 (IPO em set/2020); não há exercício anterior",
                qualitativo=QUAL(1, 2, 3, 2, 2)),
     Industrial("UGPA3", "Ultrapar", "servicos", preco=38.51, n_acoes=acoes("UGPA3"), spread_kd=0.015, g_real=0.01, jcp_share=jcp("UGPA3"),
                anos_ciclo=[str(a) for a in range(2021, 2026)], deflator=M["deflator"], capex_ciclico=True,
+               janela_razao="perímetro comparável: Oxiteno e Extrafarma descontinuadas em 2021 — antes a margem é de outro conjunto de negócios",
                qualitativo=QUAL(3, 3, 4, 3, 3)),
     Industrial("VBBR3", "Vibra Energia", "servicos", preco=37.66, n_acoes=acoes("VBBR3"), spread_kd=0.015, g_real=0.01, jcp_share=jcp("VBBR3"),
                anos_ciclo=[str(a) for a in range(2020, 2026)], deflator=M["deflator"], capex_ciclico=True,
+               janela_razao="gestão privada desde jul/2019 (saída da Petrobras): a margem anterior é de empresa estatal",
                outras_liquidas=True, anos_outras=[str(a) for a in range(2016, 2026)], fora_circulo=False,
                qualitativo=QUAL(3, 3, 4, 3, 2)),
 ]

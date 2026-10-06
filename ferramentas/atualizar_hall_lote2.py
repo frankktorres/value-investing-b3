@@ -25,7 +25,7 @@ def main():
     for tk in sorted(SETOR, key=lambda k: -res[k][1]["pc"]):
         e, r = res[tk]
         tir = (1 + r["ke_implicito"]) / (1 + MK.pi) - 1 if r["ke_implicito"] else None
-        motivo = (f"**recalculado v2.1 (05/10)**; TIR real implícita {br(100 * tir, 1) + '%' if tir is not None else 'n.c.'} "
+        motivo = (f"**recalculado v2.2 (05/10)**; TIR real implícita {br(100 * tir, 1) + '%' if tir is not None else 'n.c.'} "
                   f"(Tesouro {br(100 * MK.rf_real, 2)}%; Ke real {br(100 * MK.ke_real, 2)}%)")
         if tir is not None and tir < MK.rf_real:
             motivo += " — **rende menos que o Tesouro**"
@@ -45,8 +45,8 @@ def main():
     t = t.replace("**exceto os Lotes 1 (Bancos e Seguridade) e 3 (Agro e B3), recalculados em 04/10 pela v2.0**",
                   "**exceto os Lotes 1 (Bancos e Seguridade), 2 (Energia e Saneamento) e 3 (Agro e B3), recalculados em 04–05/10 pela v2.0/2.1**")
     t = t.replace("| 2 | Energia elétrica e saneamento (8) | `ENERGIA ELÉTRICA E SANEAMENTO/Energia_Saneamento_rev_03-10-2026.pdf` | `…_rev_07-09-2026.pdf` |",
-                  "| 2 | Energia elétrica e saneamento (8) | `ENERGIA ELÉTRICA E SANEAMENTO/Energia_Saneamento_rev_05-10-2026.pdf` **(v2.1)** | `…_rev_03-10-2026.pdf`, `…_rev_07-09-2026.pdf` |")
-    reg = ("| 05/10/2026 | Lote 2 (8) | recalculado pela v2.1 | Regulados por P/VP justificado (patrimônio como proxy da base) + DDM, TIR real implícita "
+                  "| 2 | Energia elétrica e saneamento (8) | `ENERGIA ELÉTRICA E SANEAMENTO/Energia_Saneamento_rev_05-10-2026.pdf` **(v2.2)** | `…_rev_03-10-2026.pdf`, `…_rev_07-09-2026.pdf` |")
+    reg = ("| 05/10/2026 | Lote 2 (8) | recalculado pela v2.2 | Regulados por P/VP justificado (patrimônio como proxy da base) + DDM, TIR real implícita "
            "sempre. Todos CARA (P/C " + br(min(r["pc"] for _, r in res.values())) + "–" + br(max(r["pc"] for _, r in res.values())) +
            "); CPLE3, CSMG3 e SBSP3 rendem menos que o Tesouro. Razão (c): a rev. 03/10 usava ajustes avulsos e inflação de 4% |")
     t = "\n".join(l for l in t.split("\n") if not l.startswith("| 05/10/2026 | Lote 2 (8) |"))

@@ -1,4 +1,4 @@
-"""Lote 6 — Química e metalurgia · data-base 02/10/2026 (preços do PDF rev. 03/10) · doutrina v2.1.
+"""Lote 6 — Química e metalurgia · data-base 02/10/2026 (preços do PDF rev. 03/10) · doutrina v2.2.
 
 Demonstrações: CVM (DFP 2016–25 + ITR, 12m até jun/2026). Preço: PDF rev. 03/10 (fechamento de 02/10, StatusInvest). Ações: composição do capital
 do ITR de jun/2026 (CVM), sem tesouraria; EGIE3 com o follow-on de jul/2026. Proventos: StatusInvest, ajustados por bonificação (abaixo).
@@ -173,6 +173,8 @@ EMPRESAS = [
                qualitativo=QUAL(3, 4, 4, 2, 3)),
     Industrial("UNIP6", "Unipar Carbocloro (PNB)", "ciclica", preco=56.78, n_acoes=N["UNIP6"], spread_kd=0.02, g_real=0.01, jcp_share=jcp("UNIP6"),
                anos_ciclo=[str(a) for a in range(2017, 2026)], receita_meio=CVM["UNIP6"]["ltm_2T26"]["receita"] * CLORO["fator"], outras_liquidas=True,
+               janela_razao="Indupa consolidada em dez/2016: 2016 traz ganho de compra vantajosa e 1 mês de receita da Argentina "
+                            "(e a série de soda não cobre jan–set/2016)",
                receita_meio_fonte="receita 12m × cesta soda/PVC de meio de ciclo ÷ cesta dos 12m (BLS × PTAX, R$ de hoje)",
                qualitativo=QUAL(3, 2, 2, 2, 2)),
     Industrial("LEVE3", "Mahle Metal Leve", "servicos", preco=34.43, n_acoes=N["LEVE3"], spread_kd=0.015, g_real=0.01, jcp_share=jcp("LEVE3"),

@@ -39,7 +39,9 @@ EMPRESAS = [
     Industrial("B3SA3", "B3", "servicos", preco=19.00, n_acoes=acoes("B3SA3"), spread_kd=0.012, g_real=0.02, jcp_share=jcp("B3SA3"),
                pl_hist=20.3, qualitativo=QUAL(5, 4, 4, 3, 4)),
     Industrial("SMTO3", "São Martinho", "ciclica", preco=19.34, n_acoes=acoes("SMTO3"), spread_kd=0.015, g_real=0.01, jcp_share=jcp("SMTO3"),
-               anos_ciclo=[str(a) for a in range(2017, 2027)], pl_hist=9.7, qualitativo=QUAL(3, 4, 4, 2, 3)),
+               anos_ciclo=[str(a) for a in range(2017, 2027)], pl_hist=9.7, qualitativo=QUAL(3, 4, 4, 2, 3),
+               janela_razao="exercício social abr–mar: são os 10 exercícios fechados até mar/2026 (o '2026' da série é abr/2025–mar/2026), "
+                            "não uma janela curta"),
     Industrial("KEPL3", "Kepler Weber", "ciclica", preco=6.78, n_acoes=acoes("KEPL3"), spread_kd=0.02, g_real=0.01, jcp_share=jcp("KEPL3"),
                qualitativo=QUAL(3, 3, 3, 2, 3)),
     Industrial("SLCE3", "SLC Agrícola", "ciclica", preco=17.20, n_acoes=acoes("SLCE3"), spread_kd=0.02, g_real=0.01, jcp_share=jcp("SLCE3"),

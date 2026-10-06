@@ -9,17 +9,21 @@ import json
 import math
 import pathlib
 from dataclasses import dataclass, field
+from functools import lru_cache
 from statistics import median
 
 from defasagem import defasagem_meses
+from inflacao import fator_entre, fator_idade, inflacao_do_ano, reposicao
 from juros import juros_do_periodo
-from motor_financeiras import (HORIZONTE, IR_JCP, ORDEM, Mercado, interp, liquido_diferido, nota_preco, nota_spread,
-                               nota_yield, palavra)
+from motor_financeiras import (ANOS_ROIC_MINIMO, HORIZONTE, IR_JCP, NOTA_QUALIDADE_MINIMA, ORDEM, Mercado, interp,
+                               liquido_diferido, nota_preco, nota_spread, nota_yield, palavra, precos_de_referencia)
 
 AQUI = pathlib.Path(__file__).parent
 CVM = json.loads((AQUI / "dados" / "cvm_series.json").read_text(encoding="utf-8"))
 SI = json.loads(sorted((AQUI / "dados").glob("series_*.json"))[-1].read_text(encoding="utf-8"))
 ANOS = [str(a) for a in range(2016, 2026)]
+LIMITE_QUEBRA = 0.25      # §11.4: divergência entre a mediana de 5 anos e a da janela que levanta suspeita de quebra
+JANELA_MINIMA_SAIDA = 10  # §9: a exceção de qualidade exige histórico de ciclo inteiro; janela curta não a permite
 
 
 @dataclass
@@ -29,7 +33,8 @@ class Industrial:
     perfil: str                    # ciclica | servicos
     preco: float
     n_acoes: float                 # ações (ou units) em circulação
-    anos_ciclo: list = field(default_factory=lambda: ANOS)   # janela da margem normalizada
+    anos_ciclo: list = field(default_factory=lambda: ANOS)   # janela da margem normalizada (§11.4)
+    janela_razao: str = ""         # OBRIGATÓRIO quando anos_ciclo != ANOS: a quebra estrutural e a data (§11.4)
     receita_meio: float | None = None   # R$ mil; None = média dos 3 últimos exercícios + LTM
     aliquota: float | None = None   # None = alíquota efetiva mediana (−IR/LAIR) dos últimos 5 exercícios, entre 15% e 34%
     spread_kd: float = 0.02        # Kd nominal = rf nominal + spread
@@ -59,12 +64,18 @@ class Industrial:
     g1_real: float | None = None          # DCF em 2 estágios: crescimento real dos primeiros anos_g1 anos (compounder; só com ROIC > WACC)
     anos_g1: int = 10
     defasagem_meses: float | None = None  # provento pago N meses depois da data-com → valor presente ao Ke nominal (§6.3); None = medida na StatusInvest (defasagem.py)
+    defasagem_fonte: str = ""      # OBRIGATÓRIO quando defasagem_meses é informado: o evento declarado e a data (§6.3)
 
 
-# Lotes 2/3/5/6 foram avaliados sem o aluguel pago no OE. A recoleta de 06/10 trouxe o campo, mas a regra ainda tem dois furos:
-# linhas que misturam principal+juros (UGPA3, KLBN11, SMTO3, ABEV3) contam o juro duas vezes ou são descartadas (LTM negativo).
-# Fica FORA até a Etapa 2 (F2) decidir o método; o golden prova que nada mudou por isso. Lote 4 já usa (proxy próprio).
-SEM_ALUGUEL_NO_OE = frozenset("SUZB3 KLBN11 RANI3 B3SA3 SMTO3 KEPL3 SLCE3 PETR4 PRIO3 RECV3 UGPA3 VBBR3 LEVE3 UNIP6 GGBR4".split())
+def exigir_declaracoes(emp: Industrial) -> None:
+    """Premissa da casa sem fonte escrita não roda (doutrina §11.4 e §6.3). Falha alto, não silenciosa."""
+    faltas = []
+    if list(emp.anos_ciclo) != list(ANOS) and not emp.janela_razao.strip():
+        faltas.append(f"janela {emp.anos_ciclo[0]}-{emp.anos_ciclo[-1]} sem janela_razao (§11.4)")
+    if emp.defasagem_meses is not None and not emp.defasagem_fonte.strip():
+        faltas.append(f"defasagem_meses={emp.defasagem_meses} sem defasagem_fonte (§6.3)")
+    if faltas:
+        raise ValueError(f"{emp.ticker}: " + " · ".join(faltas))
 
 
 def v(d, k, default=None):
@@ -92,39 +103,91 @@ def capital_giro(b):
 
 
 def capex_manutencao(tk, ano, anterior, ciclica=False):
-    """Greenwald (doutrina §11.1): capex − (capital ÷ receita) × Δreceita média de 5 anos; piso zero.
-    Capital = imobilizado + intangível + ativo biológico (as mesmas contas que formam o capex)."""
+    """Capex de manutenção = capex − (capital ÷ receita) × Δreceita REAL média de 5 anos; piso zero (doutrina §11.1).
+
+    Adaptação declarada do método de Greenwald: o capital é imobilizado + intangível + biológico LÍQUIDOS do
+    exercício (as mesmas contas que formam o capex), não o PPE bruto médio de 5 anos do original — a série da CVM
+    só traz o líquido (conta 1.02.03).
+    Δreceita REAL (Etapa 2/F2): a receita antiga entra a preços do exercício corrente antes da subtração. Sem isso,
+    em economia inflacionária a inflação viraria "crescimento" e reduziria o capex de manutenção. Não é exigência
+    de Greenwald (que não trata inflação) — é coerência com a própria §11.1, que já manda preço de commodity e EPV
+    em R$ de hoje. Tudo fica em R$ do exercício, então `cap_rec` (razão do mesmo ano) e o capex seguem compatíveis.
+    """
     a, _ = serie(tk)
     d = a[ano]
     if ciclica:
         # commodity: a receita cresce por preço, não por capacidade — todo o capex é manutenção (sem projeto comprovado)
         return (d["capex"], 0.0) if d.get("capex") is not None else (None, None)
+    if d.get("capex") is None:
+        return None, None
     base = str(int(ano) - 5)
-    if d.get("capex") is None or not a.get(base, {}).get("receita"):
+    if not a.get(base, {}).get("receita"):
         p = a.get(anterior, {})
         if not p.get("receita"):
             return None, None
-        delta = d["receita"] - p["receita"]
+        delta = d["receita"] - p["receita"] * fator_entre(anterior, ano)
     else:
-        delta = (d["receita"] - a[base]["receita"]) / 5
-    if d.get("capex") is None:
-        return None, None
+        delta = (d["receita"] - a[base]["receita"] * fator_entre(base, ano)) / 5
     cap_rec = (v(d, "imobilizado", 0) + v(d, "intangivel", 0) + v(d, "biologico", 0)) / d["receita"]
     cresc = cap_rec * max(delta, 0)
     return max(d["capex"] - cresc, 0.0), cresc
 
 
-def owner_earnings_ano(tk, ano, anterior, ciclica=False):
-    a, _ = serie(tk)
+def aluguel_principal(emp: Industrial, ano, anterior, kd_real):
+    """Amortização do passivo de arrendamento (IFRS 16) que sai do OE — só o PRINCIPAL (doutrina §11.1: "sem juros").
+
+    O juro já está dentro do lucro líquido; descontar a linha cheia o contaria duas vezes. Duas situações, decididas
+    pelo DADO e não por lista:
+      · linha de principal (a maioria, e KLBN11, que tem a despesa de juros de arrendamento em linha própria na DFC):
+        desconta integralmente — o juro está em outro lugar;
+      · linha que a PRÓPRIA empresa declara como "principal e juros pagos" (UGPA3, 6.03.07): o juro é estimado pelo
+        saldo médio do passivo de arrendamento × Kd **REAL** e devolvido. O Kd nominal é o de hoje (rf de ~15%) e
+        aplicá-lo a saldos de 2019–21, quando a Selic era 2%, devolvia juro demais e INFLAVA o OE — o oposto de
+        conservador (achado do adversário em 05/10/2026). O Kd real é um limite inferior do juro, então o principal
+        descontado é um limite superior: erra para o lado que penaliza.
+    Limite declarado: quando a empresa não reporta o passivo de arrendamento no balanço estruturado (ABEV3: a conta
+    2.01.04.03/2.02.01.03 vem zerada), o juro não é estimável e a linha sai inteira — conservador, pode contar o juro
+    duas vezes. Série coletada antes de 06/10/2026 não tem os campos → 0 (sem efeito).
+    """
+    a, _ = serie(emp.ticker)
     d, p = a[ano], a.get(anterior, {})
-    cm, _ = capex_manutencao(tk, ano, anterior, ciclica)
+    limpo = max(v(d, "arrendamento_pago", 0), 0)
+    misto = max(v(d, "arrendamento_pago_com_juros", 0), 0)
+    if not misto:
+        return limpo
+    saldos = [v(x, "arrendamento_saldo", 0) for x in (d, p) if v(x, "arrendamento_saldo", 0) > 0]
+    juros = (sum(saldos) / len(saldos)) * kd_real if saldos else 0.0
+    return limpo + max(misto - juros, 0.0)
+
+
+@lru_cache(maxsize=None)
+def idade_e_fator(tk):
+    """(idade média do imobilizado, fator do IPCA dessa idade). Memoizado: `avaliar` chama `valores` ~90 vezes."""
+    a, ltm = serie(tk)
+    da = v(ltm, "da", 0) or max((v(a[x], "da", 0) for x in a), default=0)
+    return reposicao(v(ltm, "imobilizado", 0), da)
+
+
+def capital_reposicao(tk, cap_inv):
+    """Capital investido com o imobilizado a custo de reposição aproximado (doutrina §11.1, Etapa 2/F2).
+
+    Capital contábil + imobilizado × (IPCA da idade média − 1). Só o imobilizado é corrigido: intangível e goodwill
+    estão a preço de aquisição e não têm custo de reposição definido; o capital de giro já está a preços de hoje.
+    """
+    _, ltm = serie(tk)
+    idade, fator = idade_e_fator(tk)
+    return idade, cap_inv + v(ltm, "imobilizado", 0) * (fator - 1)
+
+
+def owner_earnings_ano(emp: Industrial, ano, anterior, kd_real, ciclica=False):
+    a, _ = serie(emp.ticker)
+    d, p = a[ano], a.get(anterior, {})
+    cm, _ = capex_manutencao(emp.ticker, ano, anterior, ciclica)
     if cm is None or d.get("lucro") is None or d.get("da") is None or not p:
         return None
     dwc = capital_giro(d) - capital_giro(p)
-    # IFRS 16: a D&A somada de volta inclui a depreciação do direito de uso; o aluguel pago (amortização do passivo de arrendamento,
-    # DFC de financiamento) é custo do negócio e sai (05/10). Série coletada antes de 05/10 não tem o campo → 0 (sem mudança)
-    aluguel = 0 if tk in SEM_ALUGUEL_NO_OE else max(v(d, "arrendamento_pago", 0), 0)
-    return d["lucro"] + d["da"] - cm - max(dwc, 0) - aluguel
+    # IFRS 16: a D&A somada de volta inclui a depreciação do direito de uso, então o aluguel pago é custo do negócio e sai
+    return d["lucro"] + d["da"] - cm - max(dwc, 0) - aluguel_principal(emp, ano, anterior, kd_real)
 
 
 # ---------------------------------------------------------------- qualidade contábil
@@ -212,20 +275,21 @@ def premissas_operacionais(emp: Industrial):
         # receita indexada a preço de commodity (distribuição): a margem % cai quando o combustível sobe e o EBIT por volume
         # não muda — normaliza-se o EBIT em R$ de hoje (IPCA), expresso sobre a receita real média do período
         rec_real = sum(a[x]["receita"] * emp.deflator[x] for x in anos) / len(anos)
-        margens = sorted(ebit_aj(a[x], mo, liq) * emp.deflator[x] / rec_real for x in anos)
+        por_ano = {x: ebit_aj(a[x], mo, liq) * emp.deflator[x] / rec_real for x in anos}
     elif emp.da_receita is not None:
         # E&P: o preço do barril move a margem EBITDA; a D&A (exaustão das reservas, inclusive as compradas) segue o portfólio atual
         # impairment sai do EBITDA ano a ano (baixa de capital, não custo do ano), mas a perda MEDIANA de 10 anos fica como custo
         # recorrente — quem baixa ativo quase todo ano investe mal de forma habitual (só penaliza)
         imp_rec = max(0.0, median(-v(a[x], "impairment", 0) / a[x]["receita"] for x in anos))
-        margens = sorted((ebit_aj(a[x], mo, liq) + v(a[x], "da", 0) - v(a[x], "impairment", 0)) / a[x]["receita"] - emp.da_receita - imp_rec
-                         for x in anos)
+        por_ano = {x: (ebit_aj(a[x], mo, liq) + v(a[x], "da", 0) - v(a[x], "impairment", 0)) / a[x]["receita"] - emp.da_receita - imp_rec
+                   for x in anos}
     elif emp.impairment_normalizado:
         # baixa de ativo concentrada num ano (GGBR4 2025) não é custo daquele ano; a perda mediana de 10 anos fica como custo recorrente
         imp_rec = max(0.0, median(-v(a[x], "impairment", 0) / a[x]["receita"] for x in anos))
-        margens = sorted((ebit_aj(a[x], mo, liq) - v(a[x], "impairment", 0)) / a[x]["receita"] - imp_rec for x in anos)
+        por_ano = {x: (ebit_aj(a[x], mo, liq) - v(a[x], "impairment", 0)) / a[x]["receita"] - imp_rec for x in anos}
     else:
-        margens = sorted(ebit_aj(a[x], mo, liq) / a[x]["receita"] for x in anos)
+        por_ano = {x: ebit_aj(a[x], mo, liq) / a[x]["receita"] for x in anos}
+    margens = sorted(por_ano.values())
     m50 = median(margens)
     m25 = margens[max(0, round(0.25 * (len(margens) - 1)))]
     m75 = margens[min(len(margens) - 1, round(0.75 * (len(margens) - 1)))]
@@ -253,8 +317,16 @@ def premissas_operacionais(emp: Industrial):
     nao_rec = {x: outras(a[x], liq) - mo * a[x]["receita"] for x in anos
                if outras(a[x], liq) - mo * a[x]["receita"] > 0.03 * a[x]["receita"]}
     imp = imp_rec if (emp.da_receita is not None or emp.impairment_normalizado) and not emp.deflator else 0.0
+    # §11.4 (quebra estrutural): mede a divergência entre a mediana dos 5 últimos exercícios e a da janela inteira.
+    # Só MEDE e sinaliza — a janela nunca troca sozinha, porque "mudança documentada" é julgamento, não cálculo, e em
+    # cíclica a janela curta pegaria exatamente o pico que o §2 proíbe (por isso o sinal não vale para cíclica).
+    # O corte é o PERFIL, não `ciclico()`: este último também é True por `capex_ciclico` (regra de capex de rede em
+    # telecom e distribuição), e isso desligaria o alarme em empresa de serviço — achado do adversário em 05/10/2026.
+    m50_5 = median(sorted(por_ano[x] for x in anos[-5:]))
+    div = (m50_5 - m50) / abs(m50) if m50 else 0.0
     return dict(margens=margens, m25=m25, m50=m50, m75=m75, receita_meio=rec, anos=anos, ajuste_manut=aj, med_outras=mo, nao_rec=nao_rec,
-                impairment_recorrente=imp)
+                impairment_recorrente=imp, m50_5a=m50_5, divergencia_janela=div,
+                quebra_suspeita=bool(abs(div) > LIMITE_QUEBRA and emp.perfil != "ciclica"))
 
 
 def ciclico(emp: Industrial):
@@ -298,7 +370,13 @@ def valores(emp: Industrial, mk: Mercado, ke_nom=None, margem=None, g_real=None,
     t_ef = aliquota(emp)
     nopat = op["receita_meio"] * (m + op["ajuste_manut"]) * (1 - t_ef)
     cap_inv = v(ltm, "pl", 0) + dl
+    idade_imob, cap_rep = capital_reposicao(emp.ticker, cap_inv)
     roic = nopat / cap_inv if cap_inv > 0 else None
+    # capital contábil negativo corrigido pela inflação pode virar positivo minúsculo e explodir o ROIC a reposição:
+    # sem capital contábil positivo não há ROIC nenhum (achado do adversário em 05/10/2026)
+    roic_rep = nopat / cap_rep if (cap_inv > 0 and cap_rep > 0) else None
+    # doutrina §2: o filtro 1, a nota de qualidade e a trava do crescimento usam o MENOR dos dois (conservador)
+    roic_filtro = min(x for x in (roic, roic_rep) if x is not None) if roic is not None else None
     roic_real = (1 + roic) / (1 + mk.pi) - 1 if roic else None
 
     epv_firma = nopat / w_real
@@ -311,7 +389,11 @@ def valores(emp: Industrial, mk: Mercado, ke_nom=None, margem=None, g_real=None,
         roic_c = nop / cap_inv if cap_inv > 0 else None
         # Greenwald: crescimento só tem valor se o ROIC supera o custo de capital (os dois nominais, doutrina §2).
         # Abaixo disso g = 0 e o DCF converge para o EPV; acima, reinvestimento = g real ÷ ROIC.
-        cria = roic_c is not None and roic_c > w_nom
+        # Etapa 2/F2: a trava usa o MENOR dos dois ROIC — crescer exige retorno acima do WACC sobre o capital a
+        # preços de hoje, que é o que a empresa terá de repor. O reinvestimento segue pelo ROIC contábil (é o
+        # capital que ela de fato emprega). A trava é avaliada POR CENÁRIO, então o efeito é gradual.
+        roic_rep_c = nop / cap_rep if cap_rep > 0 else None
+        cria = roic_c is not None and min(roic_c, roic_rep_c if roic_rep_c is not None else roic_c) > w_nom
         g_ef = gr if (gr <= 0 or cria) else 0.0   # só zera crescimento positivo
         # reinvestimento = g REAL ÷ ROIC REAL (Fisher) — real com real (doutrina §4); até 05/10 dividia pelo ROIC nominal (adversário do Lote 4)
         roic_r = (1 + roic_c) / (1 + mk.pi) - 1 if roic_c is not None else None
@@ -333,7 +415,7 @@ def valores(emp: Industrial, mk: Mercado, ke_nom=None, margem=None, g_real=None,
     oes = []
     anos = op["anos"]
     for i in range(1, len(anos)):
-        x = owner_earnings_ano(emp.ticker, anos[i], anos[i - 1], ciclico(emp))
+        x = owner_earnings_ano(emp, anos[i], anos[i - 1], (1 + kd) / (1 + mk.pi) - 1, ciclico(emp))
         if x is not None:
             oes.append((anos[i], x))
     oe_recentes = [x for _, x in oes[-5:]]
@@ -355,7 +437,36 @@ def valores(emp: Industrial, mk: Mercado, ke_nom=None, margem=None, g_real=None,
             anc["Owner Earnings ÷ (Ke − g)"] = oe_val
     return dict(anc=anc, op=op, wacc=w_nom, wacc_real=w_real, kd=kd, e=e, d=d, dl=dl, bruta=bruta, caixa=caixa,
                 minor=minor, nopat=nopat, roic=roic, epv=epv, dcf=dcf_c, dcf_pond=dcf_pond, oe=oes, oe_norm=oe_norm,
-                oe_val=oe_val, reprod=reprod, cap_inv=cap_inv, n=n, m=m, gr=gr, aliquota=t_ef)
+                oe_val=oe_val, reprod=reprod, cap_inv=cap_inv, n=n, m=m, gr=gr, aliquota=t_ef,
+                roic_reposicao=roic_rep, roic_filtro=roic_filtro, cap_inv_reposicao=cap_rep, idade_imobilizado=idade_imob)
+
+
+def roic_por_ano(emp: Industrial, w_real, t_ef, med_outras):
+    """Série de ROIC a custo de reposição por exercício e quantos superaram o WACC — REAL contra REAL (§4, §9).
+
+    ROIC do exercício = EBIT ajustado × (1 − alíquota) ÷ (PL + dívida líquida do próprio exercício, com o
+    imobilizado corrigido para os preços daquele exercício pela mesma idade média). Entra na exceção de venda por
+    qualidade; é o ROIC realizado, não o normalizado de `valores`.
+
+    O ROIC de um exercício é nominal DAQUELE ano (IPCA de 3,2% a 9,3% na janela) e o WACC é o de hoje (rf nominal de
+    ~15%): comparar os dois nominalmente reprovava quase todo exercício antigo. Deflaciona-se cada ROIC pela inflação
+    do próprio exercício e compara-se com o WACC real — o mesmo "real com real" que o §4 já exige no reinvestimento
+    do DCF. Achado do adversário em 05/10/2026 (invertia a contagem em 8 dos 21 tickers).
+    """
+    a, _ = serie(emp.ticker)
+    idade, _ = idade_e_fator(emp.ticker)
+    serie_roic, acima = {}, 0
+    for x in anos_validos(emp.ticker, emp.anos_ciclo):
+        d = a[x]
+        _, _, dl = divida_liquida(d)
+        ci = v(d, "pl", 0) + dl
+        if ci <= 0:
+            continue
+        ci += v(d, "imobilizado", 0) * (fator_idade(x, idade) - 1)
+        nominal = ebit_aj(d, med_outras, emp.outras_liquidas) * (1 - t_ef) / ci
+        serie_roic[x] = (1 + nominal) / (1 + inflacao_do_ano(x)) - 1
+        acima += serie_roic[x] > w_real
+    return serie_roic, acima
 
 
 def central_de(anc):
@@ -410,6 +521,7 @@ def g_implicito(emp, mk):
 
 
 def avaliar(emp: Industrial, mk: Mercado) -> dict:
+    exigir_declaracoes(emp)
     a, ltm = serie(emp.ticker)
     r = valores(emp, mk)
     anc = dict(r["anc"])
@@ -509,10 +621,10 @@ def avaliar(emp: Industrial, mk: Mercado) -> dict:
             vv = valores(emp, mk, ke_nom=mk.ke_nom + dk, margem=r["m"] + dm)["anc"]
             sens[(dk, dm)] = central_de({k: x * (1 - desc) for k, x in vv.items()})[0]
 
-    # notas
+    # notas — o spread usa o MENOR dos dois ROIC (doutrina §2: capital a custo histórico infla o retorno)
     q = emp.qualitativo
     qual = sum(q.values()) / len(q) * 2 if q else 5
-    n_qual = 0.5 * nota_spread(r["roic"] or 0, r["wacc"]) + 0.5 * qual
+    n_qual = 0.5 * nota_spread(r["roic_filtro"] or 0, r["wacc"]) + 0.5 * qual
     alav_n = interp(-(dl_ebitda_norm if dl_ebitda_norm is not None else 0), [(-5, 1), (-4, 3), (-3, 5), (-2, 7), (-1, 9), (0, 10)])
     z_n = {"segura": 10, "cinzenta": 6, "perigo": 2}[zona]
     cob_n = interp(cobertura or 0, [(1, 1), (2, 3), (3, 5), (5, 8), (8, 10)])
@@ -522,8 +634,16 @@ def avaliar(emp: Industrial, mk: Mercado) -> dict:
     n_preco = nota_preco(pc) if central > 0 else 0
     n_geral = 0.30 * n_qual + 0.20 * n_sol + 0.25 * n_renda + 0.25 * n_preco
 
+    # §9 — exceção de venda por qualidade (Buffett 1988/1989): só com retorno acima do custo de capital em 8 de 10
+    # exercícios A CUSTO DE REPOSIÇÃO e nota de qualidade ≥ 8. Tese quebrada continua saída a qualquer preço.
+    serie_roic, anos_roic = roic_por_ano(emp, r["wacc_real"], r["aliquota"], r["op"]["med_outras"])
+    # a exceção exige histórico de CICLO: janela declarada curta (quebra estrutural) não a permite, porque "8 de 10"
+    # não tem referente numa janela de 5 ou 6 exercícios — e 5 anos não são um ciclo (§2)
+    por_qualidade = (len(serie_roic) >= JANELA_MINIMA_SAIDA and anos_roic >= ANOS_ROIC_MINIMO
+                     and n_qual >= NOTA_QUALIDADE_MINIMA)
     return dict(r, ancoras=anc, central=central, dispersao=disp, confianca=conf, pc=pc, palavra_regua=p0, palavra=p,
-                compra=0.7 * central, saida=1.3 * central, compra_parcial=0.8 * central, desc_controlador=desc,
+                **precos_de_referencia(central, por_qualidade), desc_controlador=desc,
+                roic_serie=serie_roic, roic_anos_acima=anos_roic, roic_anos_total=len(serie_roic),
                 ebitda_ltm=ebitda_ltm, ebitda_norm=ebitda_norm, dl_ebitda=dl_ebitda, dl_ebitda_norm=dl_ebitda_norm,
                 cobertura_juros=cobertura, cobertura_fonte=juros_fonte, ey=ey, roc=roc, altman=z, altman_zona=zona, piotroski=pf, piotroski_crit=pf_crit,
                 beneish=mb, sloan=sl, ano_qualidade=ult, lpa_norm=lpa_norm, vpa=vpa, graham_orig=graham_orig,

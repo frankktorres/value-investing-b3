@@ -1,5 +1,5 @@
 # PROMPT DE RECÁLCULO EM LOTE (v1, 04/10/2026)
-*Use para refazer um lote inteiro de fichas pela doutrina v2.0. Um lote por conversa. Anexe o PDF vigente do lote e substitua `<LOTE>`.*
+*Use para refazer um lote inteiro de fichas pela doutrina **v2.2** (05/10/2026). Um lote por conversa. Anexe o PDF vigente do lote e substitua `<LOTE>`.*
 
 ---
 
@@ -43,7 +43,7 @@ Você é o analista independente de value investing desta mesa. **Recalcule o `<
 - Linhas de controlador ausentes: CXSE3, SANB11; BBAS3 "já no ROE normalizado" sem número.
 - Retorno real esperado abaixo do Ke em todas as JUSTA (trava).
 
-**Lote 2 — Energia e Saneamento** — ✅ **RECALCULADO em 05/10/2026 no Claude Code** (`ENERGIA ELÉTRICA E SANEAMENTO/Energia_Saneamento_rev_05-10-2026.pdf`, doutrina v2.1); os itens abaixo ficam como histórico.
+**Lote 2 — Energia e Saneamento** — ✅ **RECALCULADO em 05/10/2026 no Claude Code** (`ENERGIA ELÉTRICA E SANEAMENTO/Energia_Saneamento_rev_05-10-2026.pdf`, doutrina v2.2); os itens abaixo ficam como histórico.
 - Centrais por ajustes avulsos em R$ (CPFE3 "47+8−2+1"; "−R$ 1 de opcionalidade"); DCF, EPV, Graham e Bazin sumiram em relação a 07/09.
 - TIR real calculada só quando reprova (TAEE11, ISAE4); calcular também SBSP3, CSMG3, CPFE3, CPLE3, CMIG4, SAPR11.
 - Yield declarado (pago com dívida) usado como sustentável em TAEE11, CPFE3 e CPLE3.
@@ -54,7 +54,7 @@ Você é o analista independente de value investing desta mesa. **Recalcule o `<
 - ISAE4: DY 12m inclui RBSE; CMIG4: DY 12m parcial.
 - Preços "anteriores" de julho/agosto chamados de "ficha de 07/09".
 
-**Lote 3 — Infra e Agro** — ✅ **RECALCULADO em 04/10/2026 no Claude Code** (`AGRO E B3/Infra_Agro_rev_04-10-2026.pdf`, doutrina v2.0); os itens abaixo ficam como histórico.
+**Lote 3 — Infra e Agro** — ✅ **RECALCULADO em 05/10/2026 no Claude Code** (`AGRO E B3/Infra_Agro_rev_05-10-2026.pdf`, doutrina v2.2); os itens abaixo ficam como histórico.
 - Centrais redondos "mantidos" (SUZB3 55, KLBN11 19, RANI3 10, KEPL3 8, SLCE3 18); KEPL3 acima do DCF e do EPV; SLCE3 = NAV de terceiro × (1 − 33%).
 - "DCF a Ke real" ~35% acima do nominal (mistura de g real com Ke nominal); central acima do DCF nominal em 7/7.
 - KLBN11: payout 126% e FCF negativo — aplicar o mesmo tratamento do UNIP6 (doutrina §7); meio de ciclo trocado de 9 para 8 bi sem declarar.
@@ -63,7 +63,7 @@ Você é o analista independente de value investing desta mesa. **Recalcule o `<
 - B3SA3 sobe o central por 1 mês de volume; Bogle soma recompra.
 - Graham, Bazin, Piotroski, Altman, PEG, Fórmula Mágica e teste do R$ 1 sumiram em relação a 06/09.
 
-**Lote 4 — Saúde, Telecom e Blue Chips** — ✅ **RECALCULADO em 05/10/2026 no Claude Code** (`SAÚDE, TELECOM E BLUECHIPS/Saude_Telecom_Bluechips_rev_05-10-2026.pdf`, doutrina v2.1); os itens abaixo ficam como histórico.
+**Lote 4 — Saúde, Telecom e Blue Chips** — ✅ **RECALCULADO em 05/10/2026 no Claude Code** (`SAÚDE, TELECOM E BLUECHIPS/Saude_Telecom_Bluechips_rev_05-10-2026.pdf`, doutrina v2.2); os itens abaixo ficam como histórico.
 - Centrais = anterior × fator de Ke.
 - WEGE3: g de 12% (nominal) descontado a Ke real; Bogle a P/L 34 sem compressão de múltiplo.
 - FLRY3: Graham com LPA antigo (com LPA 1,29 e VPA 9,92 dá ~R$ 17,0); Piotroski 9/9 de HYPE3 e FLRY3 "da ficha".
@@ -72,7 +72,7 @@ Você é o analista independente de value investing desta mesa. **Recalcule o `<
 - ITSA4: "Sim (limite)" com caso recorrente de 9,6% (empate); SOTP herda o central de ITUB4 a Ke 14%.
 - Altman (WEGE3), Piotroski (VIVT3, ITSA4) sumiram.
 
-**Lote 5 — Petróleo e Gás** — ✅ **RECALCULADO em 05/10/2026 no Claude Code** (`PETROLEO E GÁS/Petroleo_Gas_rev_05-10-2026.pdf`, doutrina v2.1); os itens abaixo ficam como histórico.
+**Lote 5 — Petróleo e Gás** — ✅ **RECALCULADO em 05/10/2026 no Claude Code** (`PETROLEO E GÁS/Petroleo_Gas_rev_05-10-2026.pdf`, doutrina v2.2); os itens abaixo ficam como histórico.
 - PRIO3, RECV3, UGPA3 e VBBR3 com central na coluna real; RECV3 central acima dos dois modelos, sem pesos.
 - PETR4: cenário "normalizado" soma "+1 tri de topo"; faixa "< R$ 34 → JUSTA" está errada (34/39 = 0,87 é RADAR); pesos 25/60/15 dão 40,2, não ≈41.
 - Sem câmbio de meio de ciclo (só Brent 70).
@@ -80,7 +80,7 @@ Você é o analista independente de value investing desta mesa. **Recalcule o `<
 - Defasagem do JCP do VBBR3 a IPCA em vez de Ke.
 - Saídas de PETR4, UGPA3 e VBBR3 não acompanharam o central.
 
-**Lote 6 — Química e Metalurgia** — ✅ **RECALCULADO em 05/10/2026 no Claude Code** (`QUÍMICA E METALÚRGIA/Quimica_Metalurgia_rev_05-10-2026.pdf`, doutrina v2.1); os itens abaixo ficam como histórico.
+**Lote 6 — Química e Metalurgia** — ✅ **RECALCULADO em 05/10/2026 no Claude Code** (`QUÍMICA E METALÚRGIA/Quimica_Metalurgia_rev_05-10-2026.pdf`, doutrina v2.2); os itens abaixo ficam como histórico.
 - Centrais = anterior × 1,024–1,027 e acima do DCF ao Ke nominal (+5% a +9%) sem regra de ponderação.
 - LEVE3: Graham com LPA de pico (5,14; normalizado 4,3 → R$ 26,2).
 - EGIE3: TIR "não recalculada"; Bazin "não habilitado" × LEVE3 "com ressalva" — mesma regra para os dois.

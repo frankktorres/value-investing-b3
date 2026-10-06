@@ -1,4 +1,4 @@
-"""PDF do Lote 6 (Química e metalurgia) — doutrina v2.1. Uso: python gerar_pdf_lote6.py"""
+"""PDF do Lote 6 (Química e metalurgia) — doutrina v2.2. Uso: python gerar_pdf_lote6.py"""
 import copy
 import pathlib
 import re
@@ -12,7 +12,7 @@ from reportlab.lib.units import mm
 from reportlab.platypus import PageBreak, SimpleDocTemplate, Spacer, Table, TableStyle
 
 import gerar_pdf_lote1  # registra as fontes Arial
-from gerar_pdf_lote1 import AZUL, COR, LINHA, br, grafico_resumo, grafico_roe, img, pct, tabela
+from gerar_pdf_lote1 import AZUL, br, COR, grafico_resumo, grafico_roe, img, LINHA, nota_f2, pct, tabela
 
 _P = gerar_pdf_lote1.P
 
@@ -226,7 +226,9 @@ def ficha(emp, r, rank, story):
                + (f"; impairment recorrente {pct(r['op']['impairment_recorrente'], 2)}" if r["op"]["impairment_recorrente"] else ""), "[CVM]"],
               ["Ajuste capex de manutenção", pct(r["op"]["ajuste_manut"]) + " da receita", "[CVM]"],
               ["Dívida líquida · DL/EBITDA 12m · normalizado", f"R$ {br(r['dl'] / 1e6, 2)} bi · {br(r['dl_ebitda'])}× · {br(r['dl_ebitda_norm'])}×", "[CVM] 30/06/2026"],
-              ["ROIC normalizado · WACC", f"{pct(r['roic'])} · {pct(r['wacc'])} (Kd {pct(r['kd'])}; IR efetivo {pct(r['aliquota'], 0)})", "motor"],
+              ["ROIC normalizado · WACC", f"{pct(r['roic'])} contábil · {pct(r['roic_reposicao'])} a custo de reposição "
+                f"(imobilizado de {r['idade_imobilizado']:.1f} anos corrigido pelo IPCA) · WACC {pct(r['wacc'])} "
+                f"(Kd {pct(r['kd'])}; IR efetivo {pct(r['aliquota'], 0)}). O menor decide o filtro 1, a nota e a trava do crescimento", "motor"],
               ["Ações · P/L 12m · P/VP", f"{br(r['n'] / 1e3, 1)} mi · {br(x['pl_ltm'], 1) if x['pl_ltm'] else 'n.d.'}× · {br(x['pvp'])}×", "[CVM] ITR jun/26"]]
     lado = Table([[tabela(fatos, [38 * mm, 44 * mm, 15 * mm]), grafico_margem(emp, r)]], colWidths=[98 * mm, 84 * mm])
     lado.setStyle(TableStyle([("VALIGN", (0, 0), (-1, -1), "TOP"), ("LEFTPADDING", (0, 0), (-1, -1), 0)]))
@@ -330,7 +332,7 @@ def ficha(emp, r, rank, story):
     story.append(Spacer(1, 3))
     n = r["notas"]
     preco_txt = ("Sem palavra: as âncoras discordam mais de 3× (doutrina §11.3) — ver a margem por método acima. "
-                 if nc else f"Compra R$ {br(r['compra'])} · justo R$ {br(r['central'])} · saída R$ {br(r['saida'])}. ")
+                 if nc else f"Compra R$ {br(r['compra'])} · justo R$ {br(r['central'])} · saída R$ {br(r['saida'])}. " + nota_f2(r))
     car = " · <b>defeito estrutural: dividendo não coberto por caixa</b> (§7)" if emp.ticker == "UNIP6" else ""
     ver = Table([[P(f"<b>Veredito: <font color='{cor.hexval()}'>{palavra}</font></b>{car} — preço {br(r['pc'])}× o central. {preco_txt}"
                     f"Entrada parcial (exceção §9): {x['excecao'] if not nc else 'não se aplica'}.<br/>"
@@ -507,7 +509,7 @@ def ficha_egie(emp, r, story):
     story.append(Spacer(1, 3))
     n = r["notas"]
     ver = Table([[P(f"<b>Veredito: <font color='{cor.hexval()}'>{palavra}</font></b> — preço {br(r['pc'])}× o central. "
-                    f"Compra R$ {br(r['compra'])} · justo R$ {br(r['central'])} · saída R$ {br(r['saida'])}.<br/>"
+                    f"Compra R$ {br(r['compra'])} · justo R$ {br(r['central'])} · saída R$ {br(r['saida'])}. " + nota_f2(r) + "<br/>"
                     f"<b>Gatilho que invalida:</b> {tx['gatilho']}<br/><b>Compraria para renda?</b> {tx['renda']}<br/>"
                     f"<b>Compraria para ganho de capital?</b> {tx['capital']}<br/>"
                     f"<b>Notas</b> (30/20/25/25): qualidade {br(n['qualidade'], 1)} · solidez {br(n['solidez'], 1)} · renda {br(n['renda'], 1)} · "
@@ -544,7 +546,7 @@ def tabela_indices():
 
 def capa(res, rank, story):
     story.append(P("Fichas de Avaliação — Value Investing B3", "h1"))
-    story.append(P(f"Lote 6 — Química e metalurgia (4 empresas) · rev. 05/10/2026 · data-base {DATA_BASE} · doutrina v2.1", "h2"))
+    story.append(P(f"Lote 6 — Química e metalurgia (4 empresas) · rev. 05/10/2026 · data-base {DATA_BASE} · doutrina v2.2", "h2"))
     cont = {}
     for r in res:
         cont[r["palavra"]] = cont.get(r["palavra"], 0) + 1
@@ -629,7 +631,7 @@ def main():
         c.setFont("Arial", 6.5)
         c.setFillColor(colors.HexColor("#6B7280"))
         c.drawString(15 * mm, 9 * mm, f"Mesa de Value Investing — Lote 6 Química e metalurgia · rev. 05/10/2026 · data-base {DATA_BASE} · "
-                                      "doutrina v2.1 · não é recomendação de investimento")
+                                      "doutrina v2.2 · não é recomendação de investimento")
         c.drawRightString(195 * mm, 9 * mm, f"p. {d.page}")
         c.restoreState()
 

@@ -1,5 +1,5 @@
 # PLANO DE MELHORIAS — Mesa de Value Investing B3
-*Versão 1 · 05/10/2026 · escrito ao fim do recálculo dos 6 lotes (doutrina v2.1). Carta branca do Frank para mudar o diretório, desde que embasado
+*Versão 1 · 05/10/2026 · escrito ao fim do recálculo dos 6 lotes (doutrina v2.1; a Etapa 1 e a Etapa 2 foram executadas em 05/10/2026 e a doutrina está em v2.2). Carta branca do Frank para mudar o diretório, desde que embasado
 em value investing. Pergunta-guia de cada item: **o que Buffett e Munger fariam?***
 
 ---
@@ -17,10 +17,10 @@ segurança e comparação líquida com o Tesouro — tudo reproduzível em `ferr
 | D4 | **Olhar só para trás**: margem = mediana do passado; consenso "não encontrado" em 41 de 41 | Fichas, linha "Lucro projetado" | Média |
 | D5 | **Regra sem validação empírica**: nunca testamos se a régua (Ke = rf + 5 p.p. e compra a 0,70×) teria comprado algo bom em 2016–25 | Não existe backtest | Alta |
 | D6 | **Sem construção de carteira**: a doutrina não diz tamanho de posição, concentração, caixa, nem registra a carteira real | `07` não tem posições; doutrina não tem §12 | Alta |
-| D7 | **Regra de venda única para tudo** (1,30× o central), igual para Unipar e WEG | doutrina §9 | Média — Buffett/Fisher quase nunca vendem negócio excepcional por preço |
-| D8 | **Texto × código divergem** | Doutrina §11.1 diz "demais: média de 5 anos"; o motor usa mediana de 10 | Média |
-| D9 | **Viés de inflação no capex de manutenção** | Greenwald usa Δreceita nominal: a inflação vira "crescimento" e reduz o capex de manutenção | Média |
-| D10 | **ROIC contábil em economia inflacionária** | Capital a custo histórico infla o ROIC (WEG, ABEV, HYPE) contra um WACC corrente | Média |
+| D7 | **Regra de venda única para tudo** (1,30× o central), igual para Unipar e WEG | doutrina §9 | Média — Buffett/Fisher quase nunca vendem negócio excepcional por preço  · **RESOLVIDA 05/10/2026 (v2.2): regra de venda por qualidade aprovada (§9, saída 1,50×)** |
+| D8 | **Texto × código divergem** | Doutrina §11.1 diz "demais: média de 5 anos"; o motor usa mediana de 10 | Média  · **RESOLVIDA 05/10/2026 (v2.2): §11.4 nova: mediana de 10 exercícios e quebra estrutural declarada** |
+| D9 | **Viés de inflação no capex de manutenção** | Greenwald usa Δreceita nominal: a inflação vira "crescimento" e reduz o capex de manutenção | Média  · **RESOLVIDA 05/10/2026 (v2.2): Δreceita real (IPCA)** |
+| D10 | **ROIC contábil em economia inflacionária** | Capital a custo histórico infla o ROIC (WEG, ABEV, HYPE) contra um WACC corrente | Média  · **RESOLVIDA 05/10/2026 (v2.2): ROIC a custo de reposição, o menor dos dois decide** |
 | D11 | **Correções que ficaram só num lote** | Defasagem do provento a VP só no Lote 4; cobertura de juros pela despesa bruta em todos | Baixa-média |
 | D12 | **Preço parado**: centrais a preço de 02/10, sem rotina de atualização | Hall com nota "atualizar antes de decidir" | Média |
 | D13 | **Versionamento por cópia** (`_historico/`), sem git e sem teste automático | Regressão dos lotes conferida à mão nesta sessão | Média |
@@ -166,8 +166,8 @@ Cada frente: **objetivo · o que fazer (técnico) · pronto quando · modelo/eff
 
 | Etapa | Frente | Por que nesta ordem | Modelo · effort · plan mode |
 |---|---|---|---|
-| 1 | F1 Fundação + F7 diário | Sem teste e sem diário, qualquer melhoria seguinte é cega | Sonnet · medium · não |
-| 2 | F2 Coerência do método | Corrige o motor antes de usá-lo em escala | Opus · high · **sim** |
+| ~~1~~ ✅ | F1 Fundação + F7 diário — **CONCLUÍDA em 05/10/2026** (golden dos 41 tickers, pytest, defasagem a VP, cobertura por juros pagos, diário 09) | Sonnet · medium · não |
+| ~~2~~ ✅ | F2 Coerência do método — **CONCLUÍDA em 05/10/2026**, doutrina **v2.2**: D8 janela do ciclo (§11.4 nova), D9 capex de manutenção com Δreceita real, D10 ROIC a custo de reposição travando o crescimento, D7 saída por qualidade (aprovada; só a LEVE3 elegível), mais as duas pendências da Etapa 1 (aluguel no OE e defasagem do Lote 4). Revisão adversarial corrigiu 6 defeitos. 76 testes verdes | Opus · high · **sim** |
 | 3 | F3 Backtest | Valida (ou recalibra) a régua antes de sair procurando compra | Opus · high · **sim** (desenho) → Sonnet · medium (execução) |
 | 4 | F4 Universo + monitor | Com a régua validada, varrer toda a B3 | Opus · high · **sim** (critérios) → Sonnet · medium |
 | 5 | F5 Dossiês (saúde primeiro) | Profundidade só nas finalistas | Opus · high · sim no template |

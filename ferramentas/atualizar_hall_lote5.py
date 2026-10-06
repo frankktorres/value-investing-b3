@@ -16,13 +16,18 @@ SECAO_NC = ("### NÃO CONCLUSIVO (âncora ≤ 0 ou âncoras discordam mais de 3�
             "|---|---|---|---|---|---|---|---|\n")
 
 
+def pct_ou_nd(x):
+    """ROIC pode ser None (sem capital investido positivo) — não derruba o hall."""
+    return "n.d." if x is None else br(100 * x, 1) + "%"
+
+
 def br(x, c=2):
     return f"{x:,.{c}f}".replace(",", "X").replace(".", ",").replace("X", ".")
 
 
 def motivo(tk, e, r):
-    m = (f"**recalculado v2.1 (05/10)**; Ke implícito {br(100 * r['ke_implicito'], 1) + '%' if r['ke_implicito'] else 'n.d.'}; "
-         f"ROIC {br(100 * r['roic'], 1)}% × WACC {br(100 * r['wacc'], 1)}%; confiança {r['confianca']}")
+    m = (f"**recalculado v2.2 (05/10)**; Ke implícito {br(100 * r['ke_implicito'], 1) + '%' if r['ke_implicito'] else 'n.d.'}; "
+         f"ROIC {pct_ou_nd(r['roic'])} contábil / {pct_ou_nd(r['roic_reposicao'])} a reposição × WACC {br(100 * r['wacc'], 1)}%; confiança {r['confianca']}")
     if tk in ("PETR4", "PRIO3", "RECV3"):
         m += "; barril de meio de ciclo R$ 406 (≈ US$ 78)"
     if tk == "PETR4":
@@ -65,16 +70,16 @@ def main():
     e, r = res["VBBR3"]
     i = next(k for k, l in enumerate(linhas) if l.startswith("## 4. Fora do hall"))
     j = next(k for k in range(i, len(linhas)) if linhas[k].startswith("|---"))
-    linhas.insert(j + 1, f"| VBBR3 | R$ {br(e.preco)} · **central {br(r['central'])} (v2.1, 05/10; P/C {br(r['pc'])})** | Redundante com UGPA3 e pior em "
+    linhas.insert(j + 1, f"| VBBR3 | R$ {br(e.preco)} · **central {br(r['central'])} (v2.2, 05/10; P/C {br(r['pc'])})** | Redundante com UGPA3 e pior em "
                          "dívida, Comerc e diferimento de JCP (14–18 meses); EBIT real 2020–25 sem créditos tributários; só a margem de guerra "
                          "permanente justificaria o preço |")
     t = "\n".join(linhas)
     t = t.replace("**exceto os Lotes 1 (Bancos e Seguridade), 2 (Energia e Saneamento) e 3 (Agro e B3), recalculados em 04–05/10 pela v2.0/2.1**",
                   "**exceto os Lotes 1 (Bancos e Seguridade), 2 (Energia e Saneamento), 3 (Agro e B3) e 5 (Petróleo e Gás), recalculados em 04–05/10 pela v2.0/2.1**")
     t = t.replace("| 5 | Petróleo, gás e combustíveis (5) | `PETROLEO E GÁS/Petroleo_Gas_rev_03-10-2026.pdf` | `…_rev_06-09-2026.pdf` |",
-                  "| 5 | Petróleo, gás e combustíveis (5) | `PETROLEO E GÁS/Petroleo_Gas_rev_05-10-2026.pdf` **(v2.1)** | `…_rev_03-10-2026.pdf`, `…_rev_06-09-2026.pdf` |")
+                  "| 5 | Petróleo, gás e combustíveis (5) | `PETROLEO E GÁS/Petroleo_Gas_rev_05-10-2026.pdf` **(v2.2)** | `…_rev_03-10-2026.pdf`, `…_rev_06-09-2026.pdf` |")
     pal = {p: [tk for tk, (_, r) in res.items() if r["palavra"] == p and tk not in FORA_DO_HALL] for p in ("RADAR", "JUSTA", "CARA", "NÃO CONCLUSIVO")}
-    reg = ("| 05/10/2026 | Lote 5 (5) | recalculado pela v2.1 | Barril de meio de ciclo declarado (média de 10 anos do Brent × câmbio em R$ de hoje = "
+    reg = ("| 05/10/2026 | Lote 5 (5) | recalculado pela v2.2 | Barril de meio de ciclo declarado (média de 10 anos do Brent × câmbio em R$ de hoje = "
            "R$ 406/bbl, ≈ US$ 78); E&P por EBITDA mediano − D&A atual; distribuidoras por EBIT real; PETR4 com 8% de desconto de controlador em cenários. "
            + " · ".join(f"{p}: {', '.join(v)}" for p, v in pal.items() if v)
            + f" · VBBR3 fora do hall (CARA {br(res['VBBR3'][1]['pc'])}). Razão (c): a rev. 03/10 usava Brent US$ 70 sem câmbio, múltiplos sem capex "

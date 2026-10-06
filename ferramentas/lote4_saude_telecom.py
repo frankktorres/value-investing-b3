@@ -1,4 +1,4 @@
-"""Lote 4 — Saúde, telecom e blue chips · data-base 02/10/2026 (preços do PDF rev. 03/10) · doutrina v2.1.
+"""Lote 4 — Saúde, telecom e blue chips · data-base 02/10/2026 (preços do PDF rev. 03/10) · doutrina v2.2.
 
 Demonstrações: CVM (DFP 2016–25 + ITR, 12m até jun/2026). Preço: PDF rev. 03/10 (fechamento de 02/10). Ações: composição do capital do ITR de
 jun/2026 (CVM), sem tesouraria. Proventos: StatusInvest por data-com, com as correções abaixo. Controladores: FRE 2026 da CVM (posição acionária).
@@ -54,6 +54,10 @@ PRECO = {"TIMS3": 18.55, "VIVT3": 30.14, "ITSA4": 14.67, "FLRY3": 23.50, "HYPE3"
 NOME_CVM = {"TIMS3": "TIM S.A.", "VIVT3": "TELEF", "FLRY3": "FLEURY", "HYPE3": "HYPERA", "ABEV3": "AMBEV", "WEGE3": "WEG S.A.",
             "ITSA4": "ITAÚSA", "ITUB": "ITAU UNIBANCO HOLDING"}
 IFRS16 = [str(a) for a in range(2019, 2026)]
+# §11.4: janela pós-quebra declarada. A quebra é a adoção do IFRS 16 em 2019 — antes disso o aluguel está dentro do EBIT e usar
+# essa margem junto com a dívida de arrendamento de hoje contaria o aluguel duas vezes (§11.1).
+RAZAO_IFRS16 = ("IFRS 16 adotado em 2019: antes de 2019 o aluguel está dentro do EBIT e usar essa margem com a dívida de "
+                "arrendamento de hoje contaria o aluguel duas vezes (§11.1)")
 
 
 def _csv(arq, nome):
@@ -154,33 +158,38 @@ WEG_G1, WEG_ROE5, WEG_PAYOUT = g1_sustentavel("WEGE3")
 ZERO = lambda razao: {"tipo": "zero", "razao": razao}
 
 EMPRESAS = [
-    Industrial("TIMS3", "TIM Brasil", "servicos", preco=PRECO["TIMS3"], n_acoes=N["TIMS3"], anos_ciclo=IFRS16, anos_outras=ANOS, outras_liquidas=True, capex_ciclico=True,
+    Industrial("TIMS3", "TIM Brasil", "servicos", preco=PRECO["TIMS3"], n_acoes=N["TIMS3"], anos_ciclo=IFRS16, anos_outras=ANOS, outras_liquidas=True, capex_ciclico=True, janela_razao=RAZAO_IFRS16,
                spread_kd=0.01, g_real=0.01, jcp_share=jcp("TIMS3"), pl_hist=pl_hist("TIMS3"), defasagem_meses=4,
+               defasagem_fonte="JCP de set/2026 pago até 22/01/2027 (calendário declarado, PDF rev. 03/10)",
                desconto_controlador=ZERO("nenhuma interferência consumada; Poste Italiane (estatal italiana) controla a TI desde 18/09/2026 — risco "
                                          "prospectivo V4/V5 sem evento; tag along pendente é opção, não desconto"),
                qualitativo=QUAL(3, 4, 3, 4, 3)),
-    Industrial("VIVT3", "Telefônica Brasil (Vivo)", "servicos", preco=PRECO["VIVT3"], n_acoes=N["VIVT3"], anos_ciclo=IFRS16, anos_outras=ANOS, outras_liquidas=True, capex_ciclico=True,
+    Industrial("VIVT3", "Telefônica Brasil (Vivo)", "servicos", preco=PRECO["VIVT3"], n_acoes=N["VIVT3"], anos_ciclo=IFRS16, anos_outras=ANOS, outras_liquidas=True, capex_ciclico=True, janela_razao=RAZAO_IFRS16,
                spread_kd=0.01, g_real=0.01, jcp_share=jcp("VIVT3"), pl_hist=pl_hist("VIVT3"), defasagem_meses=10,
+               defasagem_fonte="JCP declarado pago até 30/04/2027 (calendário declarado, PDF rev. 03/10)",
                desconto_controlador=ZERO("nenhuma interferência consumada pela Telefónica S.A. (39,3% do capital pelo FRE 2026; controle com acordo)"),
                qualitativo=QUAL(4, 3, 3, 4, 3)),
-    Industrial("FLRY3", "Grupo Fleury", "servicos", preco=PRECO["FLRY3"], n_acoes=N["FLRY3"], anos_ciclo=IFRS16, anos_outras=ANOS, outras_liquidas=True,
+    Industrial("FLRY3", "Grupo Fleury", "servicos", preco=PRECO["FLRY3"], n_acoes=N["FLRY3"], anos_ciclo=IFRS16, anos_outras=ANOS, outras_liquidas=True, janela_razao=RAZAO_IFRS16,
                receita_meio=receita_media("FLRY3", ["2024", "2025"]), spread_kd=0.015, g_real=0.01, jcp_share=jcp("FLRY3"),
                pl_hist=pl_hist("FLRY3"), defasagem_meses=9,
+               defasagem_fonte="dividendo de dez/2025 em 3 parcelas até set/2027, mais JCP antecipado (calendário declarado, PDF rev. 03/10)",
                desconto_controlador=ZERO("controle compartilhado (médicos fundadores + Bradesco Seguros), sem interferência consumada"),
                qualitativo=QUAL(3, 3, 4, 4, 3)),
     Industrial("HYPE3", "Hypera Pharma", "servicos", preco=PRECO["HYPE3"], n_acoes=N["HYPE3"], outras_liquidas=True, spread_kd=0.015, g_real=0.01,
                aliquota=aliquota_doutrina("HYPE3", [str(a) for a in range(2021, 2026)]), jcp_share=jcp("HYPE3"), pl_hist=pl_hist("HYPE3"),
-               defasagem_meses=18,
+               defasagem_meses=18, defasagem_fonte="JCP de 2026 pago até 31/12/2027 (calendário declarado, PDF rev. 03/10)",
                desconto_controlador=ZERO("controlador privado (J. A. de Queiroz Filho + Maiorem, 39,3% pelo FRE 2026), sem extração consumada registrada; "
                                          "a defasagem de 15–21 meses do JCP já está no valor presente do provento"),
                qualitativo=QUAL(3, 2, 3, 4, 2)),
     Industrial("ABEV3", "Ambev", "servicos", preco=PRECO["ABEV3"], n_acoes=N["ABEV3"], outras_liquidas=True, spread_kd=0.005, g_real=0.01,
                aliquota=sum(-CVM["ABEV3"]["anual"][y]["ir"] / CVM["ABEV3"]["anual"][y]["lair"] for y in ("2024", "2025")) / 2,
-               jcp_share=jcp("ABEV3"), pl_hist=pl_hist("ABEV3"), defasagem_meses=6,
+               # ABEV3 (Etapa 2/F2): os 6 meses não tinham evento declarado — §6.3 manda usar o medido na StatusInvest (1,5 mês)
+               jcp_share=jcp("ABEV3"), pl_hist=pl_hist("ABEV3"),
                desconto_controlador=ZERO("AB InBev sem interferência consumada; contratos com a controladora (V4) já estão no EBIT histórico"),
                qualitativo=QUAL(5, 3, 3, 4, 3)),
     Industrial("WEGE3", "WEG", "servicos", preco=PRECO["WEGE3"], n_acoes=N["WEGE3"], outras_liquidas=True, spread_kd=0.005, g_real=0.02, g1_real=WEG_G1, anos_g1=10,
                jcp_share=jcp("WEGE3"), pl_hist=pl_hist("WEGE3"), defasagem_meses=9,
+               defasagem_fonte="JCP de 2026 pago em 10/03/2027 e extraordinário em 3 parcelas até 2028 (calendário declarado, PDF rev. 03/10)",
                desconto_controlador=ZERO("famílias fundadoras, sem conflito identificado"),
                qualitativo=QUAL(5, 5, 5, 3, 5)),
 ]

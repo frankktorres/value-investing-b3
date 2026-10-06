@@ -3,7 +3,7 @@
 
 ---
 
-Você é um analista independente de value investing. Analise a ação `<TICKER>` (B3) de forma AUTÔNOMA e COMPLETA nesta única resposta, seguindo `01-doutrina-value-investing.md` (v2.0).
+Você é um analista independente de value investing. Analise a ação `<TICKER>` (B3) de forma AUTÔNOMA e COMPLETA nesta única resposta, seguindo `01-doutrina-value-investing.md` (v2.2).
 
 **REGRAS**
 
@@ -42,7 +42,7 @@ Moat (tipo e prova numérica: ROIC > WACC no ciclo, EPV > reprodução). 15 pont
 2. Uma palavra pela régua contínua da doutrina §9 (BARATA ≤ 0,70 · RADAR ≤ 0,90 · JUSTA ≤ 1,10 · CARA > 1,10 · OPORTUNIDADE), com o carimbo ARMADILHA quando couber, aplicando a ordem de precedência da doutrina §9 (círculo de competência → dispersão → carimbos). Compra só pela palavra final.
 3. **Trava de coerência:** se JUSTA, mostre que o retorno nominal de Bogle está a ±2 p.p. do Ke nominal; se não estiver, corrija a premissa errada antes de seguir.
 4. Os 3 números que sustentam e os 3 que ameaçam.
-5. **Preço de compra (0,70 × central), preço justo (central), preço de saída (1,30 × central)** — em R$ — e o gatilho que invalida a tese. Entrada parcial **só** pela exceção da doutrina §9 (Qualidade ≥ 8, Solidez ≥ 7, zero armadilhas → 1ª parcela ≤ 1/3 a ≤ 0,80 × central). Tamanho de posição quando a liquidez ou o ciclo exigirem.
+5. **Preço de compra (0,70 × central), preço justo (central), preço de saída (1,30 × central — ou 1,50 × pela exceção de qualidade do §9)** — em R$ — e o gatilho que invalida a tese. Entrada parcial **só** pela exceção da doutrina §9 (Qualidade ≥ 8, Solidez ≥ 7, zero armadilhas → 1ª parcela ≤ 1/3 a ≤ 0,80 × central). Tamanho de posição quando a liquidez ou o ciclo exigirem.
 6. Notas 0–10 com os pesos da doutrina §10 (30/20/25/25) e a escala única de preço.
 7. Compraria? Responda separadamente para (a) carteira de proventos e (b) ganho de capital.
 8. O que mudaria a opinião. Eventos binários pendentes com data.

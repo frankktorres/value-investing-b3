@@ -10,7 +10,7 @@ from reportlab.lib.units import mm
 from reportlab.platypus import PageBreak, SimpleDocTemplate, Spacer, Table, TableStyle
 
 import gerar_pdf_lote1 as g1
-from gerar_pdf_lote1 import AZUL, COR, LINHA, P, br, grafico_resumo, img, pct, tabela
+from gerar_pdf_lote1 import AZUL, br, COR, grafico_resumo, img, LINHA, nota_f2, P, pct, tabela
 from lote1_bancos import DATA_BASE, MK
 from lote3_agro import EMPRESAS
 from lote3_textos import AGENDA, ANTES, T
@@ -121,7 +121,9 @@ def ficha(emp, r, rank, story):
              ["Ajuste capex de manutenção (Greenwald)", pct(r["op"]["ajuste_manut"]) + " da receita", "[CVM] 5 exercícios"],
              ["Dívida líquida · DL/EBITDA", f"R$ {br(r['dl'] / 1e6, 1)} bi · {br(r['dl_ebitda'])}×" + (f" (pró-forma Arbex {br(x['dl_ebitda_pf'])}×)" if emp.ticker == 'SUZB3' else ""), "[CVM] 30/06/2026"],
              ["Cobertura de juros (EBIT ÷ juros)", f"{br(r['cobertura_juros'], 1) if r['cobertura_juros'] else 'n.d.'}× ({r['cobertura_fonte']})", "[CVM]"],
-             ["ROIC normalizado · WACC", f"{pct(r['roic'])} · {pct(r['wacc'])} (Kd {pct(r['kd'])}; IR efetivo {pct(r['aliquota'], 0)})", "motor"],
+             ["ROIC normalizado · WACC", f"{pct(r['roic'])} contábil · {pct(r['roic_reposicao'])} a custo de reposição "
+               f"(imobilizado de {r['idade_imobilizado']:.1f} anos corrigido pelo IPCA) · WACC {pct(r['wacc'])} "
+               f"(Kd {pct(r['kd'])}; IR efetivo {pct(r['aliquota'], 0)}). O menor decide o filtro 1, a nota e a trava do crescimento", "motor"],
              ["P/L 12m · P/VP", f"{br(x['pl_ltm'], 1) if x['pl_ltm'] else 'n.d.'}× · {br(emp.preco / r['vpa'])}×", "[SI]/[CVM]"]]
     lado = Table([[tabela(fatos, [40 * mm, 40 * mm, 17 * mm]), grafico_margem(emp, r)]], colWidths=[98 * mm, 84 * mm])
     lado.setStyle(TableStyle([("VALIGN", (0, 0), (-1, -1), "TOP"), ("LEFTPADDING", (0, 0), (-1, -1), 0)]))
@@ -213,8 +215,8 @@ def ficha(emp, r, rank, story):
     n = r["notas"]
     pode = n["qualidade"] >= 8 and n["solidez"] >= 7 and r["confianca"] == "normal"
     ver = Table([[P(f"<b>Veredito: <font color='{cor.hexval()}'>{palavra}</font></b> — preço {br(r['pc'])}× o central. "
-                    f"Compra R$ {br(r['compra'])} · justo R$ {br(r['central'])} · saída R$ {br(r['saida'])}. "
-                    f"Entrada parcial (exceção §9): {'aplicável — 1ª parcela (≤ 1/3) só até R$ ' + br(r['compra_parcial']) if pode else 'não se aplica (qualidade < 8, solidez < 7 ou confiança baixa)'}.<br/>"
+                    f"Compra R$ {br(r['compra'])} · justo R$ {br(r['central'])} · saída R$ {br(r['saida'])}. " + nota_f2(r)
+                    + f"Entrada parcial (exceção §9): {'aplicável — 1ª parcela (≤ 1/3) só até R$ ' + br(r['compra_parcial']) if pode else 'não se aplica (qualidade < 8, solidez < 7 ou confiança baixa)'}.<br/>"
                     f"<b>Gatilho que invalida:</b> {tx['gatilho']}<br/><b>Compraria para renda?</b> {tx['renda']}<br/>"
                     f"<b>Compraria para ganho de capital?</b> {tx['capital']}<br/>"
                     f"<b>Notas</b> (30/20/25/25): qualidade {br(n['qualidade'], 1)} · solidez {br(n['solidez'], 1)} · renda {br(n['renda'], 1)} · "
@@ -240,7 +242,7 @@ def ficha(emp, r, rank, story):
 
 def capa(res, rank, story):
     story.append(P("Fichas de Avaliação — Value Investing B3", "h1"))
-    story.append(P(f"Lote 3 — Papel e celulose, infraestrutura de mercado e agro (7 empresas) · rev. 05/10/2026 · data-base {DATA_BASE} · doutrina v2.1", "h2"))
+    story.append(P(f"Lote 3 — Papel e celulose, infraestrutura de mercado e agro (7 empresas) · rev. 05/10/2026 · data-base {DATA_BASE} · doutrina v2.2", "h2"))
     cont = {}
     for r in res:
         cont[r["palavra"]] = cont.get(r["palavra"], 0) + 1

@@ -1,4 +1,4 @@
-"""Lote 2 — Energia elétrica e saneamento · data-base 02/10/2026 (fechamento; preços do PDF rev. 03/10) · doutrina v2.1.
+"""Lote 2 — Energia elétrica e saneamento · data-base 02/10/2026 (fechamento; preços do PDF rev. 03/10) · doutrina v2.2.
 
 Regulados: a contabilidade de concessão (ICPC 01/IFRS 15) põe o investimento em ativo de contrato dentro do FCO das
 transmissoras — "FCO − capex" não funciona. Método de regulado (doutrina §11.2, utility):

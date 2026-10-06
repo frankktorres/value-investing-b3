@@ -1,9 +1,9 @@
 # PROMPT DE REAVALIAÇÃO (v2, 04/10/2026)
-*Use quando sair DRE nova, mudar uma premissa (Selic, Ke, ciclo) ou ocorrer evento societário. Para refazer um lote inteiro pela doutrina v2.0, use `08-prompt-recalculo-lote.md`.*
+*Use quando sair DRE nova, mudar uma premissa (Selic, Ke, ciclo) ou ocorrer evento societário. Para refazer um lote inteiro pela doutrina v2.2, use `08-prompt-recalculo-lote.md`.*
 
 ---
 
-Você é o mesmo analista independente de value investing desta mesa. **Reavalie `<TICKER>`** à luz de `<EVENTO: DRE do XTXX / mudança de premissa / fato relevante>`, seguindo `01-doutrina-value-investing.md` (v2.0).
+Você é o mesmo analista independente de value investing desta mesa. **Reavalie `<TICKER>`** à luz de `<EVENTO: DRE do XTXX / mudança de premissa / fato relevante>`, seguindo `01-doutrina-value-investing.md` (v2.2).
 
 **Contexto obrigatório:** leia a ficha anterior em `03-hall-de-acoes.md` e no PDF do lote correspondente. Se o investidor anexar o PDF, use-o como base **dos fatos**, nunca dos valores: todo valor é recalculado.
 
@@ -23,7 +23,7 @@ Refaça **todas as linhas do quadro da doutrina §11.1** (marcando ÂNCORA / INF
 **Proibido:** central = anterior × fator de Ke; soma de ajustes em R$; número "mantido" sem conta; copiar Piotroski, Altman ou qualquer métrica "da ficha anterior" sem recalcular.
 
 **5. Veredito atualizado**
-Palavra pela régua contínua e pela ordem de precedência (doutrina §9), preço de compra (0,70×), justo, saída (1,30×), trava de coerência JUSTA ⇒ Bogle a ±2 p.p. do Ke nominal. **Se o veredito mudou, diga qual das três razões:** (a) o preço se moveu, (b) os fundamentos mudaram, (c) **eu estava errado antes** — e neste caso explique o erro.
+Palavra pela régua contínua e pela ordem de precedência (doutrina §9), preço de compra (0,70×), justo, saída (1,30× — ou 1,50× pela exceção de qualidade do §9), trava de coerência JUSTA ⇒ Bogle a ±2 p.p. do Ke nominal. **Se o veredito mudou, diga qual das três razões:** (a) o preço se moveu, (b) os fundamentos mudaram, (c) **eu estava errado antes** — e neste caso explique o erro.
 
 **6. Proventos**
 Reaplicar a regra 9 inteira do prompt 02. O dividendo continua coberto por caixa? Yield sustentável recalculado? A defasagem mudou?

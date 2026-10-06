@@ -16,6 +16,15 @@ PREMIO_KE = 0.05            # Ke real = rf + 5 p.p.
 IR_RESGATE = 0.15           # Tesouro e ganho de capital, > 720 dias
 IR_JCP = 0.175              # LC 224/2025
 HORIZONTE = 10              # anos, comparação com RF e Bogle
+# §9 — preços de referência. A saída de 1,50× é a exceção de qualidade da Etapa 2/F2 (doutrina v2.2), baseada em
+# Buffett (cartas de 1988 e 1989): vender negócio excepcional por preço desfaz a relação que produz o retorno e
+# antecipa um imposto que, retido, é "an interest-free loan from the U.S. Treasury".
+COMPRA = 0.70
+COMPRA_PARCIAL = 0.80
+SAIDA_PADRAO = 1.30
+SAIDA_QUALIDADE = 1.50
+ANOS_ROIC_MINIMO = 8          # exercícios com retorno > custo de capital exigidos em 10 para a exceção
+NOTA_QUALIDADE_MINIMA = 8.0
 
 
 # ---------------------------------------------------------------- mercado
@@ -65,6 +74,13 @@ def palavra(pc: float) -> str:
 
 
 ORDEM = ["BARATA", "RADAR", "JUSTA", "CARA"]
+
+
+def precos_de_referencia(central: float, saida_por_qualidade: bool = False) -> dict:
+    """§9: compra, 1ª parcela e saída a partir do central. Fonte única — os dois motores chamam esta função."""
+    return dict(compra=COMPRA * central, compra_parcial=COMPRA_PARCIAL * central,
+                saida=(SAIDA_QUALIDADE if saida_por_qualidade else SAIDA_PADRAO) * central,
+                saida_por_qualidade=saida_por_qualidade)
 
 ESCALA_PRECO = [(0.60, 10), (0.65, 9), (0.70, 8), (0.80, 7), (0.90, 6), (1.00, 5),
                 (1.10, 4), (1.20, 3), (1.30, 2), (1.40, 1), (1.50, 0)]
@@ -118,6 +134,7 @@ class Financeira:
     solidez_manual: float | None = None   # quando o prudencial não se aplica (seguradoras), com razão no texto
     fora_circulo: bool = False
     defasagem_meses: float | None = None  # provento pago N meses após a data-com → valor presente ao Ke nominal (§6.3); None = medida na StatusInvest (defasagem.py)
+    defasagem_fonte: str = ""      # OBRIGATÓRIO quando defasagem_meses é informado: o evento declarado e a data (§6.3)
     sotp: object = None                   # holding (Lote 4, 05/10): função Mercado → SOTP por ação; âncoras = SOTP + DDM (doutrina §11.2)
 
 
@@ -283,6 +300,9 @@ def avaliar(emp: Financeira, mk: Mercado) -> dict:
     else:                                    # banco: precisa reter g/ROE do lucro para crescer o capital
         dpa_fcfe = lpa_norm * (1 - g / emp.roe_lp) if emp.roe_lp > 0 else 0
     dpa_sust = min(emp.dpa_medio_5a, dpa_fcfe)
+    # §6.3: o medido na StatusInvest é o padrão; o manual só vale com evento declarado e fonte escrita
+    if emp.defasagem_meses is not None and not emp.defasagem_fonte.strip():
+        raise ValueError(f"{emp.ticker}: defasagem_meses={emp.defasagem_meses} sem defasagem_fonte (§6.3)")
     meses = emp.defasagem_meses if emp.defasagem_meses is not None else defasagem_meses(emp.ticker)
     fvp = (1 + ke) ** (-meses / 12)          # defasagem: provento a valor presente ao Ke nominal (§6.3)
     dpa_sust_vp = dpa_sust * fvp
@@ -360,7 +380,9 @@ def avaliar(emp: Financeira, mk: Mercado) -> dict:
         pvp_perpetuo=emp.vpa * pvp_justificado(emp.roe_lp, g, ke) if emp.horizonte_finito else None,
         ticker=emp.ticker, ke=ke, g=g, base=base, ancoras=anc, desc_controlador=desc_pct,
         central=central, dispersao=dispersao, confianca=confianca, pc=pc, palavra_regua=p0, palavra=p,
-        compra=0.70 * central, saida=1.30 * central, compra_parcial=0.80 * central,
+        # §9: a exceção de qualidade (saída a 1,50×) exige ROIC > WACC em 8 de 10 exercícios a custo de reposição;
+        # financeira não tem série de 10 anos no repositório (entra por campos escalares) → segue sempre 1,30×
+        **precos_de_referencia(central, saida_por_qualidade=False),
         lpa_norm=lpa_norm, graham_orig=graham_orig, graham_br=graham_br, dpa_sust=dpa_sust,
         dpa_fcfe=dpa_fcfe, dpa_sust_vp=dpa_sust_vp, fator_defasagem=fvp, defasagem_meses=meses, dpa_sust_liq=dpa_sust_liq, teto_renda=teto_renda, bazin6=bazin6,
         dy=dy, dy_liq=dy_liq, pl_atual=pl_atual, pl_final=pl_final, dmult=dmult,

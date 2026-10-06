@@ -23,6 +23,11 @@ CAB = {"BARATA": "### BARATA", "RADAR": "### RADAR", "JUSTA": "### JUSTA", "CARA
 FORA = FORA_DO_HALL | {"BBAS3", "BRSR6", "SANB11"}
 
 
+def pct_ou_nd(x):
+    """ROIC pode ser None (sem capital investido positivo) — não derruba o hall."""
+    return "n.d." if x is None else br(100 * x, 1) + "%"
+
+
 def br(x, c=2):
     return f"{x:,.{c}f}".replace(",", "X").replace(".", ",").replace("X", ".")
 
@@ -32,11 +37,11 @@ def motivo(tk, r):
     if tk == "ITSA4":
         s = sotp_partes(MK)
         tir = (1 + r["ke_implicito"]) / (1 + MK.pi) - 1 if r["ke_implicito"] else None
-        return (f"**recalculado v2.1 (05/10)**; holding: SOTP {br(r['ancoras']['SOTP'])} (Itaú 37,5% pelo FRE ao central do Lote 1, R$ {br(s['itau_ps'])} "
+        return (f"**recalculado v2.2 (05/10)**; holding: SOTP {br(r['ancoras']['SOTP'])} (Itaú 37,5% pelo FRE ao central do Lote 1, R$ {br(s['itau_ps'])} "
                 f"por ITUB4; demais a valor contábil; G&A capitalizado) · DDM {br(r['ancoras']['DDM 2 estágios'])}; ROE lp {br(100 * ITSA_ROE_LP, 1)}% × Ke "
                 f"{br(100 * MK.ke_nom, 1)}%; retorno real implícito {br(100 * tir, 1) + '%' if tir else 'n.d.'} — abaixo do Tesouro; **na carteira, acima da "
                 "saída (S)**")
-    m = f"**recalculado v2.1 (05/10)**; {ke}; ROIC {br(100 * r['roic'], 1)}% × WACC {br(100 * r['wacc'], 1)}%; confiança {r['confianca']}"
+    m = f"**recalculado v2.2 (05/10)**; {ke}; ROIC {pct_ou_nd(r['roic'])} contábil / {pct_ou_nd(r['roic_reposicao'])} a reposição × WACC {br(100 * r['wacc'], 1)}%; confiança {r['confianca']}"
     extra = {"TIMS3": "; margem EBIT 2019–25 (IFRS 16) e arrendamento na dívida; capex de rede = manutenção; com a margem dos 12m seguiria CARA",
              "VIVT3": "; margem 2019–25 estável; arrendamento na dívida; yield recorrente sem a redução de capital; política de payout de 2027 não encontrada",
              "FLRY3": "; perímetro com Pardini (receita 2024–12m); provento no limite do FCFE, dividendo em 3 parcelas até 2027",
@@ -108,11 +113,11 @@ def main():
     t = re.sub(r"## 3\. Ranking Greenblatt.*?(?=\n---)", sec3, t, count=1, flags=re.S)
 
     t = t.replace("| 4 | Saúde, telecom, blue chips (7) | `SAÚDE, TELECOM E BLUECHIPS/Saúde_Telecom_Bluechips_rev_03-10-2026.pdf` | `…_rev_06-09-2026.pdf` |",
-                  "| 4 | Saúde, telecom, blue chips (7) | `SAÚDE, TELECOM E BLUECHIPS/Saude_Telecom_Bluechips_rev_05-10-2026.pdf` **(v2.1)** | "
+                  "| 4 | Saúde, telecom, blue chips (7) | `SAÚDE, TELECOM E BLUECHIPS/Saude_Telecom_Bluechips_rev_05-10-2026.pdf` **(v2.2)** | "
                   "`Saúde_Telecom_Bluechips_rev_03-10-2026.pdf`, `…_rev_06-09-2026.pdf` |")
     t = t.replace("*As versões de 06–07/09 trazem quadro clássico mais completo (Graham, Bazin, EPV, Piotroski) que as de 03/10 — úteis como insumo, nunca como valor.*",
                   "*As versões de 06–07/09 e 03/10 ficam como histórico de fatos (eventos, proventos declarados, gatilhos) — nunca como valor.*")
-    reg = ("| 05/10/2026 | Lote 4 (7) | recalculado pela v2.1 | Todos CARA: "
+    reg = ("| 05/10/2026 | Lote 4 (7) | recalculado pela v2.2 | Todos CARA: "
            + ", ".join(f"{tk} {br(res[tk]['central'])} ({br(res[tk]['pc'])})" for tk in sorted(res, key=lambda k: res[k]["pc"]))
            + ". TIMS3 e VIVT3 RADAR → CARA; ITSA4, FLRY3 e HYPE3 JUSTA → CARA; ABEV3 e WEGE3 seguem CARA. IFRS 16: margem 2019–25 e arrendamento "
              "na dívida (teles e FLRY3); Owner Earnings com o aluguel pago; capex de rede = manutenção; WEGE3 por DCF em 2 estágios (g real ROE × "

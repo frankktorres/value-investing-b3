@@ -1,4 +1,4 @@
-"""PDF do Lote 4 (Saúde, telecom e blue chips) — doutrina v2.1. Uso: python gerar_pdf_lote4.py"""
+"""PDF do Lote 4 (Saúde, telecom e blue chips) — doutrina v2.2. Uso: python gerar_pdf_lote4.py"""
 import copy
 import pathlib
 import re
@@ -148,8 +148,11 @@ def cabecalho(story, tk, nome, perfil, r):
 def bloco_final(story, emp_ticker, preco, r, tx, cor, excecao):
     palavra = r["palavra"]
     n = r["notas"]
+    qual_txt = (" A saída é 1,50× o central pela exceção de qualidade do §9 (ROIC > WACC a custo de reposição em "
+                f"{r['roic_anos_acima']} de {r['roic_anos_total']} exercícios e nota de qualidade {br(r['notas']['qualidade'], 1)})."
+                if r.get("saida_por_qualidade") else "")
     saida_txt = (f" <b>Preço acima da saída</b> (R$ {br(preco)} > R$ {br(r['saida'])}): pela doutrina §9 quem tem a ação está fora da faixa de "
-                 "manutenção — decisão de venda é do investidor." if preco > r["saida"] else "")
+                 "manutenção — decisão de venda é do investidor." if preco > r["saida"] else "") + qual_txt
     ver = Table([[P(f"<b>Veredito: <font color='{cor.hexval()}'>{palavra}</font></b> — preço {br(r['pc'])}× o central. "
                     f"Compra R$ {br(r['compra'])} · justo R$ {br(r['central'])} · saída R$ {br(r['saida'])}.{saida_txt} "
                     f"Entrada parcial (exceção §9): {excecao}.<br/>"
@@ -202,10 +205,13 @@ def ficha(emp, r, rank, story):
     fatos = [["Fato (12m até jun/2026)", "Valor", "Fonte"],
              ["Receita · EBIT · margem", f"R$ {br(ltm['receita'] / 1e6, 2)} bi · {br(ltm['ebit'] / 1e6, 2)} bi · {pct(ltm['ebit'] / ltm['receita'])}", "[CVM]"],
              ["Receita base", f"R$ {br(r['op']['receita_meio'] / 1e6, 2)} bi ({tx['receita_base']})", "[CVM]"],
-             ["Margem EBIT normalizada (p25 · p75)", f"{pct(r['op']['m50'])} ({pct(r['op']['m25'])} · {pct(r['op']['m75'])}), mediana {janela} sem não recorrentes", "[CVM]"],
+             ["Margem EBIT normalizada (p25 · p75)", f"{pct(r['op']['m50'])} ({pct(r['op']['m25'])} · {pct(r['op']['m75'])}), mediana {janela} sem não recorrentes"
+              + (f" · quebra estrutural SUSPEITA: a mediana dos 5 últimos exercícios difere {pct(r['op']['divergencia_janela'])} da janela (§11.4) — janela mantida" if r["op"]["quebra_suspeita"] else ""), "[CVM]"],
              ["Ajuste capex de manutenção", pct(r["op"]["ajuste_manut"]) + " da receita" + (" (capex de rede = manutenção)" if emp.capex_ciclico else " (Greenwald)"), "[CVM]"],
              ["Dívida líquida c/ arrendamento · DL/EBITDA 12m", f"R$ {br(r['dl'] / 1e6, 2)} bi · {br(r['dl_ebitda'])}×", "[CVM] 30/06/2026"],
-             ["ROIC normalizado · WACC", f"{pct(r['roic'])} · {pct(r['wacc'])} (Kd {pct(r['kd'])}; IR efetivo {pct(r['aliquota'], 0)})", "motor"],
+             ["ROIC normalizado · WACC", f"{pct(r['roic'])} contábil · {pct(r['roic_reposicao'])} a custo de reposição "
+               f"(imobilizado de {r['idade_imobilizado']:.1f} anos corrigido pelo IPCA) · WACC {pct(r['wacc'])} "
+               f"(Kd {pct(r['kd'])}; IR efetivo {pct(r['aliquota'], 0)}). O menor decide o filtro 1, a nota e a trava do crescimento", "motor"],
              ["Ações · P/L 12m · P/VP", f"{br(r['n'] / 1e3, 1)} mi · {br(x['pl_ltm'], 1) if x['pl_ltm'] else 'n.d.'}× · {br(x['pvp'])}×", "[CVM] ITR jun/26"]]
     lado = Table([[tabela(fatos, [38 * mm, 44 * mm, 15 * mm]), grafico_margem(emp, r)]], colWidths=[98 * mm, 84 * mm])
     lado.setStyle(TableStyle([("VALIGN", (0, 0), (-1, -1), "TOP"), ("LEFTPADDING", (0, 0), (-1, -1), 0)]))
@@ -436,7 +442,7 @@ def ranking_hall():
 # ---------------------------------------------------------------- capa e metodologia
 def capa(res, rank, story):
     story.append(P("Fichas de Avaliação — Value Investing B3", "h1"))
-    story.append(P(f"Lote 4 — Saúde, telecom e blue chips (7 empresas) · rev. 05/10/2026 · data-base {DATA_BASE} · doutrina v2.1", "h2"))
+    story.append(P(f"Lote 4 — Saúde, telecom e blue chips (7 empresas) · rev. 05/10/2026 · data-base {DATA_BASE} · doutrina v2.2", "h2"))
     cont = {}
     for r in res:
         cont[r["palavra"]] = cont.get(r["palavra"], 0) + 1
@@ -537,7 +543,7 @@ def main():
         c.setFont("Arial", 6.5)
         c.setFillColor(colors.HexColor("#6B7280"))
         c.drawString(15 * mm, 9 * mm, f"Mesa de Value Investing — Lote 4 Saúde, telecom e blue chips · rev. 05/10/2026 · data-base {DATA_BASE} · "
-                                      "doutrina v2.1 · não é recomendação de investimento")
+                                      "doutrina v2.2 · não é recomendação de investimento")
         c.drawRightString(195 * mm, 9 * mm, f"p. {d.page}")
         c.restoreState()
 

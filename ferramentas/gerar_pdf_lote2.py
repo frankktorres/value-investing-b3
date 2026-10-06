@@ -1,4 +1,4 @@
-"""PDF do Lote 2 (Energia elétrica e saneamento) — doutrina v2.1. Uso: python gerar_pdf_lote2.py"""
+"""PDF do Lote 2 (Energia elétrica e saneamento) — doutrina v2.2. Uso: python gerar_pdf_lote2.py"""
 import copy
 import pathlib
 import sys
@@ -24,7 +24,7 @@ def rodape(c, d):
     c.setFont("Arial", 6.5)
     c.setFillColor(colors.HexColor("#6B7280"))
     c.drawString(15 * mm, 9 * mm, f"Mesa de Value Investing — Lote 2 Energia elétrica e saneamento · rev. 05/10/2026 · data-base {DATA_BASE} · "
-                                  "doutrina v2.1 · não é recomendação de investimento")
+                                  "doutrina v2.2 · não é recomendação de investimento")
     c.drawRightString(195 * mm, 9 * mm, f"p. {d.page}")
     c.restoreState()
 
@@ -196,7 +196,7 @@ def ficha(emp, r, story):
 
 def capa(res, story):
     story.append(P("Fichas de Avaliação — Value Investing B3", "h1"))
-    story.append(P(f"Lote 2 — Energia elétrica e saneamento (8 empresas) · rev. 05/10/2026 · data-base {DATA_BASE} · doutrina v2.1", "h2"))
+    story.append(P(f"Lote 2 — Energia elétrica e saneamento (8 empresas) · rev. 05/10/2026 · data-base {DATA_BASE} · doutrina v2.2", "h2"))
     tirs = [r for r in res if r["tir"] is not None]
     abaixo = [r["ticker"] for r in res if r["tir"] is None or r["tir"] < MK.rf_real]
     acima = [r["ticker"] for r in tirs if r["tir"] >= MK.rf_real + 0.02]

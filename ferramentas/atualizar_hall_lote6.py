@@ -16,6 +16,11 @@ FORA_DO_HALL = {"UNIP6"}   # saíram do hall em 05/10 (falham 2 dos filtros 1–
 CAB = {"BARATA": "### BARATA", "RADAR": "### RADAR", "JUSTA": "### JUSTA", "CARA": "### CARA", "NÃO CONCLUSIVO": "### NÃO CONCLUSIVO"}
 
 
+def pct_ou_nd(x):
+    """ROIC pode ser None (sem capital investido positivo) — não derruba o hall."""
+    return "n.d." if x is None else br(100 * x, 1) + "%"
+
+
 def br(x, c=2):
     return f"{x:,.{c}f}".replace(",", "X").replace(".", ",").replace("X", ".")
 
@@ -24,12 +29,12 @@ def motivo(tk, r):
     ke = f"Ke implícito {br(100 * r['ke_implicito'], 1) + '%' if r['ke_implicito'] else 'n.d.'}"
     if tk == "EGIE3":
         tir = (1 + r["ke_implicito"]) / (1 + MK.pi) - 1 if r["ke_implicito"] else None
-        return (f"**recalculado v2.1 (05/10)**; TIR real {br(100 * tir, 1) + '%' if tir else 'n.d.'}; ROE lp {br(100 * EGIE.roe_lp, 1)}% × Ke nominal "
+        return (f"**recalculado v2.2 (05/10)**; TIR real {br(100 * tir, 1) + '%' if tir else 'n.d.'}; ROE lp {br(100 * EGIE.roe_lp, 1)}% × Ke nominal "
                 f"{br(100 * MK.ke_nom, 1)}%; método de regulado (P/VP justificado + DDM); patrimônio + follow-on de R$ 8,36 bi (Jirau 40%) ao Ke, "
                 f"1.416 mi de ações; ROE lp do negócio existente {br(100 * EGIE_DADOS['roe_old_lp'], 1)}% (sem UBP de 2024); **no fio:** vira CARA com ROE "
                 f"< {br(100 * VIRADA['roe_virada'], 1)}% (média 2017–25 → {br(VIRADA['central_media'])}; ROE 12m → {br(VIRADA['central_roe_atual'])}); "
                 "trava JUSTA passa só com re-rating")
-    m = f"**recalculado v2.1 (05/10)**; {ke}; ROIC {br(100 * r['roic'], 1)}% × WACC {br(100 * r['wacc'], 1)}%; confiança {r['confianca']}"
+    m = f"**recalculado v2.2 (05/10)**; {ke}; ROIC {pct_ou_nd(r['roic'])} contábil / {pct_ou_nd(r['roic_reposicao'])} a reposição × WACC {br(100 * r['wacc'], 1)}%; confiança {r['confianca']}"
     if tk == "GGBR4":
         m += (f"; aço de meio de ciclo (índice BLS × câmbio, R$ de hoje; 12m {br(ACO['ltm_real'], 0)} em R$ de hoje vs meio 100); impairment normalizado; "
               f"EPV {br(r['ancoras']['EPV de meio de ciclo'])} abaixo do livro {br(r['reprod'])} — ROIC < WACC, o livro não é piso")
@@ -70,10 +75,10 @@ def main():
     t = t.replace("**Candidatas a sair no recálculo** (2 falhas prováveis): **UNIP6** (ROIC 7,7% < WACC; provento não coberto),",
                   "**Candidatas a sair no recálculo** (2 falhas prováveis): **UNIP6** (recalculada 05/10: falha balanço e provento — aguarda Frank),")
     t = t.replace("| 6 | Química e metalurgia: LEVE3, EGIE3, UNIP6, GGBR4 (4) | `QUÍMICA E METALÚRGIA/Química_Metalúrgia_rev_03-10-2026.pdf` | `…_rev_07-09-2026.pdf` |",
-                  "| 6 | Química e metalurgia: LEVE3, EGIE3, UNIP6, GGBR4 (4) | `QUÍMICA E METALÚRGIA/Quimica_Metalurgia_rev_05-10-2026.pdf` **(v2.1)** | "
+                  "| 6 | Química e metalurgia: LEVE3, EGIE3, UNIP6, GGBR4 (4) | `QUÍMICA E METALÚRGIA/Quimica_Metalurgia_rev_05-10-2026.pdf` **(v2.2)** | "
                   "`Química_Metalúrgia_rev_03-10-2026.pdf`, `…_rev_07-09-2026.pdf` |")
     pal = {p: [tk for tk, (_, r) in res.items() if r["palavra"] == p] for p in ("RADAR", "JUSTA", "CARA", "NÃO CONCLUSIVO")}
-    reg = ("| 05/10/2026 | Lote 6 (4) | recalculado pela v2.1 | Preço de aço e de cloro-soda/PVC de meio de ciclo declarado (índices BLS × câmbio em R$ "
+    reg = ("| 05/10/2026 | Lote 6 (4) | recalculado pela v2.2 | Preço de aço e de cloro-soda/PVC de meio de ciclo declarado (índices BLS × câmbio em R$ "
            "de hoje, média do ciclo na janela da margem: aço 2016–25, cloro-soda/PVC 2017–25); cíclicas por EPV/DCF/reprodução, LEVE3 por DCF/EPV/Owner Earnings, EGIE3 pelo método de regulado com o follow-on de "
            "Jirau. " + " · ".join(f"{p}: {', '.join(v)}" for p, v in pal.items() if v)
            + ". GGBR4 RADAR → CARA (ROIC < WACC: o livro não é piso); LEVE3 e EGIE3 CARA → JUSTA; UNIP6 sem palavra, defeito estrutural mantido. "

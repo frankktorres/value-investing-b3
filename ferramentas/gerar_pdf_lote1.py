@@ -62,6 +62,18 @@ def pct(x, casas=1):
     return "—" if x is None else br(100 * x, casas) + "%"
 
 
+def nota_f2(r):
+    """Notas da Etapa 2 (F2) que só aparecem quando valem: saída por qualidade (§9) e quebra suspeita (§11.4)."""
+    t = ""
+    if r.get("saida_por_qualidade"):
+        t += (f"A saída é 1,50× o central pela exceção de qualidade do §9 (ROIC > WACC a custo de reposição em "
+              f"{r['roic_anos_acima']} de {r['roic_anos_total']} exercícios e nota de qualidade {br(r['notas']['qualidade'], 1)}). ")
+    if r.get("op", {}).get("quebra_suspeita"):
+        t += (f"Quebra estrutural SUSPEITA: a mediana dos 5 últimos exercícios difere {pct(r['op']['divergencia_janela'])} "
+              "da janela (§11.4) — janela mantida; trocá-la é decisão declarada. ")
+    return t
+
+
 def P(t, st="cel"):
     return Paragraph(t, S[st])
 

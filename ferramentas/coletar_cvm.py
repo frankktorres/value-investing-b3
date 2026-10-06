@@ -50,6 +50,9 @@ RE_CAPEX = re.compile(r"(?:aquisi|adi[cç]|compra|investiment|aplica[cç][aã]o|
 RE_DIV = re.compile(r"dividend|juros sobre (?:o )?capital", re.I)
 RE_ARREND_PAGO = re.compile(r"arrendamento|loca[cç][aã]o|ifrs ?16|direito de uso", re.I)   # 6.03: pagamento de passivo de arrendamento (05/10)
 RE_ARREND_NAO = re.compile(r"juros|empr[eé]stim|financiament|deb[eê]nture", re.I)   # juros já saem do lucro; linha que mistura dívida não serve
+# Etapa 2 (F2): linha de arrendamento que a PRÓPRIA empresa declara como principal + juros (UGPA3 6.03.07).
+# Fica num campo separado porque dela o OE desconta só o principal (juro estimado pelo saldo × Kd, doutrina §11.1).
+RE_ARREND_MISTO = re.compile(r"principal", re.I)
 RE_RECOMPRA = re.compile(r"(?:recompra|aquisi[cç][aã]o).*(?:a[cç][oõ]es|tesouraria)", re.I)
 RE_JUROS_PAGOS = re.compile(r"juros.*(?:pag|liquid)|(?:pagamento|pagos?).*juros|amortiza\w*\s+(?:d\w+\s+)?juros|encargos.*pagos", re.I)   # juros efetivamente pagos (06/10): 6.01 ou 6.03
 RE_JUROS_NAO = re.compile(r"capital pr[óo]prio|jcp|dividend|aplica[cç]|receita|principal|^(?!.*pag).*receb", re.I)   # JCP, juros de aplicação e linha só de "recebidos" não entram; "(pagos) ou recebidos" (UGPA3 no ITR) entra; principal+juros misturado não serve (cai na despesa bruta)
@@ -156,6 +159,12 @@ def extras_bp(d):
               & d["DS_CONTA"].str.contains(RE_ARREND, na=False)]
         x = folhas(x)
         out["arrendamento"] = float(x["VL_CONTA"].sum()) if len(x) else 0.0
+        # Etapa 2 (F2): saldo do passivo de arrendamento ONDE ELE ESTIVER, inclusive dentro de 2.01.04/2.02.01
+        # (a maioria o lança ali, e aí "arrendamento" acima fica 0 de propósito, para não contar a dívida duas vezes).
+        # Serve SÓ para estimar o juro embutido na linha de arrendamento pago da DFC (doutrina §11.1, OE "sem juros").
+        y = folhas(d[(d["CD_CONTA"].str.startswith("2.01") | d["CD_CONTA"].str.startswith("2.02"))
+                     & d["DS_CONTA"].str.contains(RE_ARREND, na=False)])
+        out["arrendamento_saldo"] = float(y["VL_CONTA"].sum()) if len(y) else 0.0
     if d["CD_CONTA"].str.startswith("1").any():
         x = folhas(d[d["CD_CONTA"].str.startswith("1.0") & d["DS_CONTA"].str.contains(RE_BIO, na=False)])
         out["biologico"] = float(x["VL_CONTA"].sum()) if len(x) else 0.0
@@ -191,13 +200,18 @@ def impairment(d, prefixos=("3.02", "3.04")):
 
 def dfc_extra(d):
     if d.empty or "DS_CONTA" not in d:
-        return {"da": None, "capex": None, "dividendos_pagos": 0.0, "recompra": 0.0, "arrendamento_pago": 0.0, "juros_pagos": 0.0}, {}
+        return {"da": None, "capex": None, "dividendos_pagos": 0.0, "recompra": 0.0, "arrendamento_pago": 0.0, "arrendamento_pago_com_juros": 0.0, "juros_pagos": 0.0}, {}
     da = d[d["CD_CONTA"].str.startswith("6.01.01") & d["DS_CONTA"].str.contains(RE_DA, na=False) & ~d["DS_CONTA"].str.contains(RE_DA_NAO, na=False)]
     cap = d[d["CD_CONTA"].str.startswith("6.02") & d["DS_CONTA"].str.contains(RE_CAPEX, na=False) & (d["VL_CONTA"] < 0)]
     div = d[d["CD_CONTA"].str.startswith("6.03") & d["DS_CONTA"].str.contains(RE_DIV, na=False) & (d["VL_CONTA"] < 0)]
     rec = d[d["CD_CONTA"].str.startswith("6.03") & d["DS_CONTA"].str.contains(RE_RECOMPRA, na=False) & (d["VL_CONTA"] < 0)]
     arr = d[d["CD_CONTA"].str.startswith("6.03") & d["DS_CONTA"].str.contains(RE_ARREND_PAGO, na=False) & (d["VL_CONTA"] < 0)
             & ~d["DS_CONTA"].str.contains(RE_ARREND_NAO, na=False)]
+    # "juros" é o que define a linha mista, então aqui o guarda exclui só dívida financeira (sem ele, uma linha
+    # "principal e juros de empréstimos, financiamentos e arrendamentos" entraria inteira como arrendamento)
+    arr_mi = d[d["CD_CONTA"].str.startswith("6.03") & d["DS_CONTA"].str.contains(RE_ARREND_PAGO, na=False) & (d["VL_CONTA"] < 0)
+               & d["DS_CONTA"].str.contains(RE_ARREND_MISTO, na=False) & d["DS_CONTA"].str.contains(r"juros", case=False, na=False)
+               & ~d["DS_CONTA"].str.contains(r"empr[eé]stim|financiament|deb[eê]nture", case=False, na=False)]
     jur = d[(d["CD_CONTA"].str.startswith("6.01") | d["CD_CONTA"].str.startswith("6.03")) & d["DS_CONTA"].str.contains(RE_JUROS_PAGOS, na=False)
             & ~d["DS_CONTA"].str.contains(RE_JUROS_NAO, na=False) & (d["VL_CONTA"] < 0)]
     da, cap, div, rec, arr, jur = folhas(da), folhas(cap), folhas(div), folhas(rec), folhas(arr), folhas(jur)
@@ -206,8 +220,9 @@ def dfc_extra(d):
              "dividendos_pagos": float(-div["VL_CONTA"].sum()) if len(div) else 0.0,
              "recompra": float(-rec["VL_CONTA"].sum()) if len(rec) else 0.0,
              "arrendamento_pago": float(-arr["VL_CONTA"].sum()) if len(arr) else 0.0,
+             "arrendamento_pago_com_juros": float(-arr_mi["VL_CONTA"].sum()) if len(arr_mi) else 0.0,
              "juros_pagos": float(-jur["VL_CONTA"].sum()) if len(jur) else 0.0},
-            {"linhas_da": list(da["DS_CONTA"]), "linhas_capex": list(cap["DS_CONTA"]), "linhas_arrendamento": list(arr["DS_CONTA"]),
+            {"linhas_da": list(da["DS_CONTA"]), "linhas_capex": list(cap["DS_CONTA"]), "linhas_arrendamento": list(arr["DS_CONTA"]), "linhas_arrendamento_misto": list(arr_mi["DS_CONTA"]),
              "linhas_juros_pagos": list(jur["DS_CONTA"])})
 
 
@@ -283,7 +298,7 @@ def main(tks, anos=range(2016, 2026)):
             ltm = dict(serie.get(2026, {}), nota="fluxos: exercício abr/2025–mar/2026 (DFP); balanço: ITR de jun/2026")
             try:
                 b = itr_ytd(tk, 2026, 6)
-                for k in list(BPA) + list(BPP) + ["arrendamento", "biologico"]:
+                for k in list(BPA) + list(BPP) + ["arrendamento", "arrendamento_saldo", "biologico"]:
                     if b.get(k) is not None:
                         ltm[k] = b[k]
             except Exception:
@@ -292,10 +307,10 @@ def main(tks, anos=range(2016, 2026)):
           try:
             y26, y25 = itr_ytd(tk, 2026), itr_ytd(tk, 2025)
             fy = serie.get(2025, {})
-            for k in list(DRE) + list(DFC) + ["da", "capex", "dividendos_pagos", "recompra", "arrendamento_pago", "juros_pagos", "vj_biologico", "impairment", "impairment_outras"]:
+            for k in list(DRE) + list(DFC) + ["da", "capex", "dividendos_pagos", "recompra", "arrendamento_pago", "arrendamento_pago_com_juros", "juros_pagos", "vj_biologico", "impairment", "impairment_outras"]:
                 if None not in (fy.get(k), y26.get(k), y25.get(k)):
                     ltm[k] = fy[k] + y26[k] - y25[k]
-            for k in list(BPA) + list(BPP) + ["arrendamento", "biologico"]:
+            for k in list(BPA) + list(BPP) + ["arrendamento", "arrendamento_saldo", "biologico"]:
                 ltm[k] = y26.get(k)
             ltm["acoes"] = fy.get("acoes")
           except Exception as ex:

@@ -1,4 +1,4 @@
-"""PDF do Lote 5 (Petróleo, gás e combustíveis) — doutrina v2.1. Uso: python gerar_pdf_lote5.py"""
+"""PDF do Lote 5 (Petróleo, gás e combustíveis) — doutrina v2.2. Uso: python gerar_pdf_lote5.py"""
 import copy
 import pathlib
 import sys
@@ -13,7 +13,7 @@ from reportlab.platypus import PageBreak, SimpleDocTemplate, Spacer, Table, Tabl
 import re
 
 import gerar_pdf_lote1  # registra as fontes Arial
-from gerar_pdf_lote1 import AZUL, COR, LINHA, br, grafico_resumo, img, pct, tabela
+from gerar_pdf_lote1 import AZUL, br, COR, grafico_resumo, img, LINHA, nota_f2, pct, tabela
 
 _P = gerar_pdf_lote1.P
 
@@ -216,7 +216,9 @@ def ficha(emp, r, rank, story):
                    f"12m: R$ {br(ltm['ebit'] / 1e6, 2)} bi)", "[CVM][IBGE]"]]
     fatos += [["Ajuste capex de manutenção", pct(r["op"]["ajuste_manut"]) + " da receita (capex mediano acima da D&A)", "[CVM] 10a"],
               ["Dívida líquida · DL/EBITDA 12m · normalizado", f"R$ {br(r['dl'] / 1e6, 1)} bi · {br(r['dl_ebitda'])}× · {br(r['dl_ebitda_norm'])}×", "[CVM] 30/06/2026"],
-              ["ROIC normalizado · WACC", f"{pct(r['roic'])} · {pct(r['wacc'])} (Kd {pct(r['kd'])}; IR efetivo {pct(r['aliquota'], 0)})", "motor"],
+              ["ROIC normalizado · WACC", f"{pct(r['roic'])} contábil · {pct(r['roic_reposicao'])} a custo de reposição "
+                f"(imobilizado de {r['idade_imobilizado']:.1f} anos corrigido pelo IPCA) · WACC {pct(r['wacc'])} "
+                f"(Kd {pct(r['kd'])}; IR efetivo {pct(r['aliquota'], 0)}). O menor decide o filtro 1, a nota e a trava do crescimento", "motor"],
               ["P/L 12m · P/VP", f"{br(x['pl_ltm'], 1) if x['pl_ltm'] else 'n.d.'}× · {br(emp.preco / r['vpa'])}×", "[CVM]"]]
     if emp.outros_passivos:
         fatos.append(["Outros passivos na ponte", emp.outros_passivos_fonte, "[CVM]"])
@@ -329,7 +331,7 @@ def ficha(emp, r, rank, story):
     n = r["notas"]
     pode = n["qualidade"] >= 8 and n["solidez"] >= 7 and r["confianca"] == "normal"
     preco_txt = ("Sem palavra: uma âncora é ≤ 0 ou as âncoras discordam mais de 3× (doutrina §11.3) — ver a margem por método acima. "
-                 if nc else f"Compra R$ {br(r['compra'])} · justo R$ {br(r['central'])} · saída R$ {br(r['saida'])}. ")
+                 if nc else f"Compra R$ {br(r['compra'])} · justo R$ {br(r['central'])} · saída R$ {br(r['saida'])}. " + nota_f2(r))
     pc_txt = "sem central (âncora ≤ 0)" if r["central"] <= 0 else f"preço {br(r['pc'])}× o central"
     ver = Table([[P(f"<b>Veredito: <font color='{cor.hexval()}'>{palavra}</font></b>{fora} — {pc_txt}. {preco_txt}"
                     f"Entrada parcial (exceção §9): {'aplicável — 1ª parcela (≤ 1/3) só até R$ ' + br(r['compra_parcial']) if pode and not nc else 'não se aplica (qualidade < 8, solidez < 7 ou confiança baixa)'}.<br/>"
@@ -369,7 +371,7 @@ def tabela_barril():
 
 def capa(res, rank, story):
     story.append(P("Fichas de Avaliação — Value Investing B3", "h1"))
-    story.append(P(f"Lote 5 — Petróleo, gás e combustíveis (5 empresas) · rev. 05/10/2026 · data-base {DATA_BASE} · doutrina v2.1", "h2"))
+    story.append(P(f"Lote 5 — Petróleo, gás e combustíveis (5 empresas) · rev. 05/10/2026 · data-base {DATA_BASE} · doutrina v2.2", "h2"))
     cont = {}
     for r in res:
         cont[r["palavra"]] = cont.get(r["palavra"], 0) + 1
@@ -452,7 +454,7 @@ def main():
         c.setFont("Arial", 6.5)
         c.setFillColor(colors.HexColor("#6B7280"))
         c.drawString(15 * mm, 9 * mm, f"Mesa de Value Investing — Lote 5 Petróleo, gás e combustíveis · rev. 05/10/2026 · data-base {DATA_BASE} · "
-                                      "doutrina v2.1 · não é recomendação de investimento")
+                                      "doutrina v2.2 · não é recomendação de investimento")
         c.drawRightString(195 * mm, 9 * mm, f"p. {d.page}")
         c.restoreState()
 

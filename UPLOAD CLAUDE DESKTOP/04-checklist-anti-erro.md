@@ -97,7 +97,7 @@
 - [ ] A empresa passa **3 dos filtros 1–4** (senão sai do hall)?
 - [ ] **Trava de coerência:** se JUSTA, o retorno de Bogle está a ±2 p.p. do Ke nominal?
   *Erro cometido: ITUB4, BBSE3, PSSA3, ABCB4 JUSTA com retorno nominal 12–15% vs Ke 16,6%; BBAS3 JUSTA com retorno real 4,3%.*
-- [ ] Dei preço de compra (0,70×), justo, **saída (1,30×)** e gatilho de invalidação?
+- [ ] Dei preço de compra (0,70×), justo, **saída (1,30× — ou 1,50× pela exceção de qualidade do §9)** e gatilho de invalidação?
   *Erro cometido: saídas de 1,17× a 2× sem regra, paradas quando o justo mudava.*
 - [ ] Entrada parcial **só** pela exceção escrita (Qualidade ≥ 8, Solidez ≥ 7, zero armadilhas; ≤ 1/3 a ≤ 0,80×)?
   *Erro cometido: "aceitável/1ª parcela" com margem de 10–22% em ITUB4, TIMS3, GGBR4, KEPL3, CSMG3 e outros.*
@@ -135,7 +135,7 @@
 | 12 | Régua com buraco 10–15% e ARMADILHA fora da definição | ISAE4 × CPLE3 × ABEV3; PETR4; BRSR6; UNIP6 | Régua contínua (doutrina §9) |
 | 13 | JUSTA com retorno esperado abaixo do Ke | Bancos e seguradoras de 03/10 | Trava de coerência |
 | 14 | Compra "aceitável" sem margem de segurança | 15+ fichas | Exceção única de entrada parcial |
-| 15 | Saída sem regra | todos os lotes | Saída = 1,30 × central |
+| 15 | Saída sem regra | todos os lotes | Saída = 1,30 × central; 1,50 × só com ROIC > WACC a custo de reposição em ≥ 8 de 10 exercícios e Qualidade ≥ 8 (§9) |
 | 16 | Vértice da rf trocado entre lotes; taxa intradiária; IPCA abaixo do mercado | rev. 03/10 | Doutrina §4 |
 | 17 | Yield declarado (pago com dívida) no lugar do sustentável | Energia 03/10 | Doutrina §6 |
 | 18 | TIR real usada só quando reprova | TAEE11/ISAE4 × SBSP3/CSMG3 | TIR sempre (regra 7) |

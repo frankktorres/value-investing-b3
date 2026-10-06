@@ -4,7 +4,7 @@
 
 | # | Critério | Régua |
 |---|---|---|
-| 1 | Preço | P/L sobre **lucro normalizado** (média de 5 anos sem não recorrentes; cíclica: meio de ciclo) ≤ 10 (≤ 7 conta como ✓✓) |
+| 1 | Preço | P/L sobre **lucro normalizado** (mediana da janela do ciclo, 10 anos, sem não recorrentes — §11.4; cíclica: meio de ciclo) ≤ 10 (≤ 7 conta como ✓✓) |
 | 2 | Patrimônio | P/VP ≤ 2, **ou** ≤ ROE/10 |
 | 3 | Provento recorrente | Pagou em ≥ 9 dos últimos 10 anos **e** DY médio de 5 anos **ajustado** por bonificação/desdobramento ≥ 5% (nunca o DY 12m de agregador) |
 | 4 | Rentabilidade | ROE ≥ 15% (média, não pico); não financeira: ROIC > WACC |
