@@ -42,7 +42,7 @@ GOLDEN = AQUI / "tests" / "golden.json"
 REGISTRO = AQUI / "prospectivo" / "registro.jsonl"
 VEREDITOS = AQUI / "dossie" / "vereditos"
 CAMPOS = ("palavra", "pc", "central", "lote")
-COMPARA = (*CAMPOS, "preco")          # + golden_sha só no hall; no dossiê o sha do arquivo é informativo
+COMPARA = (*CAMPOS, "preco", "doutrina")          # + golden_sha só no hall; no dossiê o sha do arquivo é informativo
 
 
 def linhas_do_golden(golden: dict, data_preco: str, doutrina: str, sha: str,
