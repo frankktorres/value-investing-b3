@@ -1,0 +1,23 @@
+{
+ "ticker": "CMIN3",
+ "data_preco": "2026-10-02",
+ "preco": 4.97,
+ "central": 3.3533,
+ "pc": 1.4821,
+ "palavra": "NÃO CONCLUSIVO",
+ "palavra_regua": "CARA",
+ "notas_regra11": {
+  "moat": 3,
+  "gestao": 3,
+  "controlador": 0,
+  "ciclo": 1,
+  "fisher": 1
+ },
+ "desc_controlador": 0.0775,
+ "desc_controlador_razao": "regra 8: probabilidade × perda do risco PROSPECTIVO do controlador que o central não captura. As transações já feitas estão no balanço de jun/2026 (o caixa já saiu; o passivo de contrato está na ponte). O que fica é a repetição: a CSN está alavancada (DL R$ 37,9 bi, FCO negativo em 2025) e já usou a CMIN como fonte de caixa três vezes. Perda em % do valor por ação; a da MRS foi ~7% do valor de mercado da CMIN (pago R$ 3,35 bi contra ~R$ 1,4 bi a 8,3× o lucro = R$ 1,9 bi ÷ R$ 27,0 bi)",
+ "media_regra11": 1.3333,
+ "discricionario": true,
+ "doutrina": "v2.2",
+ "template": "02 v4",
+ "gerado_em": "2026-10-07"
+}

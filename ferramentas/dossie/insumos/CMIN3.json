@@ -1,0 +1,75 @@
+{
+ "_doc": "Insumos não mecânicos do dossiê CMIN3 (02 v4, regra 11). Data-base 02/10/2026. Cada item com fonte A/B; documentos em ferramentas/dados/cvm/docs/CMIN3/ (DFP 2021 v1, 2023 v2, 2025 v2 — notas e relatório da administração extraídos do XML do ENET; ITR 2T25, 3T25, 1T26, 2T26; IPE 2017-26: 31 fatos relevantes, 7 comunicações de transação com parte relacionada, estatuto de 16/04/2025, acordos de acionistas). Abreviações: D25 = dfp2025_v2/x/anexo1 (notas), RA25 = dfp2025_v2/x/anexo0 (relatório da administração), idem 23 e 21.",
+ "volume_mt": {
+  "valor": {"2019": 38.2, "2020": 31.155, "2021": 33.238, "2022": 33.33, "2023": 42.662, "2024": null, "2025": 45.8,
+            "ltm": 45.866, "meio": 40.0,
+            "razao_meio": "projeção vigente da companhia para 2026 (39–41 Mt de produção + compras, ponto médio; FR 29/09/2026), entre a mediana das vendas publicadas de 2019–25 (35,8 Mt, 6 anos; 2024 sem valor absoluto) e os 12m (45,9); expansão (P15) não entra"},
+  "fonte": "Vendas (Mt): 2019 = 38,2 citado como recorde anterior (RA23:7); 2020 e 2021 = 31,155 e 33,238 (RA21:934-938); 2022 = 42,662 ÷ 1,28 (RA23:1308, '+28,0% sobre 2022'; derivado); 2023 = 42,662 (RA23:1308); 2024 não publicado em valor absoluto; 2025 = 45,8 (RA25:716). 12m jul/25–jun/26 = 3T25 12,396 (release ITR 3T25) + 4T25 11,985 (= 9,636 ÷ (1 − 19,6%), release ITR 1T26: 1T26 'queda de 19,6% em relação ao 4T25'; derivado) + 1T26 9,636 + 2T26 11,849 (release ITR 2T26). Meio: fato relevante de 29/09/2026 (produção + compras 2026 de 45,0–47,0 para 39,0–41,0 Mt; C1 de US$ 22,0–23,5 para 25,0–26,0/t), linhas 22-28",
+  "nota_fonte": "A"
+ },
+ "custo_variavel_preco": {
+  "valor": {"fracao": 0.2479, "por_ano": {"2020": 0.1918, "2021": 0.2655, "2022": 0.2674, "2023": 0.2877, "2024": 0.1825, "2025": 0.2302}},
+  "fonte": "Mediana 2020–25 de (material de terceiros + impostos e taxas) ÷ receita líquida, nota de custos e despesas por natureza (D25 nota 28, pdf p.52; D23 nota 26, p.39; D21 nota 26, p.39). Material de terceiros = minério comprado (o RA25:742-744 liga o aumento do CPV às compras de terceiros), comprado a preço de índice; impostos e taxas contêm a CFEM (royalty sobre a receita), que a nota não separa. Frete, mão de obra, manutenção, serviços, suprimentos e D&A ficam como custo fixo no ano (C1 de US$ 21,0–21,8/t em 2021–25: RA25:744-746, RA23:1327). 2019 sem nota (PDF do DFP 2020 corrompido): o mesmo v para todos os anos",
+  "nota_fonte": "A"
+ },
+ "outros_passivos": {
+  "valor": 12937022,
+  "fonte": "ITR 2T26 consolidado (CVM): passivo de contrato R$ 11.773.637 mil (contas 2.01.05.02.05 + 2.02.02.02.04; nota 17: minério de ferro R$ 11.490.765 mil pré-pago por 'importantes players internacionais', entrega em < 1 ano 3,74 bi, 1–2 anos 3,21 bi, 2–5 anos 3,80 bi, > 5 anos 0,75 bi; energia R$ 282.872 mil recebida em set/2022 por 2023–30), com componente de financiamento ('juros sobre passivo de contrato' no resultado financeiro, nota 22) → a receita dessas entregas já entrou no caixa e não volta: é dívida. Mais dividendos e JCP a pagar R$ 1.163.385 mil (2.01.05.02.01; o mesmo saldo de 31/12/2025): todo provento a pagar em 30/06/2026 tem data-com anterior a essa data (as de 2026 na B3: 02/01, R$ 0,0780, e 16/04, R$ 0,1415) — o comprador de 02/10 não o recebe, e o caixa de 30/06 que o pagará está na DL",
+  "nota_fonte": "A"
+ },
+ "ma_ruim": {
+  "valor": false,
+  "fonte": "Aquisições 2019-26: participação na MRS comprada da CSN por R$ 3,35 bi (tpr_2025-12-18 linhas 76-88; D25:3004-3012) = 9,2% do ativo de 2024 (R$ 36,4 bi); Quebra-Queixo (2022, comprada de terceiros, preço não divulgado; valor justo alocado R$ 270 mi, D23:428) < 1%. Nenhuma aquisição > 20% do ativo → componente da rubrica não se aplica (0). O preço da MRS (19,3× o lucro, 3,5× o PL) é transação COM O CONTROLADOR e entra na nota do controlador e no desconto, não aqui (sem contar duas vezes)",
+  "nota_fonte": "A"
+ },
+ "interferencias": {
+  "valor": 3,
+  "fonte": "Busca no IPE 2017-26 (583 documentos; 31 FR, 7 comunicações de TPR) e nas notas de partes relacionadas 2021/23/25. Consumadas a favor do controlador (CSN, DL de R$ 37,9 bi, prejuízo de R$ 1,5 bi e FCO de −R$ 1,0 bi em 2025, DFP CSN 2025, CVM): (1) dez/2025 — compra à vista de 11,17% da MRS da CSN (9,17% em 18/12 e 2,00% em 31/12; a CMIN passa a 29,91% da MRS, joint venture, D25:511, 646-647) por R$ 3,35 bi contra valor contábil de R$ 1,0 bi (excedente de R$ 2,35 bi lançado no PL como 'transação de capital', D25:3004-3012); a R$ 3,35 bi a MRS inteira vale R$ 30,0 bi = 19,3× o lucro de 2025 (R$ 1,555 bi) e 3,47× o PL (R$ 8,65 bi), DFP 2025 da MRS (CVM) — o P/L sem crescimento ao Ke real da casa (12,1%) seria ~8,3×; preço 'determinado por meio de entendimento entre a CSN e a CMIN', 'consistente com o laudo' da Apsis; aprovada por unanimidade pelos independentes e pelo conselheiro indicado pelos minoritários, que participou da negociação; os indicados pela CSN se abstiveram (tpr_2025-12-18:91-141); (2) jan/2025 — cessão à CSN de lastro de exportação, valor estimado de US$ 1 bi para 2025, prazo indeterminado, remuneração não divulgada; só o 'excesso de lastro que não seria utilizado pela CMIN' (tpr_2025-01-28:20-46); (3) out/2019 e ago/2024 — pré-pagamento à CSN de US$ 100 mi cada de 'despesas administrativas' de ~5 anos (crédito ao controlador a 125% e 117% do CDI; saldo R$ 436 mi em 2025 = 122,9 circulante + 312,9 não circulante, tabela de partes relacionadas D25 p.43; contrato de R$ 546 mi, D25:2887-2891; tpr_2024-08-23:33-47). Não contados aqui (entram no desconto): R$ 1,57 bi de aplicações em outras partes relacionadas — Banco Fibra (mesma estrutura de controle) e fundos exclusivos da CSN, sem separação (D25:2766, 2877-2879, 2932-2936); dividendos acima do lucro em 2022 (R$ 5,05 bi × 2,95 bi) e 2025 (R$ 3,40 bi × 1,65 bi), DMPL no XML do DFP",
+  "nota_fonte": "A"
+ },
+ "partes_rel_sobre_receita": {
+  "valor": 0.281,
+  "fonte": "D25 nota de partes relacionadas (pdf pp.43-44), fluxo de 2025: vendas à CSN R$ 1.790,4 mi + ao consórcio asiático (acionistas do acordo) 1.040,1 + outras 25,2 = 2.855,7; custos com MRS (frete ferroviário, coligada) 1.532,6 + outras do grupo 628,3 + consórcio 27,8 + CSN 21,7 = 2.210,4; total 5.066,1 ÷ receita 18.025,1 = 28,1% (só vendas: 15,8%). Preço por índice de mercado, sem comparação numérica (D25:2884-2885). FRE 2026 traz montantes de contrato (bruto), só pista",
+  "nota_fonte": "A"
+ },
+ "tag_along": {
+  "valor": 1.0,
+  "fonte": "Estatuto social (IPE, versão de 16/04/2025), Nível 2 da B3 (art. 1º §1º, linhas 11-17); alienação de controle condicionada a OPA aos demais acionistas com 'tratamento igualitário àquele dado ao alienante' (linhas 842-849) = 100% para a ON (ação única ON)",
+  "nota_fonte": "A"
+ },
+ "discricionario": {
+  "valor": true,
+  "fonte": "FRE 2026 v3 e D25:3026-3040: CSN com 69,69% das ações em circulação; pelo acordo de acionistas (acordo_2021-02-09_2:311-337) o bloco asiático (Itochu, JBMF, POSCO, China Steel; 22,3%) indica 1 conselheiro e a CSN todos os demais, inclusive os independentes; a CSN decide capital, payout e contratos com o grupo (doutrina §10: peso 2)",
+  "nota_fonte": "A"
+ },
+ "fisher": {
+  "respostas": ["nao", "sim", "sem", "sem", "sim", "sem", "sem", "sem", "sem", "sem", "sem", "sem", "sim", "sim", "nao"],
+  "itens": [
+   "1 potencial de mercado: não — o volume prometido é cortado de forma recorrente: 2028 era 68 Mt (FR 14/12/2023) e virou 50–55 (FR 11/12/2024); 2026 era 43,5–47,5 Mt (FR 11/12/2024), 45,0–47,0 (FR 11/03/2026) e caiu para 39,0–41,0 (FR 29/09/2026). Capacidade instalada de produção 33 Mtpa (RA25:119-121)",
+   "2 decisão de desenvolver: sim — P15 (até 16,5 Mt de pellet feed premium, RA25:91-92; financiada por US$ 1,4 bi do JBIC/NEXI, FR 31/03/2023) e recuperação de rejeitos",
+   "3 eficácia do P&D: sem",
+   "4 força de vendas: sem — 88% da receita na Ásia (D25:3444-3470), commodity vendida a índice",
+   "5 margem que vale a pena: sim — EBIT de 27,8% em 2025 e 46% em 2019–20 (DFP, A), mesmo reexpressa ao minério de meio",
+   "6 o que faz pela margem: sem — C1 estável em US$ 21–22/t em 2021–25, mas a projeção de 2026 sobe para US$ 25–26/t (FR 29/09/2026)",
+   "7 relações de trabalho: sem",
+   "8 relações entre executivos: sem — diretoria estatutária trocada em ago/2024 (FR 14/08/2024)",
+   "9 profundidade da gestão: sem",
+   "10 controles de custo e contábeis: sem",
+   "11 aspectos do setor: sem",
+   "12 visão de longo prazo: sem — investe na P15 enquanto paga dividendos acima do lucro (2022 e 2025) financiados por pré-venda de minério",
+   "13 crescimento sem diluição: sim — nenhuma emissão; recompras em 2021 e 2024 e cancelamento de tesouraria em 2026 (5,485 → 5,432 bi ações, FR 27/03/2026)",
+   "14 fala dos problemas: sim — o FR de 29/09/2026 corta volume e eleva C1 antes do resultado do trimestre",
+   "15 integridade inquestionável: não — compra da MRS da controladora a 19× o lucro, cessão de lastro e pré-pagamento à CSN, caixa no banco do grupo"
+  ]
+ },
+ "desconto_controlador": {
+  "tipo": "cenarios",
+  "razao": "regra 8: probabilidade × perda do risco PROSPECTIVO do controlador que o central não captura. As transações já feitas estão no balanço de jun/2026 (o caixa já saiu; o passivo de contrato está na ponte). O que fica é a repetição: a CSN está alavancada (DL R$ 37,9 bi, FCO negativo em 2025) e já usou a CMIN como fonte de caixa três vezes. Perda em % do valor por ação; a da MRS foi ~7% do valor de mercado da CMIN (pago R$ 3,35 bi contra ~R$ 1,4 bi a 8,3× o lucro = R$ 1,9 bi ÷ R$ 27,0 bi)",
+  "cenarios": [
+   {"nome": "Sem nova transferência relevante além da já feita (lastro e pré-pagamento seguem, remunerados a CDI+)", "prob": 0.45, "perda": 0.0},
+   {"nome": "Nova compra de ativo do grupo acima do valor ou novo crédito ao controlador do porte da MRS em 5 anos (CSN Cimentos, energia, logística)", "prob": 0.40, "perda": 0.10},
+   {"nome": "Estresse da CSN: a CMIN pré-vende mais minério ou se endivida para pagar dividendo extraordinário/financiar a controladora, ou garante dívida do grupo", "prob": 0.15, "perda": 0.25}
+  ]
+ },
+ "ajustes": {}
+}

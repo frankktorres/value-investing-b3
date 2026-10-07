@@ -65,6 +65,9 @@ class Industrial:
     anos_g1: int = 10
     defasagem_meses: float | None = None  # provento pago N meses depois da data-com → valor presente ao Ke nominal (§6.3); None = medida na StatusInvest (defasagem.py)
     defasagem_fonte: str = ""      # OBRIGATÓRIO quando defasagem_meses é informado: o evento declarado e a data (§6.3)
+    # Etapa 5 (07/10, dossiê CMIN3): defaults preservam os lotes anteriores
+    fator_preco: dict | None = None       # cíclica de janela curta: ano → preço de meio ÷ preço do ano (R$ de hoje); a margem do ano é reexpressa ao preço de meio
+    custo_variavel_preco: float = 0.0     # fração da receita cujo custo acompanha o preço (royalty, minério de terceiros); o resto do custo fica fixo
 
 
 def exigir_declaracoes(emp: Industrial) -> None:
@@ -266,6 +269,27 @@ def mediana_outras(tk, anos, liquidas=False):
     return median(xs) if xs else 0.0
 
 
+def margem_ao_preco_meio(emp: Industrial, por_ano: dict) -> dict:
+    """Margem de cada ano reexpressa ao preço de meio de ciclo (cíclica cuja janela não cobre um ciclo inteiro).
+
+    A doutrina manda margem mediana do ciclo × receita ao preço de meio de 10 anos. Quando a janela de margem é curta e cai
+    num período de preço alto (CMIN3: DRE só de 2019–25, com o pico de 2021), a mediana leva o preço alto embutido e,
+    aplicada à receita de meio, conta o preço duas vezes. Aqui a receita do ano vai ao preço de meio (× f) e o custo fica:
+      margem' = 1 − v − (1 − margem − v) ÷ f,
+    v = custo que acompanha o preço (royalty, compra de terceiros), em fração da receita; o restante do custo é fixo no ano.
+    f = 1 devolve a margem original. Ano sem fator falha alto (nada silencioso)."""
+    if emp.deflator or emp.da_receita is not None:
+        raise ValueError(f"{emp.ticker}: fator_preco não combina com deflator nem com da_receita (E&P)")
+    v_ = emp.custo_variavel_preco
+    if not 0 <= v_ < 1:
+        raise ValueError(f"{emp.ticker}: custo_variavel_preco fora de [0, 1): {v_}")
+    falta = [x for x in por_ano if not (isinstance(emp.fator_preco.get(x), (int, float)) and math.isfinite(emp.fator_preco[x])
+                                       and emp.fator_preco[x] > 0)]      # NaN e inf passavam por "not f or f <= 0" (adversário, 07/10)
+    if falta:
+        raise ValueError(f"{emp.ticker}: fator_preco sem valor positivo para {falta}")
+    return {x: 1 - v_ - (1 - m - v_) / emp.fator_preco[x] for x, m in por_ano.items()}
+
+
 def premissas_operacionais(emp: Industrial):
     a, ltm = serie(emp.ticker)
     anos = anos_validos(emp.ticker, emp.anos_ciclo)
@@ -289,6 +313,8 @@ def premissas_operacionais(emp: Industrial):
         por_ano = {x: (ebit_aj(a[x], mo, liq) - v(a[x], "impairment", 0)) / a[x]["receita"] - imp_rec for x in anos}
     else:
         por_ano = {x: ebit_aj(a[x], mo, liq) / a[x]["receita"] for x in anos}
+    if emp.fator_preco is not None:
+        por_ano = margem_ao_preco_meio(emp, por_ano)
     margens = sorted(por_ano.values())
     m50 = median(margens)
     m25 = margens[max(0, round(0.25 * (len(margens) - 1)))]

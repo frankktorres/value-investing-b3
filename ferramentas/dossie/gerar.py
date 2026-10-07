@@ -23,7 +23,7 @@ from motor_nao_financeiras import avaliar
 
 AQUI = pathlib.Path(__file__).resolve().parent
 RAIZ = AQUI.parent.parent
-FICHAS = {"BLAU3": "dossie.fichas.blau3"}
+FICHAS = {"BLAU3": "dossie.fichas.blau3", "CMIN3": "dossie.fichas.cmin3"}
 ANO_FRE = 2026
 DOUTRINA, TEMPLATE = "v2.2", "02 v4"
 NOTAS = ("moat", "gestao", "controlador", "ciclo", "fisher")
@@ -89,7 +89,30 @@ def calcular(tk: str) -> dict:
     return dict(tk=tk, r=r, r0=r0, dc=dc, anos=anos, mg=mg, rec=rec, fr=fr, rem_txt=rem_txt, rem_l=rem_l, dil=dil, dil_txt=dil_txt,
                 r1=r1, pr_bruto=pr_bruto, pr_txt=pr_txt, tag=tag, fontes_ins=dict(ma=ma_f, interf=interf_f, pr=pr_f, tag=tag_f,
                 disc=disc_f), disc=bool(disc), base_n=base_n, aj=aj, final=final, media=media, eventos=eventos,
-                mna=ev.mna_provavel(tk, anos), listado=listado)
+                mna=ev.mna_provavel(tk, anos), listado=listado,
+                norm=ficha.normalizacao(dc) if hasattr(ficha, "normalizacao") else None)      # cíclica: ciclo em número (02 regra 7)
+
+
+def _bloco_ciclo(n: dict) -> list[str]:
+    """Normalização do ciclo em número (02 regra 7): preço, câmbio, margem e volume de meio, e a sensibilidade do método."""
+    m, vol = n["minerio"], n["volume"]
+    L = ["## Normalização do ciclo (02 regra 7)", "",
+         f"Base do índice: {m['base']} (último mês com minério, PTAX, IPCA e CPI-US).", "",
+         "| Item | Meio de ciclo (2016–25, R$/US$ de hoje) | 12m (jul/25–jun/26, nominal) |", "|---|---|---|",
+         f"| Minério 62% em R$/t | {_f(m['meio_rs_real'], 0)} | {_f(m['ltm_rs'], 0)} |",
+         f"| Minério 62% em US$/t | {_f(m['meio_usd_real'], 1)} (real; nominal {_f(m['meio_usd_nominal'], 1)}) | {_f(m['ltm_usd'], 1)} |",
+         f"| Câmbio R$/US$ | {_f(m['meio_fx_real'], 3)} (real) | {_f(m['ltm_ptax'], 3)} |",
+         f"| Volume vendido (Mt) | {_f(vol['meio'], 1)} — {vol['razao']} | {_f(vol['ltm'], 1)} |", "",
+         f"Fator de preço da receita de meio = {_f(m['fator'], 3)} · fator de volume = {_f(vol['fator'], 3)} · "
+         f"custo que acompanha o preço = {_f(n['custo_variavel'], 1, True)} da receita.", "",
+         "| Exercício | Minério R$/t de hoje | Fator de preço (meio ÷ ano) | Volume (Mt) |", "|---|---|---|---|"]
+    for a, f in m["fator_preco"].items():
+        L.append(f"| {a} | {_f(m['anual'].loc[int(a), 'rs_real'], 0)} | {_f(f, 3)} | {_f(vol['anos'].get(a), 1)} |")
+    L += ["", "| Método (sensibilidade; o adotado foi fixado antes do veredito) | Receita de meio (R$ bi) | Margem EBIT mediana | Central R$ | Régua |",
+          "|---|---|---|---|---|"]
+    for k, s in n["sensibilidade"].items():
+        L.append(f"| {k} | {_f(s['receita_meio'] / 1e6, 2)} | {_f(s['m50'], 1, True)} | {_f(s['central'])} | {s['palavra']} |")
+    return L + [""]
 
 
 def _f(x, casas=2, pct=False):
@@ -115,6 +138,8 @@ def anexo(c: dict) -> str:
          f"DL/EBITDA {_f(r['dl_ebitda'])} · defasagem do provento {_f(r['defasagem_meses'], 1)} meses",
          f"Compra R$ {_f(r.get('compra'))} · saída R$ {_f(r.get('saida'))} · notas: " +
          " · ".join(f"{k} {_f(v, 1)}" for k, v in r["notas"].items()), ""]
+    if c.get("norm"):
+        L += _bloco_ciclo(c["norm"])
     L += ["## Série por exercício", "", "| Exercício | Receita real (R$ mi) | Margem bruta | Margem EBIT aj. | ROIC real (reposição) |",
           "|---|---|---|---|---|"]
     for a in c["anos"]:
