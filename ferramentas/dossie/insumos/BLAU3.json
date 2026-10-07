@@ -1,0 +1,86 @@
+{
+  "_doc": "Insumos não mecânicos do dossiê BLAU3 (02 v4, regra 11). Data-base 02/10/2026. Cada item com fonte A/B; documentos baixados em ferramentas/dados/cvm/docs/BLAU3/ (DFP 2023 v1, 2024 v1, 2025 v2; IPE 2020-2026).",
+  "ma_ruim": {
+    "valor": false,
+    "fonte": "DFP 2020 v2 (nota de combinação de negócios, CVM): Pharma Limírio = contraprestação transferida e a transferir de R$ 140,0 mi a valor justo (R$ 130 mi fixos: 2 sinal + 58 no closing de 15/05/2020 + 70 em 14 parcelas; + R$ 10 mi do contingente de R$ 20 mi atrelado a 2 registros ANVISA), ágio R$ 112,4 mi; 140,0 / ativo 2019 (R$ 738 mi) = 19,0% < 20% (o FR de 15/05/2020 cita R$ 150 mi com o contingente cheio: 20,3%). Bergamo (~US$ 28 mi, FR 31/10/2022, ~5-6% do ativo 2022) e empréstimo Prothya (€ 50 mi, FR 30/08/2023, ~10%; recuperado com € 52,1 mi = R$ 330,5 mi, DFP 2025 nota 2) também abaixo de 20%. Nenhuma aquisição > 20% do ativo -> componente da rubrica não se aplica (0); o retorno fraco da alocação aparece no R$ 1 retido",
+    "nota_fonte": "A"
+  },
+  "interferencias": {
+    "valor": 0,
+    "fonte": "Busca no IPE da CVM 2017-2026 (781 documentos da Blau em 2020-26; 2017-19 só 2 comunicados comerciais 32 fatos relevantes, 1 comunicação de transação com parte relacionada): nenhuma operação do controlador contra o minoritário (aumento de capital dirigido, venda de ativo ao controlador, recompra do controlador, redução de payout imposta). Waivers de free float (FR 14/04/2021, 06/06/2022, 22/09/2023, 10/10/2023, 13/12/2024, 04/06/2025, 09/09/2026) e contratos F11 (DFP 2025 nota 24) não contados aqui: o primeiro entra como cenário no desconto de controlador, o segundo no componente de partes relacionadas. Janela real = 2017-2026 (o IPE da Blau começa no registro pré-IPO), não 15 anos",
+    "nota_fonte": "A"
+  },
+  "partes_rel_sobre_receita": {
+    "valor": 0.014,
+    "fonte": "DFP 2025 nota 24.3 (fluxo do exercício): F11 Segurança Privada R$ 8,4 mi + F11 Facilities R$ 15,4 mi = R$ 23,8 mi ÷ receita R$ 1.702 mi = 1,4% (2024: R$ 19,8 mi). Divergência registrada (02 regra 3): o FRE 2026 traz montantes de contrato, não fluxo (F11 R$ 29,9 + 8,0 mi; Inventta ICT R$ 58,0 mi de contrato de 2026; advogados R$ 0,8 mi): bruto 5,7% (evidencia.partes_relacionadas_bruto, só pista). Vale a nota explicativa, como desenhado. Inventta ICT é associação sem fins lucrativos sob influência da Blau (comunicado CVM 80/22 de 26/06/2026: contratos 'superando R$ 50 milhões'), não do controlador",
+    "nota_fonte": "A"
+  },
+  "tag_along": {
+    "valor": 1.0,
+    "fonte": "Estatuto social da Blau (IPE, versão de 22/04/2026), art. 33: alienação de controle condicionada a OPA aos demais acionistas nas condições do Regulamento do Novo Mercado (tag along 100%, ação única ON); art. 34: OPA obrigatória a quem atingir 15%",
+    "nota_fonte": "A"
+  },
+  "discricionario": {
+    "valor": true,
+    "fonte": "FRE 2026 v3 (CVM): controlador pessoa física com 82,50% das ON, que é também Diretor Presidente e Vice-Presidente do Conselho; presidente do Conselho é parente de 2º grau. Decide payout, capital e contratos (doutrina §10: peso 2)",
+    "nota_fonte": "A"
+  },
+  "fisher": {
+    "respostas": [
+      "sim",
+      "sim",
+      "sem",
+      "sem",
+      "sim",
+      "sim",
+      "sem",
+      "sem",
+      "sem",
+      "sem",
+      "sem",
+      "sim",
+      "sim",
+      "sim",
+      "sem"
+    ],
+    "itens": [
+      "1 potencial de mercado: sim — R$ 3,3 bi de TAM submetido à ANVISA, R$ 2,7 bi a lançar em 2026-28 (DFP 2025, relatório da administração, A; é alegação da empresa)",
+      "2 decisão de seguir lançando: sim — PD&I de R$ 188 mi (11% da receita) e 47 registros novos em 2025 (idem, A)",
+      "3 eficácia do P&D: sem — R$ 406 mi de desenvolvimento capitalizado (nota 15) contra R$ 127 mi de receita de lançamentos; eficácia ainda não provada",
+      "4 força de vendas: sem",
+      "5 margem que vale a pena: sim — margem bruta 40,1% e EBIT ajustado 19,3% em 2025 (DFP, A)",
+      "6 o que faz pela margem: sim — Bergamo de margem bruta ~0 ao nível consolidado em 2 anos; mais produção local (relatório 2025, A)",
+      "7 relações de trabalho: sem",
+      "8 relações entre executivos: sem",
+      "9 profundidade da gestão: sem — controlador é o Diretor Presidente",
+      "10 controles de custo e contábeis: sem — parecer limpo da PwC não basta como prova",
+      "11 aspectos do setor: sem",
+      "12 visão de longo prazo: sim — aceita ROIC comprimido no ciclo de anticorpos monoclonais, declarado (relatório 2025, A)",
+      "13 crescimento sem diluição: sim — ações -0,48% a.a. 2021-25, investimento financiado por caixa e dívida (FRE/DFP, A)",
+      "14 fala dos problemas: sim — divulgou provisão de estoque e receita zero da Hemarus e o mau desempenho da Prothya (relatório 2025; FR 09/07/2025, A)",
+      "15 integridade inquestionável: sem — contratos F11 com a família do controlador desde 2016 e waivers sucessivos de free float impedem o 'inquestionável'"
+    ]
+  },
+  "desconto_controlador": {
+    "tipo": "cenarios",
+    "razao": "regra 8: probabilidade x magnitude do risco prospectivo. Nenhuma interferência consumada (IPE 2017-26); o risco de alocação (ciclo de anticorpos com ROIC < WACC) fica na gestão e no valuation, não aqui. Entram só os riscos do controlador que a nota e o central não capturam",
+    "cenarios": [
+      {
+        "nome": "Sem extração além da já no EBIT (contratos F11, 1,4% da receita)",
+        "prob": 0.8,
+        "perda": 0.0
+      },
+      {
+        "nome": "Fechamento de capital ou OPA com free float fora do mínimo do Novo Mercado desde 2021 (prazo da B3 até 31/12/2027) a preço abaixo do valor",
+        "prob": 0.1,
+        "perda": 0.15
+      },
+      {
+        "nome": "Transações com empresas da família crescendo acima do negócio (F11 +20% em 2025 com receita -3%, DFP 2025 nota 24)",
+        "prob": 0.1,
+        "perda": 0.05
+      }
+    ]
+  },
+  "ajustes": {}
+}

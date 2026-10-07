@@ -1,5 +1,7 @@
 # Dados brutos reproduzíveis (CVM/StatusInvest) — não versionar
 ferramentas/dados/cvm/*.zip
+# Documentos do RAD/IPE baixados para os dossiês (DFP completo, fatos relevantes) — rebaixáveis pelo protocolo citado no dossiê
+ferramentas/dados/cvm/docs/
 ferramentas/dados/raw/
 # Derivados do backtest (reconstruíveis dos ZIPs da CVM por backtest/ledger/*)
 ferramentas/backtest/dados/
