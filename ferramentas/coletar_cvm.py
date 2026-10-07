@@ -33,6 +33,8 @@ EMPRESAS = {
     "LEVE3": ("cvm:008575", 1), "EGIE3": ("cvm:017329", 1), "UNIP6": ("cvm:011592", 1), "GGBR4": ("cvm:003980", 1),
     "TIMS3": ("cvm:017639|024929", 1), "VIVT3": ("cvm:017671", 1), "FLRY3": ("cvm:021881", 1), "HYPE3": ("cvm:021431", 1),
     "ABEV3": ("cvm:023264", 1), "WEGE3": ("cvm:005410", 1), "ITSA4": ("cvm:007617", 1),
+    # dossiês fora do hall (Etapa 5): gravam em dossie/dados/, nunca no cvm_series.json do hall
+    "BLAU3": ("cvm:024627", 1), "CMIN3": ("cvm:025585", 1),
 }
 DRE = {"receita": "3.01", "custo": "3.02", "lucro_bruto": "3.03", "desp_vendas": "3.04.01", "desp_ga": "3.04.02",
        "outras_receitas_op": "3.04.04", "outras_despesas_op": "3.04.05", "ebit": "3.05", "res_fin": "3.06", "desp_fin": "3.06.02", "lair": "3.07", "ir": "3.08", "lucro": "3.11",
@@ -282,7 +284,7 @@ def itr_ytd(tk, ano, mes=6):
     return res
 
 
-def main(tks, anos=range(2016, 2026)):
+def main(tks, anos=range(2016, 2026), arq=None):
     saida = {}
     for tk in tks:
         serie, auditoria = {}, {}
@@ -318,7 +320,7 @@ def main(tks, anos=range(2016, 2026)):
         saida[tk] = {"anual": serie, "ltm_2T26": ltm, "auditoria_linhas_dfc": auditoria, "acoes_por_unit": EMPRESAS[tk][1]}
         ok = [a for a in serie if serie[a].get("receita")]
         print(tk, "anos com DRE:", ok[0] if ok else None, "→", ok[-1] if ok else None, "| LTM receita:", ltm.get("receita"))
-    arq = AQUI / "dados" / "cvm_series.json"
+    arq = arq or AQUI / "dados" / "cvm_series.json"
     tudo = json.loads(arq.read_text(encoding="utf-8")) if arq.exists() else {}
     tudo.update(saida)                     # mescla: recoletar um lote não apaga os outros
     arq.write_text(json.dumps(tudo, ensure_ascii=False, indent=1), encoding="utf-8")

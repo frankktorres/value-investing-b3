@@ -1,0 +1,23 @@
+{
+ "ticker": "BLAU3",
+ "data_preco": "2026-10-02",
+ "preco": 10.82,
+ "central": 8.4421,
+ "pc": 1.2817,
+ "palavra": "NÃO CONCLUSIVO",
+ "palavra_regua": "CARA",
+ "notas_regra11": {
+  "moat": 2,
+  "gestao": 1,
+  "controlador": 1,
+  "ciclo": 3,
+  "fisher": 0
+ },
+ "desc_controlador": 0.0,
+ "desc_controlador_razao": "PENDENTE",
+ "media_regra11": 1.4,
+ "discricionario": false,
+ "doutrina": "v2.2",
+ "template": "02 v4",
+ "gerado_em": "2026-10-07"
+}
