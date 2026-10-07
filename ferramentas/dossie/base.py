@@ -17,6 +17,7 @@ import pathlib
 import statistics as st
 import zipfile
 from collections import defaultdict
+from contextlib import contextmanager
 
 import pandas as pd
 
@@ -36,25 +37,44 @@ PREGAO = {"BLAU3": "BLAU", "CMIN3": "CSNMINERACAO", "HYPE3": "HYPERA"}
 CNPJ = {"BLAU3": "58.430.828/0001-60", "CMIN3": "08.902.291/0001-15", "HYPE3": "02.932.074/0001-91"}
 
 
-def eventos_em_acoes(tk: str) -> list[dict]:
-    """Eventos em ações da B3 (GetListedSupplementCompany, fonte A) pela raiz do ticker. Só a bonificação tem semântica
-    conferida (fator = % de ações novas: BLAU 30,0 em 2026 = 30 novas por 100, batendo 177,7 → 228,8 mi no DFP);
-    qualquer outro tipo falha alto em vez de ajustar errado."""
-    from backtest.precos.proventos_b3 import carregar_suplemento
-    s = carregar_suplemento()
-    s = s[s["raiz"] == tk[:4]]
-    out = []
+# Tipos de evento com semântica conferida contra a contagem de ações da CVM (fonte A). Nos dois o `fator_b3` é o % de ações
+# novas sobre as antigas, e o multiplicador da quantidade é 1 + fator/100:
+#   · BONIFICACAO — BLAU 30,0 em 2026 = 30 novas por 100, batendo 177,7 → 228,8 mi no DFP;
+#   · DESDOBRAMENTO — BBAS 100,0 em 15/04/2024 (2 por 1): DFP 2023 → 2024, 2.865.417.020 → 5.730.834.040 ações integralizadas
+#     (×2 exato). O fator NÃO é a razão (seria ×100): MGLU 300,0 em 2020 é o 4 por 1.
+# Grupamento (o fator é a razão, ex.: MGLU 0,1 em 2024) e os demais tipos falham alto em vez de ajustar errado.
+SEMANTICA_CONFERIDA = ("BONIFICACAO", "DESDOBRAMENTO")
+
+
+def eventos_em_acoes(tk: str, suplemento=None) -> list[dict]:
+    """Eventos em ações da B3 (GetListedSupplementCompany, fonte A) pela raiz do ticker, com o multiplicador da quantidade
+    de ações (`SEMANTICA_CONFERIDA`); qualquer outro tipo falha alto. `suplemento` = DataFrame no formato de
+    `carregar_suplemento` (testes)."""
+    if suplemento is None:
+        from backtest.precos.proventos_b3 import carregar_suplemento
+        suplemento = carregar_suplemento()
+    s = suplemento[suplemento["raiz"] == tk[:4]]
+    out = {}
     for _, e in s.iterrows():
-        if e["tipo"] != "BONIFICACAO":
+        if e["tipo"] not in SEMANTICA_CONFERIDA:
             raise NotImplementedError(f"{tk}: evento {e['tipo']} sem semântica conferida — ajustar à mão")
-        out.append({"data_com": str(e["data_com"])[:10], "aprovacao": str(e["data_aprovacao"])[:10],
-                    "multiplicador": 1 + float(e["fator_b3"]) / 100})
-    return out
+        f = float(e["fator_b3"])
+        if not f > 0:
+            raise ValueError(f"{tk}: {e['tipo']} de {e['data_com']} com fator {e['fator_b3']!r}")
+        x = {"tipo": e["tipo"], "data_com": str(e["data_com"])[:10], "aprovacao": str(e["data_aprovacao"])[:10],
+             "multiplicador": 1 + f / 100}
+        # a B3 repete o evento por ISIN (ON, PN, UNIT): um só por (tipo, data-com), senão o multiplicador entra ao quadrado
+        # (adversário, 07/10); fatores diferentes entre classes na mesma data não têm semântica conferida → falha alto
+        k = (x["tipo"], x["data_com"])
+        if k in out and out[k]["multiplicador"] != x["multiplicador"]:
+            raise NotImplementedError(f"{tk}: {k} com fatores diferentes por classe — ajustar à mão")
+        out[k] = x
+    return list(out.values())
 
 
 def proventos_b3(tk: str) -> tuple[dict[str, float], dict[str, float]]:
     """DPA e JCP por ano da data-com (R$ por ação ON de HOJE), da API da B3: o provento com data-com anterior a uma
-    bonificação é dividido pelo multiplicador, para comparar com a quantidade atual de ações."""
+    bonificação ou desdobramento é dividido pelo multiplicador, para comparar com a quantidade atual de ações."""
     from backtest.precos.proventos_b3 import carregar_dinheiro
     ev = eventos_em_acoes(tk)
     d = carregar_dinheiro()
@@ -152,8 +172,28 @@ def pl_hist(tk: str) -> float | None:
     return st.median(xs) if xs else None
 
 
+@contextmanager
+def isolado(tk: str):
+    """Ticker que também está no hall (HYPE3): `carregar` troca SI[tk] (e põe CVM[tk] se faltar) na memória compartilhada com
+    os lotes; na saída do bloco o que havia antes volta — senão um lote avaliado depois no mesmo processo (pytest, golden de
+    41) usaria os proventos do dossiê."""
+    antes = {nome: (d[tk] if tk in d else _AUSENTE) for nome, d in (("SI", SI), ("CVM", CVM))}
+    try:
+        yield
+    finally:
+        for nome, d in (("SI", SI), ("CVM", CVM)):
+            if antes[nome] is _AUSENTE:
+                d.pop(tk, None)
+            else:
+                d[tk] = antes[nome]
+
+
+_AUSENTE = object()
+
+
 def carregar(tk: str, dia_statusinvest: str = "2026-10-07") -> dict:
-    """Põe as séries do ticker nos dicionários do motor (em memória) e devolve o que foi usado, para o anexo."""
+    """Põe as séries do ticker nos dicionários do motor (em memória) e devolve o que foi usado, para o anexo. Para ticker do
+    hall, chamar dentro de `isolado(tk)`."""
     if tk not in CVM:
         CVM[tk] = json.loads(SERIES.read_text(encoding="utf-8"))[tk]
         for (t, ano), (n, _) in CORRECOES_ACOES.items():

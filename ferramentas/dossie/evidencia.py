@@ -57,20 +57,20 @@ def r1_da_triagem(tk: str) -> float | str | None:
 
 def diluicao(tk: str, anos: list[str], eventos: list[dict], primeiro_listado: str) -> tuple[float | None, str]:
     """CAGR das ações em circulação desde o 1º fim de exercício com ação negociada (antes disso a contagem não é a do
-    acionista de bolsa), com as bonificações desfeitas (bonificação não dilui). Recompra líquida → CAGR negativo."""
+    acionista de bolsa), com as bonificações e desdobramentos desfeitos (não diluem). Recompra líquida → CAGR negativo."""
     a = CVM[tk]["anual"]
     xs = [x for x in anos if x >= primeiro_listado and a.get(x, {}).get("acoes")]
     if len(xs) < 2:
         return None, "menos de 2 exercícios com ação negociada"
 
-    def ajust(x):
+    def ajust(x):       # só o evento aprovado DENTRO da janela: o anterior a ela (HYPE3, desdobramento de 2009) já está nas duas pontas
         n = a[x]["acoes"]
         for e in eventos:
-            if e["aprovacao"] <= f"{x}-12-31":
+            if f"{xs[0]}-12-31" < e["aprovacao"] <= f"{x}-12-31":
                 n /= e["multiplicador"]
         return n
     n0, n1, t = ajust(xs[0]), ajust(xs[-1]), int(xs[-1]) - int(xs[0])
-    return (n1 / n0) ** (1 / t) - 1, f"{xs[0]} → {xs[-1]}: {n0 / 1e6:,.1f} → {n1 / 1e6:,.1f} mi (bonificações desfeitas)"
+    return (n1 / n0) ** (1 / t) - 1, f"{xs[0]} → {xs[-1]}: {n0 / 1e6:,.1f} → {n1 / 1e6:,.1f} mi (bonificações/desdobramentos desfeitos)"
 
 
 def remuneracao_sobre_lucro(tk: str, rem: dict, anos: list[str]) -> tuple[float | None, str]:

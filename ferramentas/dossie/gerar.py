@@ -23,7 +23,7 @@ from motor_nao_financeiras import avaliar
 
 AQUI = pathlib.Path(__file__).resolve().parent
 RAIZ = AQUI.parent.parent
-FICHAS = {"BLAU3": "dossie.fichas.blau3", "CMIN3": "dossie.fichas.cmin3"}
+FICHAS = {"BLAU3": "dossie.fichas.blau3", "CMIN3": "dossie.fichas.cmin3", "HYPE3": "dossie.fichas.hype3"}
 ANO_FRE = 2026
 DOUTRINA, TEMPLATE = "v2.2", "02 v4"
 NOTAS = ("moat", "gestao", "controlador", "ciclo", "fisher")
@@ -45,6 +45,11 @@ def _valor(ins: dict, chave: str, padrao=None):
 
 
 def calcular(tk: str) -> dict:
+    with base.isolado(tk):      # ticker do hall (HYPE3): os proventos da B3 não vazam para os lotes no mesmo processo
+        return _calcular(tk)
+
+
+def _calcular(tk: str) -> dict:
     ficha = importlib.import_module(FICHAS[tk])
     r0 = avaliar(ficha.empresa(), MK)
     anos = ficha.ANOS
@@ -59,7 +64,9 @@ def calcular(tk: str) -> dict:
     rem_l, rem_txt = ev.remuneracao_sobre_lucro(tk, rem, anos)
     listado = min(a for a in anos if base.fechamento_do_ano(tk, int(a)))
     dil, dil_txt = ev.diluicao(tk, anos, eventos, listado)
-    r1 = ev.r1_da_triagem(tk)
+    r1, r1_f = ev.r1_da_triagem(tk), "Q4 da última triagem"
+    if r1 is None:      # ticker do hall fica fora da triagem: o mesmo Q4, rodado só para ele, entra como insumo com fonte
+        r1, r1_f = _valor(ins, "r1_retido")
     pr_bruto, pr_txt = ev.partes_relacionadas_bruto(tk, fr["partes_relacionadas"]["dados"], anos[-1])
     tag = fre.tag_along(cnpj, ANO_FRE)
 
@@ -88,7 +95,7 @@ def calcular(tk: str) -> dict:
         r = dict(r, palavra="NÃO CONCLUSIVO", confianca="não conclusivo (desconto de controlador pendente — D3)")
     return dict(tk=tk, r=r, r0=r0, dc=dc, anos=anos, mg=mg, rec=rec, fr=fr, rem_txt=rem_txt, rem_l=rem_l, dil=dil, dil_txt=dil_txt,
                 r1=r1, pr_bruto=pr_bruto, pr_txt=pr_txt, tag=tag, fontes_ins=dict(ma=ma_f, interf=interf_f, pr=pr_f, tag=tag_f,
-                disc=disc_f), disc=bool(disc), base_n=base_n, aj=aj, final=final, media=media, eventos=eventos,
+                disc=disc_f, r1=r1_f), disc=bool(disc), base_n=base_n, aj=aj, final=final, media=media, eventos=eventos,
                 mna=ev.mna_provavel(tk, anos), listado=listado,
                 norm=ficha.normalizacao(dc) if hasattr(ficha, "normalizacao") else None)      # cíclica: ciclo em número (02 regra 7)
 
@@ -156,7 +163,7 @@ def anexo(c: dict) -> str:
           f"Insumos do dossiê: M&A {c['fontes_ins']['ma']} · interferências {c['fontes_ins']['interf']} · partes relacionadas "
           f"{c['fontes_ins']['pr']} · tag along {c['fontes_ins']['tag']}.", "",
           "## Gestão e controle (FRE " + str(ANO_FRE) + ", versão " + str(fr["documento"]["versao"] if fr.get("documento") else "—") + ")", "",
-          f"- R$ 1 retido (Q4 da triagem, mesmo dia-base): {_f(c['r1'])}",
+          f"- R$ 1 retido (Q4 da triagem, mesmo dia-base): {_f(c['r1'])} — {c['fontes_ins']['r1']}",
           f"- Diluição: {_f(c['dil'], 2, True)} a.a. — {c['dil_txt']}",
           f"- Remuneração da administração ÷ lucro: {_f(c['rem_l'], 2, True)} — {c['rem_txt']}",
           f"- Partes relacionadas (bruto do FRE, só pista): {_f(c['pr_bruto'], 1, True)} — {c['pr_txt']}",
