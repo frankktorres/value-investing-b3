@@ -122,6 +122,21 @@ Cada frente: **objetivo · o que fazer (técnico) · pronto quando · modelo/eff
   rodar pelo Agendador do Windows (schtasks + VBS oculto, ver MAQUINA.md) e anexar ao prompt de notícias.
 - **Pronto quando:** fila com as 20 melhores fora do hall, cada uma com o que a análise completa precisa resolver; monitor rodando sozinho.
 - **Modelo:** Opus high, plan mode (critérios); Sonnet medium (coleta e script).
+- **Resultado (06/10/2026): CONCLUÍDA.** `ferramentas/triagem/` (`python -m triagem.rodar`) gera o `06` com a fila; reusa o ledger
+  point-in-time, o COTAHIST e o motor reduzido da Etapa 3, com o erro medido declarado (±0,34 de P/C) e **sem palavra** (teste com
+  palavra injetada). Universo em 02/10: 312 companhias negociadas → liquidez ≥ R$ 0,97 mi/dia (piso do backtest; posição típica do
+  Frank até R$ 50 mil) → exclusões §8 (RJ pela FCA e pelo CODBDI, educação, aviação, resseguro) → 110 avaliadas. **Só 5 das 104 não
+  financeiras passam no portão Buffett** (ROIC real > WACC real em ≥ 7/10 + no máximo 1 reprovação em FCO, DL/EBITDA, R$ 1 retido,
+  proventos), e só 1 delas (CMIN3) não sai por preço — a B3 de out/2026 repete o que o hall já dizia. Por isso a fila é **ordenada,
+  não cortada** (decisão após a 1ª rodada, declarada no `06` e no config): camada A = portão; camada B = ≥ 3 de 5 testes, com o que
+  reprovou escrito como pergunta. O `adversario` achou 6 defeitos, todos corrigidos com teste: SAUD3 (Odontoprev + incorporação de
+  2026) entrava na camada A com DFPs da empresa antiga → **quebra estrutural** (base de ações > 50% ou ativo do ITR > 3× o DFP) vai
+  para "avaliar à mão"; EY com EBIT bruto (ALLD3 83,6% → 28,2% ajustado); Q4 leniente com prejuízo acumulado; nota antiga perdida na
+  troca de código; troca do COTAHIST no ano novo; EY infinito gravado como nulo. A fila entra em `prospectivo/triagem.jsonl`
+  (append-only; métrica a 1 ano declarada no `registro.py`). **Monitor:** `monitor_semanal.py` pelo Agendador
+  (`ValueInvesting-MonitorSemanal`, sexta 08:00, VBS oculto, `-StartWhenAvailable`) baixa o COTAHIST do ano, compara os 41 com
+  compra/saída do motor do hall e grava `BOLETINS/AAAA-MM-DD-monitor.md`, lido pela seção 6 do prompt de notícias (v1.2). Em
+  02/10 o monitor reproduz o P/C do golden nos 40 com central (teste). Suíte: 379 → 451 testes.
 
 ### F5 — Profundidade qualitativa: o dossiê Buffett/Munger (D2, D3, D4, D16)
 **Objetivo:** só depois da triagem, analisar poucas empresas a fundo, como dono.
@@ -181,7 +196,7 @@ Cada frente: **objetivo · o que fazer (técnico) · pronto quando · modelo/eff
 | ~~1~~ ✅ | F1 Fundação + F7 diário — **CONCLUÍDA em 05/10/2026** (golden dos 41 tickers, pytest, defasagem a VP, cobertura por juros pagos, diário 09) | Sonnet · medium · não |
 | ~~2~~ ✅ | F2 Coerência do método — **CONCLUÍDA em 05/10/2026**, doutrina **v2.2**: D8 janela do ciclo (§11.4 nova), D9 capex de manutenção com Δreceita real, D10 ROIC a custo de reposição travando o crescimento, D7 saída por qualidade (aprovada; só a LEVE3 elegível), mais as duas pendências da Etapa 1 (aluguel no OE e defasagem do Lote 4). Revisão adversarial corrigiu 6 defeitos. 76 testes verdes | Opus · high · **sim** |
 | ~~3~~ ⛔ | F3 Backtest — **PARADA em 06/10/2026 no portão do proxy** (70,7% / ΔP/C 0,34; ver F3 "Resultado"): D5 segue aberta; validação passa a ser prospectiva (`registro_prospectivo.py` a cada rodada aprovada) | Opus · high · **sim** |
-| 4 | F4 Universo + monitor | Varrer toda a B3 com a régua v2.2 — **sem validação empírica** (D5 aberta): todo veredito novo entra no registro prospectivo | Opus · high · **sim** (critérios) → Sonnet · medium |
+| ~~4~~ ✅ | F4 Universo + monitor — **CONCLUÍDA em 06/10/2026**: triagem de toda a B3 (`python -m triagem.rodar` → `06` com fila de 20, camadas A/B, sem palavra) e monitor semanal agendado (sexta 08:00 → `BOLETINS/…-monitor.md`); 5 de 104 passam no portão; fila em `prospectivo/triagem.jsonl` | Opus · high · **sim** |
 | 5 | F5 Dossiês (saúde primeiro) | Profundidade só nas finalistas | Opus · high · sim no template |
 | 6 | F6 Carteira | Depende de saber o que há para comprar | Opus · high · **sim** + respostas do Frank |
 | 7 | F8 Temporada 3T26 | Data externa (out–nov) | Sonnet · medium · não |

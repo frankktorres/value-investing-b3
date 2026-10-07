@@ -13,3 +13,5 @@ __pycache__/
 # Segredos
 .env*
 *.key
+# Log da última execução do monitor semanal (Etapa 4)
+ferramentas/monitor/ultimo.log

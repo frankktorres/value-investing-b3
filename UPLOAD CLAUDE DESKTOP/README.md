@@ -28,14 +28,17 @@
 PDF do lote → `08-prompt-recalculo-lote` → `04-checklist` → novo PDF `…_rev_DD-MM-AAAA.pdf` → atualizar `03-hall` (inclusive ranking Greenblatt)
 
 **Ampliar o hall**
-`06-triagem` → fila por prioridade → `02-prompt` um a um
+`cd ferramentas && python -m triagem.rodar` (regera o `06` com a fila de toda a B3; não editar o `06` à mão) → fila por camada → `02-prompt` um a um
+
+**Preço da semana**
+O Agendador roda `ferramentas/monitor_semanal.py` toda sexta às 08:00 (tarefa `ValueInvesting-MonitorSemanal`) → `BOLETINS/AAAA-MM-DD-monitor.md` com quem cruzou compra ou saída → `05-prompt-reavaliacao` antes de qualquer decisão. Reinstalar: `ferramentas/agendador/instalar_tarefa.ps1`.
 
 **Fechar um lote em PDF**
 Conjunto de análises completas → fichas de 2 páginas por empresa (veredito, notas 0–10, quadro clássico, tabela de reconstrução do central, proventos, comparativo com renda fixa líquida, qualitativo 0–5, buy & hold, riscos e gatilhos)
 
 ## Ferramentas (cálculo reproduzível)
 
-`ferramentas/` tem os motores de valuation (`motor_financeiras.py` e `motor_nao_financeiras.py`, fórmulas da doutrina v2.2), os coletores (`coletar_cvm.py` — DFP/ITR da CVM, fonte A — e `coletar_statusinvest.py`), as premissas e textos dos 6 lotes (`loteN_*.py`), os geradores de PDF (`gerar_pdf_loteN.py`) e os atualizadores do hall (`atualizar_hall_loteN.py`). Refazer um lote: `cd ferramentas && python gerar_pdf_loteN.py`. Os dados brutos ficam em `ferramentas/dados/` (não sobem para o Desktop).
+`ferramentas/` tem os motores de valuation (`motor_financeiras.py` e `motor_nao_financeiras.py`, fórmulas da doutrina v2.2), os coletores (`coletar_cvm.py` — DFP/ITR da CVM, fonte A — e `coletar_statusinvest.py`), as premissas e textos dos 6 lotes (`loteN_*.py`), os geradores de PDF (`gerar_pdf_loteN.py`) e os atualizadores do hall (`atualizar_hall_loteN.py`). Refazer um lote: `cd ferramentas && python gerar_pdf_loteN.py`. `triagem/` (fila de toda a B3, sem veredito) e `monitor_semanal.py` (preço semanal do hall) reusam o ledger point-in-time e o COTAHIST de `backtest/`. Os dados brutos ficam em `ferramentas/dados/` (não sobem para o Desktop).
 
 ## Pasta de upload
 
