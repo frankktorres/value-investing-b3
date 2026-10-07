@@ -4,7 +4,7 @@ import math
 
 import pytest
 
-from registro_prospectivo import ler, registrar
+from registro_prospectivo import ler, registrar, registrar_dossies
 
 
 def _golden(tmp_path, pc=2.0, central=10.0):
@@ -36,3 +36,65 @@ def test_recusa_reescrever_a_mesma_data(tmp_path):
         registrar("2026-10-02", "v2.2", _golden(tmp_path, pc=1.5), reg)
     assert registrar("2027-04-01", "v2.2", _golden(tmp_path, pc=1.5), reg) == 2
     assert len(ler(reg)) == 4
+
+
+def _veredito(pasta, tk, pc=1.3, preco=25.16):
+    v = {"ticker": tk, "data_preco": "2026-10-02", "preco": preco, "central": 19.27, "pc": pc,
+         "palavra": "CARA", "doutrina": "v2.2"}
+    (pasta / f"{tk}-2026-10-02.json").write_text(json.dumps(v), encoding="utf-8")
+
+
+def test_dossie_nao_colide_com_o_hall(tmp_path):
+    reg = tmp_path / "r.jsonl"
+    registrar("2026-10-02", "v2.2", _golden(tmp_path), reg)
+    ved = tmp_path / "ved"
+    ved.mkdir()
+    _veredito(ved, "AAAA3")                                  # mesmo ticker e data do hall
+    _veredito(ved, "HYPE3")
+    assert registrar_dossies(ved, reg, hoje="2026-10-07") == 2
+    assert registrar_dossies(ved, reg, hoje="2026-10-08") == 0   # idempotente
+    ls = ler(reg)
+    assert len(ls) == 4
+    assert {l["origem"] for l in ls if l["ticker"] == "AAAA3"} == {"hall", "dossie"}
+
+
+def test_dossie_recusa_reescrever_e_linha_antiga_vale_hall(tmp_path):
+    reg = tmp_path / "r.jsonl"
+    ved = tmp_path / "ved"
+    ved.mkdir()
+    _veredito(ved, "HYPE3")
+    registrar_dossies(ved, reg)
+    _veredito(ved, "HYPE3", pc=1.1)
+    with pytest.raises(ValueError, match="append-only"):
+        registrar_dossies(ved, reg)
+    # linha antiga (sem `origem`) conta como "hall": registrar de novo o hall não duplica
+    antigo = tmp_path / "a.jsonl"
+    registrar("2026-10-02", "v2.2", _golden(tmp_path), antigo)
+    ls = [{k: v for k, v in l.items() if k != "origem"} for l in ler(antigo)]
+    antigo.write_text("".join(json.dumps(l) + "\n" for l in ls), encoding="utf-8")
+    assert registrar("2026-10-02", "v2.2", _golden(tmp_path), antigo) == 0
+
+
+def test_dossie_duplicata_na_rodada_cosmetica_e_inf(tmp_path):
+    reg = tmp_path / "r.jsonl"
+    ved = tmp_path / "ved"
+    ved.mkdir()
+    _veredito(ved, "HYPE3")
+    (ved / "HYPE3-2026-10-02-rev.json").write_text(
+        (ved / "HYPE3-2026-10-02.json").read_text(encoding="utf-8"), encoding="utf-8")
+    with pytest.raises(ValueError, match="duas vezes"):
+        registrar_dossies(ved, reg)
+    assert ler(reg) == []                                    # nada gravado
+    (ved / "HYPE3-2026-10-02-rev.json").unlink()
+    registrar_dossies(ved, reg)
+    v = json.loads((ved / "HYPE3-2026-10-02.json").read_text(encoding="utf-8"))
+    v["parecer_frank"] = "concorda"                          # mudança que não é veredito
+    (ved / "HYPE3-2026-10-02.json").write_text(json.dumps(v, indent=4), encoding="utf-8")
+    _veredito(ved, "NOVO3")
+    assert registrar_dossies(ved, reg) == 1
+    with pytest.raises(FileNotFoundError):
+        registrar_dossies(tmp_path / "nada", reg)
+    v["pc"] = math.inf
+    (ved / "INF3-2026-10-02.json").write_text(json.dumps({**v, "ticker": "INF3"}), encoding="utf-8")
+    registrar_dossies(ved, reg)
+    assert "Infinity" not in reg.read_text(encoding="utf-8")

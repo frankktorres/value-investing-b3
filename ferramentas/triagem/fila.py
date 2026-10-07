@@ -304,7 +304,9 @@ ficaria acima de 1,10). EY = EBIT ajustado (sem o excesso de outras receitas, §
 
 > "Rode a triagem (`cd ferramentas && python -m triagem.rodar`) e me diga quais da fila valeriam o prompt completo."
 
-Cada análise completa parte das pendências da seção 2 e usa o `02-prompt-analise-completa.md`. O veredito só existe depois
-dela — e entra no registro prospectivo (`registro_prospectivo.py`).
+Cada análise completa parte das pendências da seção 2 e usa o `02-prompt-analise-completa.md` (v4: o **dossiê**; no Claude Code,
+`cd ferramentas && python -m dossie.gerar <TICKER>` gera o anexo mecânico). O veredito só existe depois dele — e entra no registro
+prospectivo com `python registro_prospectivo.py --dossie` (`origem` "dossie"; ticker que também está no hall não colide).
+Dossiês aprovados em 07/10/2026: BLAU3, CMIN3 (ambos NÃO CONCLUSIVO) e HYPE3 (CARA).
 """)
     return "\n".join(s)

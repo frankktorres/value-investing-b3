@@ -130,3 +130,19 @@ do custo por uma década é raro na B3.
 não separa nada e só vale como lista de exclusão (liquidez, §8, RJ). Se a camada B bater a A, o portão Q1 está mal desenhado
 (ROIC contábil contra WACC de hoje pune negócio que cresceu investindo).
 **Revisão:** depois da temporada do 3T26 (rodar de novo com `--data` do último pregão) e a cada rodada registrada.
+
+### 07/10/2026 — Etapa 5 (F5) fechada: dossiês, registro com `origem` e propagação
+
+**O que aconteceu.** Três dossiês aprovados pelo `adversario` e pelo `verificador-fonte` (BLAU3 e CMIN3 NÃO CONCLUSIVO; HYPE3 CARA, central
+R$ 19,27) cumprem o critério do plano (1 saúde + 1 da fila + 1 do hall). O parecer da HYPE3 foi preenchido pelo Claude a pedido do Frank e
+assinado como não independente; segunda opinião = comitê B no Desktop.
+
+**Decisões (técnicas).**
+1. `registro_prospectivo.py --dossie` grava os vereditos de `dossie/vereditos/*.json` em `prospectivo/registro.jsonl`; a chave passa a ser
+   (`origem`, `data_preco`, `ticker`) com `origem` ∈ {hall, dossie}. Linhas antigas sem o campo valem "hall" (arquivo append-only, não reescrito).
+   Assim a HYPE3 (hall e dossiê, mesma data) não colide. A triagem segue em arquivo próprio (`triagem.jsonl`).
+2. Propagado para `02` (v4), `06` (§8, via gerador `triagem/fila.py`), `08` (Passo 4: desdobramento, subvenção de ICMS, M&A, ticker isolado) e `README`.
+   Versões anteriores em `_historico/2026-10-07 antes da Etapa 5/`.
+
+**Fica aberto (⏸ do Frank):** capex de expansão sem receita; desconto de controlador sobre âncora negativa; fatia 7 (notas do hall por
+evidência); margem reexpressa no §11.1; `outros_passivos` fora da solidez/ROIC; alíquota com crédito de IR que tem prazo.

@@ -39,3 +39,6 @@
 {"central": 14.657843, "data_preco": "2026-10-02", "doutrina": "v2.2", "golden_sha": "a451c0c2630652e1", "lote": 5, "palavra": "CARA", "pc": 2.569273, "preco": 37.66, "registrado_em": "2026-10-06", "ticker": "VBBR3"}
 {"central": 17.278201, "data_preco": "2026-10-02", "doutrina": "v2.2", "golden_sha": "a451c0c2630652e1", "lote": 4, "palavra": "CARA", "pc": 1.744395, "preco": 30.14, "registrado_em": "2026-10-06", "ticker": "VIVT3"}
 {"central": 11.917946, "data_preco": "2026-10-02", "doutrina": "v2.2", "golden_sha": "a451c0c2630652e1", "lote": 4, "palavra": "CARA", "pc": 4.317019, "preco": 51.45, "registrado_em": "2026-10-06", "ticker": "WEGE3"}
+{"central": 8.2733, "data_preco": "2026-10-02", "doutrina": "v2.2", "golden_sha": "a15fdb318a4c5eb2", "lote": null, "origem": "dossie", "palavra": "NÃO CONCLUSIVO", "pc": 1.3078, "preco": 10.82, "registrado_em": "2026-10-07", "ticker": "BLAU3"}
+{"central": 3.3533, "data_preco": "2026-10-02", "doutrina": "v2.2", "golden_sha": "ff9e33950517c20c", "lote": null, "origem": "dossie", "palavra": "NÃO CONCLUSIVO", "pc": 1.4821, "preco": 4.97, "registrado_em": "2026-10-07", "ticker": "CMIN3"}
+{"central": 19.2655, "data_preco": "2026-10-02", "doutrina": "v2.2", "golden_sha": "f0fb21b8af1697e8", "lote": null, "origem": "dossie", "palavra": "CARA", "pc": 1.306, "preco": 25.16, "registrado_em": "2026-10-07", "ticker": "HYPE3"}

@@ -7,7 +7,7 @@
 |---|---|
 | `00-CONFIGURACAO-DO-PROJETO.md` | **Primeiro.** Nome, descrição e instruções para colar no Claude Desktop |
 | `01-doutrina-value-investing.md` | Referência permanente (v2.2): filtros, hierarquia, Ke e RF líquida, vetores de controlador, proventos, armadilhas, régua contínua, notas, **quadro clássico e regra do valor central** |
-| `02-prompt-analise-completa.md` | Toda análise nova de um ticker (v3) |
+| `02-prompt-analise-completa.md` | Toda análise nova de um ticker: o **dossiê** (v4, 07/10/2026) |
 | `03-hall-de-acoes.md` | Índice vivo das 41 empresas com veredito, preços, pendências e histórico de revisões |
 | `04-checklist-anti-erro.md` | **Obrigatório** antes de fechar qualquer análise (v2, 18 erros históricos) |
 | `05-prompt-reavaliacao.md` | Quando sair DRE nova ou mudar premissa (v2: quadro clássico inteiro recalculado) |
@@ -19,7 +19,7 @@
 ## Fluxos de trabalho
 
 **Analisar uma ação nova**
-`06-triagem` (se ainda não estiver na fila) → `02-prompt` → `04-checklist` → atualizar `03-hall`
+`06-triagem` (se ainda não estiver na fila) → `02-prompt` (dossiê; no Claude Code, `cd ferramentas && python -m dossie.gerar <TICKER>` gera o anexo mecânico) → `04-checklist` → dossiê aprovado em `DOSSIES/` + atualizar `03-hall` → `python registro_prospectivo.py --dossie` (registra o veredito com `origem` "dossie")
 
 **Reavaliar após resultado**
 `03-hall` (ficha anterior) → `05-prompt-reavaliacao` → `04-checklist` → atualizar `03-hall` + registro de revisões
@@ -38,7 +38,7 @@ Conjunto de análises completas → fichas de 2 páginas por empresa (veredito, 
 
 ## Ferramentas (cálculo reproduzível)
 
-`ferramentas/` tem os motores de valuation (`motor_financeiras.py` e `motor_nao_financeiras.py`, fórmulas da doutrina v2.2), os coletores (`coletar_cvm.py` — DFP/ITR da CVM, fonte A — e `coletar_statusinvest.py`), as premissas e textos dos 6 lotes (`loteN_*.py`), os geradores de PDF (`gerar_pdf_loteN.py`) e os atualizadores do hall (`atualizar_hall_loteN.py`). Refazer um lote: `cd ferramentas && python gerar_pdf_loteN.py`. `triagem/` (fila de toda a B3, sem veredito) e `monitor_semanal.py` (preço semanal do hall) reusam o ledger point-in-time e o COTAHIST de `backtest/`. Os dados brutos ficam em `ferramentas/dados/` (não sobem para o Desktop).
+`ferramentas/` tem os motores de valuation (`motor_financeiras.py` e `motor_nao_financeiras.py`, fórmulas da doutrina v2.2), os coletores (`coletar_cvm.py` — DFP/ITR da CVM, fonte A — e `coletar_statusinvest.py`), as premissas e textos dos 6 lotes (`loteN_*.py`), os geradores de PDF (`gerar_pdf_loteN.py`) e os atualizadores do hall (`atualizar_hall_loteN.py`). Refazer um lote: `cd ferramentas && python gerar_pdf_loteN.py`. `dossie/` (anexo mecânico do dossiê: FRE, notas-base por evidência, vereditos em `dossie/vereditos/`; dossiês aprovados: BLAU3, CMIN3, HYPE3), `triagem/` (fila de toda a B3, sem veredito) e `monitor_semanal.py` (preço semanal do hall) reusam o ledger point-in-time e o COTAHIST de `backtest/`. `registro_prospectivo.py` guarda o veredito do dia, append-only, com `origem` ("hall" ou "dossie") na chave. Os dados brutos ficam em `ferramentas/dados/` (não sobem para o Desktop).
 
 ## Pasta de upload
 

@@ -1,4 +1,4 @@
-# PROMPT DE RECÁLCULO EM LOTE (v1, 04/10/2026)
+# PROMPT DE RECÁLCULO EM LOTE (v1.1, 07/10/2026)
 *Use para refazer um lote inteiro de fichas pela doutrina **v2.2** (05/10/2026). Um lote por conversa. Anexe o PDF vigente do lote e substitua `<LOTE>`.*
 
 ---
@@ -28,6 +28,13 @@ Você é o analista independente de value investing desta mesa. **Recalcule o `<
 - Para não financeiras: EY e ROC de Greenblatt de cada uma (para o ranking do hall, `03` §3).
 - Rode o `04-checklist-anti-erro.md` v2 inteiro e liste os itens que falharam e como foram corrigidos.
 - Lista "Não encontrado".
+
+**PASSO 4 — Lições da Etapa 5 (dossiês BLAU3, CMIN3, HYPE3, 07/10/2026) que valem para qualquer lote**
+- **Desdobramento:** o fator da B3 é percentual (`DESDOBRAMENTO` fator 100 = ×2; multiplicador = 1 + fator/100, conferido no DFP do BBAS3 2024). A B3 repete o mesmo evento por ISIN: deduplicar por (tipo, data-com). `GRUPAMENTO` traz o fator como razão (ex.: 0,1) — não aplicar a regra do desdobramento; conferir à mão.
+- **Subvenção de ICMS (crédito outorgado):** a CVM a deixa em "deduções de vendas", isto é, **dentro** da receita e do EBIT. O tamanho só aparece na conciliação da alíquota de IR (efeito ÷ 34%): na HYPE3 ≈ R$ 1,0 bi = 57% do EBIT de 2025. Declarar quanto do EBIT depende dela e normalizar se o benefício tem prazo.
+- **Retorno incremental de M&A:** usar o EBIT **ajustado** (sem o excesso de "outras"), não o bruto.
+- **Ticker do hall em dossiê:** o dossiê troca a série de proventos só dentro do cálculo do dossiê (`base.isolado`); o golden das 41 não muda.
+- **Nota qualitativa:** base mecânica por evidência + ajuste de no máximo ±1 com fonte A/B (regra 11 do `02` v4); no lote refeito, o hall ainda tem as notas antigas (fatia 7, aberta).
 
 ---
 
