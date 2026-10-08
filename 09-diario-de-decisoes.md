@@ -225,3 +225,17 @@ depois. Central 43,41 → 49,37 (P/C 1,28, CARA). Ficar em 34% já ignoraria um 
 TIMS3: vigência dos laudos com fonte A/B (vira fase com a efetiva até o fim) ou derrota na autuação. PRIO3: o prejuízo fiscal ser
 usado mais devagar que o cronograma da administração.
 **Revisão:** DFP 2026 (LEVE3, PRIO3); vigência dos laudos SUDENE da TIM.
+
+### 08/10/2026 — DECISÃO: o analisador fica arquivado; entram só as lições
+
+**O que aconteceu.** Auditoria (3 agentes, só leitura) da pasta `analisador/`: outro projeto de value investing na B3, paralelo a
+este, com motor próprio, 91 "decisões", 1.523 testes e vereditos para 14 tickers, terminado sem nenhuma compra e com excesso de
+processo. O motor e a régua dele são piores que os daqui (baldes em vez de preço de compra/saída, ROIC sem custo de reposição, Ke
+diferente). **Decisão do Frank:** congelar (tag `arquivado-2026-10-08`, `analisador/ARQUIVADO.md`, `.venv` apagado; `dados/` e a
+história mantidos) e trazer só as lições: seção I do `04` (vieses, inversão de Munger, "não sei" ≠ "é ruim", kd > Ke, escopo e
+unidade, número vetado, teste contra documento real).
+
+**Alerta para este projeto.** O analisador morreu de burocracia: regra nova a cada sessão e nenhuma decisão de compra. A partir de
+agora a régua fica parada até a temporada do 3T26 (Etapa 7); dossiê novo só quando uma ação chegar perto do preço de compra.
+**O que me provaria errado:** se em 3 meses a doutrina tiver crescido mais que o número de decisões de compra/venda registradas
+aqui, este projeto está repetindo o analisador.

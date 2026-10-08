@@ -1,4 +1,4 @@
-# CHECKLIST ANTI-ERRO (v2.1, 07/10/2026 — itens da doutrina v2.3 em B e E)
+# CHECKLIST ANTI-ERRO (v2.2, 08/10/2026 — itens da doutrina v2.3 em B e E; seção I com as lições do analisador)
 *Rodar integralmente antes de fechar qualquer análise ou reavaliação. Cada item aqui já foi um erro cometido nesta mesa.*
 
 ---
@@ -117,6 +117,31 @@
 - [ ] Escrevi as 5 linhas céticas, com **uma obrigatória sobre o Ke**, **uma sobre o ciclo** e **uma sobre o crescimento implícito (DCF reverso)**?
 - [ ] Se alguma linha derrubou o veredito, **corrigi de fato** — em vez de só registrar?
 - [ ] Não mudei de ideia por pressão do interlocutor, apenas por mérito do argumento?
+
+## I. Vieses, inversão e erros de coleta (lições do analisador arquivado, 08/10/2026)
+
+**Vieses — antes de qualquer veredito de compra:**
+- [ ] **Mexi em alguma premissa depois de ver o preço, e ela deixou a ação mais barata?** Se sim: registrar no `09` qual, por quê e
+  com qual fonte. Premissa que só aparece quando a ação está cara é conclusão procurando justificativa.
+- [ ] Ancoragem (preço pago, preço de pico), confirmação (só li o que concorda), custo afundado (já estudei demais para desistir),
+  disponibilidade (notícia da semana), rebanho/autoridade (todo mundo está comprando; o gestor famoso comprou): algum está agindo?
+- [ ] Alguma premissa que, **mudando 20%, vira o veredito**? Ela está na sensibilidade com fonte?
+
+**Inversão de Munger (dossiê, D4):**
+- [ ] Como esta empresa quebra (3 caminhos, cada um com um sinal observável)?
+- [ ] **Como perco dinheiro mesmo estando certo?** (prazo: o mercado demora 5 anos; o dividendo some no meio; o controlador decide antes)
+
+**"Não sei" não é "é ruim":**
+- [ ] Item sem evidência ficou escrito **"não verificado"** (e conta como risco, nunca como neutro)? Faltar dado não pode virar
+  aprovação nem reprovação silenciosa.
+- [ ] Todo "OK" diz o que **não** foi conferido?
+
+**Erros de coleta e de conta:**
+- [ ] **Kd apurado acima do Ke nominal** (juros ÷ dívida absurdo, ex.: 45%)? É dado ruim: não entra no WACC; usar rf + spread declarado.
+- [ ] Escopo e unidade conferidos: consolidado × atribuído ao controlador; R$ mil × R$ milhões; fração × percentual.
+- [ ] Número que a doutrina veta (âncora inválida, Graham com lucro de pico) **sumiu de todas as seções**, não só da tabela principal?
+- [ ] Teste novo foi conferido contra o **documento real** da CVM/B3, não contra um exemplo inventado?
+- [ ] Contagens e frases fixas ("nenhuma âncora", "7 carimbos") conferidas no dado, não de memória?
 
 ---
 
