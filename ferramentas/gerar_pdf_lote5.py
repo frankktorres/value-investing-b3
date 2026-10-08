@@ -1,4 +1,5 @@
 """PDF do Lote 5 (Petróleo, gás e combustíveis) — doutrina v2.2. Uso: python gerar_pdf_lote5.py"""
+from ltm import ltm_de
 import copy
 import pathlib
 import sys
@@ -64,7 +65,7 @@ def nopat_brent(r, brent, fx=FX_SPOT):
 
 
 def extras(emp, r):
-    a, ltm = CVM[emp.ticker]["anual"], CVM[emp.ticker]["ltm_2T26"]
+    a, ltm = CVM[emp.ticker]["anual"], ltm_de(CVM[emp.ticker])
     x = {}
     x["pl_ltm"] = emp.preco / (ltm["lucro"] / r["n"]) if ltm.get("lucro") and ltm["lucro"] > 0 else None
     tk = emp.ticker
@@ -203,7 +204,7 @@ def ficha(emp, r, rank, story):
     story.append(Spacer(1, 3))
     story.append(P(f"<b>Círculo de competência.</b> {tx['circulo']}", "p"))
     story.append(Spacer(1, 3))
-    ltm = CVM[emp.ticker]["ltm_2T26"]
+    ltm = ltm_de(CVM[emp.ticker])
     fatos = [["Fato (12m até jun/2026)", "Valor", "Fonte"],
              ["Receita · EBIT · margem", f"R$ {br(ltm['receita'] / 1e6, 1)} bi · {br(ltm['ebit'] / 1e6, 2)} bi · {pct(ltm['ebit'] / ltm['receita'])}", "[CVM]"]]
     if emp.ticker in EP:

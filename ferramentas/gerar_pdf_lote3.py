@@ -1,4 +1,5 @@
 """PDF do Lote 3 (Papel e celulose, infraestrutura de mercado e agro) — doutrina v2.0. Uso: python gerar_pdf_lote3.py"""
+from ltm import ltm_de
 import copy
 import pathlib
 import sys
@@ -32,7 +33,7 @@ def rodape(c, d):
 
 
 def extras(emp, r):
-    a, ltm = CVM[emp.ticker]["anual"], CVM[emp.ticker]["ltm_2T26"]
+    a, ltm = CVM[emp.ticker]["anual"], ltm_de(CVM[emp.ticker])
     x = {}
     x["dl_ebitda_pf"] = (r["dl"] + (ARBEX_DIVIDA if emp.ticker == "SUZB3" else 0)) / r["ebitda_ltm"] if r["ebitda_ltm"] > 0 else None
     ult = a["2026" if emp.ticker == "SMTO3" else "2025"]
@@ -113,7 +114,7 @@ def ficha(emp, r, rank, story):
     story.append(Spacer(1, 3))
     story.append(P(f"<b>Círculo de competência.</b> {tx['circulo']}", "p"))
     story.append(Spacer(1, 3))
-    ltm = CVM[emp.ticker]["ltm_2T26"]
+    ltm = ltm_de(CVM[emp.ticker])
     per = "exercício até mar/2026" if emp.ticker == "SMTO3" else "12m até jun/2026"
     fatos = [["Fato (" + per + ")", "Valor", "Fonte"],
              ["Receita · EBIT · margem", f"R$ {br(ltm['receita'] / 1e6, 1)} bi · {br(ltm['ebit'] / 1e6, 2)} bi · {pct(ltm['ebit'] / ltm['receita'])}", "[CVM]"],

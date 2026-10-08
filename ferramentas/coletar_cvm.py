@@ -284,8 +284,15 @@ def itr_ytd(tk, ano, mes=6):
     return res
 
 
-def main(tks, anos=range(2016, 2026), arq=None):
+def rotulo_ltm(ano, mes):
+    """Rótulo do trimestre: (2026, 6) → "2T26"; (2026, 9) → "3T26"."""
+    return f"{mes // 3}T{ano % 100:02d}"
+
+
+def main(tks, anos=range(2016, 2026), arq=None, ano_itr=2026, mes=6):
+    """mes = mês do ITR que fecha o LTM (6 → 2T, 9 → 3T). Grava "ltm", "ltm_ref" e "ltm_<ref>"."""
     saida = {}
+    ref = rotulo_ltm(ano_itr, mes)
     for tk in tks:
         serie, auditoria = {}, {}
         anos_tk = range(2016, 2027) if tk == "SMTO3" else anos   # exercício abr–mar: DFP de mar/2026 está no arquivo 2026
@@ -294,12 +301,12 @@ def main(tks, anos=range(2016, 2026), arq=None):
                 serie[a], auditoria[a] = anual(tk, a)
             except Exception as ex:  # ano sem arquivo ou empresa sem dado
                 serie[a], auditoria[a] = {"erro": str(ex)}, {}
-        # LTM até jun/2026 = 2025 + 1S26 − 1S25 (fluxos); balanço de 30/06/2026
+        # LTM até o trimestre = exercício anterior + YTD atual − YTD anterior (fluxos); balanço da data do ITR
         ltm = {}
         if tk == "SMTO3":
             ltm = dict(serie.get(2026, {}), nota="fluxos: exercício abr/2025–mar/2026 (DFP); balanço: ITR de jun/2026")
             try:
-                b = itr_ytd(tk, 2026, 6)
+                b = itr_ytd(tk, ano_itr, mes)
                 for k in list(BPA) + list(BPP) + ["arrendamento", "arrendamento_saldo", "biologico"]:
                     if b.get(k) is not None:
                         ltm[k] = b[k]
@@ -307,8 +314,8 @@ def main(tks, anos=range(2016, 2026), arq=None):
                 pass
         else:
           try:
-            y26, y25 = itr_ytd(tk, 2026), itr_ytd(tk, 2025)
-            fy = serie.get(2025, {})
+            y26, y25 = itr_ytd(tk, ano_itr, mes), itr_ytd(tk, ano_itr - 1, mes)
+            fy = serie.get(ano_itr - 1) or anual(tk, ano_itr - 1)[0]
             for k in list(DRE) + list(DFC) + ["da", "capex", "dividendos_pagos", "recompra", "arrendamento_pago", "arrendamento_pago_com_juros", "juros_pagos", "vj_biologico", "impairment", "impairment_outras"]:
                 if None not in (fy.get(k), y26.get(k), y25.get(k)):
                     ltm[k] = fy[k] + y26[k] - y25[k]
@@ -317,7 +324,7 @@ def main(tks, anos=range(2016, 2026), arq=None):
             ltm["acoes"] = fy.get("acoes")
           except Exception as ex:
             ltm = {"erro": str(ex)}
-        saida[tk] = {"anual": serie, "ltm_2T26": ltm, "auditoria_linhas_dfc": auditoria, "acoes_por_unit": EMPRESAS[tk][1]}
+        saida[tk] = {"anual": serie, "ltm": ltm, "ltm_ref": ref, f"ltm_{ref}": ltm, "auditoria_linhas_dfc": auditoria, "acoes_por_unit": EMPRESAS[tk][1]}
         ok = [a for a in serie if serie[a].get("receita")]
         print(tk, "anos com DRE:", ok[0] if ok else None, "→", ok[-1] if ok else None, "| LTM receita:", ltm.get("receita"))
     arq = arq or AQUI / "dados" / "cvm_series.json"

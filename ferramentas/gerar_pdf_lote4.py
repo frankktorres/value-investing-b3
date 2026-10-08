@@ -1,4 +1,5 @@
 """PDF do Lote 4 (Saúde, telecom e blue chips) — doutrina v2.2. Uso: python gerar_pdf_lote4.py"""
+from ltm import ltm_de
 import copy
 import pathlib
 import re
@@ -63,7 +64,7 @@ def rf_txt(r):
 
 def extras(emp, r):
     tk = emp.ticker
-    a, ltm = CVM[tk]["anual"], CVM[tk]["ltm_2T26"]
+    a, ltm = CVM[tk]["anual"], ltm_de(CVM[tk])
     x = {"pl_ltm": emp.preco / (ltm["lucro_controlador"] / r["n"]) if ltm.get("lucro_controlador", 0) > 0 else None,
          "pvp": emp.preco / r["vpa"], "arr": (ltm.get("arrendamento") or 0), "arr_pago": ltm.get("arrendamento_pago") or 0}
     x["m_ltm"] = ebit_aj(ltm, r["op"]["med_outras"], emp.outras_liquidas) / ltm["receita"]
@@ -200,7 +201,7 @@ def ficha(emp, r, rank, story):
     story.append(Spacer(1, 3))
     story.append(P(f"<b>Círculo de competência.</b> {tx['circulo']}", "p"))
     story.append(Spacer(1, 3))
-    ltm = CVM[emp.ticker]["ltm_2T26"]
+    ltm = ltm_de(CVM[emp.ticker])
     janela = f"{r['op']['anos'][0]}–{r['op']['anos'][-1]}"
     fatos = [["Fato (12m até jun/2026)", "Valor", "Fonte"],
              ["Receita · EBIT · margem", f"R$ {br(ltm['receita'] / 1e6, 2)} bi · {br(ltm['ebit'] / 1e6, 2)} bi · {pct(ltm['ebit'] / ltm['receita'])}", "[CVM]"],

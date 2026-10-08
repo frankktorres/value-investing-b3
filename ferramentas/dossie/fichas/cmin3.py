@@ -27,6 +27,7 @@ Cíclica (minério de ferro). Ciclo normalizado EM NÚMERO antes do veredito (02
 """
 from __future__ import annotations
 
+from ltm import ltm_de
 import json
 import pathlib
 from functools import lru_cache
@@ -112,7 +113,7 @@ def custo_variavel() -> float:
 
 def receita_meio() -> float:
     base.carregar(TK)
-    return CVM[TK]["ltm_2T26"]["receita"] * minerio()["fator"] * volume()["fator"]
+    return ltm_de(CVM[TK])["receita"] * minerio()["fator"] * volume()["fator"]
 
 
 def empresa(qualitativo: dict | None = None, desconto_controlador: dict | None = None, **sobrepor) -> Industrial:
@@ -143,7 +144,7 @@ def normalizacao(desconto_controlador: dict | None = None) -> dict:
     MK = base.mercado()     # o mercado da data-base corrente (v2.3: o veredito novo é de outra data)
     base.carregar(TK)       # chamável sozinha (adversário, 07/10)
     m, vol = minerio(), volume()
-    rec_ltm = CVM[TK]["ltm_2T26"]["receita"]
+    rec_ltm = ltm_de(CVM[TK])["receita"]
     alt = {
         "c (adotado): preço 10a + margem reexpressa": {},
         "a (literal): preço 10a + margem bruta 2019–25": dict(fator_preco=None, custo_variavel_preco=0.0),

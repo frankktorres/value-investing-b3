@@ -31,6 +31,7 @@ Premissas declaradas ANTES do veredito:
     FRE 2026: 2.202,6 mi de ações diretas + 66,53% das 2.905,1 mi da IUPAR = 4.135,4 mi (37,50%). Demais participações (Alpargatas, Dexco,
     Motiva, Aegea, Copa, NTS) a valor contábil — a casa não tem valor justo delas (conservador: o PDF cita R$ 16,6 bi a mercado, marcado [H]).
 """
+from ltm import ltm_de
 import io
 import json
 import pathlib
@@ -132,7 +133,7 @@ arrendamento_pago_proxy()
 
 
 def receita_media(tk, anos, ltm=True):
-    a, l = CVM[tk]["anual"], CVM[tk]["ltm_2T26"]
+    a, l = CVM[tk]["anual"], ltm_de(CVM[tk])
     xs = [a[y]["receita"] for y in anos] + ([l["receita"]] if ltm else [])
     return sum(xs) / len(xs)
 
