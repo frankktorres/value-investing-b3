@@ -34,8 +34,9 @@ ZIP = RAIZ / "dados" / "cvm"
 DATA_BASE = "2026-10-02"      # o mesmo dia do hall e da triagem: rf e preço do mesmo dia (§4)
 
 # nome de pregão (= NOMRES do COTAHIST = tradingName da B3) e CNPJ (FCA/FRE)
-PREGAO = {"BLAU3": "BLAU", "CMIN3": "CSNMINERACAO", "HYPE3": "HYPERA"}
-CNPJ = {"BLAU3": "58.430.828/0001-60", "CMIN3": "08.902.291/0001-15", "HYPE3": "02.932.074/0001-91"}
+PREGAO = {"BLAU3": "BLAU", "CMIN3": "CSNMINERACAO", "HYPE3": "HYPERA", "LEVE3": "METAL LEVE"}
+CNPJ = {"BLAU3": "58.430.828/0001-60", "CMIN3": "08.902.291/0001-15", "HYPE3": "02.932.074/0001-91",
+        "LEVE3": "60.476.884/0001-87"}
 
 
 # Tipos de evento com semântica conferida contra a contagem de ações da CVM (fonte A). Nos dois o `fator_b3` é o % de ações
@@ -44,7 +45,23 @@ CNPJ = {"BLAU3": "58.430.828/0001-60", "CMIN3": "08.902.291/0001-15", "HYPE3": "
 #   · DESDOBRAMENTO — BBAS 100,0 em 15/04/2024 (2 por 1): DFP 2023 → 2024, 2.865.417.020 → 5.730.834.040 ações integralizadas
 #     (×2 exato). O fator NÃO é a razão (seria ×100): MGLU 300,0 em 2020 é o 4 por 1.
 # Grupamento (o fator é a razão, ex.: MGLU 0,1 em 2024) e os demais tipos falham alto em vez de ajustar errado.
-SEMANTICA_CONFERIDA = ("BONIFICACAO", "DESDOBRAMENTO")
+SEMANTICA_CONFERIDA = ("BONIFICACAO", "DESDOBRAMENTO", "GRUPAMENTO")
+# par desdobramento + grupamento na mesma data, conferido contra a contagem de ações da CVM (FRE): LEVE3 14/05/2012,
+# 42.769.500 → 128.308.500 ações (×3 = 300 × 0,01)
+PARES_CONFERIDOS = {("LEVE", "2012-05-14")}
+# GRUPAMENTO (08/10/2026, dossiê LEVE3): a B3 publica o fator como RAZÃO nova ÷ antiga (MGLU 2024: 0,1 = 10 para 1), não
+# como percentual — multiplicador = fator, e fator >= 1 falha alto. Na LEVE3 o evento é de 14/05/2012 (desdobramento ×300
+# + grupamento ÷100 na mesma data = ×3 líquido), fora da janela do dossiê; não move número.
+
+
+def isin_do_ticker(tk: str) -> str | None:
+    """ISIN do ticker no COTAHIST mais recente (lote padrão), para escolher a classe certa entre os eventos da B3."""
+    anos = sorted(COTAHIST.glob("precos_*.parquet"))
+    if not anos:
+        return None
+    p = pd.read_parquet(anos[-1], columns=["ticker", "codbdi", "codisi"])
+    x = p[(p["ticker"] == tk) & (p["codbdi"] == "02")]
+    return str(x["codisi"].iloc[-1]) if len(x) else None
 
 
 def eventos_em_acoes(tk: str, suplemento=None) -> list[dict]:
@@ -55,6 +72,24 @@ def eventos_em_acoes(tk: str, suplemento=None) -> list[dict]:
         from backtest.precos.proventos_b3 import carregar_suplemento
         suplemento = carregar_suplemento()
     s = suplemento[suplemento["raiz"] == tk[:4]]
+    isins = sorted({str(i) for i in s.get("isin", []) if str(i)})
+    proprio = isin_do_ticker(tk) if len(isins) > 1 else None
+    if proprio in isins:
+        # a classe do próprio ticker decide (LEVE3: a ON tem o par de 2012; a PN, extinta, só os eventos de 1992)
+        s = s[s["isin"] == proprio]
+        chave = lambda x, f: (x["tipo"], x["data_com"], f)
+    elif len(isins) > 1:
+        # com o ISIN: cada classe tem o seu conjunto de eventos; conjuntos iguais = o mesmo evento repetido (conta uma vez);
+        # conjuntos diferentes = fator diferente por classe, sem semântica conferida. Isso aceita dois eventos do MESMO tipo
+        # na mesma data com fatores diferentes (LEVE3, 28/04/1992: bonificações de 20% e 1.080% em ON e PN)
+        por_isin = {i: sorted((r["tipo"], str(r["data_com"])[:10], float(r["fator_b3"])) for _, r in s[s["isin"] == i].iterrows())
+                    for i in isins}
+        if len({tuple(v) for v in por_isin.values()}) > 1:
+            raise NotImplementedError(f"{tk}: eventos diferentes por classe {sorted(por_isin)} — ajustar à mão")
+        s = s[s["isin"] == isins[0]]
+        chave = lambda x, f: (x["tipo"], x["data_com"], f)
+    else:
+        chave = lambda x, f: (x["tipo"], x["data_com"])
     out = {}
     for _, e in s.iterrows():
         if e["tipo"] not in SEMANTICA_CONFERIDA:
@@ -62,14 +97,25 @@ def eventos_em_acoes(tk: str, suplemento=None) -> list[dict]:
         f = float(e["fator_b3"])
         if not f > 0:
             raise ValueError(f"{tk}: {e['tipo']} de {e['data_com']} com fator {e['fator_b3']!r}")
+        if e["tipo"] == "GRUPAMENTO" and not f < 1:
+            raise ValueError(f"{tk}: GRUPAMENTO de {e['data_com']} com fator {f} >= 1 (a B3 publica a razão, ex. 0,1)")
         x = {"tipo": e["tipo"], "data_com": str(e["data_com"])[:10], "aprovacao": str(e["data_aprovacao"])[:10],
-             "multiplicador": 1 + f / 100}
+             "multiplicador": f if e["tipo"] == "GRUPAMENTO" else 1 + f / 100}
         # a B3 repete o evento por ISIN (ON, PN, UNIT): um só por (tipo, data-com), senão o multiplicador entra ao quadrado
         # (adversário, 07/10); fatores diferentes entre classes na mesma data não têm semântica conferida → falha alto
-        k = (x["tipo"], x["data_com"])
+        k = chave(x, f)
         if k in out and out[k]["multiplicador"] != x["multiplicador"]:
             raise NotImplementedError(f"{tk}: {k} com fatores diferentes por classe — ajustar à mão")
         out[k] = x
+    # desdobramento + grupamento na MESMA data-com: a B3 não publica o par de um jeito só (LEVE3 2012: 29.900% e 0,01 = ×3; TIMS3
+    # 2025: 100 e 0,01 = ×1; VIVT3 2025: 80 e 0,025 = ×2 — adversário, 08/10). Só passa o par conferido contra a contagem de ações
+    # da CVM; o resto falha alto
+    datas = {}
+    for x in out.values():
+        datas.setdefault(x["data_com"], set()).add(x["tipo"])
+    for d, tipos in datas.items():
+        if {"DESDOBRAMENTO", "GRUPAMENTO"} <= tipos and (tk[:4], d) not in PARES_CONFERIDOS:
+            raise NotImplementedError(f"{tk}: desdobramento e grupamento na mesma data ({d}) sem conferência na CVM — ajustar à mão")
     return list(out.values())
 
 

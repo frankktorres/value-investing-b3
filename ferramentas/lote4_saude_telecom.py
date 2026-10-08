@@ -16,7 +16,7 @@ Premissas declaradas ANTES do veredito:
   · Alíquota (doutrina §2, v2.3: mediana de 5 anos sem piso; crédito com prazo = fase): ABEV3 usa a média de 2024–25 (21%) — a Lei
     14.789/2023 passou a tributar a subvenção de ICMS a partir de 2024, e 2021–23 (1–5%) não representam mais o normal; o OE é refeito a
     21% nos anos antigos. HYPE3: crédito com prazo (ágio até 2030, `fiscal.py`) → efetiva até 2030 e 34% depois (até a v2.2: piso de 15%).
-    TIMS3: mediana 5,4% ("benefício regional + JCP", texto deste lote, sem fonte nem prazo conferidos) → 34% até o dossiê.
+    TIMS3 (08/10): 18,3% = mediana sem a SUDENE/SUDAM (prazo sem fonte) e sem pontuais; fica o JCP (conciliação dos DFPs, `fiscal.py`).
   · WEGE3 (compounder, ROIC > WACC): DCF em 2 estágios — g real dos 10 primeiros anos = g sustentável (ROE mediano de 5 anos × retenção
     recorrente, deflacionado pela inflação implícita), depois g real 2% (PIB real de longo prazo, teto da doutrina). DCF reverso devolve o g dos
     10 anos que o preço embute. EPV e Owner Earnings seguem sem crescimento de 1º estágio (é o que eles medem).
@@ -40,7 +40,7 @@ import zipfile
 
 import pandas as pd
 
-from fiscal import ALIQUOTA_FASE
+from fiscal import ALIQUOTA_FASE, TIMS3_ALIQUOTA
 from lote1_bancos import EMPRESAS as LOTE1
 from lote1_bancos import MK
 from lote2_energia import pl_hist
@@ -157,6 +157,11 @@ ZERO = lambda razao: {"tipo": "zero", "razao": razao}
 EMPRESAS = [
     Industrial("TIMS3", "TIM Brasil", "servicos", preco=PRECO["TIMS3"], n_acoes=N["TIMS3"], anos_ciclo=IFRS16, anos_outras=ANOS, outras_liquidas=True, capex_ciclico=True, janela_razao=RAZAO_IFRS16,
                spread_kd=0.01, g_real=0.01, jcp_share=jcp("TIMS3"), pl_hist=pl_hist("TIMS3"), defasagem_meses=4,
+               # v2.3 (08/10): alíquota perpétua = mediana 2021–25 SEM a SUDENE/SUDAM (crédito com prazo: laudos de 10 anos por UF,
+               # vigência não encontrada nos DFPs → prazo zero) e sem os itens pontuais (2021: Selic sobre indébito, venda da
+               # I-Systems, reversão TIM Nordeste; 2022: prejuízo fiscal não reconhecido); fica o JCP (permanente). Conciliação da
+               # alíquota efetiva, DFP TIM 2023–25 nota 8.d e DFP 2022 nota 35 [A]: 19,3% · 4,5% · 18,3% · 22,1% · 15,1% → 18,3%
+               aliquota=TIMS3_ALIQUOTA,
                defasagem_fonte="JCP de set/2026 pago até 22/01/2027 (calendário declarado, PDF rev. 03/10)",
                desconto_controlador=ZERO("nenhuma interferência consumada; Poste Italiane (estatal italiana) controla a TI desde 18/09/2026 — risco "
                                          "prospectivo V4/V5 sem evento; tag along pendente é opção, não desconto"),

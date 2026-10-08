@@ -42,7 +42,7 @@ def test_fatores_diferentes_por_classe_na_mesma_data_falham_alto():
         base.eventos_em_acoes("XPTO3", s)
 
 
-@pytest.mark.parametrize("tipo", ["GRUPAMENTO", "INCORPORACAO", "CIS RED CAP"])
+@pytest.mark.parametrize("tipo", ["INCORPORACAO", "CIS RED CAP"])
 def test_tipo_sem_semantica_conferida_falha_alto(tipo):
     with pytest.raises(NotImplementedError):
         base.eventos_em_acoes("XPTO3", _sup(("XPTO", tipo, 0.1, "2024-05-24", "2024-04-24")))
@@ -58,3 +58,34 @@ def test_hype3_real_carrega():
     # o suplemento real da B3 (cache do backtest): HYPE3 só tem o desdobramento de 30/12/2009, fator 100 (2 por 1)
     ev = base.eventos_em_acoes("HYPE3")
     assert [(e["tipo"], e["data_com"], e["multiplicador"]) for e in ev] == [("DESDOBRAMENTO", "2009-12-30", 2.0)]
+
+
+def test_grupamento_usa_o_fator_como_razao_e_falha_com_fator_de_percentual():
+    ev = base.eventos_em_acoes("MGLU3", _sup(("MGLU", "GRUPAMENTO", 0.1, "2024-05-24", "2024-04-24")))
+    assert ev[0]["multiplicador"] == pytest.approx(0.1)
+    with pytest.raises(ValueError, match="razão"):
+        base.eventos_em_acoes("XPTO3", _sup(("XPTO", "GRUPAMENTO", 100.0, "2024-05-24", "2024-04-24")))
+
+
+def test_leve3_real_carrega_com_o_par_de_2012():
+    ev = {(e["tipo"], e["data_com"]): e["multiplicador"] for e in base.eventos_em_acoes("LEVE3")}
+    assert ev[("DESDOBRAMENTO", "2012-05-14")] * ev[("GRUPAMENTO", "2012-05-14")] == pytest.approx(3.0)
+
+
+def test_dois_eventos_do_mesmo_tipo_na_mesma_data_em_todas_as_classes_contam_os_dois():
+    linhas = [dict(raiz="XPTO", tipo="BONIFICACAO", fator_b3=f, data_com="1992-04-28", data_aprovacao="1992-04-28", isin=i)
+              for i in ("BRXPTOACNOR1", "BRXPTOACNPR1") for f in (20.0, 1080.0)]
+    ev = base.eventos_em_acoes("XPTO3", pd.DataFrame(linhas))
+    assert sorted(e["multiplicador"] for e in ev) == pytest.approx([1.2, 11.8])
+    linhas[-1]["fator_b3"] = 500.0                      # a PN com fator diferente da ON → falha alto
+    with pytest.raises(NotImplementedError, match="por classe"):
+        base.eventos_em_acoes("XPTO3", pd.DataFrame(linhas))
+
+
+@pytest.mark.parametrize("tk, raiz, desd, grup, data", [("TIMS3", "TIMS", 100.0, 0.01, "2025-07-02"),
+                                                       ("VIVT3", "VIVT", 80.0, 0.025, "2025-04-14")])
+def test_par_desdobramento_grupamento_sem_conferencia_falha_alto(tk, raiz, desd, grup, data):
+    """A B3 não publica o par de um jeito só: TIMS3 (×1 de fato) e VIVT3 (×2) sairiam ×0,02 e ×0,045 (adversário, 08/10)."""
+    s = _sup((raiz, "DESDOBRAMENTO", desd, data, data), (raiz, "GRUPAMENTO", grup, data, data))
+    with pytest.raises(NotImplementedError, match="mesma data"):
+        base.eventos_em_acoes(tk, s)

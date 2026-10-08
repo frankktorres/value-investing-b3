@@ -178,7 +178,11 @@ EMPRESAS = [
                receita_meio_fonte="receita 12m × cesta soda/PVC de meio de ciclo ÷ cesta dos 12m (BLS × PTAX, R$ de hoje)",
                qualitativo=QUAL(3, 2, 2, 2, 2)),
     Industrial("LEVE3", "Mahle Metal Leve", "servicos", preco=34.43, n_acoes=N["LEVE3"], spread_kd=0.015, g_real=0.01, jcp_share=jcp("LEVE3"),
-               outras_liquidas=True, pl_hist=pl_hist("LEVE3"), qualitativo=QUAL(4, 3, 3, 3, 3)),
+               outras_liquidas=True, pl_hist=pl_hist("LEVE3"),
+               # 08/10/2026: notas por evidência do dossiê (regra 11, DOSSIES/2026-10-08-LEVE3.md) no lugar das arbitradas (4, 3, 3, 3, 3)
+               qualitativo=QUAL(4, 1, 2, 3, 2), qualitativo_origem="regra 11 (dossiê 06/10/2026)", controlador_discricionario=True,
+               controlador_discricionario_fonte="FRE 2026: MAHLE Indústria e Comércio 56,8% + MAHLE Industriebeteiligungen 4,2% = 61,0%; "
+                                                "controle sobre preço de transferência, royalties (até 1% da receita) e compras do grupo"),
 ]
 
 if __name__ == "__main__":

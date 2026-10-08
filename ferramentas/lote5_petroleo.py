@@ -21,6 +21,7 @@ from statistics import mean
 
 import pandas as pd
 
+from fiscal import ALIQUOTA_FASE
 from lote1_bancos import MK
 from lote3_agro import acoes, jcp
 from motor_nao_financeiras import CVM, Industrial, avaliar
@@ -123,7 +124,8 @@ EMPRESAS = [
     Industrial("PRIO3", "PRIO", "ciclica", preco=63.35, n_acoes=acoes("PRIO3"), spread_kd=0.02, g_real=0.01, jcp_share=jcp("PRIO3"),
                anos_ciclo=[str(a) for a in range(2019, 2026)], anos_outras=[str(a) for a in range(2016, 2026)],
                janela_razao="perímetro operado atual: Frade a partir de 2019 (receita de R$ 849 mi em 2018 para R$ 1,64 bi em 2019); antes de 2019 a escala e os ativos são de outra empresa",
-               receita_meio=receita_ep("PRIO3"), da_receita=da_ep("PRIO3"), outras_liquidas=True, qualitativo=QUAL(3, 4, 4, 1, 3)),
+               receita_meio=receita_ep("PRIO3"), da_receita=da_ep("PRIO3"), outras_liquidas=True, qualitativo=QUAL(3, 4, 4, 1, 3),
+               aliquota_fase=ALIQUOTA_FASE["PRIO3"]),   # v2.3 (08/10): prejuízo fiscal com uso projetado até 2032 (fiscal.py)
     Industrial("RECV3", "PetroReconcavo", "ciclica", preco=11.20, n_acoes=acoes("RECV3"), spread_kd=0.025, g_real=-0.03, jcp_share=jcp("RECV3"),
                anos_ciclo=[str(a) for a in range(2020, 2026)], receita_meio=receita_ep("RECV3"), da_receita=da_ep("RECV3"), declinio_sem_liberacao=True,
                janela_razao="a série da CVM começa em 2020 (IPO em set/2020); não há exercício anterior",

@@ -1,5 +1,5 @@
 {
- "motivo": "v2.3 (6), rodada do adversario: (a) a efetiva da fase passa a contar os anos de credito (mediana de 5 anos sem o corte em zero, presa entre 0 e 34%, minimo de 3 anos) - antes saia de um ano so (HYPE3 2021, 1,6%) e um credito maior zerava a fase; (b) o beneficio passa a incidir sobre o lucro DEPOIS dos juros normalizados (o WACC ja da a deducao dos juros a 34%; antes contava duas vezes, R$ 1,34/acao) e fica limitado ao credito observado em R$; (c) mediana com menos de 3 anos validos = sem_dado, 34% e OE refeito. HYPE3: efetiva 0%, beneficio R$ 553 mi/ano (teto observado 718), VP R$ 2,52/acao; central 18,74 -> 17,51 (P/C 1,44), CARA. Nenhum outro ticker muda.",
+ "motivo": "Dossie LEVE3 (06/10/2026): notas da regra 11 por evidencia levadas ao hall no lugar das arbitradas - moat 4, gestao 1, controlador 2 (peso 2: controle de 61% da MAHLE), ciclo 3, Fisher 2 (antes 4/3/3/3/3); nota geral 7,02 -> 6,76; qualidade cai abaixo de 8 e a LEVE3 PERDE a excecao de saida a 1,50x (volta a 1,30x). Central e palavra iguais.",
  "tickers": {
   "ABCB4": {
    "ancoras": {
@@ -371,7 +371,7 @@
    "dy": 0.107564,
    "fator_defasagem": 0.985402,
    "lote": 6,
-   "nota_geral": 7.01907,
+   "nota_geral": 6.75907,
    "palavra": "JUSTA",
    "pc": 1.013075,
    "vence_rf": "Não"
@@ -395,19 +395,19 @@
   },
   "PRIO3": {
    "ancoras": {
-    "DCF normalizado (3 cenários)": 43.40703,
-    "EPV de meio de ciclo": 44.223027,
+    "DCF normalizado (3 cenários)": 49.366079,
+    "EPV de meio de ciclo": 50.540606,
     "Valor de reprodução": 34.835542
    },
    "bogle_nom": 0.075474,
-   "central": 43.40703,
+   "central": 49.366079,
    "cobertura_juros": 3.610907,
    "dy": 0.000228,
    "fator_defasagem": 0.992674,
    "lote": 5,
-   "nota_geral": 3.301867,
+   "nota_geral": 3.742295,
    "palavra": "CARA",
-   "pc": 1.459441,
+   "pc": 1.28327,
    "vence_rf": "Não"
   },
   "PSSA3": {
@@ -577,19 +577,19 @@
   },
   "TIMS3": {
    "ancoras": {
-    "DCF (3 cenários)": 8.082656,
-    "EPV": 7.958178,
-    "Owner Earnings ÷ (Ke − g)": 7.273453
+    "DCF (3 cenários)": 10.250613,
+    "EPV": 10.105524,
+    "Owner Earnings ÷ (Ke − g)": 9.16565
    },
-   "bogle_nom": 0.092296,
-   "central": 7.958178,
+   "bogle_nom": 0.123988,
+   "central": 10.105524,
    "cobertura_juros": 3.50333,
-   "dy": 0.040889,
+   "dy": 0.051526,
    "fator_defasagem": 0.942875,
    "lote": 4,
-   "nota_geral": 3.424582,
+   "nota_geral": 3.515948,
    "palavra": "CARA",
-   "pc": 2.330935,
+   "pc": 1.83563,
    "vence_rf": "Não"
   },
   "UGPA3": {

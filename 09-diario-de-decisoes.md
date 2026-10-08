@@ -200,3 +200,28 @@ sempre que um ano sair da mediana.
   ou o contrário), o critério muda.
 
 **Revisão:** no dossiê de cada ticker afetado (LEVE3 primeiro, depois TIMS3 e PRIO3) e na rodada da Etapa 7.
+
+### 08/10/2026 — DECISÃO DE MÉTODO: dossiê LEVE3 (perde a exceção de saída) e origem do imposto de TIMS3 e PRIO3
+
+**LEVE3 (dossiê, data-base 06/10/2026).** Central R$ 35,75, P/C 1,02, JUSTA (`DOSSIES/2026-10-08-LEVE3.md`). As notas da regra 11
+por evidência — moat 4, gestão 1, controlador 2 (peso 2), ciclo 3, Fisher 2 — substituem no hall as arbitradas (4/3/3/3/3). A
+qualidade vai de 8,005 a 7,1 e **a LEVE3 perde a exceção de saída a 1,50×**, que era a única do hall: a saída volta a 1,30 × central
+(R$ 44,18 no hall). Era o risco declarado em 05/10: a regra estava apoiada em 0,005 de nota arbitrada.
+- A compra de R$ 668 mi do controlador (2024) **não** conta como interferência consumada: preço dentro de dois laudos, comitê
+  independente, controlador abstido, minoritários aprovaram. Se a próxima compra do grupo vier sem esse rito, conta.
+- Partes relacionadas pelo total (18,3% da receita, como na HYPE3); só as saídas dariam 7,9%. Nenhuma leitura favorável leva a
+  qualidade a 8.
+
+**TIMS3: alíquota perpétua 18,3%** (era 34% provisório; 15% de piso até a v2.2). O IR baixo vem de JCP (permanente) e da redução de
+75% do IRPJ da SUDENE/SUDAM (laudos de 10 anos por UF, vigência não encontrada nos DFPs → prazo sem fonte = zero). A perpétua é a
+mediana 2021–25 sem a SUDENE e sem os itens pontuais, pela conciliação dos DFPs 2022–25 [A]. Central 7,96 → 10,11 (P/C 1,84, CARA).
+Risco: autuação de R$ 355,6 mi contra a averbação dos laudos (dez/2025).
+
+**PRIO3: fase até 2032.** O IR baixo vem do uso de prejuízo fiscal (R$ 8,09 bi reconhecidos; uso limitado a 30% do lucro tributável;
+96,5% projetados até 2032, DFP 2025 nota 16 [A]). EUA/Luxemburgo e moeda funcional não têm prazo nem permanência com fonte → 34%
+depois. Central 43,41 → 49,37 (P/C 1,28, CARA). Ficar em 34% já ignoraria um ativo fiscal de R$ 8 bi no balanço.
+
+**O que me provaria errado.** LEVE3: retorno da compra de 2024 acima do WACC no DFP 2026 (gestão vai a 2; qualidade ~7,5, ainda < 8).
+TIMS3: vigência dos laudos com fonte A/B (vira fase com a efetiva até o fim) ou derrota na autuação. PRIO3: o prejuízo fiscal ser
+usado mais devagar que o cronograma da administração.
+**Revisão:** DFP 2026 (LEVE3, PRIO3); vigência dos laudos SUDENE da TIM.

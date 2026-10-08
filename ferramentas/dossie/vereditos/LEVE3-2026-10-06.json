@@ -1,0 +1,27 @@
+{
+ "ticker": "LEVE3",
+ "data_preco": "2026-10-06",
+ "preco": 36.55,
+ "central": 35.7479,
+ "pc": 1.0224,
+ "palavra": "JUSTA",
+ "palavra_regua": "JUSTA",
+ "notas_regra11": {
+  "moat": 4,
+  "gestao": 1,
+  "controlador": 2,
+  "ciclo": 3,
+  "fisher": 2
+ },
+ "desc_controlador": 0.0,
+ "desc_controlador_razao": "Doutrina §5: consumado vs prospectivo. Consumado: nenhuma interferência desfavorável comprovada em 2017-2026 (busca documentada no campo 'interferencias'); a compra de R$ 668 mi do dono em 2024 saiu dentro da faixa de dois laudos independentes, com comitê independente, abstenção do controlador e aprovação dos minoritários, e o payout (2020 e 2023) foi pro rata. Precedente da casa: 'Mahle — Nenhuma — Zero' (01-doutrina §5, tabela de precedentes). Prospectivo: o risco V4 (royalties de 0,34% da receita para o teto contratual de 1% = +R$ 35,8 mi/ano, ~3,4% do EBITDA de 2025 de R$ 1.043,6 mi) e V3 (nova compra de ativo do grupo; Thermal e eletrificação são o plano declarado) existe, mas o royalty já está no EBIT e no fluxo projetado, e o risco de partes relacionadas (18,3% da receita) é capturado pela nota do controlador (-2) e pelo peso 2 do discricionário, então descontar de novo no valor violaria a regra 5 (aplicar uma só vez). Se o caller contar a compra de 2024 como 1 interferência consumada, trocar para 'cenarios' (sugestão: 85% sem extração; 10% novo M&A com o dono a preço no topo da faixa, perda 3%; 5% royalty ao teto de 1% capitalizado, perda 6%) — número meu, não da doutrina",
+ "media_regra11": 2.3333,
+ "discricionario": true,
+ "doutrina": "v2.3",
+ "template": "02 v4",
+ "rf_real": 0.0651,
+ "pi": 0.0567,
+ "aliquota": 0.21,
+ "aliquota_regra": "mediana",
+ "gerado_em": "2026-10-08"
+}

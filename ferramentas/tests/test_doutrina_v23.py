@@ -106,11 +106,14 @@ def test_3_peso_2_sem_fonte_nao_roda_nos_dois_motores():
 def test_3_hall_peso_2_so_onde_a_interferencia_consumada_esta_declarada():
     import universo
     disc = {e.ticker: e for _, emps, _ in universo.GRUPOS for e in emps if e.controlador_discricionario}
-    assert sorted(disc) == ["BBAS3", "BRSR6", "CMIG4", "PETR4", "SAPR11"]
-    for tk, e in disc.items():
-        assert e.desconto_controlador["tipo"] != "zero" and e.controlador_discricionario_fonte.strip(), tk
+    assert sorted(disc) == ["BBAS3", "BRSR6", "CMIG4", "LEVE3", "PETR4", "SAPR11"]
     todos = [e for _, emps, _ in universo.GRUPOS for e in emps]
-    assert all(e.qualitativo_origem == "arbitrada, pré-v4" for e in todos)
+    com_dossie = {e.ticker for e in todos if e.qualitativo_origem != "arbitrada, pré-v4"}
+    assert com_dossie == {"LEVE3"}                       # 08/10: notas por evidência do dossiê; o resto segue arbitrado
+    for tk, e in disc.items():
+        assert e.controlador_discricionario_fonte.strip(), tk
+        if tk not in com_dossie:                         # critério provisório: interferência consumada no desconto do lote
+            assert e.desconto_controlador["tipo"] != "zero", tk
 
 
 def test_3_nota_de_qualidade_do_hall_aplica_o_peso():
@@ -225,13 +228,13 @@ def test_6_oe_retributado_a_aliquota_perpetua():
     assert M.owner_earnings_ano(emp, "2025", "2024", 0.05, t_retributar=0.34) is None   # sem a linha do IR o ano sai
 
 
-def test_6_hall_so_hype3_tem_fase_e_os_abaixo_de_15_estao_declarados():
+def test_6_hall_fases_e_alíquotas_declaradas():
     import universo
     nf = [e for _, emps, _ in universo.GRUPOS for e in emps if isinstance(e, M.Industrial)]
-    assert [e.ticker for e in nf if e.aliquota_fase] == ["HYPE3"]
+    assert sorted(e.ticker for e in nf if e.aliquota_fase) == ["HYPE3", "PRIO3"]
     regras = {e.ticker: M.aliquota_regra(e)[1] for e in nf}
-    assert regras["HYPE3"] == "fase" and regras["ABEV3"] == "explicita"
-    assert sorted(t for t, x in regras.items() if x == "sem_origem") == ["PRIO3", "TIMS3"]
+    assert regras["HYPE3"] == regras["PRIO3"] == "fase" and regras["ABEV3"] == regras["TIMS3"] == "explicita"
+    assert [t for t, x in regras.items() if x == "sem_origem"] == []      # 08/10: TIMS3 e PRIO3 com origem declarada
     assert all(x in ("mediana", "fase", "explicita", "sem_origem") for x in regras.values())
 
 
