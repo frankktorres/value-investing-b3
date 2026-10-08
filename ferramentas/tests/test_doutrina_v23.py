@@ -235,9 +235,10 @@ def test_6_hall_fases_e_alíquotas_declaradas():
     nf = [e for _, emps, _ in universo.GRUPOS for e in emps if isinstance(e, M.Industrial)]
     assert sorted(e.ticker for e in nf if e.aliquota_fase) == ["HYPE3", "PRIO3"]
     regras = {e.ticker: M.aliquota_regra(e)[1] for e in nf}
-    assert regras["HYPE3"] == regras["PRIO3"] == "fase" and regras["ABEV3"] == regras["TIMS3"] == "explicita"
+    assert regras["HYPE3"] == regras["PRIO3"] == "fase" and regras["TIMS3"] == "explicita"
+    assert regras["ABEV3"] == "sem_dado"     # AUD-09 (onda 1.2): 2 exercícios desde a Lei 14.789/2023 → 34% até o DFP 2026
     assert [t for t, x in regras.items() if x == "sem_origem"] == []      # 08/10: TIMS3 e PRIO3 com origem declarada
-    assert all(x in ("mediana", "fase", "explicita", "sem_origem") for x in regras.values())
+    assert all(x in ("mediana", "fase", "explicita", "sem_origem", "sem_dado") for x in regras.values())
 
 
 # ---------------------------------------------------------------- (5) outros_passivos financeiro na DL

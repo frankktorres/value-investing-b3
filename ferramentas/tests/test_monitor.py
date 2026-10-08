@@ -92,7 +92,7 @@ def test_no_pregao_do_hall_reproduz_o_golden():
         if math.isfinite(gp):
             assert x["pc"] == pytest.approx(gp, rel=0.02), x["ticker"]
             comparados += 1
-    assert comparados == 40
+    assert comparados == 40      # só a RECV3 tem central ≤ 0 (a KLBN11 voltou a positivo com o ponto fixo partindo do contábil)
 
 
 def test_ano_novo_com_arquivo_torto_nao_fica_no_lugar(tmp_path: Path):

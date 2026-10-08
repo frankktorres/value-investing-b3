@@ -28,7 +28,7 @@ gerar_pdf_lote1.P = P
 from lote1_bancos import DATA_BASE, MK
 from lote5_petroleo import (EMPRESAS, FATOR_BARRIL, FORA_DO_HALL, FX_SPOT, M, PETR_ABANDONO, PETR_ATUARIAL, PETR_CENARIOS)
 from lote5_textos import AGENDA, ANTES, T
-from motor_nao_financeiras import CVM, SI, avaliar, valores
+from motor_nao_financeiras import CVM, SI, avaliar, estrutura_de_capital, valores
 
 sys.stdout.reconfigure(encoding="utf-8")
 REV = "05-10-2026"
@@ -45,7 +45,10 @@ def desc_de(emp):
 
 
 def central_rapido(emp):
-    r = valores(emp, MK)
+    # v2.4 (AUD-12/13): a sensibilidade usa a MESMA base do central publicado — Ke da empresa e pesos no ponto fixo, refeitos
+    # para a variante (antes: Ke de 5 p.p. e pesos a preço, não comparável ao central)
+    ec = estrutura_de_capital(emp, MK)
+    r = valores(emp, ec["mk"], e_peso=ec["e_peso"])
     return median(r["anc"].values()) * (1 - desc_de(emp))
 
 
@@ -106,11 +109,11 @@ def extras(emp, r):
     if r["trava"] is None:
         x["trava_txt"] = "não se aplica (palavra não é JUSTA)."
     elif r["trava"]:
-        x["trava_txt"] = f"passa — Bogle {pct(r['bogle_nom'])} a ±2 p.p. do Ke nominal {pct(MK.ke_nom)}."
+        x["trava_txt"] = f"passa — Bogle {pct(r['bogle_nom'])} a ±2 p.p. do Ke nominal {pct(r["ke_nom_emp"])}."
     else:
         bog_meio = r["lpa_norm"] / emp.preco + r["g_nom"]
-        ok = abs(bog_meio - MK.ke_nom) <= 0.02
-        x["trava_txt"] = (f"falha pelo Bogle de dividendos ({pct(r['bogle_nom'])} vs Ke {pct(MK.ke_nom)}): o DPA de 5 anos (R$ {br(r['dpa5'])}) "
+        ok = abs(bog_meio - r["ke_nom_emp"]) <= 0.02
+        x["trava_txt"] = (f"falha pelo Bogle de dividendos ({pct(r['bogle_nom'])} vs Ke {pct(r["ke_nom_emp"])}): o DPA de 5 anos (R$ {br(r['dpa5'])}) "
                           f"vem de 2021–25, com Brent médio acima do meio de ciclo e os extraordinários de 2022. Com o lucro de meio de ciclo "
                           f"inteiro distribuído (LPA R$ {br(r['lpa_norm'])}) o retorno é {pct(bog_meio)} — "
                           + ("passa: dentro de ±2 p.p. do Ke." if ok else "ainda fora de ±2 p.p."))

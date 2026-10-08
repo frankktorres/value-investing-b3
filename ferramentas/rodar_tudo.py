@@ -8,6 +8,7 @@ import sys
 from collections import Counter
 
 import golden
+import mercado
 import universo
 
 
@@ -19,6 +20,13 @@ def main():
     atual = universo.instantaneo_todos()
     palavras = Counter(s["palavra"] for s in atual.values())
     print(f"{len(atual)} tickers · " + " · ".join(f"{k} {v}" for k, v in sorted(palavras.items())))
+    # AUD-72: idade do preço e da taxa (regra 3 do 00-CONFIGURACAO), calculada, não escrita à mão
+    mv = mercado.dados()
+    print(f"mercado de {universo.MK.data} ({mercado.idade_dias(mv['data'])} dias): rf {universo.MK.rf_real:.2%} real, "
+          f"{mv['rf_tipo']} · π {universo.MK.pi:.2%}")
+    aviso = mercado.aviso_idade(mv["data"])
+    if aviso:
+        print(aviso)
     try:
         ant = golden.carregar()
     except FileNotFoundError:

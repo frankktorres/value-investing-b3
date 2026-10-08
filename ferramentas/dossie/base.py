@@ -166,12 +166,12 @@ def na_data(data: str | None):
 
 
 def mercado(data: str | None = None) -> Mercado:
-    """Mercado do dia (rf e π da mesma data do preço, §4): 02/10 é o do hall (`lote1_bancos.MK`); outra data vem de
+    """Mercado do dia (rf e π da mesma data do preço, §4): a data do hall vem de `mercado_vigente.json`; outra data vem de
     `dados/mercado_<data>.json` (Tesouro Transparente + ETTJ ANBIMA). Data sem arquivo falha alto."""
     data = data or DATA_BASE
-    if data == "2026-10-02":
-        from lote1_bancos import MK
-        return MK
+    import mercado as mercado_hall
+    if data == mercado_hall.dados()["data"]:     # AUD-78: a data do hall vem do arquivo único, não de literal
+        return mercado_hall.vigente()
     arq = RAIZ / "dados" / f"mercado_{data}.json"
     if not arq.exists():
         raise FileNotFoundError(f"sem mercado da data {data}: coletar rf e π do mesmo dia em {arq.name}")

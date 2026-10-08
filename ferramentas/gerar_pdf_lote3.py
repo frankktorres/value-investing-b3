@@ -51,10 +51,10 @@ def extras(emp, r):
     if r["trava"] is None:
         x["trava_txt"] = "não se aplica (palavra não é JUSTA)."
     elif r["trava"]:
-        x["trava_txt"] = f"passa — Bogle {pct(r['bogle_nom'])} a ±2 p.p. do Ke nominal {pct(MK.ke_nom)}."
+        x["trava_txt"] = f"passa — Bogle {pct(r['bogle_nom'])} a ±2 p.p. do Ke nominal {pct(r["ke_nom_emp"])}."
     else:
         fy = r["fcfe_acao"] / emp.preco + r["g_nom"] + r["dmult"]
-        x["trava_txt"] = (f"falha pelo Bogle de dividendos ({pct(r['bogle_nom'])} vs Ke {pct(MK.ke_nom)}): o dividendo paga só parte do FCFE; "
+        x["trava_txt"] = (f"falha pelo Bogle de dividendos ({pct(r['bogle_nom'])} vs Ke {pct(r["ke_nom_emp"])}): o dividendo paga só parte do FCFE; "
                           f"com o FCFE inteiro (desalavancagem retida) o retorno é {pct(fy)} — a diferença é o caixa retido, não erro do central.")
     return x
 

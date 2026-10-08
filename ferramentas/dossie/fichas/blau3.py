@@ -29,7 +29,7 @@ def empresa(qualitativo: dict | None = None, desconto_controlador: dict | None =
     base.carregar(TK)
     kw = dict(
         anos_ciclo=ANOS, anos_outras=ANOS, janela_razao=RAZAO_JANELA, outras_liquidas=True,
-        spread_kd=0.015, g_real=0.01, jcp_share=base.jcp_share(TK), pl_hist=base.pl_hist(TK),
+        g_real=0.01, jcp_share=base.jcp_share(TK), pl_hist=base.pl_hist(TK),
         defasagem_meses=base.defasagem(TK),
         defasagem_fonte="datas de pagamento da StatusInvest (C, só datas), média ponderada pelo valor, data-com 2016–25",
         desconto_controlador=desconto_controlador or {"tipo": "zero", "razao": "pendente: D3 do dossiê (FRE 2026)"},

@@ -11,7 +11,7 @@ consulta única de 06/10/2026). A D5 continua aberta: nenhuma régua desta mesa 
 ## 1. Como a fila é feita
 
 **Data:** preços de fechamento de **2026-10-02** (COTAHIST, B3) · rf 7.06% real (Tesouro IPCA+ 15/08/2050 (Tesouro Transparente, dados/mercado.json)) · π 6.46% ·
-Ke real = rf + 5% — os mesmos do hall.
+Ke real = rf + 5% fixo — rf e π os mesmos do hall; o prêmio **diverge do hall desde a v2.4 (08/10/2026)**: o hall usa o Ke pela alavancagem e os pesos no ponto fixo, e o motor reduzido da triagem (congelado pelo portão de 06/10) segue com 5 p.p.
 
 **Universo:** toda ação/unit com negócio nos 60 pregões até T, **uma linha por companhia** (a classe mais líquida).
 **Liquidez mínima R$ 0,97 mi/dia** = maior entre o piso do backtest (R$ 500 mil de mai/2014 corrigidos pelo

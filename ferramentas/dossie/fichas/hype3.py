@@ -15,7 +15,7 @@ Premissas declaradas ANTES do veredito (doutrina §11.4, §6.3; 02 regra 4):
   · Alíquota (doutrina §2, v2.3): crédito de IR COM PRAZO (ágio amortizável até 2030; subvenção de ICMS até a reforma, prazo
     não conferido na fonte) → efetiva até 2030 e 34% depois, na perpetuidade e no WACC; a declaração é a do hall (`fiscal.py`).
     Até a v2.2 (dossiê de 02/10): piso de 15% para sempre.
-  · Kd = rf nominal + 1,5 p.p.; g real 1% (só vale se ROIC > WACC) — os mesmos do hall.
+  · Kd = rf nominal + spread sintético pela cobertura normalizada (v2.4; era + 1,5 p.p. digitado); g real 1% (só vale se ROIC > WACC) — os mesmos do hall.
   · Ações: composição do capital do ITR de jun/2026 (CVM), sem tesouraria = 704,0 mi, já depois do aumento de capital
     privado de 70,6 mi de ações a R$ 21,25 (homologado em 31/03/2026, IPE) — o balanço de jun/2026 já tem o caixa dele.
   · P/L histórico de fim de exercício com fonte A (`base.pl_hist`: COTAHIST × ações do DFP ÷ lucro do controlador).
@@ -36,7 +36,7 @@ ANOS = list(ANOS_HALL)          # 2016–2025
 def empresa(qualitativo: dict | None = None, desconto_controlador: dict | None = None, **sobrepor) -> Industrial:
     base.carregar(TK)
     kw = dict(
-        outras_liquidas=True, aliquota_fase=ALIQUOTA_FASE[TK], spread_kd=0.015, g_real=0.01,
+        outras_liquidas=True, aliquota_fase=ALIQUOTA_FASE[TK], g_real=0.01,
         jcp_share=base.jcp_share(TK), pl_hist=base.pl_hist(TK),
         defasagem_meses=base.defasagem(TK),
         defasagem_fonte="datas de pagamento da StatusInvest (C, só datas), média ponderada pelo valor; JCP declarado no "

@@ -210,7 +210,7 @@ consulta única de 06/10/2026). A D5 continua aberta: nenhuma régua desta mesa 
 ## 1. Como a fila é feita
 
 **Data:** preços de fechamento de **{r.T}** (COTAHIST, B3) · rf {c.rf_real:.2%} real ({c.titulo_rf}) · π {c.pi:.2%} ·
-Ke real = rf + {c.premio:.0%} — os mesmos do hall.{aviso_rf}
+Ke real = rf + {c.premio:.0%} fixo — rf e π os mesmos do hall; o prêmio diverge do hall desde a v2.4 (o hall ajusta pela alavancagem; o motor reduzido está congelado).{aviso_rf}
 
 **Universo:** toda ação/unit com negócio nos 60 pregões até T, **uma linha por companhia** (a classe mais líquida).
 **Liquidez mínima R$ {_n(r.piso / 1e6)} mi/dia** = maior entre o piso do backtest (R$ 500 mil de mai/2014 corrigidos pelo

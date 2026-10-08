@@ -159,40 +159,43 @@ ZERO = lambda razao: {"tipo": "zero", "razao": razao}
 
 EMPRESAS = [
     Industrial("TIMS3", "TIM Brasil", "servicos", preco=PRECO["TIMS3"], n_acoes=N["TIMS3"], anos_ciclo=IFRS16, anos_outras=ANOS, outras_liquidas=True, capex_ciclico=True, janela_razao=RAZAO_IFRS16,
-               spread_kd=0.01, g_real=0.01, jcp_share=jcp("TIMS3"), pl_hist=pl_hist("TIMS3"), defasagem_meses=4,
+               g_real=0.01, jcp_share=jcp("TIMS3"), pl_hist=pl_hist("TIMS3"), defasagem_meses=4,
                # v2.3 (08/10): alíquota perpétua = mediana 2021–25 SEM a SUDENE/SUDAM (crédito com prazo: laudos de 10 anos por UF,
                # vigência não encontrada nos DFPs → prazo zero) e sem os itens pontuais (2021: Selic sobre indébito, venda da
                # I-Systems, reversão TIM Nordeste; 2022: prejuízo fiscal não reconhecido); fica o JCP (permanente). Conciliação da
                # alíquota efetiva, DFP TIM 2023–25 nota 8.d e DFP 2022 nota 35 [A]: 19,3% · 4,5% · 18,3% · 22,1% · 15,1% → 18,3%
                aliquota=TIMS3_ALIQUOTA,
+               aliquota_fonte="conciliação da alíquota efetiva, DFP TIM 2023–25 nota 8.d e DFP 2022 nota 35 [A]: mediana 2021–25 sem SUDENE/SUDAM e itens pontuais",
                defasagem_fonte="JCP de set/2026 pago até 22/01/2027 (calendário declarado, PDF rev. 03/10)",
                desconto_controlador=ZERO("nenhuma interferência consumada; Poste Italiane (estatal italiana) controla a TI desde 18/09/2026 — risco "
                                          "prospectivo V4/V5 sem evento; tag along pendente é opção, não desconto"),
                qualitativo=QUAL(3, 4, 3, 4, 3)),
     Industrial("VIVT3", "Telefônica Brasil (Vivo)", "servicos", preco=PRECO["VIVT3"], n_acoes=N["VIVT3"], anos_ciclo=IFRS16, anos_outras=ANOS, outras_liquidas=True, capex_ciclico=True, janela_razao=RAZAO_IFRS16,
-               spread_kd=0.01, g_real=0.01, jcp_share=jcp("VIVT3"), pl_hist=pl_hist("VIVT3"), defasagem_meses=10,
+               g_real=0.01, jcp_share=jcp("VIVT3"), pl_hist=pl_hist("VIVT3"), defasagem_meses=10,
                defasagem_fonte="JCP declarado pago até 30/04/2027 (calendário declarado, PDF rev. 03/10)",
                desconto_controlador=ZERO("nenhuma interferência consumada pela Telefónica S.A. (39,3% do capital pelo FRE 2026; controle com acordo)"),
                qualitativo=QUAL(4, 3, 3, 4, 3)),
     Industrial("FLRY3", "Grupo Fleury", "servicos", preco=PRECO["FLRY3"], n_acoes=N["FLRY3"], anos_ciclo=IFRS16, anos_outras=ANOS, outras_liquidas=True, janela_razao=RAZAO_IFRS16,
-               receita_meio=receita_media("FLRY3", ["2024", "2025"]), spread_kd=0.015, g_real=0.01, jcp_share=jcp("FLRY3"),
+               receita_meio=receita_media("FLRY3", ["2024", "2025"]), g_real=0.01, jcp_share=jcp("FLRY3"),
                pl_hist=pl_hist("FLRY3"), defasagem_meses=9,
                defasagem_fonte="dividendo de dez/2025 em 3 parcelas até set/2027, mais JCP antecipado (calendário declarado, PDF rev. 03/10)",
                desconto_controlador=ZERO("controle compartilhado (médicos fundadores + Bradesco Seguros), sem interferência consumada"),
                qualitativo=QUAL(3, 3, 4, 4, 3)),
-    Industrial("HYPE3", "Hypera Pharma", "servicos", preco=PRECO["HYPE3"], n_acoes=N["HYPE3"], outras_liquidas=True, spread_kd=0.015, g_real=0.01,
+    Industrial("HYPE3", "Hypera Pharma", "servicos", preco=PRECO["HYPE3"], n_acoes=N["HYPE3"], outras_liquidas=True, g_real=0.01,
                aliquota_fase=ALIQUOTA_FASE["HYPE3"], jcp_share=jcp("HYPE3"), pl_hist=pl_hist("HYPE3"),   # v2.3: crédito com prazo
                defasagem_meses=18, defasagem_fonte="JCP de 2026 pago até 31/12/2027 (calendário declarado, PDF rev. 03/10)",
                desconto_controlador=ZERO("controlador privado (J. A. de Queiroz Filho + Maiorem, 39,3% pelo FRE 2026), sem extração consumada registrada; "
                                          "a defasagem de 15–21 meses do JCP já está no valor presente do provento"),
                qualitativo=QUAL(3, 2, 3, 4, 2)),
-    Industrial("ABEV3", "Ambev", "servicos", preco=PRECO["ABEV3"], n_acoes=N["ABEV3"], outras_liquidas=True, spread_kd=0.005, g_real=0.01,
-               aliquota=sum(-CVM["ABEV3"]["anual"][y]["ir"] / CVM["ABEV3"]["anual"][y]["lair"] for y in ("2024", "2025")) / 2,
+    Industrial("ABEV3", "Ambev", "servicos", preco=PRECO["ABEV3"], n_acoes=N["ABEV3"], outras_liquidas=True, g_real=0.01,
+               # AUD-09 (v2.4): a média 2024–25 explícita (20,7%) contornava o mínimo de 3 exercícios. A lei da subvenção vale desde 2024;
+               # com 2 exercícios a regra dá 34% (`sem_dado`) até o DFP 2026 completar 3
+               aliquota_desde=dict(ano=2024, fonte="Lei 14.789/2023 (subvenção de ICMS tributada desde 01/01/2024), planalto.gov.br [A]"),
                # ABEV3 (Etapa 2/F2): os 6 meses não tinham evento declarado — §6.3 manda usar o medido na StatusInvest (1,5 mês)
                jcp_share=jcp("ABEV3"), pl_hist=pl_hist("ABEV3"),
                desconto_controlador=ZERO("AB InBev sem interferência consumada; contratos com a controladora (V4) já estão no EBIT histórico"),
                qualitativo=QUAL(5, 3, 3, 4, 3)),
-    Industrial("WEGE3", "WEG", "servicos", preco=PRECO["WEGE3"], n_acoes=N["WEGE3"], outras_liquidas=True, spread_kd=0.005, g_real=0.02, g1_real=WEG_G1, anos_g1=10,
+    Industrial("WEGE3", "WEG", "servicos", preco=PRECO["WEGE3"], n_acoes=N["WEGE3"], outras_liquidas=True, g_real=0.02, g1_real=WEG_G1, anos_g1=10,
                jcp_share=jcp("WEGE3"), pl_hist=pl_hist("WEGE3"), defasagem_meses=9,
                defasagem_fonte="JCP de 2026 pago em 10/03/2027 e extraordinário em 3 parcelas até 2028 (calendário declarado, PDF rev. 03/10)",
                desconto_controlador=ZERO("famílias fundadoras, sem conflito identificado"),

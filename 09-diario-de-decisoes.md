@@ -289,3 +289,78 @@ preço, não a do hall. (5) O PDF do LEVE3 misturava OE em R$ de hoje com lucro 
 ser deflacionado pelos próprios 12 meses (o ano-calendário ficava ~3% baixo). **Números finais:** SMTO3 23,07 → 26,58 (RADAR,
 **P/C 0,73 — a 0,03 do preço de compra**, R$ 18,61), B3SA3 8,98, WEGE3 10,94; valor de reprodução de PETR4 34,33 → 33,09.
 Notas não corrigidas (ver adversário): Kd cobrado sobre provento a pagar na base do benefício fiscal (conservador, pequeno).
+
+### 08/10/2026 — DECISÃO DE MÉTODO: Onda 1.2 da auditoria (Ke, custo da dívida, convenções de mercado) · doutrina v2.4
+
+**Reprodução antes de mexer (script, sem gravar nada).** Os 9 achados reproduziram: AUD-06 (rf 7,06% é a "Taxa Compra Manhã" do
+Tesouro Transparente e estava rotulada "fechamento"; com a ANBIMA 7,1377% — NTN-B 2050 *com cupom*, outro instrumento — ISAE4 iria a
+CARA e UNIP6 a JUSTA); AUD-78 (rf e π digitados em `lote1_bancos`, `triagem/config` e `backtest/config`, nenhum teste contra
+`mercado.json`); AUD-72 (nenhum cálculo de idade do preço no hall; a triagem já tinha); AUD-07 (21 spreads digitados de 0,5 a 2,5 p.p.
+sem fonte); AUD-09 (ABEV3 com média de 2 exercícios explícita: 10,89 contra 9,18 pela regra); AUD-18 (reprodução contábil × ROIC a
+reposição, por definição); **AUD-08 reproduziu em outros tickers** — a LEVE3 tinha saído de JUSTA na 1.1, mas SUZB3 (Bogle 11,3% × Ke
+19,3%) e ISAE4 (17,0%) eram JUSTA com a trava falha; AUD-12/13 por simulação das opções.
+
+**DECISÃO DO FRANK — AUD-12 (Ke igual para todas × ajustado pela dívida).** Opções mostradas, com o efeito no hall (Ke de 02/10):
+| Opção | Regra | Palavras que mudavam |
+|---|---|---|
+| **1. Ke sobe com a dívida (escolhida)** | 5 p.p. = risco do negócio sem dívida; prêmio × [1 + (1 − t) D/E] (Hamada 1972, *J. Finance* 27(2):435-452, sobre Modigliani-Miller 1958 — nota B, texto não aberto) | SMTO3 RADAR → CARA, SUZB3 JUSTA → CARA, LEVE3 RADAR → JUSTA, KLBN11 e SLCE3 CARA → NÃO CONCL., UNIP6 → CARA |
+| 2. Ke em torno da média do hall | 5 p.p. na alavancagem mediana; sem dívida ganha Ke menor (WEGE3, ABEV3 +12%) | SMTO3 → JUSTA, SUZB3 → CARA, KLBN11 e SLCE3 → NÃO CONCL., UNIP6 → JUSTA |
+| 3. Manter o Ke igual | convenção do §4 + linha de sensibilidade para D/E > 1 | nenhuma |
+**Por quê:** é a mais conservadora (nenhuma empresa fica com Ke abaixo de hoje) e corrige o efeito de a dívida baratear o capital
+(WACC 14,5% na KLBN11 contra 19,1% na WEGE3). Financeiras ficam nos 5 p.p. fixos (a alavancagem é o negócio).
+
+**DECISÃO DO FRANK — AUD-13 (pesos do WACC a preço de mercado).**
+| Opção | Regra | Efeito |
+|---|---|---|
+| **1. Ponto fixo (escolhida)** | E = central × ações, repetido até parar de mudar | nenhuma palavra com o Ke de hoje; o central deixa de depender do preço |
+| 2. Manter preço de mercado | como estava, declarado | nenhuma; o central se move com o preço (SMTO3 25,80/23,07/22,41 a preço ×0,7/1,0/1,3) |
+| 3. Pesos contábeis | D e PL do balanço | LEVE3 RADAR → **BARATA**, PRIO3 e SLCE3 CARA → JUSTA (menos conservador) |
+Argumento: coerência interna (§11.3 — o P/C não pode comparar o preço com um número que depende do preço); a literatura de pesos-alvo é
+nota C (não conferida).
+
+**Diferença entre a prévia e o implementado (declarada).** A prévia calculou o prêmio com o D/E **a preço** e só os pesos no ponto fixo.
+O implementado mede o D/E também no ponto fixo (o que a decisão pede: nada depende do preço). Em empresa muito alavancada cujo valor da
+casa fica abaixo do preço, isso realimenta: central menor → D/E maior → Ke maior. As **palavras são as mesmas da prévia**, mas os
+centrais saem mais baixos: SUZB3 22,04 (prévia 29,16; Ke real 26,7%, D/E 3,65), SMTO3 16,03 (16,97; 21,5%, D/E 2,29), RANI3 3,10
+(22,3%, D/E 2,76), SLCE3 7,59 (23,3%, D/E 2,94). A conta converge (amortecida) em 20 dos 21; a RECV3 não tem central positivo.
+
+**Decisões técnicas (minhas, pela doutrina).**
+- **AUD-06:** fica a taxa de compra da manhã — é a que o investidor consegue no título sem cupom, e o Tesouro Direto não publica
+  fechamento. Mudou o texto do §4 e os rótulos, não o número. ANBIMA com cupom fica como sensibilidade (ISAE4 e UNIP6 trocariam).
+- **AUD-78/72:** `ferramentas/mercado_vigente.json` + `mercado.py`; hall, triagem e dossiê leem dele; teste contra `dados/mercado.json`.
+  O literal do backtest fica (registro do experimento congelado de 05/10). `rodar_tudo.py` e o monitor imprimem a data e a idade da taxa;
+  > 15 dias → "atualizar antes de decidir"; o golden guarda a data do preço.
+- **AUD-07:** Kd = custo do RI (`kd_ri`, em reais e depois dos swaps, com fonte) ou rf nominal + spread sintético (Damodaran, jan/2026,
+  nota B) pela cobertura **normalizada**. Com a cobertura de 12 meses, a SUZB3 (EBIT de vale de ciclo) caía para B+ e virava CARA
+  pelo Kd; com a normalizada nenhuma palavra muda. Juros ÷ dívida bruta (3% a 29%) não mede custo em reais (dívida em dólar, arrendamento).
+- **AUD-09:** `aliquota_desde` (Lei 14.789/2023) → ABEV3 com 2 exercícios = 34% até o DFP 2026; explícita < 34% exige fonte (TIMS3 tem).
+- **AUD-18:** a reprodução fica no PL contábil (o menor dos dois, como no ROIC); a de reposição é exibida (`reprod_reposicao`).
+- **AUD-08:** o "corrige antes de publicar" do §9 virou código: JUSTA pela régua com a trava falha → NÃO CONCLUSIVO até `trava_razao`.
+
+**Efeito no hall (golden regravado em 4 blocos, um motivo por bloco):** SMTO3 RADAR → CARA (26,58 → 16,03); SUZB3 JUSTA → CARA
+(43,59 → 22,04); LEVE3 RADAR → NÃO CONCLUSIVO (36,31, P/C 0,95; Bogle 18,6% × Ke 20,7%); **ISAE4 (carteira) JUSTA → NÃO CONCLUSIVO**
+(Bogle 17,0% × Ke 19,3%; central 25,78 igual); KLBN11 CARA → NÃO CONCLUSIVO (central 1,72 com Ke real de 77%, D/E 17,4; dispersão 12×); SLCE3 CARA → NÃO CONCLUSIVO (dispersão);
+UNIP6 (fora) → CARA 47,32. RANI3 (carteira) 5,59 → 3,10 — já estava acima da saída (P/C 1,42 → 2,56). Ninguém chega ao preço de
+compra. ABEV3 deixa de "vencer a RF". Financeiras sem mudança. Dossiês salvos (BLAU3, CMIN3, HYPE3, LEVE3) ficam no disco; o recálculo
+na mesma data está fixado em `tests/test_dossie_fichas.py`.
+
+**Pendências.** (1) LEVE3 e ISAE4: o dossiê diz qual premissa diverge (g, payout, P/L final) ou corrige — até lá, sem palavra.
+(2) `kd_ri` de cada não financeira pelo RI (começar pelas de D/E > 1: SUZB3, SMTO3, SLCE3, RANI3, KLBN11). (3) Tabela de spread:
+reconferir em jan/2027. (4) Triagem e backtest seguem com o Ke fixo (motor reduzido congelado) — declarado no `06`.
+(5) Conferir o texto de Hamada 1972 e MM 1958 (hoje nota B por referência).
+
+**O que me provaria errado.** Se o Ke de 21–27% real das muito alavancadas (SUZB3, SLCE3, RANI3, SMTO3) for desmentido pelo mercado de
+dívida delas (spread de debênture muito abaixo do sintético) ou se o ponto fixo for instável a pequenas mudanças de margem
+(sensibilidade ±2 p.p. na ficha). **Revisão:** temporada do 3T26.
+
+**Adversário (mesmo dia): 5 defeitos reproduzidos e corrigidos, sem troca de palavra.** (1) O ponto fixo partia do PREÇO e desistia
+se o primeiro central saísse ≤ 0: a KLBN11 dava −1,44 a R$ 18,62 e +1,72 a R$ 5 — o central voltava a depender do preço, que é o que
+o AUD-13 proibiu. Agora parte do patrimônio contábil (sem PL positivo, de E = D) e dá 1,72 a qualquer preço (teste com 3 preços). O
+Ke real de 77% da KLBN11 é a fórmula de Hamada com D/E 17,4: o valor da casa quase some sob a dívida, e a palavra é NÃO CONCLUSIVO pela
+dispersão. (2) Os PDFs dos lotes 3, 5 e 6 descreviam a trava com o Ke de 19,30%, e o do lote 6 dizia "não se aplica" quando a trava é
+justamente a causa do NÃO CONCLUSIVO. Agora usam o Ke da empresa. (3) As sensibilidades dos PDFs (`central_rapido`) usavam Ke de
+5 p.p. e pesos a preço (SUZB3 44,36 contra o central 22,04). Agora usam a mesma base do central. (4) O anexo do dossiê mostrava o Ke
+de 19,30%; agora mostra o Ke da empresa e o D/E. (5) Dívida sem linha de juros virava AAA em silêncio; agora falha alto.
+**Não corrigido:** os PDFs dos lotes não foram regenerados nesta onda (seguem os de 05/10). Os textos fixos de "Ke da casa 19,30%" fora
+da trava e das sensibilidades ficam para a Onda 1.4 (documentos).
+

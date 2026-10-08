@@ -180,7 +180,11 @@ def markdown(hall: list[dict], fila: pd.DataFrame, precos_fila: dict, pregao: st
         s.append(f"> **DADO VELHO:** o último pregão é de {pregao}, {dias} dias antes de hoje. "
                  f"Download: {estado_download}.\n")
     s.append(f"# Monitor semanal de preço — {hoje}\n")
-    s.append(f"Fechamento de **{pregao}** (COTAHIST, B3). Centrais, compra e saída do `03` (régua v2.2). "
+    import mercado
+    mv = mercado.dados()      # AUD-78: o central é de uma data de taxa; o monitor a declara
+    s.append(f"Fechamento de **{pregao}** (COTAHIST, B3). Centrais, compra e saída do `03`, calculados com rf "
+             f"{mv['rf_real']:.2%} real e π {mv['pi']:.2%} de **{mv['data']}** ({mv['rf_tipo']}; "
+             f"{mercado.idade_dias(mv['data'], hoje)} dias antes de hoje). "
              f"Download: {estado_download}. **O monitor não muda palavra:** quem cruzou uma fronteira "
              "precisa do `05-prompt-reavaliacao.md` antes de qualquer decisão.\n")
     alertas = [x for x in hall if x["alerta"] in (COMPRA, SAIDA, OBSERVA)]

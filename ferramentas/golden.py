@@ -12,10 +12,11 @@ LOG = AQUI / "tests" / "golden_log.md"
 # tolerância absoluta por campo (R$ para valores por ação; fração para taxas)
 TOL = {"central": 0.01, "ancoras": 0.01, "pc": 0.005, "nota_geral": 0.05,
        "bogle_nom": 0.0005, "dy": 0.0005, "fator_defasagem": 0.0005, "cobertura_juros": 0.05}
-EXATOS = ("palavra", "vence_rf", "lote")
+EXATOS = ("palavra", "vence_rf", "lote", "data_preco")
 ROTULO = {"central": "central", "pc": "P/C", "palavra": "palavra", "ancoras": "âncora", "nota_geral": "nota geral",
           "vence_rf": "vence a RF", "bogle_nom": "Bogle nominal", "dy": "yield sustentável",
-          "cobertura_juros": "cobertura de juros", "fator_defasagem": "fator de defasagem", "lote": "lote"}
+          "cobertura_juros": "cobertura de juros", "fator_defasagem": "fator de defasagem", "lote": "lote",
+          "data_preco": "data do preço"}
 
 
 def carregar():

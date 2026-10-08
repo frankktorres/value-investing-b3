@@ -7,6 +7,10 @@ from __future__ import annotations
 import hashlib
 import json
 from dataclasses import asdict, dataclass
+import pathlib
+
+# rf e π do hall (AUD-78): um só arquivo versionado, ao lado dos lotes
+_MV = json.loads((pathlib.Path(__file__).resolve().parent.parent / "mercado_vigente.json").read_text(encoding="utf-8"))
 
 
 @dataclass(frozen=True)
@@ -74,12 +78,12 @@ class ConfigTriagem:
     # `06` de 07/09 ("entra com >= 5 de 7"): define a fila, nunca o veredito.
     fila_min_ok: int = 3
 
-    # ---- mercado: OS MESMOS do hall (lote1_bancos.MK); um teste confere que não divergem.
-    rf_real: float = 0.0706
-    pi: float = 0.0646
+    # ---- mercado: OS MESMOS do hall, lidos de `mercado_vigente.json` (AUD-78); um teste confere que não divergem.
+    rf_real: float = _MV["rf_real"]
+    pi: float = _MV["pi"]
     premio: float = 0.05
-    data_mercado: str = "2026-10-02"
-    titulo_rf: str = "Tesouro IPCA+ 15/08/2050 (Tesouro Transparente, dados/mercado.json)"
+    data_mercado: str = _MV["data"]
+    titulo_rf: str = "Tesouro IPCA+ 15/08/2050, taxa de compra da manhã (Tesouro Transparente, mercado_vigente.json)"
     aviso_mercado_dias: int = 15          # 00-CONFIGURACAO regra 3
 
     @property

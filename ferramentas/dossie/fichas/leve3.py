@@ -10,7 +10,7 @@ Premissas declaradas ANTES do veredito (doutrina §11.4, §6.3; 02 regra 4):
   · "Outras" líquidas (3.04.04 + 3.04.05), como no hall.
   · Receita de base = default do motor (média de 2023, 2024, 2025 e 12m até jun/2026).
   · Alíquota pela regra geral da v2.3 (mediana de 5 anos; a da LEVE3 fica acima de 15%, sem fase).
-  · Kd = rf nominal + 1,5 p.p.; g real 1% (só vale se ROIC > WACC) — os mesmos do hall.
+  · Kd = rf nominal + spread sintético pela cobertura normalizada (v2.4; era + 1,5 p.p. digitado); g real 1% (só vale se ROIC > WACC) — os mesmos do hall.
   · Ações: composição do capital do ITR de jun/2026 (CVM), sem tesouraria.
   · P/L histórico de fim de exercício com fonte A (`base.pl_hist`).
   · Defasagem do provento MEDIDA (datas da StatusInvest, C só para datas), como nos outros dossiês.
@@ -28,7 +28,7 @@ ANOS = list(ANOS_HALL)          # 2016–2025
 def empresa(qualitativo: dict | None = None, desconto_controlador: dict | None = None, **sobrepor) -> Industrial:
     base.carregar(TK)
     kw = dict(
-        outras_liquidas=True, spread_kd=0.015, g_real=0.01,
+        outras_liquidas=True, g_real=0.01,
         jcp_share=base.jcp_share(TK), pl_hist=base.pl_hist(TK),
         defasagem_meses=base.defasagem(TK),
         defasagem_fonte="datas de pagamento da StatusInvest (C, só datas), média ponderada pelo valor",

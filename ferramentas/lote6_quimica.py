@@ -168,17 +168,17 @@ EGIE, EGIE_DADOS = egie()
 
 # ---------------------------------------------------------------- não financeiras
 EMPRESAS = [
-    Industrial("GGBR4", "Gerdau (PN)", "ciclica", preco=26.10, n_acoes=N["GGBR4"], spread_kd=0.015, g_real=0.01, jcp_share=jcp("GGBR4"),
+    Industrial("GGBR4", "Gerdau (PN)", "ciclica", preco=26.10, n_acoes=N["GGBR4"], g_real=0.01, jcp_share=jcp("GGBR4"),
                receita_meio=ltm_de(CVM["GGBR4"])["receita"] * ACO["fator"], outras_liquidas=True, impairment_normalizado=True,
                receita_meio_fonte="receita 12m × aço de meio de ciclo ÷ aço dos 12m (BLS WPU1017 × PTAX, R$ de hoje)",
                qualitativo=QUAL(3, 4, 4, 2, 3)),
-    Industrial("UNIP6", "Unipar Carbocloro (PNB)", "ciclica", preco=56.78, n_acoes=N["UNIP6"], spread_kd=0.02, g_real=0.01, jcp_share=jcp("UNIP6"),
+    Industrial("UNIP6", "Unipar Carbocloro (PNB)", "ciclica", preco=56.78, n_acoes=N["UNIP6"], g_real=0.01, jcp_share=jcp("UNIP6"),
                anos_ciclo=[str(a) for a in range(2017, 2026)], receita_meio=ltm_de(CVM["UNIP6"])["receita"] * CLORO["fator"], outras_liquidas=True,
                janela_razao="Indupa consolidada em dez/2016: 2016 traz ganho de compra vantajosa e 1 mês de receita da Argentina "
                             "(e a série de soda não cobre jan–set/2016)",
                receita_meio_fonte="receita 12m × cesta soda/PVC de meio de ciclo ÷ cesta dos 12m (BLS × PTAX, R$ de hoje)",
                qualitativo=QUAL(3, 2, 2, 2, 2)),
-    Industrial("LEVE3", "Mahle Metal Leve", "servicos", preco=34.43, n_acoes=N["LEVE3"], spread_kd=0.015, g_real=0.01, jcp_share=jcp("LEVE3"),
+    Industrial("LEVE3", "Mahle Metal Leve", "servicos", preco=34.43, n_acoes=N["LEVE3"], g_real=0.01, jcp_share=jcp("LEVE3"),
                outras_liquidas=True, pl_hist=pl_hist("LEVE3"),
                # 08/10/2026: notas por evidência do dossiê (regra 11, DOSSIES/2026-10-08-LEVE3.md) no lugar das arbitradas (4, 3, 3, 3, 3)
                qualitativo=QUAL(4, 1, 2, 3, 2), qualitativo_origem="regra 11 (dossiê 06/10/2026)", controlador_discricionario=True,

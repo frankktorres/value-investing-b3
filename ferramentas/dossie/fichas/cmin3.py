@@ -129,7 +129,7 @@ def empresa(qualitativo: dict | None = None, desconto_controlador: dict | None =
         # campo, ele sai daqui para não contar duas vezes (hoje a série não o tem: desconta zero)
         outros_passivos_financeiros=float(_num("outros_passivos")) - float(ltm_de(CVM[TK]).get("proventos_a_pagar") or 0.0),
         outros_passivos_fonte="passivo de contrato (minério e energia pré-vendidos, com juros) + dividendos a pagar já ex, ITR 2T26",
-        spread_kd=0.015, g_real=0.01, jcp_share=base.jcp_share(TK), pl_hist=None,
+        g_real=0.01, jcp_share=base.jcp_share(TK), pl_hist=None,
         defasagem_meses=base.defasagem(TK),
         defasagem_fonte="datas de pagamento da StatusInvest (C, só datas), média ponderada pelo valor, data-com 2021–26",
         desconto_controlador=desconto_controlador or {"tipo": "zero", "razao": "pendente: D3 do dossiê"},

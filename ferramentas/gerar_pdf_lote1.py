@@ -451,7 +451,7 @@ def apendice(story):
           ["F. Quadro clássico", "Completo, com N/A por perfil declarado; lucro projetado próprio; DCF reverso em todas."],
           ["G. Veredito", "Régua contínua; compra 0,70×, saída 1,30×; trava de coerência não se aplica (nenhuma JUSTA)."],
           ["Pendências", "Consenso de LPA 2027–28; Basileia/CET1 de BRBI11; solvência das seguradoras; teste do R$ 1 (precisa de série ajustada); "
-                         "taxa de fechamento da NTN-B Principal 2050."]]
+                         "rf = taxa de compra da manhã do Tesouro Direto (o TD não publica fechamento; doutrina v2.4, AUD-06)."]]
     story.append(tabela(ck, [32 * mm, 150 * mm]))
 
 

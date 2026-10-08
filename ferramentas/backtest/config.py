@@ -158,6 +158,8 @@ class Config:
 
     # ---- proxy (fatia 12): mesmo mercado do golden (lote1_bancos.py:14), para que o erro medido
     # seja só do motor. O preço é pc × central do próprio golden.
+    # AUD-78: fica LITERAL de propósito — é o registro do experimento congelado de 05/10 (portão falhou); o hall lê
+    # rf e π de `mercado_vigente.json` e pode mudar sem reescrever esta medida.
     proxy_data: str = "2026-10-05"
     proxy_rf_real: float = 0.0706
     proxy_pi: float = 0.0646

@@ -3,16 +3,21 @@
 Cada premissa tem a justificativa ao lado. Séries: StatusInvest (dados/raw/2026-10-04); fatos: PDFs rev. 07/09 e 03/10
 (fontes primárias citadas lá); mercado: Tesouro Transparente, ANBIMA (ETTJ) e BCB (Focus).
 """
-from motor_financeiras import Financeira, Mercado, avaliar
+import mercado
+from motor_financeiras import Financeira, avaliar
 
 DATA_BASE = "02/10/2026"
 
-# rf: Tesouro IPCA+ 2050 SEM cupom (o mais longo sem cupom), 7,06% — Tesouro Transparente, taxa de compra da manhã de
-#     02/10 (a ANBIMA não publica a NTN-B Principal no arquivo do dia; NTN-B 2050 com cupom fechou a 7,14%).
+# rf e π vêm de `mercado_vigente.json` (AUD-78: um arquivo só, conferido contra dados/mercado.json por teste).
+# rf: Tesouro IPCA+ 2050 SEM cupom (o mais longo sem cupom), 7,06% — Tesouro Transparente, taxa de COMPRA DA MANHÃ de
+#     02/10: o Tesouro Direto não publica fechamento e a ANBIMA não traz a NTN-B Principal (a NTN-B 2050 com cupom, outro
+#     instrumento, fechou a 7,14% — sensibilidade no 09, AUD-06).
 # π:  inflação implícita ANBIMA (ETTJ de fechamento), vértice de 10 anos = horizonte da comparação: 6,46%.
 #     Focus (25/09): 4,99% 2026 · 4,31% 2027 · 3,50% 2029–30 — só sensibilidade.
-MK = Mercado(rf_real=0.0706, pi=0.0646, data=DATA_BASE)
-MK_FOCUS = Mercado(rf_real=0.0706, pi=0.040, data=DATA_BASE + " (π 4% — hipótese dos PDFs de 03/10)")
+MK = mercado.vigente()
+MK_FOCUS = mercado.focus()
+if MK.data != DATA_BASE:
+    raise ValueError(f"mercado_vigente.json é de {MK.data}, o lote é de {DATA_BASE}: rf e π têm de ser do dia do preço (§4)")
 
 QUAL = lambda moat, gestao, controlador, ciclo, fisher: dict(moat=moat, gestao=gestao, controlador=controlador, ciclo=ciclo, fisher=fisher)
 # notas arbitradas (pré-v4). v2.3: peso 2 do controlador (regra 11, §10) onde a interferência JÁ consumada está declarada no

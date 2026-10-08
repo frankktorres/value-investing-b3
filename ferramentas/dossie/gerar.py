@@ -156,7 +156,9 @@ def anexo(c: dict) -> str:
          "COTAHIST e proventos da B3 (A), StatusInvest só para datas de pagamento (C).*", "",
          "## Veredito mecânico (motor do hall, Ke da casa)", "",
          f"Mercado de {c['data']}: rf real {_f(mk.rf_real, 2, True)} · π implícita {_f(mk.pi, 2, True)} · Ke nominal "
-         f"{_f(mk.ke_nom, 2, True)}", "",
+         f"{_f(r.get('ke_nom_emp', mk.ke_nom), 2, True)}"
+         + (f" (v2.4: 5 p.p. × alavancagem, D/E {_f(r['de_peso'])} no ponto fixo; sem dívida seria {_f(mk.ke_nom, 2, True)})"
+            if 'ke_nom_emp' in r else ""), "",
          f"Preço R$ {_f(c['preco'])} · central R$ {_f(r['central'])} · P/C {_f(r['pc'])} · "
          f"régua **{r['palavra_regua']}** → palavra final **{r['palavra']}** (dispersão {_f(r['dispersao'])}, confiança {r['confianca']})", "",
          "| Âncora | R$/ação |", "|---|---|"] + [f"| {k} | {_f(v)} |" for k, v in r["ancoras"].items()] + [

@@ -9,15 +9,17 @@ from ltm import ltm_de, ltm_ref_de
 import json
 import math
 import pathlib
-from dataclasses import dataclass, field
+from dataclasses import dataclass, field, replace
 from functools import lru_cache
 from statistics import median
 
+from credito import FONTE as FONTE_SPREAD, spread_sintetico
 from defasagem import defasagem_meses
 from inflacao import DEFLATOR, deflator_ltm, deflator_periodo, fator_entre, fator_idade, inflacao_do_ano, reposicao
 from juros import juros_do_periodo
 from proventos_ex import ajuste_b3
-from motor_financeiras import (ANOS_ROIC_MINIMO, HORIZONTE, IR_JCP, NOTA_QUALIDADE_MINIMA, ORDEM, Mercado, descontar,
+from motor_financeiras import (ANOS_ROIC_MINIMO, HORIZONTE, IR_JCP, NOTA_QUALIDADE_MINIMA, ORDEM, PREMIO_KE, TRAVA_PP, Mercado,
+                               aplicar_trava, descontar,
                                interp, liquido_diferido, media_qualitativa, nota_preco, nota_spread, nota_yield, palavra,
                                precos_de_referencia)
 
@@ -34,6 +36,8 @@ JANELA_MINIMA_PRECO_MEIO = 7   # v2.3 (§11.1): margem reexpressa ao preço de m
 MINIMO_ANOS_ALIQUOTA = 3  # v2.3: a mediana de 5 anos da alíquota exige pelo menos 3 exercícios válidos; senão vale 34%
 FIM_EXERCICIO = {"SMTO3": 3}  # mês de fechamento do exercício fora do ano-calendário (o resto: dezembro)
 ANO_IFRS16 = 2019         # AUD-03: primeiro exercício com o aluguel fora do EBITDA (margem de E&P só a partir dele)
+TOL_PONTO_FIXO = 1e-5     # AUD-13: |ΔE/E| que encerra a iteração dos pesos do WACC
+MAX_ITER_PONTO_FIXO = 200
 
 
 @dataclass
@@ -47,7 +51,11 @@ class Industrial:
     janela_razao: str = ""         # OBRIGATÓRIO quando anos_ciclo != ANOS: a quebra estrutural e a data (§11.4)
     receita_meio: float | None = None   # R$ mil; None = média dos 3 últimos exercícios + LTM
     aliquota: float | None = None   # alíquota PERPÉTUA explícita; None = regra da v2.3 em `aliquota_regra` (mediana de 5 anos, sem piso)
-    spread_kd: float = 0.02        # Kd nominal = rf nominal + spread
+    # Kd (doutrina §2, v2.4 — AUD-07): custo médio da dívida do RI quando houver; senão rf nominal + spread sintético pela cobertura
+    # normalizada (credito.py). `spread_kd` digitado só vale com `spread_fonte`.
+    kd_ri: dict | None = None      # {"valor": Kd nominal em R$ a.a. depois dos swaps, "fonte": "...", "data": "aaaa-mm-dd"}
+    spread_kd: float | None = None
+    spread_fonte: str = ""
     g_real: float = 0.01           # crescimento real perpétuo do cenário base
     jcp_share: float = 0.0
     pl_hist: float | None = None
@@ -84,6 +92,9 @@ class Industrial:
     qualitativo_origem: str = "arbitrada, pré-v4"   # notas do hall até o dossiê do ticker; dossiê grava "regra 11"
     aliquota_fase: dict | None = None     # crédito de IR COM PRAZO (ágio, subvenção): {"ate": 2030, "fonte": "...", "efetiva": opcional}
     aliquota_permanente_fonte: str = ""   # mediana < 15% só vale com a origem PERMANENTE declarada (JCP, regime sem prazo)
+    aliquota_fonte: str = ""              # OBRIGATÓRIO com `aliquota` explícita abaixo de 34% (AUD-09)
+    aliquota_desde: dict | None = None    # mudança de lei: {"ano": 2024, "fonte": "..."} — a mediana só usa exercícios >= ano (AUD-09)
+    trava_razao: str = ""                 # §9 (v2.4): premissa que explica Bogle × Ke fora de ±2 p.p. numa JUSTA; sem ela, NÃO CONCLUSIVO
     outros_passivos_financeiros: float = 0.0   # R$ mil; passivo COM JUROS ou financeiro fora de 2.01.04/2.02.01: entra na DL (v2.3)
     capex_expansao: dict | None = None    # expansão identificada sem receita: {"anos": {ano: R$ mil}, "projeto", "fonte", "nota_fonte", "retorno_projetado"}
 
@@ -110,6 +121,18 @@ def exigir_declaracoes(emp: Industrial) -> None:
         ef = f.get("efetiva")
         if ef is not None and not (isinstance(ef, (int, float)) and 0 <= ef <= ALIQUOTA_MARGINAL):
             faltas.append(f"aliquota_fase 'efetiva' fora de [0, {ALIQUOTA_MARGINAL}]: {ef}")
+    if emp.aliquota is not None and emp.aliquota < ALIQUOTA_MARGINAL and not emp.aliquota_fonte.strip():
+        # AUD-09: a explícita contornava o mínimo de 3 exercícios e a regra de origem; abaixo de 34% exige a fonte escrita
+        faltas.append(f"aliquota explícita {emp.aliquota:.4f} < 34% sem aliquota_fonte (§2)")
+    ad = emp.aliquota_desde
+    if ad is not None and (not isinstance(ad.get("ano"), int) or not str(ad.get("fonte", "")).strip()):
+        faltas.append(f"aliquota_desde exige 'ano' (inteiro) e 'fonte': {ad}")
+    if emp.spread_kd is not None and not emp.spread_fonte.strip():
+        faltas.append(f"spread_kd={emp.spread_kd} digitado sem spread_fonte (§2; o padrão é o spread sintético)")
+    kr = emp.kd_ri
+    if kr is not None and not (isinstance(kr.get("valor"), (int, float)) and 0 < kr["valor"] < 0.5
+                               and str(kr.get("fonte", "")).strip() and str(kr.get("data", "")).strip()):
+        faltas.append(f"kd_ri exige 'valor' (fração, nominal em R$), 'fonte' e 'data': {kr}")
     if (emp.outros_passivos or emp.outros_passivos_financeiros) and not emp.outros_passivos_fonte.strip():
         faltas.append("outros_passivos sem outros_passivos_fonte (§11.1)")
     ce = emp.capex_expansao
@@ -465,10 +488,11 @@ def ciclico(emp: Industrial):
 
 
 def _anos_com_imposto(emp: Industrial) -> list:
-    """Os 5 últimos exercícios da janela com LAIR > 0 e a linha do IR."""
+    """Os 5 últimos exercícios da janela com LAIR > 0 e a linha do IR; com `aliquota_desde`, só os da lei vigente (AUD-09)."""
     a, _ = serie(emp.ticker)
+    desde = int(emp.aliquota_desde["ano"]) if emp.aliquota_desde else 0
     return [x for x in anos_validos(emp.ticker, emp.anos_ciclo)[-5:]
-            if a[x].get("lair") and a[x]["lair"] > 0 and a[x].get("ir") is not None]
+            if int(x) >= desde and a[x].get("lair") and a[x]["lair"] > 0 and a[x].get("ir") is not None]
 
 
 def mediana_efetiva(emp: Industrial) -> float | None:
@@ -559,22 +583,86 @@ def beneficio_fiscal(emp: Industrial, lair_norm: float, taxa: float) -> float:
     return sum(anual / (1 + taxa) ** t for t in range(1, n + 1))
 
 
-def wacc(emp: Industrial, mk: Mercado, ke_nom=None):
+def custo_divida(emp: Industrial, mk: Mercado, op: dict | None = None) -> dict:
+    """Kd nominal (doutrina §2, v2.4 — AUD-07): o custo médio do RI (`kd_ri`) quando declarado; senão rf nominal + spread.
+    O spread é o digitado com fonte ou, por padrão, o sintético pela cobertura NORMALIZADA = lucro operacional pré-IR de meio de
+    ciclo ÷ juros do período (LTM). Normalizada porque o EBIT de 12 meses de cíclica no vale ou no pico mudaria o rating a cada
+    trimestre (com o LTM a SUZB3 caía para B+ e a KLBN11 para B)."""
+    if emp.kd_ri:
+        return dict(kd=float(emp.kd_ri["valor"]), origem="RI", spread=None, rating=None, cobertura=None,
+                    fonte=emp.kd_ri["fonte"])
+    if emp.spread_kd is not None:
+        return dict(kd=mk.rf_nom + emp.spread_kd, origem="spread declarado", spread=emp.spread_kd, rating=None,
+                    cobertura=None, fonte=emp.spread_fonte)
+    _, ltm = serie(emp.ticker)
+    op = op or premissas_operacionais(emp)
+    juros, _f = juros_do_periodo(ltm)
+    if juros <= 0 and divida_liquida(ltm)[0] > 0:
+        # adversário (08/10): dívida sem linha de juros virava AAA em silêncio — falha alto, como as outras premissas sem fonte
+        raise ValueError(f"{emp.ticker}: dívida bruta > 0 sem juros no período ({_f}); declarar kd_ri ou spread_kd com spread_fonte")
+    cob = op["receita_meio"] * (op["m50"] + op["ajuste_manut"]) / juros if juros > 0 else None
+    sp, rating = spread_sintetico(cob)
+    return dict(kd=mk.rf_nom + sp, origem="sintético", spread=sp, rating=rating, cobertura=cob, fonte=FONTE_SPREAD)
+
+
+def wacc(emp: Industrial, mk: Mercado, ke_nom=None, kd=None, e_peso=None):
+    """WACC nominal. O peso do acionista é `e_peso` (R$ mil; o valor da casa no ponto fixo, AUD-13); sem ele, o preço."""
     _, ltm = serie(emp.ticker)
     bruta, caixa, dl = divida_liquida(ltm)
-    e = emp.preco * emp.n_acoes / 1000      # R$ mil
+    e = emp.preco * emp.n_acoes / 1000 if e_peso is None else e_peso     # R$ mil
     d = bruta
     ke = ke_nom if ke_nom is not None else mk.ke_nom
-    kd = mk.rf_nom + emp.spread_kd
+    kd = custo_divida(emp, mk)["kd"] if kd is None else kd
     w = ke * e / (e + d) + kd * (1 - aliquota(emp)) * d / (e + d)
     return w, kd, e, d
 
 
-def valores(emp: Industrial, mk: Mercado, ke_nom=None, margem=None, g_real=None, g1=None):
-    """Âncoras ao Ke dado. Retorna dict de valores por ação e insumos. g1 sobrepõe emp.g1_real (DCF reverso de 2 estágios)."""
+def premio_alavancado(d: float, e: float, t: float) -> float:
+    """Prêmio do Ke real pela alavancagem (doutrina §4, v2.4 — AUD-12, decisão do Frank em 08/10/2026): os 5 p.p. são o risco do
+    negócio SEM dívida e a dívida soma risco ao acionista — Hamada (1972), Journal of Finance 27(2):435-452, sobre Modigliani-Miller:
+    prêmio = 5 p.p. × [1 + (1 − t) × D/E]. D = dívida bruta do WACC, E = valor da casa (ponto fixo), t = alíquota perpétua."""
+    return PREMIO_KE * (1 + (1 - t) * d / e)
+
+
+def estrutura_de_capital(emp: Industrial, mk: Mercado) -> dict:
+    """Ponto fixo dos pesos do WACC (doutrina §2, v2.4 — AUD-13, decisão do Frank em 08/10/2026).
+
+    O peso do acionista é o valor que a casa calcula (central × ações), não o preço: com o preço, o central mudava quando só o
+    preço mudava, e o P/C comparava o preço com um número que dependia dele. Como o central depende do peso e do Ke (que depende de
+    D/E), repete-se valores() → central → E com amortecimento até |ΔE/E| < TOL_PONTO_FIXO. Sem central positivo (equity ≤ 0 pela
+    casa) não há ponto fixo: os pesos e o Ke ficam no patrimônio contábil, só para exibir — a palavra já é NÃO CONCLUSIVO.
+
+    A iteração PARTE do patrimônio contábil, não do preço (adversário, 08/10): partindo do preço, a KLBN11 desistia ou achava raiz
+    conforme o preço — o central voltava a depender dele. Sem PL positivo, parte de E = D (D/E = 1)."""
+    _, ltm = serie(emp.ticker)
+    d = divida_liquida(ltm)[0]
+    t = aliquota(emp)
+    desc = desconto_pct(emp)
+    pl = v(ltm, "pl", 0) - v(ltm, "nao_controladores", 0)
+    e0 = pl if pl > 0 else max(d, 1.0)
+    e = e0
+    for i in range(1, MAX_ITER_PONTO_FIXO + 1):
+        mk_e = replace(mk, premio=premio_alavancado(d, e, t))
+        central = central_de(descontar(valores(emp, mk_e, e_peso=e)["anc"], desc))[0]
+        if central <= 0:
+            return dict(mk=replace(mk, premio=premio_alavancado(d, e0, t)), e_peso=e0, iteracoes=i,
+                        ponto_fixo=False, nota="sem central positivo: pesos e Ke no patrimônio contábil, só para exibir")
+        e_novo = central * emp.n_acoes / 1000
+        if abs(e_novo / e - 1) < TOL_PONTO_FIXO:
+            return dict(mk=replace(mk, premio=premio_alavancado(d, e_novo, t)), e_peso=e_novo, iteracoes=i, ponto_fixo=True,
+                        nota=f"ponto fixo em {i} iterações")
+        e = 0.5 * e + 0.5 * e_novo
+    raise RuntimeError(f"{emp.ticker}: pesos do WACC sem ponto fixo em {MAX_ITER_PONTO_FIXO} iterações (último E {e:.0f})")
+
+
+def valores(emp: Industrial, mk: Mercado, ke_nom=None, margem=None, g_real=None, g1=None, e_peso=None):
+    """Âncoras ao Ke dado. Retorna dict de valores por ação e insumos. g1 sobrepõe emp.g1_real (DCF reverso de 2 estágios).
+    `e_peso` = peso do acionista no WACC (ponto fixo, AUD-13); None = preço (uso avulso, sensibilidades dos PDFs)."""
     a, ltm = serie(emp.ticker)
     op = premissas_operacionais(emp)
-    w_nom, kd, e, d = wacc(emp, mk, ke_nom)
+    cdiv = custo_divida(emp, mk, op)
+    w_nom, kd, e_w, d = wacc(emp, mk, ke_nom, kd=cdiv["kd"], e_peso=e_peso)
+    e = emp.preco * emp.n_acoes / 1000      # valor de mercado (EV do Greenblatt, porte); o peso do WACC é e_w
     w_real = (1 + w_nom) / (1 + mk.pi) - 1
     ke = ke_nom if ke_nom is not None else mk.ke_nom
     ke_real = (1 + ke) / (1 + mk.pi) - 1
@@ -657,6 +745,10 @@ def valores(emp: Industrial, mk: Mercado, ke_nom=None, margem=None, g_real=None,
 
     reprod = (emp.reproducao_por_acao if emp.reproducao_por_acao else
               (v(ltm, "pl", 0) - prov["no_pl"] - v(ltm, "nao_controladores", 0)) / n)
+    # AUD-18 (v2.4): a âncora fica no PL contábil — é o MENOR dos dois, a mesma regra conservadora do ROIC (§2). A reprodução a
+    # custo de reposição (imobilizado corrigido pelo IPCA da idade média, a mesma correção do ROIC) é só exibida.
+    reprod_reposicao = (None if emp.reproducao_por_acao else
+                        reprod + (cap_rep - cap_inv) / n if (cap_inv > 0 and cap_rep > 0) else None)
 
     anc = {}
     if emp.perfil == "ciclica":
@@ -669,9 +761,9 @@ def valores(emp: Industrial, mk: Mercado, ke_nom=None, margem=None, g_real=None,
         anc["EPV"] = epv
         if oe_val:
             anc["Owner Earnings ÷ (Ke − g)"] = oe_val
-    return dict(anc=anc, op=op, wacc=w_nom, wacc_real=w_real, kd=kd, e=e, d=d, dl=dl, bruta=bruta, caixa=caixa,
+    return dict(anc=anc, op=op, wacc=w_nom, wacc_real=w_real, kd=kd, kd_info=cdiv, e=e, e_peso=e_w, d=d, dl=dl, bruta=bruta, caixa=caixa,
                 minor=minor, nopat=nopat, roic=roic, epv=epv, dcf=dcf_c, dcf_pond=dcf_pond, oe=oes, oe_norm=oe_norm,
-                oe_val=oe_val, reprod=reprod, cap_inv=cap_inv, n=n, m=m, gr=gr, aliquota=t_ef, aliquota_regra=t_regra,
+                oe_val=oe_val, reprod=reprod, reprod_reposicao=reprod_reposicao, cap_inv=cap_inv, n=n, m=m, gr=gr, aliquota=t_ef, aliquota_regra=t_regra,
                 aliquota_mediana=mediana_efetiva(emp), aliquota_fase=fase_fiscal(emp), beneficio_fiscal_acao=benef_firma / n,
                 outros_passivos_financeiros=emp.outros_passivos_financeiros, proventos_ja_ex=prov, capex_expansao=emp.capex_expansao,
                 roic_reposicao=roic_rep, roic_filtro=roic_filtro, cap_inv_reposicao=cap_rep, idade_imobilizado=idade_imob)
@@ -717,11 +809,11 @@ def desconto_pct(emp: Industrial) -> float:
             sum(c["prob"] * c["perda"] for c in dc["cenarios"]) if dc["tipo"] == "cenarios" else 0.0)
 
 
-def ke_implicito(emp, mk):
+def ke_implicito(emp, mk, e_peso=None):
     # o preço se compara ao central COM o desconto (§5: uma única vez, no valor) — até a v2.2 este cálculo o ignorava
     desc = desconto_pct(emp)
     lo, hi = mk.g_teto + 0.003, 0.60
-    f = lambda k: central_de(descontar(valores(emp, mk, ke_nom=k)["anc"], desc))[0]
+    f = lambda k: central_de(descontar(valores(emp, mk, ke_nom=k, e_peso=e_peso)["anc"], desc))[0]
     try:
         if f(lo) < emp.preco:
             return None
@@ -736,11 +828,11 @@ def ke_implicito(emp, mk):
         return None
 
 
-def g_implicito(emp, mk):
+def g_implicito(emp, mk, e_peso=None):
     """DCF reverso: crescimento real perpétuo que iguala o DCF base ao preço (margem mediana, Ke da casa).
     Com DCF de 2 estágios: o g real dos primeiros anos_g1 anos (perpetuidade fixa). DCF com o desconto de controlador (§5)."""
     desc = desconto_pct(emp)
-    dcf_base = lambda **kw: descontar({"b": valores(emp, mk, **kw)["dcf"]["base"]}, desc)["b"]
+    dcf_base = lambda **kw: descontar({"b": valores(emp, mk, e_peso=e_peso, **kw)["dcf"]["base"]}, desc)["b"]
     if emp.g1_real is not None:
         lo, hi = 0.0, 0.40
         f = lambda g: dcf_base(g1=g)
@@ -752,7 +844,7 @@ def g_implicito(emp, mk):
             mid = (lo + hi) / 2
             lo, hi = (lo, mid) if f(mid) > emp.preco else (mid, hi)
         return (lo + hi) / 2
-    lo, hi = -0.05, min(0.08, valores(emp, mk)["wacc_real"] - 0.002)
+    lo, hi = -0.05, min(0.08, valores(emp, mk, e_peso=e_peso)["wacc_real"] - 0.002)
     f = lambda g: dcf_base(g_real=g)
     if f(hi) < emp.preco:
         return None
@@ -770,7 +862,11 @@ def g_implicito(emp, mk):
 def avaliar(emp: Industrial, mk: Mercado) -> dict:
     exigir_declaracoes(emp)
     a, ltm = serie(emp.ticker)
-    r = valores(emp, mk)
+    # v2.4 (AUD-12/13): Ke da empresa pela alavancagem e pesos do WACC no ponto fixo; daqui em diante TODO uso do Ke
+    # (âncoras, OE, defasagem, trava, sensibilidade, Ke/g implícitos) é o da empresa
+    ec = estrutura_de_capital(emp, mk)
+    mk, ep = ec["mk"], ec["e_peso"]
+    r = valores(emp, mk, e_peso=ep)
     desc = desconto_pct(emp)
     anc = descontar(r["anc"], desc)      # v2.3: só em âncora > 0 (a ≤ 0 continua forçando NÃO CONCLUSIVO)
     central, vals = central_de(anc)
@@ -854,7 +950,10 @@ def avaliar(emp: Industrial, mk: Mercado) -> dict:
     def cls(x):
         return "Sim" if x >= mk.rf_liq_real + 0.03 else ("Empate" if x >= mk.rf_liq_real + 0.015 else "Não")
     rf, rf_inv = cls(bogle_liq_real), cls(so_inv_liq_real)
-    trava = abs(bogle_nom - mk.ke_nom) <= 0.02 if p0 == "JUSTA" else None
+    trava = abs(bogle_nom - mk.ke_nom) <= TRAVA_PP if p0 == "JUSTA" else None
+    p_trava = aplicar_trava(p0, p, trava, emp.trava_razao)
+    if p_trava != p:
+        p, conf = p_trava, "não conclusivo (trava de coerência, §9)"
 
     peg = (pl_atual / (100 * g_nom)) if pl_atual else None
     pegy = (pl_atual / (100 * (g_nom + dy))) if pl_atual else None
@@ -863,7 +962,7 @@ def avaliar(emp: Industrial, mk: Mercado) -> dict:
     sens = {}
     for dk in (-0.01, 0, 0.01):
         for dm in (-0.02, 0, 0.02):
-            vv = valores(emp, mk, ke_nom=mk.ke_nom + dk, margem=r["m"] + dm)["anc"]
+            vv = valores(emp, mk, ke_nom=mk.ke_nom + dk, margem=r["m"] + dm, e_peso=ep)["anc"]
             sens[(dk, dm)] = central_de(descontar(vv, desc))[0]
 
     # notas — o spread usa o MENOR dos dois ROIC (doutrina §2: capital a custo histórico infla o retorno);
@@ -897,7 +996,9 @@ def avaliar(emp: Industrial, mk: Mercado) -> dict:
                 g_nom=g_nom, pl_atual=pl_atual, pl_final=pl_final, dmult=dmult, bogle_nom=bogle_nom,
                 bogle_liq_real=bogle_liq_real, so_inv_liq_real=so_inv_liq_real, vence_rf=rf, rf_sem_rerating=rf_inv,
                 so_com_rerating=rf != rf_inv, carimbo_rf=bogle_liq_real < mk.rf_liq_real, trava=trava, peg=peg, pegy=pegy,
-                ke_implicito=ke_implicito(emp, mk), g_implicito=g_implicito(emp, mk), sens=sens,
+                ke_implicito=ke_implicito(emp, mk, ep), g_implicito=g_implicito(emp, mk, ep), sens=sens,
+                ke_real_emp=mk.ke_real, ke_nom_emp=mk.ke_nom, premio_ke=mk.premio, de_peso=r["d"] / ep,
+                ponto_fixo=ec["ponto_fixo"], ponto_fixo_nota=ec["nota"],
                 notas=dict(qualidade=n_qual, solidez=n_sol, renda=n_renda, preco=n_preco, geral=n_geral),
                 qualitativo_origem=emp.qualitativo_origem, controlador_peso=2 if emp.controlador_discricionario else 1,
                 ret_investimento=dy + g_nom, ret_especulativo=dmult, ticker=emp.ticker)

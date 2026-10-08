@@ -31,7 +31,7 @@ from lote6_quimica import (ACO, CLORO, EGIE, EGIE_DADOS, EGIE_DIV_AGO26, EGIE_FO
 from lote6_textos import AGENDA, ANTES, T
 from motor_financeiras import avaliar as avaliar_fin
 from motor_financeiras import projecao
-from motor_nao_financeiras import CVM, SI, altman_z2, avaliar, beneish, ebit_aj, piotroski, sloan, valores
+from motor_nao_financeiras import CVM, SI, altman_z2, avaliar, beneish, ebit_aj, estrutura_de_capital, piotroski, sloan, valores
 
 sys.stdout.reconfigure(encoding="utf-8")
 REV = "05-10-2026"
@@ -47,7 +47,10 @@ def desc_de(emp):
 
 
 def central_rapido(emp, **kw):
-    r = valores(emp, MK, **kw)
+    # v2.4 (AUD-12/13): a sensibilidade usa a MESMA base do central publicado — Ke da empresa e pesos no ponto fixo, refeitos
+    # para a variante (antes: Ke de 5 p.p. e pesos a preço, não comparável ao central)
+    ec = estrutura_de_capital(emp, MK)
+    r = valores(emp, ec["mk"], e_peso=ec["e_peso"], **kw)
     return median(r["anc"].values()) * (1 - desc_de(emp))
 
 
@@ -106,19 +109,19 @@ def extras(emp, r):
         anc = dict(r["ancoras"])
         anc["Owner Earnings ÷ (Ke − g)"] = r["oe_val"] * oe_alt / r["oe_norm"]
         x["oe_alt"], x["c_oe"] = anc["Owner Earnings ÷ (Ke − g)"], median(anc.values())
-    if r["trava"] is None or r["palavra"] != "JUSTA":
-        x["trava_txt"] = "não se aplica (palavra final não é JUSTA)."
+    if r["trava"] is None:     # v2.4 (AUD-08): trava falha numa JUSTA pela régua vira NÃO CONCLUSIVO — o texto tem de dizer
+        x["trava_txt"] = "não se aplica (palavra pela régua não é JUSTA)."
     elif r["trava"]:
-        x["trava_txt"] = f"passa — Bogle {pct(r['bogle_nom'])} a ±2 p.p. do Ke nominal {pct(MK.ke_nom)}."
+        x["trava_txt"] = f"passa — Bogle {pct(r['bogle_nom'])} a ±2 p.p. do Ke nominal {pct(r["ke_nom_emp"])}."
     else:
         reinv = r["gr"] / r["roic"] if r["roic"] and r["gr"] > 0 else 0.0
         bog_meio = r["lpa_norm"] * (1 - reinv) / emp.preco + r["g_nom"]
-        ok = abs(bog_meio - MK.ke_nom) <= 0.02
+        ok = abs(bog_meio - r["ke_nom_emp"]) <= 0.02
         x["trava_ok"] = ok
-        x["trava_txt"] = (f"<b>{'passa' if ok else 'FALHA'}</b>. Bogle com re-rating {pct(r['bogle_nom'])} ({br(100 * (r['bogle_nom'] - MK.ke_nom), 1)} p.p. do Ke "
-                          f"{pct(MK.ke_nom)}): o P/L final de 10 anos ({br(r['pl_final'], 1)}) é sobre lucro reportado de pico e o de hoje sobre o normalizado "
+        x["trava_txt"] = (f"<b>{'passa' if ok else 'FALHA'}</b>. Bogle com re-rating {pct(r['bogle_nom'])} ({br(100 * (r['bogle_nom'] - r["ke_nom_emp"]), 1)} p.p. do Ke "
+                          f"{pct(r["ke_nom_emp"])}): o P/L final de 10 anos ({br(r['pl_final'], 1)}) é sobre lucro reportado de pico e o de hoje sobre o normalizado "
                           f"({br(r['pl_atual'], 1)}). Sem re-rating, com o lucro normalizado (LPA R$ {br(r['lpa_norm'])}) menos o reinvestimento do DCF "
-                          f"({pct(reinv)}), {pct(bog_meio)} ({br(100 * (bog_meio - MK.ke_nom), 1)} p.p.) — "
+                          f"({pct(reinv)}), {pct(bog_meio)} ({br(100 * (bog_meio - r["ke_nom_emp"]), 1)} p.p.) — "
                           + ("dentro de ±2 p.p." if ok else "fora de ±2 p.p. Premissa que diverge: o LPA normalizado desconta juros nominais (a parcela de "
                              "inflação é devolução de principal, que o EPV não cobra) e as âncoras embutem Ke de " + pct(r["ke_implicito"]) +
                              ". Não corrigido: a palavra fica com a pendência T (doutrina §9) até o 3T26."))
@@ -498,7 +501,7 @@ def ficha_egie(emp, r, story):
                          ["DPA total (R$)"] + [br(dpa.get(str(y), 0), 3) for y in yrs],
                          ["dos quais JCP (R$)"] + [br(jc.get(str(y), 0), 3) for y in yrs]], [50 * mm] + [22 * mm] * 6))
     story.append(Spacer(1, 2))
-    trava = abs(r["bogle_nom"] - MK.ke_nom) <= 0.02
+    trava = r["trava"] if r["trava"] is not None else abs(r["bogle_nom"] - r["ke_nom_emp"]) <= 0.02   # Ke da empresa (v2.4)
     story.append(tabela([["Renda e renda fixa (10 anos, líquido de IR)", "Valor"],
                          ["Yield sustentável bruto · líquido (JCP × 0,825)", f"{pct(r['dy'])} · {pct(r['dy_liq'])}"],
                          ["Coberto por caixa?", "Sim — DPA sustentável ≤ FCFE normalizado" if r["dpa_fcfe"] >= emp.dpa_medio_5a else

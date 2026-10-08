@@ -32,7 +32,7 @@ from lote1_bancos import DATA_BASE, MK
 from lote4_saude_telecom import EMPRESAS, ITSA, ITSA4, ITSA_PAYOUT, ITSA_ROE_LP, ITUB4, N, WEG_G1, WEG_PAYOUT, WEG_ROE5, sotp_partes
 from lote4_textos import AGENDA, ANTES, T
 from motor_financeiras import Mercado, avaliar as avaliar_fin, projecao
-from motor_nao_financeiras import ANOS, CVM, SI, avaliar, ebit_aj, valores
+from motor_nao_financeiras import ANOS, CVM, SI, avaliar, ebit_aj, estrutura_de_capital, valores
 
 sys.stdout.reconfigure(encoding="utf-8")
 REV = "05-10-2026"
@@ -43,7 +43,10 @@ FORA_DO_HALL = {"UNIP6", "VBBR3"}
 
 
 def central_rapido(emp, **kw):
-    return median(valores(emp, MK, **kw)["anc"].values())
+    # v2.4 (AUD-12/13): a sensibilidade usa a MESMA base do central publicado — Ke da empresa e pesos no ponto fixo, refeitos
+    # para a variante (antes: Ke de 5 p.p. e pesos a preço, não comparável ao central)
+    ec = estrutura_de_capital(emp, MK)
+    return median(valores(emp, ec["mk"], e_peso=ec["e_peso"], **kw)["anc"].values())
 
 
 def com(emp, **campos):
@@ -449,9 +452,11 @@ def capa(res, rank, story):
         cont[r["palavra"]] = cont.get(r["palavra"], 0) + 1
     resumo = " · ".join(f"{k}: {v}" for k, v in sorted(cont.items()))
     acima = [r["ticker"] for r in res if r["preco_"] > r["saida"]]
-    box = (f"<b>Conclusão.</b> Ao Ke da casa ({pct(MK.ke_nom)} nominal = Tesouro IPCA+ {pct(MK.rf_real, 2)} + 5 p.p.), o lote inteiro fica "
+    box = (f"<b>Conclusão.</b> Ao Ke da casa ({pct(MK.ke_nom)} nominal sem dívida = Tesouro IPCA+ {pct(MK.rf_real, 2)} + 5 p.p.; cada não financeira soma o "
+           f"prêmio da alavancagem, v2.4), o lote inteiro fica "
            f"<b>{resumo}</b>: o preço de hoje embute retornos de {pct(min(r['ke_implicito'] for r in res if r['ke_implicito']))} a "
-           f"{pct(max(r['ke_implicito'] for r in res if r['ke_implicito']))} nominais (Ke implícito), abaixo dos {pct(MK.ke_nom)} exigidos. "
+           f"{pct(max(r['ke_implicito'] for r in res if r['ke_implicito']))} nominais (Ke implícito), abaixo do Ke exigido de cada empresa "
+           f"({pct(min(r.get('ke_nom_emp', MK.ke_nom) for r in res))} a {pct(max(r.get('ke_nom_emp', MK.ke_nom) for r in res))}). "
            "<b>Nenhuma compra autorizada.</b> TIMS3 e VIVT3 perdem o RADAR (o central de 03/10 era o de 07/09 × fator de Ke, sem margem "
            "normalizada nem arrendamento na dívida); ITSA4, FLRY3 e HYPE3 perdem o JUSTA. Só ABEV3 e WEGE3 criam valor (ROIC acima do WACC); "
            "nas demais o retorno sobre o capital fica abaixo do custo. "
@@ -477,7 +482,7 @@ def capa(res, rank, story):
     story.append(PageBreak())
     story.append(P("Premissas e metodologia (o que é novo em relação aos Lotes 1–6)", "h2"))
     met = [["Item", "Regra"],
-           ["Mercado", f"Tesouro IPCA+ 2050 sem cupom {pct(MK.rf_real, 2)} (fechamento de 02/10) · inflação implícita ANBIMA 10a {pct(MK.pi, 2)} · Ke real "
+           ["Mercado", f"Tesouro IPCA+ 2050 sem cupom {pct(MK.rf_real, 2)} (taxa de compra da manhã de 02/10) · inflação implícita ANBIMA 10a {pct(MK.pi, 2)} · Ke real "
                        f"{pct(MK.ke_real, 2)} · Ke nominal {pct(MK.ke_nom, 2)} · RF real líquida {pct(MK.rf_liq_real, 2)} — o mesmo dos Lotes 1–6."],
            ["Dados", "Demonstrações consolidadas da CVM (DFP 2016–25 + ITR; 12m até jun/2026) — fonte A. TIM: TIM Participações (CVM 017639) até 2019 e "
                      "TIM S.A. (024929) depois; em 2024–25 a TIM S.A. entregou o consolidado zerado (sem controladas) → individual. Preço: fechamento de "

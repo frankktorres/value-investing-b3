@@ -34,7 +34,7 @@ def avaliar_todos():
     out = {}
     for lote, empresas, motor in GRUPOS:
         for e in empresas:
-            out[e.ticker] = dict(lote=lote, empresa=e, r=motor(e, MK))
+            out[e.ticker] = dict(lote=lote, empresa=e, r=motor(e, MK), data_preco=MK.data)   # AUD-72: preço e taxa do mesmo dia
     return out
 
 
@@ -42,7 +42,7 @@ def instantaneo(item):
     """Os números que o golden guarda para um ticker."""
     r = item["r"]
     snap = dict(
-        lote=item["lote"],
+        lote=item["lote"], data_preco=item.get("data_preco"),
         central=r["central"], pc=r["pc"], palavra=r["palavra"],
         ancoras={k: v for k, v in r["ancoras"].items()},
         nota_geral=r["notas"]["geral"], vence_rf=r.get("vence_rf"), bogle_nom=r.get("bogle_nom"),

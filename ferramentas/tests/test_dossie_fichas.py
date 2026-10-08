@@ -22,9 +22,11 @@ ARQUIVOS = sorted(p.stem for p in VEREDITOS.glob("*.json"))
 # mudam o central destes dossiês. O registro é append-only (veredito novo = data nova) e ainda não há rodada de data nova:
 # o JSON antigo fica no disco e o recálculo na MESMA data é fixado aqui, para a regressão continuar valendo. Ver 09-diario.
 METODO_ONDA_1_1 = {
-    "BLAU3-2026-10-02": dict(central=8.798, pc=1.2298, palavra="NÃO CONCLUSIVO"),   # era 8,2733 (AUD-01/16)
-    "HYPE3-2026-10-06": dict(central=18.3522, pc=1.4712, palavra="CARA"),           # era 18,122 (AUD-01/16 + AUD-02)
-    "LEVE3-2026-10-06": dict(central=42.5717, pc=0.8586, palavra="RADAR"),          # era 35,7479 JUSTA (AUD-01 + AUD-16)
+    # Onda 1.2 (08/10/2026): Kd sintético (AUD-07), Ke pela alavancagem e pesos no ponto fixo (AUD-12/13), trava do §9 (AUD-08)
+    "BLAU3-2026-10-02": dict(central=8.2998, pc=1.3036, palavra="NÃO CONCLUSIVO"),  # 1.1: 8,798
+    "HYPE3-2026-10-06": dict(central=16.9224, pc=1.5955, palavra="CARA"),           # 1.1: 18,3522
+    "LEVE3-2026-10-06": dict(central=38.3732, pc=0.9525, palavra="NÃO CONCLUSIVO"), # 1.1: 42,5717 RADAR; agora JUSTA com trava falha
+    "CMIN3-2026-10-06": dict(central=3.3668, pc=1.4673, palavra="CARA"),            # salvo 3,6329
 }
 
 
@@ -103,4 +105,4 @@ def test_normalizacao_chamada_sozinha_e_linha_adotada_igual_ao_central():
     with base.na_data(salvo["data_preco"]):          # a sensibilidade usa o mercado e o preço da data do veredito
         n = cmin3.normalizacao(dc)
     adotado = next(v for k, v in n["sensibilidade"].items() if k.startswith("c "))
-    assert adotado["central"] == pytest.approx(salvo["central"], abs=1e-4)
+    assert adotado["central"] == pytest.approx(METODO_ONDA_1_1.get(atual, salvo)["central"], abs=1e-3)

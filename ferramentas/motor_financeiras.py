@@ -27,15 +27,30 @@ ANOS_ROIC_MINIMO = 8          # exercícios com retorno > custo de capital exigi
 NOTA_QUALIDADE_MINIMA = 8.0
 
 
+TRAVA_PP = 0.02            # §9: JUSTA exige retorno de Bogle a ±2 p.p. do Ke nominal
+
+
+def aplicar_trava(p0: str, p: str, trava: bool | None, razao: str = "") -> str:
+    """§9, trava de coerência (v2.4, AUD-08): JUSTA pela régua com Bogle fora de ±2 p.p. do Ke quer dizer que uma das duas contas
+    está errada, e a doutrina manda corrigir ANTES de publicar. Até a ficha escrever qual premissa diverge (`trava_razao`), a
+    palavra é NÃO CONCLUSIVO — antes a trava era só um campo, e a LEVE3 saía JUSTA com ela falha."""
+    if p0 == "JUSTA" and p == "JUSTA" and trava is False and not razao.strip():
+        return "NÃO CONCLUSIVO"
+    return p
+
+
 # ---------------------------------------------------------------- mercado
 @dataclass
 class Mercado:
-    rf_real: float              # Tesouro IPCA+ sem cupom mais longo, fechamento
+    rf_real: float              # Tesouro IPCA+ sem cupom mais longo, taxa de compra da manhã (Tesouro Transparente, §4)
     pi: float                   # inflação implícita
     data: str = ""
+    # prêmio do Ke real sobre a rf. Financeira: 5 p.p. fixos (a alavancagem é o negócio). Não financeira (v2.4, AUD-12): o motor
+    # troca pelo prêmio realavancado da empresa (`motor_nao_financeiras.estrutura_de_capital`)
+    premio: float = PREMIO_KE
 
     @property
-    def ke_real(self): return self.rf_real + PREMIO_KE
+    def ke_real(self): return self.rf_real + self.premio
 
     @property
     def ke_nom(self): return (1 + self.ke_real) * (1 + self.pi) - 1
@@ -168,6 +183,7 @@ class Financeira:
     controlador_discricionario: bool = False   # peso 2 do controlador na média qualitativa (regra 11, §10)
     controlador_discricionario_fonte: str = ""  # OBRIGATÓRIO quando True: o poder exercido e a fonte
     qualitativo_origem: str = "arbitrada, pré-v4"   # notas do hall até o dossiê do ticker; dossiê grava "regra 11"
+    trava_razao: str = ""          # §9 (v2.4): a premissa que explica Bogle × Ke fora de ±2 p.p. numa JUSTA; sem ela, NÃO CONCLUSIVO
 
 
 def g_de(emp: Financeira, mk: Mercado, roe: float) -> float:
@@ -368,7 +384,10 @@ def avaliar(emp: Financeira, mk: Mercado) -> dict:
 
     trava = None
     if p0 == "JUSTA":
-        trava = abs(bogle_nom - ke) <= 0.02
+        trava = abs(bogle_nom - ke) <= TRAVA_PP
+    p_trava = aplicar_trava(p0, p, trava, emp.trava_razao)
+    if p_trava != p:
+        p, confianca = p_trava, "não conclusivo (trava de coerência, §9)"
 
     roe_implicito = emp.roe_lp                               # DCF reverso: r = g(r) + P/VP × (Ke − g(r))
     for _ in range(200):
