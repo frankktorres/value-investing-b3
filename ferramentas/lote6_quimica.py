@@ -19,6 +19,7 @@ Ciclo declarado ANTES do veredito (doutrina §2, regra 4; §11.1 "preço de comm
     R$ 8,36 bi, para 40% de Jirau): somado ao patrimônio e suposto render o Ke (VPL zero) — o valor sobe exatamente pelo caixa captado.
 P/L histórico no Bogle só na LEVE3 (lucro de GGBR4 e UNIP6 dominado pelo preço da commodity).
 """
+from ltm import ltm_de
 import json
 import pathlib
 import statistics as st
@@ -145,7 +146,7 @@ def roe_limpo(tk, anos):
 
 
 def egie():
-    l = CVM["EGIE3"]["ltm_2T26"]
+    l = ltm_de(CVM["EGIE3"])
     pl_old = l["pl"] - l["nao_controladores"] - EGIE_DIV_AGO26
     pl_new = pl_old + EGIE_FOLLOW_ON["valor"]
     roes = roe_limpo("EGIE3", range(2017, 2026))
@@ -168,11 +169,11 @@ EGIE, EGIE_DADOS = egie()
 # ---------------------------------------------------------------- não financeiras
 EMPRESAS = [
     Industrial("GGBR4", "Gerdau (PN)", "ciclica", preco=26.10, n_acoes=N["GGBR4"], spread_kd=0.015, g_real=0.01, jcp_share=jcp("GGBR4"),
-               receita_meio=CVM["GGBR4"]["ltm_2T26"]["receita"] * ACO["fator"], outras_liquidas=True, impairment_normalizado=True,
+               receita_meio=ltm_de(CVM["GGBR4"])["receita"] * ACO["fator"], outras_liquidas=True, impairment_normalizado=True,
                receita_meio_fonte="receita 12m × aço de meio de ciclo ÷ aço dos 12m (BLS WPU1017 × PTAX, R$ de hoje)",
                qualitativo=QUAL(3, 4, 4, 2, 3)),
     Industrial("UNIP6", "Unipar Carbocloro (PNB)", "ciclica", preco=56.78, n_acoes=N["UNIP6"], spread_kd=0.02, g_real=0.01, jcp_share=jcp("UNIP6"),
-               anos_ciclo=[str(a) for a in range(2017, 2026)], receita_meio=CVM["UNIP6"]["ltm_2T26"]["receita"] * CLORO["fator"], outras_liquidas=True,
+               anos_ciclo=[str(a) for a in range(2017, 2026)], receita_meio=ltm_de(CVM["UNIP6"])["receita"] * CLORO["fator"], outras_liquidas=True,
                janela_razao="Indupa consolidada em dez/2016: 2016 traz ganho de compra vantajosa e 1 mês de receita da Argentina "
                             "(e a série de soda não cobre jan–set/2016)",
                receita_meio_fonte="receita 12m × cesta soda/PVC de meio de ciclo ÷ cesta dos 12m (BLS × PTAX, R$ de hoje)",

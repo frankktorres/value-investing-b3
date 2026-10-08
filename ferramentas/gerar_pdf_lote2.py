@@ -1,4 +1,5 @@
 """PDF do Lote 2 (Energia elétrica e saneamento) — doutrina v2.2. Uso: python gerar_pdf_lote2.py"""
+from ltm import ltm_de
 import copy
 import pathlib
 import sys
@@ -51,7 +52,7 @@ def extras(emp, r):
     x["central_roe_atual"] = avaliar(e3, MK)["central"]
     a = CVM[emp.ticker]["anual"]
     d1, d0 = a["2025"], a["2024"]
-    x["altman"], x["zona"] = altman_z2(CVM[emp.ticker]["ltm_2T26"])
+    x["altman"], x["zona"] = altman_z2(ltm_de(CVM[emp.ticker]))
     x["piotroski"], _ = piotroski(d1, d0)
     x["beneish"] = beneish(d1, d0)
     x["sloan"] = sloan(d1, d0)
@@ -89,7 +90,7 @@ def ficha(emp, r, story):
     story.append(Spacer(1, 3))
     story.append(P(f"<b>Círculo de competência.</b> {tx['circulo']}", "p"))
     story.append(Spacer(1, 3))
-    l = CVM[emp.ticker]["ltm_2T26"]
+    l = ltm_de(CVM[emp.ticker])
     fatos = [["Fato", "Valor", "Fonte"],
              ["Preço (fechamento 02/10)", f"R$ {br(emp.preco)}", "PDF 03/10"],
              ["VPA · P/VP", f"R$ {br(emp.vpa)} · {br(r['pvp'])}×", "[SI]"],

@@ -7,6 +7,7 @@ transmissoras — "FCO − capex" não funciona. Método de regulado (doutrina �
   · TIR real implícita = Ke implícito no preço, em termos reais — comparada à rf (piso) e ao Ke real (sempre).
 VPA/LPA/ROE/proventos: StatusInvest (base pós-bonificação, coerente com o preço). Alavancagem e cobertura: CVM (12m até jun/26).
 """
+from ltm import ltm_de
 import json
 import pathlib
 import statistics as st
@@ -60,7 +61,7 @@ def pl_hist(tk):
 
 
 def alavancagem(tk):
-    l = CVM[tk]["ltm_2T26"]
+    l = ltm_de(CVM[tk])
     bruta = (l.get("emprest_cp") or 0) + (l.get("emprest_lp") or 0) + (l.get("arrendamento") or 0)
     dl = bruta - (l.get("caixa") or 0) - (l.get("aplic_cp") or 0)
     ebitda = l["ebit"] + (l.get("da") or 0)

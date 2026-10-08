@@ -1,4 +1,5 @@
 """PDF do Lote 6 (Química e metalurgia) — doutrina v2.2. Uso: python gerar_pdf_lote6.py"""
+from ltm import ltm_de
 import copy
 import pathlib
 import re
@@ -63,7 +64,7 @@ def margem_ano(emp, r, y):
 
 def extras(emp, r):
     tk = emp.ticker
-    a, ltm = CVM[tk]["anual"], CVM[tk]["ltm_2T26"]
+    a, ltm = CVM[tk]["anual"], ltm_de(CVM[tk])
     x = {"pl_ltm": emp.preco / (ltm["lucro_controlador"] / r["n"]) if ltm.get("lucro_controlador", 0) > 0 else None,
          "pvp": emp.preco / r["vpa"], "ebit_ltm": ltm["ebit"] - ((ltm.get("impairment") or 0) if emp.impairment_normalizado else 0), "ebit_meio": r["op"]["receita_meio"] * r["m"],
          "div_bruta": (ltm.get("emprest_cp") or 0) + (ltm.get("emprest_lp") or 0)}
@@ -214,7 +215,7 @@ def ficha(emp, r, rank, story):
     story.append(Spacer(1, 3))
     story.append(P(f"<b>Círculo de competência.</b> {tx['circulo']}", "p"))
     story.append(Spacer(1, 3))
-    ltm = CVM[emp.ticker]["ltm_2T26"]
+    ltm = ltm_de(CVM[emp.ticker])
     fatos = [["Fato (12m até jun/2026)", "Valor", "Fonte"],
              ["Receita · EBIT · margem", f"R$ {br(ltm['receita'] / 1e6, 2)} bi · {br(ltm['ebit'] / 1e6, 2)} bi · {pct(ltm['ebit'] / ltm['receita'])}", "[CVM]"]]
     if emp.ticker in INDICE:
@@ -388,7 +389,7 @@ def egie_extras(emp, r):
             hi = mid
     x["roe_virada"] = (lo + hi) / 2
     a = CVM[emp.ticker]["anual"]
-    x["altman"], x["zona"] = altman_z2(CVM[emp.ticker]["ltm_2T26"])
+    x["altman"], x["zona"] = altman_z2(ltm_de(CVM[emp.ticker]))
     x["piotroski"], _ = piotroski(a["2025"], a["2024"])
     x["beneish"] = beneish(a["2025"], a["2024"])
     x["sloan"] = sloan(a["2025"], a["2024"])
@@ -429,7 +430,7 @@ def ficha_egie(emp, r, story):
     story.append(Spacer(1, 3))
     story.append(P(f"<b>Círculo de competência.</b> {tx['circulo']}", "p"))
     story.append(Spacer(1, 3))
-    l = CVM["EGIE3"]["ltm_2T26"]
+    l = ltm_de(CVM["EGIE3"])
     fatos = [["Fato", "Valor", "Fonte"],
              ["Patrimônio do controlador 30/06 − dividendo de ago/26", f"R$ {br(d['pl_old'] / 1e6, 2)} bi (dividendo R$ {br(EGIE_DIV_AGO26 / 1e6, 2)} bi, data-com 20/08)", "[CVM][SI]"],
              ["+ follow-on de jul/26 (Jirau 40%)", f"R$ {br(EGIE_FOLLOW_ON['valor'] / 1e6, 2)} bi · {br(EGIE_FOLLOW_ON['acoes'] / 1e6, 1)} mi de ações", "PDF 07/09"],

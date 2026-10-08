@@ -14,6 +14,7 @@ Ciclo declarado ANTES do veredito (doutrina §2, regra 4):
     (gestão privada desde jul/2019). Perfil serviços (DCF, EPV, Owner Earnings), com a regra de capex de commodity (a receita cresce por preço).
 P/L histórico fora do Bogle em todas (lucro dominado por Brent e margem de guerra).
 """
+from ltm import ltm_de
 import json
 import pathlib
 import sys
@@ -77,7 +78,7 @@ def barril(ini, fim):
 
 def base_ep(tk):
     """(receita de meio de ciclo, D&A anual atual) em R$ mil — doutrina §11.1, E&P."""
-    ltm = CVM[tk]["ltm_2T26"]
+    ltm = ltm_de(CVM[tk])
     if tk != "PRIO3":
         return ltm["receita"] * FATOR_BARRIL, ltm["da"]
     from coletar_cvm import itr_ytd

@@ -5,6 +5,7 @@ Tudo em R$ por ação no fim. Convenção: taxas em fração.
 """
 from __future__ import annotations
 
+from ltm import ltm_de
 import json
 import math
 import pathlib
@@ -127,7 +128,7 @@ def v(d, k, default=None):
 
 
 def serie(tk):
-    return CVM[tk]["anual"], CVM[tk]["ltm_2T26"]
+    return CVM[tk]["anual"], ltm_de(CVM[tk])
 
 
 def anos_validos(tk, anos):
