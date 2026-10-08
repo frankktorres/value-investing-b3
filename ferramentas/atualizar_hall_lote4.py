@@ -45,7 +45,7 @@ def motivo(tk, r):
     extra = {"TIMS3": "; margem EBIT 2019–25 (IFRS 16) e arrendamento na dívida; capex de rede = manutenção; com a margem dos 12m seguiria CARA",
              "VIVT3": "; margem 2019–25 estável; arrendamento na dívida; yield recorrente sem a redução de capital; política de payout de 2027 não encontrada",
              "FLRY3": "; perímetro com Pardini (receita 2024–12m); provento no limite do FCFE, dividendo em 3 parcelas até 2027",
-             "HYPE3": "; a menos cara do lote; alíquota no piso de 15% (a 34% cai mais); JCP pago 15–21 meses depois (valor presente)",
+             "HYPE3": "; a menos cara do lote; alíquota por fase (v2.3): crédito de IR com prazo, efetiva até 2030 e 34% depois; JCP pago 15–21 meses depois (valor presente)",
              "ABEV3": "; cria valor (ROIC > WACC); alíquota pós-subvenção 21%; Imposto Seletivo fora do número",
              "WEGE3": f"; melhor negócio do hall; DCF 2 estágios (g real {br(100 * WEG_G1, 1)}% por 10 anos, ROE × retenção); o preço exige "
                       f"{br(100 * r['g_implicito'], 0) if r['g_implicito'] else 'n.d.'}% real por 10 anos"}

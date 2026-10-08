@@ -3,11 +3,13 @@
 1ª passada do motor (qualitativo neutro) → evidência (motor, CVM, FRE, triagem) → notas da regra 11 (`notas.py`) com os
 insumos não mecânicos do dossiê (`dossie/insumos/<TK>.json`, cada um com fonte) → 2ª passada com a média da regra 11.
 
-O peso dobrado do controlador (doutrina §10) entra sem mexer no motor: o `qualitativo` vai com UMA chave, a média da
-regra 11, e a média simples que o motor faz de uma chave é ela mesma. O hall segue com o `QUAL` arbitrado até a decisão
-da fatia 7 (divergência declarada).
+Desde a v2.3 o motor faz a média da regra 11 (peso 2 do controlador quando discricionário): o `qualitativo` vai com as
+cinco notas finais e a flag `controlador_discricionario` com a fonte do insumo. O hall segue com o `QUAL` arbitrado
+("arbitrada, pré-v4") até o dossiê de cada ticker.
 
 Saídas: `DOSSIES/dados/<TK>-<data>.md` (anexo, não editar à mão) e `dossie/vereditos/<TK>-<data>.json`.
+Outra data-base: `python -m dossie.gerar HYPE3 --data 2026-10-06` — preço do COTAHIST e mercado do mesmo dia
+(`dados/mercado_<data>.json`, §4). O registro é append-only: veredito novo = data nova.
 """
 from __future__ import annotations
 
@@ -18,14 +20,13 @@ import sys
 from datetime import date
 
 from dossie import base, evidencia as ev, fre, notas
-from lote1_bancos import MK
 from motor_nao_financeiras import avaliar
 
 AQUI = pathlib.Path(__file__).resolve().parent
 RAIZ = AQUI.parent.parent
 FICHAS = {"BLAU3": "dossie.fichas.blau3", "CMIN3": "dossie.fichas.cmin3", "HYPE3": "dossie.fichas.hype3"}
 ANO_FRE = 2026
-DOUTRINA, TEMPLATE = "v2.2", "02 v4"
+DOUTRINA, TEMPLATE = "v2.3", "02 v4"
 NOTAS = ("moat", "gestao", "controlador", "ciclo", "fisher")
 
 
@@ -44,13 +45,14 @@ def _valor(ins: dict, chave: str, padrao=None):
     return x["valor"], f"{x['fonte']} [{x['nota_fonte']}]"
 
 
-def calcular(tk: str) -> dict:
-    with base.isolado(tk):      # ticker do hall (HYPE3): os proventos da B3 não vazam para os lotes no mesmo processo
-        return _calcular(tk)
+def calcular(tk: str, data: str | None = None) -> dict:
+    with base.na_data(data) as d, base.isolado(tk):   # ticker do hall (HYPE3): os proventos da B3 não vazam para os lotes
+        return dict(_calcular(tk), data=d, mk=base.mercado(d), preco=base.preco(tk, d))
 
 
 def _calcular(tk: str) -> dict:
     ficha = importlib.import_module(FICHAS[tk])
+    MK = base.mercado()          # rf e π da data-base corrente (§4)
     r0 = avaliar(ficha.empresa(), MK)
     anos = ficha.ANOS
     ins = insumos(tk)
@@ -90,7 +92,9 @@ def _calcular(tk: str) -> dict:
     media = notas.media(*(final[k] for k in NOTAS), discricionario=bool(disc))
 
     dc = ins.get("desconto_controlador")       # {"tipo": "zero"|"fixo"|"cenarios", "razao": ..., ...} do D3 do dossiê
-    r = avaliar(ficha.empresa(qualitativo={"media_regra11": media}, desconto_controlador=dc), MK)
+    r = avaliar(ficha.empresa(qualitativo=notas.para_qual(*(final[k] for k in NOTAS)), desconto_controlador=dc,
+                              controlador_discricionario=bool(disc), controlador_discricionario_fonte=disc_f if disc else "",
+                              qualitativo_origem="regra 11 (dossiê)"), MK)
     if not dc:      # regra 8 do 02: a linha de desconto é obrigatória; sem ela o central não está pronto (adversário, 07/10)
         r = dict(r, palavra="NÃO CONCLUSIVO", confianca="não conclusivo (desconto de controlador pendente — D3)")
     return dict(tk=tk, r=r, r0=r0, dc=dc, anos=anos, mg=mg, rec=rec, fr=fr, rem_txt=rem_txt, rem_l=rem_l, dil=dil, dil_txt=dil_txt,
@@ -122,6 +126,18 @@ def _bloco_ciclo(n: dict) -> list[str]:
     return L + [""]
 
 
+def _linha_aliquota(r: dict) -> str:
+    """Alíquota perpétua e a regra da doutrina §2 v2.3 (fase de crédito com prazo, mediana sem piso, sem origem → 34%)."""
+    t = f"Alíquota perpétua (WACC, NOPAT, OE) {_f(r['aliquota'], 1, True)} — regra '{r['aliquota_regra']}' (mediana efetiva de 5 anos "
+    t += f"{_f(r['aliquota_mediana'], 1, True)})"
+    if r.get("aliquota_fase"):
+        ef, n = r["aliquota_fase"]
+        t += f"; crédito com prazo: efetiva {_f(ef, 1, True)} por {n} exercícios, valor presente R$ {_f(r['beneficio_fiscal_acao'])}/ação no EPV"
+    if r.get("outros_passivos_financeiros"):
+        t += f" · outros passivos financeiros na DL: R$ {_f(r['outros_passivos_financeiros'] / 1e6, 2)} bi"
+    return t + "."
+
+
 def _f(x, casas=2, pct=False):
     if x is None:
         return "—"
@@ -133,11 +149,14 @@ def _f(x, casas=2, pct=False):
 
 def anexo(c: dict) -> str:
     tk, r, fr = c["tk"], c["r"], c["fr"]
-    L = [f"# {tk} — anexo mecânico do dossiê ({TEMPLATE}) · data-base {base.DATA_BASE} · doutrina {DOUTRINA}",
-         f"*Gerado por `python -m dossie.gerar {tk}` em {date.today().isoformat()} — não editar à mão. Fontes: CVM DFP/ITR/FRE (A), "
+    mk = c["mk"]
+    L = [f"# {tk} — anexo mecânico do dossiê ({TEMPLATE}) · data-base {c['data']} · doutrina {DOUTRINA}",
+         f"*Gerado por `python -m dossie.gerar {tk}{'' if c['data'] == base.DATA_BASE else ' --data ' + c['data']}` em {date.today().isoformat()} — não editar à mão. Fontes: CVM DFP/ITR/FRE (A), "
          "COTAHIST e proventos da B3 (A), StatusInvest só para datas de pagamento (C).*", "",
          "## Veredito mecânico (motor do hall, Ke da casa)", "",
-         f"Preço R$ {_f(base.preco(tk))} · central R$ {_f(r['central'])} · P/C {_f(r['pc'])} · "
+         f"Mercado de {c['data']}: rf real {_f(mk.rf_real, 2, True)} · π implícita {_f(mk.pi, 2, True)} · Ke nominal "
+         f"{_f(mk.ke_nom, 2, True)}", "",
+         f"Preço R$ {_f(c['preco'])} · central R$ {_f(r['central'])} · P/C {_f(r['pc'])} · "
          f"régua **{r['palavra_regua']}** → palavra final **{r['palavra']}** (dispersão {_f(r['dispersao'])}, confiança {r['confianca']})", "",
          "| Âncora | R$/ação |", "|---|---|"] + [f"| {k} | {_f(v)} |" for k, v in r["ancoras"].items()] + [
          "", f"WACC real {_f(r['wacc_real'], 1, True)} · ROIC filtro {_f(r['roic_filtro'], 1, True)} · margem normalizada "
@@ -145,6 +164,7 @@ def anexo(c: dict) -> str:
          f"DL/EBITDA {_f(r['dl_ebitda'])} · defasagem do provento {_f(r['defasagem_meses'], 1)} meses",
          f"Compra R$ {_f(r.get('compra'))} · saída R$ {_f(r.get('saida'))} · notas: " +
          " · ".join(f"{k} {_f(v, 1)}" for k, v in r["notas"].items()), ""]
+    L += [_linha_aliquota(r), ""]
     if c.get("norm"):
         L += _bloco_ciclo(c["norm"])
     L += ["## Série por exercício", "", "| Exercício | Receita real (R$ mi) | Margem bruta | Margem EBIT aj. | ROIC real (reposição) |",
@@ -195,24 +215,30 @@ def anexo(c: dict) -> str:
 
 def veredito(c: dict) -> dict:
     r = c["r"]
-    return dict(ticker=c["tk"], data_preco=base.DATA_BASE, preco=round(base.preco(c["tk"]), 2), central=round(r["central"], 4),
+    return dict(ticker=c["tk"], data_preco=c["data"], preco=round(c["preco"], 2), central=round(r["central"], 4),
                 pc=round(r["pc"], 4), palavra=r["palavra"], palavra_regua=r["palavra_regua"], notas_regra11=c["final"],
                 desc_controlador=round(r["desc_controlador"], 4), desc_controlador_razao=(c["dc"] or {}).get("razao", "PENDENTE"),
                 media_regra11=round(c["media"], 4), discricionario=c["disc"], doutrina=DOUTRINA, template=TEMPLATE,
+                rf_real=c["mk"].rf_real, pi=c["mk"].pi, aliquota=round(r["aliquota"], 4), aliquota_regra=r["aliquota_regra"],
                 gerado_em=date.today().isoformat())
 
 
 def main(argv=None) -> int:
     sys.stdout.reconfigure(encoding="utf-8")
-    tk = (argv or sys.argv[1:])[0].upper()
-    c = calcular(tk)
+    import argparse
+    ap = argparse.ArgumentParser(description="anexo mecânico e veredito do dossiê")
+    ap.add_argument("ticker")
+    ap.add_argument("--data", help="data-base AAAA-MM-DD (padrão: a do hall); exige dados/mercado_<data>.json")
+    a = ap.parse_args(argv)
+    tk = a.ticker.upper()
+    c = calcular(tk, a.data)
     d_md = RAIZ / "DOSSIES" / "dados"
     d_js = AQUI / "vereditos"
     d_md.mkdir(parents=True, exist_ok=True)
     d_js.mkdir(parents=True, exist_ok=True)
-    (d_md / f"{tk}-{base.DATA_BASE}.md").write_text(anexo(c), encoding="utf-8")
+    (d_md / f"{tk}-{c['data']}.md").write_text(anexo(c), encoding="utf-8")
     v = veredito(c)
-    (d_js / f"{tk}-{base.DATA_BASE}.json").write_text(json.dumps(v, ensure_ascii=False, indent=1), encoding="utf-8")
+    (d_js / f"{tk}-{c['data']}.json").write_text(json.dumps(v, ensure_ascii=False, indent=1), encoding="utf-8")
     print(json.dumps(v, ensure_ascii=False))
     return 0
 

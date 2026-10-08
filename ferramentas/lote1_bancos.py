@@ -15,6 +15,9 @@ MK = Mercado(rf_real=0.0706, pi=0.0646, data=DATA_BASE)
 MK_FOCUS = Mercado(rf_real=0.0706, pi=0.040, data=DATA_BASE + " (π 4% — hipótese dos PDFs de 03/10)")
 
 QUAL = lambda moat, gestao, controlador, ciclo, fisher: dict(moat=moat, gestao=gestao, controlador=controlador, ciclo=ciclo, fisher=fisher)
+# notas arbitradas (pré-v4). v2.3: peso 2 do controlador (regra 11, §10) onde a interferência JÁ consumada está declarada no
+# desconto do próprio lote — critério mecânico provisório; o dossiê de cada ticker decide pela evidência
+DISC = "interferência consumada declarada no desconto do lote (critério provisório v2.3, até o dossiê): "
 
 EMPRESAS = [
     Financeira("ITUB4", "Itaú Unibanco", "banco", preco=44.83, vpa=19.75, lpa_12m=4.247,
@@ -34,6 +37,8 @@ EMPRESAS = [
                desconto_controlador=dict(tipo="cenarios", peso=0.30, delta_roe=0.04,
                                          razao="União: crédito dirigido e spreads políticos (2012–15), MP 1.314/1.376 de renegociação rural; "
                                                "30% de probabilidade de repetir um ciclo com ROE 4 p.p. abaixo do normalizado"),
+               controlador_discricionario=True,
+               controlador_discricionario_fonte=DISC + "União — crédito dirigido e spreads políticos (2012–15), MP 1.314/1.376",
                prudencial=dict(cet1=11.27, inad90=5.61, cobertura=148.5), qualitativo=QUAL(4, 3, 1, 2, 3)),
     Financeira("ABCB4", "ABC Brasil", "banco", preco=26.15, vpa=27.85, lpa_12m=3.914,
                roe_lp=0.1283, roe_inicio=0.14, payout=0.45, dpa_medio_5a=1.698, jcp_share=1.0, pl_hist=6.89,
@@ -42,6 +47,8 @@ EMPRESAS = [
                roe_lp=0.1138, roe_inicio=0.11, payout=0.40, dpa_medio_5a=1.070, jcp_share=0.90, pl_hist=5.65,
                desconto_controlador=dict(tipo="fixo", pct=0.35,
                                          razao="Estado do RS: compra da própria folha por R$ 1,23 bi em 2026 (V3 consumado, −1,7 p.p. de CET1); precedente da casa = 35%"),
+               controlador_discricionario=True,
+               controlador_discricionario_fonte=DISC + "Estado do RS — compra da própria folha por R$ 1,23 bi em 2026 (V3)",
                prudencial=dict(cet1=12.4, inad90=4.62, cobertura=149.5), qualitativo=QUAL(2, 2, 1, 2, 2)),
     Financeira("BRBI11", "BR Partners", "banco", preco=15.14, vpa=7.71, lpa_12m=1.520,
                roe_lp=0.2062, roe_inicio=0.197, payout=0.85, dpa_medio_5a=1.628, jcp_share=0.0, pl_hist=10.32,

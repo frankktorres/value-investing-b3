@@ -146,3 +146,57 @@ assinado como não independente; segunda opinião = comitê B no Desktop.
 
 **Fica aberto (⏸ do Frank):** capex de expansão sem receita; desconto de controlador sobre âncora negativa; fatia 7 (notas do hall por
 evidência); margem reexpressa no §11.1; `outros_passivos` fora da solidez/ROIC; alíquota com crédito de IR que tem prazo.
+
+### 07/10/2026 — DECISÃO DE MÉTODO: doutrina v2.3 (as 6 pendências acima)
+
+**Quem decidiu.** O Claude, pela doutrina, com o "ok" do Frank ("decida tudo isso baseado no value investing"). A doutrina não
+tratava nenhum dos seis casos, então valeu a regra mais conservadora que não mexesse no golden sem necessidade.
+
+**Decisões e efeito medido (golden regravado em duas linhas de log; nenhuma palavra mudou nos 41).**
+1. **Alíquota (§2).** O piso de 15% acabou. Benefício permanente (JCP) fica na mediana. Crédito com prazo (ágio, subvenção de ICMS)
+   vale só até o fim documentado, em valor presente à parte, e depois 34% na perpetuidade e no WACC. **Achado na implementação:**
+   tirar o piso, ao pé da letra, **subiria** o central de TIMS3 (mediana 5,4%) e PRIO3 (11,1%), e a PRIO3 iria a JUSTA. Por isso,
+   mediana abaixo de 15% só vale com a origem permanente declarada com fonte; sem ela, 34%. Também o Owner Earnings passa a ser
+   refeito à alíquota perpétua quando ela não é a mediana; senão o crédito voltaria à perpetuidade por essa âncora.
+   Na revisão do `adversario` a fase foi corrigida: a efetiva conta os anos de crédito (antes saía de um ano só, e um crédito
+   maior zerava a fase); o benefício incide sobre o lucro depois dos juros (o WACC já deduz os juros a 34%) e tem teto no crédito
+   observado; mediana com menos de 3 anos válidos vale 34%.
+   Efeito: HYPE3 19,60 → 17,51; TIMS3 10,53 → 7,96; PRIO3 55,31 → 43,41; ABEV3 só o OE, 9,37 → 7,97 (a subvenção de 2021–23 saiu
+   da perpetuidade; a premissa da Lei 14.789/2023 é a do Lote 4, e o texto da lei não abriu no planalto.gov.br em 07/10). Todas seguem CARA.
+2. **Desconto de controlador só em âncora > 0 (§5).** Corrigido nos dois motores e na sensibilidade. O Ke implícito e o DCF reverso
+   não financeiros passam a usar o valor descontado; o financeiro já usava. Sem efeito no golden.
+3. **Média da regra 11 no motor (§10).** Peso 2 do controlador quando discricionário; peso 2 sem razão escrita não roda. No hall,
+   critério provisório: interferência consumada já declarada no desconto do lote (BBAS3, BRSR6, CMIG4, SAPR11, PETR4). As notas
+   seguem "arbitrada, pré-v4" até o dossiê de cada ticker. A LEVE3 vai primeiro, porque a exceção de saída depende de 0,005 de nota
+   arbitrada. Nota geral: −0,04 a −0,10 nos cinco.
+4. **Outros passivos (§11.1).** O financeiro (com juros, ou provento a pagar já ex) entra na dívida líquida; o operacional, só na
+   ponte. Só a CMIN3 usa: DL/EBITDA 0,17 → 2,33 e ROIC 23,4% → 12,4%. A trava zera o g do DCF (3,89 → 3,40), a dispersão cai de
+   3,10 para 2,71 e **a palavra do dossiê sai de NÃO CONCLUSIVO para CARA**.
+5. **Capex de expansão (§11.1).** Só o projeto identificado (nome, valor, prazo, fonte A/B, sem receita) sai antes da regra de
+   manutenção. Nenhum ticker usa ainda: a CMIN3 tem só o projetado (R$ 13,2 bi em 2025–30) e a BLAU3 não foi refeita.
+6. **Margem ao preço de meio (§11.1).** Escrito o que o código faz. O código agora confere perfil cíclico e janela ≥ 7.
+
+**Vereditos novos (registro append-only = data nova).** HYPE3 e CMIN3 em **06/10/2026**, com rf e π do mesmo dia (6,51% e 5,67%,
+`ferramentas/dados/mercado_2026-10-06.json`):
+- **HYPE3:** central R$ 18,12, P/C 1,49, CARA. O Ke menor sobe o central 5,9% e a alíquota por fase o baixa 11,2%.
+- **CMIN3:** central R$ 3,63, P/C 1,36, CARA.
+
+Os vereditos de 02/10 ficam no disco e no registro como histórico da v2.2. O hall **não** é registrado de novo em 02/10, porque o
+registro recusa outro valor na mesma data; a v2.3 do hall entra na próxima rodada (Etapa 7).
+
+**Divergência declarada.** O motor reduzido (`backtest/motor/reduzido_nf.py`, usado pela triagem) segue com o piso de 15%. Ele foi
+congelado pelo portão de 06/10, e mudá-lo agora seria recalibrar depois de ver o resultado. A triagem só ordena a fila; a alíquota de
+cada nome é decidida no dossiê.
+
+**Pendência baixa (`adversario`, sem ticker afetado hoje).** Na regra da mediana com 3 ou 4 anos válidos, os anos de crédito
+descartados continuam inteiros no Owner Earnings. Fechar quando algum ticker cair nesse caso: refazer o OE à alíquota perpétua
+sempre que um ano sair da mediana.
+
+**O que me provaria errado.**
+- Se TIMS3 ou PRIO3 mostrarem, com fonte A/B, benefício permanente (ou com prazo longo) que explique a alíquota baixa, o 34% terá
+  subavaliado as duas: o dossiê corrige com `aliquota_permanente_fonte` ou `aliquota_fase`.
+- Se a subvenção de Goiás durar até 2032 com fonte, a fase da HYPE3 vai a 2032 (central R$ 19,04, ainda CARA).
+- Se o critério provisório de "discricionário" errar num dossiê (controlador sem interferência consumada, mas com poder de fato,
+  ou o contrário), o critério muda.
+
+**Revisão:** no dossiê de cada ticker afetado (LEVE3 primeiro, depois TIMS3 e PRIO3) e na rodada da Etapa 7.

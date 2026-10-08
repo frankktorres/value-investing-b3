@@ -25,10 +25,9 @@ RAZAO_JANELA = ("1º DFP com DRE na CVM é 2017 (registro pré-IPO; IPO abr/2021
                 "(02 regra 4), não uma quebra estrutural")
 
 
-def empresa(qualitativo: dict | None = None, desconto_controlador: dict | None = None) -> Industrial:
+def empresa(qualitativo: dict | None = None, desconto_controlador: dict | None = None, **sobrepor) -> Industrial:
     base.carregar(TK)
-    return Industrial(
-        TK, "Blau Farmacêutica", "servicos", preco=base.preco(TK), n_acoes=base.acoes_itr(TK),
+    kw = dict(
         anos_ciclo=ANOS, anos_outras=ANOS, janela_razao=RAZAO_JANELA, outras_liquidas=True,
         spread_kd=0.015, g_real=0.01, jcp_share=base.jcp_share(TK), pl_hist=base.pl_hist(TK),
         defasagem_meses=base.defasagem(TK),
@@ -36,3 +35,5 @@ def empresa(qualitativo: dict | None = None, desconto_controlador: dict | None =
         desconto_controlador=desconto_controlador or {"tipo": "zero", "razao": "pendente: D3 do dossiê (FRE 2026)"},
         qualitativo=qualitativo or {},
     )
+    kw.update(sobrepor)
+    return Industrial(TK, "Blau Farmacêutica", "servicos", preco=base.preco(TK), n_acoes=base.acoes_itr(TK), **kw)

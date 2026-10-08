@@ -82,6 +82,34 @@ def precos_de_referencia(central: float, saida_por_qualidade: bool = False) -> d
                 saida=(SAIDA_QUALIDADE if saida_por_qualidade else SAIDA_PADRAO) * central,
                 saida_por_qualidade=saida_por_qualidade)
 
+
+def descontar(anc: dict, desc: float) -> dict:
+    """§5: desconto de controlador no valor — só em âncora POSITIVA (doutrina v2.3). `x × (1 − desc)` sobre âncora ≤ 0 a
+    aproximaria de zero, isto é, MELHORARIA o valor; ela fica como está e continua forçando NÃO CONCLUSIVO (§11.3)."""
+    return {k: x * (1 - desc) if x > 0 else x for k, x in anc.items()}
+
+
+CHAVES_QUAL = ("moat", "gestao", "controlador", "ciclo", "fisher")
+
+
+def media_qualitativa(q: dict, discricionario: bool = False) -> float:
+    """Média 0–5 das notas qualitativas — regra 11 do `02` v4 e doutrina §10 (motor desde a v2.3; até a v2.2 era média simples):
+    (moat + gestão + c × controlador + ciclo + Fisher) ÷ (4 + c), c = 2 quando o controlador tem poder discricionário sobre preço,
+    payout, capital ou contratos. Fonte única: os dois motores e `dossie/notas.media` chamam esta função.
+    Sem notas → 2,5 (neutro, o 5 de 10 de antes). Chave fora das cinco → erro (nota que não existe na rubrica não entra calada)."""
+    if not q:
+        return 2.5
+    if set(q) != set(CHAVES_QUAL):
+        raise ValueError(f"qualitativo precisa das chaves {CHAVES_QUAL}, veio {sorted(q)}")
+    c = 2 if discricionario else 1
+    return (q["moat"] + q["gestao"] + c * q["controlador"] + q["ciclo"] + q["fisher"]) / (4 + c)
+
+
+def exigir_controlador(emp) -> None:
+    """Peso 2 do controlador sem a razão escrita não roda (mesma regra da defasagem, §6.3)."""
+    if emp.controlador_discricionario and not emp.controlador_discricionario_fonte.strip():
+        raise ValueError(f"{emp.ticker}: controlador_discricionario sem controlador_discricionario_fonte (§10)")
+
 ESCALA_PRECO = [(0.60, 10), (0.65, 9), (0.70, 8), (0.80, 7), (0.90, 6), (1.00, 5),
                 (1.10, 4), (1.20, 3), (1.30, 2), (1.40, 1), (1.50, 0)]
 
@@ -136,6 +164,10 @@ class Financeira:
     defasagem_meses: float | None = None  # provento pago N meses após a data-com → valor presente ao Ke nominal (§6.3); None = medida na StatusInvest (defasagem.py)
     defasagem_fonte: str = ""      # OBRIGATÓRIO quando defasagem_meses é informado: o evento declarado e a data (§6.3)
     sotp: object = None                   # holding (Lote 4, 05/10): função Mercado → SOTP por ação; âncoras = SOTP + DDM (doutrina §11.2)
+    # v2.3 (07/10): defaults preservam os lotes anteriores
+    controlador_discricionario: bool = False   # peso 2 do controlador na média qualitativa (regra 11, §10)
+    controlador_discricionario_fonte: str = ""  # OBRIGATÓRIO quando True: o poder exercido e a fonte
+    qualitativo_origem: str = "arbitrada, pré-v4"   # notas do hall até o dossiê do ticker; dossiê grava "regra 11"
 
 
 def g_de(emp: Financeira, mk: Mercado, roe: float) -> float:
@@ -231,7 +263,7 @@ def central_ao_ke(emp: Financeira, mk: Mercado, ke_nom: float) -> float:
         ai = ancoras(emp, mk2, emp.roe_lp - dc["delta_roe"])
         a = {k: (1 - dc["peso"]) * a[k] + dc["peso"] * ai[k] for k in a}
     elif dc["tipo"] == "fixo":
-        a = {k: v * (1 - dc["pct"]) for k, v in a.items()}
+        a = descontar(a, dc["pct"])
     return median(list(a.values()))
 
 
@@ -265,7 +297,7 @@ def avaliar(emp: Financeira, mk: Mercado) -> dict:
         anc = {k: (1 - dc["peso"]) * base[k] + dc["peso"] * inter[k] for k in base}
         desc_pct = 1 - sum(anc.values()) / sum(base.values())
     elif dc["tipo"] == "fixo":
-        anc = {k: v * (1 - dc["pct"]) for k, v in base.items()}
+        anc = descontar(base, dc["pct"])
         desc_pct = dc["pct"]
     else:
         anc, desc_pct = dict(base), 0.0
@@ -351,13 +383,13 @@ def avaliar(emp: Financeira, mk: Mercado) -> dict:
             ai = ancoras(emp, mk2, emp.roe_lp + roe_shift - dc["delta_roe"])
             a = {k: (1 - dc["peso"]) * a[k] + dc["peso"] * ai[k] for k in a}
         elif dc["tipo"] == "fixo":
-            a = {k: v * (1 - dc["pct"]) for k, v in a.items()}
+            a = descontar(a, dc["pct"])
         return median(list(a.values()))
     sens = {(dk, dr): central_com(dk, dr) for dk in (-0.01, 0, 0.01) for dr in (-0.02, 0, 0.02)}
 
-    # notas
-    q = emp.qualitativo
-    qual_media = sum(q.values()) / len(q) * 2 if q else 5
+    # notas — média da regra 11 (v2.3): controlador com peso 2 quando discricionário
+    exigir_controlador(emp)
+    qual_media = media_qualitativa(emp.qualitativo, emp.controlador_discricionario) * 2
     n_qual = 0.5 * nota_spread(emp.roe_lp, ke) + 0.5 * qual_media
     pr = emp.prudencial
     if emp.solidez_manual is not None:
@@ -390,5 +422,6 @@ def avaliar(emp: Financeira, mk: Mercado) -> dict:
         vence_rf=rf, carimbo_rf=carimbo_rf, trava=trava, roe_implicito=roe_implicito,
         pvp=emp.preco / emp.vpa, pvp_just=pvp_justificado(emp.roe_lp, g, ke), sens=sens,
         notas=dict(qualidade=n_qual, solidez=n_sol, renda=n_renda, preco=n_preco, geral=n_geral),
+        qualitativo_origem=emp.qualitativo_origem, controlador_peso=2 if emp.controlador_discricionario else 1,
         fluxo_ddm=fluxo,
     )

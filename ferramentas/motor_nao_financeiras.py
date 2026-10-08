@@ -15,8 +15,9 @@ from statistics import median
 from defasagem import defasagem_meses
 from inflacao import fator_entre, fator_idade, inflacao_do_ano, reposicao
 from juros import juros_do_periodo
-from motor_financeiras import (ANOS_ROIC_MINIMO, HORIZONTE, IR_JCP, NOTA_QUALIDADE_MINIMA, ORDEM, Mercado, interp,
-                               liquido_diferido, nota_preco, nota_spread, nota_yield, palavra, precos_de_referencia)
+from motor_financeiras import (ANOS_ROIC_MINIMO, HORIZONTE, IR_JCP, NOTA_QUALIDADE_MINIMA, ORDEM, Mercado, descontar,
+                               interp, liquido_diferido, media_qualitativa, nota_preco, nota_spread, nota_yield, palavra,
+                               precos_de_referencia)
 
 AQUI = pathlib.Path(__file__).parent
 CVM = json.loads((AQUI / "dados" / "cvm_series.json").read_text(encoding="utf-8"))
@@ -24,6 +25,11 @@ SI = json.loads(sorted((AQUI / "dados").glob("series_*.json"))[-1].read_text(enc
 ANOS = [str(a) for a in range(2016, 2026)]
 LIMITE_QUEBRA = 0.25      # §11.4: divergência entre a mediana de 5 anos e a da janela que levanta suspeita de quebra
 JANELA_MINIMA_SAIDA = 10  # §9: a exceção de qualidade exige histórico de ciclo inteiro; janela curta não a permite
+ALIQUOTA_MARGINAL = 0.34  # IRPJ 25% + CSLL 9%: a alíquota da perpetuidade quando o benefício tem prazo (§2, v2.3)
+LIMIAR_ORIGEM = 0.15      # v2.3: mediana abaixo disto só vale com a origem declarada (até a v2.2 era o piso da alíquota)
+ANO_BASE = 2026           # ano da data-base dos preços: a fase do benefício fiscal conta os exercícios cheios depois dele
+JANELA_MINIMA_PRECO_MEIO = 7   # v2.3 (§11.1): margem reexpressa ao preço de meio só com janela de 7+ exercícios
+MINIMO_ANOS_ALIQUOTA = 3  # v2.3: a mediana de 5 anos da alíquota exige pelo menos 3 exercícios válidos; senão vale 34%
 
 
 @dataclass
@@ -36,7 +42,7 @@ class Industrial:
     anos_ciclo: list = field(default_factory=lambda: ANOS)   # janela da margem normalizada (§11.4)
     janela_razao: str = ""         # OBRIGATÓRIO quando anos_ciclo != ANOS: a quebra estrutural e a data (§11.4)
     receita_meio: float | None = None   # R$ mil; None = média dos 3 últimos exercícios + LTM
-    aliquota: float | None = None   # None = alíquota efetiva mediana (−IR/LAIR) dos últimos 5 exercícios, entre 15% e 34%
+    aliquota: float | None = None   # alíquota PERPÉTUA explícita; None = regra da v2.3 em `aliquota_regra` (mediana de 5 anos, sem piso)
     spread_kd: float = 0.02        # Kd nominal = rf nominal + spread
     g_real: float = 0.01           # crescimento real perpétuo do cenário base
     jcp_share: float = 0.0
@@ -53,8 +59,8 @@ class Industrial:
     anos_outras: list | None = None      # janela da mediana de "outras" (doutrina: 10 anos); None = anos_ciclo
     capex_ciclico: bool | None = None    # regra de capex de commodity; None = perfil == "ciclica"
     deflator: dict | None = None         # ano → fator IPCA até a data-base: margem = EBIT real ÷ receita real média
-    outros_passivos: float = 0.0         # R$ mil; passivo de dívida fora de 2.01.04/2.02.01 (ex.: déficit atuarial)
-    outros_passivos_fonte: str = ""
+    outros_passivos: float = 0.0         # R$ mil; passivo OPERACIONAL à frente do acionista fora de 2.01.04/2.02.01 — só na ponte (v2.3)
+    outros_passivos_fonte: str = ""      # OBRIGATÓRIO quando outros_passivos ou outros_passivos_financeiros ≠ 0
     declinio_sem_liberacao: bool = False  # g < 0 declarado: o declínio não devolve capital (campo maduro)
     da_receita: float | None = None      # E&P: D&A atual ÷ receita de meio de ciclo → margem = EBITDA mediano − este valor
     # Lote 6 (05/10): defaults preservam os lotes anteriores
@@ -68,6 +74,14 @@ class Industrial:
     # Etapa 5 (07/10, dossiê CMIN3): defaults preservam os lotes anteriores
     fator_preco: dict | None = None       # cíclica de janela curta: ano → preço de meio ÷ preço do ano (R$ de hoje); a margem do ano é reexpressa ao preço de meio
     custo_variavel_preco: float = 0.0     # fração da receita cujo custo acompanha o preço (royalty, minério de terceiros); o resto do custo fica fixo
+    # v2.3 (07/10): defaults preservam os lotes anteriores
+    controlador_discricionario: bool = False   # peso 2 do controlador na média qualitativa (regra 11, §10)
+    controlador_discricionario_fonte: str = ""  # OBRIGATÓRIO quando True: o poder exercido e a fonte
+    qualitativo_origem: str = "arbitrada, pré-v4"   # notas do hall até o dossiê do ticker; dossiê grava "regra 11"
+    aliquota_fase: dict | None = None     # crédito de IR COM PRAZO (ágio, subvenção): {"ate": 2030, "fonte": "...", "efetiva": opcional}
+    aliquota_permanente_fonte: str = ""   # mediana < 15% só vale com a origem PERMANENTE declarada (JCP, regime sem prazo)
+    outros_passivos_financeiros: float = 0.0   # R$ mil; passivo COM JUROS ou financeiro fora de 2.01.04/2.02.01: entra na DL (v2.3)
+    capex_expansao: dict | None = None    # expansão identificada sem receita: {"anos": {ano: R$ mil}, "projeto", "fonte", "nota_fonte", "retorno_projetado"}
 
 
 def exigir_declaracoes(emp: Industrial) -> None:
@@ -77,6 +91,32 @@ def exigir_declaracoes(emp: Industrial) -> None:
         faltas.append(f"janela {emp.anos_ciclo[0]}-{emp.anos_ciclo[-1]} sem janela_razao (§11.4)")
     if emp.defasagem_meses is not None and not emp.defasagem_fonte.strip():
         faltas.append(f"defasagem_meses={emp.defasagem_meses} sem defasagem_fonte (§6.3)")
+    if emp.controlador_discricionario and not emp.controlador_discricionario_fonte.strip():
+        faltas.append("controlador_discricionario sem controlador_discricionario_fonte (§10)")
+    f = emp.aliquota_fase
+    if f is not None:
+        if emp.aliquota is not None or emp.aliquota_permanente_fonte.strip():
+            faltas.append("aliquota_fase não combina com aliquota explícita nem com aliquota_permanente_fonte (§2)")
+        if not isinstance(f.get("ate"), int) or not str(f.get("fonte", "")).strip():
+            faltas.append(f"aliquota_fase exige 'ate' (ano, inteiro) e 'fonte': {f}")
+        ef = f.get("efetiva")
+        if ef is not None and not (isinstance(ef, (int, float)) and 0 <= ef <= ALIQUOTA_MARGINAL):
+            faltas.append(f"aliquota_fase 'efetiva' fora de [0, {ALIQUOTA_MARGINAL}]: {ef}")
+    if (emp.outros_passivos or emp.outros_passivos_financeiros) and not emp.outros_passivos_fonte.strip():
+        faltas.append("outros_passivos sem outros_passivos_fonte (§11.1)")
+    ce = emp.capex_expansao
+    if ce is not None:
+        if not (str(ce.get("projeto", "")).strip() and str(ce.get("fonte", "")).strip() and ce.get("nota_fonte") in ("A", "B")):
+            faltas.append("capex_expansao exige 'projeto', 'fonte' e 'nota_fonte' A ou B (§11.1)")
+        anos_ce = ce.get("anos")
+        if not isinstance(anos_ce, dict) or not anos_ce:
+            faltas.append("capex_expansao sem 'anos' {ano: R$ mil}")
+        else:
+            a = CVM.get(emp.ticker, {}).get("anual", {})
+            for ano, x in anos_ce.items():
+                capex = a.get(ano, {}).get("capex")
+                if capex is None or not isinstance(x, (int, float)) or not 0 <= x <= capex:
+                    faltas.append(f"capex_expansao {ano}={x} fora de [0, capex do ano={capex}]")
     if faltas:
         raise ValueError(f"{emp.ticker}: " + " · ".join(faltas))
 
@@ -105,12 +145,19 @@ def capital_giro(b):
     return (v(b, "ac", 0) - v(b, "caixa", 0) - v(b, "aplic_cp", 0)) - (v(b, "pc", 0) - v(b, "emprest_cp", 0))
 
 
-def capex_manutencao(tk, ano, anterior, ciclica=False):
+def expansao_do_ano(emp: Industrial, ano) -> float:
+    """Capex de expansão IDENTIFICADO no exercício (R$ mil; v2.3) — zero sem declaração."""
+    return float(emp.capex_expansao["anos"].get(ano, 0.0)) if emp.capex_expansao else 0.0
+
+
+def capex_manutencao(tk, ano, anterior, ciclica=False, expansao=0.0):
     """Capex de manutenção = capex − (capital ÷ receita) × Δreceita REAL média de 5 anos; piso zero (doutrina §11.1).
 
     Adaptação declarada do método de Greenwald: o capital é imobilizado + intangível + biológico LÍQUIDOS do
     exercício (as mesmas contas que formam o capex), não o PPE bruto médio de 5 anos do original — a série da CVM
     só traz o líquido (conta 1.02.03).
+    `expansao` (v2.3): capex de projeto identificado (nome, valor e prazo em fonte A/B) e ainda sem receita sai ANTES da regra —
+    o Greenwald só enxerga crescimento que já virou receita, e sem isso a obra em andamento contaria como manutenção.
     Δreceita REAL (Etapa 2/F2): a receita antiga entra a preços do exercício corrente antes da subtração. Sem isso,
     em economia inflacionária a inflação viraria "crescimento" e reduziria o capex de manutenção. Não é exigência
     de Greenwald (que não trata inflação) — é coerência com a própria §11.1, que já manda preço de commodity e EPV
@@ -120,7 +167,7 @@ def capex_manutencao(tk, ano, anterior, ciclica=False):
     d = a[ano]
     if ciclica:
         # commodity: a receita cresce por preço, não por capacidade — todo o capex é manutenção (sem projeto comprovado)
-        return (d["capex"], 0.0) if d.get("capex") is not None else (None, None)
+        return (d["capex"] - expansao, 0.0) if d.get("capex") is not None else (None, None)
     if d.get("capex") is None:
         return None, None
     base = str(int(ano) - 5)
@@ -133,7 +180,7 @@ def capex_manutencao(tk, ano, anterior, ciclica=False):
         delta = (d["receita"] - a[base]["receita"] * fator_entre(base, ano)) / 5
     cap_rec = (v(d, "imobilizado", 0) + v(d, "intangivel", 0) + v(d, "biologico", 0)) / d["receita"]
     cresc = cap_rec * max(delta, 0)
-    return max(d["capex"] - cresc, 0.0), cresc
+    return max(d["capex"] - expansao - cresc, 0.0), cresc
 
 
 def aluguel_principal(emp: Industrial, ano, anterior, kd_real):
@@ -182,15 +229,23 @@ def capital_reposicao(tk, cap_inv):
     return idade, cap_inv + v(ltm, "imobilizado", 0) * (fator - 1)
 
 
-def owner_earnings_ano(emp: Industrial, ano, anterior, kd_real, ciclica=False):
+def owner_earnings_ano(emp: Industrial, ano, anterior, kd_real, ciclica=False, t_retributar=None):
+    """OE do exercício. `t_retributar` (v2.3): quando a alíquota perpétua não é a mediana observada (explícita, fase de crédito
+    com prazo, mediana < 15% sem origem), o lucro do ano é refeito a essa alíquota — senão o crédito vencido ou temporário
+    ficaria na perpetuidade do OE. Lucro a t = LAIR × (1 − t); o ajuste é −(IR + t × LAIR), com IR negativo = despesa."""
     a, _ = serie(emp.ticker)
     d, p = a[ano], a.get(anterior, {})
-    cm, _ = capex_manutencao(emp.ticker, ano, anterior, ciclica)
+    cm, _ = capex_manutencao(emp.ticker, ano, anterior, ciclica, expansao_do_ano(emp, ano))
     if cm is None or d.get("lucro") is None or d.get("da") is None or not p:
         return None
+    lucro = d["lucro"]
+    if t_retributar is not None:
+        if d.get("lair") is None or d.get("ir") is None:
+            return None             # sem a linha do imposto não dá para retributar: o ano sai (nada silencioso)
+        lucro -= d["ir"] + t_retributar * d["lair"]
     dwc = capital_giro(d) - capital_giro(p)
     # IFRS 16: a D&A somada de volta inclui a depreciação do direito de uso, então o aluguel pago é custo do negócio e sai
-    return d["lucro"] + d["da"] - cm - max(dwc, 0) - aluguel_principal(emp, ano, anterior, kd_real)
+    return lucro + d["da"] - cm - max(dwc, 0) - aluguel_principal(emp, ano, anterior, kd_real)
 
 
 # ---------------------------------------------------------------- qualidade contábil
@@ -277,7 +332,13 @@ def margem_ao_preco_meio(emp: Industrial, por_ano: dict) -> dict:
     aplicada à receita de meio, conta o preço duas vezes. Aqui a receita do ano vai ao preço de meio (× f) e o custo fica:
       margem' = 1 − v − (1 − margem − v) ÷ f,
     v = custo que acompanha o preço (royalty, compra de terceiros), em fração da receita; o restante do custo é fixo no ano.
-    f = 1 devolve a margem original. Ano sem fator falha alto (nada silencioso)."""
+    f = 1 devolve a margem original. Ano sem fator falha alto (nada silencioso).
+    Doutrina v2.3 (§11.1): só cíclica, com dossiê próprio e janela de pelo menos 7 exercícios (abaixo disso a mediana não
+    tem ciclo para normalizar). O dossiê é processo (02/08); o perfil e a janela o código confere."""
+    if emp.perfil != "ciclica":
+        raise ValueError(f"{emp.ticker}: fator_preco só vale para perfil 'ciclica' (§11.1), não '{emp.perfil}'")
+    if len(por_ano) < JANELA_MINIMA_PRECO_MEIO:
+        raise ValueError(f"{emp.ticker}: fator_preco exige janela >= {JANELA_MINIMA_PRECO_MEIO} exercícios, veio {len(por_ano)}")
     if emp.deflator or emp.da_receita is not None:
         raise ValueError(f"{emp.ticker}: fator_preco não combina com deflator nem com da_receita (E&P)")
     v_ = emp.custo_variavel_preco
@@ -328,14 +389,14 @@ def premissas_operacionais(emp: Industrial):
     if ciclico(emp):
         # commodity: receita cresce por preço; projetos de expansão (Cerrado, Puma II, Gaia) não identificados um a um →
         # capex de manutenção = mediana de 10 anos de capex/receita (dilui os picos de projeto) contra a mediana de D&A/receita
-        cx = [a[x]["capex"] / a[x]["receita"] for x in anos if a[x].get("capex") is not None]
+        cx = [(a[x]["capex"] - expansao_do_ano(emp, x)) / a[x]["receita"] for x in anos if a[x].get("capex") is not None]
         dd = ([emp.da_receita] if emp.da_receita is not None else
               [a[x]["da"] / a[x]["receita"] for x in anos if a[x].get("da") is not None])
         aj = min(0.0, median(dd) - median(cx)) if cx and dd else 0.0
     else:
         ajs = []
         for i in range(max(1, len(anos) - 5), len(anos)):
-            cm, _ = capex_manutencao(emp.ticker, anos[i], anos[i - 1])
+            cm, _ = capex_manutencao(emp.ticker, anos[i], anos[i - 1], expansao=expansao_do_ano(emp, anos[i]))
             da = a[anos[i]].get("da")
             if cm is not None and da is not None:
                 ajs.append(min(0.0, da - cm) / a[anos[i]]["receita"])
@@ -359,14 +420,99 @@ def ciclico(emp: Industrial):
     return emp.perfil == "ciclica" if emp.capex_ciclico is None else emp.capex_ciclico
 
 
-def aliquota(emp: Industrial):
-    if emp.aliquota is not None:
-        return emp.aliquota
+def _anos_com_imposto(emp: Industrial) -> list:
+    """Os 5 últimos exercícios da janela com LAIR > 0 e a linha do IR."""
     a, _ = serie(emp.ticker)
-    tx = [-a[x]["ir"] / a[x]["lair"] for x in anos_validos(emp.ticker, emp.anos_ciclo)[-5:]
-          if a[x].get("lair") and a[x]["lair"] > 0 and a[x].get("ir") is not None]
-    tx = [x for x in tx if 0 <= x <= 0.5]       # anos com crédito fiscal (alíquota negativa) não representam o normal
-    return min(max(median(tx), 0.15), 0.34) if tx else 0.34
+    return [x for x in anos_validos(emp.ticker, emp.anos_ciclo)[-5:]
+            if a[x].get("lair") and a[x]["lair"] > 0 and a[x].get("ir") is not None]
+
+
+def mediana_efetiva(emp: Industrial) -> float | None:
+    """Mediana de −IR ÷ LAIR dos 5 últimos exercícios da janela (LAIR > 0). Anos fora de [0, 50%] não representam o normal
+    (crédito maior que o imposto, ou LAIR quase zero). Menos de MINIMO_ANOS_ALIQUOTA anos dentro → None (adversário, 07/10:
+    com 1 ou 2 anos a "mediana" é um ano só, e os anos de crédito descartados ficariam inteiros no OE)."""
+    a, _ = serie(emp.ticker)
+    tx = [-a[x]["ir"] / a[x]["lair"] for x in _anos_com_imposto(emp)]
+    tx = [x for x in tx if 0 <= x <= 0.5]
+    return median(tx) if len(tx) >= MINIMO_ANOS_ALIQUOTA else None
+
+
+def aliquota_regra(emp: Industrial) -> tuple[float, str]:
+    """(alíquota PERPÉTUA, regra) — doutrina §2, v2.3 (07/10/2026). A perpétua vale no WACC, no NOPAT, no ROIC e no OE.
+
+    · explícita: premissa do lote com razão escrita (ABEV3: só os anos depois da Lei 14.789/2023);
+    · fase: crédito de IR COM PRAZO (ágio amortizável, subvenção de ICMS) → 34% na perpetuidade e no WACC; a alíquota efetiva
+      só vale até o fim do benefício, como valor presente à parte (`fase_fiscal`, `beneficio_fiscal`);
+    · mediana: benefício PERMANENTE (JCP, regime sem prazo) fica na mediana efetiva de 5 anos, teto 34%, SEM piso (o piso de
+      15% da v2.2 acabou);
+    · mediana abaixo de 15% sem a origem declarada (`aliquota_permanente_fonte`) → 34%: benefício de origem e prazo
+      desconhecidos tem prazo zero. Sem isso, tirar o piso SUBIRIA o central de quem tem crédito temporário (TIMS3, PRIO3);
+    · sem_dado: menos de 3 exercícios com taxa entre 0 e 50% nos 5 últimos → 34% e OE refeito (mesmo tratamento do sem_origem).
+    """
+    if emp.aliquota is not None:
+        return emp.aliquota, "explicita"
+    if emp.aliquota_fase:
+        return ALIQUOTA_MARGINAL, "fase"
+    m = mediana_efetiva(emp)
+    if m is None:
+        return ALIQUOTA_MARGINAL, "sem_dado"
+    if m >= LIMIAR_ORIGEM:
+        return min(m, ALIQUOTA_MARGINAL), "mediana"
+    if emp.aliquota_permanente_fonte.strip():
+        return m, "permanente"
+    return ALIQUOTA_MARGINAL, "sem_origem"
+
+
+def aliquota(emp: Industrial):
+    return aliquota_regra(emp)[0]
+
+
+def fase_fiscal(emp: Industrial) -> tuple[float, int] | None:
+    """(alíquota efetiva da fase, exercícios cheios restantes depois de ANO_BASE) do crédito com prazo; None sem fase.
+
+    A efetiva é a declarada ou a mediana de 5 anos COM os anos de crédito (taxa negativa: é justamente o benefício que a fase
+    mede), presa entre 0 e 34%. Sem o corte em zero, um crédito maior nunca dá valor menor (adversário, 07/10: com o corte, a
+    HYPE3 ficava com um ano só e um crédito um pouco maior zerava a fase). Menos de 3 anos com LAIR > 0 → efetiva 34%
+    (benefício zero, conservador)."""
+    f = emp.aliquota_fase
+    if not f:
+        return None
+    ef = f.get("efetiva")
+    if ef is None:
+        a, _ = serie(emp.ticker)
+        tx = [-a[x]["ir"] / a[x]["lair"] for x in _anos_com_imposto(emp)]
+        tx = [x for x in tx if x <= 0.5]
+        ef = median(tx) if len(tx) >= MINIMO_ANOS_ALIQUOTA else None
+    ef = ALIQUOTA_MARGINAL if ef is None else min(max(ef, 0.0), ALIQUOTA_MARGINAL)
+    return ef, max(int(f["ate"]) - ANO_BASE, 0)
+
+
+def credito_observado(emp: Industrial) -> float:
+    """Crédito de IR observado por ano (R$ mil, a preços do último exercício): mediana de 34% × LAIR + IR (IR negativo =
+    despesa) nos 5 últimos anos com LAIR > 0. É o teto do benefício anual da fase: o modelo nunca supõe crédito maior que o
+    que a empresa de fato teve (adversário, 07/10)."""
+    a, _ = serie(emp.ticker)
+    anos = _anos_com_imposto(emp)
+    if not anos:
+        return 0.0
+    ult = anos[-1]
+    return max(median((ALIQUOTA_MARGINAL * a[x]["lair"] + a[x]["ir"]) * fator_entre(x, ult) for x in anos), 0.0)
+
+
+def beneficio_fiscal(emp: Industrial, lair_norm: float, taxa: float) -> float:
+    """Valor presente (R$ mil) do crédito com prazo: Σ_{t=1..N} min(LAIR normalizado × (perpétua − efetiva), crédito
+    observado) ÷ (1 + taxa)^t.
+
+    A base é o lucro DEPOIS dos juros normalizados (lucro operacional pré-IR − Kd × dívida líquida): o WACC já dá a dedução
+    dos juros a 34%, e o benefício sobre o lucro antes dos juros a contaria de novo (adversário, 07/10: R$ 1,34/ação na
+    HYPE3). O teto é o crédito que a empresa de fato teve (`credito_observado`). Sem crescimento do benefício e sem o
+    trimestre corrente (conservador); zero sem fase ou com base ≤ 0."""
+    fase = fase_fiscal(emp)
+    if not fase or lair_norm <= 0:
+        return 0.0
+    ef, n = fase
+    anual = min(lair_norm * (aliquota(emp) - ef), credito_observado(emp))
+    return sum(anual / (1 + taxa) ** t for t in range(1, n + 1))
 
 
 def wacc(emp: Industrial, mk: Mercado, ke_nom=None):
@@ -389,12 +535,16 @@ def valores(emp: Industrial, mk: Mercado, ke_nom=None, margem=None, g_real=None,
     ke = ke_nom if ke_nom is not None else mk.ke_nom
     ke_real = (1 + ke) / (1 + mk.pi) - 1
     bruta, caixa, dl = divida_liquida(ltm)
-    minor = v(ltm, "nao_controladores", 0) + emp.outros_passivos   # direitos à frente do acionista na ponte firma → equity
+    # v2.3: passivo com juros/financeiro fora das contas de empréstimo é dívida — entra na DL e, por ela, na ponte, no DL/EBITDA,
+    # no capital do ROIC, no EV e nos juros normalizados. O WACC fica com a dívida do balanço (peso menor de Kd = conservador).
+    dl += emp.outros_passivos_financeiros
+    minor = v(ltm, "nao_controladores", 0) + emp.outros_passivos   # direitos à frente do acionista (operacional) só na ponte
     n = emp.n_acoes / 1000     # mil ações → valores em R$ mil / mil ações = R$/ação
     m = margem if margem is not None else op["m50"]
     gr = emp.g_real if g_real is None else g_real
-    t_ef = aliquota(emp)
-    nopat = op["receita_meio"] * (m + op["ajuste_manut"]) * (1 - t_ef)
+    t_ef, t_regra = aliquota_regra(emp)          # perpétua (v2.3); o crédito com prazo entra à parte, em valor presente
+    lucro_pre_ir = op["receita_meio"] * (m + op["ajuste_manut"])
+    nopat = lucro_pre_ir * (1 - t_ef)
     cap_inv = v(ltm, "pl", 0) + dl
     idade_imob, cap_rep = capital_reposicao(emp.ticker, cap_inv)
     roic = nopat / cap_inv if cap_inv > 0 else None
@@ -405,13 +555,19 @@ def valores(emp: Industrial, mk: Mercado, ke_nom=None, margem=None, g_real=None,
     roic_filtro = min(x for x in (roic, roic_rep) if x is not None) if roic is not None else None
     roic_real = (1 + roic) / (1 + mk.pi) - 1 if roic else None
 
-    epv_firma = nopat / w_real
+    # base do crédito com prazo: lucro depois dos juros normalizados (v2.3); caixa líquido não aumenta a base (o caixa rende
+    # rf, não Kd — adversário, 07/10)
+    lair_norm = lucro_pre_ir - kd * max(dl, 0.0)
+    benef_firma = beneficio_fiscal(emp, lair_norm, w_real)
+    epv_firma = nopat / w_real + benef_firma
     epv = (epv_firma - dl - minor) / n
 
     g1_ = emp.g1_real if g1 is None else g1
 
     def dcf(mg):
-        nop = op["receita_meio"] * (mg + op["ajuste_manut"]) * (1 - t_ef)
+        pre = op["receita_meio"] * (mg + op["ajuste_manut"])
+        nop = pre * (1 - t_ef)
+        bf = beneficio_fiscal(emp, pre - kd * max(dl, 0.0), w_real)   # crédito com prazo (v2.3): VP à parte, zero sem fase
         roic_c = nop / cap_inv if cap_inv > 0 else None
         # Greenwald: crescimento só tem valor se o ROIC supera o custo de capital (os dois nominais, doutrina §2).
         # Abaixo disso g = 0 e o DCF converge para o EPV; acima, reinvestimento = g real ÷ ROIC.
@@ -426,7 +582,7 @@ def valores(emp: Industrial, mk: Mercado, ke_nom=None, margem=None, g_real=None,
         reinv = g_ef / roic_r if (g_ef != 0 and roic_r and not (g_ef < 0 and emp.declinio_sem_liberacao)) else 0.0
         if g1_ is None:
             fcff1 = nop * (1 + g_ef) * (1 - reinv)
-            return (fcff1 / (w_real - g_ef) - dl - minor) / n
+            return (fcff1 / (w_real - g_ef) + bf - dl - minor) / n
         # 2 estágios (compounder): NOPAT cresce g1 real por anos_g1 anos reinvestindo g1 ÷ ROIC; depois, Gordon com g_ef
         g1e = g1_ if cria else 0.0
         vp, nop_t = 0.0, nop
@@ -434,19 +590,24 @@ def valores(emp: Industrial, mk: Mercado, ke_nom=None, margem=None, g_real=None,
             nop_t *= 1 + g1e
             vp += nop_t * (1 - (g1e / roic_r if g1e > 0 else 0.0)) / (1 + w_real) ** t
         terminal = nop_t * (1 + g_ef) * (1 - reinv) / (w_real - g_ef)
-        return (vp + terminal / (1 + w_real) ** emp.anos_g1 - dl - minor) / n
+        return (vp + terminal / (1 + w_real) ** emp.anos_g1 + bf - dl - minor) / n
     dcf_c = {"pessimista": dcf(op["m25"]), "base": dcf(m), "otimista": dcf(op["m75"])}
     dcf_pond = 0.25 * dcf_c["pessimista"] + 0.5 * dcf_c["base"] + 0.25 * dcf_c["otimista"]
 
     oes = []
     anos = op["anos"]
+    t_oe = t_ef if t_regra in ("explicita", "fase", "sem_origem", "sem_dado") else None   # v2.3: OE à alíquota perpétua
     for i in range(1, len(anos)):
-        x = owner_earnings_ano(emp, anos[i], anos[i - 1], (1 + kd) / (1 + mk.pi) - 1, ciclico(emp))
+        x = owner_earnings_ano(emp, anos[i], anos[i - 1], (1 + kd) / (1 + mk.pi) - 1, ciclico(emp), t_oe)
         if x is not None:
             oes.append((anos[i], x))
     oe_recentes = [x for _, x in oes[-5:]]
     oe_norm = median(oe_recentes) if oe_recentes else None
-    oe_val = (oe_norm / (ke_real - gr) - emp.outros_passivos) / n if oe_norm and ke_real > gr else None
+    # fluxo do acionista: o crédito com prazo incide sobre o lucro depois dos juros normalizados, ao Ke real
+    benef_acao = beneficio_fiscal(emp, lair_norm, ke_real)
+    # o OE é fluxo do acionista (depois dos juros da DL do balanço): os dois outros passivos saem por inteiro
+    oe_val = ((oe_norm / (ke_real - gr) + benef_acao - emp.outros_passivos - emp.outros_passivos_financeiros) / n
+              if oe_norm and ke_real > gr else None)
 
     reprod = emp.reproducao_por_acao if emp.reproducao_por_acao else (v(ltm, "pl", 0) - v(ltm, "nao_controladores", 0)) / n
 
@@ -463,7 +624,9 @@ def valores(emp: Industrial, mk: Mercado, ke_nom=None, margem=None, g_real=None,
             anc["Owner Earnings ÷ (Ke − g)"] = oe_val
     return dict(anc=anc, op=op, wacc=w_nom, wacc_real=w_real, kd=kd, e=e, d=d, dl=dl, bruta=bruta, caixa=caixa,
                 minor=minor, nopat=nopat, roic=roic, epv=epv, dcf=dcf_c, dcf_pond=dcf_pond, oe=oes, oe_norm=oe_norm,
-                oe_val=oe_val, reprod=reprod, cap_inv=cap_inv, n=n, m=m, gr=gr, aliquota=t_ef,
+                oe_val=oe_val, reprod=reprod, cap_inv=cap_inv, n=n, m=m, gr=gr, aliquota=t_ef, aliquota_regra=t_regra,
+                aliquota_mediana=mediana_efetiva(emp), aliquota_fase=fase_fiscal(emp), beneficio_fiscal_acao=benef_firma / n,
+                outros_passivos_financeiros=emp.outros_passivos_financeiros, capex_expansao=emp.capex_expansao,
                 roic_reposicao=roic_rep, roic_filtro=roic_filtro, cap_inv_reposicao=cap_rep, idade_imobilizado=idade_imob)
 
 
@@ -500,9 +663,18 @@ def central_de(anc):
     return median(vals), vals
 
 
+def desconto_pct(emp: Industrial) -> float:
+    """§5: desconto de controlador declarado — fixo ou Σ prob × perda dos cenários; zero no mais."""
+    dc = emp.desconto_controlador
+    return (dc.get("pct", 0.0) if dc["tipo"] == "fixo" else
+            sum(c["prob"] * c["perda"] for c in dc["cenarios"]) if dc["tipo"] == "cenarios" else 0.0)
+
+
 def ke_implicito(emp, mk):
+    # o preço se compara ao central COM o desconto (§5: uma única vez, no valor) — até a v2.2 este cálculo o ignorava
+    desc = desconto_pct(emp)
     lo, hi = mk.g_teto + 0.003, 0.60
-    f = lambda k: central_de(valores(emp, mk, ke_nom=k)["anc"])[0]
+    f = lambda k: central_de(descontar(valores(emp, mk, ke_nom=k)["anc"], desc))[0]
     try:
         if f(lo) < emp.preco:
             return None
@@ -519,10 +691,12 @@ def ke_implicito(emp, mk):
 
 def g_implicito(emp, mk):
     """DCF reverso: crescimento real perpétuo que iguala o DCF base ao preço (margem mediana, Ke da casa).
-    Com DCF de 2 estágios: o g real dos primeiros anos_g1 anos (perpetuidade fixa)."""
+    Com DCF de 2 estágios: o g real dos primeiros anos_g1 anos (perpetuidade fixa). DCF com o desconto de controlador (§5)."""
+    desc = desconto_pct(emp)
+    dcf_base = lambda **kw: descontar({"b": valores(emp, mk, **kw)["dcf"]["base"]}, desc)["b"]
     if emp.g1_real is not None:
         lo, hi = 0.0, 0.40
-        f = lambda g: valores(emp, mk, g1=g)["dcf"]["base"]
+        f = lambda g: dcf_base(g1=g)
         if f(hi) < emp.preco:
             return None
         if f(lo) > emp.preco:
@@ -532,7 +706,7 @@ def g_implicito(emp, mk):
             lo, hi = (lo, mid) if f(mid) > emp.preco else (mid, hi)
         return (lo + hi) / 2
     lo, hi = -0.05, min(0.08, valores(emp, mk)["wacc_real"] - 0.002)
-    f = lambda g: valores(emp, mk, g_real=g)["dcf"]["base"]
+    f = lambda g: dcf_base(g_real=g)
     if f(hi) < emp.preco:
         return None
     if f(lo) > emp.preco:
@@ -550,11 +724,8 @@ def avaliar(emp: Industrial, mk: Mercado) -> dict:
     exigir_declaracoes(emp)
     a, ltm = serie(emp.ticker)
     r = valores(emp, mk)
-    anc = dict(r["anc"])
-    dc = emp.desconto_controlador
-    desc = (dc.get("pct", 0.0) if dc["tipo"] == "fixo" else
-            sum(c["prob"] * c["perda"] for c in dc["cenarios"]) if dc["tipo"] == "cenarios" else 0.0)
-    anc = {k: x * (1 - desc) for k, x in anc.items()}
+    desc = desconto_pct(emp)
+    anc = descontar(r["anc"], desc)      # v2.3: só em âncora > 0 (a ≤ 0 continua forçando NÃO CONCLUSIVO)
     central, vals = central_de(anc)
     nao_conc = any(x <= 0 for x in vals)
     disp = max(vals) / min(vals) if not nao_conc else float("inf")
@@ -645,11 +816,11 @@ def avaliar(emp: Industrial, mk: Mercado) -> dict:
     for dk in (-0.01, 0, 0.01):
         for dm in (-0.02, 0, 0.02):
             vv = valores(emp, mk, ke_nom=mk.ke_nom + dk, margem=r["m"] + dm)["anc"]
-            sens[(dk, dm)] = central_de({k: x * (1 - desc) for k, x in vv.items()})[0]
+            sens[(dk, dm)] = central_de(descontar(vv, desc))[0]
 
-    # notas — o spread usa o MENOR dos dois ROIC (doutrina §2: capital a custo histórico infla o retorno)
-    q = emp.qualitativo
-    qual = sum(q.values()) / len(q) * 2 if q else 5
+    # notas — o spread usa o MENOR dos dois ROIC (doutrina §2: capital a custo histórico infla o retorno);
+    # o qualitativo é a média da regra 11 (v2.3): controlador com peso 2 quando discricionário
+    qual = media_qualitativa(emp.qualitativo, emp.controlador_discricionario) * 2
     n_qual = 0.5 * nota_spread(r["roic_filtro"] or 0, r["wacc"]) + 0.5 * qual
     alav_n = interp(-(dl_ebitda_norm if dl_ebitda_norm is not None else 0), [(-5, 1), (-4, 3), (-3, 5), (-2, 7), (-1, 9), (0, 10)])
     z_n = {"segura": 10, "cinzenta": 6, "perigo": 2}[zona]
@@ -680,4 +851,5 @@ def avaliar(emp: Industrial, mk: Mercado) -> dict:
                 so_com_rerating=rf != rf_inv, carimbo_rf=bogle_liq_real < mk.rf_liq_real, trava=trava, peg=peg, pegy=pegy,
                 ke_implicito=ke_implicito(emp, mk), g_implicito=g_implicito(emp, mk), sens=sens,
                 notas=dict(qualidade=n_qual, solidez=n_sol, renda=n_renda, preco=n_preco, geral=n_geral),
+                qualitativo_origem=emp.qualitativo_origem, controlador_peso=2 if emp.controlador_discricionario else 1,
                 ret_investimento=dy + g_nom, ret_especulativo=dmult, ticker=emp.ticker)

@@ -70,7 +70,7 @@ def extras(emp, r):
     x["c_ltm"] = central_rapido(emp, margem=x["m_ltm"])
     x["pc_ltm"] = emp.preco / x["c_ltm"]
     if tk == "HYPE3":
-        x["c34"] = central_rapido(com(emp, aliquota=0.34))
+        x["c34"] = central_rapido(com(emp, aliquota=0.34, aliquota_fase=None))     # 34% já, sem a fase até 2030 (v2.3)
     if tk == "ABEV3":
         x["c_aliq_motor"] = central_rapido(com(emp, aliquota=None))
     if tk == "WEGE3":
@@ -495,7 +495,7 @@ def capa(res, rank, story):
                                "ao mesmo Ke) − G&A capitalizado; demais participações a valor contábil (conservador). Desconto de holding = o custo "
                                "capitalizado e o PIS/Cofins sobre o JCP recebido até a mudança de 2027 (15 meses, a valor presente), declarados; sem desconto adicional."],
            ["Alíquota", "Mediana de 5 anos entre 15% e 34% (§2). ABEV3: média 2024–25 (21%) — a Lei 14.789/2023 passou a tributar a subvenção de ICMS. "
-                        "HYPE3: mediana negativa → piso de 15% (sensibilidade a 34% na ficha)."],
+                        "HYPE3: crédito de IR com prazo → efetiva até 2030 e 34% depois (v2.3; sensibilidade a 34% já na ficha). TIMS3: mediana 5,4% sem origem declarada → 34%."],
            ["Proventos", "Defasagem do pagamento trazida a valor presente ao Ke nominal (§6.3): HYPE3 18 meses, VIVT3 10, FLRY3 9, WEGE3 9, ABEV3 6, "
                          "TIMS3 4. VIVT3 sem redução de capital (R$ 1,25 em 2026); ABEV3 com o JCP de jun/26 corrigido (R$ 0,0449)."],
            ["Coletor e motor (valem para todos os lotes)", "Coletor: consolidado zerado → individual; código CVM sucessor; capex em linha só com o "

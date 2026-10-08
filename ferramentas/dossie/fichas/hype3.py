@@ -12,8 +12,9 @@ Premissas declaradas ANTES do veredito (doutrina §11.4, §6.3; 02 regra 4):
   · Receita de base = default do motor (média de 2023, 2024, 2025 e 12m até jun/2026): 2024–25 têm a receita deprimida
     pela redução do estoque no canal (otimização de capital de giro, FR 18/10/2024), e o 12m já mostra a volta; a média
     não escolhe nenhum dos dois extremos.
-  · Alíquota pela doutrina (§2): mediana de −IR/LAIR 2021–25, presa entre 15% e 34%. A mediana é negativa (crédito de IR
-    maior que o imposto em 2022–25) → piso de 15%, como no hall; a 34% vai como sensibilidade no dossiê.
+  · Alíquota (doutrina §2, v2.3): crédito de IR COM PRAZO (ágio amortizável até 2030; subvenção de ICMS até a reforma, prazo
+    não conferido na fonte) → efetiva até 2030 e 34% depois, na perpetuidade e no WACC; a declaração é a do hall (`fiscal.py`).
+    Até a v2.2 (dossiê de 02/10): piso de 15% para sempre.
   · Kd = rf nominal + 1,5 p.p.; g real 1% (só vale se ROIC > WACC) — os mesmos do hall.
   · Ações: composição do capital do ITR de jun/2026 (CVM), sem tesouraria = 704,0 mi, já depois do aumento de capital
     privado de 70,6 mi de ações a R$ 21,25 (homologado em 31/03/2026, IPE) — o balanço de jun/2026 já tem o caixa dele.
@@ -24,25 +25,18 @@ Premissas declaradas ANTES do veredito (doutrina §11.4, §6.3; 02 regra 4):
 """
 from __future__ import annotations
 
-import statistics as st
-
 from dossie import base
-from motor_nao_financeiras import ANOS as ANOS_HALL, CVM, Industrial
+from fiscal import ALIQUOTA_FASE
+from motor_nao_financeiras import ANOS as ANOS_HALL, Industrial
 
 TK = "HYPE3"
 ANOS = list(ANOS_HALL)          # 2016–2025
 
 
-def aliquota() -> float:
-    """Doutrina §2 (a mesma conta do `lote4_saude_telecom.aliquota_doutrina`): mediana de −IR/LAIR 2021–25 entre 15% e 34%."""
-    a = CVM[TK]["anual"]
-    return min(max(st.median(-a[y]["ir"] / a[y]["lair"] for y in ANOS[-5:] if a[y].get("lair")), 0.15), 0.34)
-
-
 def empresa(qualitativo: dict | None = None, desconto_controlador: dict | None = None, **sobrepor) -> Industrial:
     base.carregar(TK)
     kw = dict(
-        outras_liquidas=True, aliquota=aliquota(), spread_kd=0.015, g_real=0.01,
+        outras_liquidas=True, aliquota_fase=ALIQUOTA_FASE[TK], spread_kd=0.015, g_real=0.01,
         jcp_share=base.jcp_share(TK), pl_hist=base.pl_hist(TK),
         defasagem_meses=base.defasagem(TK),
         defasagem_fonte="datas de pagamento da StatusInvest (C, só datas), média ponderada pelo valor; JCP declarado no "

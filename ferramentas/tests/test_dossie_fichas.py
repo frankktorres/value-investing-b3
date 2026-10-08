@@ -10,16 +10,31 @@ from dossie import gerar
 from dossie.fichas import cmin3
 
 VEREDITOS = pathlib.Path(gerar.__file__).resolve().parent / "vereditos"
+# Vereditos de uma doutrina anterior que o motor atual NÃO reproduz por decisão declarada — ficam no disco e no registro
+# (append-only) como histórico; o veredito novo é de outra data. Doutrina v2.3 (07/10/2026), 09-diario.
+SUPERADOS = {
+    "HYPE3-2026-10-02": "v2.2: alíquota no piso de 15% para sempre; v2.3 = fase até 2030 e 34% depois (HYPE3-2026-10-06)",
+    "CMIN3-2026-10-02": "v2.2: passivo de contrato fora da DL; v2.3 = financeiro na DL, a trava do ROIC zera o g do DCF e a "
+                        "dispersão cai abaixo de 3x (CMIN3-2026-10-06)",
+}
+ARQUIVOS = sorted(p.stem for p in VEREDITOS.glob("*.json"))
 
 
-@pytest.mark.parametrize("tk", ["BLAU3", "CMIN3", "HYPE3"])
-def test_veredito_salvo_reproduz(tk):
-    salvo = json.loads((VEREDITOS / f"{tk}-2026-10-02.json").read_text(encoding="utf-8"))
-    v = gerar.veredito(gerar.calcular(tk))
-    for k in ("central", "pc", "desc_controlador", "media_regra11"):
+@pytest.mark.parametrize("nome", [n for n in ARQUIVOS if n not in SUPERADOS])
+def test_veredito_salvo_reproduz(nome):
+    salvo = json.loads((VEREDITOS / f"{nome}.json").read_text(encoding="utf-8"))
+    v = gerar.veredito(gerar.calcular(salvo["ticker"], salvo["data_preco"]))
+    for k in ("central", "pc", "desc_controlador", "media_regra11", "preco"):
         assert v[k] == pytest.approx(salvo[k], abs=1e-4), k
     for k in ("palavra", "palavra_regua", "notas_regra11", "discricionario"):
         assert v[k] == salvo[k], k
+
+
+def test_veredito_superado_tem_sucessor_mais_novo_e_continua_no_disco():
+    for nome in SUPERADOS:
+        tk, data = nome.split("-", 1)
+        assert nome in ARQUIVOS, nome
+        assert any(n.startswith(tk + "-") and n.split("-", 1)[1] > data for n in ARQUIVOS if n not in SUPERADOS), nome
 
 
 def test_dossie_de_ticker_do_hall_nao_vaza_para_o_lote():
@@ -63,8 +78,11 @@ def test_minerio_12m_e_fatores():
 
 
 def test_normalizacao_chamada_sozinha_e_linha_adotada_igual_ao_central():
+    from dossie import base
     dc = gerar.insumos("CMIN3")["desconto_controlador"]
-    n = cmin3.normalizacao(dc)
+    atual = max(n for n in ARQUIVOS if n.startswith("CMIN3-") and n not in SUPERADOS)
+    salvo = json.loads((VEREDITOS / f"{atual}.json").read_text(encoding="utf-8"))
+    with base.na_data(salvo["data_preco"]):          # a sensibilidade usa o mercado e o preço da data do veredito
+        n = cmin3.normalizacao(dc)
     adotado = next(v for k, v in n["sensibilidade"].items() if k.startswith("c "))
-    salvo = json.loads((VEREDITOS / "CMIN3-2026-10-02.json").read_text(encoding="utf-8"))
     assert adotado["central"] == pytest.approx(salvo["central"], abs=1e-4)

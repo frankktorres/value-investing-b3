@@ -123,7 +123,8 @@ def empresa(qualitativo: dict | None = None, desconto_controlador: dict | None =
         receita_meio=receita_meio(), fator_preco=m["fator_preco"], custo_variavel_preco=custo_variavel(),
         receita_meio_fonte=(f"receita 12m × minério de meio ÷ minério dos 12m ({m['fator']:.3f}; FMI 62% × PTAX, R$ de hoje, "
                             f"{JANELA_PRECO[0]}–{JANELA_PRECO[1]}) × volume de meio ÷ volume 12m ({vol['fator']:.3f})"),
-        outros_passivos=float(_num("outros_passivos")),
+        # v2.3: os dois são financeiros (o passivo de contrato tem juros, nota 22; o provento a pagar já é ex) → entram na DL
+        outros_passivos_financeiros=float(_num("outros_passivos")),
         outros_passivos_fonte="passivo de contrato (minério e energia pré-vendidos, com juros) + dividendos a pagar já ex, ITR 2T26",
         spread_kd=0.015, g_real=0.01, jcp_share=base.jcp_share(TK), pl_hist=None,
         defasagem_meses=base.defasagem(TK),
@@ -138,8 +139,8 @@ def empresa(qualitativo: dict | None = None, desconto_controlador: dict | None =
 def normalizacao(desconto_controlador: dict | None = None) -> dict:
     """Números do ciclo para o anexo e para a tabela de sensibilidade do dossiê (a: literal; b: preço 2019–25; c: adotado),
     com o mesmo desconto de controlador do central (senão a linha "c" não bate com o veredito)."""
-    from lote1_bancos import MK
     from motor_nao_financeiras import avaliar
+    MK = base.mercado()     # o mercado da data-base corrente (v2.3: o veredito novo é de outra data)
     base.carregar(TK)       # chamável sozinha (adversário, 07/10)
     m, vol = minerio(), volume()
     rec_ltm = CVM[TK]["ltm_2T26"]["receita"]

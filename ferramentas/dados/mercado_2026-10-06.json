@@ -1,0 +1,21 @@
+{
+ "data_base": "2026-10-06",
+ "coletado_em": "2026-10-07",
+ "uso": "Mercado dos dossiês com data-base 06/10/2026 (doutrina v2.3): rf e preço do mesmo dia (§4). Mesmo método do mercado.json de 02/10.",
+ "rf_real": 0.0651,
+ "pi": 0.0567,
+ "rf": {
+  "valor": 6.51,
+  "titulo": "Tesouro IPCA+ 15/08/2050 (mais longo sem cupom à venda em 06/10/2026)",
+  "tipo": "Tesouro Transparente, Taxa Compra Manhã (% a.a.); taxa venda manhã 6,63",
+  "fonte_url": "https://www.tesourotransparente.gov.br/ckan/dataset/df56aa42-484a-4a59-8184-7676580c81e3/resource/796d2059-14e9-44e3-80c9-2d9e30b405c1/download/PrecoTaxaTesouroDireto.csv",
+  "nota_fonte": "A"
+ },
+ "pi_implicita": {
+  "valor": 5.6672,
+  "tipo": "ANBIMA ETTJ, inflação implícita no vértice de 2520 du (~10a); ETTJ IPCA 6,8745 / PREF 12,9313; 1260 du: 5,4749",
+  "fonte_url": "https://www.anbima.com.br/informacoes/est-termo/CZ-down.asp (POST Idioma=PT&Dt_Ref=06/10/2026&saida=csv)",
+  "conferencia": "o mesmo POST para 02/10/2026 devolve 6,4593 (2520 du) e 6,1721 (1260 du), iguais ao mercado.json do hall",
+  "nota_fonte": "A"
+ }
+}

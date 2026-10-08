@@ -5,7 +5,7 @@ nos dicionários do motor só em memória (`carregar`). Um ticker novo num lote 
 
 Fontes (doutrina §2, regra 1 do 02):
   · demonstrações e ações em circulação — CVM, DFP/ITR (A), coletadas por `coletar_cvm.main(..., arq=SERIES)`;
-  · preço — COTAHIST da B3, fechamento de DATA_BASE (A);
+  · preço — COTAHIST da B3, fechamento de DATA_BASE (A); outra data só com o mercado do mesmo dia (`na_data`, `mercado`);
   · proventos por data-com — API pública da B3, cache do backtest (A);
   · data de pagamento, só para a defasagem do §6.3 — StatusInvest (C; a B3 não publica a data de pagamento nessa API).
 """
@@ -23,6 +23,7 @@ import pandas as pd
 
 from defasagem import defasagem_meses
 from montar_series import series as series_statusinvest
+from motor_financeiras import Mercado
 from motor_nao_financeiras import CVM, SI
 
 AQUI = pathlib.Path(__file__).resolve().parent
@@ -105,8 +106,36 @@ def _precos(ano: int) -> pd.DataFrame:
     return p[p["codbdi"] == "02"]
 
 
-def preco(tk: str, data: str = DATA_BASE) -> float:
+@contextmanager
+def na_data(data: str | None):
+    """Roda o dossiê noutra data-base (v2.3: veredito novo = data nova, o registro é append-only). Preço e mercado
+    passam a ser os dessa data; ao sair, volta a DATA_BASE padrão."""
+    global DATA_BASE
+    antes = DATA_BASE
+    DATA_BASE = data or antes
+    try:
+        yield DATA_BASE
+    finally:
+        DATA_BASE = antes
+
+
+def mercado(data: str | None = None) -> Mercado:
+    """Mercado do dia (rf e π da mesma data do preço, §4): 02/10 é o do hall (`lote1_bancos.MK`); outra data vem de
+    `dados/mercado_<data>.json` (Tesouro Transparente + ETTJ ANBIMA). Data sem arquivo falha alto."""
+    data = data or DATA_BASE
+    if data == "2026-10-02":
+        from lote1_bancos import MK
+        return MK
+    arq = RAIZ / "dados" / f"mercado_{data}.json"
+    if not arq.exists():
+        raise FileNotFoundError(f"sem mercado da data {data}: coletar rf e π do mesmo dia em {arq.name}")
+    m = json.loads(arq.read_text(encoding="utf-8"))
+    return Mercado(rf_real=m["rf_real"], pi=m["pi"], data=data)
+
+
+def preco(tk: str, data: str | None = None) -> float:
     """Fechamento (PREULT, lote padrão) do COTAHIST na data — erro alto se o pregão não existir."""
+    data = data or DATA_BASE
     p = _precos(int(data[:4]))
     x = p[(p["ticker"] == tk) & (p["data"].astype(str).str[:10] == data)]
     if x.empty:

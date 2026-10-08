@@ -116,6 +116,9 @@ EMPRESAS = [
                receita_meio=receita_ep("PETR4"), da_receita=da_ep("PETR4"), outras_liquidas=True,
                desconto_controlador={"tipo": "cenarios", "cenarios": PETR_CENARIOS,
                                      "razao": "V1 (preços 2011–14; diesel abaixo da paridade desde mar/26), V3 (refino, fertilizantes), V5 (extraordinários)"},
+               controlador_discricionario=True,
+               controlador_discricionario_fonte="interferência consumada declarada no desconto do lote (critério provisório v2.3, até o "
+                                                "dossiê): União — V1 preços 2011–14 e diesel abaixo da paridade desde mar/26, V3, V5",
                qualitativo=QUAL(4, 2, 1, 2, 2)),
     Industrial("PRIO3", "PRIO", "ciclica", preco=63.35, n_acoes=acoes("PRIO3"), spread_kd=0.02, g_real=0.01, jcp_share=jcp("PRIO3"),
                anos_ciclo=[str(a) for a in range(2019, 2026)], anos_outras=[str(a) for a in range(2016, 2026)],

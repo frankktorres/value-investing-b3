@@ -1,5 +1,5 @@
 {
- "motivo": "Etapa 2 (F2), rodada do adversario: ROIC por exercicio comparado REAL contra REAL (o ROIC nominal de 2017 contra o WACC nominal de 2026 reprovava quase todo exercicio antigo e invertia a contagem em 8 dos 21 tickers; doutrina 4) - LEVE3 passa de 5 para 8 de 10 exercicios e, com qualidade 8,005, ganha a saida de 1,50x (R$ 50,98); excecao de qualidade exige janela de pelo menos 10 exercicios (8 de 10 nao tem referente em janela de 5 a 7 anos declarada por quebra estrutural: TIMS3, VIVT3, FLRY3, PRIO3, RECV3, UGPA3, VBBR3); juro do arrendamento estimado ao Kd REAL e nao ao nominal de hoje (o nominal devolvia juro demais sobre saldo de 2019-21 e inflava o OE - UGPA3 agora desconta 344 mi em 2025 contra 285 mi em 2024, na direcao do desembolso) - central da LEVE3 34,12 -> 33,99 e OE da UGPA3 12,90 -> 12,43; alarme de quebra estrutural passa a usar o PERFIL e nao capex_ciclico (que tambem e True por capex de rede e desligava o alarme em servico); ROIC a reposicao vira None sem capital contabil positivo (capital negativo corrigido pela inflacao virava positivo minusculo e explodia o ROIC); guarda de divida financeira na linha mista do coletor; indice de IPCA de ano fora da serie nao derruba mais o motor. 6 testes novos. Nenhuma palavra mudou.",
+ "motivo": "v2.3 (6), rodada do adversario: (a) a efetiva da fase passa a contar os anos de credito (mediana de 5 anos sem o corte em zero, presa entre 0 e 34%, minimo de 3 anos) - antes saia de um ano so (HYPE3 2021, 1,6%) e um credito maior zerava a fase; (b) o beneficio passa a incidir sobre o lucro DEPOIS dos juros normalizados (o WACC ja da a deducao dos juros a 34%; antes contava duas vezes, R$ 1,34/acao) e fica limitado ao credito observado em R$; (c) mediana com menos de 3 anos validos = sem_dado, 34% e OE refeito. HYPE3: efetiva 0%, beneficio R$ 553 mi/ano (teto observado 718), VP R$ 2,52/acao; central 18,74 -> 17,51 (P/C 1,44), CARA. Nenhum outro ticker muda.",
  "tickers": {
   "ABCB4": {
    "ancoras": {
@@ -21,7 +21,7 @@
    "ancoras": {
     "DCF (3 cenários)": 11.420243,
     "EPV": 10.498989,
-    "Owner Earnings ÷ (Ke − g)": 9.368994
+    "Owner Earnings ÷ (Ke − g)": 7.966906
    },
    "bogle_nom": 0.16684,
    "central": 10.498989,
@@ -62,7 +62,7 @@
    "dy": 0.069449,
    "fator_defasagem": 0.992674,
    "lote": 1,
-   "nota_geral": 3.610887,
+   "nota_geral": 3.530887,
    "palavra": "CARA",
    "pc": 1.895994,
    "vence_rf": "Sim"
@@ -125,7 +125,7 @@
    "dy": 0.066719,
    "fator_defasagem": 0.992674,
    "lote": 1,
-   "nota_geral": 3.546892,
+   "nota_geral": 3.506892,
    "palavra": "CARA",
    "pc": 2.328351,
    "vence_rf": "Não"
@@ -141,7 +141,7 @@
    "dy": 0.072079,
    "fator_defasagem": 0.889014,
    "lote": 2,
-   "nota_geral": 4.328592,
+   "nota_geral": 4.248592,
    "palavra": "CARA",
    "pc": 1.583302,
    "vence_rf": "Empate"
@@ -262,19 +262,19 @@
   },
   "HYPE3": {
    "ancoras": {
-    "DCF (3 cenários)": 19.598641,
-    "EPV": 21.249241,
-    "Owner Earnings ÷ (Ke − g)": 19.359429
+    "DCF (3 cenários)": 17.512085,
+    "EPV": 19.122647,
+    "Owner Earnings ÷ (Ke − g)": 14.078679
    },
-   "bogle_nom": 0.120174,
-   "central": 19.598641,
+   "bogle_nom": 0.094989,
+   "central": 17.512085,
    "cobertura_juros": 1.8858,
    "dy": 0.036817,
    "fator_defasagem": 0.76744,
    "lote": 4,
-   "nota_geral": 4.212037,
+   "nota_geral": 3.829638,
    "palavra": "CARA",
-   "pc": 1.283762,
+   "pc": 1.436722,
    "vence_rf": "Não"
   },
   "ISAE4": {
@@ -388,26 +388,26 @@
    "dy": 0.111037,
    "fator_defasagem": 0.963904,
    "lote": 5,
-   "nota_geral": 5.113346,
+   "nota_geral": 5.053346,
    "palavra": "JUSTA",
    "pc": 0.988229,
    "vence_rf": "Sim"
   },
   "PRIO3": {
    "ancoras": {
-    "DCF normalizado (3 cenários)": 55.31216,
-    "EPV de meio de ciclo": 56.266374,
+    "DCF normalizado (3 cenários)": 43.40703,
+    "EPV de meio de ciclo": 44.223027,
     "Valor de reprodução": 34.835542
    },
    "bogle_nom": 0.075474,
-   "central": 55.31216,
+   "central": 43.40703,
    "cobertura_juros": 3.610907,
    "dy": 0.000228,
    "fator_defasagem": 0.992674,
    "lote": 5,
-   "nota_geral": 4.130293,
+   "nota_geral": 3.301867,
    "palavra": "CARA",
-   "pc": 1.145318,
+   "pc": 1.459441,
    "vence_rf": "Não"
   },
   "PSSA3": {
@@ -487,7 +487,7 @@
    "dy": 0.037674,
    "fator_defasagem": 0.869619,
    "lote": 2,
-   "nota_geral": 3.974562,
+   "nota_geral": 3.874562,
    "palavra": "CARA",
    "pc": 1.923642,
    "vence_rf": "Não"
@@ -577,19 +577,19 @@
   },
   "TIMS3": {
    "ancoras": {
-    "DCF (3 cenários)": 10.674482,
-    "EPV": 10.525363,
-    "Owner Earnings ÷ (Ke − g)": 10.059211
+    "DCF (3 cenários)": 8.082656,
+    "EPV": 7.958178,
+    "Owner Earnings ÷ (Ke − g)": 7.273453
    },
-   "bogle_nom": 0.128377,
-   "central": 10.525363,
+   "bogle_nom": 0.092296,
+   "central": 7.958178,
    "cobertura_juros": 3.50333,
-   "dy": 0.051958,
+   "dy": 0.040889,
    "fator_defasagem": 0.942875,
    "lote": 4,
-   "nota_geral": 4.019859,
+   "nota_geral": 3.424582,
    "palavra": "CARA",
-   "pc": 1.76241,
+   "pc": 2.330935,
    "vence_rf": "Não"
   },
   "UGPA3": {

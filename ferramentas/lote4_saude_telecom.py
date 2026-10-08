@@ -13,9 +13,10 @@ Premissas declaradas ANTES do veredito:
     (ver arrendamento_pago_proxy). FLRY3: a linha 'Pagamento de Arrendamento Mercantil' pode incluir juros (inferência do adversário) —
     mantida inteira (conservador); afeta só o OE e a cobertura do provento.
   · FLRY3: Pardini incorporado em ago/2023 (troca de ações). Receita de base = média de 2024, 2025 e 12m (perímetro atual); 2023 tem 5 meses.
-  · Alíquota (doutrina §2: mediana de 5 anos entre 15% e 34%): ABEV3 usa a média de 2024–25 (21%) — a Lei 14.789/2023 passou a tributar a
-    subvenção de ICMS a partir de 2024, e 2021–23 (1–5%) não representam mais o normal. HYPE3: a mediana de 5 anos é negativa (créditos, JCP,
-    subvenção) → piso da doutrina, 15%; sensibilidade a 34% no texto.
+  · Alíquota (doutrina §2, v2.3: mediana de 5 anos sem piso; crédito com prazo = fase): ABEV3 usa a média de 2024–25 (21%) — a Lei
+    14.789/2023 passou a tributar a subvenção de ICMS a partir de 2024, e 2021–23 (1–5%) não representam mais o normal; o OE é refeito a
+    21% nos anos antigos. HYPE3: crédito com prazo (ágio até 2030, `fiscal.py`) → efetiva até 2030 e 34% depois (até a v2.2: piso de 15%).
+    TIMS3: mediana 5,4% ("benefício regional + JCP", texto deste lote, sem fonte nem prazo conferidos) → 34% até o dossiê.
   · WEGE3 (compounder, ROIC > WACC): DCF em 2 estágios — g real dos 10 primeiros anos = g sustentável (ROE mediano de 5 anos × retenção
     recorrente, deflacionado pela inflação implícita), depois g real 2% (PIB real de longo prazo, teto da doutrina). DCF reverso devolve o g dos
     10 anos que o preço embute. EPV e Owner Earnings seguem sem crescimento de 1º estágio (é o que eles medem).
@@ -39,6 +40,7 @@ import zipfile
 
 import pandas as pd
 
+from fiscal import ALIQUOTA_FASE
 from lote1_bancos import EMPRESAS as LOTE1
 from lote1_bancos import MK
 from lote2_energia import pl_hist
@@ -128,11 +130,6 @@ def arrendamento_pago_proxy():
 arrendamento_pago_proxy()
 
 
-def aliquota_doutrina(tk, anos):
-    """Mediana de −IR ÷ LAIR (inclusive anos negativos), presa entre 15% e 34% (doutrina §2)."""
-    a = CVM[tk]["anual"]
-    return min(max(st.median(-a[y]["ir"] / a[y]["lair"] for y in anos if a[y].get("lair")), 0.15), 0.34)
-
 
 def receita_media(tk, anos, ltm=True):
     a, l = CVM[tk]["anual"], CVM[tk]["ltm_2T26"]
@@ -176,7 +173,7 @@ EMPRESAS = [
                desconto_controlador=ZERO("controle compartilhado (médicos fundadores + Bradesco Seguros), sem interferência consumada"),
                qualitativo=QUAL(3, 3, 4, 4, 3)),
     Industrial("HYPE3", "Hypera Pharma", "servicos", preco=PRECO["HYPE3"], n_acoes=N["HYPE3"], outras_liquidas=True, spread_kd=0.015, g_real=0.01,
-               aliquota=aliquota_doutrina("HYPE3", [str(a) for a in range(2021, 2026)]), jcp_share=jcp("HYPE3"), pl_hist=pl_hist("HYPE3"),
+               aliquota_fase=ALIQUOTA_FASE["HYPE3"], jcp_share=jcp("HYPE3"), pl_hist=pl_hist("HYPE3"),   # v2.3: crédito com prazo
                defasagem_meses=18, defasagem_fonte="JCP de 2026 pago até 31/12/2027 (calendário declarado, PDF rev. 03/10)",
                desconto_controlador=ZERO("controlador privado (J. A. de Queiroz Filho + Maiorem, 39,3% pelo FRE 2026), sem extração consumada registrada; "
                                          "a defasagem de 15–21 meses do JCP já está no valor presente do provento"),

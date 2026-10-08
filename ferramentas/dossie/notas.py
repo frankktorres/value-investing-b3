@@ -8,6 +8,8 @@ import math
 import statistics
 from dataclasses import dataclass, field
 
+from motor_financeiras import media_qualitativa
+
 _EPS = 9  # casas decimais para comparar fronteiras sem ruído de ponto flutuante
 
 
@@ -209,16 +211,12 @@ def final(nota, ajuste=0, fonte="", nota_fonte=""):
 
 
 def media(moat, gestao, controlador, ciclo, fisher, discricionario):
-    """Média da doutrina §10: (moat + gestão + c x controlador + ciclo + fisher) / (4 + c); c = 2 se discricionário."""
-    c = 2 if discricionario else 1
-    return (moat + gestao + c * controlador + ciclo + fisher) / (4 + c)
+    """Média da doutrina §10: (moat + gestão + c x controlador + ciclo + fisher) / (4 + c); c = 2 se discricionário.
+    Conta única no motor (`motor_financeiras.media_qualitativa`, v2.3) — aqui só se repassa."""
+    return media_qualitativa(para_qual(moat, gestao, controlador, ciclo, fisher), discricionario)
 
 
 def para_qual(moat, gestao, controlador, ciclo, fisher):
-    """Notas finais no formato do `QUAL` dos lotes (chaves moat, gestao, controlador, ciclo, fisher).
-
-    ATENÇÃO, divergência declarada: `media()` é a conta da doutrina §10 (peso dobrado do controlador nos
-    discricionários), mas o motor ainda faz média SIMPLES das cinco chaves. Este dict não aplica peso
-    nenhum. Decisão pendente do Frank: manter a média simples ou levar o peso ao motor.
-    """
+    """Notas finais no formato do `QUAL` dos lotes (chaves moat, gestao, controlador, ciclo, fisher). O peso do controlador
+    não vai no dict: o motor o aplica pela flag `controlador_discricionario` (v2.3; até a v2.2 a média era simples)."""
     return {"moat": moat, "gestao": gestao, "controlador": controlador, "ciclo": ciclo, "fisher": fisher}

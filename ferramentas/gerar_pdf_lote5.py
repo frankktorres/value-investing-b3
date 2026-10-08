@@ -82,6 +82,7 @@ def extras(emp, r):
         x["imp_rec"] = r["op"]["impairment_recorrente"]
         e4 = copy.deepcopy(emp)
         e4.outros_passivos = PETR_ATUARIAL
+        e4.outros_passivos_fonte = "déficit atuarial (sensibilidade; o custo atuarial já está no EBIT)"
         x["com_atuarial"] = central_rapido(e4)
     if tk == "PRIO3":
         R = r["op"]["receita_meio"]

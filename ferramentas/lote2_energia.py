@@ -88,7 +88,11 @@ def F(tk, nome, preco, payout, roe_inicio=None, desconto=None, qual=None, roe=No
                       roe_inicio=roe_inicio if roe_inicio is not None else ind(tk, "roe") / 100,
                       payout=payout, dpa_medio_5a=dpa5(tk), jcp_share=jcp(tk), pl_hist=pl_hist(tk),
                       desconto_controlador=desconto or {"tipo": "zero", "razao": ""}, solidez_manual=solidez(tk),
-                      anos_pagos_10=anos_pagos(tk), qualitativo=qual or {})
+                      anos_pagos_10=anos_pagos(tk), qualitativo=qual or {},
+                      # v2.3: peso 2 do controlador onde a interferência consumada está declarada no desconto (provisório, até o dossiê)
+                      controlador_discricionario=desconto is not None,
+                      controlador_discricionario_fonte=("interferência consumada declarada no desconto do lote (critério provisório "
+                                                        "v2.3, até o dossiê): " + desconto["razao"]) if desconto else "")
 
 
 EMPRESAS = [
