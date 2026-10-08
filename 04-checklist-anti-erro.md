@@ -27,7 +27,7 @@
   *Erro cometido: ITUB4 e PSSA3 a "Ke mercado 14%"; BBSE3, CXSE3, PRIO3, RECV3, UGPA3, VBBR3 na coluna real.*
 - [ ] Não financeira: declarei **WACC** (Ke, Kd, pesos) e comparei **ROIC × WACC**? Financeira: **ROE × Ke nominal**? EPV e Owner Earnings em termos **reais** (WACC real, R$ de hoje)?
 - [ ] **Alíquota (doutrina §2, v2.3):** sem piso. Se a mediana de 5 anos ficou abaixo de 15%, declarei a origem com fonte (permanente → mediana; crédito com prazo → efetiva só até o fim e 34% depois, inclusive no WACC)? Sem origem declarada, usei 34%? O Owner Earnings está à mesma alíquota da perpetuidade?
-- [ ] Passivo com juros fora dos empréstimos (passivo de contrato, provento a pagar já ex) está na **dívida líquida** (DL/EBITDA e ROIC), e não só na ponte?
+- [ ] Passivo com juros fora dos empréstimos (passivo de contrato, provento a pagar já ex) está na **dívida líquida** (DL/EBITDA e ROIC), e não só na ponte? Provento **aprovado depois do balanço** e já ex na data do preço também conta (v2.3.1). Receita, OE e DPA de anos passados estão em **R$ de hoje** antes da média?
 - [ ] É concessão ou regulado? Calculei a **TIR real implícita — mesmo que aprove** — e comparei com a rf bruta (piso) e com o Ke real?
   *Este teste reprovou a Taesa (6,5% < 7,35%). Erro cometido: TIR usada só quando reprovava (TAEE11, ISAE4), omitida em SBSP3 e CSMG3.*
 - [ ] Registrei a sensibilidade quando o Ke da régua penaliza um ativo de risco baixo?

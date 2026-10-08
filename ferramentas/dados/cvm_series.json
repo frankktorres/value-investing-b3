@@ -568,7 +568,8 @@
    "arrendamento": 6707418.0,
    "arrendamento_saldo": 6707418.0,
    "biologico": 27631695.0,
-   "acoes": 1235908788.0
+   "acoes": 1235908788.0,
+   "proventos_a_pagar": 7352.0
   },
   "auditoria_linhas_dfc": {
    "2016": {
@@ -1314,7 +1315,8 @@
    "arrendamento": 1840293.0,
    "arrendamento_saldo": 1840293.0,
    "biologico": 12900187.0,
-   "acoes": 6135427665.0
+   "acoes": 6135427665.0,
+   "proventos_a_pagar": 556000.0
   },
   "auditoria_linhas_dfc": {
    "2016": {
@@ -2058,7 +2060,8 @@
    "arrendamento": 59048.0,
    "arrendamento_saldo": 59048.0,
    "biologico": 649068.0,
-   "acoes": 230501.0
+   "acoes": 230501.0,
+   "proventos_a_pagar": 1829.0
   },
   "auditoria_linhas_dfc": {
    "2016": {
@@ -2806,7 +2809,8 @@
    "arrendamento": 0.0,
    "arrendamento_saldo": 0.0,
    "biologico": 0.0,
-   "acoes": 5034561292.0
+   "acoes": 5034561292.0,
+   "proventos_a_pagar": 1582372.0
   },
   "auditoria_linhas_dfc": {
    "2016": {
@@ -3564,7 +3568,8 @@
    "arrendamento_pago_com_juros": 0.0,
    "juros_pagos": 667470.0,
    "acoes": 322773291.0,
-   "nota": "fluxos: exercício abr/2025–mar/2026 (DFP); balanço: ITR de jun/2026"
+   "nota": "fluxos: exercício abr/2025–mar/2026 (DFP); balanço: ITR de jun/2026",
+   "proventos_a_pagar": 69928.0
   },
   "auditoria_linhas_dfc": {
    "2016": {
@@ -4335,7 +4340,8 @@
    "arrendamento": 0.0,
    "arrendamento_saldo": 16436.0,
    "biologico": 0.0,
-   "acoes": 173332.0
+   "acoes": 173332.0,
+   "proventos_a_pagar": 0.0
   },
   "auditoria_linhas_dfc": {
    "2016": {
@@ -5054,7 +5060,8 @@
    "arrendamento": 2869931.0,
    "arrendamento_saldo": 2869931.0,
    "biologico": 3288287.0,
-   "acoes": 496820758.0
+   "acoes": 496820758.0,
+   "proventos_a_pagar": 0.0
   },
   "auditoria_linhas_dfc": {
    "2016": {
@@ -5790,7 +5797,8 @@
    "arrendamento": 0.0,
    "arrendamento_saldo": 524461.0,
    "biologico": 0.0,
-   "acoes": 1511205519.0
+   "acoes": 1511205519.0,
+   "proventos_a_pagar": 1737.0
   },
   "auditoria_linhas_dfc": {
    "2016": {
@@ -6509,7 +6517,8 @@
    "arrendamento": 130071.0,
    "arrendamento_saldo": 130071.0,
    "biologico": 0.0,
-   "acoes": 379181.0
+   "acoes": 379181.0,
+   "proventos_a_pagar": 127232.0
   },
   "auditoria_linhas_dfc": {
    "2016": {
@@ -7242,7 +7251,8 @@
    "arrendamento": 0.0,
    "arrendamento_saldo": 0.0,
    "biologico": 0.0,
-   "acoes": 700219438.0
+   "acoes": 700219438.0,
+   "proventos_a_pagar": 441222.0
   },
   "auditoria_linhas_dfc": {
    "2016": {
@@ -7956,7 +7966,8 @@
    "arrendamento": 0.0,
    "arrendamento_saldo": 795.0,
    "biologico": 0.0,
-   "acoes": 1033497.0
+   "acoes": 1033497.0,
+   "proventos_a_pagar": 161112.0
   },
   "auditoria_linhas_dfc": {
    "2016": {
@@ -8693,7 +8704,8 @@
    "arrendamento": 0.0,
    "arrendamento_saldo": 47865.0,
    "biologico": 0.0,
-   "acoes": 658883304.0
+   "acoes": 658883304.0,
+   "proventos_a_pagar": 12484.0
   },
   "auditoria_linhas_dfc": {
    "2016": {
@@ -9425,7 +9437,8 @@
    "arrendamento": 397236.0,
    "arrendamento_saldo": 397236.0,
    "biologico": 0.0,
-   "acoes": 2860682.0
+   "acoes": 2860682.0,
+   "proventos_a_pagar": 2668464.0
   },
   "auditoria_linhas_dfc": {
    "2016": {
@@ -10142,7 +10155,8 @@
    "arrendamento": 0.0,
    "arrendamento_saldo": 0.0,
    "biologico": 0.0,
-   "acoes": 1152254440.0
+   "acoes": 1152254440.0,
+   "proventos_a_pagar": 3054692.0
   },
   "auditoria_linhas_dfc": {
    "2016": {
@@ -10857,7 +10871,8 @@
    "arrendamento": 284970.0,
    "arrendamento_saldo": 284970.0,
    "biologico": 0.0,
-   "acoes": 2970070325.0
+   "acoes": 2970070325.0,
+   "proventos_a_pagar": 631686.0
   },
   "auditoria_linhas_dfc": {
    "2016": {
@@ -11603,7 +11618,8 @@
    "arrendamento": 0.0,
    "arrendamento_saldo": 232799000.0,
    "biologico": 0.0,
-   "acoes": 12888732761.0
+   "acoes": 12888732761.0,
+   "proventos_a_pagar": 8192000.0
   },
   "auditoria_linhas_dfc": {
    "2016": {
@@ -12322,7 +12338,8 @@
    "arrendamento": 0.0,
    "arrendamento_saldo": 629847.0,
    "biologico": 0.0,
-   "acoes": 809922731.0
+   "acoes": 809922731.0,
+   "proventos_a_pagar": 0.0
   },
   "auditoria_linhas_dfc": {
    "2016": {
@@ -13035,7 +13052,8 @@
    "arrendamento": 39070.0,
    "arrendamento_saldo": 39070.0,
    "biologico": 0.0,
-   "acoes": 292977928.0
+   "acoes": 292977928.0,
+   "proventos_a_pagar": 300000.0
   },
   "auditoria_linhas_dfc": {
    "2016": {},
@@ -13714,7 +13732,8 @@
    "arrendamento": 0.0,
    "arrendamento_saldo": 1700362.0,
    "biologico": 0.0,
-   "acoes": 1087307868.0
+   "acoes": 1087307868.0,
+   "proventos_a_pagar": 36876.0
   },
   "auditoria_linhas_dfc": {
    "2016": {
@@ -14468,7 +14487,8 @@
    "arrendamento": 0.0,
    "arrendamento_saldo": 959000.0,
    "biologico": 0.0,
-   "acoes": 1191974.0
+   "acoes": 1191974.0,
+   "proventos_a_pagar": 789000.0
   },
   "auditoria_linhas_dfc": {
    "2016": {
@@ -15194,7 +15214,8 @@
    "arrendamento": 0.0,
    "arrendamento_saldo": 42208.0,
    "biologico": 0.0,
-   "acoes": 135539000.0
+   "acoes": 135539000.0,
+   "proventos_a_pagar": 1748.0
   },
   "auditoria_linhas_dfc": {
    "2016": {
@@ -15923,7 +15944,8 @@
    "arrendamento": 0.0,
    "arrendamento_saldo": 0.0,
    "biologico": 0.0,
-   "acoes": 1142298836.0
+   "acoes": 1142298836.0,
+   "proventos_a_pagar": 8474.0
   },
   "auditoria_linhas_dfc": {
    "2016": {
@@ -16636,7 +16658,8 @@
    "arrendamento": 0.0,
    "arrendamento_saldo": 11589.0,
    "biologico": 0.0,
-   "acoes": 111622153.0
+   "acoes": 111622153.0,
+   "proventos_a_pagar": 44323.0
   },
   "auditoria_linhas_dfc": {
    "2016": {
@@ -17360,7 +17383,8 @@
    "arrendamento": 1612345.0,
    "arrendamento_saldo": 1612345.0,
    "biologico": 0.0,
-   "acoes": 1975143891.0
+   "acoes": 1975143891.0,
+   "proventos_a_pagar": 0.0
   },
   "auditoria_linhas_dfc": {
    "2016": {
@@ -18094,7 +18118,8 @@
    "arrendamento": 13848324.0,
    "arrendamento_saldo": 13848324.0,
    "biologico": 0.0,
-   "acoes": 2388668322.0
+   "acoes": 2388668322.0,
+   "proventos_a_pagar": 364623.0
   },
   "auditoria_linhas_dfc": {
    "2016": {
@@ -18812,7 +18837,8 @@
    "arrendamento": 29151.0,
    "arrendamento_saldo": 14813864.0,
    "biologico": 0.0,
-   "acoes": 3195606352.0
+   "acoes": 3195606352.0,
+   "proventos_a_pagar": 1682523.0
   },
   "auditoria_linhas_dfc": {
    "2016": {
@@ -19517,7 +19543,8 @@
    "arrendamento": 0.0,
    "arrendamento_saldo": 1361105.0,
    "biologico": 0.0,
-   "acoes": 545015471.0
+   "acoes": 545015471.0,
+   "proventos_a_pagar": 142216.0
   },
   "auditoria_linhas_dfc": {
    "2016": {
@@ -20236,7 +20263,8 @@
    "arrendamento": 0.0,
    "arrendamento_saldo": 0.0,
    "biologico": 2994.0,
-   "acoes": 632953512.0
+   "acoes": 632953512.0,
+   "proventos_a_pagar": 983890.0
   },
   "auditoria_linhas_dfc": {
    "2016": {
@@ -20951,7 +20979,8 @@
    "arrendamento": 0.0,
    "arrendamento_saldo": 0.0,
    "biologico": 0.0,
-   "acoes": 15616526.0
+   "acoes": 15616526.0,
+   "proventos_a_pagar": 4194413.0
   },
   "auditoria_linhas_dfc": {
    "2016": {
@@ -21676,7 +21705,8 @@
    "arrendamento": 768389.0,
    "arrendamento_saldo": 768389.0,
    "biologico": 0.0,
-   "acoes": 4195695973.0
+   "acoes": 4195695973.0,
+   "proventos_a_pagar": 5933092.0
   },
   "auditoria_linhas_dfc": {
    "2016": {
@@ -22391,7 +22421,8 @@
    "arrendamento": 959000.0,
    "arrendamento_saldo": 959000.0,
    "biologico": 3044000.0,
-   "acoes": 11211347.0
+   "acoes": 11211347.0,
+   "proventos_a_pagar": 2723000.0
   },
   "auditoria_linhas_dfc": {
    "2016": {

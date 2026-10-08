@@ -239,3 +239,53 @@ unidade, número vetado, teste contra documento real).
 agora a régua fica parada até a temporada do 3T26 (Etapa 7); dossiê novo só quando uma ação chegar perto do preço de compra.
 **O que me provaria errado:** se em 3 meses a doutrina tiver crescido mais que o número de decisões de compra/venda registradas
 aqui, este projeto está repetindo o analisador.
+
+### 08/10/2026 — CORREÇÃO DE INSUMOS: Onda 1.1 da auditoria (AUD-01, 16, 02, 04, 03) · doutrina v2.3.1
+
+**O que foi feito.** A auditoria de 08/10 (`docs/auditoria/AUDITORIA_2026-10-08.md`) teve verificação branda; cada achado foi
+**reproduzido com script antes** de mexer, e cada correção tem teste que falhou no código antigo (`ferramentas/tests/test_onda1_insumos.py`,
+14 vermelhos → verdes). Nenhuma regra nova: a doutrina já mandava tudo isso; o código não fazia. Golden regravado por achado
+(4 entradas em `tests/golden_log.md`).
+1. **AUD-01 + AUD-16 — unidades.** Receita de meio padrão (3 exercícios + 12 meses), Owner Earnings de cada ano e DPA médio iam
+   **nominais** para uma taxa **real**: o NOPAT saía ~7,5% baixo. Agora vão a R$ de hoje pelo IPCA antes da média/mediana. Achado novo na
+   reprodução: a `receita_media` do FLRY3 tinha o mesmo defeito. 19 tickers; **SUZB3 CARA → JUSTA** (37,12 → 43,59, P/C 1,02) e
+   **LEVE3 JUSTA → RADAR** (33,99 → 40,27, P/C 0,86) — a auditoria mediu cada efeito isolado (LEVE3 ficava JUSTA); somados, o DCF passa a
+   ser a mediana. KLBN11 +39%, SLCE3 +23%, RANI3 +15%: centrais pequenos com alavancagem.
+2. **AUD-02 — provento já ex na dívida.** Só a CMIN3 aplicava, à mão. Agora o motor mede em toda não financeira: passivo de proventos
+   do ITR (novo campo do coletor, sem o mínimo obrigatório, a custódia da B3 e provisões) + proventos **aprovados depois de 30/06 e ex até
+   02/10** (API da B3, `proventos_ex.py`; a casa já fazia isso à mão no EGIE3). WEGE3 13,98 → 10,91 (−22%, R$ 5,9 bi a pagar), PETR4 −3,5%
+   (R$ 25,6 bi), UGPA3 −5%, VBBR3 −7%; nenhuma troca de palavra. LTM de 4º trimestre com passivo de proventos **falha alto** (o DFP pode
+   trazer o mínimo obrigatório ainda não aprovado na linha genérica) — decidir na temporada do 4T26.
+3. **AUD-04 — ISAE4 pela regra de follow-on (§11.2), igual ao EGIE3.** VPA = (PL de 30/06 + R$ 1,2 bi) ÷ (659 mi + 44 mi ações novas)
+   = 33,21; ROE ponderado com o dinheiro novo ao Ke. **CARA 1,17 → JUSTA 1,09** (central 24,10 → 25,78). O texto do lote, que mandava usar
+   659 mi, também errava e foi corrigido. Encerra a pendência "conferir no RI" de 05/10, menos o custo da oferta (usado o valor bruto).
+4. **AUD-03 — PETR4 com a margem só de 2019–25 (IFRS 16).** A margem de E&P é EBITDA − D&A atual, e a D&A atual tem o direito de uso:
+   o EBITDA de 2016–18 contava o aluguel duas vezes (eram as 3 menores margens). Base: §11.1 (DCF) e §11.4.2; a tensão com o §11.4.4
+   (cíclica = 10 anos) foi resolvida por escrito: o item 4 proíbe encurtar pelo teste, não por quebra declarada; 7 anos cobrem o vale de
+   2020 e o pico de 2022. O motor agora recusa E&P com ano anterior a 2019. Central 49,95 → 62,31, P/C 0,82 — **segue JUSTA** porque a
+   dispersão (> 1,8) rebaixa RADAR.
+
+**Dossiês.** Os vereditos salvos de BLAU3 (02/10), HYPE3 e LEVE3 (06/10) não se reproduzem mais pelo método novo; ficam no disco
+(registro append-only) e o recálculo na mesma data está fixado em `test_dossie_fichas.py`: LEVE3 35,75 JUSTA → 42,57 **RADAR**
+(P/C 0,86), HYPE3 18,12 → 18,35 CARA, BLAU3 8,27 → 8,80 (segue não conclusivo). Veredito novo só com data nova.
+
+**Achados novos (fora do roteiro, registrados para as próximas ondas).**
+- A API da B3 devolve vazio para nome de pregão com "/" ("AMBEV S/A", "KLABIN S/A"; só respondem "… SA"): o cache de proventos do
+  **backtest** não tem AMBEV nem KLABIN. Backtest parado; corrigir antes de religá-lo.
+- O provento aprovado depois do balanço também existe nas **financeiras/utilities** (P/VP sobre o PL de 30/06); só o EGIE3 o desconta.
+- O DPA digitado do motor financeiro (`dpa_medio_5a`) segue nominal; move só a renda, não o central.
+- O passivo de proventos entra no capital de giro (`pc`); a variação dele mexe no OE do ano — conferir na Onda 1.3.
+
+**O que me provaria errado.** Se o ITR do 3T26 mostrar que os proventos aprovados depois de 30/06 já estavam no passivo de 30/06
+(contagem dupla da parte B3), ou se a receita de meio em R$ de hoje fizer o central de cíclicas oscilar com o IPCA mais do que com o
+negócio. **Revisão:** temporada do 3T26 (Etapa 7) — rodar `python proventos_ex.py` depois da data do preço de cada rodada.
+
+**Adversário (mesmo dia), 5 defeitos reproduzidos e corrigidos, sem troca de palavra.** (1) SMTO3 contava duas vezes o mínimo
+provisionado em 31/03 (rótulo genérico, R$ 69,9 mi) e aprovado na AGO de 03/07: entre o fim do exercício e a AGO o passivo e a B3 trazem o
+mesmo dinheiro — no 1º trimestre depois do exercício conta o maior dos dois; no próprio fim do exercício o motor falha alto. (2) O
+provento aprovado depois do balanço ainda está no PL de 30/06: ao entrar na DL, sai do PL no capital do ROIC e no valor de reprodução
+(como no EGIE3). (3) Data-com no dia do preço ainda não é ex (o fechamento dela carrega o provento). (4) Dossiê usa a data do próprio
+preço, não a do hall. (5) O PDF do LEVE3 misturava OE em R$ de hoje com lucro nominal. Junto: o exercício abr–mar da SMTO3 passou a
+ser deflacionado pelos próprios 12 meses (o ano-calendário ficava ~3% baixo). **Números finais:** SMTO3 23,07 → 26,58 (RADAR,
+**P/C 0,73 — a 0,03 do preço de compra**, R$ 18,61), B3SA3 8,98, WEGE3 10,94; valor de reprodução de PETR4 34,33 → 33,09.
+Notas não corrigidas (ver adversário): Kd cobrado sobre provento a pagar na base do benefício fiscal (conservador, pequeno).

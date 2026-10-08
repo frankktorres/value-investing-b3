@@ -11,6 +11,7 @@ import pytest
 
 import motor_financeiras as F
 import motor_nao_financeiras as M
+from inflacao import DEFLATOR
 from lote1_bancos import MK
 
 
@@ -210,7 +211,8 @@ def test_6_menos_de_3_anos_validos_e_sem_dado_com_oe_refeito():
     assert M.aliquota_regra(emp) == (M.ALIQUOTA_MARGINAL, "sem_dado")
     r = M.valores(emp, MK)
     kd_real = (1 + r["kd"]) / (1 + MK.pi) - 1
-    assert all(x == pytest.approx(M.owner_earnings_ano(emp, a, str(int(a) - 1), kd_real, False, 0.34)) for a, x in r["oe"])
+    # AUD-16 (08/10): o OE de cada ano entra em R$ de hoje
+    assert all(x == pytest.approx(M.owner_earnings_ano(emp, a, str(int(a) - 1), kd_real, False, 0.34) * DEFLATOR[a]) for a, x in r["oe"])
 
 
 def test_6_oe_retributado_a_aliquota_perpetua():
@@ -222,8 +224,8 @@ def test_6_oe_retributado_a_aliquota_perpetua():
     assert refeito == pytest.approx(puro - (d["ir"] + 0.34 * d["lair"]))      # lucro 1000 → LAIR × 0,66 = 990
     r = M.valores(emp, MK)
     assert r["aliquota_regra"] == "sem_origem"
-    assert all(x == pytest.approx(M.owner_earnings_ano(emp, a, str(int(a) - 1), (1 + r["kd"]) / (1 + MK.pi) - 1, False, 0.34))
-               for a, x in r["oe"])
+    assert all(x == pytest.approx(M.owner_earnings_ano(emp, a, str(int(a) - 1), (1 + r["kd"]) / (1 + MK.pi) - 1, False, 0.34)
+                                  * DEFLATOR[a]) for a, x in r["oe"])     # AUD-16: em R$ de hoje
     del M.CVM["TESTEV23T5"]["anual"]["2025"]["ir"]
     assert M.owner_earnings_ano(emp, "2025", "2024", 0.05, t_retributar=0.34) is None   # sem a linha do IR o ano sai
 
@@ -277,7 +279,8 @@ def test_1_expansao_sobe_o_oe_e_o_ajuste_de_manutencao_padrao_vazio_nao_muda_nad
     sem = M.valores(_emp("TESTEV23E2"), MK)
     com = M.valores(_emp("TESTEV23E2", capex_expansao=dict(EXP, anos={str(a): 300.0 for a in range(2016, 2026)})), MK)
     assert com["op"]["ajuste_manut"] > sem["op"]["ajuste_manut"]
-    assert com["oe_norm"] == pytest.approx(sem["oe_norm"] + 300.0)
+    # AUD-16: OE em R$ de hoje; com o OE nominal constante, a mediana de 2021–25 é o ano do meio (2023)
+    assert com["oe_norm"] == pytest.approx(sem["oe_norm"] + 300.0 * DEFLATOR["2023"])
     cic = dict(perfil="ciclica")
     s, c = (M.valores(_emp("TESTEV23E2", **cic, **kw), MK)["op"]["ajuste_manut"] for kw in
             ({}, {"capex_expansao": dict(EXP, anos={str(a): 300.0 for a in range(2016, 2026)})}))

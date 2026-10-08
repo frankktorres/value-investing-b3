@@ -7,6 +7,7 @@ MÉDIA dos índices mensais do ano, porque receita e capex se acumulam ao longo 
 Usos (doutrina §11.1):
   · DEFLATOR[ano] → fator que leva R$ daquele exercício a R$ da data-base (último mês da série).
   · fator_entre(de, para) → leva R$ do exercício `de` a R$ do exercício `para` (usado no Δreceita real).
+  · deflator_ltm(ref) → leva os 12 meses do LTM ("2T26") a R$ da data-base (receita de meio de ciclo, AUD-01).
   · reposicao(imobilizado, da) → (idade média, fator) para o imobilizado a custo de reposição aproximado.
 """
 from __future__ import annotations
@@ -54,6 +55,25 @@ def _indice_ano(ano: str | int) -> float:
 def fator_entre(de: str | int, para: str | int) -> float:
     """Fator que expressa R$ do exercício `de` em R$ do exercício `para` (> 1 quando `para` é posterior)."""
     return _indice_ano(para) / _indice_ano(de)
+
+
+def deflator_ltm(ref: str) -> float:
+    """Fator que leva a receita dos 12 meses do LTM `ref` ("2T26" = jul/2025–jun/2026) a R$ da data-base (AUD-01, 08/10/2026).
+
+    Mesma convenção do DEFLATOR anual: índice MÉDIO dos meses do período, porque o fluxo se acumula ao longo dele. Meses
+    depois do último da série ficam de fora (o LTM de um trimestre ainda sem IPCA publicado usa os meses que existem);
+    sem nenhum mês, 1,0 — o LTM já está em R$ de hoje.
+    """
+    return deflator_periodo(2000 + int(ref[2:]), 3 * int(ref[0]))
+
+
+def deflator_periodo(ano_fim: int, mes_fim: int) -> float:
+    """Fator dos 12 meses que terminam em `mes_fim`/`ano_fim` até R$ da data-base — o LTM e o exercício fora do ano-calendário
+    (SMTO3, abr–mar: `deflator_periodo(2026, 3)` = abr/2025–mar/2026; adversário de 08/10/2026: o DEFLATOR do ano de fechamento
+    ficava ~3% abaixo)."""
+    fim = ano_fim * 12 + mes_fim - 1
+    meses = [m for m in range(fim - 11, fim + 1) if m in _INDICE]
+    return BASE / (sum(_INDICE[m] for m in meses) / len(meses)) if meses else 1.0
 
 
 def inflacao_do_ano(ano: str | int) -> float:

@@ -47,7 +47,7 @@ T = {
                  "Crescimento implícito: ROE perpétuo de {roe_impl}.",
                  "Investimento pesado no FCO: lucro contábil e caixa divergem até os greenfields entrarem em operação.",
                  "Na rev. 03/10: 'DDM 3 cenários' sem números; aqui as duas âncoras estão na tabela."],
-    nao_encontrado="Dívida líquida oficial; custo da dívida; WACC regulatório. Contagem de ações pós-follow-on: 703 mi (StatusInvest/PDF 03/10) contra 659 mi na DFP 2025 — com 659 mi o VPA vai a R$ 33,63 e o central a ~R$ 25,73 (JUSTA, 1,10×). Conferir no RI."),
+    nao_encontrado="Dívida líquida oficial; custo da dívida; WACC regulatório. Custo da oferta do follow-on de jul/2026 (o valor usado é o bruto, R$ 1,2 bi). Corrigido em 08/10 (AUD-04): o VPA de R$ 31,51 dividia o PL de 30/06, SEM o dinheiro da oferta, pelas 703 mi ações de DEPOIS dela; pela regra do §11.2 (a mesma do EGIE3) é (PL + R$ 1,2 bi) ÷ (659 mi + 44 mi novas) = R$ 33,21 — usar só 659 mi, como dizia este texto, também errava."),
 "CPFE3": dict(
     circulo="Distribuição (Paulista, Piratininga, RGE, Santa Cruz), geração e transmissão. Ganha com a base regulatória (RAB) remunerada "
             "e eficiência acima do regulador; pararia com regras de renovação ou Fator X que cortem o retorno.",

@@ -115,6 +115,11 @@ PETR_CENARIOS = [
 
 EMPRESAS = [
     Industrial("PETR4", "Petrobras (PN)", "ciclica", preco=51.17, n_acoes=acoes("PETR4"), spread_kd=0.015, g_real=0.01, jcp_share=jcp("PETR4"),
+               # AUD-03 (08/10/2026): a margem de E&P é EBITDA − D&A ATUAL, e a D&A atual já tem a depreciação do direito de uso;
+               # o EBITDA de 2016–18 é pré-IFRS 16 e carrega o aluguel como custo → aluguel descontado duas vezes (as 3 menores margens)
+               anos_ciclo=[str(a) for a in range(2019, 2026)], anos_outras=[str(a) for a in range(2016, 2026)],
+               janela_razao="IFRS 16 adotado em 2019: o EBITDA de 2016–18 traz o aluguel como custo e a D&A atual já traz a depreciação "
+                            "do direito de uso (doutrina §11.1 DCF e §11.4.2); 2019–25 cobre vale (2020) e pico (2022) do Brent",
                receita_meio=receita_ep("PETR4"), da_receita=da_ep("PETR4"), outras_liquidas=True,
                desconto_controlador={"tipo": "cenarios", "cenarios": PETR_CENARIOS,
                                      "razao": "V1 (preços 2011–14; diesel abaixo da paridade desde mar/26), V3 (refino, fertilizantes), V5 (extraordinários)"},

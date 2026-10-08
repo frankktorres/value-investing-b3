@@ -83,10 +83,32 @@ def ind(tk, k):
     return SI[tk]["indicadores"][k]["atual"]
 
 
+# Doutrina §11.2 — emissão de ações depois do balanço: patrimônio + caixa captado, o dinheiro novo rendendo o Ke (VPL zero), igual
+# ao EGIE3 (lote6.egie). AUD-04 (08/10/2026): o VPA da StatusInvest dividia o PL de 30/06 (sem o dinheiro) pelas ações de depois
+# da oferta. Ações novas = valor ÷ preço da oferta; somadas às da CVM dão as 703,3 mi que a StatusInvest já usava.
+FOLLOW_ON = {"ISAE4": dict(valor=1_200_000, preco=27.0, data="jul/2026",       # R$ mil; R$ 1,2 bi a R$ 27 [fatos_lote2; PDF 03/10]
+                           fonte="follow-on de jul/2026 (fatos_lote2.json, PDF rev. 03/10); valor bruto — custo da oferta a conferir no RI")}
+
+
+def follow_on(tk, roe_antigo_lp, roe_antigo_ini):
+    """(VPA, ROE de longo prazo, ROE de partida) com o follow-on: o P/VP justificado é linear no ROE, então o ROE ponderado
+    (antigo no PL antigo, Ke no dinheiro novo) equivale a valor antigo + caixa captado."""
+    f, l = FOLLOW_ON[tk], ltm_de(CVM[tk])
+    pl_old = l["pl"] - l["nao_controladores"]
+    pl_new = pl_old + f["valor"]
+    w = f["valor"] / pl_new
+    acoes = l["acoes"] + f["valor"] * 1000 / f["preco"]
+    return pl_new * 1000 / acoes, (1 - w) * roe_antigo_lp + w * MK.ke_nom, (1 - w) * roe_antigo_ini + w * MK.ke_nom
+
+
 def F(tk, nome, preco, payout, roe_inicio=None, desconto=None, qual=None, roe=None):
-    return Financeira(tk, nome, "utility", preco=preco, vpa=ind(tk, "vpa"), lpa_12m=ind(tk, "lpa"),
-                      roe_lp=roe if roe is not None else roe_lp(tk),
-                      roe_inicio=roe_inicio if roe_inicio is not None else ind(tk, "roe") / 100,
+    vpa = ind(tk, "vpa")
+    r_lp = roe if roe is not None else roe_lp(tk)
+    r_ini = roe_inicio if roe_inicio is not None else ind(tk, "roe") / 100
+    if tk in FOLLOW_ON:
+        vpa, r_lp, r_ini = follow_on(tk, r_lp, r_ini)
+    return Financeira(tk, nome, "utility", preco=preco, vpa=vpa, lpa_12m=ind(tk, "lpa"),
+                      roe_lp=r_lp, roe_inicio=r_ini,
                       payout=payout, dpa_medio_5a=dpa5(tk), jcp_share=jcp(tk), pl_hist=pl_hist(tk),
                       desconto_controlador=desconto or {"tipo": "zero", "razao": ""}, solidez_manual=solidez(tk),
                       anos_pagos_10=anos_pagos(tk), qualitativo=qual or {},

@@ -1,5 +1,5 @@
 {
- "motivo": "Dossie LEVE3 (06/10/2026): notas da regra 11 por evidencia levadas ao hall no lugar das arbitradas - moat 4, gestao 1, controlador 2 (peso 2: controle de 61% da MAHLE), ciclo 3, Fisher 2 (antes 4/3/3/3/3); nota geral 7,02 -> 6,76; qualidade cai abaixo de 8 e a LEVE3 PERDE a excecao de saida a 1,50x (volta a 1,30x). Central e palavra iguais.",
+ "motivo": "Adversario da Onda 1.1 (08/10/2026): SMTO3 contava o minimo provisionado duas vezes (passivo + AGO de 03/07) - no 1o trimestre depois do exercicio conta o maior dos dois - e passa a deflacionar pelo proprio exercicio abr-mar (24,84 -> 26,58, RADAR 0,73); provento aprovado depois do balanco sai do PL ao entrar na DL (capital do ROIC e valor de reproducao: B3SA3, WEGE3, PETR4/GGBR4/RANI3/RECV3 reproducao); data-com no dia do preco ainda nao e ex. Sem troca de palavra",
  "tickers": {
   "ABCB4": {
    "ancoras": {
@@ -19,36 +19,36 @@
   },
   "ABEV3": {
    "ancoras": {
-    "DCF (3 cenários)": 11.420243,
-    "EPV": 10.498989,
-    "Owner Earnings ÷ (Ke − g)": 7.966906
+    "DCF (3 cenários)": 11.89555,
+    "EPV": 10.887106,
+    "Owner Earnings ÷ (Ke − g)": 8.786803
    },
-   "bogle_nom": 0.16684,
-   "central": 10.498989,
+   "bogle_nom": 0.177994,
+   "central": 10.887106,
    "cobertura_juros": 27.944195,
-   "dy": 0.048841,
+   "dy": 0.056064,
    "fator_defasagem": 0.978184,
    "lote": 4,
-   "nota_geral": 5.563352,
+   "nota_geral": 5.793261,
    "palavra": "CARA",
-   "pc": 1.508717,
-   "vence_rf": "Empate"
+   "pc": 1.454932,
+   "vence_rf": "Sim"
   },
   "B3SA3": {
    "ancoras": {
-    "DCF (3 cenários)": 8.898042,
-    "EPV": 8.061907,
-    "Owner Earnings ÷ (Ke − g)": 9.253378
+    "DCF (3 cenários)": 8.975498,
+    "EPV": 8.102529,
+    "Owner Earnings ÷ (Ke − g)": 9.133726
    },
-   "bogle_nom": 0.108398,
-   "central": 8.898042,
+   "bogle_nom": 0.114159,
+   "central": 8.975498,
    "cobertura_juros": 4.29225,
-   "dy": 0.027649,
+   "dy": 0.032947,
    "fator_defasagem": 0.978184,
    "lote": 3,
-   "nota_geral": 5.746689,
+   "nota_geral": 5.697207,
    "palavra": "CARA",
-   "pc": 2.135301,
+   "pc": 2.116874,
    "vence_rf": "Não"
   },
   "BBAS3": {
@@ -228,70 +228,70 @@
   },
   "FLRY3": {
    "ancoras": {
-    "DCF (3 cenários)": 11.829764,
-    "EPV": 11.80408,
-    "Owner Earnings ÷ (Ke − g)": 6.045979
+    "DCF (3 cenários)": 12.163913,
+    "EPV": 12.136843,
+    "Owner Earnings ÷ (Ke − g)": 7.256673
    },
-   "bogle_nom": 0.084259,
-   "central": 11.80408,
+   "bogle_nom": 0.09386,
+   "central": 12.136843,
    "cobertura_juros": 2.166042,
-   "dy": 0.024927,
+   "dy": 0.03265,
    "fator_defasagem": 0.876036,
    "lote": 4,
-   "nota_geral": 3.175981,
+   "nota_geral": 3.161035,
    "palavra": "CARA",
-   "pc": 1.990837,
+   "pc": 1.936253,
    "vence_rf": "Não"
   },
   "GGBR4": {
    "ancoras": {
-    "DCF normalizado (3 cenários)": 19.945937,
-    "EPV de meio de ciclo": 18.296652,
-    "Valor de reprodução": 27.27439
+    "DCF normalizado (3 cenários)": 19.715937,
+    "EPV de meio de ciclo": 18.066652,
+    "Valor de reprodução": 27.04439
    },
-   "bogle_nom": 0.14065,
-   "central": 19.945937,
+   "bogle_nom": 0.153986,
+   "central": 19.715937,
    "cobertura_juros": 3.013061,
-   "dy": 0.065404,
+   "dy": 0.07874,
    "fator_defasagem": 0.992674,
    "lote": 6,
-   "nota_geral": 4.830608,
+   "nota_geral": 4.917672,
    "palavra": "CARA",
-   "pc": 1.308537,
-   "vence_rf": "Não"
+   "pc": 1.323802,
+   "vence_rf": "Empate"
   },
   "HYPE3": {
    "ancoras": {
-    "DCF (3 cenários)": 17.512085,
-    "EPV": 19.122647,
-    "Owner Earnings ÷ (Ke − g)": 14.078679
+    "DCF (3 cenários)": 17.660737,
+    "EPV": 19.394641,
+    "Owner Earnings ÷ (Ke − g)": 12.97016
    },
-   "bogle_nom": 0.094989,
-   "central": 17.512085,
+   "bogle_nom": 0.100229,
+   "central": 17.660737,
    "cobertura_juros": 1.8858,
-   "dy": 0.036817,
+   "dy": 0.041249,
    "fator_defasagem": 0.76744,
    "lote": 4,
-   "nota_geral": 3.829638,
+   "nota_geral": 3.326092,
    "palavra": "CARA",
-   "pc": 1.436722,
+   "pc": 1.424629,
    "vence_rf": "Não"
   },
   "ISAE4": {
    "ancoras": {
-    "DDM 2 estágios": 23.248709,
-    "P/VP justificado": 24.960063
+    "DDM 2 estágios": 24.917906,
+    "P/VP justificado": 26.638206
    },
-   "bogle_nom": 0.163051,
-   "central": 24.104386,
+   "bogle_nom": 0.169767,
+   "central": 25.778056,
    "cobertura_juros": null,
    "dy": 0.08343,
    "fator_defasagem": 0.978184,
    "lote": 2,
-   "nota_geral": 5.309122,
-   "palavra": "CARA",
-   "pc": 1.169497,
-   "vence_rf": "Não"
+   "nota_geral": 5.51243,
+   "palavra": "JUSTA",
+   "pc": 1.093566,
+   "vence_rf": "Empate"
   },
   "ITSA4": {
    "ancoras": {
@@ -327,70 +327,70 @@
   },
   "KEPL3": {
    "ancoras": {
-    "DCF normalizado (3 cenários)": 6.583687,
-    "EPV de meio de ciclo": 6.655131,
+    "DCF normalizado (3 cenários)": 7.117502,
+    "EPV de meio de ciclo": 7.177014,
     "Valor de reprodução": 4.601972
    },
-   "bogle_nom": 0.188849,
-   "central": 6.583687,
+   "bogle_nom": 0.202784,
+   "central": 7.117502,
    "cobertura_juros": 3.495395,
-   "dy": 0.113603,
+   "dy": 0.127538,
    "fator_defasagem": 0.992674,
    "lote": 3,
-   "nota_geral": 5.496895,
+   "nota_geral": 5.928244,
    "palavra": "JUSTA",
-   "pc": 1.029818,
+   "pc": 0.952581,
    "vence_rf": "Sim"
   },
   "KLBN11": {
    "ancoras": {
-    "DCF normalizado (3 cenários)": 4.980827,
-    "EPV de meio de ciclo": 3.789418,
+    "DCF normalizado (3 cenários)": 6.944191,
+    "EPV de meio de ciclo": 5.662638,
     "Valor de reprodução": 7.73118
    },
-   "bogle_nom": 0.140929,
-   "central": 4.980827,
+   "bogle_nom": 0.149505,
+   "central": 6.944191,
    "cobertura_juros": 1.57882,
-   "dy": 0.065683,
+   "dy": 0.074259,
    "fator_defasagem": 0.971018,
    "lote": 3,
-   "nota_geral": 3.480392,
+   "nota_geral": 3.570188,
    "palavra": "CARA",
-   "pc": 3.738335,
+   "pc": 2.681378,
    "vence_rf": "Não"
   },
   "LEVE3": {
    "ancoras": {
-    "DCF (3 cenários)": 36.758281,
-    "EPV": 33.985621,
-    "Owner Earnings ÷ (Ke − g)": 33.98078
+    "DCF (3 cenários)": 40.267852,
+    "EPV": 37.080947,
+    "Owner Earnings ÷ (Ke − g)": 40.71549
    },
-   "bogle_nom": 0.153698,
-   "central": 33.985621,
+   "bogle_nom": 0.183911,
+   "central": 40.267852,
    "cobertura_juros": 11.989037,
-   "dy": 0.107564,
+   "dy": 0.128923,
    "fator_defasagem": 0.985402,
    "lote": 6,
-   "nota_geral": 6.75907,
-   "palavra": "JUSTA",
-   "pc": 1.013075,
-   "vence_rf": "Não"
+   "nota_geral": 7.4226,
+   "palavra": "RADAR",
+   "pc": 0.855024,
+   "vence_rf": "Sim"
   },
   "PETR4": {
    "ancoras": {
-    "DCF normalizado (3 cenários)": 51.779491,
-    "EPV de meio de ciclo": 57.279987,
-    "Valor de reprodução": 34.330295
+    "DCF normalizado (3 cenários)": 63.890229,
+    "EPV de meio de ciclo": 62.312061,
+    "Valor de reprodução": 33.090004
    },
-   "bogle_nom": 0.186283,
-   "central": 51.779491,
+   "bogle_nom": 0.220682,
+   "central": 62.312061,
    "cobertura_juros": 17.019058,
-   "dy": 0.111037,
+   "dy": 0.145436,
    "fator_defasagem": 0.963904,
    "lote": 5,
-   "nota_geral": 5.053346,
+   "nota_geral": 5.784449,
    "palavra": "JUSTA",
-   "pc": 0.988229,
+   "pc": 0.821189,
    "vence_rf": "Sim"
   },
   "PRIO3": {
@@ -399,10 +399,10 @@
     "EPV de meio de ciclo": 50.540606,
     "Valor de reprodução": 34.835542
    },
-   "bogle_nom": 0.075474,
+   "bogle_nom": 0.075507,
    "central": 49.366079,
    "cobertura_juros": 3.610907,
-   "dy": 0.000228,
+   "dy": 0.000261,
    "fator_defasagem": 0.992674,
    "lote": 5,
    "nota_geral": 3.742295,
@@ -428,34 +428,34 @@
   },
   "RANI3": {
    "ancoras": {
-    "DCF normalizado (3 cenários)": 4.874719,
-    "EPV de meio de ciclo": 4.346476,
-    "Valor de reprodução": 6.217288
+    "DCF normalizado (3 cenários)": 5.590554,
+    "EPV de meio de ciclo": 5.02161,
+    "Valor de reprodução": 6.182883
    },
    "bogle_nom": 0.075246,
-   "central": 4.874719,
+   "central": 5.590554,
    "cobertura_juros": 1.531314,
    "dy": 0.0,
    "fator_defasagem": 0.992674,
    "lote": 3,
-   "nota_geral": 2.905418,
+   "nota_geral": 3.116048,
    "palavra": "CARA",
-   "pc": 1.628812,
+   "pc": 1.420253,
    "vence_rf": "Não"
   },
   "RECV3": {
    "ancoras": {
-    "DCF normalizado (3 cenários)": -1.45872,
-    "EPV de meio de ciclo": -0.157661,
-    "Valor de reprodução": 15.13256
+    "DCF normalizado (3 cenários)": -2.823424,
+    "EPV de meio de ciclo": -1.522365,
+    "Valor de reprodução": 14.791824
    },
    "bogle_nom": 0.032662,
-   "central": -0.157661,
+   "central": -1.522365,
    "cobertura_juros": 2.385249,
    "dy": 0.0,
    "fator_defasagem": 0.992674,
    "lote": 5,
-   "nota_geral": 2.759121,
+   "nota_geral": 2.723159,
    "palavra": "NÃO CONCLUSIVO",
    "pc": Infinity,
    "vence_rf": "Não"
@@ -510,53 +510,53 @@
   },
   "SLCE3": {
    "ancoras": {
-    "DCF normalizado (3 cenários)": 10.687188,
-    "EPV de meio de ciclo": 9.318184,
+    "DCF normalizado (3 cenários)": 13.139177,
+    "EPV de meio de ciclo": 11.666844,
     "Valor de reprodução": 27.12
    },
-   "bogle_nom": -0.180169,
-   "central": 10.687188,
+   "bogle_nom": -0.08578,
+   "central": 13.139177,
    "cobertura_juros": 2.190263,
    "dy": 0.0,
    "fator_defasagem": 0.992674,
    "lote": 3,
-   "nota_geral": 3.062262,
+   "nota_geral": 3.569607,
    "palavra": "CARA",
-   "pc": 1.609404,
+   "pc": 1.309062,
    "vence_rf": "Não"
   },
   "SMTO3": {
    "ancoras": {
-    "DCF normalizado (3 cenários)": 24.4631,
-    "EPV de meio de ciclo": 23.073125,
+    "DCF normalizado (3 cenários)": 28.089538,
+    "EPV de meio de ciclo": 26.583858,
     "Valor de reprodução": 22.850686
    },
-   "bogle_nom": -0.008605,
-   "central": 23.073125,
+   "bogle_nom": 0.017761,
+   "central": 26.583858,
    "cobertura_juros": 2.089683,
    "dy": 0.0,
    "fator_defasagem": 0.992674,
    "lote": 3,
-   "nota_geral": 5.024873,
+   "nota_geral": 5.307166,
    "palavra": "RADAR",
-   "pc": 0.838205,
+   "pc": 0.727509,
    "vence_rf": "Não"
   },
   "SUZB3": {
    "ancoras": {
-    "DCF normalizado (3 cenários)": 36.435708,
-    "EPV de meio de ciclo": 37.124411,
+    "DCF normalizado (3 cenários)": 43.59202,
+    "EPV de meio de ciclo": 44.332244,
     "Valor de reprodução": 40.211619
    },
-   "bogle_nom": 0.108246,
-   "central": 37.124411,
+   "bogle_nom": 0.112865,
+   "central": 43.59202,
    "cobertura_juros": 1.812817,
-   "dy": 0.033,
+   "dy": 0.037619,
    "fator_defasagem": 0.985402,
    "lote": 3,
-   "nota_geral": 4.064097,
-   "palavra": "CARA",
-   "pc": 1.194632,
+   "nota_geral": 4.525405,
+   "palavra": "JUSTA",
+   "pc": 1.017388,
    "vence_rf": "Não"
   },
   "TAEE11": {
@@ -577,104 +577,104 @@
   },
   "TIMS3": {
    "ancoras": {
-    "DCF (3 cenários)": 10.250613,
-    "EPV": 10.105524,
-    "Owner Earnings ÷ (Ke − g)": 9.16565
+    "DCF (3 cenários)": 11.037168,
+    "EPV": 10.88109,
+    "Owner Earnings ÷ (Ke − g)": 10.133889
    },
-   "bogle_nom": 0.123988,
-   "central": 10.105524,
+   "bogle_nom": 0.137719,
+   "central": 10.88109,
    "cobertura_juros": 3.50333,
-   "dy": 0.051526,
+   "dy": 0.057826,
    "fator_defasagem": 0.942875,
    "lote": 4,
-   "nota_geral": 3.515948,
+   "nota_geral": 4.067079,
    "palavra": "CARA",
-   "pc": 1.83563,
+   "pc": 1.704792,
    "vence_rf": "Não"
   },
   "UGPA3": {
    "ancoras": {
-    "DCF (3 cenários)": 18.96473,
-    "EPV": 19.973077,
-    "Owner Earnings ÷ (Ke − g)": 12.432789
+    "DCF (3 cenários)": 17.930815,
+    "EPV": 18.939162,
+    "Owner Earnings ÷ (Ke − g)": 12.798203
    },
-   "bogle_nom": 0.093666,
-   "central": 18.96473,
+   "bogle_nom": 0.096086,
+   "central": 17.930815,
    "cobertura_juros": 3.001838,
-   "dy": 0.01842,
+   "dy": 0.02084,
    "fator_defasagem": 0.992674,
    "lote": 5,
-   "nota_geral": 3.994405,
+   "nota_geral": 3.969974,
    "palavra": "CARA",
-   "pc": 2.030612,
+   "pc": 2.147699,
    "vence_rf": "Não"
   },
   "UNIP6": {
    "ancoras": {
-    "DCF normalizado (3 cenários)": 53.895727,
-    "EPV de meio de ciclo": 54.380182,
+    "DCF normalizado (3 cenários)": 53.498646,
+    "EPV de meio de ciclo": 53.983101,
     "Valor de reprodução": 17.907037
    },
-   "bogle_nom": 0.147043,
-   "central": 53.895727,
+   "bogle_nom": 0.157521,
+   "central": 53.498646,
    "cobertura_juros": 1.52938,
-   "dy": 0.071797,
+   "dy": 0.082275,
    "fator_defasagem": 0.992674,
    "lote": 6,
-   "nota_geral": 4.19212,
+   "nota_geral": 4.271945,
    "palavra": "NÃO CONCLUSIVO",
-   "pc": 1.053516,
-   "vence_rf": "Não"
+   "pc": 1.061335,
+   "vence_rf": "Empate"
   },
   "VBBR3": {
    "ancoras": {
-    "DCF (3 cenários)": 14.657843,
-    "EPV": 16.505534,
-    "Owner Earnings ÷ (Ke − g)": 11.218796
+    "DCF (3 cenários)": 13.578551,
+    "EPV": 15.426243,
+    "Owner Earnings ÷ (Ke − g)": 10.65027
    },
-   "bogle_nom": 0.104322,
-   "central": 14.657843,
+   "bogle_nom": 0.105646,
+   "central": 13.578551,
    "cobertura_juros": 2.9702,
-   "dy": 0.029076,
+   "dy": 0.0304,
    "fator_defasagem": 0.882501,
    "lote": 5,
-   "nota_geral": 3.128399,
+   "nota_geral": 3.096443,
    "palavra": "CARA",
-   "pc": 2.569273,
+   "pc": 2.773492,
    "vence_rf": "Não"
   },
   "VIVT3": {
    "ancoras": {
-    "DCF (3 cenários)": 17.278201,
-    "EPV": 17.090793,
-    "Owner Earnings ÷ (Ke − g)": 20.553508
+    "DCF (3 cenários)": 17.89214,
+    "EPV": 17.690647,
+    "Owner Earnings ÷ (Ke − g)": 22.603968
    },
-   "bogle_nom": 0.104058,
-   "central": 17.278201,
+   "bogle_nom": 0.113221,
+   "central": 17.89214,
    "cobertura_juros": 4.324351,
-   "dy": 0.035623,
+   "dy": 0.042082,
    "fator_defasagem": 0.863248,
    "lote": 4,
-   "nota_geral": 4.044742,
+   "nota_geral": 4.037009,
    "palavra": "CARA",
-   "pc": 1.744395,
+   "pc": 1.684539,
    "vence_rf": "Não"
   },
   "WEGE3": {
    "ancoras": {
-    "DCF (3 cenários)": 11.917946,
-    "EPV": 10.693816,
-    "Owner Earnings ÷ (Ke − g)": 12.730406
+    "DCF (3 cenários)": 10.942431,
+    "EPV": 9.938887,
+    "Owner Earnings ÷ (Ke − g)": 12.456464
    },
-   "bogle_nom": 0.13392,
-   "central": 11.917946,
+   "bogle_nom": 0.128322,
+   "central": 10.942431,
    "cobertura_juros": 37.346503,
-   "dy": 0.013398,
+   "dy": 0.015002,
    "fator_defasagem": 0.876036,
    "lote": 4,
-   "nota_geral": 5.431303,
+   "nota_geral": 5.19171,
    "palavra": "CARA",
-   "pc": 4.317019,
+   "pc": 4.70188,
    "vence_rf": "Não"
   }
  }

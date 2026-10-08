@@ -375,6 +375,7 @@ Proposta, sem execução. Qualquer mudança que mexa em central ou palavra exige
 ### Onda 1 — o que pode errar o veredito hoje
 
 1. **Unidades e insumos que movem o central:** AUD-01 (receita de meio em R$ de hoje) e AUD-16 (OE e DPA deflacionados); AUD-02 (dividendos a pagar da WEGE3; depois varrer os demais, ver seção 4); AUD-04 (follow-on do ISAE4 e o texto do lote); AUD-03 (janela IFRS 16 da PETR4).
+   **FEITO em 08/10/2026 (Onda 1.1, doutrina v2.3.1):** os cinco reproduziram com os números desta auditoria e foram corrigidos (testes em `ferramentas/tests/test_onda1_insumos.py`). Ampliações na reprodução: FLRY3 (`receita_media`, mesma média nominal) e AUD-02 para toda não financeira, incluindo proventos aprovados depois do balanço e ex até a data do preço (API da B3). Palavras: SUZB3 e ISAE4 CARA → JUSTA; LEVE3 JUSTA → RADAR (soma de AUD-01 e AUD-16). Achados novos e pendências: `09-diario`, entrada de 08/10 "Onda 1.1".
 2. **Convenções de mercado e custo de capital:** AUD-06 (rf fechamento), AUD-78 (rf e π lidos de um arquivo, com data), AUD-72 (idade do preço), AUD-07 (Kd com fonte), AUD-12 e AUD-13 (decidir e registrar o Ke fixo e o peso a preço de mercado), AUD-09 (alíquota da ABEV3), AUD-18 (fórmula da reprodução), AUD-08 (trava de coerência da LEVE3).
 3. **Decisão e gatilhos:** AUD-43 (monitor ignora a palavra final), AUD-37 (monitor sem alerta de falha), AUD-33 (corte da triagem), AUD-67 e AUD-77 (preço/flag do hall), AUD-20 (condição do §11.2 na Sabesp).
 4. **Documentos que levam a decisão errada:** AUD-19, AUD-35, AUD-36, AUD-69.

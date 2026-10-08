@@ -140,6 +140,8 @@ def contas(d, mapa):
 RE_ARREND = re.compile(r"arrendamento", re.I)
 RE_BIO = re.compile(r"biol[oó]g", re.I)
 RE_VJ = re.compile(r"valor justo.*biol|biol.*valor justo", re.I)
+RE_PROV_PAGAR = re.compile(r"dividend|juros sobre (?:o )?capital|\bjcp\b|provento", re.I)
+RE_PROV_PAGAR_NAO = re.compile(r"m[ií]nimo obrigat|cust[óo]dia", re.I)
 RE_IMPAIR = re.compile(r"valor de recupera|recuperabilidade|impairment", re.I)
 RE_IMPAIR_NAO = re.compile(r"financeir|receb|cr[eé]dito", re.I)   # perda esperada de crédito (IFRS 9) é custo recorrente, não baixa de ativo (05/10)
 
@@ -167,6 +169,12 @@ def extras_bp(d):
         y = folhas(d[(d["CD_CONTA"].str.startswith("2.01") | d["CD_CONTA"].str.startswith("2.02"))
                      & d["DS_CONTA"].str.contains(RE_ARREND, na=False)])
         out["arrendamento_saldo"] = float(y["VL_CONTA"].sum()) if len(y) else 0.0
+        # AUD-02 (08/10/2026): proventos DECLARADOS a pagar — provento a pagar já ex é dívida (doutrina §11.1, v2.3). Fora: o
+        # dividendo mínimo obrigatório provisionado (ainda não aprovado, não é ex), proventos de terceiros sob custódia (B3,
+        # 2.01.05.02.05) e provisões (2.02.04: JCP em disputa fiscal, VBBR3). Folhas, para não somar pai e filho.
+        z = folhas(d[(d["CD_CONTA"].str.startswith("2.01") | d["CD_CONTA"].str.startswith("2.02")) & ~d["CD_CONTA"].str.startswith("2.02.04")
+                     & d["DS_CONTA"].str.contains(RE_PROV_PAGAR, na=False) & ~d["DS_CONTA"].str.contains(RE_PROV_PAGAR_NAO, na=False)])
+        out["proventos_a_pagar"] = float(z["VL_CONTA"].sum()) if len(z) else 0.0
     if d["CD_CONTA"].str.startswith("1").any():
         x = folhas(d[d["CD_CONTA"].str.startswith("1.0") & d["DS_CONTA"].str.contains(RE_BIO, na=False)])
         out["biologico"] = float(x["VL_CONTA"].sum()) if len(x) else 0.0
@@ -307,7 +315,7 @@ def main(tks, anos=range(2016, 2026), arq=None, ano_itr=2026, mes=6):
             ltm = dict(serie.get(2026, {}), nota="fluxos: exercício abr/2025–mar/2026 (DFP); balanço: ITR de jun/2026")
             try:
                 b = itr_ytd(tk, ano_itr, mes)
-                for k in list(BPA) + list(BPP) + ["arrendamento", "arrendamento_saldo", "biologico"]:
+                for k in list(BPA) + list(BPP) + ["arrendamento", "arrendamento_saldo", "biologico", "proventos_a_pagar"]:
                     if b.get(k) is not None:
                         ltm[k] = b[k]
             except Exception:
@@ -319,7 +327,7 @@ def main(tks, anos=range(2016, 2026), arq=None, ano_itr=2026, mes=6):
             for k in list(DRE) + list(DFC) + ["da", "capex", "dividendos_pagos", "recompra", "arrendamento_pago", "arrendamento_pago_com_juros", "juros_pagos", "vj_biologico", "impairment", "impairment_outras"]:
                 if None not in (fy.get(k), y26.get(k), y25.get(k)):
                     ltm[k] = fy[k] + y26[k] - y25[k]
-            for k in list(BPA) + list(BPP) + ["arrendamento", "arrendamento_saldo", "biologico"]:
+            for k in list(BPA) + list(BPP) + ["arrendamento", "arrendamento_saldo", "biologico", "proventos_a_pagar"]:
                 ltm[k] = y26.get(k)
             ltm["acoes"] = fy.get("acoes")
           except Exception as ex:

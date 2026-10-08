@@ -18,9 +18,27 @@ SUPERADOS = {
                         "dispersão cai abaixo de 3x (CMIN3-2026-10-06)",
 }
 ARQUIVOS = sorted(p.stem for p in VEREDITOS.glob("*.json"))
+# Onda 1.1 da auditoria (08/10/2026): receita de meio, OE e DPA em R$ de hoje (AUD-01/16) e provento já ex na dívida (AUD-02)
+# mudam o central destes dossiês. O registro é append-only (veredito novo = data nova) e ainda não há rodada de data nova:
+# o JSON antigo fica no disco e o recálculo na MESMA data é fixado aqui, para a regressão continuar valendo. Ver 09-diario.
+METODO_ONDA_1_1 = {
+    "BLAU3-2026-10-02": dict(central=8.798, pc=1.2298, palavra="NÃO CONCLUSIVO"),   # era 8,2733 (AUD-01/16)
+    "HYPE3-2026-10-06": dict(central=18.3522, pc=1.4712, palavra="CARA"),           # era 18,122 (AUD-01/16 + AUD-02)
+    "LEVE3-2026-10-06": dict(central=42.5717, pc=0.8586, palavra="RADAR"),          # era 35,7479 JUSTA (AUD-01 + AUD-16)
+}
 
 
-@pytest.mark.parametrize("nome", [n for n in ARQUIVOS if n not in SUPERADOS])
+@pytest.mark.parametrize("nome", sorted(METODO_ONDA_1_1))
+def test_veredito_refeito_pela_onda_1_1(nome):
+    salvo = json.loads((VEREDITOS / f"{nome}.json").read_text(encoding="utf-8"))
+    v = gerar.veredito(gerar.calcular(salvo["ticker"], salvo["data_preco"]))
+    novo = METODO_ONDA_1_1[nome]
+    assert v["central"] == pytest.approx(novo["central"], abs=1e-3) and v["pc"] == pytest.approx(novo["pc"], abs=1e-3)
+    assert v["palavra"] == novo["palavra"]
+    assert v["central"] != pytest.approx(salvo["central"], abs=1e-3)      # o JSON antigo continua sendo o do método antigo
+
+
+@pytest.mark.parametrize("nome", [n for n in ARQUIVOS if n not in SUPERADOS and n not in METODO_ONDA_1_1])
 def test_veredito_salvo_reproduz(nome):
     salvo = json.loads((VEREDITOS / f"{nome}.json").read_text(encoding="utf-8"))
     v = gerar.veredito(gerar.calcular(salvo["ticker"], salvo["data_preco"]))

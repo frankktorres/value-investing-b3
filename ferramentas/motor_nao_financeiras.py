@@ -5,7 +5,7 @@ Tudo em R$ por ação no fim. Convenção: taxas em fração.
 """
 from __future__ import annotations
 
-from ltm import ltm_de
+from ltm import ltm_de, ltm_ref_de
 import json
 import math
 import pathlib
@@ -14,8 +14,9 @@ from functools import lru_cache
 from statistics import median
 
 from defasagem import defasagem_meses
-from inflacao import fator_entre, fator_idade, inflacao_do_ano, reposicao
+from inflacao import DEFLATOR, deflator_ltm, deflator_periodo, fator_entre, fator_idade, inflacao_do_ano, reposicao
 from juros import juros_do_periodo
+from proventos_ex import ajuste_b3
 from motor_financeiras import (ANOS_ROIC_MINIMO, HORIZONTE, IR_JCP, NOTA_QUALIDADE_MINIMA, ORDEM, Mercado, descontar,
                                interp, liquido_diferido, media_qualitativa, nota_preco, nota_spread, nota_yield, palavra,
                                precos_de_referencia)
@@ -31,6 +32,8 @@ LIMIAR_ORIGEM = 0.15      # v2.3: mediana abaixo disto só vale com a origem dec
 ANO_BASE = 2026           # ano da data-base dos preços: a fase do benefício fiscal conta os exercícios cheios depois dele
 JANELA_MINIMA_PRECO_MEIO = 7   # v2.3 (§11.1): margem reexpressa ao preço de meio só com janela de 7+ exercícios
 MINIMO_ANOS_ALIQUOTA = 3  # v2.3: a mediana de 5 anos da alíquota exige pelo menos 3 exercícios válidos; senão vale 34%
+FIM_EXERCICIO = {"SMTO3": 3}  # mês de fechamento do exercício fora do ano-calendário (o resto: dezembro)
+ANO_IFRS16 = 2019         # AUD-03: primeiro exercício com o aluguel fora do EBITDA (margem de E&P só a partir dele)
 
 
 @dataclass
@@ -90,6 +93,10 @@ def exigir_declaracoes(emp: Industrial) -> None:
     faltas = []
     if list(emp.anos_ciclo) != list(ANOS) and not emp.janela_razao.strip():
         faltas.append(f"janela {emp.anos_ciclo[0]}-{emp.anos_ciclo[-1]} sem janela_razao (§11.4)")
+    if emp.da_receita is not None and min(int(x) for x in emp.anos_ciclo) < ANO_IFRS16:
+        # AUD-03 (08/10/2026): margem de E&P = EBITDA do ano − D&A ATUAL (com o direito de uso); EBITDA pré-IFRS 16 já desconta o
+        # aluguel → contado duas vezes (PETR4 2016–18). Janela só a partir de 2019 (§11.1, linha do DCF)
+        faltas.append(f"E&P com janela desde {min(emp.anos_ciclo)}: EBITDA pré-IFRS 16 contra D&A atual com direito de uso (§11.1)")
     if emp.defasagem_meses is not None and not emp.defasagem_fonte.strip():
         faltas.append(f"defasagem_meses={emp.defasagem_meses} sem defasagem_fonte (§6.3)")
     if emp.controlador_discricionario and not emp.controlador_discricionario_fonte.strip():
@@ -140,6 +147,38 @@ def divida_liquida(b):
     bruta = v(b, "emprest_cp", 0) + v(b, "emprest_lp", 0) + v(b, "arrendamento", 0)   # IFRS 16 é dívida
     caixa = v(b, "caixa", 0) + v(b, "aplic_cp", 0)
     return bruta, caixa, bruta - caixa
+
+
+def deflator_exercicio(tk, ano) -> float:
+    """R$ do exercício `ano` → R$ de hoje. Exercício fora do ano-calendário (SMTO3, abr–mar) usa os 12 meses dele (adversário,
+    08/10/2026: o DEFLATOR do ano de fechamento ficava ~3% baixo)."""
+    mes = FIM_EXERCICIO.get(tk, 12)
+    return DEFLATOR[str(ano)] if mes == 12 else deflator_periodo(int(ano), mes)
+
+
+def proventos_ja_ex(emp: Industrial, data_preco: str | None = None) -> dict:
+    """Provento já ex que ainda está no caixa do balanço do LTM, em R$ mil (AUD-02, 08/10/2026; regra em proventos_ex.py).
+
+    total = passivo de proventos do balanço − a parte dele ainda não ex na data do preço + aprovados depois do balanço e
+    já ex. Entra na dívida líquida e sai do OE, como `outros_passivos_financeiros` (§11.1, v2.3).
+    Entre o fim do exercício e a AGO a linha genérica do passivo pode ser o dividendo mínimo PROVISIONADO, que a AGO aprova
+    depois do balanço — e aí ele aparece também na parte da B3 (SMTO3 2T26: R$ 69,9 mi nos dois; adversário, 08/10):
+      · balanço NO fim do exercício (DFP) com passivo → falha alto: o provisionado pode nem ser ex no preço; decidir à mão;
+      · 1º trimestre depois do fim do exercício → conta UMA vez: o maior entre o passivo e os aprovados depois."""
+    _, ltm = serie(emp.ticker)
+    ref = ltm_ref_de(CVM[emp.ticker])
+    balanco = max(v(ltm, "proventos_a_pagar", 0), 0.0)
+    mes_bal, fim = 3 * int(ref[0]), FIM_EXERCICIO.get(emp.ticker, 12)
+    if balanco and mes_bal == fim:
+        raise NotImplementedError(f"{emp.ticker}: LTM {ref} (fim do exercício) com proventos a pagar de R$ {balanco:,.0f} mil — o "
+                                  "passivo pode trazer o mínimo obrigatório ainda não aprovado; separar o que é ex antes de rodar (AUD-02)")
+    b3 = ajuste_b3(emp.ticker, emp.n_acoes, ref, data_preco=data_preco)
+    nao_ex = min(b3["nao_ex"], balanco)
+    pos_exercicio = mes_bal == fim % 12 + 3
+    total = max(balanco - nao_ex, b3["depois"]) if pos_exercicio else balanco - nao_ex + b3["depois"]
+    # o que não é passivo no balanço ainda está DENTRO do PL de 30/06 (o EGIE3 faz o mesmo: lote6, pl − EGIE_DIV_AGO26)
+    return dict(balanco=balanco, nao_ex=nao_ex, aprovados_depois=b3["depois"], total=total, pos_exercicio=pos_exercicio,
+                no_pl=total - (balanco - nao_ex), ref=ref, eventos=b3["eventos"])
 
 
 def capital_giro(b):
@@ -382,9 +421,13 @@ def premissas_operacionais(emp: Industrial):
     m25 = margens[max(0, round(0.25 * (len(margens) - 1)))]
     m75 = margens[min(len(margens) - 1, round(0.75 * (len(margens) - 1)))]
     ult = [x for x in anos][-3:]
-    extra = [] if abs(ltm["receita"] - a[ult[-1]]["receita"]) < 1 else [ltm["receita"]]   # SMTO3: LTM = último exercício
+    # AUD-01 (08/10/2026): cada receita vai a R$ de hoje ANTES da média — margem × receita é descontada ao WACC REAL contra
+    # dívida e capital de hoje (§11.1, EPV "em R$ de hoje"). Até aqui a média era nominal e o NOPAT saía ~7,5% baixo.
+    # SMTO3 (exercício abr–mar): os 12 meses do exercício (deflator_exercicio).
+    extra = ([] if abs(ltm["receita"] - a[ult[-1]]["receita"]) < 1        # SMTO3: LTM = último exercício
+             else [ltm["receita"] * deflator_ltm(ltm_ref_de(CVM[emp.ticker]))])
     rec = emp.receita_meio or (rec_real if emp.deflator else
-                               (sum(a[x]["receita"] for x in ult) + sum(extra)) / (len(ult) + len(extra)))
+                               (sum(a[x]["receita"] * deflator_exercicio(emp.ticker, x) for x in ult) + sum(extra)) / (len(ult) + len(extra)))
     # Greenwald: lucro sustentável = EBIT + D&A − capex de manutenção. Só penaliza (min 0): D&A acima do capex de
     # manutenção pode ser subinvestimento temporário. Mediana dos 5 últimos exercícios, em % da receita.
     if ciclico(emp):
@@ -538,7 +581,9 @@ def valores(emp: Industrial, mk: Mercado, ke_nom=None, margem=None, g_real=None,
     bruta, caixa, dl = divida_liquida(ltm)
     # v2.3: passivo com juros/financeiro fora das contas de empréstimo é dívida — entra na DL e, por ela, na ponte, no DL/EBITDA,
     # no capital do ROIC, no EV e nos juros normalizados. O WACC fica com a dívida do balanço (peso menor de Kd = conservador).
-    dl += emp.outros_passivos_financeiros
+    # AUD-02: o provento já ex que ainda está no caixa é o mesmo tipo de passivo financeiro, medido do dado (não digitado)
+    prov = proventos_ja_ex(emp, mk.data or None)
+    dl += emp.outros_passivos_financeiros + prov["total"]
     minor = v(ltm, "nao_controladores", 0) + emp.outros_passivos   # direitos à frente do acionista (operacional) só na ponte
     n = emp.n_acoes / 1000     # mil ações → valores em R$ mil / mil ações = R$/ação
     m = margem if margem is not None else op["m50"]
@@ -546,7 +591,7 @@ def valores(emp: Industrial, mk: Mercado, ke_nom=None, margem=None, g_real=None,
     t_ef, t_regra = aliquota_regra(emp)          # perpétua (v2.3); o crédito com prazo entra à parte, em valor presente
     lucro_pre_ir = op["receita_meio"] * (m + op["ajuste_manut"])
     nopat = lucro_pre_ir * (1 - t_ef)
-    cap_inv = v(ltm, "pl", 0) + dl
+    cap_inv = v(ltm, "pl", 0) - prov["no_pl"] + dl     # provento aprovado depois do balanço sai do PL ao entrar na DL
     idade_imob, cap_rep = capital_reposicao(emp.ticker, cap_inv)
     roic = nopat / cap_inv if cap_inv > 0 else None
     # capital contábil negativo corrigido pela inflação pode virar positivo minúsculo e explodir o ROIC a reposição:
@@ -601,16 +646,17 @@ def valores(emp: Industrial, mk: Mercado, ke_nom=None, margem=None, g_real=None,
     for i in range(1, len(anos)):
         x = owner_earnings_ano(emp, anos[i], anos[i - 1], (1 + kd) / (1 + mk.pi) - 1, ciclico(emp), t_oe)
         if x is not None:
-            oes.append((anos[i], x))
+            oes.append((anos[i], x * deflator_exercicio(emp.ticker, anos[i])))   # AUD-16: em R$ de hoje antes da mediana (capitalizado ao Ke REAL)
     oe_recentes = [x for _, x in oes[-5:]]
     oe_norm = median(oe_recentes) if oe_recentes else None
     # fluxo do acionista: o crédito com prazo incide sobre o lucro depois dos juros normalizados, ao Ke real
     benef_acao = beneficio_fiscal(emp, lair_norm, ke_real)
     # o OE é fluxo do acionista (depois dos juros da DL do balanço): os dois outros passivos saem por inteiro
-    oe_val = ((oe_norm / (ke_real - gr) + benef_acao - emp.outros_passivos - emp.outros_passivos_financeiros) / n
+    oe_val = ((oe_norm / (ke_real - gr) + benef_acao - emp.outros_passivos - emp.outros_passivos_financeiros - prov["total"]) / n
               if oe_norm and ke_real > gr else None)
 
-    reprod = emp.reproducao_por_acao if emp.reproducao_por_acao else (v(ltm, "pl", 0) - v(ltm, "nao_controladores", 0)) / n
+    reprod = (emp.reproducao_por_acao if emp.reproducao_por_acao else
+              (v(ltm, "pl", 0) - prov["no_pl"] - v(ltm, "nao_controladores", 0)) / n)
 
     anc = {}
     if emp.perfil == "ciclica":
@@ -627,7 +673,7 @@ def valores(emp: Industrial, mk: Mercado, ke_nom=None, margem=None, g_real=None,
                 minor=minor, nopat=nopat, roic=roic, epv=epv, dcf=dcf_c, dcf_pond=dcf_pond, oe=oes, oe_norm=oe_norm,
                 oe_val=oe_val, reprod=reprod, cap_inv=cap_inv, n=n, m=m, gr=gr, aliquota=t_ef, aliquota_regra=t_regra,
                 aliquota_mediana=mediana_efetiva(emp), aliquota_fase=fase_fiscal(emp), beneficio_fiscal_acao=benef_firma / n,
-                outros_passivos_financeiros=emp.outros_passivos_financeiros, capex_expansao=emp.capex_expansao,
+                outros_passivos_financeiros=emp.outros_passivos_financeiros, proventos_ja_ex=prov, capex_expansao=emp.capex_expansao,
                 roic_reposicao=roic_rep, roic_filtro=roic_filtro, cap_inv_reposicao=cap_rep, idade_imobilizado=idade_imob)
 
 
@@ -769,14 +815,15 @@ def avaliar(emp: Industrial, mk: Mercado) -> dict:
     # lucro normalizado por ação (para Graham, Lynch, Bogle): NOPAT normalizado − juros líquidos normalizados após IR
     lucro_norm = r["nopat"] - r["kd"] * r["dl"] * (1 - r["aliquota"])   # dívida líquida negativa (caixa) soma receita financeira
     lpa_norm = lucro_norm / n
-    vpa = (v(ltm, "pl", 0) - v(ltm, "nao_controladores", 0)) / n
+    vpa = (v(ltm, "pl", 0) - r["proventos_ja_ex"]["no_pl"] - v(ltm, "nao_controladores", 0)) / n
     graham_orig = math.sqrt(22.5 * lpa_norm * vpa) if lpa_norm > 0 and vpa > 0 else None
     graham_br = math.sqrt(22.5 * mk.fator_graham * lpa_norm * vpa) if lpa_norm > 0 and vpa > 0 else None
     g_real_pct = 100 * r["gr"]
     graham_rev = lpa_norm * (8.5 + 2 * g_real_pct) * mk.fator_graham if lpa_norm > 0 else None
 
     dpa = SI[emp.ticker]["dpa_por_ano_datacom"]
-    dpa5 = sum(dpa.get(str(x), 0) for x in range(2021, 2026)) / 5
+    # AUD-16: DPA de cada ano da data-com em R$ de hoje — é comparado ao OE (já em R$ de hoje) e vira yield sobre o preço de hoje
+    dpa5 = sum(dpa.get(str(x), 0) * DEFLATOR[str(x)] for x in range(2021, 2026)) / 5
     fcfe_acao = (r["oe_norm"] / n) if r["oe_norm"] else 0
     dpa_sust = min(dpa5, max(fcfe_acao, 0))
     coberto = dpa5 <= fcfe_acao

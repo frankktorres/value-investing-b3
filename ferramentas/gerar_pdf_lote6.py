@@ -1,5 +1,6 @@
 """PDF do Lote 6 (Química e metalurgia) — doutrina v2.2. Uso: python gerar_pdf_lote6.py"""
 from ltm import ltm_de
+from inflacao import DEFLATOR
 import copy
 import pathlib
 import re
@@ -96,9 +97,10 @@ def extras(emp, r):
         x["g0"] = central_rapido(com(emp, g_real=0.0))
         x["c34"] = central_rapido(com(emp, aliquota=0.34))
         dpa = SI[tk]["dpa_por_ano_datacom"]
-        x["dpa_sem_extra"] = (sum(dpa.get(str(y), 0) for y in range(2021, 2026)) - 5.54) / 5
+        # em R$ de hoje, como o dpa5 do motor (AUD-16); o extraordinário de R$ 5,54 é de 2023 (adversário, 08/10/2026)
+        x["dpa_sem_extra"] = (sum(dpa.get(str(y), 0) * DEFLATOR[str(y)] for y in range(2021, 2026)) - 5.54 * DEFLATOR["2023"]) / 5
         a5 = [str(y) for y in range(2021, 2026)]
-        luc_med = median(a[y]["lucro"] for y in a5)
+        luc_med = median(a[y]["lucro"] * DEFLATOR[y] for y in a5)   # R$ de hoje, como o oe_norm (AUD-16)
         lucro_norm = r["lpa_norm"] * r["n"]
         oe_alt = r["oe_norm"] - (luc_med - lucro_norm)
         anc = dict(r["ancoras"])

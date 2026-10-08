@@ -39,7 +39,7 @@ Você é o analista independente de value investing desta mesa. **Recalcule o `<
 **PASSO 5 — Doutrina v2.3 (07/10/2026), conferir em cada ticker**
 - **Alíquota (§2):** mediana de 5 anos sem piso. Abaixo de 15%, declarar a origem: permanente (JCP, regime sem prazo; `aliquota_permanente_fonte`) ou crédito com prazo (`aliquota_fase` com o ano final e a fonte A/B). Sem origem declarada, o motor usa 34% (TIMS3 e PRIO3 estão assim até o dossiê). O Owner Earnings é refeito à alíquota perpétua.
 - **Desconto de controlador (§5):** só sobre âncora positiva; âncora ≤ 0 continua NÃO CONCLUSIVO.
-- **Outros passivos (§11.1):** com juros ou financeiro (passivo de contrato, provento a pagar já ex) em `outros_passivos_financeiros` (entra na dívida líquida, no DL/EBITDA e no ROIC); operacional em `outros_passivos` (só ponte). Fonte obrigatória.
+- **Outros passivos (§11.1):** com juros ou financeiro (passivo de contrato) em `outros_passivos_financeiros`; o **provento já ex** (passivo de proventos do balanço + aprovado depois do balanço e ex até a data do preço) o motor soma sozinho (`proventos_ex.py`, v2.3.1) — não digitar de novo (entra na dívida líquida, no DL/EBITDA e no ROIC); operacional em `outros_passivos` (só ponte). Fonte obrigatória.
 - **Capex de expansão (§11.1):** só projeto nomeado, com valor e prazo em fonte A/B e sem receita (`capex_expansao`); o resto é manutenção.
 - **Margem ao preço de meio (§11.1):** só cíclica com dossiê e janela ≥ 7 exercícios (`fator_preco`).
 

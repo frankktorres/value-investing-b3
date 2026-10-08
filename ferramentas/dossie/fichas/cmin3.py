@@ -124,8 +124,10 @@ def empresa(qualitativo: dict | None = None, desconto_controlador: dict | None =
         receita_meio=receita_meio(), fator_preco=m["fator_preco"], custo_variavel_preco=custo_variavel(),
         receita_meio_fonte=(f"receita 12m × minério de meio ÷ minério dos 12m ({m['fator']:.3f}; FMI 62% × PTAX, R$ de hoje, "
                             f"{JANELA_PRECO[0]}–{JANELA_PRECO[1]}) × volume de meio ÷ volume 12m ({vol['fator']:.3f})"),
-        # v2.3: os dois são financeiros (o passivo de contrato tem juros, nota 22; o provento a pagar já é ex) → entram na DL
-        outros_passivos_financeiros=float(_num("outros_passivos")),
+        # v2.3: os dois são financeiros (o passivo de contrato tem juros, nota 22; o provento a pagar já é ex) → entram na DL.
+        # AUD-02 (08/10/2026): o motor soma sozinho o `proventos_a_pagar` da série; quando a série do dossiê for recoletada com o
+        # campo, ele sai daqui para não contar duas vezes (hoje a série não o tem: desconta zero)
+        outros_passivos_financeiros=float(_num("outros_passivos")) - float(ltm_de(CVM[TK]).get("proventos_a_pagar") or 0.0),
         outros_passivos_fonte="passivo de contrato (minério e energia pré-vendidos, com juros) + dividendos a pagar já ex, ITR 2T26",
         spread_kd=0.015, g_real=0.01, jcp_share=base.jcp_share(TK), pl_hist=None,
         defasagem_meses=base.defasagem(TK),
