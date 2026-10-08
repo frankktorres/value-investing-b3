@@ -1,5 +1,5 @@
 # PROMPT DE RECÁLCULO EM LOTE (v1.1, 07/10/2026)
-*Use para refazer um lote inteiro de fichas pela doutrina **v2.2** (05/10/2026). Um lote por conversa. Anexe o PDF vigente do lote e substitua `<LOTE>`.*
+*Use para refazer um lote inteiro de fichas pela doutrina **v2.3** (07/10/2026). Um lote por conversa. Anexe o PDF vigente do lote e substitua `<LOTE>`.*
 
 ---
 
@@ -26,7 +26,7 @@ Você é o analista independente de value investing desta mesa. **Recalcule o `<
 **PASSO 3 — Fechamento do lote**
 - Quadro-resumo: ticker | palavra | preço | central | P/C | compra | saída | vence RF (líquida) | nota | pendências resolvidas.
 - Para não financeiras: EY e ROC de Greenblatt de cada uma (para o ranking do hall, `03` §3).
-- Rode o `04-checklist-anti-erro.md` v2 inteiro e liste os itens que falharam e como foram corrigidos.
+- Rode o `04-checklist-anti-erro.md` v2.1 inteiro e liste os itens que falharam e como foram corrigidos.
 - Lista "Não encontrado".
 
 **PASSO 4 — Lições da Etapa 5 (dossiês BLAU3, CMIN3, HYPE3, 07/10/2026) que valem para qualquer lote**
@@ -34,7 +34,14 @@ Você é o analista independente de value investing desta mesa. **Recalcule o `<
 - **Subvenção de ICMS (crédito outorgado):** a CVM a deixa em "deduções de vendas", isto é, **dentro** da receita e do EBIT. O tamanho só aparece na conciliação da alíquota de IR (efeito ÷ 34%): na HYPE3 ≈ R$ 1,0 bi = 57% do EBIT de 2025. Declarar quanto do EBIT depende dela e normalizar se o benefício tem prazo.
 - **Retorno incremental de M&A:** usar o EBIT **ajustado** (sem o excesso de "outras"), não o bruto.
 - **Ticker do hall em dossiê:** o dossiê troca a série de proventos só dentro do cálculo do dossiê (`base.isolado`); o golden das 41 não muda.
-- **Nota qualitativa:** base mecânica por evidência + ajuste de no máximo ±1 com fonte A/B (regra 11 do `02` v4); no lote refeito, o hall ainda tem as notas antigas (fatia 7, aberta).
+- **Nota qualitativa:** base mecânica por evidência + ajuste de no máximo ±1 com fonte A/B (regra 11 do `02` v4). Desde a v2.3 o motor faz a média da regra 11 (peso 2 do controlador discricionário, com a razão escrita). No lote refeito, o hall segue com as notas arbitradas ("arbitrada, pré-v4") até o dossiê de cada ticker; peso 2 provisório só onde a interferência consumada está no desconto do lote.
+
+**PASSO 5 — Doutrina v2.3 (07/10/2026), conferir em cada ticker**
+- **Alíquota (§2):** mediana de 5 anos sem piso. Abaixo de 15%, declarar a origem: permanente (JCP, regime sem prazo; `aliquota_permanente_fonte`) ou crédito com prazo (`aliquota_fase` com o ano final e a fonte A/B). Sem origem declarada, o motor usa 34% (TIMS3 e PRIO3 estão assim até o dossiê). O Owner Earnings é refeito à alíquota perpétua.
+- **Desconto de controlador (§5):** só sobre âncora positiva; âncora ≤ 0 continua NÃO CONCLUSIVO.
+- **Outros passivos (§11.1):** com juros ou financeiro (passivo de contrato, provento a pagar já ex) em `outros_passivos_financeiros` (entra na dívida líquida, no DL/EBITDA e no ROIC); operacional em `outros_passivos` (só ponte). Fonte obrigatória.
+- **Capex de expansão (§11.1):** só projeto nomeado, com valor e prazo em fonte A/B e sem receita (`capex_expansao`); o resto é manutenção.
+- **Margem ao preço de meio (§11.1):** só cíclica com dossiê e janela ≥ 7 exercícios (`fator_preco`).
 
 ---
 

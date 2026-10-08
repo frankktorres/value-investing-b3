@@ -1,5 +1,5 @@
 # PROMPT — Agente de notícias de sexta (value investing B3)
-*Versão 1.2 · 06/10/2026 · tarefa agendada no Claude Desktop, toda sexta 18h · Sonnet com pesquisa na web · alinhado à doutrina v2.2 · lê o monitor de preço gerado às 08h (Etapa 4)*
+*Versão 1.3 · 07/10/2026 · tarefa agendada no Claude Desktop, toda sexta 18h · Sonnet com pesquisa na web · alinhado à doutrina v2.3 · lê o monitor de preço gerado às 08h (Etapa 4)*
 
 ---
 
@@ -19,10 +19,10 @@ Se você tem acesso à pasta `VALUE INVESTING`, leia nesta ordem: o **monitor ma
 
 **Carteira (prioridade 1):** ISAE4, ABCB4, ITSA4, RANI3
 
-**Hall: ticker e preço de compra = 0,70 × central (prioridade 2; centrais da doutrina v2.2, 05/10/2026, preços de 02/10)**
+**Hall: ticker e preço de compra = 0,70 × central (prioridade 2; centrais da doutrina v2.3 — HYPE3, PRIO3 e TIMS3 recalculados em 07/10 —, preços de 02/10)**
 RADAR: SMTO3 16,15
 JUSTA: PETR4 36,25 · LEVE3 23,79 (saída 1,50×) · KEPL3 4,61 · EGIE3 20,14
-CARA: PRIO3 38,72 · ISAE4 16,87 · SUZB3 25,99 · HYPE3 13,72 · GGBR4 13,96 · ABEV3 7,35 · CPFE3 21,85 · CMIG4 5,04 · TAEE11 18,72 · SLCE3 7,48 · RANI3 3,41 · BBSE3 16,35 · VIVT3 12,09 · TIMS3 7,37 · BRBI11 5,80 · SAPR11 12,81 · ABCB4 9,32 · FLRY3 8,26 · BBDC4 6,72 · UGPA3 13,28 · ITSA4 4,98 · B3SA3 6,23 · PSSA3 14,09 · ITUB4 12,28 · CXSE3 5,45 · KLBN11 3,49 · SBSP3 4,94 · WEGE3 8,34 · CSMG3 7,88 · CPLE3 2,23
+CARA: ISAE4 16,87 · SUZB3 25,99 · GGBR4 13,96 · HYPE3 12,26 · PRIO3 30,38 · ABEV3 7,35 · CPFE3 21,85 · CMIG4 5,04 · TAEE11 18,72 · SLCE3 7,48 · RANI3 3,41 · BBSE3 16,35 · VIVT3 12,09 · BRBI11 5,80 · SAPR11 12,81 · ABCB4 9,32 · FLRY3 8,26 · BBDC4 6,72 · UGPA3 13,28 · ITSA4 4,98 · B3SA3 6,23 · TIMS3 5,57 · PSSA3 14,09 · ITUB4 12,28 · CXSE3 5,45 · KLBN11 3,49 · SBSP3 4,94 · WEGE3 8,34 · CSMG3 7,88 · CPLE3 2,23
 NÃO CONCLUSIVO (sem preço de compra; só acompanhar): RECV3 (produção e certificação)
 Fora do hall (só acompanhar; saíram em 05/10 por falhar 2 filtros: UNIP6, BBAS3, BRSR6): SANB11 · VBBR3 · UNIP6 · BBAS3 · BRSR6
 
@@ -105,7 +105,7 @@ Por item: **Fato** (1–2 linhas, data) · **Código** (F1–F5/Ke/ARM/DIL; em F
 - Copom/Selic, Focus (IPCA esperado), tributação de dividendos/JCP, norma setorial nova (ANEEL, SUSEP, BCB/CMN, saneamento).
 
 **6. Sr. Mercado: preço na zona de compra**
-**Com acesso à pasta:** copie a seção "Alertas" do `BOLETINS/AAAA-MM-DD-monitor.md` mais recente (fechamento oficial do COTAHIST da B3, gerado por script às 08h; o pregão é o de quinta) e cite o arquivo; não recalcule à mão. Se o arquivo tiver mais de 7 dias ou abrir com "DADO VELHO", diga isso no cabeçalho. **Sem acesso:** tickers do hall com fechamento **≤ preço de compra** ou **até 10% acima dele**: ticker · fechamento (data, fonte) · preço de compra · distância %. Liste também quem passou da **saída (1,30 × central; LEVE3 1,50 ×)**. Aviso fixo: "preço na zona não é compra; a ficha precisa estar válida pela doutrina v2.2 — rodar `05` antes".
+**Com acesso à pasta:** copie a seção "Alertas" do `BOLETINS/AAAA-MM-DD-monitor.md` mais recente (fechamento oficial do COTAHIST da B3, gerado por script às 08h; o pregão é o de quinta) e cite o arquivo; não recalcule à mão. Se o arquivo tiver mais de 7 dias ou abrir com "DADO VELHO", diga isso no cabeçalho. **Sem acesso:** tickers do hall com fechamento **≤ preço de compra** ou **até 10% acima dele**: ticker · fechamento (data, fonte) · preço de compra · distância %. Liste também quem passou da **saída (1,30 × central; LEVE3 1,50 ×)**. Aviso fixo: "preço na zona não é compra; a ficha precisa estar válida pela doutrina v2.3 — rodar `05` antes".
 
 **7. Agenda da próxima semana:** data-com, divulgação de resultados, Copom, AGE/AGO, vencimento de concessão ou revisão tarifária de empresas da carteira e do hall.
 

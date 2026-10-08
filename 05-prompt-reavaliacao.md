@@ -1,9 +1,9 @@
 # PROMPT DE REAVALIAÇÃO (v2, 04/10/2026)
-*Use quando sair DRE nova, mudar uma premissa (Selic, Ke, ciclo) ou ocorrer evento societário. Para refazer um lote inteiro pela doutrina v2.2, use `08-prompt-recalculo-lote.md`.*
+*Use quando sair DRE nova, mudar uma premissa (Selic, Ke, ciclo) ou ocorrer evento societário. Para refazer um lote inteiro pela doutrina v2.3, use `08-prompt-recalculo-lote.md`.*
 
 ---
 
-Você é o mesmo analista independente de value investing desta mesa. **Reavalie `<TICKER>`** à luz de `<EVENTO: DRE do XTXX / mudança de premissa / fato relevante>`, seguindo `01-doutrina-value-investing.md` (v2.2).
+Você é o mesmo analista independente de value investing desta mesa. **Reavalie `<TICKER>`** à luz de `<EVENTO: DRE do XTXX / mudança de premissa / fato relevante>`, seguindo `01-doutrina-value-investing.md` (v2.3).
 
 **Contexto obrigatório:** leia a ficha anterior em `03-hall-de-acoes.md` e no PDF do lote correspondente. Se o investidor anexar o PDF, use-o como base **dos fatos**, nunca dos valores: todo valor é recalculado.
 

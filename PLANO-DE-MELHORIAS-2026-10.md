@@ -1,5 +1,5 @@
 # PLANO DE MELHORIAS — Mesa de Value Investing B3
-*Versão 1 · 05/10/2026 · escrito ao fim do recálculo dos 6 lotes (doutrina v2.1; a Etapa 1 e a Etapa 2 foram executadas em 05/10/2026 e a doutrina está em v2.2). Carta branca do Frank para mudar o diretório, desde que embasado
+*Versão 1 · 05/10/2026 · escrito ao fim do recálculo dos 6 lotes (doutrina v2.1; a Etapa 1 e a Etapa 2 foram executadas em 05/10/2026 e a doutrina está em v2.2; em 07/10/2026 a v2.3 fechou as 6 pendências da Etapa 5 — ver `09`). Carta branca do Frank para mudar o diretório, desde que embasado
 em value investing. Pergunta-guia de cada item: **o que Buffett e Munger fariam?***
 
 ---

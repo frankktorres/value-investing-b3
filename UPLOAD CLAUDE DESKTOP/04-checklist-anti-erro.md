@@ -1,4 +1,4 @@
-# CHECKLIST ANTI-ERRO (v2, 04/10/2026)
+# CHECKLIST ANTI-ERRO (v2.1, 07/10/2026 — itens da doutrina v2.3 em B e E)
 *Rodar integralmente antes de fechar qualquer análise ou reavaliação. Cada item aqui já foi um erro cometido nesta mesa.*
 
 ---
@@ -26,6 +26,8 @@
 - [ ] **O central saiu da coluna do Ke da casa?** Ke de mercado só como sensibilidade?
   *Erro cometido: ITUB4 e PSSA3 a "Ke mercado 14%"; BBSE3, CXSE3, PRIO3, RECV3, UGPA3, VBBR3 na coluna real.*
 - [ ] Não financeira: declarei **WACC** (Ke, Kd, pesos) e comparei **ROIC × WACC**? Financeira: **ROE × Ke nominal**? EPV e Owner Earnings em termos **reais** (WACC real, R$ de hoje)?
+- [ ] **Alíquota (doutrina §2, v2.3):** sem piso. Se a mediana de 5 anos ficou abaixo de 15%, declarei a origem com fonte (permanente → mediana; crédito com prazo → efetiva só até o fim e 34% depois, inclusive no WACC)? Sem origem declarada, usei 34%? O Owner Earnings está à mesma alíquota da perpetuidade?
+- [ ] Passivo com juros fora dos empréstimos (passivo de contrato, provento a pagar já ex) está na **dívida líquida** (DL/EBITDA e ROIC), e não só na ponte?
 - [ ] É concessão ou regulado? Calculei a **TIR real implícita — mesmo que aprove** — e comparei com a rf bruta (piso) e com o Ke real?
   *Este teste reprovou a Taesa (6,5% < 7,35%). Erro cometido: TIR usada só quando reprovava (TAEE11, ISAE4), omitida em SBSP3 e CSMG3.*
 - [ ] Registrei a sensibilidade quando o Ke da régua penaliza um ativo de risco baixo?
@@ -64,6 +66,7 @@
 - [ ] Escrevi a linha **"Desconto de controlador: X% em [cenários | Ke]" — ou "zero, porque …"**, inclusive para controlador privado?
   *Erro cometido: CXSE3, SANB11, HYPE3, VIVT3, ABEV3, FLRY3 sem linha; SAPR11 sem dizer onde entrou o haircut.*
 - [ ] Apliquei o desconto **uma única vez**, sem voltar a descontar o retorno esperado?
+- [ ] O desconto incidiu **só sobre âncora positiva**? (âncora ≤ 0 fica como está e o veredito é NÃO CONCLUSIVO — doutrina §5, v2.3)
   *Erros cometidos: risco político no texto e no gatilho, mas não no número (Cemig, Petrobras); ou no número e de novo no qualitativo (BBSE3, CXSE3); CMIG4 com cenários 40/60 e retorno "ponderado" descontado de novo.*
 - [ ] **Teste de coerência:** estou tratando o mesmo defeito da mesma forma em todas as empresas?
   *Erro cometido: KLBN11 (payout 126%, FCF negativo) JUSTA; UNIP6 pelo mesmo defeito ARMADILHA.*

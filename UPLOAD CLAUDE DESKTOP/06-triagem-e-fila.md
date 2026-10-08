@@ -43,6 +43,8 @@ não confiável (âncora ≤ 0 ou dispersão > 3,0). Sai da fila quem tem centra
 **P/C proxy > 1,44** (= 1,10 + o erro de 0,34: mesmo com o erro a favor
 ficaria acima de 1,10). EY = EBIT ajustado (sem o excesso de outras receitas, §7) ÷ (valor de mercado + dívida líquida).
 
+**Divergência declarada (doutrina v2.3, 07/10/2026):** o motor reduzido da triagem segue com a alíquota da v2.2 (mediana de 5 anos presa entre 15% e 34%), porque está congelado pelo portão do backtest de 06/10. A v2.3 (sem piso; crédito com prazo por fase; abaixo de 15% sem origem declarada = 34%) vale no hall e no dossiê; a alíquota de cada nome da fila é decidida na análise completa.
+
 **Funil:** 312 companhias negociadas → 110 avaliadas (104 não financeiras,
 6 financeiras) → **5 passam no portão** · 38 na camada B ·
 15 fora por preço.
