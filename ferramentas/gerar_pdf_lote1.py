@@ -9,6 +9,8 @@ import sys
 import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
+import series_vigente
+from historico_arquivos import guardar
 from reportlab.lib import colors
 from reportlab.lib.enums import TA_LEFT
 from reportlab.lib.pagesizes import A4
@@ -104,7 +106,7 @@ def img(fig, w_mm):
     return Image(buf, width=w_mm * mm, height=w_mm * mm * h / w)
 
 
-SERIES = json.loads(pathlib.Path(sorted(glob.glob(str(AQUI / "dados" / "series_*.json")))[-1]).read_text(encoding="utf-8"))
+SERIES = series_vigente.carregar()      # AUD-24: série vigente explícita, não "a mais nova da pasta"
 
 
 def grafico_roe(tk, r, emp):
@@ -461,6 +463,7 @@ def main():
         r = avaliar(e, MK)
         r["preco_"] = e.preco
         res.append(r)
+    guardar(SAIDA, "pdf lote 1")      # AUD-84: o PDF anterior do mesmo nome vai para _historico/
     doc = SimpleDocTemplate(str(SAIDA), pagesize=A4, leftMargin=14 * mm, rightMargin=14 * mm, topMargin=12 * mm, bottomMargin=14 * mm,
                             title="Lote 1 — Bancos e Seguridade · rev. 09/10/2026", author="Mesa de Value Investing")
     story = []

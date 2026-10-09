@@ -19,6 +19,7 @@ from pathlib import Path
 import pandas as pd
 
 from backtest import cotahist
+from historico_arquivos import gravar_texto
 from backtest.precos import espinha, eventos as ev_mod, ibov as ibov_mod, proventos_b3
 
 from . import avaliar as A
@@ -79,7 +80,7 @@ def main(argv: list[str] | None = None) -> int:
     DADOS.mkdir(exist_ok=True)
     r.tabela.to_csv(DADOS / f"triagem_{T}.csv", index=False, encoding="utf-8")
     md = fila.markdown(r)
-    SAIDA_06.write_text(md, encoding="utf-8", newline="\n")
+    gravar_texto(SAIDA_06, md, "06 triagem", newline="\n")      # AUD-84: o 06 anterior vai para _historico/
     shutil.copyfile(SAIDA_06, UPLOAD_06)
     print(f"06 gerado: fila {len(r.fila)} · financeiras {len(r.financeiras)} · deep value {len(r.netnet)}")
     if not a.sem_registro:

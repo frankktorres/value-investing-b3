@@ -525,3 +525,37 @@ borda da régua (`<` no lugar de `<=`, 0,70→0,75), sinal da defasagem, ROIC no
   quebrava o bundle; destino dentro de `dados/` entrava no próprio ZIP; o hook tratava xfail como skip e não pegava skip de módulo.
 - **Aprendizado:** rodei a suíte enquanto o pytest do backtest ainda corria em segundo plano e deu 9 falhas falsas (ABEV3 e outros);
   sozinha, a suíte passa. Regra de memória reforçada: nunca dois pytest ao mesmo tempo.
+
+### 09/10/2026 — REPRODUTIBILIDADE DE REGISTRO, COLETORES E HISTÓRICO: Onda 2, 3ª parte (AUD-102, 82, 24, 26, 86, 21, 22, 23, 81, 83, 84)
+
+Nenhuma palavra, central ou regra mudou (golden intacto; `cvm_series.json` não foi regravado). Cada achado foi reproduzido por script
+antes de mexer (KeyError 'TAEE11' com `series_` parcial; VIVT3 DPA 2026 2,098→0,846 conforme o import; HYPE3 2024 com a linha de
+01/02/2024 duplicada na B3; ISAE4/SLCE3/KEPL3/SMTO3 com o LTM refeito contra o comparativo).
+- **AUD-102 (registro).** `prospectivo/registro.chain` guarda o sha256 encadeado de cada linha; `registro_prospectivo.py --verificar` e
+  `_gravar` recusam registro editado, apagado ou com linha inserida. Limite declarado: quem reescreve registro e corrente juntos passa; o git é a
+  segunda trava. Corrente das 47 linhas existentes criada hoje.
+- **AUD-82 (preço real).** Rodada nova grava o fechamento do snapshot `precos_hall_<data>.csv` (RECV3 deixa de ficar sem preço). As linhas
+  de 02/10 **não foram editadas** (append-only): PRIO3 63,35 (oficial 63,01), UGPA3 38,51 (38,61), UNIP6 56,78 (57,02), VBBR3 37,66 (38,15)
+  e RECV3 sem preço (11,20). Reexecutar a rodada de 02/10 agora levanta `ValueError` nesses 5; a rodada nunca é regravada.
+- **AUD-24 (série vigente).** `series_vigente.py`: arquivo vigente é constante (`series_2026-10-05.json`) e o carregamento exige 41 tickers;
+  `motor_nao_financeiras`, `lote2_energia` e `defasagem` deixaram de pegar o "último da pasta". Trocar a série = editar a constante.
+- **AUD-26 (estado do lote 4).** `corrigir_proventos` e `arrendamento_pago_proxy` já eram idempotentes (medido); o efeito por import
+  continua (lê SI antes do lote 4 → DPA sem correção), agora documentado e fixado por teste: idempotência e instantâneo dos 41 igual
+  importando o lote 4 antes ou depois (subprocessos).
+- **AUD-21/22/86 (LTM).** `coletar_cvm.py`: o LTM usa o acumulado do ano anterior **reapresentado** (coluna PENÚLTIMO do ITR corrente) e
+  registra `reapresentados` quando difere > 0,5% do ITR original; a SMTO3 (exercício abr–mar) monta FY(mar/26) + YTD abr–jun/26 − YTD
+  anterior; componente ausente vira `lacunas` e erro vira `erro` + aviso (antes: `except: pass`). **Os dados não foram regravados — decisão
+  do Frank.** Impacto medido se regravar (motor com o LTM novo, só os 4): palavras não mudam; ISAE4 EBIT −3,2% / lucro −5,8%, SLCE3 FCO
+  −3,6%, KEPL3 FCO −1,3% (central/P/C iguais à 6ª casa); **SMTO3** receita −4,4%, EBIT −8,2%, FCO −11,3%, central 16,03 → 14,68 (P/C 1,21 → 1,32,
+  segue CARA). Lacunas hoje no arquivo: SAPR11 e TIMS3 sem `lucro_controlador`, CMIG4 sem `capex` no LTM.
+- **AUD-23 (JCP duplicado).** O dossiê reusa a regra de duplicata do backtest (`sem_repeticao`, 1% dentro de ticker+data-com+tipo): DPA 2024
+  da HYPE3 1,2651 → 1,1678 (= StatusInvest); `carregar` grava `divergencias_b3_si` (alerta > 3%). O veredito de HYPE3 de 02/10 não foi
+  refeito (dpa5 ~−1,6%); vale na próxima data de dossiê.
+- **AUD-81 (macro).** `coletar_macro_fred.py` baixa as 9 séries FRED e a PTAX (SGS 3698), confere a parte comum (divergência = nada gravado,
+  `--aceitar-revisoes` para revisão do BLS), guarda o arquivo anterior em `_historico/` e escreve `dados/macro/MANIFESTO_MACRO.json` (URL,
+  data de coleta, intervalo, sha256); os 10 arquivos existentes entraram no manifesto como "coleta anterior a 09/10/2026". Os dados macro
+  não foram rebaixados.
+- **AUD-83/84 (histórico).** `monitor/historico.csv` agora é upsert por (rodada, pregão, ticker) — 164 → 123 linhas, as 41 repetidas eram
+  idênticas; original em `_historico/2026-10-09 monitor historico/`. `historico_arquivos.py` (`guardar`/`gravar_texto`) copia o vigente
+  para `_historico/AAAA-MM-DD <rótulo>/` antes de regravar: 6 `atualizar_hall_lote*`, `hall03 --corrigir`, `triagem/rodar` (o 06), 6 `gerar_pdf_lote*`
+  e o histórico do monitor; só copia quando o conteúdo muda (CRLF×LF não conta).

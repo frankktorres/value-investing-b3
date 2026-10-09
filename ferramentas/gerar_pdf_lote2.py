@@ -4,6 +4,7 @@ import copy
 import pathlib
 import sys
 
+from historico_arquivos import guardar
 from reportlab.lib import colors
 from reportlab.lib.pagesizes import A4
 from reportlab.lib.units import mm
@@ -258,6 +259,7 @@ def main():
         r["tir"] = tir_real(r)
         r["ke14"] = central_ao_ke(e, MK, KE_REF)
         res.append(r)
+    guardar(SAIDA, "pdf lote 2")      # AUD-84: o PDF anterior do mesmo nome vai para _historico/
     doc = SimpleDocTemplate(str(SAIDA), pagesize=A4, leftMargin=14 * mm, rightMargin=14 * mm, topMargin=12 * mm, bottomMargin=14 * mm,
                             title="Lote 2 — Energia elétrica e saneamento · rev. 09/10/2026", author="Mesa de Value Investing")
     story = []

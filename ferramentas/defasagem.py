@@ -4,6 +4,7 @@ Doutrina §6.3: o provento é trazido a valor presente ao Ke nominal pela defasa
 Amortização/redução de capital fica fora (não é provento, §6.4); eventos sem data de pagamento são ignorados.
 """
 import json
+import series_vigente
 import pathlib
 from datetime import datetime
 
@@ -17,7 +18,7 @@ _SI = None
 def _series():
     global _SI
     if _SI is None:
-        _SI = json.loads(sorted((AQUI / "dados").glob("series_*.json"))[-1].read_text(encoding="utf-8"))
+        _SI = series_vigente.carregar()
     return _SI
 
 

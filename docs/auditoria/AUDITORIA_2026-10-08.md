@@ -394,6 +394,8 @@ Proposta, sem execução. Qualquer mudança que mexa em central ou palavra exige
 2. **Reprodutibilidade:** AUD-38 e AUD-73 (requirements, bootstrap, import tolerante), AUD-109 (manifesto sha256 dos ZIPs), AUD-108 (EOL do golden_sha), AUD-102 (integridade do registro), AUD-82 (preço real no registro), AUD-24 (series vigente), AUD-26 e AUD-86 (estado compartilhado e coletor), AUD-21, AUD-22 e AUD-23 (LTM e proventos), AUD-81 (coletor FRED e PTAX), AUD-83 (histórico do monitor), AUD-84 (histórico antes de sobrescrever).
 3. **Testes que não distinguem certo de errado:** AUD-17, AUD-27, AUD-28, AUD-30, AUD-31 (fórmulas, limiares, NaN, ROIC real), AUD-88 e AUD-90 (bordas), AUD-29 e AUD-107 (sentinela PIT), AUD-89 (skip silencioso), AUD-91 (paridade do motor reduzido).
 
+**Status da Onda 2 (09/10/2026):** feitos AUD-05, 17, 27, 28, 30, 31, 38, 73, 88, 89, 90, 108, 109 (partes 1 e 2) e, na 3ª parte, AUD-102, 82, 24, 26, 86, 21, 22, 23, 81, 83, 84 (detalhes no `09`). Pendentes: AUD-29 e 107 (sentinela PIT) e AUD-91 (paridade do motor reduzido). Os dados do LTM (AUD-21/22) **não foram regravados**: o coletor está corrigido, mas `cvm_series.json` segue com o LTM antigo até decisão do Frank (impacto medido no `09`: só o central da SMTO3 move, 16,03 → 14,68).
+
 ### Onda 3 — riscos latentes
 
 - **Motor:** AUD-10, AUD-11, AUD-14, AUD-15, AUD-34, AUD-39, AUD-47, AUD-50, AUD-51, AUD-52, AUD-53, AUD-54, AUD-55, AUD-56, AUD-59, AUD-63, AUD-66, AUD-85, AUD-103, AUD-25.

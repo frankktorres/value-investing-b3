@@ -84,6 +84,11 @@ N = obter("lote4.acoes_jun26", ["itr_2026.zip"], lambda: {tk: _acoes_zip(tk) for
 
 # ---------------------------------------------------------------- proventos corrigidos (StatusInvest)
 def corrigir_proventos():
+    """Reescreve em SI (memória compartilhada com os outros lotes e o dossiê) o DPA/JCP por data-com dos 7 tickers do lote.
+
+    AUD-26: IDEMPOTENTE — recalcula tudo a partir de `s["eventos"]`, nunca do resultado anterior —, mas o efeito é por
+    import: quem lê SI antes de importar este módulo vê o DPA da StatusInvest sem correção (VIVT3 2026: 2,098 antes
+    contra 0,846 depois). `tests/test_aud24_26_estado.py` fixa a idempotência e a igualdade entre as ordens de import."""
     for tk in PRECO:
         s = SI[tk]
         dpa, jc = {}, {}

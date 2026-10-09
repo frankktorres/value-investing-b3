@@ -7,6 +7,7 @@ from __future__ import annotations
 
 from ltm import ltm_de, ltm_ref_de
 import json
+import series_vigente
 import math
 import pathlib
 from dataclasses import dataclass, field, replace
@@ -25,7 +26,7 @@ from motor_financeiras import (ANOS_ROIC_MINIMO, HORIZONTE, IR_JCP, NOTA_QUALIDA
 
 AQUI = pathlib.Path(__file__).parent
 CVM = json.loads((AQUI / "dados" / "cvm_series.json").read_text(encoding="utf-8"))
-SI = json.loads(sorted((AQUI / "dados").glob("series_*.json"))[-1].read_text(encoding="utf-8"))
+SI = series_vigente.carregar()
 ANOS = [str(a) for a in range(2016, 2026)]
 LIMITE_QUEBRA = 0.25      # §11.4: divergência entre a mediana de 5 anos e a da janela que levanta suspeita de quebra
 JANELA_MINIMA_SAIDA = 10  # §9: a exceção de qualidade exige histórico de ciclo inteiro; janela curta não a permite

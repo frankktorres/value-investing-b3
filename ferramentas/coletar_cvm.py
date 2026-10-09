@@ -268,8 +268,12 @@ def anual(tk, ano):
     return res, aud
 
 
-def itr_ytd(tk, ano, mes=6):
-    """Fluxos acumulados no ano até o trimestre (DRE e DFC) e balanço da data, do ITR."""
+def itr_ytd(tk, ano, mes=6, comparativo=False, mes_ini="01"):
+    """Fluxos acumulados no exercício até o trimestre (DRE e DFC) e balanço da data, do ITR.
+
+    `comparativo=True` (AUD-21) lê a coluna PENÚLTIMO EXERCÍCIO do mesmo ITR — o acumulado do ano anterior como a
+    empresa o REAPRESENTA hoje; o ITR do ano anterior traz o valor original, que difere quando há reapresentação.
+    `mes_ini` (AUD-22) é o mês em que o exercício começa: "01" para ano-calendário, "04" para a São Martinho."""
     regex, _ = EMPRESAS[tk]
     z = zip_de("ITR", ano)
     res = {}
@@ -278,9 +282,12 @@ def itr_ytd(tk, ano, mes=6):
         if d is None or d.empty:
             continue
         d = d[d["DT_REFER"].str[5:7].astype(int) == mes]
-        d = d[d["ORDEM_EXERC"].str.upper().str.startswith("ÚLTIMO") | d["ORDEM_EXERC"].str.upper().str.startswith("ULTIMO")]
+        ordem = d["ORDEM_EXERC"].str.upper().str.replace("Ú", "U")
+        d = d[ordem.str.startswith("PENULTIMO" if comparativo else "ULTIMO")]
+        if comparativo and not fluxo:
+            continue                                          # balanço do comparativo é o de dez/ano anterior: não serve
         if fluxo and "DT_INI_EXERC" in d:
-            d = d[d["DT_INI_EXERC"].str[5:7] == "01"]          # acumulado no ano
+            d = d[d["DT_INI_EXERC"].str[5:7] == mes_ini]       # acumulado no exercício
         res.update(contas(d, mapa))
         res.update(extras_bp(d))
         if nome == "DRE_con":
@@ -297,6 +304,35 @@ def rotulo_ltm(ano, mes):
     return f"{mes // 3}T{ano % 100:02d}"
 
 
+CHAVES_FLUXO = (*DRE, *DFC, "da", "capex", "dividendos_pagos", "recompra", "arrendamento_pago",
+                "arrendamento_pago_com_juros", "juros_pagos", "vj_biologico", "impairment", "impairment_outras")
+CHAVES_BALANCO = (*BPA, *BPP, "arrendamento", "arrendamento_saldo", "biologico", "proventos_a_pagar")
+TOL_REAPRESENTACAO = 0.005       # AUD-21: ITR original × comparativo reapresentado acima de 0,5% é registrado
+
+
+def combinar_ltm(fy, atual, anterior, original=None):
+    """LTM = exercício + acumulado atual − acumulado anterior (fluxos); balanço da data do ITR.
+
+    Devolve (ltm, lacunas, reapresentados). `lacunas` (AUD-86): fluxos que existem em ALGUM dos três componentes mas
+    faltam em outro — ficam fora do LTM, e o motor trata ausente como 0, então tem de ser visível. `reapresentados`
+    (AUD-21): [(chave, original, comparativo)] onde o ITR do ano anterior (`original`) difere do comparativo > 0,5%."""
+    ltm, lacunas, reap = {}, [], []
+    for k in CHAVES_FLUXO:
+        partes = (fy.get(k), atual.get(k), anterior.get(k))
+        if None in partes:
+            if any(x is not None for x in partes):
+                lacunas.append(k)
+            continue
+        ltm[k] = fy[k] + atual[k] - anterior[k]
+        o = (original or {}).get(k)
+        if o is not None and abs(o - anterior[k]) > TOL_REAPRESENTACAO * max(abs(o), abs(anterior[k]), 1.0):
+            reap.append((k, o, anterior[k]))
+    for k in CHAVES_BALANCO:
+        ltm[k] = atual.get(k)
+    ltm["acoes"] = fy.get("acoes")
+    return ltm, lacunas, reap
+
+
 def main(tks, anos=range(2016, 2026), arq=None, ano_itr=2026, mes=6):
     """mes = mês do ITR que fecha o LTM (6 → 2T, 9 → 3T). Grava "ltm", "ltm_ref" e "ltm_<ref>"."""
     saida = {}
@@ -309,29 +345,28 @@ def main(tks, anos=range(2016, 2026), arq=None, ano_itr=2026, mes=6):
                 serie[a], auditoria[a] = anual(tk, a)
             except Exception as ex:  # ano sem arquivo ou empresa sem dado
                 serie[a], auditoria[a] = {"erro": str(ex)}, {}
-        # LTM até o trimestre = exercício anterior + YTD atual − YTD anterior (fluxos); balanço da data do ITR
-        ltm = {}
-        if tk == "SMTO3":
-            ltm = dict(serie.get(2026, {}), nota="fluxos: exercício abr/2025–mar/2026 (DFP); balanço: ITR de jun/2026")
-            try:
-                b = itr_ytd(tk, ano_itr, mes)
-                for k in list(BPA) + list(BPP) + ["arrendamento", "arrendamento_saldo", "biologico", "proventos_a_pagar"]:
-                    if b.get(k) is not None:
-                        ltm[k] = b[k]
-            except Exception:
-                pass
-        else:
-          try:
-            y26, y25 = itr_ytd(tk, ano_itr, mes), itr_ytd(tk, ano_itr - 1, mes)
-            fy = serie.get(ano_itr - 1) or anual(tk, ano_itr - 1)[0]
-            for k in list(DRE) + list(DFC) + ["da", "capex", "dividendos_pagos", "recompra", "arrendamento_pago", "arrendamento_pago_com_juros", "juros_pagos", "vj_biologico", "impairment", "impairment_outras"]:
-                if None not in (fy.get(k), y26.get(k), y25.get(k)):
-                    ltm[k] = fy[k] + y26[k] - y25[k]
-            for k in list(BPA) + list(BPP) + ["arrendamento", "arrendamento_saldo", "biologico", "proventos_a_pagar"]:
-                ltm[k] = y26.get(k)
-            ltm["acoes"] = fy.get("acoes")
-          except Exception as ex:
+        # LTM até o trimestre = exercício anterior + YTD atual − YTD anterior (fluxos); balanço da data do ITR.
+        # SMTO3 (exercício abr–mar): o exercício anterior é o DFP de mar/ano_itr (arquivo ano_itr) e o YTD começa em abril (AUD-22).
+        ini, ano_fy = ("04", ano_itr) if tk == "SMTO3" else ("01", ano_itr - 1)
+        try:
+            atual = itr_ytd(tk, ano_itr, mes, mes_ini=ini)
+            anterior = itr_ytd(tk, ano_itr, mes, comparativo=True, mes_ini=ini)     # reapresentado (AUD-21)
+            original = itr_ytd(tk, ano_itr - 1, mes, mes_ini=ini)
+            fy = serie.get(ano_fy) or anual(tk, ano_fy)[0]
+            if not anterior.get("receita"):                  # ITR sem comparativo legível: cai no original, dito no registro
+                anterior, original = original, None
+            ltm, lacunas, reap = combinar_ltm(fy, atual, anterior, original)
+            if lacunas:
+                ltm["lacunas"] = lacunas
+                print(f"  AVISO {tk}: fluxos fora do LTM por componente ausente: {lacunas}")
+            if reap:
+                ltm["reapresentados"] = {k: {"original": o, "comparativo": c} for k, o, c in reap}
+                print(f"  AVISO {tk}: ITR do ano anterior reapresentado em {[k for k, _, _ in reap]}; LTM usa o comparativo")
+            if tk == "SMTO3":
+                ltm["nota"] = f"fluxos: exercício abr/{ano_fy - 1}–mar/{ano_fy} (DFP) + YTD abr–{rotulo_ltm(ano_itr, mes)} − YTD anterior"
+        except Exception as ex:
             ltm = {"erro": str(ex)}
+            print(f"  ERRO {tk}: LTM não montado — {ex}")
         saida[tk] = {"anual": serie, "ltm": ltm, "ltm_ref": ref, f"ltm_{ref}": ltm, "auditoria_linhas_dfc": auditoria, "acoes_por_unit": EMPRESAS[tk][1]}
         ok = [a for a in serie if serie[a].get("receita")]
         print(tk, "anos com DRE:", ok[0] if ok else None, "→", ok[-1] if ok else None, "| LTM receita:", ltm.get("receita"))

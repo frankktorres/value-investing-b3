@@ -61,6 +61,7 @@ def test_carteira_sem_palavra_aparece_nos_alertas():
 def _isolar(monkeypatch, tmp_path: Path, pregao: str):
     monkeypatch.setattr(M, "BOLETINS", tmp_path / "BOLETINS")
     monkeypatch.setattr(M, "HISTORICO", tmp_path / "historico.csv")
+    monkeypatch.setattr(M, "RAIZ", tmp_path)                  # AUD-84: _historico/ de teste não vai para o repo
     monkeypatch.setattr(M, "referencias_do_hall", lambda: {"AAAA3": dict(
         central=10.0, palavra="CARA", lote=1, compra=7.0, saida=13.0, saida_por_qualidade=False)})
     monkeypatch.setattr(M, "fila_do_06", lambda: pd.DataFrame())

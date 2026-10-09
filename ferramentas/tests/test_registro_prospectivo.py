@@ -72,6 +72,8 @@ def test_dossie_recusa_reescrever_e_linha_antiga_vale_hall(tmp_path):
     registrar("2026-10-02", "v2.2", _golden(tmp_path), antigo)
     ls = [{k: v for k, v in l.items() if k != "origem"} for l in ler(antigo)]
     antigo.write_text("".join(json.dumps(l) + "\n" for l in ls), encoding="utf-8")
+    from registro_prospectivo import _caminho_corrente, _corrente, _linhas_cruas
+    _caminho_corrente(antigo).write_text("".join(e + "\n" for e in _corrente(_linhas_cruas(antigo))), encoding="utf-8")
     assert registrar("2026-10-02", "v2.2", _golden(tmp_path), antigo) == 0
 
 
@@ -115,3 +117,49 @@ def test_aud108_sha_do_golden_nao_depende_do_eol(tmp_path):
     registrar("2026-10-02", "v2.2", g_lf, tmp_path / "a.jsonl", hoje="2026-10-06")
     registrar("2026-10-02", "v2.2", g_crlf, tmp_path / "b.jsonl", hoje="2026-10-06")
     assert {l["golden_sha"] for l in ler(tmp_path / "a.jsonl")} == {l["golden_sha"] for l in ler(tmp_path / "b.jsonl")}
+
+
+def test_aud102_corrente_acusa_adulteracao_do_passado(tmp_path):
+    """AUD-102: editar, apagar ou inserir linha antiga tem de ser acusado; o registro intacto passa."""
+    from registro_prospectivo import verificar
+    reg = tmp_path / "r.jsonl"
+    registrar("2026-10-02", "v2.2", _golden(tmp_path), reg)
+    registrar("2026-11-02", "v2.2", _golden(tmp_path, pc=1.5), reg)
+    assert verificar(reg) == []
+    original = reg.read_text(encoding="utf-8")
+    reg.write_text(original.replace('"CARA"', '"BARATA"', 1), encoding="utf-8")      # CARA → BARATA
+    assert verificar(reg) != []
+    reg.write_text("\n".join(original.splitlines()[1:]) + "\n", encoding="utf-8")     # apaga a 1ª linha
+    assert verificar(reg) != []
+    reg.write_text(original + original.splitlines()[0] + "\n", encoding="utf-8")      # acrescenta à mão
+    assert verificar(reg) != []
+    with pytest.raises(ValueError, match="adulterado"):
+        registrar("2027-01-04", "v2.2", _golden(tmp_path), reg)                       # nova data não "lava" o passado
+    reg.write_text(original, encoding="utf-8")
+    assert registrar("2027-01-04", "v2.2", _golden(tmp_path), reg) == 2
+    assert verificar(reg) == []
+
+
+def test_aud102_registro_real_integro():
+    """O registro versionado confere com a corrente versionada."""
+    from registro_prospectivo import verificar
+    assert verificar() == []
+
+
+def test_aud82_preco_oficial_vence_o_produto_arredondado(tmp_path):
+    """AUD-82: com o snapshot da data, o preço gravado é o fechamento (inclusive onde a P/C é ∞, como RECV3)."""
+    import precos_hall
+    reg = tmp_path / "r.jsonl"
+    g = {"motivo": "t", "tickers": {
+        "PRIO3": {"palavra": "CARA", "pc": 1.5, "central": 40.0, "lote": 5},
+        "RECV3": {"palavra": "NÃO CONCLUSIVO", "pc": math.inf, "central": -0.2, "lote": 5}}}
+    p = tmp_path / "g.json"
+    p.write_text(json.dumps(g), encoding="utf-8")
+    registrar(precos_hall.PRECO_DATA, "v2.5", p, reg, hoje="2026-10-09")
+    snap = precos_hall.ler()
+    por = {l["ticker"]: l["preco"] for l in ler(reg)}
+    assert por == {"PRIO3": snap["PRIO3"], "RECV3": snap["RECV3"]} and por["RECV3"] is not None
+    reg2 = tmp_path / "r2.jsonl"
+    registrar("2026-11-06", "v2.5", p, reg2, hoje="2026-11-06")             # data sem snapshot: cai no produto
+    por2 = {l["ticker"]: l["preco"] for l in ler(reg2)}
+    assert por2 == {"PRIO3": 60.0, "RECV3": None}

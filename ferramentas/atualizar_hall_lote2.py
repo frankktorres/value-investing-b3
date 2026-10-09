@@ -3,6 +3,7 @@ import pathlib
 import re
 import sys
 
+from historico_arquivos import gravar_texto
 from lote1_bancos import MK
 from lote2_energia import EMPRESAS
 from motor_financeiras import avaliar
@@ -51,7 +52,7 @@ def main():
            "); CPLE3, CSMG3 e SBSP3 rendem menos que o Tesouro. Razão (c): a rev. 03/10 usava ajustes avulsos e inflação de 4% |")
     t = "\n".join(l for l in t.split("\n") if not l.startswith("| 05/10/2026 | Lote 2 (8) |"))
     t = t.rstrip("\n") + "\n" + reg + "\n"
-    HALL.write_text(t, encoding="utf-8")
+    gravar_texto(HALL, t, "hall lote 2")      # AUD-84: o 03 anterior vai para _historico/
     print("ok")
 
 

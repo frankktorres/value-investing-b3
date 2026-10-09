@@ -111,3 +111,32 @@ def test_normalizacao_chamada_sozinha_e_linha_adotada_igual_ao_central():
         n = cmin3.normalizacao(dc)
     adotado = next(v for k, v in n["sensibilidade"].items() if k.startswith("c "))
     assert adotado["central"] == pytest.approx(METODO_ONDA_1_1.get(atual, salvo)["central"], abs=1e-3)
+
+
+def test_aud23_b3_repete_linha_de_jcp_e_a_soma_nao_dobra():
+    """AUD-23: HYPE3 01/02/2024 vem duas vezes idêntica na B3; a regra do backtest tem de valer no dossiê."""
+    import pandas as pd
+
+    from backtest.precos.proventos_b3 import sem_repeticao
+    d = pd.DataFrame([("HYPERA", "2024-02-01", "JRS CAP PROPRIO", 0.09725)] * 2
+                     + [("HYPERA", "2024-02-22", "JRS CAP PROPRIO", 0.09725),
+                        ("HYPERA", "2024-12-27", "JRS CAP PROPRIO", 0.16911),
+                        ("HYPERA", "2024-12-27", "DIVIDENDO", 0.12170)],
+                     columns=["nome", "data_com", "tipo", "valor"])
+    u = sem_repeticao(d, ["nome", "data_com", "tipo"])
+    assert len(u) == 4 and u["valor"].sum() == pytest.approx(0.09725 * 2 + 0.16911 + 0.12170)
+
+
+@requer_suplemento_b3
+def test_aud23_dpa_real_da_hype3_2024_bate_com_a_statusinvest():
+    from dossie import base
+    dpa, _ = base.proventos_b3("HYPE3")
+    assert dpa["2024"] == pytest.approx(1.1678, abs=1e-3)        # era 1,2651 com a linha duplicada
+    assert base.divergencias_b3_si({"2024": 1.1678}, {"2024": 1.1678}) == []
+
+
+def test_aud23_divergencia_acima_de_3_por_cento_vira_alerta():
+    from dossie import base
+    assert base.divergencias_b3_si({"2024": 1.2651}, {"2024": 1.1678}) == [("2024", 1.2651, 1.1678)]
+    assert base.divergencias_b3_si({"2024": 1.20}, {"2024": 1.19}) == []
+    assert [a for a, _, _ in base.divergencias_b3_si({"2024": 1.0}, {"2025": 1.0})] == ["2024", "2025"]

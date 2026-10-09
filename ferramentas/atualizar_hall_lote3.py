@@ -3,6 +3,7 @@ import pathlib
 import re
 import sys
 
+from historico_arquivos import gravar_texto
 from lote1_bancos import MK
 from lote3_agro import EMPRESAS
 from motor_nao_financeiras import avaliar
@@ -57,7 +58,7 @@ def main():
            "números redondos e múltiplos de EBITDA sem capex de manutenção |")
     t = "\n".join(l for l in t.split("\n") if not l.startswith("| 04/10/2026 | Lote 3 (7) |"))
     t = t.rstrip("\n") + "\n" + reg + "\n"
-    HALL.write_text(t, encoding="utf-8")
+    gravar_texto(HALL, t, "hall lote 3")      # AUD-84: o 03 anterior vai para _historico/
     print("ok")
 
 

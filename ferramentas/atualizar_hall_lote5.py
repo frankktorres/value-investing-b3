@@ -3,6 +3,7 @@ import pathlib
 import re
 import sys
 
+from historico_arquivos import gravar_texto
 from lote1_bancos import MK
 from lote5_petroleo import EMPRESAS, FORA_DO_HALL
 from motor_nao_financeiras import avaliar
@@ -86,7 +87,7 @@ def main():
              "e '+1 tri de topo' |")
     t = "\n".join(l for l in t.split("\n") if not l.startswith("| 05/10/2026 | Lote 5 (5) |"))
     t = t.rstrip("\n") + "\n" + reg + "\n"
-    HALL.write_text(t, encoding="utf-8")
+    gravar_texto(HALL, t, "hall lote 5")      # AUD-84: o 03 anterior vai para _historico/
     print("ok")
 
 

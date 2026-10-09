@@ -14,7 +14,14 @@ Regras:
     ticker pode estar no hall e no dossiê sem colidir;
   · registra o golden aprovado (o estado que passou no `rodar_tudo.py`), com o sha do golden e a
     versão da doutrina — a régua que produziu cada linha fica identificável;
-  · vai para o git (`prospectivo/registro.jsonl`), não para `dados/`: é evidência, não cache.
+  · vai para o git (`prospectivo/registro.jsonl`), não para `dados/`: é evidência, não cache;
+  · AUD-102: o append-only é conferido, não só combinado. `prospectivo/registro.chain` guarda, por linha, o sha256
+    encadeado (sha(anterior + linha)); `verificar()` recalcula e acusa linha editada, apagada ou inserida. Linha
+    acrescentada à mão sem passar por `_gravar` também é acusada (a corrente não cobre). Limite: quem reescreve
+    registro E corrente juntos passa — o git (`git diff HEAD`) é a segunda trava;
+  · AUD-82: o preço gravado é o fechamento oficial do snapshot `dados/precos_hall_<data>.csv` quando a data do
+    preço é a dele; fora disso cai em pc × central arredondado (None se a P/C não existe). Linhas já gravadas
+    em 02/10/2026 (PRIO3, UGPA3, UNIP6, VBBR3 com preço de site; RECV3 None) ficam como estão: o passado não se edita.
 
 Avaliação DECLARADA AGORA, antes de existir resultado (mudar depois = olhar o resultado):
   · horizonte principal 1 ano, direção em 3 anos, a partir de `data_preco`;
@@ -55,14 +62,23 @@ def sha_arquivo(bruto: bytes) -> str:
     return hashlib.sha256(bruto.replace(b"\r\n", b"\n")).hexdigest()[:16]
 
 
+def precos_oficiais(data_preco: str) -> dict[str, float]:
+    """Fechamentos do snapshot do hall quando `data_preco` é a data dele; senão vazio (AUD-82)."""
+    import precos_hall
+    return precos_hall.ler() if data_preco == precos_hall.PRECO_DATA else {}
+
+
 def linhas_do_golden(golden: dict, data_preco: str, doutrina: str, sha: str,
-                     hoje: str) -> list[dict]:
+                     hoje: str, precos: dict[str, float] | None = None) -> list[dict]:
     out = []
+    precos = precos or {}
     for tk in sorted(golden["tickers"]):
         g = golden["tickers"][tk]
         pc, central = g["pc"], g["central"]
-        # o golden guarda pc e central arredondados: o produto volta com ruído de float
-        preco = round(pc * central, 2) if math.isfinite(pc) else None
+        # o golden guarda pc e central arredondados: o produto volta com ruído de float — só vale sem preço oficial
+        preco = precos.get(tk)
+        if preco is None:
+            preco = round(pc * central, 2) if math.isfinite(pc) else None
         out.append({"origem": "hall", "data_preco": data_preco, "ticker": tk, "preco": preco,
                     **{c: (None if isinstance(g[c], float) and math.isinf(g[c]) else g[c])
                        for c in CAMPOS},
@@ -95,7 +111,46 @@ def linhas_dos_vereditos(pasta: pathlib.Path, hoje: str) -> list[dict]:
     return out
 
 
+def _elo(anterior: str, linha: str) -> str:
+    return hashlib.sha256((anterior + linha).encode("utf-8")).hexdigest()
+
+
+def _corrente(linhas: list[str]) -> list[str]:
+    out, h = [], ""
+    for x in linhas:
+        h = _elo(h, x)
+        out.append(h)
+    return out
+
+
+def _caminho_corrente(caminho: pathlib.Path) -> pathlib.Path:
+    return caminho.with_suffix(".chain")
+
+
+def _linhas_cruas(caminho: pathlib.Path) -> list[str]:
+    if not caminho.exists():
+        return []
+    return [x for x in caminho.read_text(encoding="utf-8").splitlines() if x.strip()]
+
+
+def verificar(caminho: pathlib.Path = REGISTRO) -> list[str]:
+    """Problemas de integridade do registro contra a corrente (lista vazia = íntegro). AUD-102."""
+    linhas = _linhas_cruas(caminho)
+    cc = _caminho_corrente(caminho)
+    guardada = cc.read_text(encoding="utf-8").split() if cc.exists() else []
+    if not guardada and linhas:
+        return [f"{cc.name} ausente ou vazio: registro sem corrente"]
+    esperada = _corrente(linhas)
+    if len(guardada) != len(esperada):
+        return [f"{len(linhas)} linhas no registro, {len(guardada)} na corrente"]
+    return [f"linha {i + 1} ({json.loads(linhas[i]).get('ticker')}) não bate com a corrente: editada, "
+            "apagada ou inserida" for i, (a, b) in enumerate(zip(guardada, esperada)) if a != b][:5]
+
+
 def _gravar(novas: list[dict], caminho: pathlib.Path) -> int:
+    problemas = verificar(caminho)
+    if problemas:
+        raise ValueError(f"registro adulterado, nada gravado (AUD-102): {problemas}")
     existentes = {(l.get("origem", "hall"), l["data_preco"], l["ticker"]): l for l in ler(caminho)}
     a_gravar, vistas = [], set()
     for l in novas:
@@ -113,9 +168,27 @@ def _gravar(novas: list[dict], caminho: pathlib.Path) -> int:
                              "com outro valor — registro é append-only; use outra data de preço")
     if a_gravar:
         caminho.parent.mkdir(exist_ok=True)
-        with caminho.open("a", encoding="utf-8", newline="\n") as f:
-            for l in a_gravar:
-                f.write(json.dumps(l, ensure_ascii=False, sort_keys=True) + "\n")
+        textos = [json.dumps(l, ensure_ascii=False, sort_keys=True) for l in a_gravar]
+        antes = _corrente(_linhas_cruas(caminho))
+        h, elos = (antes[-1] if antes else ""), []
+        for x in textos:
+            h = _elo(h, x)
+            elos.append(h)
+        cc = _caminho_corrente(caminho)
+        tam = {p: p.stat().st_size if p.exists() else None for p in (caminho, cc)}
+        try:
+            with caminho.open("a", encoding="utf-8", newline="\n") as f:
+                f.write("".join(x + "\n" for x in textos))
+            with cc.open("a", encoding="utf-8", newline="\n") as f:
+                f.write("".join(e + "\n" for e in elos))
+        except BaseException:
+            for p, n in tam.items():            # falha no meio: desfaz, senão o registro fica "adulterado" para sempre
+                if n is None:
+                    p.unlink(missing_ok=True)
+                elif p.exists():
+                    with p.open("r+b") as f:
+                        f.truncate(n)
+            raise
     return len(a_gravar)
 
 
@@ -125,7 +198,7 @@ def registrar(data_preco: str, doutrina: str, golden_path: pathlib.Path = GOLDEN
     bruto = golden_path.read_bytes()
     sha = sha_arquivo(bruto)
     novas = linhas_do_golden(json.loads(bruto.decode("utf-8")), data_preco, doutrina, sha,
-                             hoje or dt.date.today().isoformat())
+                             hoje or dt.date.today().isoformat(), precos_oficiais(data_preco))
     return _gravar(novas, caminho)
 
 
@@ -141,7 +214,12 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--doutrina", help="versão da doutrina, ex.: v2.2")
     ap.add_argument("--dossie", action="store_true",
                     help="registra os vereditos de dossie/vereditos/*.json (origem 'dossie')")
+    ap.add_argument("--verificar", action="store_true", help="confere a corrente do registro (AUD-102)")
     a = ap.parse_args(argv)
+    if a.verificar:
+        p = verificar()
+        print("registro íntegro" if not p else "\n".join(p))
+        return 1 if p else 0
     if a.dossie and (a.data_preco or a.doutrina):
         ap.error("--dossie não combina com --data-preco/--doutrina")
     if a.dossie:

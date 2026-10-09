@@ -25,6 +25,7 @@ from __future__ import annotations
 import argparse
 import csv
 import datetime as dt
+import io
 import math
 import shutil
 import sys
@@ -33,6 +34,8 @@ import traceback
 from pathlib import Path
 
 import pandas as pd
+
+from historico_arquivos import guardar
 
 AQUI = Path(__file__).resolve().parent
 RAIZ = AQUI.parent
@@ -245,14 +248,24 @@ def gravar_historico(hall: list[dict], pregao: str, hoje: str, caminho: Path | N
     # `HISTORICO` gravava no histórico versionado (achado na Onda 1.3)
     caminho = caminho or HISTORICO
     caminho.parent.mkdir(parents=True, exist_ok=True)
-    novo = not caminho.exists()
-    with caminho.open("a", encoding="utf-8", newline="") as f:
-        w = csv.writer(f)
-        if novo:
-            w.writerow(["rodada", "pregao", "ticker", "preco", "central", "pc", "alerta"])
-        for x in hall:
-            w.writerow([hoje, pregao, x["ticker"], x["preco"], x["central"],
-                        round(x["pc"], 4) if math.isfinite(x["pc"]) else "", x["alerta"]])
+    cab = ["rodada", "pregao", "ticker", "preco", "central", "pc", "alerta"]
+    linhas: dict[tuple[str, str, str], list] = {}
+    if caminho.exists():
+        with caminho.open(encoding="utf-8", newline="") as f:
+            for r in csv.reader(f):
+                if r and r != cab:
+                    linhas[(r[0], r[1], r[2])] = r
+    # AUD-83: upsert por (rodada, pregão, ticker) — rodar o monitor duas vezes no mesmo dia substitui, não duplica
+    for x in hall:
+        linhas[(hoje, pregao, x["ticker"])] = [hoje, pregao, x["ticker"], x["preco"], x["central"],
+                                              round(x["pc"], 4) if math.isfinite(x["pc"]) else "", x["alerta"]]
+    buf = io.StringIO(newline="")
+    w = csv.writer(buf)
+    w.writerow(cab)
+    w.writerows(linhas.values())
+    novo = buf.getvalue().encode("utf-8")
+    guardar(caminho, "monitor historico", novo, RAIZ)      # AUD-84: a versão anterior vai para _historico/
+    caminho.write_bytes(novo)
 
 
 def boletim_de(hoje: str) -> Path:

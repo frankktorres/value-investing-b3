@@ -10,6 +10,7 @@ import lote3_agro
 import lote5_petroleo
 import lote6_quimica
 from gerar_pdf_lote4 import FORA_DO_HALL, ranking_hall
+from historico_arquivos import gravar_texto
 from lote1_bancos import MK
 from lote4_saude_telecom import EMPRESAS, ITSA4, ITSA_ROE_LP, WEG_G1, sotp_partes
 from motor_financeiras import avaliar as avaliar_fin
@@ -126,7 +127,7 @@ def main():
              "Greenblatt do hall preenchido (§3) |")
     t = "\n".join(l for l in t.split("\n") if not l.startswith("| 05/10/2026 | Lote 4 (7) |"))
     t = t.rstrip("\n") + "\n" + reg + "\n"
-    HALL.write_text(t, encoding="utf-8")
+    gravar_texto(HALL, t, "hall lote 4")      # AUD-84: o 03 anterior vai para _historico/
     print("ok", {tk: (r["palavra"], round(r["central"], 2), round(r["pc"], 2)) for tk, r in res.items()})
     print("RF sim", sim, "empate", emp, "rerating", rr)
 

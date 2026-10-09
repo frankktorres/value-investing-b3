@@ -25,6 +25,8 @@ import re
 import sys
 from pathlib import Path
 
+from historico_arquivos import guardar
+
 AQUI = Path(__file__).resolve().parent
 RAIZ = AQUI.parent
 HALL = RAIZ / "03-hall-de-acoes.md"
@@ -194,8 +196,11 @@ def main(argv: list[str] | None = None) -> int:
     texto = HALL.read_text(encoding="utf-8")
     prompt = PROMPT.read_text(encoding="utf-8")
     if a.corrigir:
-        HALL.write_bytes(corrigir_texto(texto, esp).encode("utf-8"))
-        PROMPT.write_bytes(corrigir_prompt(prompt, esp).encode("utf-8"))
+        novo_hall, novo_prompt = corrigir_texto(texto, esp).encode("utf-8"), corrigir_prompt(prompt, esp).encode("utf-8")
+        guardar(HALL, "hall03 corrigir", novo_hall)           # AUD-84: versão anterior vai para _historico/
+        guardar(PROMPT, "hall03 corrigir", novo_prompt)
+        HALL.write_bytes(novo_hall)
+        PROMPT.write_bytes(novo_prompt)
         texto, prompt = HALL.read_text(encoding="utf-8"), PROMPT.read_text(encoding="utf-8")
     div = divergencias(texto, esp)
     for tk, campo, no03, motor in div:

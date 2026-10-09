@@ -1,0 +1,102 @@
+{
+ "brent_fred.csv": {
+  "coletado_em": "anterior a 2026-10-09 (data não registrada)",
+  "descricao": "Brent spot Europa, US$/bbl diário — EIA via FRED (nota A)",
+  "linhas": 10270,
+  "primeira": "1987-05-20",
+  "serie": "DCOILBRENTEU",
+  "sha256": "68b1b12a3e217ed57b60f53cea699e3fad740f714bbaa6d23afb96c8dac94c1e",
+  "ultima": "2026-09-29",
+  "url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=DCOILBRENTEU"
+ },
+ "cpi_us_fred.csv": {
+  "coletado_em": "anterior a 2026-10-09 (data não registrada)",
+  "descricao": "CPI-U EUA, índice mensal — BLS via FRED (nota A)",
+  "linhas": 956,
+  "primeira": "1947-01-01",
+  "serie": "CPIAUCSL",
+  "sha256": "f8ecddf53a9a9a74dda92c2c4204e6039466fcb744bc74171b73b5f6aac48119",
+  "ultima": "2026-08-01",
+  "url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=CPIAUCSL"
+ },
+ "fred_PCU3251803251804.csv": {
+  "coletado_em": "anterior a 2026-10-09 (data não registrada)",
+  "descricao": "PPI cloro-álcalis — BLS via FRED (nota A)",
+  "linhas": 549,
+  "primeira": "1980-12-01",
+  "serie": "PCU3251803251804",
+  "sha256": "d590dd7084259d76ebffb01140868fa4d3e44552b3ab772a9dff522e9a2401e6",
+  "ultima": "2026-08-01",
+  "url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=PCU3251803251804"
+ },
+ "fred_PIORECRUSDM.csv": {
+  "coletado_em": "anterior a 2026-10-09 (data não registrada)",
+  "descricao": "Minério de ferro 62% Fe CFR China, US$/t — FMI via FRED (nota B)",
+  "linhas": 415,
+  "primeira": "1992-01-01",
+  "serie": "PIORECRUSDM",
+  "sha256": "94f2e617c942cd5e04b16cc39a4bb3cf2518c101a901fc9e79cd66d3d4848328",
+  "ultima": "2026-07-01",
+  "url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=PIORECRUSDM"
+ },
+ "fred_WPU06130302.csv": {
+  "coletado_em": "anterior a 2026-10-09 (data não registrada)",
+  "descricao": "PPI soda cáustica — BLS via FRED (nota A)",
+  "linhas": 255,
+  "primeira": "2005-06-01",
+  "serie": "WPU06130302",
+  "sha256": "f669f2d1ad9404d69f932c2764bb63202979bb5f06e4386307ba279367700429",
+  "ultima": "2026-08-01",
+  "url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=WPU06130302"
+ },
+ "fred_WPU0662.csv": {
+  "coletado_em": "anterior a 2026-10-09 (data não registrada)",
+  "descricao": "PPI resinas termoplásticas (proxy do PVC) — BLS via FRED (nota A)",
+  "linhas": 549,
+  "primeira": "1980-12-01",
+  "serie": "WPU0662",
+  "sha256": "d1e422a9b8eb02b90178aa300cb25a6dc61e8d5b253b07febcc9f6a8813eb61a",
+  "ultima": "2026-08-01",
+  "url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=WPU0662"
+ },
+ "fred_WPU1012.csv": {
+  "coletado_em": "anterior a 2026-10-09 (data não registrada)",
+  "descricao": "PPI ferro-gusa e ferroligas — BLS via FRED (nota A)",
+  "linhas": 956,
+  "primeira": "1947-01-01",
+  "serie": "WPU1012",
+  "sha256": "3e303f7b22326c777c76a2497d9b097309c442120f8d8892e5255495c22d042e",
+  "ultima": "2026-08-01",
+  "url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=WPU1012"
+ },
+ "fred_WPU1017.csv": {
+  "coletado_em": "anterior a 2026-10-09 (data não registrada)",
+  "descricao": "PPI aço e produtos de aço — BLS via FRED (nota A)",
+  "linhas": 1052,
+  "primeira": "1939-01-01",
+  "serie": "WPU1017",
+  "sha256": "6c3e4055a9d8d411575fffb008e178afbe083c47e8d94e69159d6f59375be329",
+  "ultima": "2026-08-01",
+  "url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=WPU1017"
+ },
+ "fred_WPU101704.csv": {
+  "coletado_em": "anterior a 2026-10-09 (data não registrada)",
+  "descricao": "PPI aço, subgrupo — BLS via FRED (nota A)",
+  "linhas": 531,
+  "primeira": "1982-06-01",
+  "serie": "WPU101704",
+  "sha256": "0ff78d664c4172a6359f3f120ee853b1ffdab23a9cd65d020beaa3c0fb54b327",
+  "ultima": "2026-08-01",
+  "url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=WPU101704"
+ },
+ "ptax_media_mensal.json": {
+  "coletado_em": "anterior a 2026-10-09 (data não registrada)",
+  "descricao": "PTAX — taxa de câmbio livre, dólar americano (venda), média mensal — BCB SGS 3698 (nota A)",
+  "linhas": 141,
+  "primeira": "01/01/2015",
+  "serie": "3698",
+  "sha256": "b4987e46aa5ace2bb85186514dee23d0483e0bf9f41a1d2ce846bd4038907ccc",
+  "ultima": "01/09/2026",
+  "url": "https://api.bcb.gov.br/dados/serie/bcdata.sgs.3698/dados?formato=json&dataInicial=01/01/2015&dataFinal=..."
+ }
+}

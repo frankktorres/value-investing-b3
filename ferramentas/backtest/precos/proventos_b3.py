@@ -187,6 +187,14 @@ CONFERE_PRECO = 0.01
 DUPLICATA_TOL = 0.01
 
 
+def sem_repeticao(m: pd.DataFrame, chave: list[str]) -> pd.DataFrame:
+    """Uma linha por provento: dentro de `chave`, valor a <= DUPLICATA_TOL do anterior é a mesma linha (ver
+    `dinheiro_por_ticker`). Compartilhada com o dossiê (AUD-23), que antes somava as linhas repetidas da B3."""
+    m = m.sort_values([*chave, "valor"])
+    ant = m.groupby(chave)["valor"].shift(1)
+    return m[~((m["valor"] / ant - 1).abs() <= DUPLICATA_TOL)]
+
+
 def dinheiro_por_ticker(precos: pd.DataFrame, pregoes: list[str], linhagem: dict[str, str],
                         desde: str = "2014-01-01") -> tuple[pd.DataFrame, pd.DataFrame]:
     """Proventos casados a ticker, com data ex. Devolve (casados, não_casados).
@@ -228,9 +236,7 @@ def dinheiro_por_ticker(precos: pd.DataFrame, pregoes: list[str], linhagem: dict
     # repetição (achado do `adversario`): dentro de (ticker, data-com, tipo), valor a <= 1% do
     # anterior é a mesma linha. Proventos distintos no mesmo dia têm valores longe (PETR4 3T22:
     # 1,1558 e 1,6002).
-    m = m.sort_values(["ticker", "data_com", "tipo", "valor"])
-    ant = m.groupby(["ticker", "data_com", "tipo"])["valor"].shift(1)
-    m = m[~((m["valor"] / ant - 1).abs() <= DUPLICATA_TOL)]
+    m = sem_repeticao(m, ["ticker", "data_com", "tipo"])
     m["data_ex"] = [pregoes[i] if i < len(pregoes) else ""
                     for i in (bisect.bisect_right(pregoes, d) for d in m["data_com"])]
     m["valor_acao"] = m["valor"] / m["lote"]

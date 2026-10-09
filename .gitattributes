@@ -3,3 +3,5 @@ ferramentas/tests/golden.json text eol=lf
 ferramentas/prospectivo/*.jsonl text eol=lf
 ferramentas/dados/derivados_zip.json text eol=lf
 ferramentas/dados/cvm/MANIFESTO.json text eol=lf
+ferramentas/prospectivo/*.chain text eol=lf
+ferramentas/dados/macro/MANIFESTO_MACRO.json text eol=lf

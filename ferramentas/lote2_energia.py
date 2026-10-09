@@ -12,6 +12,7 @@ VPA/LPA/ROE/proventos: StatusInvest (base pós-bonificação, coerente com o pre
 """
 from ltm import ltm_de
 import json
+import series_vigente
 import pathlib
 import statistics as st
 import sys
@@ -22,7 +23,7 @@ from motor_financeiras import Financeira, avaliar, interp
 
 AQUI = pathlib.Path(__file__).parent
 CVM = json.loads((AQUI / "dados" / "cvm_series.json").read_text(encoding="utf-8"))
-SI = json.loads(sorted((AQUI / "dados").glob("series_*.json"))[-1].read_text(encoding="utf-8"))
+SI = series_vigente.carregar()
 QUAL = lambda moat, gestao, controlador, ciclo, fisher: dict(moat=moat, gestao=gestao, controlador=controlador, ciclo=ciclo, fisher=fisher)
 
 

@@ -3,6 +3,7 @@ import pathlib
 import re
 import sys
 
+from historico_arquivos import gravar_texto
 from lote1_bancos import MK
 from lote6_quimica import ACO, CLORO, EGIE, EGIE_DADOS, EMPRESAS
 from motor_financeiras import avaliar as avaliar_fin
@@ -86,7 +87,7 @@ def main():
              "transação; impairment pela conta-raiz): Lotes 2, 3 e 5 sem mudança de palavra (SUZB3 37,94 → 37,12) |")
     t = "\n".join(l for l in t.split("\n") if not l.startswith("| 05/10/2026 | Lote 6 (4) |"))
     t = t.rstrip("\n") + "\n" + reg + "\n"
-    HALL.write_text(t, encoding="utf-8")
+    gravar_texto(HALL, t, "hall lote 6")      # AUD-84: o 03 anterior vai para _historico/
     print("ok", {tk: (r["palavra"], round(r["central"], 2)) for tk, (_, r) in res.items()})
 
 

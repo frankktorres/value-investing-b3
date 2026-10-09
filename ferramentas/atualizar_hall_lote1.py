@@ -3,6 +3,7 @@ import pathlib
 import re
 import sys
 
+from historico_arquivos import gravar_texto
 from lote1_bancos import EMPRESAS, MK
 from motor_financeiras import avaliar
 
@@ -55,7 +56,7 @@ def main():
            "BBAS3 e BRSR6 falham 2 filtros (1 e 3) |")
     if "| 04/10/2026 | Lote 1 (10) |" not in t:
         t = t.rstrip("\n") + "\n" + reg + "\n"
-    HALL.write_text(t, encoding="utf-8")
+    gravar_texto(HALL, t, "hall lote 1")      # AUD-84: o 03 anterior vai para _historico/
     print("\n".join(novas))
 
 

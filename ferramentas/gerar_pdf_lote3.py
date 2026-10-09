@@ -5,6 +5,7 @@ import pathlib
 import sys
 
 import matplotlib.pyplot as plt
+from historico_arquivos import guardar
 from reportlab.lib import colors
 from reportlab.lib.pagesizes import A4
 from reportlab.lib.units import mm
@@ -310,6 +311,7 @@ def main():
     roc = sorted(res, key=lambda z: -(z["roc"] or 0))
     soma = {r["ticker"]: ey.index(r) + roc.index(r) for r in res}
     rank = {tk: i + 1 for i, (tk, _) in enumerate(sorted(soma.items(), key=lambda kv: kv[1]))}
+    guardar(SAIDA, "pdf lote 3")      # AUD-84: o PDF anterior do mesmo nome vai para _historico/
     doc = SimpleDocTemplate(str(SAIDA), pagesize=A4, leftMargin=14 * mm, rightMargin=14 * mm, topMargin=12 * mm, bottomMargin=14 * mm,
                             title="Lote 3 — Papel e celulose, B3 e agro · rev. 09/10/2026", author="Mesa de Value Investing")
     story = []

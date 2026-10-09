@@ -7,6 +7,7 @@ import sys
 from statistics import median
 
 import matplotlib.pyplot as plt
+from historico_arquivos import guardar
 from reportlab.lib import colors
 from reportlab.lib.pagesizes import A4
 from reportlab.lib.units import mm
@@ -541,6 +542,7 @@ def main():
     rank_hall = {z["ticker"]: z["pos"] for z in lin}
     rank_txt = {tk: f"{p}º de {len(lin)}" for tk, p in rank_hall.items()}
     todos = res + [ri]
+    guardar(SAIDA, "pdf lote 4")      # AUD-84: o PDF anterior do mesmo nome vai para _historico/
     doc = SimpleDocTemplate(str(SAIDA), pagesize=A4, leftMargin=14 * mm, rightMargin=14 * mm, topMargin=12 * mm, bottomMargin=14 * mm,
                             title=f"Lote 4 — Saúde, telecom e blue chips · rev. {REV.replace('-', '/')}", author="Mesa de Value Investing")
 

@@ -122,10 +122,11 @@ def eventos_em_acoes(tk: str, suplemento=None) -> list[dict]:
 def proventos_b3(tk: str) -> tuple[dict[str, float], dict[str, float]]:
     """DPA e JCP por ano da data-com (R$ por ação ON de HOJE), da API da B3: o provento com data-com anterior a uma
     bonificação ou desdobramento é dividido pelo multiplicador, para comparar com a quantidade atual de ações."""
-    from backtest.precos.proventos_b3 import carregar_dinheiro
+    from backtest.precos.proventos_b3 import carregar_dinheiro, sem_repeticao
     ev = eventos_em_acoes(tk)
     d = carregar_dinheiro()
     d = d[(d["nome"] == PREGAO[tk]) & (d["tipo_acao"] == "ON")]
+    d = sem_repeticao(d, ["nome", "data_com", "tipo"])        # AUD-23: a B3 repete a linha (HYPE3 01/02/2024 duas vezes)
     dpa, jcp = defaultdict(float), defaultdict(float)
     for _, e in d.iterrows():
         com = str(e["data_com"])[:10]
@@ -278,7 +279,22 @@ def carregar(tk: str, dia_statusinvest: str = "2026-10-07") -> dict:
     si_c = series_statusinvest(tk, dia_statusinvest)
     SI[tk] = {"dpa_por_ano_datacom": dpa, "jcp_por_ano_datacom": jcp, "eventos": si_c["eventos"],
               "dpa_statusinvest": {str(k): v for k, v in si_c["dpa_por_ano_datacom"].items()}}
+    SI[tk]["divergencias_b3_si"] = divergencias_b3_si(dpa, SI[tk]["dpa_statusinvest"])
     return SI[tk]
+
+
+TOL_B3_SI = 0.03           # AUD-23: DPA anual da B3 contra o da StatusInvest (fonte C): acima disso, alerta
+
+
+def divergencias_b3_si(dpa_b3: dict, dpa_si: dict, tol: float = TOL_B3_SI) -> list[tuple[str, float, float]]:
+    """[(ano, DPA B3, DPA StatusInvest)] onde os dois diferem mais que `tol` (relativo ao maior). Os anos só de um lado
+    entram: ou a B3 ou a StatusInvest não tem o ano, e isso também é divergência a olhar."""
+    out = []
+    for a in sorted(set(dpa_b3) | set(dpa_si)):
+        x, y = float(dpa_b3.get(a, 0.0)), float(dpa_si.get(a, 0.0))
+        if abs(x - y) > tol * max(abs(x), abs(y), 1e-12):
+            out.append((a, x, y))
+    return out
 
 
 def jcp_share(tk: str) -> float:
