@@ -504,3 +504,24 @@ reproduzido antes de mexer.
   levantaria `ValueError` (o sha entra na comparação do hall); o golden mudou desde então, então a rodada nunca mais é regravada. Registrado
   no docstring de `sha_arquivo`. *Fora do escopo, antigo:* `test_veredito_salvo_reproduz` tem 0 casos (todos os vereditos estão em SUPERADOS ou
   no método da Onda 1.1) — não confere nada hoje.
+
+### 09/10/2026 — TESTES QUE DISTINGUEM CERTO DE ERRADO + BACKUP: Onda 2, 2ª parte (AUD-05, 27, 28, 30, 31, 88, 89, 90)
+
+Nenhuma palavra, central ou regra mudou (golden intacto). Cada achado foi reproduzido por mutação antes do teste; os 17 mutantes
+abaixo agora morrem em `tests/test_aud27_31_formulas.py` (33 testes, números escritos à mão, sem importar as constantes do motor):
+nota de qualidade 8→5, saída 1,50→1,40 e 1,30→1,25, 8 de 10 anos→6, IRRF do JCP 17,5→15% e com sinal trocado, IR do resgate 15→10%,
+borda da régua (`<` no lugar de `<=`, 0,70→0,75), sinal da defasagem, ROIC nominal no lugar do real, `LIMIAR_ORIGEM` 0,15→0,10,
+`LIMITE_QUEBRA` 0,25→0,40, `JANELA_MINIMA_SAIDA` 10→8, `MINIMO_ANOS_ALIQUOTA` 3→2 e a checagem de NaN do golden.
+- **AUD-05 (backup).** O achado dizia "sem remoto"; hoje há remoto privado no GitHub, com `master` igual ao local. Faltava cópia do que
+  não se recria: `backup_dados.py` grava no OneDrive um ZIP (180+ arquivos, ~1 MB: `dados/` sem `cvm/`, mais o log append-only e a
+  consulta original do proxy) e um `git bundle`. Os 2 GB de ZIPs da CVM e COTAHIST são públicos e voltam pelo `bootstrap_dados.py`.
+  `ferramentas/dados/_historico/` (cópia anterior ao AUD-02) entrou no git.
+- **AUD-27/28/31/88/90.** `qualifica_saida(anos_serie, anos_acima, nota)` foi extraída do motor (mesma expressão) para ter limiar testável.
+  AUD-31: para os 41 tickers o teste refaz fora do motor o fator de defasagem, o yield líquido do JCP (0,175), o Bogle e o Bogle líquido real.
+- **AUD-30.** O golden tratava NaN como igual e `palavra(NaN)` dava CARA: agora NaN nunca é igual (nem a outro NaN) e `salvar` recusa NaN.
+- **AUD-89.** Skip por falta de dado não é verde: o resumo do pytest diz quantos pularam e `EXIGIR_DADOS=1` transforma skip (inclusive
+  de módulo) em falha; xfail continua xfail.
+- **Adversário (4 defeitos, todos corrigidos):** o backup deixava de fora `proxy_consultas.log` e `proxy_2026-10-05.json`; destino relativo
+  quebrava o bundle; destino dentro de `dados/` entrava no próprio ZIP; o hook tratava xfail como skip e não pegava skip de módulo.
+- **Aprendizado:** rodei a suíte enquanto o pytest do backtest ainda corria em segundo plano e deu 9 falhas falsas (ABEV3 e outros);
+  sozinha, a suíte passa. Regra de memória reforçada: nunca dois pytest ao mesmo tempo.

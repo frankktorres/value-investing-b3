@@ -3,6 +3,7 @@
 Uma mudança de método só passa se o diff for declarado: `python -m tests.regerar_golden --motivo "..."`.
 """
 import json
+import math
 import pathlib
 
 AQUI = pathlib.Path(__file__).parent
@@ -24,6 +25,10 @@ def carregar():
 
 
 def salvar(snap, motivo):
+    ruins = [(tk, k) for tk, d in snap.items() for k, x in d.items() if _nan(x)
+              or (k == "ancoras" and any(_nan(y) for y in x.values()))]
+    if ruins:
+        raise ValueError(f"golden com NaN não é gravado (AUD-30): {ruins}")
     from datetime import datetime
     GOLDEN.parent.mkdir(exist_ok=True)
     GOLDEN.write_text(json.dumps({"motivo": motivo, "tickers": snap}, ensure_ascii=False, indent=1, sort_keys=True), encoding="utf-8")
@@ -31,7 +36,13 @@ def salvar(snap, motivo):
         f.write(f"- {datetime.now():%Y-%m-%d %H:%M} — {motivo}\n")
 
 
+def _nan(x):
+    return isinstance(x, float) and math.isnan(x)
+
+
 def _difere(campo, a, b):
+    if _nan(a) or _nan(b):             # NaN nunca é igual a nada (AUD-30): nem a outro NaN, nem a si mesmo
+        return True
     if a is None or b is None:
         return a is not b
     if campo in EXATOS or isinstance(a, str):

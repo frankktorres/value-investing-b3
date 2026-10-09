@@ -1,5 +1,5 @@
 # PROJECT BRIEF — Mesa de Value Investing B3
-*Versão de 09/10/2026 (rev. Onda 2) · gerado por `/brief` · fonte: repositório, memória do projeto e `docs/auditoria/AUDITORIA_2026-10-08.md`*
+*Versão de 09/10/2026 (rev. Onda 2, 2ª parte) · gerado por `/brief` · fonte: repositório, memória do projeto e `docs/auditoria/AUDITORIA_2026-10-08.md`*
 
 ## 1. Projeto
 Mesa de análise fundamentalista da B3 para dividendos/JCP e longo prazo: doutrina escrita (v2.5) + motores de valuation em Python que
@@ -7,7 +7,7 @@ dão preço de compra, central e saída (régua 0,70/0,90/1,10/1,30×) para 41 e
 
 ## 2. Estágio
 MVP de uso pessoal, maduro no cálculo. Um usuário real, sem terceiros. Prazo externo conhecido: temporada do ITR 3T26 (fim de out–nov/2026,
-`ferramentas/temporada.py`). Onda 1 da auditoria concluída: 1.1 (bb79ba9), 1.2 (49b5f53 + dd9c3c1), 1.3 (gatilhos) e 1.4 (documentos) feitas; Onda 2 em andamento (reprodutibilidade: AUD-38/73/108/109/17 feitos; faltam AUD-102, 82, 24, 26, 86, 21–23, 81, 83, 84 e a parte "testes que escondem erro"). Meta de longo prazo: SaaS com front-end
+`ferramentas/temporada.py`). Onda 1 da auditoria concluída: 1.1 (bb79ba9), 1.2 (49b5f53 + dd9c3c1), 1.3 (gatilhos) e 1.4 (documentos) feitas; Onda 2 em andamento (feitos: reprodutibilidade AUD-38/73/108/109/17, backup AUD-05 e testes que distinguem certo de errado AUD-27/28/30/31/88/89/90; faltam AUD-91 e a reprodutibilidade AUD-102, 82, 24, 26, 86, 21–23, 81, 83, 84). Meta de longo prazo: SaaS com front-end
 (sem prazo).
 
 ## 3. Stack
@@ -23,12 +23,13 @@ MVP de uso pessoal, maduro no cálculo. Um usuário real, sem terceiros. Prazo e
 - **Doutrina e prompts (raiz, `00`–`09`):** regras, hall das 41, checklist anti-erro, diário de decisões — a "especificação".
 - **Motores:** `motor_nao_financeiras.py` e `motor_financeiras.py` (quadro clássico: Graham, Bazin, EPV, DCF, OE…, central = mediana); `fiscal.py`.
 - **Reprodutibilidade (Onda 2):** `bootstrap_dados.py` (receita: `--baixar`, `--verificar`, `--derivados`), `manifesto_cvm.py` (sha256 dos 77 ZIPs em `dados/cvm/MANIFESTO.json`), `derivados_zip.py` (os lotes 4 e 6 usam o snapshot `dados/derivados_zip.json` quando os ZIPs não estão no disco) e `dados_opcionais.py` (skip explícito do que depende do suplemento da B3). Clone limpo roda `pytest --ignore=backtest`.
+- **Backup (AUD-05):** o git tem remoto privado (GitHub `frankktorres/value-investing-b3`); `backup_dados.py` grava em `OneDrive/Backups/value-investing` um ZIP datado do que não se recria (`dados/` sem `cvm/`, mais `proxy_consultas.log` e `proxy_*.json` do backtest) e um `git bundle`. Os ZIPs da CVM e o COTAHIST são públicos e voltam pelo `bootstrap_dados.py`, então não entram.
 - **Coleta:** `coletar_cvm.py`, `coletar_macro.py`, `coletar_statusinvest.py`, `proventos_ex.py`, `ltm.py`.
 - **Lotes:** `loteN_*.py` (premissas digitadas) → `gerar_pdf_loteN.py`; `rodar_tudo.py` regrava o golden. O quadro do `03` e o hall do
   prompt de sexta são gerados do motor por `hall03.py` (Onda 1.3); preço oficial com data e fonte em `precos_hall.py`.
 - **`dossie/`:** anexo mecânico por ticker (FRE, notas por evidência, vereditos). **`triagem/`:** fila de toda a B3, sem veredito.
 - **`backtest/`:** ledger point-in-time + COTAHIST (parado no portão do proxy). **`monitor_semanal.py`**, **`temporada.py`**, **`registro_prospectivo.py`**.
-- **Testes:** pytest com golden dos 41 tickers: 393 no hall (09/10, Onda 2; num clone limpo 375 passam e 18 saem como pulados com motivo) + 301 no backtest (08/10, Onda 1.3). Mudança no `Mercado` ou nos motores exige rodar as duas suítes.
+- **Testes:** pytest com golden dos 41 tickers: 430 no hall (09/10, Onda 2 2ª parte; num clone limpo 413 passam e 18 saem como pulados, com aviso no resumo; `EXIGIR_DADOS=1` transforma skip em falha) + 301 no backtest (08/10, Onda 1.3). Mudança no `Mercado` ou nos motores exige rodar as duas suítes.
 
 ## 5. Top 5 gargalos
 1. **Insumos e premissas, não fórmulas.** Auditoria de 08/10: 109 achados, 5 ALTO; motores conferem a 0–0,36%, mas insumos movem o central
@@ -45,7 +46,7 @@ MVP de uso pessoal, maduro no cálculo. Um usuário real, sem terceiros. Prazo e
 
 ## 6. Próximos 3 marcos
 1. Onda 1 da auditoria concluída (1.1 a 1.4: PDFs reemitidos em v2.5, pasta de upload sincronizada, versões dos prompts, Ke/retorno do `03` gerados
-   pelo motor) → **Onda 2 (em andamento):** feitos clone do zero (AUD-38/73), manifesto dos ZIPs (109), EOL do golden_sha (108) e teste analítico do DDM (17); faltam o restante de reprodutibilidade (registro, coletores, LTM/proventos) e os testes que não distinguem certo de errado (AUD-27, 28, 30, 31, 88–91).
+   pelo motor) → **Onda 2 (em andamento):** feitos clone do zero (AUD-38/73), manifesto dos ZIPs (109), EOL do golden_sha (108), teste analítico do DDM (17), backup (05) e testes de fórmula/limiar/NaN/ROIC real/bordas/skip (27, 28, 30, 31, 88, 89, 90); faltam AUD-91 (paridade do motor reduzido) e o restante de reprodutibilidade (registro, coletores, LTM/proventos).
 2. Temporada 3T26: `python ferramentas/temporada.py` ao sair o ITR; régua congelada até lá.
 3. Etapa 6 / F6 — construção de carteira (tamanho de posição, concentração, caixa); depende de respostas do Frank.
 
@@ -92,3 +93,4 @@ Primeira versão.
 - 09/10/2026 (Onda 1.4): `hall03.py` também gera Ke implícito/retorno do `03`; 6 PDFs reemitidos (rev. 09-10-2026, v2.5); pasta de upload
   sincronizada (reenvio ao Desktop segue suspenso); gerador do lote 6 corrigido (`por_metodo`); estágio e marco 1 atualizados.
 - 09/10/2026 (Onda 2, 1ª parte): requirements, bootstrap, snapshot dos derivados de ZIP, manifesto sha256 dos ZIPs, sha do golden sem EOL, teste analítico do DDM/P/VP justificado; stack, arquitetura e marcos atualizados.
+- 09/10/2026 (Onda 2, 2ª parte): backup (AUD-05); testes de fórmula, limiares, NaN no golden, ROIC real e bordas (AUD-27/28/30/31/88/90); skip vira falha com `EXIGIR_DADOS=1` (AUD-89); `qualifica_saida` extraída do motor; stack, arquitetura e marcos atualizados.

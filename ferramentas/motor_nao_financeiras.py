@@ -769,6 +769,12 @@ def valores(emp: Industrial, mk: Mercado, ke_nom=None, margem=None, g_real=None,
                 roic_reposicao=roic_rep, roic_filtro=roic_filtro, cap_inv_reposicao=cap_rep, idade_imobilizado=idade_imob)
 
 
+def qualifica_saida(anos_serie: int, anos_acima: int, nota_qualidade: float) -> bool:
+    """§9, exceção de saída a 1,50×: série com ao menos 10 exercícios, ROIC real > WACC real em 8 deles e nota de qualidade ≥ 8."""
+    return (anos_serie >= JANELA_MINIMA_SAIDA and anos_acima >= ANOS_ROIC_MINIMO
+            and nota_qualidade >= NOTA_QUALIDADE_MINIMA)
+
+
 def roic_por_ano(emp: Industrial, w_real, t_ef, med_outras):
     """Série de ROIC a custo de reposição por exercício e quantos superaram o WACC — REAL contra REAL (§4, §9).
 
@@ -983,8 +989,7 @@ def avaliar(emp: Industrial, mk: Mercado) -> dict:
     serie_roic, anos_roic = roic_por_ano(emp, r["wacc_real"], r["aliquota"], r["op"]["med_outras"])
     # a exceção exige histórico de CICLO: janela declarada curta (quebra estrutural) não a permite, porque "8 de 10"
     # não tem referente numa janela de 5 ou 6 exercícios — e 5 anos não são um ciclo (§2)
-    por_qualidade = (len(serie_roic) >= JANELA_MINIMA_SAIDA and anos_roic >= ANOS_ROIC_MINIMO
-                     and n_qual >= NOTA_QUALIDADE_MINIMA)
+    por_qualidade = qualifica_saida(len(serie_roic), anos_roic, n_qual)
     return dict(r, ancoras=anc, central=central, dispersao=disp, confianca=conf, pc=pc, palavra_regua=p0, palavra=p,
                 **precos_de_referencia(central, por_qualidade), desc_controlador=desc,
                 roic_serie=serie_roic, roic_anos_acima=anos_roic, roic_anos_total=len(serie_roic),
