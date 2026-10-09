@@ -1,13 +1,13 @@
 # PROJECT BRIEF — Mesa de Value Investing B3
-*Versão de 08/10/2026 · gerado por `/brief` · fonte: repositório, memória do projeto e `docs/auditoria/AUDITORIA_2026-10-08.md`*
+*Versão de 08/10/2026 (rev. Onda 1.2) · gerado por `/brief` · fonte: repositório, memória do projeto e `docs/auditoria/AUDITORIA_2026-10-08.md`*
 
 ## 1. Projeto
-Mesa de análise fundamentalista da B3 para dividendos/JCP e longo prazo: doutrina escrita (v2.3) + motores de valuation em Python que
+Mesa de análise fundamentalista da B3 para dividendos/JCP e longo prazo: doutrina escrita (v2.4) + motores de valuation em Python que
 dão preço de compra, central e saída (régua 0,70/0,90/1,10/1,30×) para 41 empresas. Público hoje: um investidor pessoa física (uso próprio).
 
 ## 2. Estágio
 MVP de uso pessoal, maduro no cálculo. Um usuário real, sem terceiros. Prazo externo conhecido: temporada do ITR 3T26 (fim de out–nov/2026,
-`ferramentas/temporada.py`). Onda 1 da auditoria em andamento (1.1 com mudanças ainda não commitadas). Meta de longo prazo: SaaS com front-end
+`ferramentas/temporada.py`). Onda 1 da auditoria em andamento: 1.1 (bb79ba9) e 1.2 (49b5f53 + dd9c3c1) feitas; faltam 1.3 e 1.4. Meta de longo prazo: SaaS com front-end
 (sem prazo).
 
 ## 3. Stack
@@ -26,12 +26,13 @@ MVP de uso pessoal, maduro no cálculo. Um usuário real, sem terceiros. Prazo e
 - **Lotes:** `loteN_*.py` (premissas digitadas) → `gerar_pdf_loteN.py` → `atualizar_hall_loteN.py`; `rodar_tudo.py` regrava o golden.
 - **`dossie/`:** anexo mecânico por ticker (FRE, notas por evidência, vereditos). **`triagem/`:** fila de toda a B3, sem veredito.
 - **`backtest/`:** ledger point-in-time + COTAHIST (parado no portão do proxy). **`monitor_semanal.py`**, **`temporada.py`**, **`registro_prospectivo.py`**.
-- **Testes:** pytest com golden dos 41 tickers (~301 rápidos + ~220 do backtest, segundo a última sessão).
+- **Testes:** pytest com golden dos 41 tickers: 345 no hall + 301 no backtest (08/10, Onda 1.2). Mudança no `Mercado` ou nos motores exige rodar as duas suítes.
 
 ## 5. Top 5 gargalos
 1. **Insumos e premissas, não fórmulas.** Auditoria de 08/10: 109 achados, 5 ALTO; motores conferem a 0–0,36%, mas insumos movem o central
    em 5–48% (AUD-01 receita nominal × real, `motor_nao_financeiras.py:386`; AUD-02 dividendos fora da DL, `lote4_saude_telecom.py:193`;
-   AUD-03 IFRS 16 na PETR4; AUD-04 follow-on ISAE4). 12–13 empresas a uma premissa de trocar de palavra.
+   AUD-03 IFRS 16 na PETR4; AUD-04 follow-on ISAE4 — corrigidos na Onda 1.1). Na 1.2 (v2.4) o custo de capital passou a depender da dívida
+   (Ke por Hamada, pesos no ponto fixo, Kd sintético): os muito alavancados ficaram com Ke real de 21–27% (KLBN11 77%) — a vigiar.
 2. **Premissas digitadas no código e dados em data fixa.** Mercado de 02–06/10, premissas nos `lote*.py`, parte dos dados da StatusInvest (C);
    sem banco nem coleta diária — bloqueia o SaaS.
 3. **Régua sem validação empírica.** Backtest parou: proxy reproduziu a palavra em 70,7% (portão ≥ 80%). Validação agora só prospectiva,
@@ -41,7 +42,7 @@ MVP de uso pessoal, maduro no cálculo. Um usuário real, sem terceiros. Prazo e
    da mesma doença. Comitê único (mesma família de modelo; 2º comitê pausado).
 
 ## 6. Próximos 3 marcos
-1. Onda 1 da auditoria (1.1 insumos → 1.2 Ke e mercado, com decisão do Frank → 1.3 gatilhos → 1.4 documentos).
+1. Onda 1 da auditoria: 1.1 e 1.2 feitas → **1.3 gatilhos** (monitor, flag de saída, preços, corte da triagem, Sabesp) → 1.4 documentos (inclui regenerar os PDFs).
 2. Temporada 3T26: `python ferramentas/temporada.py` ao sair o ITR; régua congelada até lá.
 3. Etapa 6 / F6 — construção de carteira (tamanho de posição, concentração, caixa); depende de respostas do Frank.
 
@@ -82,3 +83,4 @@ MVP de uso pessoal, maduro no cálculo. Um usuário real, sem terceiros. Prazo e
 
 ## 12. O que mudou
 Primeira versão.
+- 08/10/2026 (Onda 1.2): doutrina v2.4; Onda 1 com 1.1 e 1.2 feitas; contagem de testes; gargalo 1 e marco 1 atualizados.
