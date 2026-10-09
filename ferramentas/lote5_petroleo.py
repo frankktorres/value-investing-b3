@@ -22,6 +22,7 @@ from statistics import mean
 
 import pandas as pd
 
+from derivados_zip import obter
 from fiscal import ALIQUOTA_FASE
 from lote1_bancos import MK
 from lote3_agro import acoes, jcp
@@ -81,11 +82,15 @@ def base_ep(tk):
     ltm = ltm_de(CVM[tk])
     if tk != "PRIO3":
         return ltm["receita"] * FATOR_BARRIL, ltm["da"]
-    from coletar_cvm import itr_ytd
-    t1, s1 = itr_ytd(tk, 2026, 3), itr_ytd(tk, 2026, 6)
-    r1, r2 = t1["receita"], s1["receita"] - t1["receita"]
-    rec = 2 * (r1 * M["barril_meio"] / barril("2026-01", "2026-03") + r2 * M["barril_meio"] / barril("2026-04", "2026-06"))
-    return rec, 2 * s1["da"]
+    def do_zip():
+        from coletar_cvm import itr_ytd
+        t1, s1 = itr_ytd(tk, 2026, 3), itr_ytd(tk, 2026, 6)
+        r1, r2 = t1["receita"], s1["receita"] - t1["receita"]
+        rec = 2 * (r1 * M["barril_meio"] / barril("2026-01", "2026-03") + r2 * M["barril_meio"] / barril("2026-04", "2026-06"))
+        return [rec, 2 * s1["da"]]
+    # AUD-38: sem o ZIP, snapshot (antes o import baixava o ITR da rede por conta própria, fora do manifesto)
+    rec, da = obter("lote5.base_prio3", ["itr_2026.zip"], do_zip)
+    return rec, da
 
 
 BASE = {tk: base_ep(tk) for tk in ("PETR4", "PRIO3", "RECV3")}

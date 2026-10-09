@@ -57,8 +57,34 @@ def baixar_itr(ano):
     r.raise_for_status()
     tmp = alvo.with_suffix(".zip.novo")
     tmp.write_bytes(r.content)
+    import zipfile
+    if not zipfile.is_zipfile(tmp):          # 200 com HTML de erro não pode virar "o ITR" nem entrar no manifesto
+        tmp.unlink()
+        raise ValueError(f"resposta da CVM para {alvo.name} não é um ZIP ({len(r.content)} bytes); {alvo.name} mantido")
+    guardar_anterior(alvo, tmp)
     tmp.replace(alvo)
+    import manifesto_cvm
+    manifesto_cvm.registrar(alvo)
     return alvo
+
+
+def guardar_anterior(alvo, novo, hoje=None):
+    """AUD-109: antes de sobrescrever o ZIP, guarda a cópia datada do anterior em dados/cvm/_antes/ se o conteúdo mudou.
+    Devolve o caminho da cópia, ou None (não havia ZIP, ou o novo é idêntico)."""
+    import shutil
+
+    import manifesto_cvm
+    if not alvo.exists() or manifesto_cvm.sha256_arquivo(alvo)[0] == manifesto_cvm.sha256_arquivo(novo)[0]:
+        return None
+    pasta = alvo.parent / "_antes"
+    pasta.mkdir(exist_ok=True)
+    copia = pasta / f"{alvo.stem}_{(hoje or date.today()).isoformat()}{alvo.suffix}"
+    n = 1
+    while copia.exists():
+        n += 1
+        copia = pasta / f"{alvo.stem}_{(hoje or date.today()).isoformat()}_{n}{alvo.suffix}"
+    shutil.copy2(alvo, copia)
+    return copia
 
 
 def quem_publicou(z, tickers, dt_ref, empresas=None):

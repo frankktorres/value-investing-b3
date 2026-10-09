@@ -5,6 +5,7 @@ import math
 import pathlib
 
 import pytest
+from dados_opcionais import requer_suplemento_b3
 
 from dossie import gerar
 from dossie.fichas import cmin3
@@ -30,6 +31,7 @@ METODO_ONDA_1_1 = {
 }
 
 
+@requer_suplemento_b3
 @pytest.mark.parametrize("nome", sorted(METODO_ONDA_1_1))
 def test_veredito_refeito_pela_onda_1_1(nome):
     salvo = json.loads((VEREDITOS / f"{nome}.json").read_text(encoding="utf-8"))
@@ -57,6 +59,7 @@ def test_veredito_superado_tem_sucessor_mais_novo_e_continua_no_disco():
         assert any(n.startswith(tk + "-") and n.split("-", 1)[1] > data for n in ARQUIVOS if n not in SUPERADOS), nome
 
 
+@requer_suplemento_b3
 def test_dossie_de_ticker_do_hall_nao_vaza_para_o_lote():
     # HYPE3 está no Lote 4: o dossiê troca SI["HYPE3"] (proventos da B3) só dentro do calcular; o hall continua igual
     from motor_nao_financeiras import CVM, SI
@@ -66,6 +69,7 @@ def test_dossie_de_ticker_do_hall_nao_vaza_para_o_lote():
     assert "indicadores" in SI["HYPE3"]          # o do hall (StatusInvest), que o pl_hist do lote lê
 
 
+@requer_suplemento_b3
 def test_ticker_fora_do_hall_sai_da_memoria():
     from motor_nao_financeiras import CVM, SI
     gerar.calcular("BLAU3")
@@ -97,6 +101,7 @@ def test_minerio_12m_e_fatores():
         assert f * m["anual"].loc[int(a), "rs_real"] == pytest.approx(m["meio_rs_real"])
 
 
+@requer_suplemento_b3
 def test_normalizacao_chamada_sozinha_e_linha_adotada_igual_ao_central():
     from dossie import base
     dc = gerar.insumos("CMIN3")["desconto_controlador"]

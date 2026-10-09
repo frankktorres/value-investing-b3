@@ -1,0 +1,5 @@
+# AUD-108: golden e registro com EOL fixo (core.autocrlf=true no Windows gerava CRLF no working tree e sha diferente do blob)
+ferramentas/tests/golden.json text eol=lf
+ferramentas/prospectivo/*.jsonl text eol=lf
+ferramentas/dados/derivados_zip.json text eol=lf
+ferramentas/dados/cvm/MANIFESTO.json text eol=lf

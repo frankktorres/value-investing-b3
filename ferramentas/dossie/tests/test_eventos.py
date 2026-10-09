@@ -1,6 +1,7 @@
 """Eventos em ações (dossie/base.eventos_em_acoes): só bonificação e desdobramento têm semântica conferida contra a CVM."""
 import pandas as pd
 import pytest
+from dados_opcionais import requer_suplemento_b3
 
 from dossie import base
 
@@ -54,6 +55,7 @@ def test_fator_invalido_falha_alto(fator):
         base.eventos_em_acoes("XPTO3", _sup(("XPTO", "DESDOBRAMENTO", fator, "2024-05-24", "2024-04-24")))
 
 
+@requer_suplemento_b3
 def test_hype3_real_carrega():
     # o suplemento real da B3 (cache do backtest): HYPE3 só tem o desdobramento de 30/12/2009, fator 100 (2 por 1)
     ev = base.eventos_em_acoes("HYPE3")
@@ -67,6 +69,7 @@ def test_grupamento_usa_o_fator_como_razao_e_falha_com_fator_de_percentual():
         base.eventos_em_acoes("XPTO3", _sup(("XPTO", "GRUPAMENTO", 100.0, "2024-05-24", "2024-04-24")))
 
 
+@requer_suplemento_b3
 def test_leve3_real_carrega_com_o_par_de_2012():
     ev = {(e["tipo"], e["data_com"]): e["multiplicador"] for e in base.eventos_em_acoes("LEVE3")}
     assert ev[("DESDOBRAMENTO", "2012-05-14")] * ev[("GRUPAMENTO", "2012-05-14")] == pytest.approx(3.0)

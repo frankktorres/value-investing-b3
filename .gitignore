@@ -20,3 +20,5 @@ ferramentas/monitor/ultimo.log
 
 # Projeto antigo arquivado em 08/10/2026 (git próprio; ver analisador/ARQUIVADO.md)
 analisador/
+# Cópia datada do ZIP da CVM anterior à reescrita (temporada.baixar_itr); ver ferramentas/manifesto_cvm.py
+ferramentas/dados/cvm/_antes/

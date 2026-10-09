@@ -1,0 +1,7 @@
+# Dependências de ferramentas/ (versões medidas em 09/10/2026, Python 3.14). Backtest usa as mesmas.
+pandas==2.3.3
+numpy==2.3.4
+requests==2.33.0
+reportlab==4.4.9
+matplotlib==3.10.7
+pytest==9.0.2

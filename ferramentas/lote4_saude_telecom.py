@@ -42,6 +42,7 @@ import zipfile
 
 import pandas as pd
 
+from derivados_zip import obter
 from fiscal import ALIQUOTA_FASE, TIMS3_ALIQUOTA
 from lote1_bancos import EMPRESAS as LOTE1
 from lote1_bancos import MK
@@ -70,7 +71,7 @@ def _csv(arq, nome):
     return pd.read_csv(io.BytesIO(z.read(n)), sep=";", encoding="latin-1", dtype=str)
 
 
-def acoes_jun26(tk):
+def _acoes_zip(tk):
     """Ações em circulação em 30/06/2026 (ITR, composição do capital), sem tesouraria."""
     df = _csv("itr_2026.zip", "composicao")
     d = df[df["DENOM_CIA"].str.upper().str.startswith(NOME_CVM[tk]) & (df["DT_REFER"] == "2026-06-30")].iloc[-1]
@@ -78,8 +79,7 @@ def acoes_jun26(tk):
     return n * 1000 if n < 1e8 else n          # Ambev, Itaúsa e Itaú informam a quantidade em milhares
 
 
-N = {tk: acoes_jun26(tk) for tk in PRECO}
-N["ITUB"] = acoes_jun26("ITUB")
+N = obter("lote4.acoes_jun26", ["itr_2026.zip"], lambda: {tk: _acoes_zip(tk) for tk in (*PRECO, "ITUB")})   # AUD-38: snapshot sem os ZIPs
 
 
 # ---------------------------------------------------------------- proventos corrigidos (StatusInvest)
@@ -105,11 +105,12 @@ def corrigir_proventos():
 corrigir_proventos()
 
 
-def arrendamento_pago_proxy():
+def _arrendamento_zip():
     """Owner Earnings (IFRS 16): o aluguel pago sai do OE. VIVT3 e WEGE3 pagam o arrendamento dentro da linha de amortização de empréstimos da DFC
     → proxy = parcela circulante do passivo de arrendamento no fim do ano anterior (principal que vence no ano), limitada ao principal total pago
     (6.03 pagamento/amortização, sem juros) menos a dívida financeira circulante do ano anterior (achado do adversário 05/10: o proxy da Vivo
     passava do principal pago). TIMS3 2021: a DFC desse ano não traz a linha → média de 2020 e 2022."""
+    out = {}
     for tk, cod in {"VIVT3": "017671", "WEGE3": "005410"}.items():
         for a in range(2020, 2026):
             bp = _csv(f"dfp_{a - 1}.zip", f"BPP_con_{a - 1}")
@@ -124,7 +125,15 @@ def arrendamento_pago_proxy():
             pago = -fc[fc["DS_CONTA"].str.contains(r"principal|amortiza|arrendament|empr[eé]stim", case=False, na=False)
                        & ~fc["DS_CONTA"].str.contains(r"juros|dividend|a[cç][oõ]es|derivativ|acionista|capital", case=False, na=False)
                        & (fc["v"] < 0)]["v"].sum()
-            CVM[tk]["anual"][str(a)]["arrendamento_pago"] = max(0.0, min(arr["v"].sum(), pago - div_cp))
+            out.setdefault(tk, {})[str(a)] = max(0.0, min(arr["v"].sum(), pago - div_cp))
+    return out
+
+
+def arrendamento_pago_proxy():
+    """Grava o proxy em CVM[tk]["anual"][ano]["arrendamento_pago"] (ZIPs da CVM ou, sem eles, o snapshot — AUD-38)."""
+    for tk, por_ano in obter("lote4.arrendamento_pago", [f"dfp_{a}.zip" for a in range(2019, 2026)], _arrendamento_zip).items():
+        for a, v in por_ano.items():
+            CVM[tk]["anual"][a]["arrendamento_pago"] = v
     t = CVM["TIMS3"]["anual"]
     t["2021"]["arrendamento_pago"] = (t["2020"]["arrendamento_pago"] + t["2022"]["arrendamento_pago"]) / 2
 
@@ -244,9 +253,14 @@ def acoes_itau_da_itausa():
     return direta + fatia * iupar, direta, iupar, fatia
 
 
-ITSA = itausa_individual()
-ITSA["pl_itau"] = itau_pl_controlador()
-ITSA["acoes_itau"], ITSA["acoes_itau_diretas"], ITSA["acoes_iupar"], ITSA["fatia_iupar"] = acoes_itau_da_itausa()
+def _itsa_zip():
+    d = itausa_individual()
+    d["pl_itau"] = itau_pl_controlador()
+    d["acoes_itau"], d["acoes_itau_diretas"], d["acoes_iupar"], d["fatia_iupar"] = acoes_itau_da_itausa()
+    return d
+
+
+ITSA = obter("lote4.itsa", ["itr_2026.zip", "itr_2025.zip", "dfp_2025.zip", "fre_2026.zip"], _itsa_zip)
 ITSA["pct_itau"] = ITSA["acoes_itau"] / N["ITUB"]
 ITSA["itau_contabil"] = ITSA["pct_itau"] * ITSA["pl_itau"]                 # R$ mil (equivalência ≈ % × PL do Itaú)
 ITSA["outras_contabil"] = ITSA["investimentos"] - ITSA["itau_contabil"]

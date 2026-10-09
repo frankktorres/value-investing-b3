@@ -473,3 +473,34 @@ Nenhuma palavra, central ou regra mudou; só documentos e geradores. Cada achado
   agora depende da dispersão. (4) A UNIP6 (CARA, dispersão 2,67×) ainda falava como NC; textos corrigidos.
   **Ressalvas aceitas:** `hall03` não reconhece o sinal "−" (U+2212) nem formatos como "≈20,3%" no Ke implícito (hoje nenhum caso); o
   texto dos bancos no PDF/`03` diz "pela v2.0" ao contar o histórico da rev. de 04/10 (data correta, não é regra vigente).
+
+### 09/10/2026 — REPRODUTIBILIDADE: Onda 2, 1ª parte (AUD-38, 73, 109, 108, 17)
+
+Nenhuma palavra, central ou regra mudou (`rodar_tudo.py`: "sem mudanças em relação ao golden", também no clone limpo). Cada achado foi
+reproduzido antes de mexer.
+
+- **AUD-38/73 (clone do zero).** Reproduzido: `git archive` + `pytest --ignore=backtest` aborta na coleta (`FileNotFoundError: itr_2026.zip`,
+  porque `lote4`/`lote6` abriam o ZIP no import). Agora `derivados_zip.obter()` recalcula dos ZIPs quando existem e, sem eles, lê o
+  snapshot versionado `dados/derivados_zip.json` (5 chaves: ações de jun/26 dos lotes 4 e 6, proxy de arrendamento, Itaúsa, base E&P da PRIO3) e avisa em
+  stderr; teste confere snapshot = recálculo quando os ZIPs estão no disco. `requirements.txt` (6 libs, versões de 09/10), `bootstrap_dados.py`
+  (`--baixar/--verificar/--derivados`) e parágrafo no README. Os 9 testes que dependiam do suplemento da B3 (`backtest/dados`, fora do
+  git) agora saem como PULADOS com motivo (`dados_opcionais.py`). Clone limpo: 375 passam, 18 pulados.
+  *Decisão:* snapshot em vez de dados de teste fabricados — é o mesmo código sobre os mesmos ZIPs, com o teste de igualdade impedindo a
+  defasagem. *Limite:* no clone limpo o parser dos ZIPs não é exercitado (só o snapshot); isso exige `--baixar`.
+- **AUD-109 (manifesto).** `manifesto_cvm.py` + `dados/cvm/MANIFESTO.json` (sha256 e tamanho de 77 ZIPs). `temporada.baixar_itr` guarda
+  a cópia datada do ZIP anterior em `dados/cvm/_antes/` (ignorada pelo git) e atualiza o manifesto; antes sobrescrevia sem rastro. Teste: ZIPs
+  em disco = manifesto. A CVM reescreve arquivos, então diferença é aviso a investigar, não prova de erro.
+- **AUD-108 (EOL do golden_sha).** Reproduzido: o sha gravado (`a451c0c2…`) é o do arquivo em CRLF e não bate com o blob do git. Agora
+  `registro_prospectivo.sha_arquivo` normaliza CRLF→LF antes do hash (= sha do blob) e `.gitattributes` fixa LF no golden, no registro e nos
+  novos JSON. As 41 linhas já gravadas com o sha antigo ficam como estão (append-only) e não são reverificáveis por esse caminho.
+- **AUD-17 (teste analítico).** `tests/test_aud17_ddm_analitico.py`: P/VP justificado, g com teto, DDM com ROE constante = Gordon
+  (1/0,105) e DDM convergindo com valores de papel (VP 8,6015, terminal 11,6982). Mutações testadas à mão (Ke+g no denominador; desconto
+  t−1): ambas derrubam o teste. Motor intacto.
+- **Testes:** `pytest --ignore=backtest` 392 verdes + 1 pulado; motor e `Mercado` intactos, o backtest não rodou.
+- **Adversário (4 achados; 3 corrigidos).** (1) `import universo` baixava `itr_2026.zip` sozinho pelo `lote5_petroleo.base_ep("PRIO3")`
+  (fora do manifesto, e misturava snapshot com ZIP novo): agora é a 5ª chave do snapshot; teste importa `universo` sem ZIP e sem rede.
+  (3) `baixar_itr` aceitava HTTP 200 com HTML como ZIP: agora valida `is_zipfile` antes de trocar e de registrar. (4) `--derivados` com ZIPs
+  parciais gravava snapshot misto: agora exige as 5 chaves. **(2) Aceito:** re-registrar a rodada de 02/10/v2.2 com o golden CRLF antigo
+  levantaria `ValueError` (o sha entra na comparação do hall); o golden mudou desde então, então a rodada nunca mais é regravada. Registrado
+  no docstring de `sha_arquivo`. *Fora do escopo, antigo:* `test_veredito_salvo_reproduz` tem 0 casos (todos os vereditos estão em SUPERADOS ou
+  no método da Onda 1.1) — não confere nada hoje.

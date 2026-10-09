@@ -98,3 +98,20 @@ def test_dossie_duplicata_na_rodada_cosmetica_e_inf(tmp_path):
     (ved / "INF3-2026-10-02.json").write_text(json.dumps({**v, "ticker": "INF3"}), encoding="utf-8")
     registrar_dossies(ved, reg)
     assert "Infinity" not in reg.read_text(encoding="utf-8")
+
+
+def test_aud108_sha_do_golden_nao_depende_do_eol(tmp_path):
+    """AUD-108: o mesmo conteúdo em LF e em CRLF (autocrlf do Windows) tem de dar o mesmo golden_sha."""
+    import hashlib
+
+    from registro_prospectivo import sha_arquivo
+    lf = b'{"a": 1,\n "b": 2}\n'
+    crlf = lf.replace(b"\n", b"\r\n")
+    assert sha_arquivo(lf) == sha_arquivo(crlf) == hashlib.sha256(lf).hexdigest()[:16]
+    g_lf, g_crlf = tmp_path / "lf.json", tmp_path / "crlf.json"
+    corpo = _golden(tmp_path).read_bytes()
+    g_lf.write_bytes(corpo.replace(b"\r\n", b"\n"))
+    g_crlf.write_bytes(corpo.replace(b"\r\n", b"\n").replace(b"\n", b"\r\n"))
+    registrar("2026-10-02", "v2.2", g_lf, tmp_path / "a.jsonl", hoje="2026-10-06")
+    registrar("2026-10-02", "v2.2", g_crlf, tmp_path / "b.jsonl", hoje="2026-10-06")
+    assert {l["golden_sha"] for l in ler(tmp_path / "a.jsonl")} == {l["golden_sha"] for l in ler(tmp_path / "b.jsonl")}

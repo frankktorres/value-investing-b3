@@ -1,0 +1,314 @@
+{
+ "nota": "sha256 dos ZIPs da CVM em dados/cvm (fora do git). A CVM reescreve arquivos; ver manifesto_cvm.py.",
+ "atualizado_em": "2026-10-09",
+ "arquivos": {
+  "dfp_2010.zip": {
+   "sha256": "c6a9c95c2510e8a71bb583084492e9c52c3f423a3be56f1c5d2dd4f6960677ff",
+   "bytes": 8900829
+  },
+  "dfp_2011.zip": {
+   "sha256": "858423fba40124d7a30abea4e70248f7251e1d2c792e9fcece5a57afd3115f34",
+   "bytes": 9225478
+  },
+  "dfp_2012.zip": {
+   "sha256": "3aff7a726d324d29924887eed45bbc58bc30b66cd9079bafe701d55efdfe0849",
+   "bytes": 9201737
+  },
+  "dfp_2013.zip": {
+   "sha256": "ef379ac9aab9567434ca6d36053d8bd1f0a2a47a0c65a2e1d218259da530e224",
+   "bytes": 9171449
+  },
+  "dfp_2014.zip": {
+   "sha256": "b8795dba134754475a485c0f88b6542face6613bb418d261caa011d90e032f28",
+   "bytes": 9079931
+  },
+  "dfp_2015.zip": {
+   "sha256": "39a7001be9eaa91a6acc83831c816794df4f92441d7702b80da6c4b234352b4e",
+   "bytes": 8987623
+  },
+  "dfp_2016.zip": {
+   "sha256": "772f06a73c5fe80534b61365ea5d03f9d8fcce21b87823bd5c9d48699bcf71d5",
+   "bytes": 9832691
+  },
+  "dfp_2017.zip": {
+   "sha256": "1ff8185d61759e49b406c55c5d0b593587c2e76e9032c95f836f7fea02fc9d58",
+   "bytes": 10150935
+  },
+  "dfp_2018.zip": {
+   "sha256": "280dcf5acd7bdb529acc186c9a1195092a1e06cf1e33ddcdca0b11c31261296f",
+   "bytes": 10237924
+  },
+  "dfp_2019.zip": {
+   "sha256": "bc82a1162b44686e8953b521e3424a5938b6661ff4655f832db4ea9488296a0d",
+   "bytes": 11185526
+  },
+  "dfp_2020.zip": {
+   "sha256": "8fb97d1887aed1e1e2d85e54cb133baf9f65b9f46f60fa8720f09c1f7a74362e",
+   "bytes": 12637854
+  },
+  "dfp_2021.zip": {
+   "sha256": "64b8693b709538a0357c5179ae02231cb380d0000956ee57a873a21d4efda2e4",
+   "bytes": 13283026
+  },
+  "dfp_2022.zip": {
+   "sha256": "b9ac4eed33ef64346c826ef25aa7a59b6098822dcac04c131e52305e29e3e4ae",
+   "bytes": 13448916
+  },
+  "dfp_2023.zip": {
+   "sha256": "be508606d186cda7ee86dcf461993b392e1151dd1a01d9290f8b627d7d4b5cbb",
+   "bytes": 13563376
+  },
+  "dfp_2024.zip": {
+   "sha256": "fea8592888271d4b7cab04328b2b5c586a6c44adb2399d74b61bfa822400dcf3",
+   "bytes": 13396369
+  },
+  "dfp_2025.zip": {
+   "sha256": "d7aec54e7c67998e4cd3ef94c463ab247f09a6baaa2254878d1e431f28130e2a",
+   "bytes": 12784140
+  },
+  "dfp_2026.zip": {
+   "sha256": "7eab96451f58476d37b52653dabdd4fd423feb0870b97d44df5925feb42cdd93",
+   "bytes": 243348
+  },
+  "fca_2010.zip": {
+   "sha256": "9a9b933fa02c96f7cf632dbb1f7b004bb78696c81c989792b1eb60f70b001021",
+   "bytes": 337720
+  },
+  "fca_2011.zip": {
+   "sha256": "f5c7aaa2a4464b4232a05d77c288d33bca5474edd72199a9295d6fa2a34012e8",
+   "bytes": 381161
+  },
+  "fca_2012.zip": {
+   "sha256": "ba68b8e8c12b74fc56bf76a75ae582aa53e5adef1d61d940d5191c55b9be2e06",
+   "bytes": 381058
+  },
+  "fca_2013.zip": {
+   "sha256": "d62ef489d8c1208ef3d41cfd25a093b8fcb5f6b47640e59288aece45d4962cce",
+   "bytes": 373007
+  },
+  "fca_2014.zip": {
+   "sha256": "1f70b5e3a544535affb47b04a0c60a618bef872bc783e6909940d2e7dad89e3f",
+   "bytes": 384748
+  },
+  "fca_2015.zip": {
+   "sha256": "74326a566c405d703b56af257c9fade687f112f372ae68b8624719becc8215f2",
+   "bytes": 380898
+  },
+  "fca_2016.zip": {
+   "sha256": "229b2cfc8c0ac5e60083932381364bbdb6666f028422c13a1ac5f6dccc9e3e6c",
+   "bytes": 376154
+  },
+  "fca_2017.zip": {
+   "sha256": "48127cf15d8baf4d31b9544b266f9511962db158d591fc9803e335a8ab081d45",
+   "bytes": 375132
+  },
+  "fca_2018.zip": {
+   "sha256": "b20056b00927c5261ba587b668e52e4cdfe2d989e7d794491b2bb127fbd0a8cd",
+   "bytes": 381642
+  },
+  "fca_2019.zip": {
+   "sha256": "09f84e5f5485217c8b36f8379c36f718dbdcd6d6908b4e96b68861394e76fe97",
+   "bytes": 371770
+  },
+  "fca_2020.zip": {
+   "sha256": "ccf2ac081747da9ccefa50349a5494c263763d5dd8bb961565fd2ae64c264b20",
+   "bytes": 405892
+  },
+  "fca_2021.zip": {
+   "sha256": "65ba4b0225e9b2106901cdf348215933be8affba79925fc71361e2f6818c7999",
+   "bytes": 465704
+  },
+  "fca_2022.zip": {
+   "sha256": "af329d61aa555dd0b2c766d60e91c8c7bbd4521519e69e0ea907de8e5966dd91",
+   "bytes": 458286
+  },
+  "fca_2023.zip": {
+   "sha256": "8cd5dbe13c0dc316c69ab1ced8d5b6167ceda8bee57d51bab18693d955a48f9a",
+   "bytes": 434044
+  },
+  "fca_2024.zip": {
+   "sha256": "3828c976a0f9ae0393a86c18376f88ad1efb1553e8a1aa883af4f454ebe12e60",
+   "bytes": 392000
+  },
+  "fca_2025.zip": {
+   "sha256": "b8728d571587ebee9dc603d3150ffcf1146a38962a621862116e96d40185a7ef",
+   "bytes": 383620
+  },
+  "fca_2026.zip": {
+   "sha256": "21d4bb18fb6923cf2253c2a1d76496ef71366287fbde5ca725d76f303a2069b8",
+   "bytes": 361734
+  },
+  "fre_2010.zip": {
+   "sha256": "a83d0dd42ed2fc57d83245ef75561585179eaff68351454a9c804dac2611970b",
+   "bytes": 6327657
+  },
+  "fre_2011.zip": {
+   "sha256": "7ef45a3f8fa9d62f396cc11a692566e9d16137cc6d0ffccaaff8d8d507b4cad8",
+   "bytes": 7050662
+  },
+  "fre_2012.zip": {
+   "sha256": "cd48dd32bab6d410dc523a3de0d27ca3bb7ebd8c403e6fa1de647b1454fbd069",
+   "bytes": 7427318
+  },
+  "fre_2013.zip": {
+   "sha256": "2c746f2cf0636236972a06be1d4e15dabaac15281e88753505acae9385a76f79",
+   "bytes": 7741288
+  },
+  "fre_2014.zip": {
+   "sha256": "8797e5b66f4c126d9266746ab704bdb0d787ed5d92dca917ceffa2749b150a50",
+   "bytes": 7929118
+  },
+  "fre_2015.zip": {
+   "sha256": "21be79d408fcc08e9edafcee941f02a339c5664e96b3ad83afd84f27ed838d60",
+   "bytes": 7853370
+  },
+  "fre_2016.zip": {
+   "sha256": "bfd0513d903cb3e5a43360dcb1673b3c9ac1f23396974726cca764df64d481cc",
+   "bytes": 7583877
+  },
+  "fre_2017.zip": {
+   "sha256": "cb90963d1e7d6b2416265eb7aa0a463b98d067ade096f47b724467184273b0ab",
+   "bytes": 7605478
+  },
+  "fre_2018.zip": {
+   "sha256": "7a349acbce124fdb0846c371b3e68e5ff06781ead4b8713d6080eabf6737d082",
+   "bytes": 7824065
+  },
+  "fre_2019.zip": {
+   "sha256": "30f461d5d3b3cdbab84faac20c158c6a41cea1ee0223c40d988db9845e2c6a51",
+   "bytes": 7935765
+  },
+  "fre_2020.zip": {
+   "sha256": "17d2d911201f64dc8ff501104ce8fe343cd4ab3bdb41ea03eb6bfc2c4f6b80ab",
+   "bytes": 9233986
+  },
+  "fre_2021.zip": {
+   "sha256": "882e4c19c0719b7ac75f8e906c264fdd69b899cf0a2942ad00c4eb14a1b855bd",
+   "bytes": 10494738
+  },
+  "fre_2022.zip": {
+   "sha256": "90485eccf2df09c035cde0cac389961473707c1cecebfcbe2070b5b8373121e5",
+   "bytes": 10754788
+  },
+  "fre_2023.zip": {
+   "sha256": "a3bddcd8d8bc9feda017fdc7018eed0c29f107e2e705a88899f9ba9c6153c1eb",
+   "bytes": 8132763
+  },
+  "fre_2024.zip": {
+   "sha256": "9d214d1e02409f3a45b8725274fa8b0ec017b168e7891046e8ea97937abce88f",
+   "bytes": 8409803
+  },
+  "fre_2025.zip": {
+   "sha256": "23cacdb758cffcce79732d2092ce0823988e64749992b2b83907dc0880fc33de",
+   "bytes": 8497399
+  },
+  "fre_2026.zip": {
+   "sha256": "a04a1079f2807b3d53c25d0ff6978bba844f5f665ac6df62303c5d0aae46b624",
+   "bytes": 8126598
+  },
+  "ipe_cia_aberta_2017.zip": {
+   "sha256": "5bdcc18b2c1ef7c5d593633a50d7737e35c22b610fe170dc16384c2d20a1a16b",
+   "bytes": 1597274
+  },
+  "ipe_cia_aberta_2018.zip": {
+   "sha256": "8bc30f64ec4e2b2ec6805de1fa97afd10d8790d2334a6350b71221661ccdf9ea",
+   "bytes": 1738051
+  },
+  "ipe_cia_aberta_2019.zip": {
+   "sha256": "1ece808881dc17f09dfaaa5cd81ee5ff9f96cb705f23787f269ebce24450ee55",
+   "bytes": 1847419
+  },
+  "ipe_cia_aberta_2020.zip": {
+   "sha256": "757704676e462302d7c5234bd48f8ea5fa7a4b2dda7f15b1f882f3025429b910",
+   "bytes": 1873161
+  },
+  "ipe_cia_aberta_2021.zip": {
+   "sha256": "b5ad4dcc2c0376027a23ed372469feaea11bf0dfd7ac75e2bbe99fd6b8f78ee7",
+   "bytes": 2258012
+  },
+  "ipe_cia_aberta_2022.zip": {
+   "sha256": "44e4a5bf88efa6696b9150f4b7fde3693cbf7ec79d511b65a62c0135ac674c5d",
+   "bytes": 2132181
+  },
+  "ipe_cia_aberta_2023.zip": {
+   "sha256": "ef1093983df55399b8ec02255eaa822d941ea797f881d00b8f61f23fb63fb1b0",
+   "bytes": 2152474
+  },
+  "ipe_cia_aberta_2024.zip": {
+   "sha256": "65878657e487ba86b717e93f112a11cf08faf0356ae245ef6e0e72b0fbac80e2",
+   "bytes": 2179005
+  },
+  "ipe_cia_aberta_2025.zip": {
+   "sha256": "2a9f9eed8f21094855bca7d285a3252a154b2154c99a85bb3b9ecd352214f475",
+   "bytes": 2267896
+  },
+  "ipe_cia_aberta_2026.zip": {
+   "sha256": "f74f4d5e00c7993d94bf541b860c5f33be5729504971c4e7236f973d3ab7a4e1",
+   "bytes": 1689970
+  },
+  "itr_2011.zip": {
+   "sha256": "11f0d8cc47bad618a6e705a4615f8444d652967cc210dd29af8d18cad11b2a9a",
+   "bytes": 24581120
+  },
+  "itr_2012.zip": {
+   "sha256": "f1d642a1a644e2528ae96c7963e6319a87537d083d003f965cee637ff9d39842",
+   "bytes": 24650791
+  },
+  "itr_2013.zip": {
+   "sha256": "a336c9d5d5f2e4650bf2c16a80600daf3a423d7bbcd594f1d8dd94bf12f148ea",
+   "bytes": 24514311
+  },
+  "itr_2014.zip": {
+   "sha256": "c10271ea978a7da9c0fb2ef57d6b485dc9eb8032c0634479d8f4afa90ba0ead9",
+   "bytes": 24468760
+  },
+  "itr_2015.zip": {
+   "sha256": "2755f06e74668144620b4265e59db8149284252a1b3a5bb6404c0db22b21c64b",
+   "bytes": 24295580
+  },
+  "itr_2016.zip": {
+   "sha256": "3c2954a0d7e2c4c1c6dec157134e959fd0dea0ba53001d4bab01d04727d67c21",
+   "bytes": 23803768
+  },
+  "itr_2017.zip": {
+   "sha256": "f2e626260461ec4e04614d32212ca8dc5a1be7c5b56c261343eb8866c9ed5f26",
+   "bytes": 24127956
+  },
+  "itr_2018.zip": {
+   "sha256": "a551278c83e5c0584edd2a29b6035e34e833176176827e3f04a28f8373df536b",
+   "bytes": 23460448
+  },
+  "itr_2019.zip": {
+   "sha256": "dbfe1e32296563a9efdcb993ed5811876e3d50b778bc547fe004af15b9a75021",
+   "bytes": 24435666
+  },
+  "itr_2020.zip": {
+   "sha256": "4ca11b431eb21aa98f813a3c18086ca600f234f5eb0dcec0c51a8641fccbca0a",
+   "bytes": 27151708
+  },
+  "itr_2021.zip": {
+   "sha256": "c8723d5ccd4a6e99e9bc1566f2a558139cee1c2d96e4b940c4bcbedcb46a173a",
+   "bytes": 31230595
+  },
+  "itr_2022.zip": {
+   "sha256": "d601fd8130b217c23d399ffae72b57e6308ce9ed034d7b2b233243cc2301e31a",
+   "bytes": 32324776
+  },
+  "itr_2023.zip": {
+   "sha256": "e4e00db0a75b47c7e92524991efda71a47f23a147a2ba0a358623b35a5168e2d",
+   "bytes": 32350760
+  },
+  "itr_2024.zip": {
+   "sha256": "6158b55d85bcada12c7d319a940aeb78439e593e4ddf67e5ae811a67e1a016b7",
+   "bytes": 32723955
+  },
+  "itr_2025.zip": {
+   "sha256": "efe754841bed9eac2a3138c92a187060842c1746845e9471749be5c91819dc51",
+   "bytes": 31660219
+  },
+  "itr_2026.zip": {
+   "sha256": "0e1ef74291d2143e7bb55247b01c8bbd94995d995536f70f0d19de1d79d7e38c",
+   "bytes": 19634453
+  }
+ }
+}

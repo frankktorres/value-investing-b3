@@ -27,6 +27,7 @@ import sys
 
 import pandas as pd
 
+from derivados_zip import obter
 from lote1_bancos import MK
 from lote2_energia import pl_hist, solidez
 from lote3_agro import jcp
@@ -86,7 +87,7 @@ SODA = indice({"PCU3251803251804": 1.0}, 2017)
 PVC = indice({"WPU0662": 1.0}, 2017)
 
 
-def acoes_jun26(tk):
+def _acoes_zip(tk):
     """Ações em circulação em 30/06/2026 (ITR, composição do capital), sem tesouraria."""
     import io
     import zipfile
@@ -122,7 +123,7 @@ def ajustar_dpa(tk, n_atual):
             s[chave] = {y: val * min(1.0, (n_ano(int(y)) or ref) / n_atual) if int(y) <= 2025 else val for y, val in s[chave].items()}
 
 
-N = {tk: acoes_jun26(tk) for tk in ("LEVE3", "EGIE3", "UNIP6", "GGBR4")}
+N = obter("lote6.acoes_jun26", ["itr_2026.zip"], lambda: {tk: _acoes_zip(tk) for tk in ("LEVE3", "EGIE3", "UNIP6", "GGBR4")})   # AUD-38
 EGIE_FOLLOW_ON = dict(acoes=274.1e6, valor=8_360_000, data="jul/2026")        # R$ mil; [PDF 07/09 e 03/10]
 EGIE_DIV_AGO26 = 770_800      # R$ mil, data-com 20/08/2026 (R$ 0,5442 × 1.416 mi): sai do PL de 30/06 — o preço de 02/10 já é ex
 N["EGIE3"] += EGIE_FOLLOW_ON["acoes"]

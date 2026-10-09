@@ -45,6 +45,16 @@ CAMPOS = ("palavra", "pc", "central", "lote")
 COMPARA = (*CAMPOS, "preco", "doutrina")          # + golden_sha só no hall; no dossiê o sha do arquivo é informativo
 
 
+def sha_arquivo(bruto: bytes) -> str:
+    """sha256 (16 hex) do conteúdo com EOL normalizado para LF.
+
+    AUD-108: com core.autocrlf=true o working tree tem CRLF e o blob do git tem LF; o sha do arquivo cru não batia com
+    nenhum blob e mudava de máquina para máquina. Normalizado, é o sha do blob (`git show HEAD:caminho | sha256sum`).
+    Linhas gravadas antes de 09/10/2026 usam o sha do arquivo cru em CRLF e não são reverificáveis por este caminho.
+    """
+    return hashlib.sha256(bruto.replace(b"\r\n", b"\n")).hexdigest()[:16]
+
+
 def linhas_do_golden(golden: dict, data_preco: str, doutrina: str, sha: str,
                      hoje: str) -> list[dict]:
     out = []
@@ -81,7 +91,7 @@ def linhas_dos_vereditos(pasta: pathlib.Path, hoje: str) -> list[dict]:
         out.append({"origem": "dossie", "data_preco": v["data_preco"], "ticker": v["ticker"],
                     "preco": v["preco"], "palavra": v["palavra"], "pc": v["pc"],
                     "central": v["central"], "lote": None, "doutrina": v["doutrina"],
-                    "golden_sha": hashlib.sha256(bruto).hexdigest()[:16], "registrado_em": hoje})
+                    "golden_sha": sha_arquivo(bruto), "registrado_em": hoje})
     return out
 
 
@@ -113,7 +123,7 @@ def registrar(data_preco: str, doutrina: str, golden_path: pathlib.Path = GOLDEN
               caminho: pathlib.Path = REGISTRO, hoje: str | None = None) -> int:
     """Acrescenta a rodada. Devolve quantas linhas novas; 0 se a rodada já estava idêntica."""
     bruto = golden_path.read_bytes()
-    sha = hashlib.sha256(bruto).hexdigest()[:16]
+    sha = sha_arquivo(bruto)
     novas = linhas_do_golden(json.loads(bruto.decode("utf-8")), data_preco, doutrina, sha,
                              hoje or dt.date.today().isoformat())
     return _gravar(novas, caminho)
