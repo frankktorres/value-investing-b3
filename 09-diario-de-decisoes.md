@@ -559,3 +559,19 @@ antes de mexer (KeyError 'TAEE11' com `series_` parcial; VIVT3 DPA 2026 2,098→
   idênticas; original em `_historico/2026-10-09 monitor historico/`. `historico_arquivos.py` (`guardar`/`gravar_texto`) copia o vigente
   para `_historico/AAAA-MM-DD <rótulo>/` antes de regravar: 6 `atualizar_hall_lote*`, `hall03 --corrigir`, `triagem/rodar` (o 06), 6 `gerar_pdf_lote*`
   e o histórico do monitor; só copia quando o conteúdo muda (CRLF×LF não conta).
+
+### 09/10/2026 — DADOS: cvm_series.json regravado com o LTM novo (decisão do Frank, AUD-21/22/86)
+
+Decidido por "ok, regrava" depois da recomendação de não misturar a correção com a temporada 3T26. Antes de gravar, medi os 41 contra o golden:
+**nenhuma palavra muda**; 8 mudanças em 2 tickers. **SMTO3** (exercício abr–mar, comparativo reapresentado): central 16,03 → 14,68, P/C 1,21 → 1,32
+(segue CARA), âncoras DCF 16,03 → 14,68 e EPV 14,88 → 13,58, nota geral 4,11 → 3,78, cobertura de juros 2,09 → 1,74, Bogle nominal 1,96% → 0,67%.
+**UGPA3**: só a cobertura de juros, 3,00 → 2,92. O adversário havia previsto 6 tickers a mais (CMIG4, LEVE3, TAEE11, UGPA3, UNIP6, WEGE3): o LTM
+deles mudou no arquivo (12 tickers em `ltm_2T26`), mas medido nos 41 o motor só moveu SMTO3 e UGPA3; central e palavra dos demais ficaram iguais.
+- O que mudou no arquivo: `ltm_2T26` em 12 tickers; chaves novas `ltm` e `ltm_ref` nos 31; `proventos_a_pagar` em 307 exercícios que o arquivo antigo
+  não tinha. Avisos do coletor: 10 tickers com ITR reapresentado (KEPL3, SLCE3, TAEE11, ISAE4, CMIG4, UGPA3, LEVE3, UNIP6, ABEV3, WEGE3) e
+  TIMS3 sem `lucro_controlador` no LTM (lacuna já conhecida).
+- Feito: golden regravado (`rodar_tudo.py --motivo`), `hall03.py --corrigir` (03 e bloco do prompt de sexta), PDFs dos lotes 3 e 5 reemitidos;
+  anteriores em `_historico/` (cvm_series, hall03, PDFs). Cópia em `UPLOAD CLAUDE DESKTOP/` sincronizada (reenvio ao Desktop segue suspenso).
+- Testes: hall 457 passed, 1 skipped. Backtest não rodou: o backtest lê parquets, não o `cvm_series.json`, e os motores não mudaram.
+- **Atenção:** o boletim do monitor de 09/10 (`BOLETINS/2026-10-09-monitor.md`) mostra o central antigo da SMTO3 (16,03); não conferi o
+  `registro.jsonl`. O registro só acrescenta, e a próxima rodada grava 14,68. A diferença é de dado, não de método.

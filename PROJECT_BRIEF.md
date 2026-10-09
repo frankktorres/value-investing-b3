@@ -1,5 +1,5 @@
 # PROJECT BRIEF — Mesa de Value Investing B3
-*Versão de 09/10/2026 (rev. Onda 2, 3ª parte) · gerado por `/brief` · fonte: repositório, memória do projeto e `docs/auditoria/AUDITORIA_2026-10-08.md`*
+*Versão de 09/10/2026 (rev. Onda 2, 3ª parte + LTM regravado) · gerado por `/brief` · fonte: repositório, memória do projeto e `docs/auditoria/AUDITORIA_2026-10-08.md`*
 
 ## 1. Projeto
 Mesa de análise fundamentalista da B3 para dividendos/JCP e longo prazo: doutrina escrita (v2.5) + motores de valuation em Python que
@@ -95,3 +95,4 @@ Primeira versão.
 - 09/10/2026 (Onda 2, 1ª parte): requirements, bootstrap, snapshot dos derivados de ZIP, manifesto sha256 dos ZIPs, sha do golden sem EOL, teste analítico do DDM/P/VP justificado; stack, arquitetura e marcos atualizados.
 - 09/10/2026 (Onda 2, 2ª parte): backup (AUD-05); testes de fórmula, limiares, NaN no golden, ROIC real e bordas (AUD-27/28/30/31/88/90); skip vira falha com `EXIGIR_DADOS=1` (AUD-89); `qualifica_saida` extraída do motor; stack, arquitetura e marcos atualizados.
 - 09/10/2026 (Onda 2, 3ª parte): registro prospectivo com corrente sha256 e preço oficial; série vigente explícita; coletor do LTM (comparativo reapresentado, SMTO3 abr–mar, lacunas visíveis); dossiê sem JCP duplicado; `coletar_macro_fred.py` + manifesto macro; `historico_arquivos.py` (versão anterior vai para `_historico/` antes de regravar); histórico do monitor em upsert; gargalo/estágio/marco atualizados.
+- 09/10/2026 (dados): `cvm_series.json` regravado com o LTM novo (decisão do Frank); nenhuma palavra mudou, SMTO3 central 16,03 → 14,68 (segue CARA); golden, 03, prompt de sexta e PDFs dos lotes 3 e 5 regravados.

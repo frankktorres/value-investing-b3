@@ -1,5 +1,5 @@
 {
- "motivo": "Onda 1.3 (AUD-67): preço = fechamento oficial do COTAHIST de 02/10 (precos_hall.py) em PRIO3 63,35→63,01, UGPA3 38,51→38,61, VBBR3 37,66→38,15, UNIP6 56,78→57,02 (vinham de sites de terceiros); só o P/C muda, nenhuma palavra",
+ "motivo": "Regrava cvm_series.json com o LTM novo (AUD-21/22/86: comparativo reapresentado, SMTO3 abr-mar, lacunas) e proventos_a_pagar dos exercicios; so mudam SMTO3 (central 16,03 -> 14,68, segue CARA) e a cobertura de juros da UGPA3; nenhuma palavra muda",
  "tickers": {
   "ABCB4": {
    "ancoras": {
@@ -150,7 +150,7 @@
    "dy": 0.072079,
    "fator_defasagem": 0.889014,
    "lote": 2,
-   "nota_geral": 4.248592,
+   "nota_geral": 4.232854,
    "palavra": "CARA",
    "pc": 1.583302,
    "vence_rf": "Empate"
@@ -306,7 +306,7 @@
    "dy": 0.08343,
    "fator_defasagem": 0.978184,
    "lote": 2,
-   "nota_geral": 5.51243,
+   "nota_geral": 5.471631,
    "palavra": "NÃO CONCLUSIVO",
    "pc": 1.093566,
    "vence_rf": "Empate"
@@ -559,20 +559,20 @@
   },
   "SMTO3": {
    "ancoras": {
-    "DCF normalizado (3 cenários)": 16.026177,
-    "EPV de meio de ciclo": 14.883693,
+    "DCF normalizado (3 cenários)": 14.678938,
+    "EPV de meio de ciclo": 13.577016,
     "Valor de reprodução": 22.850686
    },
-   "bogle_nom": 0.019602,
-   "central": 16.026177,
-   "cobertura_juros": 2.089683,
+   "bogle_nom": 0.006666,
+   "central": 14.678938,
+   "cobertura_juros": 1.7395,
    "data_preco": "02/10/2026",
    "dy": 0.0,
-   "fator_defasagem": 0.989324,
+   "fator_defasagem": 0.98903,
    "lote": 3,
-   "nota_geral": 4.109,
+   "nota_geral": 3.783854,
    "palavra": "CARA",
-   "pc": 1.206776,
+   "pc": 1.317534,
    "vence_rf": "Não"
   },
   "SUZB3": {
@@ -636,12 +636,12 @@
    },
    "bogle_nom": 0.096001,
    "central": 15.78387,
-   "cobertura_juros": 3.001838,
+   "cobertura_juros": 2.920173,
    "data_preco": "02/10/2026",
    "dy": 0.020755,
    "fator_defasagem": 0.991186,
    "lote": 5,
-   "nota_geral": 3.969974,
+   "nota_geral": 3.959147,
    "palavra": "CARA",
    "pc": 2.446168,
    "vence_rf": "Não"
