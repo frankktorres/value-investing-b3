@@ -1,4 +1,4 @@
-"""PDF do Lote 3 (Papel e celulose, infraestrutura de mercado e agro) — doutrina v2.0. Uso: python gerar_pdf_lote3.py"""
+"""PDF do Lote 3 (Papel e celulose, infraestrutura de mercado e agro) — doutrina v2.5. Uso: python gerar_pdf_lote3.py"""
 from ltm import ltm_de
 import copy
 import pathlib
@@ -18,7 +18,7 @@ from lote3_textos import AGENDA, ANTES, T
 from motor_nao_financeiras import CVM, SI, avaliar, premissas_operacionais
 
 sys.stdout.reconfigure(encoding="utf-8")
-SAIDA = pathlib.Path(__file__).parent.parent / "AGRO E B3" / "Infra_Agro_rev_05-10-2026.pdf"
+SAIDA = pathlib.Path(__file__).parent.parent / "AGRO E B3" / "Infra_Agro_rev_09-10-2026.pdf"
 ARBEX_DIVIDA = 12e6   # R$ mil — só para a alavancagem pró-forma da SUZB3 (PDF 03/10)
 
 
@@ -26,8 +26,8 @@ def rodape(c, d):
     c.saveState()
     c.setFont("Arial", 6.5)
     c.setFillColor(colors.HexColor("#6B7280"))
-    c.drawString(15 * mm, 9 * mm, f"Mesa de Value Investing — Lote 3 Papel e celulose, B3 e agro · rev. 05/10/2026 · data-base {DATA_BASE} · "
-                                  "doutrina v2.0 · não é recomendação de investimento")
+    c.drawString(15 * mm, 9 * mm, f"Mesa de Value Investing — Lote 3 Papel e celulose, B3 e agro · rev. 09/10/2026 · data-base {DATA_BASE} · "
+                                  "doutrina v2.5 · não é recomendação de investimento")
     c.drawRightString(195 * mm, 9 * mm, f"p. {d.page}")
     c.restoreState()
 
@@ -99,6 +99,9 @@ def ficha(emp, r, rank, story):
     x = extras(emp, r)
     tx = {k: ([preencher(i, emp, r, x) for i in val] if isinstance(val, list) else preencher(val, emp, r, x)) for k, val in T[emp.ticker].items()}
     palavra = r["palavra"]
+    nc = palavra == "NÃO CONCLUSIVO"
+    if nc:       # §9: sem palavra não há preço de compra nem de saída (o texto da ficha falava em "compra ≤ R$ …")
+        tx["capital"] = f"Não. NÃO CONCLUSIVO ({br(r['pc'])}× o central): sem palavra não há preço de compra nem de saída (§9)."
     cor = COR.get(palavra, AZUL)
     cab = Table([[P(f"<font name='Arial-B' size=14 color='#1F3A5F'>{emp.ticker}</font>  <font size=9>{emp.nome} · {emp.perfil}</font>", "p"),
                   P(f"<font name='Arial-B' size=12 color='white'>{palavra}</font><font size=7 color='white'> · confiança {r['confianca']}</font>", "p")]],
@@ -108,7 +111,7 @@ def ficha(emp, r, rank, story):
     story.append(cab)
     story.append(Spacer(1, 3))
     kpi = [["Preço 02/10", "Valor central", "P/C", "Compra 0,70×", "Saída 1,30×", "Ke implícito", "Vence a RF?", "Nota geral"],
-           [f"R$ {br(emp.preco)}", f"R$ {br(r['central'])}", br(r["pc"]) + "×", f"R$ {br(r['compra'])}", f"R$ {br(r['saida'])}",
+           [f"R$ {br(emp.preco)}", f"R$ {br(r['central'])}", br(r["pc"]) + "×", "n.a." if nc else f"R$ {br(r['compra'])}", "n.a." if nc else f"R$ {br(r['saida'])}",
             pct(r["ke_implicito"]), r["vence_rf"] + (" (só com re-rating)" if r["so_com_rerating"] else ""), br(r["notas"]["geral"], 1)]]
     story.append(tabela(kpi, [22.5 * mm] * 8, extra=[("ALIGN", (0, 0), (-1, -1), "CENTER")]))
     story.append(Spacer(1, 3))
@@ -215,8 +218,8 @@ def ficha(emp, r, rank, story):
     story.append(Spacer(1, 3))
     n = r["notas"]
     pode = n["qualidade"] >= 8 and n["solidez"] >= 7 and r["confianca"] == "normal"
-    ver = Table([[P(f"<b>Veredito: <font color='{cor.hexval()}'>{palavra}</font></b> — preço {br(r['pc'])}× o central. "
-                    f"Compra R$ {br(r['compra'])} · justo R$ {br(r['central'])} · saída R$ {br(r['saida'])}. " + nota_f2(r)
+    ver = Table([[P(f"<b>Veredito: <font color='{cor.hexval()}'>{palavra}</font></b> — preço {br(r['pc'])}× o central. " +
+                    ("Sem palavra: sem preço de compra nem de saída (§9). " if nc else f"Compra R$ {br(r['compra'])} · justo R$ {br(r['central'])} · saída R$ {br(r['saida'])}. " + nota_f2(r))
                     + f"Entrada parcial (exceção §9): {'aplicável — 1ª parcela (≤ 1/3) só até R$ ' + br(r['compra_parcial']) if pode else 'não se aplica (qualidade < 8, solidez < 7 ou confiança baixa)'}.<br/>"
                     f"<b>Gatilho que invalida:</b> {tx['gatilho']}<br/><b>Compraria para renda?</b> {tx['renda']}<br/>"
                     f"<b>Compraria para ganho de capital?</b> {tx['capital']}<br/>"
@@ -243,7 +246,7 @@ def ficha(emp, r, rank, story):
 
 def capa(res, rank, story):
     story.append(P("Fichas de Avaliação — Value Investing B3", "h1"))
-    story.append(P(f"Lote 3 — Papel e celulose, infraestrutura de mercado e agro (7 empresas) · rev. 05/10/2026 · data-base {DATA_BASE} · doutrina v2.2", "h2"))
+    story.append(P(f"Lote 3 — Papel e celulose, infraestrutura de mercado e agro (7 empresas) · rev. 09/10/2026 · data-base {DATA_BASE} · doutrina v2.5", "h2"))
     cont = {}
     for r in res:
         cont[r["palavra"]] = cont.get(r["palavra"], 0) + 1
@@ -266,7 +269,7 @@ def capa(res, rank, story):
     for r in sorted(res, key=lambda z: z["pc"]):
         an = ANTES[r["ticker"]]
         q.append([r["ticker"], f"<font color='{COR.get(r['palavra'], AZUL).hexval()}'><b>{r['palavra']}</b></font>", br(r["preco_"]), br(r["central"]),
-                  br(r["pc"]), br(r["compra"]), br(r["saida"]), pct(r["ke_implicito"]), f"{pct(r['roic'], 0)} × {pct(r['wacc'], 0)}",
+                  br(r["pc"]), "n.a." if r["palavra"] == "NÃO CONCLUSIVO" else br(r["compra"]), "n.a." if r["palavra"] == "NÃO CONCLUSIVO" else br(r["saida"]), pct(r["ke_implicito"]), f"{pct(r['roic'], 0)} × {pct(r['wacc'], 0)}",
                   f"{rank[r['ticker']]}º", r["vence_rf"] + ("*" if r["so_com_rerating"] else ""), br(r["notas"]["geral"], 1), f"{an[0]} {br(an[1])}"])
     story.append(tabela(q, [13 * mm, 15 * mm, 12 * mm, 13 * mm, 10 * mm, 12 * mm, 12 * mm, 15 * mm, 18 * mm, 15 * mm, 13 * mm, 9 * mm, 25 * mm]))
     story.append(Spacer(1, 4))
@@ -308,7 +311,7 @@ def main():
     soma = {r["ticker"]: ey.index(r) + roc.index(r) for r in res}
     rank = {tk: i + 1 for i, (tk, _) in enumerate(sorted(soma.items(), key=lambda kv: kv[1]))}
     doc = SimpleDocTemplate(str(SAIDA), pagesize=A4, leftMargin=14 * mm, rightMargin=14 * mm, topMargin=12 * mm, bottomMargin=14 * mm,
-                            title="Lote 3 — Papel e celulose, B3 e agro · rev. 05/10/2026", author="Mesa de Value Investing")
+                            title="Lote 3 — Papel e celulose, B3 e agro · rev. 09/10/2026", author="Mesa de Value Investing")
     story = []
     capa(res, rank, story)
     for i in sorted(range(len(EMPRESAS)), key=lambda k: res[k]["pc"]):

@@ -1,4 +1,4 @@
-"""PDF do Lote 5 (Petróleo, gás e combustíveis) — doutrina v2.2. Uso: python gerar_pdf_lote5.py"""
+"""PDF do Lote 5 (Petróleo, gás e combustíveis) — doutrina v2.5. Uso: python gerar_pdf_lote5.py"""
 from ltm import ltm_de
 import copy
 import pathlib
@@ -31,7 +31,7 @@ from lote5_textos import AGENDA, ANTES, T
 from motor_nao_financeiras import CVM, SI, avaliar, estrutura_de_capital, valores
 
 sys.stdout.reconfigure(encoding="utf-8")
-REV = "05-10-2026"
+REV = "09-10-2026"
 SAIDA = pathlib.Path(__file__).parent.parent / "PETROLEO E GÁS" / f"Petroleo_Gas_rev_{REV}.pdf"
 EP = ("PETR4", "PRIO3", "RECV3")
 CAPTURA = 0.70     # fração da receita incremental (preço) que vira EBIT — royalties, participação especial e custos atrelados a preço (HIPÓTESE)
@@ -376,7 +376,7 @@ def tabela_barril():
 
 def capa(res, rank, story):
     story.append(P("Fichas de Avaliação — Value Investing B3", "h1"))
-    story.append(P(f"Lote 5 — Petróleo, gás e combustíveis (5 empresas) · rev. 05/10/2026 · data-base {DATA_BASE} · doutrina v2.2", "h2"))
+    story.append(P(f"Lote 5 — Petróleo, gás e combustíveis (5 empresas) · rev. 09/10/2026 · data-base {DATA_BASE} · doutrina v2.5", "h2"))
     cont = {}
     for r in res:
         cont[r["palavra"]] = cont.get(r["palavra"], 0) + 1
@@ -458,8 +458,8 @@ def main():
         c.saveState()
         c.setFont("Arial", 6.5)
         c.setFillColor(colors.HexColor("#6B7280"))
-        c.drawString(15 * mm, 9 * mm, f"Mesa de Value Investing — Lote 5 Petróleo, gás e combustíveis · rev. 05/10/2026 · data-base {DATA_BASE} · "
-                                      "doutrina v2.2 · não é recomendação de investimento")
+        c.drawString(15 * mm, 9 * mm, f"Mesa de Value Investing — Lote 5 Petróleo, gás e combustíveis · rev. 09/10/2026 · data-base {DATA_BASE} · "
+                                      "doutrina v2.5 · não é recomendação de investimento")
         c.drawRightString(195 * mm, 9 * mm, f"p. {d.page}")
         c.restoreState()
 

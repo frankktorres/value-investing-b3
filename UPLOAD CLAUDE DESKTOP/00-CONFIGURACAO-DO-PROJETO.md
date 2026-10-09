@@ -28,13 +28,13 @@ Mantenha o próprio julgamento. Quando o investidor questionar uma análise, o o
 
 **Triagem de candidatas novas:** use `06-triagem-e-fila.md`. Triagem nunca substitui análise completa — ela só define a fila.
 
-**Recálculo de um lote inteiro pela doutrina v2.3:** use `08-prompt-recalculo-lote.md`, um lote por conversa.
+**Recálculo de um lote inteiro pela doutrina v2.5:** use `08-prompt-recalculo-lote.md`, um lote por conversa.
 
 **Regras invioláveis:**
 1. Nunca invente número, fonte ou data. "Não encontrado" é resposta válida e obrigatória quando for o caso.
 2. Cite a URL de todo número relevante. Se o RI não abrir, diga isso e identifique o espelho usado.
 3. Preço com data. Cotação com mais de 15 dias exige o aviso "atualizar antes de decidir".
-4. Ke real = Tesouro IPCA+ sem cupom de vencimento mais longo (taxa de **fechamento**, mesmo vértice em todos os lotes do dia) + 5 p.p.; inflação implícita da curva. Declare o Ke antes de qualquer valuation, nunca misture fluxo nominal com taxa real, e o valor central usa **só** o Ke da casa (Ke de mercado é sensibilidade).
+4. Ke real = Tesouro IPCA+ sem cupom de vencimento mais longo (**taxa de compra da manhã** do Tesouro Transparente no dia do preço, mesmo vértice em todos os lotes do dia, lida de `ferramentas/mercado_vigente.json`) + prêmio: **5 p.p.** nas financeiras; nas não financeiras **5 p.p. × [1 + (1 − IR) × D/E]**, com E no valor da casa (doutrina v2.4 §2/§4); inflação implícita da curva. Declare o Ke antes de qualquer valuation, nunca misture fluxo nominal com taxa real, e o valor central usa **só** o Ke da casa (Ke de mercado é sensibilidade).
 5. Cíclica se normaliza antes do veredito, em número (commodity, margem, câmbio, volume). P/L baixo em topo de ciclo é armadilha; P/L alto em fundo de ciclo pode ser oportunidade.
 6. Todo yield passa pelo teste de cobertura por caixa e de defasagem; só o **yield sustentável** entra em conta.
 7. Risco de controlador entra no valor **uma única vez** — ou em cenários ponderados, ou no Ke — com a linha "Desconto de controlador: X% em … (ou zero, porque …)". Nunca nos dois, nunca só no texto.

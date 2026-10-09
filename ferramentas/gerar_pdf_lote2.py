@@ -1,4 +1,4 @@
-"""PDF do Lote 2 (Energia elétrica e saneamento) — doutrina v2.2. Uso: python gerar_pdf_lote2.py"""
+"""PDF do Lote 2 (Energia elétrica e saneamento) — doutrina v2.5. Uso: python gerar_pdf_lote2.py"""
 from ltm import ltm_de
 import copy
 import pathlib
@@ -17,15 +17,15 @@ from motor_financeiras import avaliar, central_ao_ke, projecao
 from motor_nao_financeiras import altman_z2, beneish, piotroski, sloan
 
 sys.stdout.reconfigure(encoding="utf-8")
-SAIDA = pathlib.Path(__file__).parent.parent / "ENERGIA ELÉTRICA E SANEAMENTO" / "Energia_Saneamento_rev_05-10-2026.pdf"
+SAIDA = pathlib.Path(__file__).parent.parent / "ENERGIA ELÉTRICA E SANEAMENTO" / "Energia_Saneamento_rev_09-10-2026.pdf"
 
 
 def rodape(c, d):
     c.saveState()
     c.setFont("Arial", 6.5)
     c.setFillColor(colors.HexColor("#6B7280"))
-    c.drawString(15 * mm, 9 * mm, f"Mesa de Value Investing — Lote 2 Energia elétrica e saneamento · rev. 05/10/2026 · data-base {DATA_BASE} · "
-                                  "doutrina v2.2 · não é recomendação de investimento")
+    c.drawString(15 * mm, 9 * mm, f"Mesa de Value Investing — Lote 2 Energia elétrica e saneamento · rev. 09/10/2026 · data-base {DATA_BASE} · "
+                                  "doutrina v2.5 · não é recomendação de investimento")
     c.drawRightString(195 * mm, 9 * mm, f"p. {d.page}")
     c.restoreState()
 
@@ -75,6 +75,9 @@ def ficha(emp, r, story):
     x = extras(emp, r)
     tx = {k: ([preencher(i, emp, r, x) for i in v] if isinstance(v, list) else preencher(v, emp, r, x)) for k, v in T[emp.ticker].items()}
     palavra = r["palavra"]
+    nc = palavra == "NÃO CONCLUSIVO"
+    if nc:       # §9: sem palavra não há preço de compra nem de saída (o texto da ficha falava em "compra ≤ R$ …")
+        tx["capital"] = f"Não. NÃO CONCLUSIVO ({br(r['pc'])}× o central): sem palavra não há preço de compra nem de saída (§9)."
     cor = COR.get(palavra, AZUL)
     cab = Table([[P(f"<font name='Arial-B' size=14 color='#1F3A5F'>{emp.ticker}</font>  <font size=9>{emp.nome} · regulado</font>", "p"),
                   P(f"<font name='Arial-B' size=12 color='white'>{palavra}</font>", "p")]], colWidths=[120 * mm, 60 * mm], rowHeights=[11 * mm])
@@ -84,7 +87,7 @@ def ficha(emp, r, story):
     story.append(Spacer(1, 3))
     tir = x["tir"]
     kpi = [["Preço 02/10", "Valor central", "P/C", "Compra 0,70×", "Saída 1,30×", "TIR real implícita", "Vence a RF?", "Nota geral"],
-           [f"R$ {br(emp.preco)}", f"R$ {br(r['central'])}", br(r["pc"]) + "×", f"R$ {br(r['compra'])}", f"R$ {br(r['saida'])}",
+           [f"R$ {br(emp.preco)}", f"R$ {br(r['central'])}", br(r["pc"]) + "×", "n.a." if nc else f"R$ {br(r['compra'])}", "n.a." if nc else f"R$ {br(r['saida'])}",
             pct(tir) if tir is not None else "n.c.", r["vence_rf"] + (" (só c/ re-rating)" if r["so_com_rerating"] else ""), br(r["notas"]["geral"], 1)]]
     story.append(tabela(kpi, [22.5 * mm] * 8, extra=[("ALIGN", (0, 0), (-1, -1), "CENTER")]))
     story.append(Spacer(1, 3))
@@ -170,8 +173,8 @@ def ficha(emp, r, story):
                         [95 * mm, 87 * mm]))
     story.append(Spacer(1, 3))
     n = r["notas"]
-    ver = Table([[P(f"<b>Veredito: <font color='{cor.hexval()}'>{palavra}</font></b> — preço {br(r['pc'])}× o central. "
-                    f"Compra R$ {br(r['compra'])} · justo R$ {br(r['central'])} · saída R$ {br(r['saida'])}.<br/>"
+    ver = Table([[P(f"<b>Veredito: <font color='{cor.hexval()}'>{palavra}</font></b> — preço {br(r['pc'])}× o central. " +
+                    ("Sem palavra: sem preço de compra nem de saída (§9)." if nc else f"Compra R$ {br(r['compra'])} · justo R$ {br(r['central'])} · saída R$ {br(r['saida'])}.") + "<br/>"
                     f"<b>Gatilho que invalida:</b> {tx['gatilho']}<br/><b>Compraria para renda?</b> {tx['renda']}<br/>"
                     f"<b>Compraria para ganho de capital?</b> {tx['capital']}<br/>"
                     f"<b>Notas</b> (30/20/25/25): qualidade {br(n['qualidade'], 1)} · solidez {br(n['solidez'], 1)} · renda {br(n['renda'], 1)} · "
@@ -197,7 +200,7 @@ def ficha(emp, r, story):
 
 def capa(res, story):
     story.append(P("Fichas de Avaliação — Value Investing B3", "h1"))
-    story.append(P(f"Lote 2 — Energia elétrica e saneamento (8 empresas) · rev. 05/10/2026 · data-base {DATA_BASE} · doutrina v2.2", "h2"))
+    story.append(P(f"Lote 2 — Energia elétrica e saneamento (8 empresas) · rev. 09/10/2026 · data-base {DATA_BASE} · doutrina v2.5", "h2"))
     tirs = [r for r in res if r["tir"] is not None]
     abaixo = [r["ticker"] for r in res if r["tir"] is None or r["tir"] < MK.rf_real]
     acima = [r["ticker"] for r in tirs if r["tir"] >= MK.rf_real + 0.02]
@@ -218,7 +221,7 @@ def capa(res, story):
     for r in sorted(res, key=lambda z: z["pc"]):
         a0 = ANTES[r["ticker"]]
         q.append([r["ticker"], f"<font color='{COR.get(r['palavra'], AZUL).hexval()}'><b>{r['palavra']}</b></font>", br(r["preco_"]), br(r["central"]),
-                  br(r["pc"]), br(r["compra"]), br(r["saida"]), pct(r["tir"]) if r["tir"] is not None else "n.c.", br(r["ke14"]),
+                  br(r["pc"]), "n.a." if r["palavra"] == "NÃO CONCLUSIVO" else br(r["compra"]), "n.a." if r["palavra"] == "NÃO CONCLUSIVO" else br(r["saida"]), pct(r["tir"]) if r["tir"] is not None else "n.c.", br(r["ke14"]),
                   r["vence_rf"] + ("*" if r["so_com_rerating"] else ""), br(r["notas"]["geral"], 1), f"{a0[0]} {br(a0[1])}"])
     story.append(tabela(q, [14 * mm, 14 * mm, 12 * mm, 13 * mm, 10 * mm, 13 * mm, 13 * mm, 15 * mm, 14 * mm, 14 * mm, 10 * mm, 30 * mm]))
     story.append(Spacer(1, 4))
@@ -256,7 +259,7 @@ def main():
         r["ke14"] = central_ao_ke(e, MK, KE_REF)
         res.append(r)
     doc = SimpleDocTemplate(str(SAIDA), pagesize=A4, leftMargin=14 * mm, rightMargin=14 * mm, topMargin=12 * mm, bottomMargin=14 * mm,
-                            title="Lote 2 — Energia elétrica e saneamento · rev. 05/10/2026", author="Mesa de Value Investing")
+                            title="Lote 2 — Energia elétrica e saneamento · rev. 09/10/2026", author="Mesa de Value Investing")
     story = []
     capa(res, story)
     for i in sorted(range(len(EMPRESAS)), key=lambda k: res[k]["pc"]):

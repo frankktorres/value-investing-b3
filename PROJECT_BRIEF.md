@@ -1,5 +1,5 @@
 # PROJECT BRIEF — Mesa de Value Investing B3
-*Versão de 08/10/2026 (rev. Onda 1.3) · gerado por `/brief` · fonte: repositório, memória do projeto e `docs/auditoria/AUDITORIA_2026-10-08.md`*
+*Versão de 09/10/2026 (rev. Onda 1.4) · gerado por `/brief` · fonte: repositório, memória do projeto e `docs/auditoria/AUDITORIA_2026-10-08.md`*
 
 ## 1. Projeto
 Mesa de análise fundamentalista da B3 para dividendos/JCP e longo prazo: doutrina escrita (v2.5) + motores de valuation em Python que
@@ -7,7 +7,7 @@ dão preço de compra, central e saída (régua 0,70/0,90/1,10/1,30×) para 41 e
 
 ## 2. Estágio
 MVP de uso pessoal, maduro no cálculo. Um usuário real, sem terceiros. Prazo externo conhecido: temporada do ITR 3T26 (fim de out–nov/2026,
-`ferramentas/temporada.py`). Onda 1 da auditoria em andamento: 1.1 (bb79ba9), 1.2 (49b5f53 + dd9c3c1) e 1.3 (gatilhos) feitas; falta 1.4 (documentos). Meta de longo prazo: SaaS com front-end
+`ferramentas/temporada.py`). Onda 1 da auditoria concluída: 1.1 (bb79ba9), 1.2 (49b5f53 + dd9c3c1), 1.3 (gatilhos) e 1.4 (documentos) feitas; falta a Onda 2 (reprodutibilidade). Meta de longo prazo: SaaS com front-end
 (sem prazo).
 
 ## 3. Stack
@@ -43,8 +43,8 @@ MVP de uso pessoal, maduro no cálculo. Um usuário real, sem terceiros. Prazo e
    da mesma doença. Comitê único (mesma família de modelo; 2º comitê pausado).
 
 ## 6. Próximos 3 marcos
-1. Onda 1 da auditoria: 1.1, 1.2 e 1.3 feitas → **1.4 documentos** (AUD-19, 35, 36, 69: PDFs dos lotes, pasta de upload, versões
-   citadas nos prompts, células do `03` ainda digitadas).
+1. Onda 1 da auditoria concluída (1.1 a 1.4: PDFs reemitidos em v2.5, pasta de upload sincronizada, versões dos prompts, Ke/retorno do `03` gerados
+   pelo motor) → **Onda 2: reprodutibilidade e testes que escondem erro** (AUD-38 clone do zero, AUD-17 DDM sem teste analítico).
 2. Temporada 3T26: `python ferramentas/temporada.py` ao sair o ITR; régua congelada até lá.
 3. Etapa 6 / F6 — construção de carteira (tamanho de posição, concentração, caixa); depende de respostas do Frank.
 
@@ -88,3 +88,5 @@ Primeira versão.
 - 08/10/2026 (Onda 1.2): doutrina v2.4; Onda 1 com 1.1 e 1.2 feitas; contagem de testes; gargalo 1 e marco 1 atualizados.
 - 08/10/2026 (Onda 1.3): doutrina v2.5 (regulados por P/VP justificado como proxy declarado); ferramentas novas `hall03.py`,
   `precos_hall.py`, `triagem/erro_proxy.py`; monitor com falha ativa; corte da triagem medido (2,07); testes e marco 1 atualizados.
+- 09/10/2026 (Onda 1.4): `hall03.py` também gera Ke implícito/retorno do `03`; 6 PDFs reemitidos (rev. 09-10-2026, v2.5); pasta de upload
+  sincronizada (reenvio ao Desktop segue suspenso); gerador do lote 6 corrigido (`por_metodo`); estágio e marco 1 atualizados.

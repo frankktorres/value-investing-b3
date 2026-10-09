@@ -1,4 +1,4 @@
-"""PDF do Lote 6 (Química e metalurgia) — doutrina v2.2. Uso: python gerar_pdf_lote6.py"""
+"""PDF do Lote 6 (Química e metalurgia) — doutrina v2.5. Uso: python gerar_pdf_lote6.py"""
 from ltm import ltm_de
 from inflacao import DEFLATOR
 import copy
@@ -34,7 +34,7 @@ from motor_financeiras import projecao
 from motor_nao_financeiras import CVM, SI, altman_z2, avaliar, beneish, ebit_aj, estrutura_de_capital, piotroski, sloan, valores
 
 sys.stdout.reconfigure(encoding="utf-8")
-REV = "05-10-2026"
+REV = "09-10-2026"
 SAIDA = pathlib.Path(__file__).parent.parent / "QUÍMICA E METALÚRGIA" / f"Quimica_Metalurgia_rev_{REV}.pdf"
 INDICE = {"GGBR4": ACO, "UNIP6": CLORO}
 NOME_IDX = {"GGBR4": "aço (BLS WPU1017)", "UNIP6": "cesta 50% soda (BLS PCU3251803251804) + 50% resinas termoplásticas (BLS WPU0662)"}
@@ -72,6 +72,8 @@ def extras(emp, r):
     x = {"pl_ltm": emp.preco / (ltm["lucro_controlador"] / r["n"]) if ltm.get("lucro_controlador", 0) > 0 else None,
          "pvp": emp.preco / r["vpa"], "ebit_ltm": ltm["ebit"] - ((ltm.get("impairment") or 0) if emp.impairment_normalizado else 0), "ebit_meio": r["op"]["receita_meio"] * r["m"],
          "div_bruta": (ltm.get("emprest_cp") or 0) + (ltm.get("emprest_lp") or 0)}
+    # preço ÷ cada âncora: a ficha NÃO CONCLUSIVO mostra (antes só a UNIP6; o EGIE3 passou a NC com a trava da v2.4)
+    x["por_metodo"] = {k: (emp.preco / val if val > 0 else None) for k, val in r["ancoras"].items()}
     if tk in INDICE:
         ix = INDICE[tk]
         rec12 = ltm["receita"]
@@ -85,7 +87,6 @@ def extras(emp, r):
         x["div22"] = (a["2022"].get("emprest_cp") or 0) + (a["2022"].get("emprest_lp") or 0)
         m3 = median(margem_ano(emp, r, y) for y in ("2023", "2024", "2025"))
         x["m3a"], x["c3a"] = m3, central_rapido(emp, margem=m3)
-        x["por_metodo"] = {k: (emp.preco / val if val > 0 else None) for k, val in r["ancoras"].items()}
         s = 1.0                         # quanto a receita de meio precisa cair para as âncoras ficarem abaixo de 3× (e a palavra voltar)
         while s > 0.5:
             s -= 0.005
@@ -201,6 +202,8 @@ def ficha(emp, r, rank, story):
     tx = {k: ([preencher(i, emp, r, x) for i in val] if isinstance(val, list) else preencher(val, emp, r, x)) for k, val in T[emp.ticker].items()}
     palavra = r["palavra"]
     nc = palavra == "NÃO CONCLUSIVO"
+    if nc:       # §9: sem palavra não há preço de compra
+        tx["capital"] = f"Não. NÃO CONCLUSIVO ({br(r['pc'])}× o central): sem palavra não há preço de compra nem de saída (§9)."
     cor = COR.get(palavra, AZUL)
     perfil = {"ciclica": "cíclica (commodity)", "servicos": "industrial (autopeças)"}[emp.perfil]
     carimbo = " · defeito estrutural" if emp.ticker == "UNIP6" else ""
@@ -337,7 +340,7 @@ def ficha(emp, r, rank, story):
                         [95 * mm, 87 * mm]))
     story.append(Spacer(1, 3))
     n = r["notas"]
-    preco_txt = ("Sem palavra: as âncoras discordam mais de 3× (doutrina §11.3) — ver a margem por método acima. "
+    preco_txt = ((("Sem palavra: as âncoras discordam mais de 3× (doutrina §11.3)" if r["dispersao"] > 3 else f"Sem palavra: trava de coerência (§9; dispersão das âncoras {br(r['dispersao'])}×)") + " — ver a margem por método acima. ")
                  if nc else f"Compra R$ {br(r['compra'])} · justo R$ {br(r['central'])} · saída R$ {br(r['saida'])}. " + nota_f2(r))
     car = " · <b>defeito estrutural: dividendo não coberto por caixa</b> (§7)" if emp.ticker == "UNIP6" else ""
     ver = Table([[P(f"<b>Veredito: <font color='{cor.hexval()}'>{palavra}</font></b>{car} — preço {br(r['pc'])}× o central. {preco_txt}"
@@ -553,18 +556,19 @@ def tabela_indices():
 
 def capa(res, rank, story):
     story.append(P("Fichas de Avaliação — Value Investing B3", "h1"))
-    story.append(P(f"Lote 6 — Química e metalurgia (4 empresas) · rev. 05/10/2026 · data-base {DATA_BASE} · doutrina v2.2", "h2"))
+    story.append(P(f"Lote 6 — Química e metalurgia (4 empresas) · rev. 09/10/2026 · data-base {DATA_BASE} · doutrina v2.5", "h2"))
     cont = {}
     for r in res:
         cont[r["palavra"]] = cont.get(r["palavra"], 0) + 1
     resumo = " · ".join(f"{k}: {v}" for k, v in sorted(cont.items()))
+    pal = {x["ticker"]: x["palavra"] for x in res}
     por = " · ".join(f"{p}: {', '.join(r['ticker'] for r in res if r['palavra'] == p)}" for p in ("BARATA", "RADAR", "JUSTA", "CARA", "NÃO CONCLUSIVO")
                      if any(r["palavra"] == p for r in res))
     box = (f"<b>Conclusão.</b> Ao Ke da casa ({pct(MK.ke_nom)} nominal), com o preço de aço e de cloro-soda/PVC de meio de ciclo declarado antes do "
            f"veredito (média do ciclo em reais de hoje: aço 2016–25, cloro-soda/PVC 2017–25), o lote fica: <b>{resumo}</b> — {por}. <b>Nenhuma compra autorizada.</b> "
-           "LEVE3 é a única que cria valor (ROIC acima do WACC) e está no preço justo; EGIE3 fica justa com o follow-on de Jirau somado ao "
-           "patrimônio; GGBR4 perde o RADAR — o livro não é piso quando o ROIC de meio de ciclo fica abaixo do custo de capital; UNIP6 não tem "
-           "palavra (lucro de meio de ciclo × livro distribuído discordam mais de 3×) e mantém o defeito estrutural de dividendo não coberto.")
+           f"LEVE3 cria valor (ROIC acima do WACC), mas a palavra é {pal['LEVE3']} (ver a ficha); EGIE3 fica {pal['EGIE3']} com o follow-on de Jirau somado ao "
+           "patrimônio; GGBR4 perde o RADAR — o livro não é piso quando o ROIC de meio de ciclo fica abaixo do custo de capital; "
+           f"UNIP6 fica {pal['UNIP6']} (lucro de meio de ciclo × livro distribuído, âncoras perto do corte de 3×) e mantém o defeito estrutural de dividendo não coberto.")
     tb = Table([[P(box, "box")]], colWidths=[182 * mm])
     tb.setStyle(TableStyle([("BOX", (0, 0), (-1, -1), 1, AZUL), ("BACKGROUND", (0, 0), (-1, -1), colors.HexColor("#EEF3F9")),
                             ("LEFTPADDING", (0, 0), (-1, -1), 7), ("TOPPADDING", (0, 0), (-1, -1), 6), ("BOTTOMPADDING", (0, 0), (-1, -1), 6)]))
@@ -637,8 +641,8 @@ def main():
         c.saveState()
         c.setFont("Arial", 6.5)
         c.setFillColor(colors.HexColor("#6B7280"))
-        c.drawString(15 * mm, 9 * mm, f"Mesa de Value Investing — Lote 6 Química e metalurgia · rev. 05/10/2026 · data-base {DATA_BASE} · "
-                                      "doutrina v2.2 · não é recomendação de investimento")
+        c.drawString(15 * mm, 9 * mm, f"Mesa de Value Investing — Lote 6 Química e metalurgia · rev. 09/10/2026 · data-base {DATA_BASE} · "
+                                      "doutrina v2.5 · não é recomendação de investimento")
         c.drawRightString(195 * mm, 9 * mm, f"p. {d.page}")
         c.restoreState()
 

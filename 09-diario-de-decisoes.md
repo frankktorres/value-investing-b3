@@ -444,3 +444,32 @@ do central e apagava "(S)" no meio de frase; agora o número tem de abrir a cél
 (4) Se o próprio boletim de falha não gravasse, o código saía 1 e o aviso dizia "nem rodou"; agora sai 21 e o log diz por quê.
 (5) A falha depois de um boletim já escrito vai **para o topo** dele (o prompt de sexta e o aviso olham a abertura). (6) A ficha
 da EGIE3 no PDF do lote 6 também diz onde está o investimento. (7) Restos de nome e comentário.
+
+### 09/10/2026 — DOCUMENTOS: Onda 1.4 da auditoria (AUD-36, 69, 19, 35)
+
+Nenhuma palavra, central ou regra mudou; só documentos e geradores. Cada achado foi reproduzido antes de mexer.
+
+- **AUD-36 (versões citadas).** `08-prompt-recalculo-lote.md` mandava recalcular "pela doutrina v2.0" e o checklist "v2.1"; passou a
+  v2.5 / v2.2. Também `05`, `02`, `00`, `README` (v2.3 → v2.5) e a frase do prompt de sexta ("recalculados pela v2.0/2.1"). O "PASSO 5 —
+  v2.3" do `08` e o histórico dos lotes ficam: descrevem o que cada versão trouxe.
+- **AUD-69 (células digitadas).** Não eram 3: **24 linhas** do quadro do `03` tinham "Ke implícito" ou "retorno de investimento" fora
+  do motor (PETR4 20,3 × 21,8; SLCE3 15,9 × 21,1; KLBN11 12,5 × 20,0; as de 05/10 não acompanharam as Ondas 1.1/1.2). `hall03.py`
+  agora gera as duas células (só o primeiro de cada na célula; sem valor → "n.d.") e `--corrigir` as reescreveu; teste novo cobre troca,
+  "n.d." e idempotência. `hall03.py` sem divergência.
+  *Limite:* o texto ao redor (ROIC, DCF reverso, "Ke da casa") ainda é digitado e pode estar mais velho que o número trocado.
+- **AUD-19 (PDFs).** Os 6 PDFs reemitidos como `…_rev_09-10-2026.pdf` (v2.5; os antigos ficam na pasta como "versão anterior"); o §5
+  do `03` aponta os novos. Conferido no texto: HYPE3 central 16,22 (era 19,60 no PDF velho); LEVE3 agora NÃO CONCLUSIVO, sem a saída
+  50,98. **Achado:** `gerar_pdf_lote6.py` quebrava (`KeyError: 'por_metodo'`) porque a ficha NÃO CONCLUSIVO só tinha esse campo para a
+  UNIP6 — o gerador estava parado desde a v2.4; `por_metodo` agora vale para todos.
+- **AUD-35 (pasta do Desktop).** Decisão: a pasta `UPLOAD CLAUDE DESKTOP/` é só **cópia local**, então foi sincronizada com a raiz
+  (9 .md, `COLAR-NO-CAMPO`, 6 PDFs novos; os 6 PDFs e .md antigos foram para `_historico/2026-10-09 antes da onda 1.4/UPLOAD CLAUDE
+  DESKTOP/`). O **reenvio ao Claude Desktop continua SUSPENSO** (decisão de 08/10): nada foi enviado; se o Frank retomar o agente de sexta no
+  Desktop, basta subir a pasta como está.
+- **Testes:** `pytest --ignore=backtest` 377 verdes; motor e `Mercado` intactos, então o backtest não rodou.
+- **Adversário (sem bloqueio depois de 4 correções, com teste de texto nos PDFs).** (1) Os PDFs dos lotes 2 e 3 davam compra/saída
+  para SLCE3, KLBN11 e ISAE4 (NÃO CONCLUSIVO) e a pergunta "compraria para ganho de capital?" dizia "compra ≤ R$ …": agora "n.a." e
+  "sem preço de compra nem de saída (§9)", como o `03` e os lotes 5 e 6. (2) A capa do lote 6 dizia LEVE3 "preço justo" e UNIP6 "sem
+  palavra": agora lê a palavra do motor. (3) A ficha da LEVE3 (NC pela trava, dispersão 1,08×) dizia "âncoras discordam > 3×": o motivo
+  agora depende da dispersão. (4) A UNIP6 (CARA, dispersão 2,67×) ainda falava como NC; textos corrigidos.
+  **Ressalvas aceitas:** `hall03` não reconhece o sinal "−" (U+2212) nem formatos como "≈20,3%" no Ke implícito (hoje nenhum caso); o
+  texto dos bancos no PDF/`03` diz "pela v2.0" ao contar o histórico da rev. de 04/10 (data correta, não é regra vigente).

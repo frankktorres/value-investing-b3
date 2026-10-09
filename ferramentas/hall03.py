@@ -8,7 +8,9 @@ Regras (as mesmas do monitor, `monitor_semanal.alerta`):
 - (S) ⇔ preço ≥ saída **e** palavra ≠ NÃO CONCLUSIVO;
 - NÃO CONCLUSIVO → compra e saída "n.a." (§9: sem palavra final não há preço de compra nem de saída);
 - central ≤ 0 → P/C "n.d."; saída pela exceção de qualidade → "(1,50×)" na célula;
-- a seção (### BARATA / RADAR / JUSTA / CARA / NÃO CONCLUSIVO) tem de ser a palavra do motor.
+- a seção (### BARATA / RADAR / JUSTA / CARA / NÃO CONCLUSIVO) tem de ser a palavra do motor;
+- "Ke implícito X%" e "retorno de investimento X%" no texto do motivo (AUD-69) são o PRIMEIRO de cada um na célula e
+  saem de `r["ke_implicito"]` e `r["ret_investimento"]`; sem valor no motor → "n.d.".
 
 Também gera o bloco do hall no `PROMPT-AGENTE-NOTICIAS-SEXTA.md` (entre os marcadores `hall03`).
 
@@ -36,12 +38,19 @@ INICIO, FIM = "<!-- hall03:inicio (gerado por ferramentas/hall03.py; não editar
 # o número do central é o PRIMEIRO da célula (com ou sem negrito); outro formato = divergência, nunca troca silenciosa
 _NUM = re.compile(r"^(\*\*)?(-?\d+(?:\.\d{3})*,\d+)")
 # (S) só como marca: antes de ";", de "**" ou no fim da célula — "segmento (S) do grupo" não é marca
+_KE = re.compile(r"(Ke impl[ií]cito )(?:(-?\d+,\d+)%|n\.d\.)")
+_RET = re.compile(r"(retorno de investimento )(?:(-?\d+,\d+)%|n\.d\.)")
 _S = re.compile(r" ?\(S\)(?=;|\*\*|\s*$)")
 _TICKER = re.compile(r"^[A-Z][A-Z0-9]{3}\d{1,2}$")      # B3SA3 tem dígito na 2ª posição
 
 
 def br(x: float, nd: int = 2) -> str:
     return f"{x:.{nd}f}".replace(".", ",")
+
+
+def _pct(x) -> str:
+    """Célula de percentual no motivo: 1 casa e '%'; sem valor no motor (None ou 0) → 'n.d.'."""
+    return br(100 * x, 1) + "%" if x else "n.d."
 
 
 # ------------------------------------------------------------------------------ esperado
@@ -61,6 +70,7 @@ def esperado(todos: dict | None = None) -> dict[str, dict]:
                        pc=br(preco / central) if central > 0 else "n.d.",
                        compra="n.a." if sem_regua else br(r["compra"]),
                        saida="n.a." if sem_regua else br(r["saida"]) + q,
+                       ke_impl=_pct(r.get("ke_implicito")), ret=_pct(r.get("ret_investimento")),
                        s=M.alerta(preco, r["compra"], r["saida"], palavra) == M.SAIDA,
                        preco_f=preco, central_f=central, compra_f=r["compra"], saida_f=r["saida"])
     return out
@@ -110,6 +120,10 @@ def divergencias(texto: str, esp: dict[str, dict]) -> list[tuple[str, str, str, 
                             ("pc", c["pc"]), ("compra", c["compra"]), ("saida", c["saida"])):
             if no03 != e[campo]:
                 out.append((tk, campo, no03, e[campo]))
+        for campo, rx in (("ke_impl", _KE), ("ret", _RET)):
+            k = rx.search(c["motivo"])
+            if k and (k.group(2) + "%" if k.group(2) else "n.d.") != e[campo]:
+                out.append((tk, campo, k.group(2) + "%" if k.group(2) else "n.d.", e[campo]))
         tem_s = bool(_S.search(c["motivo"]))
         if tem_s != e["s"]:
             out.append((tk, "(S)", "sim" if tem_s else "não", "sim" if e["s"] else "não"))
@@ -134,6 +148,8 @@ def corrigir_texto(texto: str, esp: dict[str, dict]) -> str:
             motivo = motivo.rstrip() + " (S)"
         elif not e["s"] and _S.search(motivo):
             motivo = _S.sub("", motivo)
+        for campo, rx in (("ke_impl", _KE), ("ret", _RET)):
+            motivo = rx.sub(lambda k, v=e[campo]: k.group(1) + v, motivo, count=1)
         cel[-1] = motivo
         linhas[x["i"]] = "| " + " | ".join(cel) + " |"
     return "\n".join(linhas)

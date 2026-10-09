@@ -1,4 +1,4 @@
-"""Gera o PDF do Lote 1 (Bancos e Seguridade) pela doutrina v2.0. Uso: python gerar_pdf_lote1.py"""
+"""Gera o PDF do Lote 1 (Bancos e Seguridade) pela doutrina v2.5. Uso: python gerar_pdf_lote1.py"""
 import glob
 import io
 import json
@@ -26,7 +26,7 @@ from motor_financeiras import (HORIZONTE, IR_JCP, PIB_REAL_LP, PREMIO_KE, avalia
 sys.stdout.reconfigure(encoding="utf-8")
 AQUI = pathlib.Path(__file__).parent
 RAIZ = AQUI.parent
-SAIDA = RAIZ / "BANCOS E SEGURIDADE" / "Banco_Seguridade_rev_04-10-2026.pdf"
+SAIDA = RAIZ / "BANCOS E SEGURIDADE" / "Banco_Seguridade_rev_09-10-2026.pdf"
 
 pdfmetrics.registerFont(TTFont("Arial", "C:/Windows/Fonts/arial.ttf"))
 pdfmetrics.registerFont(TTFont("Arial-B", "C:/Windows/Fonts/arialbd.ttf"))
@@ -150,7 +150,7 @@ def rodape(c, d):
     c.saveState()
     c.setFont("Arial", 6.5)
     c.setFillColor(colors.HexColor("#6B7280"))
-    c.drawString(15 * mm, 9 * mm, f"Mesa de Value Investing — Lote 1 Bancos e Seguridade · rev. 04/10/2026 · data-base {DATA_BASE} · doutrina v2.0 · "
+    c.drawString(15 * mm, 9 * mm, f"Mesa de Value Investing — Lote 1 Bancos e Seguridade · rev. 09/10/2026 · data-base {DATA_BASE} · doutrina v2.5 · "
                                   "não é recomendação de investimento")
     c.drawRightString(195 * mm, 9 * mm, f"p. {d.page}")
     c.restoreState()
@@ -350,7 +350,7 @@ def ficha(emp, r, story):
 
 def capa(res, story):
     story.append(P("Fichas de Avaliação — Value Investing B3", "h1"))
-    story.append(P(f"Lote 1 — Bancos e Seguridade (10 empresas) · rev. 04/10/2026 · data-base {DATA_BASE} · doutrina v2.0", "h2"))
+    story.append(P(f"Lote 1 — Bancos e Seguridade (10 empresas) · rev. 09/10/2026 · data-base {DATA_BASE} · doutrina v2.5", "h2"))
     caras = sum(1 for r in res if r["palavra"] == "CARA")
     box = (f"<b>Conclusão.</b> Ao custo de capital da casa (Ke nominal {pct(MK.ke_nom)}), <b>{caras} de 10 estão CARAS</b> e nenhuma está JUSTA, RADAR ou BARATA. "
            f"O preço de cada uma embute um retorno de {pct(min(r['ke_implicito'] for r in res))} a {pct(max(r['ke_implicito'] for r in res))} ao ano — "
@@ -462,7 +462,7 @@ def main():
         r["preco_"] = e.preco
         res.append(r)
     doc = SimpleDocTemplate(str(SAIDA), pagesize=A4, leftMargin=14 * mm, rightMargin=14 * mm, topMargin=12 * mm, bottomMargin=14 * mm,
-                            title="Lote 1 — Bancos e Seguridade · rev. 04/10/2026", author="Mesa de Value Investing")
+                            title="Lote 1 — Bancos e Seguridade · rev. 09/10/2026", author="Mesa de Value Investing")
     story = []
     capa(res, story)
     metodo(res, story)

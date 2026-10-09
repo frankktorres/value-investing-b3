@@ -54,16 +54,16 @@ T = {
     gatilho="DL/EBITDA > 3,5×, cobertura de juros < 1,2× por 2 trimestres, nova distribuição acima do lucro com dívida subindo, ou margem EBIT "
             "< 10% por 4 trimestres.",
     renda="Não. O provento médio de 5 anos (R$ {dpa5}) supera o FCFE normalizado (R$ {fcfe}); em 2026 não houve provento.",
-    capital="Não. Sem palavra pela regra: as âncoras discordam {dispersao}× (pelo lucro de meio de ciclo o preço fica perto do valor; pelo livro, "
-            "três vezes acima). Defeito estrutural: dividendo não coberto por caixa.",
+    capital="Não. {palavra} ({pc}× o central); compra ≤ R$ {compra}. As âncoras discordam {dispersao}× (pelo lucro de meio de ciclo o preço fica "
+            "perto do valor; pelo livro, bem acima). Defeito estrutural: dividendo não coberto por caixa.",
     de_para="A rev. 03/10 (R$ 37) era o DCF de FCFE de 07/09 reescalado (+2,5%); em 04/10 o carimbo ARMADILHA virou CARA com defeito estrutural "
             "(P/L 24 não é múltiplo baixo). Agora: receita de 12m à cesta de meio de ciclo (fator {fator}), margem EBIT mediana de 2017–25 e as três "
             "âncoras de cíclica, com preço e margem na mesma janela ({janela}). EPV e DCF sobem (a margem dos 12m, 11,7%, está perto da mínima da série); a reprodução cai (PL distribuído). Razão (c).",
     autocritica=["A margem mediana ({m50}) supera a de 2023–25 ({m3a}); com ela o central (mediana) iria a R$ {c3a}. O PVC asiático pode ter "
                  "rebaixado o meio de ciclo de forma permanente.",
-                 "Sem palavra no fio: com a receita de meio {corte} menor as âncoras ficam abaixo de 3× e a palavra seria {palavra_corte} (P/C {pc_corte}). O índice dos EUA (soda + resinas, 50/50) não é o preço realizado no Mercosul.",
-                 "Reprodução pelo livro subestima o custo de construir uma planta de cloro-soda hoje; laudo de reposição não encontrado — é ele que "
-                 "leva a dispersão acima de 3×.",
+                 "A dispersão das âncoras ({dispersao}×) está abaixo do corte de 3× (§11.3), mas perto: acima dele a palavra deixa de existir. O índice dos EUA (soda + resinas, 50/50) não é o preço realizado no Mercosul.",
+                 "Reprodução pelo livro subestima o custo de construir uma planta de cloro-soda hoje; laudo de reposição não encontrado — com ele "
+                 "a dispersão das âncoras mudaria.",
                  "Argentina em IAS 29 (hiperinflação) distorce receita e EBIT da Indupa ano a ano.",
                  "Ações ON, PNA e PNB somadas ao preço da PNB."],
     nao_encontrado="Preço realizado de soda e PVC (R$/t) e volumes; tag along da PNB no formulário de referência; reconciliação do caixa "

@@ -1,9 +1,9 @@
 # PROMPT DE RECÁLCULO EM LOTE (v1.1, 07/10/2026)
-*Use para refazer um lote inteiro de fichas pela doutrina **v2.3** (07/10/2026). Um lote por conversa. Anexe o PDF vigente do lote e substitua `<LOTE>`.*
+*Use para refazer um lote inteiro de fichas pela doutrina **v2.5** (08/10/2026). Um lote por conversa. Anexe o PDF vigente do lote e substitua `<LOTE>`.*
 
 ---
 
-Você é o analista independente de value investing desta mesa. **Recalcule o `<LOTE>`** pela `01-doutrina-value-investing.md` **v2.0**, usando o PDF anexado só como fonte de **fatos** (balanços, proventos, eventos). **Nenhum valor central, nota ou métrica do PDF é reaproveitado sem recalcular.**
+Você é o analista independente de value investing desta mesa. **Recalcule o `<LOTE>`** pela `01-doutrina-value-investing.md` **v2.5**, usando o PDF anexado só como fonte de **fatos** (balanços, proventos, eventos). **Nenhum valor central, nota ou métrica do PDF é reaproveitado sem recalcular.**
 
 **PASSO 1 — Premissas comuns (uma vez, no topo)**
 - rf = Tesouro IPCA+ **sem cupom** de vencimento mais longo, taxa de **fechamento** do último dia útil, com URL e vencimento.
@@ -26,7 +26,7 @@ Você é o analista independente de value investing desta mesa. **Recalcule o `<
 **PASSO 3 — Fechamento do lote**
 - Quadro-resumo: ticker | palavra | preço | central | P/C | compra | saída | vence RF (líquida) | nota | pendências resolvidas.
 - Para não financeiras: EY e ROC de Greenblatt de cada uma (para o ranking do hall, `03` §3).
-- Rode o `04-checklist-anti-erro.md` v2.1 inteiro e liste os itens que falharam e como foram corrigidos.
+- Rode o `04-checklist-anti-erro.md` v2.2 inteiro e liste os itens que falharam e como foram corrigidos.
 - Lista "Não encontrado".
 
 **PASSO 4 — Lições da Etapa 5 (dossiês BLAU3, CMIN3, HYPE3, 07/10/2026) que valem para qualquer lote**

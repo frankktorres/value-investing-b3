@@ -90,3 +90,24 @@ def test_corrigir_nao_corrompe_texto_livre():
     md2 = cab + "| CARA3 | X | 13,00 | **−3,00** | 1,30 | 7,00 | 13,00 | x (S) |\n"
     assert ("CARA3", "central") in {(tk, c) for tk, c, *_ in H.divergencias(md2, e)}
     assert "−-" not in H.corrigir_texto(md2, e)
+
+
+def test_ke_implicito_e_retorno_do_texto_saem_do_motor():
+    """AUD-69: "Ke implícito X%" e "retorno de investimento X%" digitados divergiam do motor (PETR4 20,3 × 19,43;
+    BBDC4, PSSA3). Só o primeiro de cada um na célula é trocado; sem valor no motor vira "n.d."."""
+    it = _item(13.0, 10.0, "CARA")
+    it["r"].update(ke_implicito=0.19426, ret_investimento=0.1161)
+    sem = _item(13.0, 10.0, "CARA")
+    sem["r"].update(ke_implicito=None, ret_investimento=0.0)
+    e = H.esperado({"CARA3": it, "SEMV3": sem})
+    cab = ("## 1. Quadro\n\n### CARA\n| Ticker | Setor | Preço 02/10 | Central | P/C | Compra 0,70× | Saída 1,30× | "
+           "Pendências v2 / motivo |\n|---|---|---|---|---|---|---|---|\n")
+    md = (cab + "| CARA3 | X | 13,00 | **10,00** | 1,30 | 7,00 | 13,00 | Ke implícito 20,3% vs Ke da casa 19,3%; "
+          "retorno de investimento 12,0%; antes Ke implícito 15,0% (S) |\n"
+          "| SEMV3 | X | 13,00 | **10,00** | 1,30 | 7,00 | 13,00 | Ke implícito 9,9%; retorno de investimento 5,0% (S) |\n")
+    campos = {(tk, c) for tk, c, *_ in H.divergencias(md, e)}
+    assert {("CARA3", "ke_impl"), ("CARA3", "ret"), ("SEMV3", "ke_impl"), ("SEMV3", "ret")} <= campos
+    novo = H.corrigir_texto(md, e)
+    assert "Ke implícito 19,4% vs Ke da casa 19,3%; retorno de investimento 11,6%; antes Ke implícito 15,0% (S) |" in novo
+    assert "Ke implícito n.d.; retorno de investimento n.d. (S) |" in novo
+    assert H.divergencias(novo, e) == [] and H.corrigir_texto(novo, e) == novo

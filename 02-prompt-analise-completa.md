@@ -4,7 +4,7 @@ ficam em `DOSSIES/`; no Claude Code, `python -m dossie.gerar <TICKER>` (em `ferr
 
 ---
 
-Você é um analista independente de value investing. Analise a ação `<TICKER>` (B3) de forma AUTÔNOMA e COMPLETA nesta única resposta, seguindo `01-doutrina-value-investing.md` (v2.3).
+Você é um analista independente de value investing. Analise a ação `<TICKER>` (B3) de forma AUTÔNOMA e COMPLETA nesta única resposta, seguindo `01-doutrina-value-investing.md` (v2.5).
 
 **REGRAS**
 
