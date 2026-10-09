@@ -6,8 +6,10 @@ from __future__ import annotations
 
 import hashlib
 import json
-from dataclasses import asdict, dataclass
+from dataclasses import asdict, dataclass, field
 import pathlib
+
+from .erro_proxy import razao_maxima as _razao_maxima
 
 # rf e π do hall (AUD-78): um só arquivo versionado, ao lado dos lotes
 _MV = json.loads((pathlib.Path(__file__).resolve().parent.parent / "mercado_vigente.json").read_text(encoding="utf-8"))
@@ -64,10 +66,13 @@ class ConfigTriagem:
     q5_frac: float = 0.80                 # pagou provento em >= 8 de 10
     max_reprovacoes_q2_q5: int = 1        # Q1 obrigatório e no máximo 1 reprovação entre Q2..Q5
 
-    # ---- preço (sem palavra). Erro do proxy MEDIDO na Etapa 3 (consulta única, PLANO F3):
-    # mediana |ΔP/C| = 0,340 nos 41 do golden. Corte = limite de CARA + erro a favor.
+    # ---- preço (sem palavra). Erro do proxy MEDIDO na Etapa 3 (consulta única de 06/10/2026, PLANO F3; o portão
+    # do proxy reprovou): mediana |ΔP/C| = 0,340 nos 41 do golden — descreve o erro típico, NÃO é limite.
     erro_proxy_pc: float = 0.34
     limite_cara: float = 1.10
+    # AUD-33 (08/10/2026): o corte era 1,10 + 0,34 e tirava 4 dos 5 que passam no portão. Agora é 1,10 × a MAIOR
+    # superestimação medida (razão proxy ÷ golden nos 30 confiáveis), lida da evidência versionada — não digitada.
+    razao_erro_proxy: float = field(default_factory=_razao_maxima)
     disp_confiavel: float = 3.00          # acima disso (ou âncora <= 0) o central rápido não vale
     disp_alerta: float = 1.80
     netnet_fracao: float = 2 / 3          # Graham: preço <= 2/3 do NCAV por ação
@@ -88,7 +93,8 @@ class ConfigTriagem:
 
     @property
     def corte_pc(self) -> float:
-        return round(self.limite_cara + self.erro_proxy_pc, 4)
+        """Mesmo com o pior erro medido do proxy, quem passa deste P/C estaria acima de `limite_cara`."""
+        return round(self.limite_cara * self.razao_erro_proxy, 4)
 
     @property
     def volume_minimo_posicao(self) -> float:

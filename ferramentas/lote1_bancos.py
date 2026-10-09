@@ -24,6 +24,7 @@ QUAL = lambda moat, gestao, controlador, ciclo, fisher: dict(moat=moat, gestao=g
 # desconto do próprio lote — critério mecânico provisório; o dossiê de cada ticker decide pela evidência
 DISC = "interferência consumada declarada no desconto do lote (critério provisório v2.3, até o dossiê): "
 
+# Preços = fechamento oficial (PREULT do COTAHIST) de 02/10/2026 — data e fonte em precos_hall.py (AUD-67).
 EMPRESAS = [
     Financeira("ITUB4", "Itaú Unibanco", "banco", preco=44.83, vpa=19.75, lpa_12m=4.247,
                roe_lp=0.1758,      # mediana 2016–25 (13,2–21,9%)

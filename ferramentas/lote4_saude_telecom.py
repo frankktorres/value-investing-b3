@@ -54,7 +54,7 @@ from motor_nao_financeiras import ANOS, CVM, SI, Industrial, avaliar
 AQUI = pathlib.Path(__file__).parent
 ZIP = AQUI / "dados" / "cvm"
 QUAL = lambda moat, gestao, controlador, ciclo, fisher: dict(moat=moat, gestao=gestao, controlador=controlador, ciclo=ciclo, fisher=fisher)
-PRECO = {"TIMS3": 18.55, "VIVT3": 30.14, "ITSA4": 14.67, "FLRY3": 23.50, "HYPE3": 25.16, "ABEV3": 15.84, "WEGE3": 51.45}   # fech. 02/10 [PDF 03/10]
+PRECO = {"TIMS3": 18.55, "VIVT3": 30.14, "ITSA4": 14.67, "FLRY3": 23.50, "HYPE3": 25.16, "ABEV3": 15.84, "WEGE3": 51.45}   # fechamento oficial de 02/10 (precos_hall.py, AUD-67)
 NOME_CVM = {"TIMS3": "TIM S.A.", "VIVT3": "TELEF", "FLRY3": "FLEURY", "HYPE3": "HYPERA", "ABEV3": "AMBEV", "WEGE3": "WEG S.A.",
             "ITSA4": "ITAÚSA", "ITUB": "ITAU UNIBANCO HOLDING"}
 IFRS16 = [str(a) for a in range(2019, 2026)]

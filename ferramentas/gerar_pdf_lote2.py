@@ -11,7 +11,7 @@ from reportlab.platypus import PageBreak, SimpleDocTemplate, Spacer, Table, Tabl
 
 from gerar_pdf_lote1 import AZUL, COR, LINHA, P, SERIES, br, grafico_resumo, grafico_roe, pct, tabela
 from lote1_bancos import DATA_BASE, MK
-from lote2_energia import CVM, EMPRESAS, alavancagem, dpas
+from lote2_energia import CVM, EMPRESAS, alavancagem, dpas, metodo_regulado
 from lote2_textos import AGENDA, ANTES, T
 from motor_financeiras import avaliar, central_ao_ke, projecao
 from motor_nao_financeiras import altman_z2, beneish, piotroski, sloan
@@ -137,7 +137,7 @@ def ficha(emp, r, story):
         ["Altman Z'' · Piotroski · Beneish · Sloan", f"{br(x['altman'])} ({x['zona']}) · {x['piotroski']}/9 · {br(x['beneish']) if x['beneish'] is not None else 'n.d.'} · {pct(x['sloan'])}",
          "INFORMATIVO", "exercício 2025 vs 2024 [CVM]; em concessão o Altman tende à zona cinzenta pela estrutura de capital (dívida longa regulada)"],
         ["Greenblatt · EPV · Owner Earnings", "N/A", "N/A por perfil",
-         "concessão (ICPC 01/IFRS 15): o investimento em ativo de contrato passa pelo FCO e o imobilizado é quase nulo — EBIT/capital e FCO − capex não medem o negócio; o retorno é o regulatório (P/VP justificado e TIR)"],
+         "regulado: o retorno é o regulatório (P/VP justificado e TIR), não EBIT/capital nem FCO − capex. " + metodo_regulado(emp.ticker)],
     ]
     story.append(tabela(lin, [33 * mm, 27 * mm, 21 * mm, 101 * mm]))
     story.append(PageBreak())
@@ -229,8 +229,11 @@ def capa(res, story):
     story.append(PageBreak())
     story.append(P("Metodologia dos regulados", "h2"))
     met = [["Item", "Regra"],
-           ["Por que não FCO − capex", "Concessão (ICPC 01/IFRS 15): o investimento em ativo de contrato das transmissoras passa pelo FCO (ISAE4 tem FCO negativo) "
-                                       "e o imobilizado é quase nulo. Lucro de caixa e lucro contábil divergem enquanto a base cresce."],
+           ["Por que não FCO − capex", "Nas transmissoras (TAEE11, ISAE4) a concessão (ICPC 01/IFRS 15) põe o investimento em ativo de contrato "
+                                       "dentro do FCO (ISAE4 tem FCO negativo); nas distribuidoras e no saneamento o capex está no FCI, mas o ciclo de "
+                                       "investimento deixa o FCO − capex negativo (SBSP3). Lucro de caixa e lucro contábil divergem enquanto a base cresce. "
+                                       "Sem base regulatória e WACC regulatório com fonte A/B, o DCF regulatório é o P/VP justificado como proxy "
+                                       "declarado (doutrina v2.5 §11.2); cada ficha diz onde está o investimento (FCO, FCI ou misto)."],
            ["Âncoras", "DCF regulatório = patrimônio (proxy da base regulatória) × (ROE − g) ÷ (Ke − g) · DDM em 2 estágios (ROE do 12m converge à mediana de "
                        "10 anos em 5 anos; terminal = P/VP justificado). Central = mediana. Tudo ao Ke da casa."],
            ["TIR real implícita (doutrina §4)", "Sempre calculada: o Ke que iguala o valor central ao preço, deflacionado pela inflação implícita. "

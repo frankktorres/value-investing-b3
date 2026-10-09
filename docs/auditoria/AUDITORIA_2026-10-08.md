@@ -379,6 +379,13 @@ Proposta, sem execução. Qualquer mudança que mexa em central ou palavra exige
 2. **Convenções de mercado e custo de capital:** AUD-06 (rf fechamento), AUD-78 (rf e π lidos de um arquivo, com data), AUD-72 (idade do preço), AUD-07 (Kd com fonte), AUD-12 e AUD-13 (decidir e registrar o Ke fixo e o peso a preço de mercado), AUD-09 (alíquota da ABEV3), AUD-18 (fórmula da reprodução), AUD-08 (trava de coerência da LEVE3).
    **FEITO em 08/10/2026 (Onda 1.2, doutrina v2.4, commit 49b5f53 + correção do backtest no commit seguinte):** os nove reproduziram antes da correção (AUD-08 em outros tickers: SUZB3 e ISAE4, depois LEVE3 de novo). Decisões do Frank: AUD-12 = Ke sobe com a dívida (Hamada, 5 p.p. = negócio sem dívida); AUD-13 = pesos do WACC no ponto fixo, partindo do patrimônio contábil. Kd sintético pela cobertura normalizada (Damodaran jan/2026); rf e π em `mercado_vigente.json`; trava do §9 → NÃO CONCLUSIVO. Palavras: SMTO3 e SUZB3 → CARA; LEVE3, ISAE4, KLBN11, SLCE3 → NÃO CONCLUSIVO; UNIP6 → CARA. Testes em `ferramentas/tests/test_onda12_*.py`; detalhes e pendências no `09`.
 3. **Decisão e gatilhos:** AUD-43 (monitor ignora a palavra final), AUD-37 (monitor sem alerta de falha), AUD-33 (corte da triagem), AUD-67 e AUD-77 (preço/flag do hall), AUD-20 (condição do §11.2 na Sabesp).
+   **FEITO em 08/10/2026 (Onda 1.3, doutrina v2.5):** os seis reproduziram antes da correção, três de forma diferente: AUD-43 em KLBN11 e SLCE3, com "≥ SAÍDA" (UNIP6 saiu do hall); AUD-33 pior, porque o corte tirava 4 dos 5 que passam no portão; AUD-20 mais amplo, com a condição falhando em 5 dos 9 regulados e mista em 2. Decisão do Frank no AUD-20: regra nova, P/VP justificado como proxy declarado (v2.5). Correções:
+   - Monitor: "sem palavra" para NÃO CONCLUSIVO; falha vira boletim; códigos 20/21; aviso na tela pelo `.vbs`; prompt de sexta v1.4 exige o monitor da sexta.
+   - `hall03.py`: o `03` e o hall do prompt passam a ser gerados do motor.
+   - `precos_hall.py`: preço oficial do COTAHIST com data e fonte; PRIO3, UGPA3, VBBR3 e UNIP6 corrigidos.
+   - Corte da triagem: 1,10 × 1,88 = 2,07, medido.
+
+   Nenhuma palavra mudou. Os testes estão em `test_monitor`, `test_hall03`, `test_precos_hall`, `test_triagem_regras` e `test_regulados_dfc`; detalhes no `09`. Achado novo, para a Onda 3: o `capex` do `cvm_series.json` não pega "ativo de contrato" dos regulados.
 4. **Documentos que levam a decisão errada:** AUD-19, AUD-35, AUD-36, AUD-69.
 
 ### Onda 2 — reprodutibilidade e testes que escondem erro

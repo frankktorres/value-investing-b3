@@ -29,6 +29,7 @@ def acoes(tk):
     return n / CVM[tk]["acoes_por_unit"]
 
 
+# Preços = fechamento oficial (PREULT do COTAHIST) de 02/10/2026 — data e fonte em precos_hall.py (AUD-67).
 EMPRESAS = [
     Industrial("SUZB3", "Suzano", "ciclica", preco=44.35, n_acoes=acoes("SUZB3"), g_real=0.01, jcp_share=jcp("SUZB3"),
                qualitativo=QUAL(4, 4, 4, 2, 3)),

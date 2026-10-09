@@ -1,13 +1,13 @@
 # PROJECT BRIEF — Mesa de Value Investing B3
-*Versão de 08/10/2026 (rev. Onda 1.2) · gerado por `/brief` · fonte: repositório, memória do projeto e `docs/auditoria/AUDITORIA_2026-10-08.md`*
+*Versão de 08/10/2026 (rev. Onda 1.3) · gerado por `/brief` · fonte: repositório, memória do projeto e `docs/auditoria/AUDITORIA_2026-10-08.md`*
 
 ## 1. Projeto
-Mesa de análise fundamentalista da B3 para dividendos/JCP e longo prazo: doutrina escrita (v2.4) + motores de valuation em Python que
+Mesa de análise fundamentalista da B3 para dividendos/JCP e longo prazo: doutrina escrita (v2.5) + motores de valuation em Python que
 dão preço de compra, central e saída (régua 0,70/0,90/1,10/1,30×) para 41 empresas. Público hoje: um investidor pessoa física (uso próprio).
 
 ## 2. Estágio
 MVP de uso pessoal, maduro no cálculo. Um usuário real, sem terceiros. Prazo externo conhecido: temporada do ITR 3T26 (fim de out–nov/2026,
-`ferramentas/temporada.py`). Onda 1 da auditoria em andamento: 1.1 (bb79ba9) e 1.2 (49b5f53 + dd9c3c1) feitas; faltam 1.3 e 1.4. Meta de longo prazo: SaaS com front-end
+`ferramentas/temporada.py`). Onda 1 da auditoria em andamento: 1.1 (bb79ba9), 1.2 (49b5f53 + dd9c3c1) e 1.3 (gatilhos) feitas; falta 1.4 (documentos). Meta de longo prazo: SaaS com front-end
 (sem prazo).
 
 ## 3. Stack
@@ -23,10 +23,11 @@ MVP de uso pessoal, maduro no cálculo. Um usuário real, sem terceiros. Prazo e
 - **Doutrina e prompts (raiz, `00`–`09`):** regras, hall das 41, checklist anti-erro, diário de decisões — a "especificação".
 - **Motores:** `motor_nao_financeiras.py` e `motor_financeiras.py` (quadro clássico: Graham, Bazin, EPV, DCF, OE…, central = mediana); `fiscal.py`.
 - **Coleta:** `coletar_cvm.py`, `coletar_macro.py`, `coletar_statusinvest.py`, `proventos_ex.py`, `ltm.py`.
-- **Lotes:** `loteN_*.py` (premissas digitadas) → `gerar_pdf_loteN.py` → `atualizar_hall_loteN.py`; `rodar_tudo.py` regrava o golden.
+- **Lotes:** `loteN_*.py` (premissas digitadas) → `gerar_pdf_loteN.py`; `rodar_tudo.py` regrava o golden. O quadro do `03` e o hall do
+  prompt de sexta são gerados do motor por `hall03.py` (Onda 1.3); preço oficial com data e fonte em `precos_hall.py`.
 - **`dossie/`:** anexo mecânico por ticker (FRE, notas por evidência, vereditos). **`triagem/`:** fila de toda a B3, sem veredito.
 - **`backtest/`:** ledger point-in-time + COTAHIST (parado no portão do proxy). **`monitor_semanal.py`**, **`temporada.py`**, **`registro_prospectivo.py`**.
-- **Testes:** pytest com golden dos 41 tickers: 345 no hall + 301 no backtest (08/10, Onda 1.2). Mudança no `Mercado` ou nos motores exige rodar as duas suítes.
+- **Testes:** pytest com golden dos 41 tickers: 376 no hall (+1 pulado) + 301 no backtest (08/10, Onda 1.3). Mudança no `Mercado` ou nos motores exige rodar as duas suítes.
 
 ## 5. Top 5 gargalos
 1. **Insumos e premissas, não fórmulas.** Auditoria de 08/10: 109 achados, 5 ALTO; motores conferem a 0–0,36%, mas insumos movem o central
@@ -42,7 +43,8 @@ MVP de uso pessoal, maduro no cálculo. Um usuário real, sem terceiros. Prazo e
    da mesma doença. Comitê único (mesma família de modelo; 2º comitê pausado).
 
 ## 6. Próximos 3 marcos
-1. Onda 1 da auditoria: 1.1 e 1.2 feitas → **1.3 gatilhos** (monitor, flag de saída, preços, corte da triagem, Sabesp) → 1.4 documentos (inclui regenerar os PDFs).
+1. Onda 1 da auditoria: 1.1, 1.2 e 1.3 feitas → **1.4 documentos** (AUD-19, 35, 36, 69: PDFs dos lotes, pasta de upload, versões
+   citadas nos prompts, células do `03` ainda digitadas).
 2. Temporada 3T26: `python ferramentas/temporada.py` ao sair o ITR; régua congelada até lá.
 3. Etapa 6 / F6 — construção de carteira (tamanho de posição, concentração, caixa); depende de respostas do Frank.
 
@@ -84,3 +86,5 @@ MVP de uso pessoal, maduro no cálculo. Um usuário real, sem terceiros. Prazo e
 ## 12. O que mudou
 Primeira versão.
 - 08/10/2026 (Onda 1.2): doutrina v2.4; Onda 1 com 1.1 e 1.2 feitas; contagem de testes; gargalo 1 e marco 1 atualizados.
+- 08/10/2026 (Onda 1.3): doutrina v2.5 (regulados por P/VP justificado como proxy declarado); ferramentas novas `hall03.py`,
+  `precos_hall.py`, `triagem/erro_proxy.py`; monitor com falha ativa; corte da triagem medido (2,07); testes e marco 1 atualizados.

@@ -84,8 +84,25 @@ def test_mercado_e_o_mesmo_do_hall():
     assert (PADRAO.rf_real, PADRAO.pi) == (lote1_bancos.MK.rf_real, lote1_bancos.MK.pi)
 
 
-def test_corte_de_preco_e_cara_mais_erro_do_proxy():
-    assert PADRAO.corte_pc == pytest.approx(1.10 + 0.34)
+def test_corte_de_preco_e_cara_vezes_o_pior_erro_medido():
+    """AUD-33: o corte era 1,10 + 0,34 (a MEDIANA do erro, que não é limite) e tirava 4 dos 5 papéis que passam no
+    portão. Agora é 1,10 × a maior superestimação medida do proxy nos confiáveis, lida da evidência versionada."""
+    from triagem import erro_proxy as E
+    ev = [x for x in E.ler() if x["confiavel"]]
+    assert len(ev) == 30
+    assert PADRAO.razao_erro_proxy == E.razao_maxima() == pytest.approx(1.8818)
+    assert PADRAO.corte_pc == pytest.approx(2.07, abs=1e-4)
+    # com o pior erro observado, nenhum confiável da amostra com P/C verdadeiro ≤ 1,10 seria cortado
+    assert all(x["golden_pc"] * x["razao"] <= PADRAO.corte_pc for x in ev if x["golden_pc"] <= PADRAO.limite_cara)
+    assert PADRAO.corte_pc / max(x["razao"] for x in ev) == pytest.approx(PADRAO.limite_cara, abs=1e-4)
+
+
+def test_evidencia_do_erro_e_a_consulta_original(tmp_path):
+    from triagem import erro_proxy as E
+    if not E.ORIGEM.exists():
+        pytest.skip("consulta do proxy (backtest/dados, fora do git) ausente")
+    E.extrair(destino=tmp_path / "e.csv")
+    assert (tmp_path / "e.csv").read_bytes() == E.EVIDENCIA.read_bytes()
 
 
 # ----------------------------------------------------------------------------- qualidade
@@ -296,11 +313,23 @@ def _tab(ls):
 
 
 def test_fila_respeita_corte_de_preco_e_minimo_de_testes():
-    ls = [_linha("CARA_CONF", pc=1.5), _linha("CARA_NC", pc=1.5, confiavel=False),
-          _linha("POUCO", passa=False, n_ok=2), _linha("BOA")]
+    ls = [_linha("CARA_CONF", pc=2.5), _linha("CARA_NC", pc=2.5, confiavel=False),
+          _linha("POUCO", passa=False, n_ok=2), _linha("BOA"), _linha("ENTRE", pc=1.5)]
     r = fila.montar(_tab(ls), ls, T, PISO)
-    assert {x["ticker"] for x in r.fila} == {"BOA", "CARA_NC"}
+    # AUD-33: P/C proxy 1,5 não é mais cortado (cabe no erro medido do proxy: 1,5 ÷ 1,88 = 0,80)
+    assert {x["ticker"] for x in r.fila} == {"BOA", "CARA_NC", "ENTRE"}
     assert [x["ticker"] for x in r.por_preco] == ["CARA_CONF"]
+
+
+def test_06_avisa_quando_a_data_foi_registrada_com_outra_config():
+    from triagem.config import hash_config
+    r = fila.Resultado(T="2026-10-02", piso=0.0, tabela=pd.DataFrame(), cfg=PADRAO)
+    atual = hash_config(PADRAO)
+    assert fila.aviso_registro(r, []) == ""
+    assert fila.aviso_registro(r, [{"data_preco": "2026-10-02", "config": atual}]) == ""
+    assert fila.aviso_registro(r, [{"data_preco": "2026-09-01", "config": "velha"}]) == ""
+    aviso = fila.aviso_registro(r, [{"data_preco": "2026-10-02", "config": "929faf4f4d56c5b1"}])
+    assert "929faf4f4d56c5b1" in aviso and atual in aviso and "append-only" in aviso
 
 
 def test_central_nao_confiavel_nao_e_premiado():
@@ -415,3 +444,10 @@ def test_nota_antiga_segue_a_troca_de_codigo():
 
 def test_registro_distingue_ev_negativo_de_ausente():
     assert registro._f(math.inf) == "inf" and registro._f(math.nan) is None
+
+
+def test_corte_tambem_cobre_a_regua_vigente():
+    """Revisão do adversário: a razão 1,88 foi medida contra o golden de 06/10 (v2.2); contra o vigente o pior caso é
+    menor. O corte fica com o maior; se a régua vigente piorar o proxy, este teste manda recalibrar."""
+    from triagem import erro_proxy as E
+    assert E.razao_maxima_vigente() <= PADRAO.razao_erro_proxy

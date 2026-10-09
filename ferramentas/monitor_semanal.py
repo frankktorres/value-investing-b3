@@ -12,6 +12,11 @@ O que faz:
 
 **Nunca muda a palavra do `03`.** O central não mudou; quem muda a palavra é a reavaliação (05).
 O monitor só diz quem cruzou uma fronteira e precisa de reavaliação antes de qualquer decisão.
+NÃO CONCLUSIVO não tem compra nem saída (§9: a compra só vem da palavra FINAL) — rótulo "sem palavra" (AUD-43).
+
+Código de saída (vira o LastTaskResult; o .vbs abre um aviso na tela se ≠ 0 — AUD-37):
+0 ok · 20 DADO VELHO (último pregão > 7 dias) · 21 exceção (o boletim do dia diz "MONITOR FALHOU" com o
+traceback). Códigos altos de propósito: 1 é o que o `cmd` e o Python devolvem quando nem chegam a rodar o main.
 
     cd ferramentas && python monitor_semanal.py [--sem-download] [--hoje AAAA-MM-DD]
 """
@@ -24,6 +29,7 @@ import math
 import shutil
 import sys
 import time
+import traceback
 from pathlib import Path
 
 import pandas as pd
@@ -39,6 +45,9 @@ FAIXA_OBSERVACAO = 0.10        # até 10% acima da compra -> observação
 CARTEIRA = ("ISAE4", "ITSA4", "ABCB4", "RANI3")
 
 COMPRA, OBSERVA, SAIDA, NEUTRO, SEM = "≤ COMPRA", "perto da compra", "≥ SAÍDA", "", "sem central"
+NC = "sem palavra"             # NÃO CONCLUSIVO: nem compra nem saída pela régua
+NAO_CONCLUSIVO = "NÃO CONCLUSIVO"
+RC_VELHO, RC_FALHA = 20, 21    # lidos pelo agendador/monitor_semanal.vbs
 
 
 # ------------------------------------------------------------------------------ COTAHIST
@@ -111,7 +120,10 @@ def ultimos_precos(tickers, hoje: str) -> tuple[dict[str, float], str]:
 
 
 # ------------------------------------------------------------------------------ alertas
-def alerta(preco: float, compra: float, saida: float) -> str:
+def alerta(preco: float, compra: float, saida: float, palavra: str) -> str:
+    """`palavra` é obrigatória (AUD-43): sem palavra final não há preço de compra nem de saída (§9)."""
+    if palavra == NAO_CONCLUSIVO:
+        return NC
     if not (math.isfinite(compra) and compra > 0 and math.isfinite(saida)):
         return SEM
     if preco <= compra:
@@ -143,11 +155,12 @@ def linhas_hall(refs: dict, precos: dict) -> list[dict]:
     out = []
     for tk in sorted(refs):
         r, p = refs[tk], precos.get(tk, math.nan)
-        compra, saida = (r["compra"], r["saida"]) if r["central"] > 0 else (math.nan, math.nan)
+        tem_regua = r["central"] > 0 and r["palavra"] != NAO_CONCLUSIVO
+        compra, saida = (r["compra"], r["saida"]) if tem_regua else (math.nan, math.nan)
         out.append(dict(ticker=tk, lote=r["lote"], palavra=r["palavra"], preco=p, central=r["central"],
                         pc=p / r["central"] if r["central"] > 0 else math.nan, compra=compra,
                         saida=saida, saida_qualidade=r["saida_por_qualidade"],
-                        alerta=alerta(p, compra, saida) if math.isfinite(p) else "sem preço",
+                        alerta=alerta(p, compra, saida, r["palavra"]) if math.isfinite(p) else "sem preço",
                         carteira=tk in CARTEIRA))
     return out
 
@@ -199,6 +212,12 @@ def markdown(hall: list[dict], fila: pd.DataFrame, precos_fila: dict, pregao: st
                  f"{FAIXA_OBSERVACAO:.0%} acima do preço de compra.")
     else:
         s.append("Nenhum papel do hall cruzou compra ou saída.")
+    sem_palavra = [x["ticker"] for x in hall if x["carteira"] and x["alerta"] == NC]
+    if sem_palavra:
+        s.append(f"\n**Carteira sem palavra (NÃO CONCLUSIVO):** {', '.join(sem_palavra)} — sem preço de compra nem "
+                 "de saída pela régua (§9); escrever a premissa que diverge (`trava_razao`) ou rodar o 05 antes de "
+                 "qualquer decisão. Só a tese quebrada vende sem palavra.")
+    s.append(f"\n*\"{NC}\" = NÃO CONCLUSIVO no `03`: o central não sustenta compra nem saída; o P/C é só informativo.*")
     s.append("\n## Carteira\n")
     s.append("| Ticker | Preço | Central | P/C | Compra | Saída | Alerta |\n|---|---|---|---|---|---|---|")
     for x in [x for x in hall if x["carteira"]]:
@@ -211,7 +230,7 @@ def markdown(hall: list[dict], fila: pd.DataFrame, precos_fila: dict, pregao: st
                  f"{_n(x['pc'])} | {_n(x['compra'])} | {_n(x['saida'])} | {x['alerta'] or '—'} |")
     if not fila.empty:
         s.append(f"\n## Fila da triagem ({fila.attrs.get('arquivo', '')}) — sem alerta, sem palavra\n")
-        s.append("P/C proxy = preço ÷ central rápido do motor reduzido (erro medido ±0,34; ver `06`).\n")
+        s.append("P/C proxy = preço ÷ central rápido do motor reduzido (erro e corte medidos: ver `06`).\n")
         s.append("| # | Ticker | Preço na triagem | Preço agora | P/C proxy agora |\n|---|---|---|---|---|")
         for x in fila.to_dict("records"):
             p = precos_fila.get(x["ticker"], math.nan)
@@ -221,8 +240,11 @@ def markdown(hall: list[dict], fila: pd.DataFrame, precos_fila: dict, pregao: st
     return "\n".join(s) + "\n"
 
 
-def gravar_historico(hall: list[dict], pregao: str, hoje: str, caminho: Path = HISTORICO) -> None:
-    caminho.parent.mkdir(exist_ok=True)
+def gravar_historico(hall: list[dict], pregao: str, hoje: str, caminho: Path | None = None) -> None:
+    # o caminho é resolvido na CHAMADA: um default `= HISTORICO` fica preso na definição e o teste que troca
+    # `HISTORICO` gravava no histórico versionado (achado na Onda 1.3)
+    caminho = caminho or HISTORICO
+    caminho.parent.mkdir(parents=True, exist_ok=True)
     novo = not caminho.exists()
     with caminho.open("a", encoding="utf-8", newline="") as f:
         w = csv.writer(f)
@@ -233,11 +255,28 @@ def gravar_historico(hall: list[dict], pregao: str, hoje: str, caminho: Path = H
                         round(x["pc"], 4) if math.isfinite(x["pc"]) else "", x["alerta"]])
 
 
-def main(argv: list[str] | None = None) -> int:
-    ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("--sem-download", action="store_true")
-    ap.add_argument("--hoje", default=dt.date.today().isoformat())
-    a = ap.parse_args(argv)
+def boletim_de(hoje: str) -> Path:
+    return BOLETINS / f"{hoje}-monitor.md"
+
+
+def gravar_falha(hoje: str, erro: BaseException) -> Path:
+    """AUD-37: a falha vira boletim (o agente de sexta e o Frank leem BOLETINS/, não o log ignorado pelo git).
+    Se o boletim do dia já foi escrito antes da falha, ele fica, com a falha NO TOPO (o prompt de sexta e o aviso
+    do .vbs procuram "MONITOR FALHOU" na abertura do arquivo)."""
+    rastro = "".join(traceback.format_exception(type(erro), erro, erro.__traceback__))[-4000:]
+    bloco = (f"> **MONITOR FALHOU** em {hoje}: `{type(erro).__name__}: {erro}`. Os alertas abaixo (se houver) "
+             "podem estar incompletos; o boletim de uma semana anterior **não** vale como desta semana. "
+             "Corrigir e rodar `python monitor_semanal.py` de novo.\n\n```\n" + rastro + "\n```\n")
+    BOLETINS.mkdir(parents=True, exist_ok=True)
+    destino = boletim_de(hoje)
+    if destino.exists():
+        destino.write_text(bloco + "\n" + destino.read_text(encoding="utf-8"), encoding="utf-8", newline="\n")
+    else:
+        destino.write_text(bloco, encoding="utf-8", newline="\n")
+    return destino
+
+
+def _rodar(a) -> int:
     estado = "pulado (--sem-download)" if a.sem_download else atualizar_cotahist(int(a.hoje[:4]))
     print(f"COTAHIST {a.hoje[:4]}: {estado}", flush=True)
     refs = referencias_do_hall()
@@ -245,14 +284,30 @@ def main(argv: list[str] | None = None) -> int:
     tickers = set(refs) | set(fila["ticker"] if not fila.empty else [])
     precos, pregao = ultimos_precos(tickers, a.hoje)
     hall = linhas_hall(refs, precos)
-    BOLETINS.mkdir(exist_ok=True)
-    saida = BOLETINS / f"{a.hoje}-monitor.md"
+    BOLETINS.mkdir(parents=True, exist_ok=True)
+    saida = boletim_de(a.hoje)
     saida.write_text(markdown(hall, fila, precos, pregao, a.hoje, estado), encoding="utf-8", newline="\n")
     gravar_historico(hall, pregao, a.hoje)
     n = sum(x["alerta"] in (COMPRA, SAIDA) for x in hall)
-    print(f"{saida.relative_to(RAIZ)} · pregão {pregao} · {n} alerta(s) de compra/saída")
-    return 1 if estado.startswith("falhou") and (dt.date.fromisoformat(a.hoje)
-                                                - dt.date.fromisoformat(pregao)).days > DIAS_VELHO else 0
+    print(f"{saida.name} · pregão {pregao} · {n} alerta(s) de compra/saída")
+    velho = (dt.date.fromisoformat(a.hoje) - dt.date.fromisoformat(pregao)).days > DIAS_VELHO
+    return RC_VELHO if velho else 0
+
+
+def main(argv: list[str] | None = None) -> int:
+    ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+    ap.add_argument("--sem-download", action="store_true")
+    ap.add_argument("--hoje", default=dt.date.today().isoformat())
+    a = ap.parse_args(argv)
+    try:
+        return _rodar(a)
+    except Exception as e:                                          # noqa: BLE001 — falha vira boletim e RC_FALHA
+        traceback.print_exc()
+        try:
+            print(f"falha registrada em {gravar_falha(a.hoje, e).name}", flush=True)
+        except Exception as e2:                                     # noqa: BLE001 — nem o boletim gravou: o log diz
+            print(f"e o boletim de falha também não gravou ({type(e2).__name__}: {e2})", flush=True)
+        return RC_FALHA
 
 
 if __name__ == "__main__":

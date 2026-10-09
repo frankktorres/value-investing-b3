@@ -26,7 +26,7 @@ def P(t, st="cel"):
 
 gerar_pdf_lote1.P = P
 from lote1_bancos import DATA_BASE, MK
-from lote2_energia import alavancagem
+from lote2_energia import alavancagem, metodo_regulado
 from lote6_quimica import (ACO, CLORO, EGIE, EGIE_DADOS, EGIE_DIV_AGO26, EGIE_FOLLOW_ON, EMPRESAS, N, PVC, SERIES, SODA)
 from lote6_textos import AGENDA, ANTES, T
 from motor_financeiras import avaliar as avaliar_fin
@@ -456,7 +456,8 @@ def ficha_egie(emp, r, story):
     f = MK.fator_graham
     lin = [["Método", "Valor", "Marca", "Fórmula / insumos"],
            ["DCF regulatório (P/VP justificado)", f"R$ {br(an[0][1])}", "ÂNCORA",
-            f"patrimônio (proxy da base regulatória) × (ROE {pct(emp.roe_lp)} − g {pct(g)}) ÷ (Ke {pct(ke, 2)} − g) = {br(r['pvp_just'])}× VPA"],
+            f"patrimônio (proxy da base regulatória) × (ROE {pct(emp.roe_lp)} − g {pct(g)}) ÷ (Ke {pct(ke, 2)} − g) = {br(r['pvp_just'])}× VPA. "
+            + metodo_regulado(emp.ticker)],
            ["DDM 2 estágios", f"R$ {br(an[1][1])}", "ÂNCORA", f"ROE {pct(emp.roe_inicio)} → {pct(emp.roe_lp)} em 5 anos; payout {pct(emp.payout, 0)}; terminal = P/VP justificado"],
            ["TIR real implícita", pct(tir) if tir is not None else "n.c.", "TESTE (§4)",
             f"retorno real que o preço embute (mesmo modelo); piso rf {pct(MK.rf_real, 2)} · Ke real {pct(MK.ke_real, 2)} — "

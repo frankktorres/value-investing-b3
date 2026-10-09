@@ -15,6 +15,7 @@ from backtest.motor.perfil import normaliza
 
 from . import qualidade as Q
 from .config import NOTAS_06_ANTIGO, PADRAO, ConfigTriagem, hash_config
+from .erro_proxy import razao_maxima_vigente
 from .universo import JA_ANALISADA, LIQUIDEZ
 
 SIMBOLO = {Q.OK: "✓", Q.FALHA: "✗", Q.INDET: "?", Q.NA: "–"}
@@ -192,6 +193,21 @@ CAB = ("| # | Ticker | Camada | Setor (FCA) | Preço | P/C proxy | EY | Q1 Q2 Q3
        "|---|---|---|---|---|---|---|---|")
 
 
+def aviso_registro(r: Resultado, linhas_registro: list[dict] | None = None) -> str:
+    """Se a fila desta data já foi registrada com OUTRA config, diz isso: o registro é append-only e esta fila
+    não o substitui (caso de 02/10/2026: registrada com o corte antigo, regerada depois do AUD-33)."""
+    if linhas_registro is None:
+        from . import registro
+        linhas_registro = registro.ler()
+    cfgs = sorted({l["config"] for l in linhas_registro if l["data_preco"] == r.T})
+    atual = hash_config(r.cfg)
+    if not cfgs or cfgs == [atual]:
+        return ""
+    return (f"> **Registro prospectivo:** a fila de {r.T} está em `prospectivo/triagem.jsonl` com a config "
+            f"{', '.join(f'`{c}`' for c in cfgs)}, não com esta (`{atual}`). O registro é append-only: a fila acima "
+            "não substitui a registrada; a próxima data de triagem registra com a config vigente.\n")
+
+
 def markdown(r: Resultado) -> str:
     c, f = r.cfg, r.funil
     rf_dias = (dt.date.fromisoformat(r.T) - dt.date.fromisoformat(c.data_mercado)).days
@@ -204,8 +220,10 @@ o histórico fica em `_historico/` e em `prospectivo/triagem.jsonl`). Config `{h
 
 **Regra dura (vale desde 07/09):** a triagem define **a fila**, nunca o veredito. Prova antiga: LEVE3 passou 7/7 e a análise
 completa deu JUSTA/CARA; UNIP6 passou 5/7 e deu ARMADILHA. Aqui não existe palavra: o central rápido é o do motor reduzido da
-Etapa 3, cujo erro **medido** contra a régua completa é de **±{_n(c.erro_proxy_pc)} de P/C** (mediana |ΔP/C| nos 41 do hall,
-consulta única de 06/10/2026). A D5 continua aberta: nenhuma régua desta mesa tem validação empírica.
+Etapa 3, cujo erro **medido** contra a régua completa é de **±{_n(c.erro_proxy_pc)} de P/C na mediana** (|ΔP/C| nos 41 do hall,
+consulta única de 06/10/2026; o portão do proxy pedia ≤ 0,15 e reprovou) e chega a **{_n(c.razao_erro_proxy)}×** o P/C
+da régua de 06/10 (v2.2) no pior caso entre os 30 com central confiável ({_n(razao_maxima_vigente())}× contra a régua vigente).
+A D5 continua aberta: nenhuma régua desta mesa tem validação empírica.
 
 ## 1. Como a fila é feita
 
@@ -239,8 +257,14 @@ fora do portão — entra para a análise completa resolver o que reprovou. A fi
 
 **Preço, sem palavra:** P/C proxy = preço ÷ central rápido (EPV de meio de ciclo, Owner Earnings, reprodução). "(n/c)" =
 não confiável (âncora ≤ 0 ou dispersão > {_n(c.disp_confiavel, 1)}). Sai da fila quem tem central confiável e
-**P/C proxy > {_n(c.corte_pc)}** (= {_n(c.limite_cara)} + o erro de {_n(c.erro_proxy_pc)}: mesmo com o erro a favor
-ficaria acima de 1,10). EY = EBIT ajustado (sem o excesso de outras receitas, §7) ÷ (valor de mercado + dívida líquida).
+**P/C proxy > {_n(c.corte_pc)}** (= {_n(c.limite_cara)} × {_n(c.razao_erro_proxy, 4)}, a maior superestimação do P/C
+medida no proxy entre os 30 confiáveis do hall contra a régua de 06/10 (v2.2) — `triagem/dados/erro_proxy_2026-10-06.csv`;
+contra a régua vigente o pior caso é {_n(razao_maxima_vigente(), 4)}× e o corte seria {_n(c.limite_cara * razao_maxima_vigente())}: fica o
+maior, que corta menos): mesmo com o pior erro
+observado ficaria acima de {_n(c.limite_cara)}. Amostra pequena e quase toda CARA: o corte é provisório e só tira o que
+está claramente caro. Até 08/10/2026 o corte era {_n(c.limite_cara)} + {_n(c.erro_proxy_pc)} (a mediana, que não é limite) e
+tirava 4 dos 5 papéis que passam no portão (AUD-33). EY = EBIT ajustado (sem o excesso de outras receitas, §7) ÷ (valor
+de mercado + dívida líquida).
 
 **Divergência declarada (doutrina v2.3, 07/10/2026):** o motor reduzido da triagem segue com a alíquota da v2.2 (mediana de 5 anos presa entre 15% e 34%), porque está congelado pelo portão do backtest de 06/10. A v2.3 (sem piso; crédito com prazo por fase; abaixo de 15% sem origem declarada = 34%) vale no hall e no dossiê; a alíquota de cada nome da fila é decidida na análise completa.
 
@@ -248,6 +272,9 @@ ficaria acima de 1,10). EY = EBIT ajustado (sem o excesso de outras receitas, §
 {f['financeiras']} financeiras) → **{f['passam_portao']} passam no portão** · {f['camada_b']} na camada B ·
 {f['por_preco']} fora por preço.
 """]
+    aviso_reg = aviso_registro(r)
+    if aviso_reg:
+        s.append(aviso_reg)
     s.append(f"## 2. Fila ({len(r.fila)})\n\n{CAB}")
     s += [_linha(i, x) for i, x in enumerate(r.fila, 1)]
     s.append("\n### O que cada análise completa precisa resolver\n")

@@ -1,7 +1,10 @@
 """Lote 2 — Energia elétrica e saneamento · data-base 02/10/2026 (fechamento; preços do PDF rev. 03/10) · doutrina v2.2.
 
-Regulados: a contabilidade de concessão (ICPC 01/IFRS 15) põe o investimento em ativo de contrato dentro do FCO das
-transmissoras — "FCO − capex" não funciona. Método de regulado (doutrina §11.2, utility):
+Regulados: nas transmissoras a contabilidade de concessão (ICPC 01/IFRS 15) põe o investimento em ativo de contrato
+dentro do FCO — "FCO − capex" não funciona; nas distribuidoras e no saneamento o investimento está no FCI (AUD-20:
+SBSP3 6.02.01 −13,7 bi na DFP 2025). Sem base regulatória e WACC regulatório com fonte A/B, o DCF regulatório é o
+P/VP justificado como PROXY declarado, onde quer que o investimento esteja (doutrina v2.5 §11.2; `REGULADOS_DFC`).
+Método de regulado (doutrina §11.2, utility):
   · DCF regulatório = P/VP justificado: patrimônio (proxy da base regulatória) × (ROE − g) ÷ (Ke − g)
   · DDM em 2 estágios (ROE do início converge ao de longo prazo em 5 anos)
   · TIR real implícita = Ke implícito no preço, em termos reais — comparada à rf (piso) e ao Ke real (sempre).
@@ -118,6 +121,46 @@ def F(tk, nome, preco, payout, roe_inicio=None, desconto=None, qual=None, roe=No
                                                         "v2.3, até o dossiê): " + desconto["razao"]) if desconto else "")
 
 
+# §11.2 (doutrina v2.5, AUD-20): onde está o investimento de cada regulado na DFC de 2025 (DFC_MI; "con" = consolidada,
+# "ind" = individual — a Sanepar só publica a individual). Valores em R$ mil, conferidos contra o ZIP da CVM por
+# tests/test_regulados_dfc.py. As linhas 6.01.x são o investimento que a concessão põe DENTRO do FCO; as 6.02.x, o
+# capex no FCI. Nenhum dos 9 tem base regulatória e WACC regulatório com fonte A/B → em todos o DCF regulatório é o
+# P/VP justificado sobre o patrimônio, como proxy declarado (a condição "investimento no FCO" da v2.1 só valia em 2).
+REGULADOS_DFC = {
+    "TAEE11": ("con", {"6.01.01.14": -2_299_138}, {"6.02.04": -43_797}),
+    "ISAE4": ("con", {"6.01.01.08": -10_688_556}, {"6.02.04": -27_604, "6.02.05": -16_845}),
+    "EGIE3": ("con", {"6.01.01.13": -1_509_763}, {"6.02.11": -1_752_248}),
+    "CPLE3": ("con", {"6.01.01.04": -867_817}, {"6.02.04": -2_903_661, "6.02.10": -162_100, "6.02.12": -43_788}),
+    "CPFE3": ("con", {}, {"6.02.03": -4_963_868, "6.02.02": -369_941, "6.02.04": -20_543}),
+    "CMIG4": ("con", {}, {"6.02.04": -5_386_242, "6.02.02": -699_182, "6.02.03": -378_608}),
+    "SAPR11": ("ind", {}, {"6.02.01": -2_615_418}),
+    "CSMG3": ("con", {}, {"6.02.10": -1_937_331, "6.02.11": -727_089, "6.02.12": -83_019}),
+    "SBSP3": ("con", {}, {"6.02.01": -13_740_392}),
+}
+FCI_MAX_NO_FCO = 0.10        # até 10% do investimento no FCI ainda é "FCO" (TAEE11: 1,9%; ISAE4: 0,4%)
+
+
+def investimento_dfc(tk: str) -> str:
+    """'FCO', 'FCI' ou 'misto' — calculado das linhas citadas, não digitado."""
+    _, fco, fci = REGULADOS_DFC[tk]
+    no_fco, no_fci = -sum(fco.values()), -sum(fci.values())
+    if no_fco <= 0:
+        return "FCI"
+    return "FCO" if no_fci / (no_fco + no_fci) <= FCI_MAX_NO_FCO else "misto"
+
+
+def metodo_regulado(tk: str) -> str:
+    """Frase da ficha: o método e por quê (§11.2 v2.5)."""
+    _, fco, fci = REGULADOS_DFC[tk]
+    mi = lambda d: " + ".join(f"{k} " + f"{v / 1e6:.2f}".replace(".", ",") + " bi" for k, v in d.items())
+    onde = {"FCO": f"investimento no FCO pela contabilidade de concessão ({mi(fco)})",
+            "FCI": f"investimento no FCI ({mi(fci)})",
+            "misto": f"investimento misto: FCO {mi(fco)}; FCI {mi(fci)}"}[investimento_dfc(tk)]
+    return (f"DCF regulatório = P/VP justificado sobre o patrimônio, como proxy da base (§11.2 v2.5): {onde} na DFP 2025; "
+            "sem base regulatória e WACC regulatório com fonte A/B")
+
+
+# Preços = fechamento oficial (PREULT do COTAHIST) de 02/10/2026 — data e fonte em precos_hall.py (AUD-67).
 EMPRESAS = [
     F("TAEE11", "Taesa (unit)", 42.85, payout=0.75, qual=QUAL(4, 3, 3, 4, 3)),
     F("ISAE4", "ISA Energia (ex-CTEEP)", 28.19, payout=0.60, qual=QUAL(4, 4, 4, 4, 3)),

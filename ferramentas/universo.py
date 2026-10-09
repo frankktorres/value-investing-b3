@@ -9,6 +9,7 @@ import lote3_agro
 import lote4_saude_telecom
 import lote5_petroleo
 import lote6_quimica
+import precos_hall
 from lote1_bancos import MK
 from motor_financeiras import avaliar as avaliar_fin
 from motor_nao_financeiras import avaliar as avaliar_nf
@@ -34,7 +35,8 @@ def avaliar_todos():
     out = {}
     for lote, empresas, motor in GRUPOS:
         for e in empresas:
-            out[e.ticker] = dict(lote=lote, empresa=e, r=motor(e, MK), data_preco=MK.data)   # AUD-72: preço e taxa do mesmo dia
+            # AUD-67: a data do preço é a do snapshot oficial (precos_hall), não a da taxa (MK.data, AUD-72)
+            out[e.ticker] = dict(lote=lote, empresa=e, r=motor(e, MK), data_preco=precos_hall.PRECO_DATA_BR)
     return out
 
 

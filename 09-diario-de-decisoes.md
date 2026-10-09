@@ -374,3 +374,73 @@ e preço, não tem Bogle nem Ke, logo não tem a trava do §9 — nos dois segue
 no teste (`DIVERGE_PELA_TRAVA`, com o motivo), não corrigida: a régua do backtest está congelada. Resultado: backtest **301 passed,
 0 failed**; hall 345 passed; golden sem mudança. **Lição:** a suíte do backtest fica fora do `--ignore=backtest` do critério de
 pronto — mudança no `Mercado` ou nos motores exige rodar as duas.
+
+
+### 08/10/2026 — DECISÃO DE MÉTODO: Onda 1.3 da auditoria (decisão e gatilhos) · doutrina v2.5
+
+**Reprodução antes de mexer (script, sem gravar nada).** Os 6 reproduziram, três de forma diferente da auditoria:
+- **AUD-43:** no pregão de 06/10, KLBN11 (P/C 10,8) e SLCE3 (2,28), ambas NÃO CONCLUSIVO, saíam **"≥ SAÍDA"** no monitor; a ISAE4
+  (carteira, NÃO CONCLUSIVO) sairia "≤ COMPRA" a ≤ R$ 18,04. O exemplo da auditoria (UNIP6) não vale mais: virou CARA e saiu do hall.
+- **AUD-37:** exceção no monitor = nenhum boletim (só o `ultimo.log`, ignorado pelo git); código 1 só com download falho **e**
+  pregão > 7 dias; o prompt de sexta aceitava um monitor de até 7 dias, ou seja, o da sexta anterior.
+- **AUD-77:** as linhas da Onda 1.2 foram editadas à mão; (S) faltava em SUZB3, GGBR4 (26,10 ≥ 24,04) e PRIO3 e sobrava em KLBN11 e
+  SLCE3 (NÃO CONCLUSIVO); LEVE3, ISAE4 e SLCE3 mostravam compra/saída, KLBN11 e RECV3 "n.a.". Nenhum teste lia o `03`.
+- **AUD-67:** 37 de 41 preços = PREULT do COTAHIST de 02/10. Os 4 restantes vinham de sites (investidor10, StatusInvest, HG Brasil):
+  PRIO3 63,35 × 63,01, VBBR3 37,66 × 38,15, UNIP6 56,78 × 57,02, UGPA3 38,51 × 38,61. A divergência de 1–11% da auditoria era contra
+  05/10 (data deliberada, não erro).
+- **AUD-33 (pior que o relatado):** o 0,34 é a mediana de |ΔP/C| com ∞ nos 6 excluídos, de um portão que o proxy reprovou (limite 0,15).
+  O corte 1,44 tirava **4 dos 5 papéis que passam no portão** (TGMA3, INTB3, CURY3, TFCO4). O erro é proporcional: razão proxy ÷ golden
+  nos 30 confiáveis com mediana 0,98 e os três maiores 1,65 (WEGE3), 1,68 (FLRY3) e 1,88 (HYPE3).
+- **AUD-20 (mais amplo):** a condição do §11.2 ("investimento no FCO") só valia em **TAEE11 e ISAE4**. Na DFP 2025: SBSP3 6.02.01
+  −13,74 bi no FCI; CPFE3, CMIG4, SAPR11, CSMG3 no FCI; CPLE3 e EGIE3 mistas. Nenhum código checava; não existe DCF regulatório; a base
+  da Sabesp (R$ 70 bi) é nota C.
+
+**DECISÃO DO FRANK — AUD-20 (método dos regulados).**
+| Opção | Regra | Efeito |
+|---|---|---|
+| **1. Ajustar a regra (escolhida)** | v2.5: sem base regulatória **e** WACC regulatório de fonte A/B, P/VP justificado como **proxy declarado** em qualquer posição do investimento; a ficha diz FCO/FCI/misto com as linhas; base nota C só informativa | nenhum central muda |
+| 2. Só registrar exceção | 7 de 9 fora da condição, provisoriamente | doutrina diria uma coisa e o motor faria outra em 7 de 9 |
+| 3. DCF regulatório de verdade | TIR sobre a base da Arsesp com fonte A, começando pela SBSP3 | onda própria; palavra provavelmente igual (base-paridade ≈ R$ 10,2 contra 28,23) |
+**Por quê:** uma exceção que vale para 7 de 9 é a regra; e sem base com fonte A/B não há DCF regulatório que o protocolo de fontes aceite.
+Implementado em `lote2_energia.REGULADOS_DFC` (linhas da DFC, classificação calculada delas) e `metodo_regulado()` (texto da ficha),
+com teste contra o ZIP da CVM.
+
+**Decisões técnicas (minhas, pela doutrina).**
+- **AUD-43:** `monitor_semanal.alerta()` exige a palavra; NÃO CONCLUSIVO → rótulo **"sem palavra"**, sem compra nem saída (§9: a compra
+  só vem da palavra final; a trava diz que o central é suspeito, então a saída também é). O boletim destaca "Carteira sem palavra: ISAE4".
+- **AUD-37:** falha vira boletim (`> **MONITOR FALHOU**` com o traceback); códigos **20** (dado velho) e **21** (exceção). O teste real
+  do `.vbs` mostrou que python ausente também sai com 1 (código do `cmd`) — por isso códigos altos. O `.vbs` abre um aviso na tela
+  quando o código ≠ 0. A tarefa **continua Interativa**: o aviso e o agente das 18h do Desktop só existem com a sessão aberta; com S4U a
+  falha voltaria a ser silenciosa. Prompt de sexta v1.4: exige o monitor **desta sexta**; ausente/falho/velho vai no topo do boletim.
+- **AUD-77:** `ferramentas/hall03.py` gera preço, central, P/C, compra, saída e a marca (S) do quadro geral e o bloco do hall do prompt
+  de sexta; regra do (S) = a do monitor (preço ≥ saída e palavra ≠ NÃO CONCLUSIVO). `rodar_tudo.py` avisa quando o `03` diverge.
+- **AUD-67:** `ferramentas/precos_hall.py` + `dados/precos_hall_2026-10-02.csv` (data e fonte por ticker); os 4 preços foram para o
+  fechamento oficial; o `data_preco` do golden vem do snapshot, não da data da taxa. Golden: só P/C, DY, Bogle e nota dos 4 mudam.
+- **AUD-33:** corte = 1,10 × a maior superestimação medida (1,8818) = **2,07**, lido de `triagem/dados/erro_proxy_2026-10-06.csv`
+  (extraído da consulta de 06/10, que fica fora do git). Leitura: mesmo com o pior erro observado, o cortado estaria acima de 1,10.
+  Amostra pequena e quase toda CARA, então o corte é provisório. Fila de 02/10 regerada (`--sem-registro`): 10 cortados em vez de 15;
+  entram TGMA3 (1º, camada A), INTB3, ALUP11, GRND3; saem SYNE3, PNVL3, VALE3, GOAU4. O registro prospectivo **não** foi regravado
+  (append-only; a fila de 02/10 fica registrada com a config antiga e o `06` avisa); a próxima triagem registra com a config nova.
+
+**Efeito na carteira.** **ISAE4:** monitor e `03` deixam de mostrar compra e saída ("sem palavra"/n.a.) — antes sairia "≤ COMPRA" a
+≤ 18,04; preço oficial já batia; é transmissora, a condição antiga do §11.2 vale, nada muda no método. **ITSA4, ABCB4, RANI3:** CARA e
+"≥ SAÍDA" iguais; o (S) já estava certo; preços já eram oficiais. Nenhuma palavra do hall mudou.
+
+**Pendências novas.** (1) O campo `capex` do `cvm_series.json` não pega as linhas de "ativo de contrato" (CPFE3 0,39 contra 5,35 bi;
+CMIG4 vazio contra 6,46 bi; CPLE3; CSMG3) — hoje sem efeito, porque o perfil utility não usa capex; Onda 3 (dados). (2) PDFs dos lotes
+e cópias do `UPLOAD CLAUDE DESKTOP/` (03, 01, prompt de sexta) seguem defasados — Onda 1.4 (AUD-19, AUD-35). (3) Os
+`atualizar_hall_lote*.py` antigos não seguem a regra do (S)/NC; quem manda agora é o `hall03.py` (o teste pega qualquer regressão).
+
+**Achado durante a onda.** `gravar_historico(..., caminho=HISTORICO)` prendia o caminho na definição: os testes que trocam
+`HISTORICO` (e a rodada de conferência no scratchpad) gravaram 53 linhas no `ferramentas/monitor/historico.csv` versionado. O
+caminho agora é resolvido na chamada, o teste prova que o arquivo real não muda, e o histórico voltou ao do último commit (cópia
+das linhas descartadas no scratchpad da sessão; eram só de teste e da conferência, nenhuma rodada de sexta).
+
+**Adversário (sem bloqueio; 7 ressalvas, todas corrigidas com teste).** (1) O §4 do `03` tinha os preços antigos de VBBR3 (P/C
+3,62 → 3,66) e UNIP6. (2) A razão 1,88 do corte foi medida contra o golden de 06/10 (régua v2.2); contra o vigente o pior caso é
+1,56 (HYPE3) e o corte seria 1,71. **Fica 2,07** (o maior dos dois, que corta menos), declarado no `06`, e um teste manda
+recalibrar se a régua vigente passar a dar razão maior que a medida. (3) `hall03` trocava o 1º número de qualquer texto na célula
+do central e apagava "(S)" no meio de frase; agora o número tem de abrir a célula e o (S) só conta antes de ";", de "**" ou no fim.
+(4) Se o próprio boletim de falha não gravasse, o código saía 1 e o aviso dizia "nem rodou"; agora sai 21 e o log diz por quê.
+(5) A falha depois de um boletim já escrito vai **para o topo** dele (o prompt de sexta e o aviso olham a abertura). (6) A ficha
+da EGIE3 no PDF do lote 6 também diz onde está o investimento. (7) Restos de nome e comentário.
