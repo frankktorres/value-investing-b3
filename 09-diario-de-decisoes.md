@@ -364,3 +364,13 @@ de 19,30%; agora mostra o Ke da empresa e o D/E. (5) Dívida sem linha de juros 
 **Não corrigido:** os PDFs dos lotes não foram regenerados nesta onda (seguem os de 05/10). Os textos fixos de "Ke da casa 19,30%" fora
 da trava e das sensibilidades ficam para a Onda 1.4 (documentos).
 
+
+**Correção depois do commit 49b5f53 (mesmo dia, achado pelo Frank ao rodar o backtest).** `pytest backtest -rf` deu 4 falhas que
+passavam no 626ef5a. (1–2) `test_premio_parametrizado`: com o `Mercado` carregando o próprio prêmio (v2.4), `central_ao_ke` ainda
+subtraía a constante `PREMIO_KE` e criava `Mercado(rf, pi)` com o prêmio padrão — então a constante voltava a mexer no resultado.
+Agora usa `mk.premio` e o repassa (o mesmo na sensibilidade do motor de financeiras); o teste da "porta do prêmio" passou a provar a
+porta nova: `avaliar` responde a `mk.premio` e não à constante. (3–4) `test_regua` [ISAE4, LEVE3]: a régua do backtest só vê âncoras
+e preço, não tem Bogle nem Ke, logo não tem a trava do §9 — nos dois segue JUSTA, no hall é NÃO CONCLUSIVO. Divergência **declarada**
+no teste (`DIVERGE_PELA_TRAVA`, com o motivo), não corrigida: a régua do backtest está congelada. Resultado: backtest **301 passed,
+0 failed**; hall 345 passed; golden sem mudança. **Lição:** a suíte do backtest fica fora do `--ignore=backtest` do critério de
+pronto — mudança no `Mercado` ou nos motores exige rodar as duas.

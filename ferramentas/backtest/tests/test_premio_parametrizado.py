@@ -9,9 +9,9 @@ A saída é `ke_nom=`, e o teste decisivo é algébrico: trocar `PREMIO_KE` por 
 que o resultado seja IDÊNTICO. Se for, está provado que a constante não participa do cálculo
 quando `ke_nom` é passado — mais forte do que qualquer sentinela de construção.
 
-O teste também prova o LIMITE: `avaliar(emp, mk)`, que não recebe `ke_nom`, responde a `PREMIO_KE`.
-É por isso que o backtest nunca o chama. Se um dia alguém apontar o backtest para `avaliar`, este
-teste é o que explica por que não.
+O teste também prova o LIMITE: `avaliar(emp, mk)`, que não recebe `ke_nom`, responde ao prêmio do próprio
+Mercado (`mk.premio`, desde a v2.4 — antes era a constante `PREMIO_KE`). É por isso que o backtest nunca o
+chama. Se um dia alguém apontar o backtest para `avaliar`, este teste é o que explica por que não.
 
 Importar os lote*.py AQUI é legítimo e não contradiz test_isolamento: o que está proibido é o
 RUNTIME do backtest ler premissa de 2026; um teste que afirma uma propriedade do motor precisa de
@@ -131,17 +131,15 @@ def test_valores_ignora_a_constante_do_modulo(
 
 
 # --------------------------------------------------------------------------------- o limite
-def test_avaliar_NAO_e_premio_agnostico_por_isso_o_backtest_nao_o_usa(financeira) -> None:
-    """Documenta a fronteira: sem `ke_nom`, o prêmio volta a ser a constante do módulo."""
+def test_avaliar_responde_a_mk_premio_e_nao_a_constante(financeira, monkeypatch: pytest.MonkeyPatch) -> None:
+    """Documenta a fronteira (v2.4, 08/10/2026): a porta do prêmio de `avaliar()` passou a ser `mk.premio` — o Mercado carrega
+    o próprio prêmio (as não financeiras usam o realavancado, AUD-12). Trocar a constante do módulo não muda nada; trocar
+    `mk.premio` muda o central. O backtest continua sem chamar `avaliar` (passa o Ke pronto por `ke_nom`/`central_ao_ke`)."""
+    import dataclasses
     import motor_financeiras
     emp, mk_casa = financeira
     antes = motor_financeiras.avaliar(emp, mk_casa)["central"]
-    original = motor_financeiras.PREMIO_KE
-    try:
-        motor_financeiras.PREMIO_KE = 0.10
-        depois = motor_financeiras.avaliar(emp, mk_casa)["central"]
-    finally:
-        motor_financeiras.PREMIO_KE = original
-    assert depois != pytest.approx(antes), (
-        "avaliar() deveria responder a PREMIO_KE. Se parou de responder, a porta do prêmio mudou "
-        "e o backtest precisa ser reexaminado.")
+    monkeypatch.setattr(motor_financeiras, "PREMIO_KE", 0.10)
+    assert motor_financeiras.avaliar(emp, mk_casa)["central"] == pytest.approx(antes, rel=1e-12),         "avaliar() voltou a ler a constante do módulo: a porta do prêmio mudou e o backtest precisa ser reexaminado"
+    depois = motor_financeiras.avaliar(emp, dataclasses.replace(mk_casa, premio=0.10))["central"]
+    assert depois < antes, "prêmio maior em mk.premio => Ke maior => central menor"

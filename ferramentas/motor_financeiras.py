@@ -270,9 +270,11 @@ def projecao(emp: Financeira, anos: int = 3):
 
 
 def central_ao_ke(emp: Financeira, mk: Mercado, ke_nom: float) -> float:
-    """Valor central (com o desconto de controlador) recalculado a um Ke nominal dado."""
-    rf = (1 + ke_nom) / (1 + mk.pi) - 1 - PREMIO_KE
-    mk2 = Mercado(rf, mk.pi)
+    """Valor central (com o desconto de controlador) recalculado a um Ke nominal dado.
+    v2.4: o prêmio é o do próprio `mk` (`mk.premio`), subtraído e repassado — a constante do módulo não participa, então o
+    Mercado interno tem Ke nominal = `ke_nom` qualquer que seja o prêmio (o backtest e o Ke implícito dependem disso)."""
+    rf = (1 + ke_nom) / (1 + mk.pi) - 1 - mk.premio
+    mk2 = Mercado(rf, mk.pi, premio=mk.premio)
     a = ancoras(emp, mk2, emp.roe_lp)
     dc = emp.desconto_controlador
     if dc["tipo"] == "cenarios":
@@ -396,7 +398,7 @@ def avaliar(emp: Financeira, mk: Mercado) -> dict:
 
     # sensibilidade do central: Ke ±1 p.p. e ROE_lp ±2 p.p.
     def central_com(ke_shift=0.0, roe_shift=0.0):
-        mk2 = Mercado(mk.rf_real + ke_shift, mk.pi)
+        mk2 = Mercado(mk.rf_real + ke_shift, mk.pi, premio=mk.premio)
         a = ancoras(emp, mk2, emp.roe_lp + roe_shift)
         if dc["tipo"] == "cenarios":
             ai = ancoras(emp, mk2, emp.roe_lp + roe_shift - dc["delta_roe"])

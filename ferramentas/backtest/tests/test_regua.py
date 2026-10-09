@@ -26,12 +26,24 @@ def test_golden_tem_41():
     assert len(_golden()) == 41
 
 
+# Divergência DECLARADA (doutrina v2.4, Onda 1.2 da auditoria, 08/10/2026): o hall aplica a trava de coerência do §9
+# (JUSTA pela régua com o retorno de Bogle fora de ±2 p.p. do Ke → NÃO CONCLUSIVO, AUD-08). A régua do backtest só vê as
+# âncoras e o preço — não tem Bogle nem Ke —, então nela os dois seguem JUSTA. A régua congelada não ganha a trava.
+DIVERGE_PELA_TRAVA = {
+    "ISAE4": "trava do §9: Bogle 17,0% × Ke 19,3% nominal (2,3 p.p.) — o hall diz NÃO CONCLUSIVO, a régua do backtest JUSTA",
+    "LEVE3": "trava do §9: Bogle 18,6% × Ke da empresa 20,7% (2,1 p.p.) — o hall diz NÃO CONCLUSIVO, a régua do backtest JUSTA",
+}
+
+
 @pytest.mark.parametrize("ticker", sorted(_golden()))
 def test_reproduz_palavra_e_central_do_golden(ticker):
     g = _golden()[ticker]
     preco = g["pc"] * g["central"] if math.isfinite(g["pc"]) else 1.0
     v = avaliar_bt(g["ancoras"], preco)
-    assert v.palavra == g["palavra"]
+    if ticker in DIVERGE_PELA_TRAVA:
+        assert (g["palavra"], v.palavra) == (NAO_CONCLUSIVO, JUSTA), DIVERGE_PELA_TRAVA[ticker]
+    else:
+        assert v.palavra == g["palavra"]
     assert v.central == pytest.approx(g["central"], abs=0.01)
     if math.isfinite(g["pc"]):
         assert v.pc == pytest.approx(g["pc"], abs=0.005)
