@@ -140,6 +140,49 @@ def _limpar_caches() -> None:
         f.cache_clear()
 
 
+def _mascara_visivel(fatos: pd.DataFrame, data_corte: str) -> "pd.Series":
+    """True nas linhas cujo (categ, cd_cvm, dt_refer) já estava entregue em T.
+
+    Vetorizada (AUD-107): a versão anterior montava uma lista de 7,5 milhões de tuplas Python e
+    estourava a memória (MemoryError de 628 MiB) na suíte completa — vermelho espúrio,
+    indistinguível de vazamento. `MultiIndex.isin` fatora as colunas e não materializa tuplas.
+    """
+    permitidos = pd.MultiIndex.from_tuples(
+        [(categ, int(c), str(d))
+         for categ in ("dfp", "itr")
+         for c, d in zip(*[ic.documentos_visiveis(categ, data_corte)[k] for k in ("cd_cvm", "dt_refer")])],
+        names=["categ", "cd_cvm", "dt_refer"])
+    chave = pd.MultiIndex.from_arrays(
+        [fatos["categ"].astype(str), fatos["cd_cvm"].astype("int64"), fatos["dt_refer"].astype(str)],
+        names=["categ", "cd_cvm", "dt_refer"])
+    return pd.Series(chave.isin(permitidos), index=fatos.index)
+
+
+def _diferencas(a: "pit.LedgerPIT", b: "pit.LedgerPIT") -> list[str]:
+    """O que difere entre dois ledgers: procedência E cada Exercicio inteiro (AUD-29).
+
+    A versão anterior olhava só `procedencia()` e `anuais[].contas`: vazamento em `dfc` (D&A, capex,
+    dividendos) ou no ITR (`ultimo_itr`) passava. `Exercicio` é dataclass congelada, então `!=`
+    compara todos os campos — contas, dfc, estado, versão, período.
+    """
+    achados = []
+    if a.procedencia() != b.procedencia():
+        achados.append("procedencia")
+    if a.anuais != b.anuais:
+        achados.extend(f"anual {x.dt_refer}" for x, y in zip(a.anuais, b.anuais) if x != y)
+        if len(a.anuais) != len(b.anuais):
+            achados.append("n_anuais")
+    if a.ultimo_itr != b.ultimo_itr:
+        achados.append("ultimo_itr")
+    return achados
+
+
+def _amostra_espalhada(cds: list[int], n: int = 40) -> list[int]:
+    """n companhias espalhadas por todo o intervalo de cd_cvm (AUD-29: as 40 MENORES eram um viés)."""
+    passo = max(1, len(cds) // n)
+    return cds[::passo][:n]
+
+
 def _rodar_truncado(cds: list[int], data_corte: str) -> dict[int, "pit.LedgerPIT | None"]:
     """Remonta os ledgers com as fontes de VALOR truncadas em T.
 
@@ -158,14 +201,7 @@ def _rodar_truncado(cds: list[int], data_corte: str) -> dict[int, "pit.LedgerPIT
     fatos_orig, acoes_orig = pit._fatos, pit._acoes
     try:
         fatos_cheio, acoes_cheio = fatos_orig(), acoes_orig()
-        permitidos = set()
-        for categ in ("dfp", "itr"):
-            v = ic.documentos_visiveis(categ, data_corte)
-            permitidos |= {(categ, int(c), str(d)) for c, d in zip(v["cd_cvm"], v["dt_refer"])}
-        chave = list(zip(fatos_cheio["categ"], fatos_cheio["cd_cvm"].astype(int),
-                         fatos_cheio["dt_refer"].astype(str)))
-        visivel = pd.Series([k in permitidos for k in chave], index=fatos_cheio.index)
-        fatos_pit = fatos_cheio[visivel]
+        fatos_pit = fatos_cheio[_mascara_visivel(fatos_cheio, data_corte)]
         pit._fatos = lambda: fatos_pit                                           # type: ignore[assignment]
         pit._acoes = lambda: acoes_cheio[                                        # type: ignore[assignment]
             (acoes_cheio["dt_receb"] <= data_corte)
@@ -187,7 +223,7 @@ def test_5_sentinela_truncar_as_fontes_em_T_nao_muda_a_selecao() -> None:
     """
     for data_corte in ("2016-06-30", "2019-12-31", "2022-06-30"):
         vis = ic.documentos_visiveis("dfp", data_corte)
-        cds = sorted(set(vis["cd_cvm"].dropna().astype(int)))[:40]
+        cds = _amostra_espalhada(sorted(set(vis["cd_cvm"].dropna().astype(int))))
         normais = {cd: pit.ledger_em(cd, data_corte) for cd in cds}
         truncados = _rodar_truncado(cds, data_corte)
 
@@ -196,11 +232,10 @@ def test_5_sentinela_truncar_as_fontes_em_T_nao_muda_a_selecao() -> None:
             if a is None and b is None:
                 continue
             assert a is not None and b is not None, f"cd {cd}@{data_corte}: um sumiu com o truncamento"
-            assert a.procedencia() == b.procedencia(), (
-                f"cd {cd}@{data_corte}: truncar o futuro MUDOU a seleção.\n"
+            dif = _diferencas(a, b)
+            assert not dif, (
+                f"cd {cd}@{data_corte}: truncar o futuro MUDOU o ledger em {dif}.\n"
                 f"  normal:    {a.procedencia()}\n  truncado:  {b.procedencia()}")
-            assert [e.contas for e in a.anuais] == [e.contas for e in b.anuais], \
-                f"cd {cd}@{data_corte}: as CONTAS mudaram com o truncamento"
 
 
 def test_5b_o_sentinela_pega_um_vazamento_injetado() -> None:
@@ -250,6 +285,48 @@ def test_5b_o_sentinela_pega_um_vazamento_injetado() -> None:
         f"o sentinela NÃO pegou um vazamento de valor injetado em {mudou} contas. "
         "Voltou a ser tautologia: conferir se _rodar_truncado perturba _fatos()/_acoes() e limpa "
         "os quatro caches lru.")
+
+
+def test_5c_a_comparacao_enxerga_vazamento_em_dfc_e_no_itr(amostra) -> None:
+    """AUD-29: dois ledgers que só diferem em `dfc` ou no ITR têm de ser acusados.
+
+    Com a comparação antiga (`procedencia()` + `contas`) os dois passavam — é o que este teste
+    prende. Rápido: usa a amostra já carregada, sem remontar fontes.
+    """
+    import dataclasses
+
+    l = next(x for x in amostra if x.anuais and x.ultimo_itr and x.anuais[-1].dfc)
+    assert _diferencas(l, l) == []
+
+    ult = l.anuais[-1]
+    cod, desc, val = ult.dfc[0]
+    dfc_vaza = dataclasses.replace(ult, dfc=((cod, desc, val + 1.0),) + ult.dfc[1:])
+    com_dfc = dataclasses.replace(l, anuais=l.anuais[:-1] + (dfc_vaza,))
+    itr_vaza = dataclasses.replace(l.ultimo_itr, contas={**l.ultimo_itr.contas, "x_vazou": 1.0})
+    com_itr = dataclasses.replace(l, ultimo_itr=itr_vaza)
+
+    def antiga(a, b) -> bool:      # o critério de antes: True = "iguais"
+        return a.procedencia() == b.procedencia() and \
+            [e.contas for e in a.anuais] == [e.contas for e in b.anuais]
+
+    assert antiga(l, com_dfc) and antiga(l, com_itr), "premissa: o critério antigo era cego a isto"
+    assert _diferencas(l, com_dfc), "vazamento em dfc passou despercebido"
+    assert _diferencas(l, com_itr), "vazamento no ITR passou despercebido"
+
+
+def test_mascara_visivel_bate_com_documentos_visiveis() -> None:
+    """AUD-107: a máscara vetorizada mantém exatamente os (categ, cd, dt_refer) entregues em T."""
+    f = pit._fatos()
+    amostra_f = f.sample(200_000, random_state=0)
+    m = _mascara_visivel(amostra_f, "2019-12-31")
+    permitidos = set()
+    for categ in ("dfp", "itr"):
+        v = ic.documentos_visiveis(categ, "2019-12-31")
+        permitidos |= {(categ, int(c), str(d)) for c, d in zip(v["cd_cvm"], v["dt_refer"])}
+    esperado = [(c, int(cd), str(d)) in permitidos for c, cd, d in
+                zip(amostra_f["categ"], amostra_f["cd_cvm"], amostra_f["dt_refer"])]
+    assert list(m) == esperado
+    assert 0 < sum(esperado) < len(esperado), "amostra degenerada: nada ou tudo visível"
 
 
 def test_parquet_tem_uma_versao_por_exercicio() -> None:

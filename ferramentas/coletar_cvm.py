@@ -350,6 +350,8 @@ def main(tks, anos=range(2016, 2026), arq=None, ano_itr=2026, mes=6):
         ini, ano_fy = ("04", ano_itr) if tk == "SMTO3" else ("01", ano_itr - 1)
         try:
             atual = itr_ytd(tk, ano_itr, mes, mes_ini=ini)
+            if not atual.get("receita"):         # ITR do mês pedido sem DRE acumulada (ex.: SMTO3 com mes=3: o 1T é o DFP, não ITR)
+                raise ValueError(f"ITR {ano_itr}-{mes:02d} sem DRE acumulada desde o mês {ini} (mes inválido p/ este exercício?)")
             anterior = itr_ytd(tk, ano_itr, mes, comparativo=True, mes_ini=ini)     # reapresentado (AUD-21)
             original = itr_ytd(tk, ano_itr - 1, mes, mes_ini=ini)
             fy = serie.get(ano_fy) or anual(tk, ano_fy)[0]

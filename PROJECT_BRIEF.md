@@ -1,5 +1,5 @@
 # PROJECT BRIEF — Mesa de Value Investing B3
-*Versão de 09/10/2026 (rev. Onda 2, 3ª parte + LTM regravado) · gerado por `/brief` · fonte: repositório, memória do projeto e `docs/auditoria/AUDITORIA_2026-10-08.md`*
+*Versão de 09/10/2026 (rev. Onda 2 concluída) · gerado por `/brief` · fonte: repositório, memória do projeto e `docs/auditoria/AUDITORIA_2026-10-08.md`*
 
 ## 1. Projeto
 Mesa de análise fundamentalista da B3 para dividendos/JCP e longo prazo: doutrina escrita (v2.5) + motores de valuation em Python que
@@ -7,7 +7,7 @@ dão preço de compra, central e saída (régua 0,70/0,90/1,10/1,30×) para 41 e
 
 ## 2. Estágio
 MVP de uso pessoal, maduro no cálculo. Um usuário real, sem terceiros. Prazo externo conhecido: temporada do ITR 3T26 (fim de out–nov/2026,
-`ferramentas/temporada.py`). Onda 1 da auditoria concluída: 1.1 (bb79ba9), 1.2 (49b5f53 + dd9c3c1), 1.3 (gatilhos) e 1.4 (documentos) feitas; Onda 2 quase fechada (feitos: reprodutibilidade AUD-38/73/108/109/17/102/82/24/26/86/21–23/81/83/84, backup AUD-05 e testes que distinguem certo de errado AUD-27/28/30/31/88/89/90; faltam AUD-91 e AUD-29/107). Meta de longo prazo: SaaS com front-end
+`ferramentas/temporada.py`). Onda 1 da auditoria concluída: 1.1 (bb79ba9), 1.2 (49b5f53 + dd9c3c1), 1.3 (gatilhos) e 1.4 (documentos) feitas; Onda 2 concluída (reprodutibilidade AUD-38/73/108/109/17/102/82/24/26/86/21–23/81/83/84, backup AUD-05 e testes que distinguem certo de errado AUD-27/28/30/31/88/89/90/29/107/91). Meta de longo prazo: SaaS com front-end
 (sem prazo).
 
 ## 3. Stack
@@ -29,7 +29,7 @@ MVP de uso pessoal, maduro no cálculo. Um usuário real, sem terceiros. Prazo e
   prompt de sexta são gerados do motor por `hall03.py` (Onda 1.3); preço oficial com data e fonte em `precos_hall.py`.
 - **`dossie/`:** anexo mecânico por ticker (FRE, notas por evidência, vereditos). **`triagem/`:** fila de toda a B3, sem veredito.
 - **`backtest/`:** ledger point-in-time + COTAHIST (parado no portão do proxy). **`monitor_semanal.py`**, **`temporada.py`**, **`registro_prospectivo.py`**.
-- **Testes:** pytest com golden dos 41 tickers: 430 no hall (09/10, Onda 2 2ª parte; num clone limpo 413 passam e 18 saem como pulados, com aviso no resumo; `EXIGIR_DADOS=1` transforma skip em falha) + 301 no backtest (08/10, Onda 1.3). Mudança no `Mercado` ou nos motores exige rodar as duas suítes.
+- **Testes:** pytest com golden dos 41 tickers: 458 no hall (09/10, Onda 2 concluída; `EXIGIR_DADOS=1` transforma skip em falha) + 308 no backtest (09/10; rodar SOZINHO, ~13 min, e com a máquina folgada: a suíte inteira estoura memória se algo mais estiver aberto). Mudança no `Mercado` ou nos motores exige rodar as duas suítes.
 
 ## 5. Top 5 gargalos
 1. **Insumos e premissas, não fórmulas.** Auditoria de 08/10: 109 achados, 5 ALTO; motores conferem a 0–0,36%, mas insumos movem o central
@@ -46,7 +46,7 @@ MVP de uso pessoal, maduro no cálculo. Um usuário real, sem terceiros. Prazo e
 
 ## 6. Próximos 3 marcos
 1. Onda 1 da auditoria concluída (1.1 a 1.4: PDFs reemitidos em v2.5, pasta de upload sincronizada, versões dos prompts, Ke/retorno do `03` gerados
-   pelo motor) → **Onda 2 (quase fechada):** feitos clone do zero (AUD-38/73), manifesto dos ZIPs (109), EOL do golden_sha (108), teste analítico do DDM (17), backup (05), testes de fórmula/limiar/NaN/ROIC real/bordas/skip (27, 28, 30, 31, 88, 89, 90) e, na 3ª parte, registro com corrente (102), preço real (82), série vigente (24), estado do lote 4 (26), coletor do LTM (21, 22, 86), JCP duplicado (23), coletor FRED/PTAX (81) e histórico (83, 84); faltam AUD-91 (paridade do motor reduzido) e AUD-29/107 (sentinela PIT). **Decisão pendente do Frank:** regravar `cvm_series.json` com o LTM corrigido (só o central da SMTO3 move, 16,03 → 14,68).
+   pelo motor) → **Onda 2 (concluída):** feitos clone do zero (AUD-38/73), manifesto dos ZIPs (109), EOL do golden_sha (108), teste analítico do DDM (17), backup (05), testes de fórmula/limiar/NaN/ROIC real/bordas/skip (27, 28, 30, 31, 88, 89, 90) e, na 3ª parte, registro com corrente (102), preço real (82), série vigente (24), estado do lote 4 (26), coletor do LTM (21, 22, 86), JCP duplicado (23), coletor FRED/PTAX (81) e histórico (83, 84); e, na 4ª parte, sentinela PIT comparando o `Exercicio` inteiro e sem estouro de memória (29, 107) e paridade do motor reduzido × mesa (91). `cvm_series.json` já foi regravado com o LTM novo.
 2. Temporada 3T26: `python ferramentas/temporada.py` ao sair o ITR; régua congelada até lá.
 3. Etapa 6 / F6 — construção de carteira (tamanho de posição, concentração, caixa); depende de respostas do Frank.
 
@@ -94,5 +94,6 @@ Primeira versão.
   sincronizada (reenvio ao Desktop segue suspenso); gerador do lote 6 corrigido (`por_metodo`); estágio e marco 1 atualizados.
 - 09/10/2026 (Onda 2, 1ª parte): requirements, bootstrap, snapshot dos derivados de ZIP, manifesto sha256 dos ZIPs, sha do golden sem EOL, teste analítico do DDM/P/VP justificado; stack, arquitetura e marcos atualizados.
 - 09/10/2026 (Onda 2, 2ª parte): backup (AUD-05); testes de fórmula, limiares, NaN no golden, ROIC real e bordas (AUD-27/28/30/31/88/90); skip vira falha com `EXIGIR_DADOS=1` (AUD-89); `qualifica_saida` extraída do motor; stack, arquitetura e marcos atualizados.
+- 09/10/2026 (Onda 2, 4ª parte): sentinela PIT compara `Exercicio` inteiro (dfc e ITR) com máscara vetorizada; `test_paridade_nf.py` (motor reduzido × mesa) fixa a divergência da alíquota v2.3; `coletar_cvm.main` marca erro quando o ITR do mês não tem DRE. Onda 2 concluída.
 - 09/10/2026 (Onda 2, 3ª parte): registro prospectivo com corrente sha256 e preço oficial; série vigente explícita; coletor do LTM (comparativo reapresentado, SMTO3 abr–mar, lacunas visíveis); dossiê sem JCP duplicado; `coletar_macro_fred.py` + manifesto macro; `historico_arquivos.py` (versão anterior vai para `_historico/` antes de regravar); histórico do monitor em upsert; gargalo/estágio/marco atualizados.
 - 09/10/2026 (dados): `cvm_series.json` regravado com o LTM novo (decisão do Frank); nenhuma palavra mudou, SMTO3 central 16,03 → 14,68 (segue CARA); golden, 03, prompt de sexta e PDFs dos lotes 3 e 5 regravados.

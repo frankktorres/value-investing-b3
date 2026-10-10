@@ -61,3 +61,15 @@ def test_aud22_exercicio_abril_marco_usa_ytd_a_partir_de_abril(tmp_path, monkeyp
     assert c.itr_ytd("TESTE3", 2026, 6)["receita"] is None          # com "01" (ano-calendário) o YTD de abril não entra
     assert c.itr_ytd("TESTE3", 2026, 6, mes_ini="04")["receita"] == 30
     assert c.itr_ytd("TESTE3", 2026, 6, comparativo=True, mes_ini="04")["receita"] == 28
+
+
+def test_main_com_itr_sem_dre_marca_erro_em_vez_de_ltm_vazio(tmp_path, monkeypatch):
+    """Pendência da Onda 2: SMTO3 com mes=3 (o 1T do exercício abr–mar é o DFP, não ITR) devolvia LTM só
+    com `lacunas` e sem `receita`, sem `erro` — o motor leria tudo como 0. Agora vira {"erro": ...}."""
+    import json
+    monkeypatch.setattr(c, "anual", lambda tk, a: ({"receita": 100.0, "ebit": 10.0}, {}))
+    monkeypatch.setattr(c, "itr_ytd", lambda *a, **k: {})            # ITR sem DRE para o mês pedido
+    arq = tmp_path / "s.json"
+    c.main(["SMTO3"], arq=arq, mes=3)
+    ltm = json.loads(arq.read_text(encoding="utf-8"))["SMTO3"]["ltm"]
+    assert "erro" in ltm and "receita" not in ltm

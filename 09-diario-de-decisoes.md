@@ -575,3 +575,22 @@ deles mudou no arquivo (12 tickers em `ltm_2T26`), mas medido nos 41 o motor só
 - Testes: hall 457 passed, 1 skipped. Backtest não rodou: o backtest lê parquets, não o `cvm_series.json`, e os motores não mudaram.
 - **Atenção:** o boletim do monitor de 09/10 (`BOLETINS/2026-10-09-monitor.md`) mostra o central antigo da SMTO3 (16,03); não conferi o
   `registro.jsonl`. O registro só acrescenta, e a próxima rodada grava 14,68. A diferença é de dado, não de método.
+
+### 09/10/2026 — SENTINELA PIT, PARIDADE DO MOTOR REDUZIDO E ITR SEM DRE: Onda 2, 4ª parte (AUD-29, 107, 91) — ONDA 2 CONCLUÍDA
+
+Nenhuma palavra, central ou regra mudou (golden intacto). Só testes e uma guarda no coletor.
+- **AUD-29.** O sentinela PIT comparava `procedencia()` e `anuais[].contas`; agora compara `anuais` e `ultimo_itr` inteiros (`Exercicio` é dataclass
+  congelada: dfc, estado, versão, período) e a amostra é espalhada por todo o intervalo de `cd_cvm`, não as 40 menores. Mutação à mão: voltar ao critério
+  antigo faz `test_5c` falhar ("vazamento em dfc passou despercebido").
+- **AUD-107.** A máscara de visibilidade (7,5 mi de tuplas Python) virou `MultiIndex.isin`; `test_5` isolado passa em 198 s sem o estouro de 628 MiB.
+  `test_mascara_visivel_bate_com_documentos_visiveis` confere a máscara contra a definição por tuplas; mutação (máscara aceitando futuro) falha.
+  **Limite declarado:** com a máquina no teto (~11 GB de VS Code/navegador) a suíte inteira do backtest ainda pode estourar memória em cascata
+  (9 falhas `MemoryError` numa corrida com outro processo ativo); rodada sozinha: 308 passed em 13 min.
+- **AUD-91.** `backtest/tests/test_paridade_nf.py`: empresa sintética nos dois motores (IPCA achatado em 1, receita constante) — margem mediana,
+  receita de meio, ajuste de manutenção, alíquota e retirada do excesso de "outras" coincidem; 8 mutações (6 no reduzido, 2 na mesa) morrem.
+  **Divergências reais, fixadas e NÃO corrigidas:** (a) alíquota — o reduzido tem piso de 15% e aceita mediana de 1 ano; a mesa v2.3 manda 34% quando a mediana
+  < 15% sem origem permanente e quando há < 3 anos válidos; (b) receita de meio — mediana da janela × média dos 3 últimos; (c) ajuste de manutenção —
+  a mesa abate o capex de crescimento (Greenwald); o reduzido usa o capex total (cenário com receita crescendo: 0,0 × −0,0207). O backtest está parado e a trava anti-calibração (fatia 12) só admite corrigir o reduzido por prova sintética;
+  se o backtest/triagem for retomado, decidir se o reduzido acompanha a v2.3 (o teste `test_divergencias_declaradas_*` vira e avisa).
+- **Pendência menor.** `coletar_cvm.main` com SMTO3 e `mes=3` devolvia LTM só com `lacunas`, sem `receita` nem `erro`; agora ITR sem DRE acumulada
+  levanta e vira `{"erro": ...}` (teste novo, falha sem a correção).
