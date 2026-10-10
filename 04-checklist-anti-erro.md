@@ -1,4 +1,4 @@
-# CHECKLIST ANTI-ERRO (v2.2, 08/10/2026 — itens da doutrina v2.3 em B e E; seção I com as lições do analisador)
+# CHECKLIST ANTI-ERRO (v2.3, 08/10/2026 — itens da doutrina v2.3 em B e E; seção I com as lições do analisador)
 *Rodar integralmente antes de fechar qualquer análise ou reavaliação. Cada item aqui já foi um erro cometido nesta mesa.*
 
 ---

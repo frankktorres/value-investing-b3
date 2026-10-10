@@ -1,5 +1,5 @@
 # PROJECT BRIEF — Mesa de Value Investing B3
-*Versão de 09/10/2026 (rev. Onda 2 concluída) · gerado por `/brief` · fonte: repositório, memória do projeto e `docs/auditoria/AUDITORIA_2026-10-08.md`*
+*Versão de 10/10/2026 (rev. checkup e abertura da Onda 3) · gerado por `/brief` · fonte: repositório, memória do projeto e `docs/auditoria/AUDITORIA_2026-10-08.md`*
 
 ## 1. Projeto
 Mesa de análise fundamentalista da B3 para dividendos/JCP e longo prazo: doutrina escrita (v2.5) + motores de valuation em Python que
@@ -44,11 +44,12 @@ MVP de uso pessoal, maduro no cálculo. Um usuário real, sem terceiros. Prazo e
 5. **Risco de burocracia.** O projeto paralelo (`analisador/`) morreu por regra nova a cada sessão sem decisão; o próprio repo registra sinais
    da mesma doença. Comitê único (mesma família de modelo; 2º comitê pausado).
 
-## 6. Próximos 3 marcos
+## 6. Próximos 4 marcos
 1. Onda 1 da auditoria concluída (1.1 a 1.4: PDFs reemitidos em v2.5, pasta de upload sincronizada, versões dos prompts, Ke/retorno do `03` gerados
    pelo motor) → **Onda 2 (concluída):** feitos clone do zero (AUD-38/73), manifesto dos ZIPs (109), EOL do golden_sha (108), teste analítico do DDM (17), backup (05), testes de fórmula/limiar/NaN/ROIC real/bordas/skip (27, 28, 30, 31, 88, 89, 90) e, na 3ª parte, registro com corrente (102), preço real (82), série vigente (24), estado do lote 4 (26), coletor do LTM (21, 22, 86), JCP duplicado (23), coletor FRED/PTAX (81) e histórico (83, 84); e, na 4ª parte, sentinela PIT comparando o `Exercicio` inteiro e sem estouro de memória (29, 107) e paridade do motor reduzido × mesa (91). `cvm_series.json` já foi regravado com o LTM novo.
 2. Temporada 3T26: `python ferramentas/temporada.py` ao sair o ITR; régua congelada até lá.
-3. Etapa 6 / F6 — construção de carteira (tamanho de posição, concentração, caixa); depende de respostas do Frank.
+3. **Onda 3 da auditoria (riscos latentes, ~45 AUD-ids: motor, dados e premissas, método e estatística, doutrina e régua — `docs/auditoria/AUDITORIA_2026-10-08.md` §6).** ABERTA em 10/10/2026, sem ordem decidida nem item feito; antes de começar, escolher o primeiro bloco (sugestão: motor).
+4. Etapa 6 / F6 — construção de carteira (tamanho de posição, concentração, caixa); depende de respostas do Frank.
 
 ## 7. Restrições
 - **Orçamento:** não informado.
@@ -86,7 +87,6 @@ MVP de uso pessoal, maduro no cálculo. Um usuário real, sem terceiros. Prazo e
 6. Licença pretendida do código (fechado/aberto)?
 
 ## 12. O que mudou
-Primeira versão.
 - 08/10/2026 (Onda 1.2): doutrina v2.4; Onda 1 com 1.1 e 1.2 feitas; contagem de testes; gargalo 1 e marco 1 atualizados.
 - 08/10/2026 (Onda 1.3): doutrina v2.5 (regulados por P/VP justificado como proxy declarado); ferramentas novas `hall03.py`,
   `precos_hall.py`, `triagem/erro_proxy.py`; monitor com falha ativa; corte da triagem medido (2,07); testes e marco 1 atualizados.
@@ -94,6 +94,7 @@ Primeira versão.
   sincronizada (reenvio ao Desktop segue suspenso); gerador do lote 6 corrigido (`por_metodo`); estágio e marco 1 atualizados.
 - 09/10/2026 (Onda 2, 1ª parte): requirements, bootstrap, snapshot dos derivados de ZIP, manifesto sha256 dos ZIPs, sha do golden sem EOL, teste analítico do DDM/P/VP justificado; stack, arquitetura e marcos atualizados.
 - 09/10/2026 (Onda 2, 2ª parte): backup (AUD-05); testes de fórmula, limiares, NaN no golden, ROIC real e bordas (AUD-27/28/30/31/88/90); skip vira falha com `EXIGIR_DADOS=1` (AUD-89); `qualifica_saida` extraída do motor; stack, arquitetura e marcos atualizados.
-- 09/10/2026 (Onda 2, 4ª parte): sentinela PIT compara `Exercicio` inteiro (dfc e ITR) com máscara vetorizada; `test_paridade_nf.py` (motor reduzido × mesa) fixa a divergência da alíquota v2.3; `coletar_cvm.main` marca erro quando o ITR do mês não tem DRE. Onda 2 concluída.
+- 09/10/2026 (Onda 2, 4ª parte): sentinela PIT compara `Exercicio` inteiro (dfc e ITR) com máscara vetorizada; `backtest/tests/test_paridade_nf.py` (motor reduzido × mesa) fixa a divergência da alíquota v2.3; `coletar_cvm.main` marca erro quando o ITR do mês não tem DRE. Onda 2 concluída.
 - 09/10/2026 (Onda 2, 3ª parte): registro prospectivo com corrente sha256 e preço oficial; série vigente explícita; coletor do LTM (comparativo reapresentado, SMTO3 abr–mar, lacunas visíveis); dossiê sem JCP duplicado; `coletar_macro_fred.py` + manifesto macro; `historico_arquivos.py` (versão anterior vai para `_historico/` antes de regravar); histórico do monitor em upsert; gargalo/estágio/marco atualizados.
 - 09/10/2026 (dados): `cvm_series.json` regravado com o LTM novo (decisão do Frank); nenhuma palavra mudou, SMTO3 central 16,03 → 14,68 (segue CARA); golden, 03, prompt de sexta e PDFs dos lotes 3 e 5 regravados.
+- 10/10/2026 (checkup e rodada): monitor semanal rodado (boletim de 10/10, histórico em upsert); `python -m dossie.gerar HYPE3` sem `--data` sobrescreveu o veredito de 02/10 (restaurado do git, cópia em `_historico/2026-10-10 hype3 regerado pelo passo 4/`); poka-yoke: `gerar` recusa regravar veredito já registrado no prospectivo (`dossie/tests/test_gerar_recusa.py`); cabeçalhos do `03`, README, prompt de sexta e `04` alinhados; Onda 3 aberta como marco 3.

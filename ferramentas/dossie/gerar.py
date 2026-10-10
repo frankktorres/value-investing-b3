@@ -9,7 +9,9 @@ cinco notas finais e a flag `controlador_discricionario` com a fonte do insumo. 
 
 Saídas: `DOSSIES/dados/<TK>-<data>.md` (anexo, não editar à mão) e `dossie/vereditos/<TK>-<data>.json`.
 Outra data-base: `python -m dossie.gerar HYPE3 --data 2026-10-06` — preço do COTAHIST e mercado do mesmo dia
-(`dados/mercado_<data>.json`, §4). O registro é append-only: veredito novo = data nova.
+(`dados/mercado_<data>.json`, §4). O registro é append-only: veredito novo = data nova. Poka-yoke (10/10/2026): se o
+veredito do ticker nessa data já está em `prospectivo/registro.jsonl`, `gerar` recusa regravar (a HYPE3 de 02/10 foi
+sobrescrita por `gerar HYPE3` sem `--data`); para ver o caso de hoje, use `--data` nova.
 """
 from __future__ import annotations
 
@@ -226,6 +228,20 @@ def veredito(c: dict) -> dict:
                 gerado_em=date.today().isoformat())
 
 
+def ja_registrado(tk: str, data: str, registro: pathlib.Path | None = None) -> bool:
+    """O veredito (ticker, data-base) de dossiê já está no registro prospectivo append-only?"""
+    registro = registro or RAIZ / "ferramentas" / "prospectivo" / "registro.jsonl"
+    if not registro.exists():
+        return False
+    for linha in registro.read_text(encoding="utf-8").splitlines():
+        if not linha.strip():
+            continue
+        r = json.loads(linha)
+        if r.get("origem") == "dossie" and r.get("ticker") == tk and r.get("data_preco") == data:
+            return True
+    return False
+
+
 def main(argv=None) -> int:
     sys.stdout.reconfigure(encoding="utf-8")
     import argparse
@@ -235,6 +251,10 @@ def main(argv=None) -> int:
     a = ap.parse_args(argv)
     tk = a.ticker.upper()
     c = calcular(tk, a.data)
+    if ja_registrado(tk, c["data"]):
+        print(f"RECUSADO: o veredito {tk} de {c['data']} já está em prospectivo/registro.jsonl (append-only). "
+              f"Regravar sobrescreveria o anexo e o veredito vigentes; use --data nova.", file=sys.stderr)
+        return 2
     d_md = RAIZ / "DOSSIES" / "dados"
     d_js = AQUI / "vereditos"
     d_md.mkdir(parents=True, exist_ok=True)

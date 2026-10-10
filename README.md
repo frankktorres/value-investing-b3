@@ -1,5 +1,5 @@
 # Mesa de Value Investing — B3
-*Projeto de apoio à análise fundamentalista · doutrina v2.5 · 08/10/2026*
+*Projeto de apoio à análise fundamentalista · doutrina v2.5 (08/10/2026) · documentos conferidos em 10/10/2026*
 
 ## Ordem de leitura
 

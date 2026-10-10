@@ -1,5 +1,5 @@
 # PROMPT — Agente de notícias de sexta (value investing B3)
-*Versão 1.4 · 08/10/2026 · tarefa agendada no Claude Desktop, toda sexta 18h · Sonnet com pesquisa na web · alinhado à doutrina v2.5 · lê o monitor de preço gerado às 08h (Etapa 4) e exige o desta sexta (Onda 1.3, AUD-37/43)*
+*Versão 1.4 · 08/10/2026 (bloco do hall regravado por `hall03.py` em 09/10/2026) · tarefa agendada no Claude Desktop, toda sexta 18h · Sonnet com pesquisa na web · alinhado à doutrina v2.5 · lê o monitor de preço gerado às 08h (Etapa 4) e exige o desta sexta (Onda 1.3, AUD-37/43)*
 
 ---
 

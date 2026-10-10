@@ -594,3 +594,15 @@ Nenhuma palavra, central ou regra mudou (golden intacto). Só testes e uma guard
   se o backtest/triagem for retomado, decidir se o reduzido acompanha a v2.3 (o teste `test_divergencias_declaradas_*` vira e avisa).
 - **Pendência menor.** `coletar_cvm.main` com SMTO3 e `mes=3` devolvia LTM só com `lacunas`, sem `receita` nem `erro`; agora ITR sem DRE acumulada
   levanta e vira `{"erro": ...}` (teste novo, falha sem a correção).
+
+### 10/10/2026 — LIÇÃO: `dossie.gerar` sem `--data` sobrescreve o veredito vigente (rodada de 10/10 e checkup)
+- **O que houve.** Rodada de 10/10: monitor semanal (boletim `BOLETINS/2026-10-10-monitor.md`, histórico em `_historico/2026-10-10 monitor historico/`) e, no passo
+  "ver um dossiê", `python -m dossie.gerar HYPE3` **sem `--data`**. O comando grava em `<TK>-<data-base do hall>`, que era a data do dossiê de 02/10: o anexo
+  `DOSSIES/dados/HYPE3-2026-10-02.md` e o veredito `dossie/vereditos/HYPE3-2026-10-02.json` foram regravados com o método atual (central 19,27 → 15,99; P/C 1,31 → 1,57;
+  doutrina v2.2 → v2.3; palavra seguiu CARA). O registro prospectivo é append-only e confere o sha desse JSON: o próximo `--dossie` falharia.
+- **Reparo.** Os dois arquivos foram restaurados do git; a versão regenerada ficou em `_historico/2026-10-10 hype3 regerado pelo passo 4/`. Nenhuma palavra mudou.
+- **Lição.** Gerar dossiê "para ver" sem `--data` nova destrói o veredito vigente. Para ver o caso de hoje: `--data <hoje>` (exige `dados/mercado_<data>.json`).
+- **Poka-yoke (feito).** `dossie.gerar.ja_registrado(tk, data)` lê `prospectivo/registro.jsonl`; se o veredito (ticker, data-base) já está lá, `gerar` sai com código 2 e a
+  mensagem `RECUSADO`, sem gravar nada. Veredito ainda não registrado pode ser regerado (ajuste antes de registrar continua possível). Teste: `dossie/tests/test_gerar_recusa.py`.
+- **Documentos alinhados (checkup de 10/10, `docs/auditoria/CHECKUP_2026-10-10.md`).** Cabeçalho do `03` (data do `hall03.py --corrigir`, 09/10), README, prompt de sexta e
+  título do `04` com versão/data coerentes; raiz e `UPLOAD CLAUDE DESKTOP/` idênticos (exceto o parágrafo "Clone do zero" do README, só da raiz). Sem mudança de método.
