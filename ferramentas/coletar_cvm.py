@@ -134,7 +134,31 @@ def contas(d, mapa):
     for k, cod in mapa.items():
         v = d.loc[d["CD_CONTA"] == cod, "VL_CONTA"]
         out[k] = float(v.iloc[0]) if len(v) else None
-    return out
+    return sanear_lucro_controlador(out)
+
+
+def sanear_lucro_controlador(c: dict) -> dict:
+    """AUD-68: 3.11.01 = 0 com lucro (3.11) ≠ 0 é linha não preenchida na CVM (SBSP3 2023-25, TIMS3 2022-23, KLBN11 2025,
+    KEPL3 2021), não lucro zero do controlador → None ("sem dado"). Com o 0 o LTM somava exercício zerado com o acumulado do
+    ITR e a SBSP3 saía com 3,2 bi contra 8,1 bi de lucro. Mesma leitura de `backtest.motor.base.lucro_controlador`."""
+    if c.get("lucro_controlador") == 0 and c.get("lucro"):
+        c["lucro_controlador"] = None
+    return c
+
+
+def acoes_em_circulacao(z, nome, cnpj, mes=None):
+    """Ações sem tesouraria da composição do capital (DFP ou ITR); `mes` filtra a data de referência do ITR. None sem linha."""
+    cap = ler(z, nome)
+    if cap is None or not cnpj or "CNPJ_CIA" not in cap:
+        return None
+    c = cap[cap["CNPJ_CIA"] == cnpj]
+    if mes is not None:
+        c = c[c["DT_REFER"].str[5:7].astype(int) == mes]
+    if not len(c):
+        return None
+    tot = pd.to_numeric(c["QT_ACAO_TOTAL_CAP_INTEGR"], errors="coerce").iloc[-1]
+    tes = pd.to_numeric(c.get("QT_ACAO_TOTAL_TESOURO", pd.Series([0])), errors="coerce").fillna(0).iloc[-1]
+    return float(tot - tes)
 
 
 RE_ARREND = re.compile(r"arrendamento", re.I)
@@ -276,7 +300,7 @@ def itr_ytd(tk, ano, mes=6, comparativo=False, mes_ini="01"):
     `mes_ini` (AUD-22) é o mês em que o exercício começa: "01" para ano-calendário, "04" para a São Martinho."""
     regex, _ = EMPRESAS[tk]
     z = zip_de("ITR", ano)
-    res = {}
+    res, cnpj = {}, None
     for nome, mapa, fluxo in (("DRE_con", DRE, True), ("BPA_con", BPA, False), ("BPP_con", BPP, False), ("DFC_MI_con", DFC, True)):
         d = buscar(z, nome, ano, regex)
         if d is None or d.empty:
@@ -284,6 +308,8 @@ def itr_ytd(tk, ano, mes=6, comparativo=False, mes_ini="01"):
         d = d[d["DT_REFER"].str[5:7].astype(int) == mes]
         ordem = d["ORDEM_EXERC"].str.upper().str.replace("Ú", "U")
         d = d[ordem.str.startswith("PENULTIMO" if comparativo else "ULTIMO")]
+        if cnpj is None and len(d) and "CNPJ_CIA" in d:
+            cnpj = d["CNPJ_CIA"].iloc[0]
         if comparativo and not fluxo:
             continue                                          # balanço do comparativo é o de dez/ano anterior: não serve
         if fluxo and "DT_INI_EXERC" in d:
@@ -296,6 +322,11 @@ def itr_ytd(tk, ano, mes=6, comparativo=False, mes_ini="01"):
             res["impairment_outras"] = impairment(d, ("3.04.05",))
         if nome == "DFC_MI_con":
             res.update(dfc_extra(d)[0])
+    if not comparativo:
+        # AUD-68: ações da data do ITR — o desdobramento da SBSP3 (5:1, entre mar e jun/2026) não aparece no DFP do ano anterior
+        n = acoes_em_circulacao(z, f"composicao_capital_{ano}.csv", cnpj, mes)
+        if n is not None:
+            res["acoes"] = n
     return res
 
 
@@ -329,7 +360,7 @@ def combinar_ltm(fy, atual, anterior, original=None):
             reap.append((k, o, anterior[k]))
     for k in CHAVES_BALANCO:
         ltm[k] = atual.get(k)
-    ltm["acoes"] = fy.get("acoes")
+    ltm["acoes"] = atual.get("acoes") or fy.get("acoes")      # AUD-68: as do ITR; o DFP só quando o ITR não traz
     return ltm, lacunas, reap
 
 

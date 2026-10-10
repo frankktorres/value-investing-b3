@@ -13,7 +13,8 @@ def test_aud08_trava_falha_sem_razao_vira_nao_conclusivo():
     assert aplicar_trava("JUSTA", "JUSTA", False) == "NÃO CONCLUSIVO"
     assert aplicar_trava("JUSTA", "JUSTA", False, "g da ficha diverge do g do Bogle: …") == "JUSTA"
     assert aplicar_trava("JUSTA", "JUSTA", True) == "JUSTA"
-    assert aplicar_trava("RADAR", "JUSTA", None) == "JUSTA"           # JUSTA por dispersão não é JUSTA pela régua
+    assert aplicar_trava("RADAR", "JUSTA", None) == "JUSTA"           # trava não calculada (None) não decide
+    assert aplicar_trava("RADAR", "JUSTA", False) == "NÃO CONCLUSIVO"  # v2.6 (AUD-10): JUSTA final pela dispersão também trava
     assert aplicar_trava("JUSTA", "NÃO CONCLUSIVO", False) == "NÃO CONCLUSIVO"
 
 
@@ -21,7 +22,7 @@ def test_aud08_no_hall_nenhuma_justa_publica_com_trava_falha():
     import universo
     for tk, it in universo.avaliar_todos().items():
         r = it["r"]
-        if r["palavra"] == "JUSTA" and r["palavra_regua"] == "JUSTA":
+        if r["palavra"] == "JUSTA":
             assert r["trava"] or it["empresa"].trava_razao.strip(), tk
 
 

@@ -28,8 +28,8 @@ DISC = "interferência consumada declarada no desconto do lote (critério provis
 EMPRESAS = [
     Financeira("ITUB4", "Itaú Unibanco", "banco", preco=44.83, vpa=19.75, lpa_12m=4.247,
                roe_lp=0.1758,      # mediana 2016–25 (13,2–21,9%)
-               roe_inicio=0.215,   # ROE 12m (StatusInvest) / 2T26 ~22%
-               payout=0.60,        # política ordinária + extras recorrentes; 2024 58%
+               roe_inicio=0.215,   # ROE 12m (StatusInvest, nota C) no t = 0; o fatos_B cita 24,3% no 2T26 (AUD-63)
+               payout=0.60,        # nota C, sem fonte primária (AUD-61): fatos_B dá 69,4% em 2024 COM extraordinário; política do RI a conferir
                dpa_medio_5a=2.069, jcp_share=0.41, pl_hist=9.50,
                prudencial=dict(cet1=12.3, inad90=1.9), qualitativo=QUAL(5, 5, 4, 3, 4)),
     Financeira("BBDC4", "Bradesco", "banco", preco=19.23, vpa=17.11, lpa_12m=2.321,
@@ -48,7 +48,7 @@ EMPRESAS = [
                prudencial=dict(cet1=11.27, inad90=5.61, cobertura=148.5), qualitativo=QUAL(4, 3, 1, 2, 3)),
     Financeira("ABCB4", "ABC Brasil", "banco", preco=26.15, vpa=27.85, lpa_12m=3.914,
                roe_lp=0.1283, roe_inicio=0.14, payout=0.45, dpa_medio_5a=1.698, jcp_share=1.0, pl_hist=6.89,
-               prudencial=dict(cet1=11.9, inad90=0.6, cobertura=250), qualitativo=QUAL(2, 3, 4, 3, 3)),
+               prudencial=dict(cet1=11.9, inad90=0.6, cobertura=250), qualitativo=QUAL(2, 3, 4, 3, 3)),   # AUD-58: cobertura 250 sem fonte rastreável (Pilar 3 a conferir)
     Financeira("BRSR6", "Banrisul", "banco", preco=15.92, vpa=28.96, lpa_12m=4.016,
                roe_lp=0.1138, roe_inicio=0.11, payout=0.40, dpa_medio_5a=1.070, jcp_share=0.90, pl_hist=5.65,
                desconto_controlador=dict(tipo="fixo", pct=0.35,
@@ -59,12 +59,13 @@ EMPRESAS = [
     Financeira("BRBI11", "BR Partners", "banco", preco=15.14, vpa=7.71, lpa_12m=1.520,
                roe_lp=0.2062, roe_inicio=0.197, payout=0.85, dpa_medio_5a=1.628, jcp_share=0.0, pl_hist=10.32,
                solidez_manual=6.0, anos_pagos_10=8, qualitativo=QUAL(2, 4, 3, 2, 3)),
+    # AUD-58: dpa_medio_5a 1,628 contra 1,302 da StatusInvest (sem 2021, que vira 0) — o digitado inclui 2021; fonte A (RI/DFP) a conferir
     Financeira("BBSE3", "BB Seguridade", "holding_seguro", preco=40.45, vpa=5.61, lpa_12m=4.733,
                roe_lp=0.687, roe_inicio=0.84, payout=0.90, dpa_medio_5a=2.673, jcp_share=0.0, pl_hist=11.10,
-               horizonte_finito=dict(anos=7, prob_renovacao=0.80, haircut_renov=0.40),
+               horizonte_finito=dict(anos=7, prob_renovacao=0.80, haircut_renov=0.40),   # AUD-58: 0,80 e 0,40 arbitrados, sem fonte numérica
                solidez_manual=8.0, qualitativo=QUAL(4, 3, 3, 3, 3)),
     Financeira("CXSE3", "Caixa Seguridade", "holding_seguro", preco=20.41, vpa=4.60, lpa_12m=1.508,
-               roe_lp=0.292, roe_inicio=0.328, payout=0.85, dpa_medio_5a=1.000, jcp_share=0.0, pl_hist=11.35,
+               roe_lp=0.292, roe_inicio=0.328, payout=0.85, dpa_medio_5a=1.000, jcp_share=0.0, pl_hist=11.35,   # AUD-58: dpa 1,000 sem fonte (SI 0,849; IPO 2021)
                solidez_manual=8.0, qualitativo=QUAL(4, 3, 3, 3, 3)),
     Financeira("PSSA3", "Porto Seguro", "seguradora", preco=49.47, vpa=24.94, lpa_12m=5.698,
                roe_lp=0.169, roe_inicio=0.21, payout=0.50, dpa_medio_5a=1.864, jcp_share=0.83, pl_hist=9.44,

@@ -58,6 +58,7 @@ def comparar(g_palavra: str, g_pc: float, p_palavra: str | None, p_pc: float | N
     exata = p_palavra == g_palavra
     um = exata or (g_palavra in regua.NIVEL and p_palavra in regua.NIVEL
                    and abs(regua.NIVEL[g_palavra] - regua.NIVEL[p_palavra]) <= 1)
+    g_pc = math.inf if g_pc is None else g_pc        # AUD-52: o golden grava null no P/C sem central
     gi, pi_ = math.isinf(g_pc), math.isinf(p_pc)
     delta = 0.0 if (gi and pi_) else math.inf if (gi or pi_) else abs(p_pc - g_pc)
     return exata, um, delta
@@ -154,7 +155,7 @@ def rodar(cfg: Config = PADRAO) -> list[dict]:
         g = golden[tk]
         # Preço = o do golden (pc × central). Com central <= 0 o golden não guarda preço (pc = ∞):
         # aí vale o PREULT do COTAHIST no último pregão <= T, marcado na linha.
-        if math.isfinite(g["pc"]):
+        if g["pc"] is not None and math.isfinite(g["pc"]):     # AUD-52: null = sem central
             preco, fonte_preco = g["pc"] * g["central"], "golden"
         else:
             from ..precos.retorno import preco_de_corte

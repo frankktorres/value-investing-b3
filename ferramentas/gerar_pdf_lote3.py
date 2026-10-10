@@ -12,7 +12,7 @@ from reportlab.lib.units import mm
 from reportlab.platypus import PageBreak, SimpleDocTemplate, Spacer, Table, TableStyle
 
 import gerar_pdf_lote1 as g1
-from gerar_pdf_lote1 import AZUL, br, COR, grafico_resumo, img, LINHA, nota_f2, P, pct, tabela
+from gerar_pdf_lote1 import AZUL, br, COR, grafico_resumo, img, LINHA, nota_f2, P, pct, tabela, texto_entrada_parcial
 from lote1_bancos import DATA_BASE, MK
 from lote3_agro import EMPRESAS
 from lote3_textos import AGENDA, ANTES, T
@@ -218,10 +218,9 @@ def ficha(emp, r, rank, story):
                         [95 * mm, 87 * mm]))
     story.append(Spacer(1, 3))
     n = r["notas"]
-    pode = n["qualidade"] >= 8 and n["solidez"] >= 7 and r["confianca"] == "normal"
     ver = Table([[P(f"<b>Veredito: <font color='{cor.hexval()}'>{palavra}</font></b> — preço {br(r['pc'])}× o central. " +
                     ("Sem palavra: sem preço de compra nem de saída (§9). " if nc else f"Compra R$ {br(r['compra'])} · justo R$ {br(r['central'])} · saída R$ {br(r['saida'])}. " + nota_f2(r))
-                    + f"Entrada parcial (exceção §9): {'aplicável — 1ª parcela (≤ 1/3) só até R$ ' + br(r['compra_parcial']) if pode else 'não se aplica (qualidade < 8, solidez < 7 ou confiança baixa)'}.<br/>"
+                    + f"Entrada parcial (exceção §9): {texto_entrada_parcial(r, emp)}.<br/>"
                     f"<b>Gatilho que invalida:</b> {tx['gatilho']}<br/><b>Compraria para renda?</b> {tx['renda']}<br/>"
                     f"<b>Compraria para ganho de capital?</b> {tx['capital']}<br/>"
                     f"<b>Notas</b> (30/20/25/25): qualidade {br(n['qualidade'], 1)} · solidez {br(n['solidez'], 1)} · renda {br(n['renda'], 1)} · "

@@ -50,7 +50,9 @@ def instantaneo(item):
         nota_geral=r["notas"]["geral"], vence_rf=r.get("vence_rf"), bogle_nom=r.get("bogle_nom"),
         cobertura_juros=r.get("cobertura_juros"), fator_defasagem=r.get("fator_defasagem"), dy=r.get("dy"),
     )
-    return {k: (round(v, 6) if isinstance(v, float) and v == v and abs(v) != float("inf") else v) for k, v in snap.items()} | \
+    # AUD-52: P/C infinito (central ≤ 0, NÃO CONCLUSIVO) vira null — "Infinity" não é JSON válido
+    return {k: (None if isinstance(v, float) and abs(v) == float("inf") else
+                round(v, 6) if isinstance(v, float) and v == v else v) for k, v in snap.items()} | \
         {"ancoras": {k: round(v, 6) for k, v in snap["ancoras"].items()}}
 
 

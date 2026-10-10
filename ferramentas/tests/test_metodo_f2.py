@@ -239,7 +239,10 @@ def test_d7_saida_segue_os_dois_criterios_em_todos_os_tickers():
                         and r["roic_anos_acima"] >= ANOS_ROIC_MINIMO
                         and r["notas"]["qualidade"] >= NOTA_QUALIDADE_MINIMA)
             assert r["saida_por_qualidade"] is esperado, emp.ticker
-            assert r["saida"] == pytest.approx((SAIDA_QUALIDADE if esperado else SAIDA_PADRAO) * r["central"])
+            if r["central"] <= 0:                  # AUD-52 (v2.6): NÃO CONCLUSIVO sem central não tem preço de saída
+                assert r["saida"] is None, emp.ticker
+            else:
+                assert r["saida"] == pytest.approx((SAIDA_QUALIDADE if esperado else SAIDA_PADRAO) * r["central"])
 
 
 def test_d7_serie_de_roic_cobre_a_janela_declarada():

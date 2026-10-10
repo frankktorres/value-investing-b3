@@ -15,7 +15,7 @@ from reportlab.platypus import PageBreak, SimpleDocTemplate, Spacer, Table, Tabl
 import re
 
 import gerar_pdf_lote1  # registra as fontes Arial
-from gerar_pdf_lote1 import AZUL, br, COR, grafico_resumo, img, LINHA, nota_f2, pct, tabela
+from gerar_pdf_lote1 import AZUL, br, COR, grafico_resumo, img, LINHA, nota_f2, pct, tabela, texto_entrada_parcial
 
 _P = gerar_pdf_lote1.P
 
@@ -335,12 +335,11 @@ def ficha(emp, r, rank, story):
                         [95 * mm, 87 * mm]))
     story.append(Spacer(1, 3))
     n = r["notas"]
-    pode = n["qualidade"] >= 8 and n["solidez"] >= 7 and r["confianca"] == "normal"
     preco_txt = ("Sem palavra: uma âncora é ≤ 0 ou as âncoras discordam mais de 3× (doutrina §11.3) — ver a margem por método acima. "
                  if nc else f"Compra R$ {br(r['compra'])} · justo R$ {br(r['central'])} · saída R$ {br(r['saida'])}. " + nota_f2(r))
     pc_txt = "sem central (âncora ≤ 0)" if r["central"] <= 0 else f"preço {br(r['pc'])}× o central"
     ver = Table([[P(f"<b>Veredito: <font color='{cor.hexval()}'>{palavra}</font></b>{fora} — {pc_txt}. {preco_txt}"
-                    f"Entrada parcial (exceção §9): {'aplicável — 1ª parcela (≤ 1/3) só até R$ ' + br(r['compra_parcial']) if pode and not nc else 'não se aplica (qualidade < 8, solidez < 7 ou confiança baixa)'}.<br/>"
+                    f"Entrada parcial (exceção §9): {texto_entrada_parcial(r, emp)}.<br/>"
                     f"<b>Gatilho que invalida:</b> {tx['gatilho']}<br/><b>Compraria para renda?</b> {tx['renda']}<br/>"
                     f"<b>Compraria para ganho de capital?</b> {tx['capital']}<br/>"
                     f"<b>Notas</b> (30/20/25/25): qualidade {br(n['qualidade'], 1)} · solidez {br(n['solidez'], 1)} · renda {br(n['renda'], 1)} · "

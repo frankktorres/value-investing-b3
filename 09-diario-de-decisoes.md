@@ -606,3 +606,64 @@ Nenhuma palavra, central ou regra mudou (golden intacto). Só testes e uma guard
   mensagem `RECUSADO`, sem gravar nada. Veredito ainda não registrado pode ser regerado (ajuste antes de registrar continua possível). Teste: `dossie/tests/test_gerar_recusa.py`.
 - **Documentos alinhados (checkup de 10/10, `docs/auditoria/CHECKUP_2026-10-10.md`).** Cabeçalho do `03` (data do `hall03.py --corrigir`, 09/10), README, prompt de sexta e
   título do `04` com versão/data coerentes; raiz e `UPLOAD CLAUDE DESKTOP/` idênticos (exceto o parágrafo "Clone do zero" do README, só da raiz). Sem mudança de método.
+
+### 10/10/2026 — DECISÃO DE MÉTODO: Onda 3 da auditoria (riscos latentes), doutrina v2.6 — ONDA 3 CONCLUÍDA
+**Como foi feito.** Os 48 achados da Onda 3 foram reproduzidos antes de qualquer correção, por scripts no scratchpad (3 subagentes, sem pytest). Todos ainda valiam;
+AUD-71, 97 e 55 tinham mudado em parte. Corte proposto e aprovado pelo Frank: corrigir o que é barato e não muda regra; parar (⏸) no que mexe em regra de valuation ou
+no texto da doutrina; o resto fica **aceito** com motivo. Cada correção tem teste que **falha com a versão errada** (19 mutações à mão, todas pegas:
+`tests/test_onda3_motor.py`, `tests/test_onda3_dados.py`). **Nenhuma palavra mudou nos 41.**
+
+**Corrigidos sem mudar regra.**
+- **AUD-11** — banco/utility com ROE ≤ 0 derrubava o motor das financeiras (Bogle complexo, divisão por zero) e P/C negativo saía BARATA com nota de preço 10. Agora: as
+  guardas do motor de não financeiras (âncora, central ou LPA normalizado ≤ 0 → NÃO CONCLUSIVO; nota de preço 0).
+- **AUD-52** — central ≤ 0 (RECV3) deixava compra e saída negativas e `"pc": Infinity` no golden (JSON inválido). Agora `precos_de_referencia` devolve vazio, o golden grava
+  `null` e `golden.salvar` recusa infinito; `registro_prospectivo` e `atualizar_hall_lote5` aceitam o vazio.
+- **AUD-46** — preço igual a 0,70 × central dava 0,7000000000000001 e caía em RADAR: `palavra` arredonda o P/C a 9 casas.
+- **AUD-54** — DL/EBITDA indefinido (EBITDA normalizado ≤ 0) virava nota 10 na Solidez; agora é a pior nota (`nota_alavancagem`). A cobertura ausente segue com a nota mínima (conservador).
+- **AUD-47** — âncora Owner Earnings descartada (OE ausente ou Ke real ≤ g) fica em `ancoras_descartadas`. **AUD-51** — aviso `aliquota_perto_do_limiar` (VIVT3, mediana 15,53%).
+- **AUD-85 e AUD-103 (achado maior que o da auditoria).** O `temporada.py` importava os lotes ANTES de injetar o LTM novo: o cache da idade do imobilizado e as premissas que
+  os lotes calculam no import (follow-on e solidez do lote 2, receita de meio do E&P, GGBR4/UNIP6, EGIE3) sairiam com o LTM velho no boletim do 3T26. Agora o LTM novo entra
+  por `series_vigente.CVM_SOBREPOSTO` antes do import (um carregador só, `carregar_cvm`, com teste que proíbe ler o arquivo por fora), as causas do boletim vêm do arquivo
+  oficial e `injetar` limpa o cache. O WEGE3 g1 depende só da StatusInvest e de π (sem efeito no 3T26).
+- **AUD-45** — testes de precedência da régua (círculo, dispersão, NC) nos dois motores de produção. **AUD-63** — comentários de campo (roe_inicio é t = 0).
+- **AUD-68 (dados).** A CVM entrega 3.11.01 = 0 com lucro ≠ 0 em SBSP3 2023-25, TIMS3 2022-23, KLBN11 2025 e KEPL3 2021: o coletor agora grava "sem dado" (mesma leitura de
+  `backtest.motor.base.lucro_controlador`) e as ações do LTM vêm do ITR (SBSP3: 700 mi → 3.507 mi, desdobramento 5:1). `cvm_series.json` corrigido com as duas regras, sem
+  recoleta (anterior em `_historico/2026-10-10 aud68 cvm_series/`); o LTM do controlador da SBSP3 (3,2 bi, era só o semestre) virou lacuna. Nenhum número do hall muda.
+- **AUD-58 e 61** — fonte (ou falta dela) comentada em cada premissa digitada dos bancos; valores intactos.
+
+**DECISÕES DO FRANK (⏸ de 10/10/2026).**
+- **AUD-10** — trava de coerência na **palavra final**: a RADAR que sobe a JUSTA pela dispersão também precisa de Bogle a ±2 p.p. do Ke ou de `trava_razao` (o passo 3b
+  dizia "pela régua" e o parágrafo da trava, "se o veredito é JUSTA"). Hoje nenhum ticker no caso.
+- **AUD-15** — Owner Earnings pelo lucro do controlador (sem a linha, o consolidado). **AUD-34** — declínio (g < 0) com ROIC < WACC não libera capital (antes o
+  "reinvestimento negativo" fazia o DCF subir com o declínio; só a RECV3 tinha o freio). **AUD-53** — cenário de DCF negativo entra como zero.
+  Efeito: âncoras OE ABEV3 7,34 → 7,04, WEGE3 11,76 → 11,08, UGPA3 9,11 → 8,69 (as outras < 2%); centrais KLBN11 1,72 → 2,62 (segue NÃO CONCLUSIVO), SUZB3
+  22,04 → 22,78, RANI3 3,11 → 3,19, RECV3 −3,67 → 0 (segue NÃO CONCLUSIVO); dossiê LEVE3 de 06/10 refeito 38,37 → 38,45 (palavra igual). Golden regravado com motivo.
+- **AUD-42** — entrada parcial numa função só (`entrada_parcial`), com as cinco condições do §9 e o preço ≤ 0,80×; os PDFs testavam subconjuntos (só um o preço, nenhum o círculo).
+- **Textos da doutrina alinhados ao motor (v2.6):** AUD-14 (a trava do crescimento é degrau por cenário), AUD-39 (Solidez sem Piotroski/Beneish), AUD-40 (carimbo do
+  Tesouro pelo ponto médio), AUD-55 (defasagem da Vibra 8,5 meses).
+- **Hall e prompt de sexta** regravados por `hall03.py --corrigir` (SUZB3, RANI3, KLBN11, RECV3).
+
+**ACEITOS (não corrigidos), com motivo e quando reabrir.**
+- **Backtest parado (06/10):** AUD-25 (elo ticker→CNPJ só pelo FCA), 79 (parâmetros de contaminação sem consumidor), 80 (sem embargo entre calibração e validação), 97 (portão
+  mediu reprodutibilidade; o proxy já imprime os baselines). Reabrir antes de retomar o backtest.
+- **Premissas deliberadas, sem troca de palavra:** AUD-50 (ROIC a reposição deflacionado, D7), 56 (ROE lp das utilities na janela longa), 62 (DPA do ITUB4 com extraordinário;
+  só DY/Bogle/teto), 70 (PIB real de LP 2%, escolha da casa), 74 (bancos na StatusInvest, nota C, CARA com folga), 104 (prêmio de 5 p.p., D5 aberta), 44 (âncoras de
+  bancos/utilities não independentes, consequência do §11.2). Reabrir se algum ticker chegar perto da fronteira por essas premissas.
+- **Sensibilidade e comunicação:** AUD-92 (registrar o ponto de virada nas decisões futuras), 93 (quadro Ke ±1 p.p. sem palavra), 94 (central residual de EV − dívida em 6
+  tickers), 95 (EGIE3 a 3% da fronteira CARA), 100 (golden com 34 CARA não discrimina por palavra), 101 (cortes da régua sem estudo de sensibilidade), 66 (p25/p75 por posto
+  mais próximo — declarar o estimador na próxima revisão da doutrina), 59 (payout terminal implícito quando o teto de g morde).
+- **Dados e rolagem:** AUD-71 (só os `fatos_*.json` seguem sem leitor: documentação), 76 (anos literais — rolar antes do DFP 2026, mar/2027), **75** (Amortização e
+  Rendimento entram no DPA da StatusInvest: KEPL3 1,07 → 0,76, VIVT3 1,46 → 1,24 se filtrar; só yield/Bazin/nota de renda. Exige regravar a série vigente e decidir
+  caso a caso o "Rend. Tributado", que pode ser JCP — fazer na próxima coleta da StatusInvest).
+- **AUD-41** — o "20 de 41 com razão vazia" é a razão do desconto de controlador (§5: "sempre declarado, inclusive zero"): hoje são **29** tickers com desconto zero sem
+  razão escrita. Escrever as razões é julgamento por ticker (dossiê); os filtros 1–4 seguem sem função no motor e a regra "TIR < rf ⇒ CARA", só em texto. Aceito até o
+  dossiê de cada ticker. (No ⏸ de hoje o item foi descrito como "razão de saída do hall" — descrição errada minha; nada foi implementado com base nela.)
+- **Pré-registro (decisão do Frank: não mudar agora):** AUD-32 (regra de refutação sem poder), 98 (Ibovespa como comparador), 99 (qual linha do registro vale por rodada).
+  Decidir juntos, numa sessão própria, antes da leitura de 2027.
+
+**Revisão adversarial (10/10/2026, sem bloqueio).** Corrigidos: LTM do controlador da KLBN11 (−973 mi, conta com o 2025 zerado) virou lacuna, como na SBSP3
+(cópia em `_historico/2026-10-10 aud68 cvm_series/cvm_series.2.json`; teste cobre todo ticker); `backtest/experimento/proxy.py` e `test_regua.py` aceitam o P/C null
+do golden; motivos de `entrada_parcial` com vírgula decimal. Ficam registrados: (a) `entrada_parcial` não exige mais confiança "normal" — o §9 não exige; âncora
+única (BBSE3) pode ser elegível; os PDFs antigos davam "aplicável" a B3SA3, CPFE3 e CXSE3 já CARA, o que a regra nova corrige; (b) ações do LTM da HYPE3 seguem
+as do DFP (632,95 mi contra 703,99 mi no ITR, emissão real) — o central não muda (lote 4 usa as ações do ZIP) e a temporada do 3T26 troca; (c) o OE usa o
+consolidado onde o controlador está sem dado (SBSP3, SAPR11, TIMS3 2021–25, KLBN11 2025, KEPL3 2021): série heterogênea, fallback declarado no §11.

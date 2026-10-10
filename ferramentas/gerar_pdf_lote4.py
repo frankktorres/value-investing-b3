@@ -14,7 +14,7 @@ from reportlab.lib.units import mm
 from reportlab.platypus import PageBreak, SimpleDocTemplate, Spacer, Table, TableStyle
 
 import gerar_pdf_lote1  # registra as fontes Arial
-from gerar_pdf_lote1 import AZUL, COR, LINHA, br, grafico_resumo, grafico_roe, img, pct, tabela
+from gerar_pdf_lote1 import AZUL, COR, LINHA, br, grafico_resumo, grafico_roe, img, pct, tabela, texto_entrada_parcial
 
 _P = gerar_pdf_lote1.P
 
@@ -86,9 +86,7 @@ def extras(emp, r):
     if tk in ("TIMS3", "VIVT3"):
         x["c_greenwald"] = central_rapido(com(emp, capex_ciclico=False))
     n = r["notas"]
-    x["excecao"] = (f"não se aplica (qualidade {br(n['qualidade'], 1)}, solidez {br(n['solidez'], 1)}; exige ≥ 8 e ≥ 7, zero armadilhas)"
-                    if not (n["qualidade"] >= 8 and n["solidez"] >= 7) else
-                    f"não se aplica — a palavra é {r['palavra']} (a exceção exige preço ≤ 0,80× o central: R$ {br(r['compra_parcial'])})")
+    x["excecao"] = texto_entrada_parcial(r, emp)          # AUD-42: regra única do §9
     return x
 
 
@@ -420,7 +418,7 @@ def ficha_itsa(r, story):
                          ["Trava de coerência: JUSTA → retorno ≈ Ke", "não se aplica (palavra final não é JUSTA)"]],
                         [95 * mm, 87 * mm]))
     story.append(Spacer(1, 3))
-    bloco_final(story, "ITSA4", ITSA4.preco, r, tx, cor, "não se aplica (palavra CARA)")
+    bloco_final(story, "ITSA4", ITSA4.preco, r, tx, cor, texto_entrada_parcial(r, ITSA4))
 
 
 # ---------------------------------------------------------------- ranking Greenblatt do hall

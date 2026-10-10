@@ -42,7 +42,7 @@ def motivo(tk, e, r):
               "**defeito estrutural:** produção em declínio (−11% a/a) com ROIC abaixo do WACC")
     if tk == "UGPA3":
         m += "; EBIT real 2021–25; nem a margem de guerra permanente justifica o preço"
-    if e.preco > r["saida"] and r["palavra"] != "NÃO CONCLUSIVO":
+    if r["palavra"] != "NÃO CONCLUSIVO" and r["saida"] is not None and e.preco > r["saida"]:
         m += " (S)"
     return m
 

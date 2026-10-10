@@ -23,7 +23,7 @@ from reportlab.platypus import (Image, KeepTogether, PageBreak, Paragraph, Simpl
 
 from lote1_bancos import DATA_BASE, EMPRESAS, MK, MK_FOCUS
 from lote1_textos import AGENDA, ANTES, T
-from motor_financeiras import (HORIZONTE, IR_JCP, PIB_REAL_LP, PREMIO_KE, avaliar, central_ao_ke, projecao)
+from motor_financeiras import (HORIZONTE, IR_JCP, PIB_REAL_LP, PREMIO_KE, avaliar, central_ao_ke, entrada_parcial, projecao)
 
 sys.stdout.reconfigure(encoding="utf-8")
 AQUI = pathlib.Path(__file__).parent
@@ -62,6 +62,12 @@ def br(x, casas=2):
 
 def pct(x, casas=1):
     return "—" if x is None else br(100 * x, casas) + "%"
+
+
+def texto_entrada_parcial(r, emp, armadilhas=()):
+    """§9, exceção da 1ª parcela pela regra única do motor (AUD-42): o texto diz o motivo de cada recusa."""
+    ok, motivos = entrada_parcial(r, emp.fora_circulo, armadilhas)
+    return ("aplicável — 1ª parcela (≤ 1/3) só até R$ " + br(r["compra_parcial"])) if ok else "não se aplica (" + "; ".join(motivos) + ")"
 
 
 def nota_f2(r):
@@ -324,7 +330,7 @@ def ficha(emp, r, story):
     n = r["notas"]
     ver = [[P(f"<b>Veredito: <font color='{cor.hexval()}'>{palavra}</font></b> — preço {br(r['pc'])}× o central. "
               f"Compra R$ {br(r['compra'])} · justo R$ {br(r['central'])} · saída R$ {br(r['saida'])}. "
-              f"Entrada parcial (exceção §9): {'aplicável — 1ª parcela (≤ 1/3) só até R$ ' + br(r['compra_parcial']) if (n['qualidade'] >= 8 and n['solidez'] >= 7 and r['confianca'] == 'normal') else 'não se aplica (qualidade < 8, solidez < 7 ou confiança baixa)'}.<br/>"
+              f"Entrada parcial (exceção §9): {texto_entrada_parcial(r, emp)}.<br/>"
               f"<b>Gatilho que invalida:</b> {tx['gatilho']}<br/>"
               f"<b>Compraria para renda?</b> {tx['renda']}<br/><b>Compraria para ganho de capital?</b> {tx['capital']}<br/>"
               f"<b>Notas</b> (30/20/25/25): qualidade {br(n['qualidade'], 1)} · solidez {br(n['solidez'], 1)} · renda {br(n['renda'], 1)} · "

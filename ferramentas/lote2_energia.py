@@ -22,7 +22,7 @@ from juros import juros_do_periodo
 from motor_financeiras import Financeira, avaliar, interp
 
 AQUI = pathlib.Path(__file__).parent
-CVM = json.loads((AQUI / "dados" / "cvm_series.json").read_text(encoding="utf-8"))
+CVM = series_vigente.carregar_cvm()     # AUD-103: com o LTM da temporada por cima, quando houver
 SI = series_vigente.carregar()
 QUAL = lambda moat, gestao, controlador, ciclo, fisher: dict(moat=moat, gestao=gestao, controlador=controlador, ciclo=ciclo, fisher=fisher)
 

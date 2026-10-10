@@ -185,7 +185,7 @@ def test_no_pregao_do_hall_reproduz_o_golden():
     comparados = 0
     for x in M.linhas_hall(refs, precos):
         gp = g[x["ticker"]]["pc"]
-        if math.isfinite(gp):
+        if gp is not None and math.isfinite(gp):    # AUD-52: P/C sem central é null no golden
             assert x["pc"] == pytest.approx(gp, rel=0.02), x["ticker"]
             comparados += 1
     assert comparados == 40      # só a RECV3 tem central ≤ 0 (a KLBN11 voltou a positivo com o ponto fixo partindo do contábil)

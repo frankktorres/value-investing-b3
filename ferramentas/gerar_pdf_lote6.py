@@ -15,7 +15,7 @@ from reportlab.lib.units import mm
 from reportlab.platypus import PageBreak, SimpleDocTemplate, Spacer, Table, TableStyle
 
 import gerar_pdf_lote1  # registra as fontes Arial
-from gerar_pdf_lote1 import AZUL, br, COR, grafico_resumo, grafico_roe, img, LINHA, nota_f2, pct, tabela
+from gerar_pdf_lote1 import AZUL, br, COR, grafico_resumo, grafico_roe, img, LINHA, nota_f2, pct, tabela, texto_entrada_parcial
 
 _P = gerar_pdf_lote1.P
 
@@ -131,10 +131,9 @@ def extras(emp, r):
     bloqueio = {"LEVE3": ("não se aplica — qualidade e solidez passam, mas a doutrina §7 lista a Mahle em 'ROE inflado' (ROE 12m ~72% × ROIC "
                           "{roic}) e em 'lucro não recorrente' (lucro 12m 1,5× o normalizado); zero armadilhas não está demonstrado — "
                           "liberar exige mudar o §7 (decisão do Frank)"), "UNIP6": "não se aplica (defeito estrutural)"}
-    x["excecao"] = (bloqueio[emp.ticker].replace("{roic}", pct(r["roic"])) if emp.ticker in bloqueio else
-                    "aplicável — 1ª parcela (≤ 1/3) só até R$ " + br(r["compra_parcial"]))
-    x["excecao"] = (x["excecao"] if n["qualidade"] >= 8 and n["solidez"] >= 7 and r["confianca"] == "normal"
-                    else f"não se aplica (qualidade {br(n['qualidade'], 1)}, solidez {br(n['solidez'], 1)}; exige ≥ 8 e ≥ 7, zero armadilhas)")
+    # AUD-42: regra única do §9; o bloqueio do lote entra como armadilha (o motor não calcula carimbos)
+    arm = [bloqueio[emp.ticker].replace("{roic}", pct(r["roic"]))] if emp.ticker in bloqueio else []
+    x["excecao"] = texto_entrada_parcial(r, emp, arm)
     return x
 
 

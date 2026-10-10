@@ -225,6 +225,10 @@ def injetar(novo):
                 m.CVM[tk]["ltm"] = reg["ltm"]
                 m.CVM[tk]["ltm_ref"] = reg["ltm_ref"]
                 m.CVM[tk][f"ltm_{reg['ltm_ref']}"] = reg["ltm"]
+    # AUD-85: a idade do imobilizado é memoizada por ticker; sem limpar, quem já avaliou (o import dos lotes) seguia com o LTM velho
+    mnf = sys.modules.get("motor_nao_financeiras")
+    if mnf is not None:
+        mnf.idade_e_fator.cache_clear()
     return antigos
 
 
@@ -265,8 +269,13 @@ def main(argv=None):
     ruins = [tk for tk in pub if tk not in novo]
     if ruins:
         print("coleta sem LTM utilizável (ficam com o LTM antigo): " + ", ".join(ruins))
+    import series_vigente
+    oficial = series_vigente.carregar_cvm()          # o LTM antigo (causas do boletim) sai do arquivo oficial, antes da troca
+    antigos = {tk: ltm_de(oficial[tk]) for tk in novo if tk in oficial}
+    # AUD-103: o LTM novo entra ANTES do import — as premissas que os lotes calculam no import já nascem com ele
+    series_vigente.CVM_SOBREPOSTO.update(novo)
     import universo   # carrega os lotes (alguns segundos)
-    antigos = injetar(novo)
+    injetar(novo)     # quem já estava carregado (e o cache da idade do imobilizado, AUD-85)
     atual = universo.instantaneo_todos()
     mud = golden.comparar(ant, atual)
     causas_por_tk = {tk: causas(antigos.get(tk), novo[tk]["ltm"]) for tk in novo}

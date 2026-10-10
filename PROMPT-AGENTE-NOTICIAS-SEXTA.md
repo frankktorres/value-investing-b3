@@ -24,7 +24,7 @@ Se você tem acesso à pasta `VALUE INVESTING`, leia nesta ordem: o **monitor de
 **Hall: ticker e preço de compra = 0,70 × central (prioridade 2; bloco gerado do motor por `ferramentas/hall03.py`, preços de 02/10, ordem de P/C crescente). NÃO CONCLUSIVO ("sem palavra" no monitor) não tem preço de compra nem de saída.**
 <!-- hall03:inicio (gerado por ferramentas/hall03.py; não editar à mão) -->
 JUSTA: PETR4 37,44 · KEPL3 4,68 · EGIE3 20,14
-CARA: SMTO3 10,28 · PRIO3 32,40 · GGBR4 12,94 · CPFE3 21,85 · HYPE3 11,36 · CMIG4 5,04 · TAEE11 18,72 · ABEV3 6,43 · BBSE3 16,35 · VIVT3 11,85 · BRBI11 5,80 · TIMS3 6,82 · SAPR11 12,81 · ABCB4 9,32 · BBDC4 6,72 · SUZB3 15,43 · ITSA4 4,98 · FLRY3 7,61 · B3SA3 5,72 · UGPA3 11,05 · PSSA3 14,09 · ITUB4 12,28 · RANI3 2,17 · CXSE3 5,45 · SBSP3 4,94 · WEGE3 7,76 · CSMG3 7,88 · CPLE3 2,23
+CARA: SMTO3 10,28 · PRIO3 32,40 · GGBR4 12,94 · CPFE3 21,85 · HYPE3 11,36 · CMIG4 5,04 · TAEE11 18,72 · ABEV3 6,43 · BBSE3 16,35 · VIVT3 11,85 · BRBI11 5,80 · TIMS3 6,82 · SAPR11 12,81 · SUZB3 15,94 · ABCB4 9,32 · BBDC4 6,72 · ITSA4 4,98 · FLRY3 7,61 · B3SA3 5,72 · UGPA3 11,05 · PSSA3 14,09 · RANI3 2,23 · ITUB4 12,28 · CXSE3 5,45 · SBSP3 4,94 · WEGE3 7,76 · CSMG3 7,88 · CPLE3 2,23
 NÃO CONCLUSIVO (sem preço de compra nem de saída; só acompanhar): LEVE3 · ISAE4 · SLCE3 · KLBN11 · RECV3
 <!-- hall03:fim -->
 Fora do hall (só acompanhar; saíram em 05/10 por falhar 2 filtros: UNIP6, BBAS3, BRSR6): SANB11 · VBBR3 · UNIP6 · BBAS3 · BRSR6

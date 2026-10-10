@@ -78,7 +78,7 @@ def linhas_do_golden(golden: dict, data_preco: str, doutrina: str, sha: str,
         # o golden guarda pc e central arredondados: o produto volta com ruído de float — só vale sem preço oficial
         preco = precos.get(tk)
         if preco is None:
-            preco = round(pc * central, 2) if math.isfinite(pc) else None
+            preco = round(pc * central, 2) if pc is not None and math.isfinite(pc) else None   # AUD-52: pc null sem central
         out.append({"origem": "hall", "data_preco": data_preco, "ticker": tk, "preco": preco,
                     **{c: (None if isinstance(g[c], float) and math.isinf(g[c]) else g[c])
                        for c in CAMPOS},

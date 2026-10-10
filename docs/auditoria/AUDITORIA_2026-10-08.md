@@ -400,6 +400,8 @@ Proposta, sem execução. Qualquer mudança que mexa em central ou palavra exige
 
 ### Onda 3 — riscos latentes
 
+**Onda 3 CONCLUÍDA em 10/10/2026 (doutrina v2.6; detalhes e motivos no `09`).** Corrigidos: AUD-11, 52, 46, 54, 47, 51, 85, 103, 45, 63, 68, 58, 61 e, por decisão do Frank, AUD-10, 15, 34, 53, 42 e os textos 14, 39, 40, 55. Aceitos com motivo: AUD-25, 79, 80, 97 (backtest parado); 50, 56, 62, 70, 74, 104, 44 (premissa deliberada); 92, 93, 94, 95, 100, 101, 66, 59 (sensibilidade/comunicação); 71, 76, 75 (dados/rolagem); 41 (29 descontos zero sem razão — dossiê); 32, 98, 99 (pré-registro, decisão própria). Nenhuma palavra mudou. A lista abaixo fica como histórico.
+
 - **Motor:** AUD-10, AUD-11, AUD-14, AUD-15, AUD-34, AUD-39, AUD-47, AUD-50, AUD-51, AUD-52, AUD-53, AUD-54, AUD-55, AUD-56, AUD-59, AUD-63, AUD-66, AUD-85, AUD-103, AUD-25.
 - **Dados e premissas:** AUD-58, AUD-61, AUD-62, AUD-68, AUD-70, AUD-71, AUD-74, AUD-75, AUD-76.
 - **Método e estatística:** AUD-32, AUD-92, AUD-93, AUD-94, AUD-95, AUD-97, AUD-98, AUD-99, AUD-100, AUD-101, AUD-104, AUD-79, AUD-80.

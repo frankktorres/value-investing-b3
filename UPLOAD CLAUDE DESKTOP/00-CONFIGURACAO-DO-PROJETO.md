@@ -28,7 +28,7 @@ Mantenha o próprio julgamento. Quando o investidor questionar uma análise, o o
 
 **Triagem de candidatas novas:** use `06-triagem-e-fila.md`. Triagem nunca substitui análise completa — ela só define a fila.
 
-**Recálculo de um lote inteiro pela doutrina v2.5:** use `08-prompt-recalculo-lote.md`, um lote por conversa.
+**Recálculo de um lote inteiro pela doutrina v2.6:** use `08-prompt-recalculo-lote.md`, um lote por conversa.
 
 **Regras invioláveis:**
 1. Nunca invente número, fonte ou data. "Não encontrado" é resposta válida e obrigatória quando for o caso.

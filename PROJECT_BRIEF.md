@@ -1,13 +1,13 @@
 # PROJECT BRIEF — Mesa de Value Investing B3
-*Versão de 10/10/2026 (rev. checkup e abertura da Onda 3) · gerado por `/brief` · fonte: repositório, memória do projeto e `docs/auditoria/AUDITORIA_2026-10-08.md`*
+*Versão de 10/10/2026 (rev. Onda 3 concluída, doutrina v2.6) · gerado por `/brief` · fonte: repositório, memória do projeto e `docs/auditoria/AUDITORIA_2026-10-08.md`*
 
 ## 1. Projeto
-Mesa de análise fundamentalista da B3 para dividendos/JCP e longo prazo: doutrina escrita (v2.5) + motores de valuation em Python que
+Mesa de análise fundamentalista da B3 para dividendos/JCP e longo prazo: doutrina escrita (v2.6) + motores de valuation em Python que
 dão preço de compra, central e saída (régua 0,70/0,90/1,10/1,30×) para 41 empresas. Público hoje: um investidor pessoa física (uso próprio).
 
 ## 2. Estágio
 MVP de uso pessoal, maduro no cálculo. Um usuário real, sem terceiros. Prazo externo conhecido: temporada do ITR 3T26 (fim de out–nov/2026,
-`ferramentas/temporada.py`). Onda 1 da auditoria concluída: 1.1 (bb79ba9), 1.2 (49b5f53 + dd9c3c1), 1.3 (gatilhos) e 1.4 (documentos) feitas; Onda 2 concluída (reprodutibilidade AUD-38/73/108/109/17/102/82/24/26/86/21–23/81/83/84, backup AUD-05 e testes que distinguem certo de errado AUD-27/28/30/31/88/89/90/29/107/91). Meta de longo prazo: SaaS com front-end
+`ferramentas/temporada.py`). Onda 1 da auditoria concluída: 1.1 (bb79ba9), 1.2 (49b5f53 + dd9c3c1), 1.3 (gatilhos) e 1.4 (documentos) feitas; Onda 2 concluída (reprodutibilidade AUD-38/73/108/109/17/102/82/24/26/86/21–23/81/83/84, backup AUD-05 e testes que distinguem certo de errado AUD-27/28/30/31/88/89/90/29/107/91); Onda 3 concluída em 10/10 (riscos latentes, doutrina v2.6; 22 corrigidos, 26 aceitos com motivo no `09`). Meta de longo prazo: SaaS com front-end
 (sem prazo).
 
 ## 3. Stack
@@ -48,7 +48,7 @@ MVP de uso pessoal, maduro no cálculo. Um usuário real, sem terceiros. Prazo e
 1. Onda 1 da auditoria concluída (1.1 a 1.4: PDFs reemitidos em v2.5, pasta de upload sincronizada, versões dos prompts, Ke/retorno do `03` gerados
    pelo motor) → **Onda 2 (concluída):** feitos clone do zero (AUD-38/73), manifesto dos ZIPs (109), EOL do golden_sha (108), teste analítico do DDM (17), backup (05), testes de fórmula/limiar/NaN/ROIC real/bordas/skip (27, 28, 30, 31, 88, 89, 90) e, na 3ª parte, registro com corrente (102), preço real (82), série vigente (24), estado do lote 4 (26), coletor do LTM (21, 22, 86), JCP duplicado (23), coletor FRED/PTAX (81) e histórico (83, 84); e, na 4ª parte, sentinela PIT comparando o `Exercicio` inteiro e sem estouro de memória (29, 107) e paridade do motor reduzido × mesa (91). `cvm_series.json` já foi regravado com o LTM novo.
 2. Temporada 3T26: `python ferramentas/temporada.py` ao sair o ITR; régua congelada até lá.
-3. **Onda 3 da auditoria (riscos latentes, ~45 AUD-ids: motor, dados e premissas, método e estatística, doutrina e régua — `docs/auditoria/AUDITORIA_2026-10-08.md` §6).** ABERTA em 10/10/2026, sem ordem decidida nem item feito; antes de começar, escolher o primeiro bloco (sugestão: motor).
+3. **Onda 3 da auditoria — CONCLUÍDA em 10/10/2026 (doutrina v2.6).** Motor blindado (guardas de NÃO CONCLUSIVO nas financeiras, sem preço negativo nem Infinity, fronteira da régua, LTM da temporada chegando às premissas calculadas no import); decisões do Frank: trava na palavra final, OE do controlador, freio do declínio, cenário negativo como zero, entrada parcial numa função só; 26 aceitos com motivo (`09`). Pendente de decisão própria: pré-registro (AUD-32/98/99) e razões do desconto zero em 29 tickers (AUD-41). Onda 4 (qualidade e rumo SaaS) a abrir.
 4. Etapa 6 / F6 — construção de carteira (tamanho de posição, concentração, caixa); depende de respostas do Frank.
 
 ## 7. Restrições
@@ -98,3 +98,4 @@ MVP de uso pessoal, maduro no cálculo. Um usuário real, sem terceiros. Prazo e
 - 09/10/2026 (Onda 2, 3ª parte): registro prospectivo com corrente sha256 e preço oficial; série vigente explícita; coletor do LTM (comparativo reapresentado, SMTO3 abr–mar, lacunas visíveis); dossiê sem JCP duplicado; `coletar_macro_fred.py` + manifesto macro; `historico_arquivos.py` (versão anterior vai para `_historico/` antes de regravar); histórico do monitor em upsert; gargalo/estágio/marco atualizados.
 - 09/10/2026 (dados): `cvm_series.json` regravado com o LTM novo (decisão do Frank); nenhuma palavra mudou, SMTO3 central 16,03 → 14,68 (segue CARA); golden, 03, prompt de sexta e PDFs dos lotes 3 e 5 regravados.
 - 10/10/2026 (checkup e rodada): monitor semanal rodado (boletim de 10/10, histórico em upsert); `python -m dossie.gerar HYPE3` sem `--data` sobrescreveu o veredito de 02/10 (restaurado do git, cópia em `_historico/2026-10-10 hype3 regerado pelo passo 4/`); poka-yoke: `gerar` recusa regravar veredito já registrado no prospectivo (`dossie/tests/test_gerar_recusa.py`); cabeçalhos do `03`, README, prompt de sexta e `04` alinhados; Onda 3 aberta como marco 3.
+- 10/10/2026 (Onda 3): doutrina v2.6 (AUD-10 trava na palavra final; AUD-15/34/53 OE do controlador, freio do declínio, DCF sem cenário negativo; AUD-42 `entrada_parcial`); `series_vigente.carregar_cvm` + `CVM_SOBREPOSTO` (o LTM do 3T26 chega às premissas do import, AUD-103/85); coletor da CVM sem lucro do controlador zerado e com ações do ITR (AUD-68); golden, 03 e prompt de sexta regravados; nenhuma palavra mudou; estágio e marco 3 atualizados.

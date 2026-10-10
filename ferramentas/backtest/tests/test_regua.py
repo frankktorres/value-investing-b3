@@ -38,14 +38,15 @@ DIVERGE_PELA_TRAVA = {
 @pytest.mark.parametrize("ticker", sorted(_golden()))
 def test_reproduz_palavra_e_central_do_golden(ticker):
     g = _golden()[ticker]
-    preco = g["pc"] * g["central"] if math.isfinite(g["pc"]) else 1.0
+    finito = g["pc"] is not None and math.isfinite(g["pc"])   # AUD-52: P/C sem central é null no golden
+    preco = g["pc"] * g["central"] if finito else 1.0
     v = avaliar_bt(g["ancoras"], preco)
     if ticker in DIVERGE_PELA_TRAVA:
         assert (g["palavra"], v.palavra) == (NAO_CONCLUSIVO, JUSTA), DIVERGE_PELA_TRAVA[ticker]
     else:
         assert v.palavra == g["palavra"]
     assert v.central == pytest.approx(g["central"], abs=0.01)
-    if math.isfinite(g["pc"]):
+    if finito:
         assert v.pc == pytest.approx(g["pc"], abs=0.005)
     else:
         assert math.isinf(v.pc)

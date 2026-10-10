@@ -1,5 +1,5 @@
 {
- "motivo": "Regrava cvm_series.json com o LTM novo (AUD-21/22/86: comparativo reapresentado, SMTO3 abr-mar, lacunas) e proventos_a_pagar dos exercicios; so mudam SMTO3 (central 16,03 -> 14,68, segue CARA) e a cobertura de juros da UGPA3; nenhuma palavra muda",
+ "motivo": "Onda 3 da auditoria (doutrina v2.6, 10/10/2026): OE pelo lucro do controlador (AUD-15), declínio sem liberação com ROIC < WACC (AUD-34), cenário de DCF negativo como zero (AUD-53), P/C infinito gravado como null (AUD-52). Nenhuma palavra muda; KLBN11 e RECV3 seguem NÃO CONCLUSIVO",
  "tickers": {
   "ABCB4": {
    "ancoras": {
@@ -22,16 +22,16 @@
    "ancoras": {
     "DCF (3 cenários)": 9.789959,
     "EPV": 9.19281,
-    "Owner Earnings ÷ (Ke − g)": 7.337746
+    "Owner Earnings ÷ (Ke − g)": 7.042854
    },
-   "bogle_nom": 0.155685,
+   "bogle_nom": 0.153659,
    "central": 9.19281,
    "cobertura_juros": 27.944195,
    "data_preco": "02/10/2026",
-   "dy": 0.052779,
+   "dy": 0.050752,
    "fator_defasagem": 0.978109,
    "lote": 4,
-   "nota_geral": 4.81934,
+   "nota_geral": 4.800346,
    "palavra": "CARA",
    "pc": 1.723086,
    "vence_rf": "Não"
@@ -40,7 +40,7 @@
    "ancoras": {
     "DCF (3 cenários)": 9.076504,
     "EPV": 8.177214,
-    "Owner Earnings ÷ (Ke − g)": 8.008592
+    "Owner Earnings ÷ (Ke − g)": 8.006306
    },
    "bogle_nom": 0.114168,
    "central": 8.177214,
@@ -244,13 +244,13 @@
    "ancoras": {
     "DCF (3 cenários)": 10.898947,
     "EPV": 10.873637,
-    "Owner Earnings ÷ (Ke − g)": 5.348129
+    "Owner Earnings ÷ (Ke − g)": 5.322253
    },
-   "bogle_nom": 0.091429,
+   "bogle_nom": 0.091291,
    "central": 10.873637,
    "cobertura_juros": 2.166042,
    "data_preco": "02/10/2026",
-   "dy": 0.031903,
+   "dy": 0.031765,
    "fator_defasagem": 0.855994,
    "lote": 4,
    "nota_geral": 3.161035,
@@ -280,13 +280,13 @@
    "ancoras": {
     "DCF (3 cenários)": 16.22481,
     "EPV": 17.874929,
-    "Owner Earnings ÷ (Ke − g)": 10.836674
+    "Owner Earnings ÷ (Ke − g)": 10.895524
    },
-   "bogle_nom": 0.097619,
+   "bogle_nom": 0.09785,
    "central": 16.22481,
    "cobertura_juros": 1.8858,
    "data_preco": "02/10/2026",
-   "dy": 0.040087,
+   "dy": 0.040317,
    "fator_defasagem": 0.745812,
    "lote": 4,
    "nota_geral": 3.137665,
@@ -365,36 +365,36 @@
   },
   "KLBN11": {
    "ancoras": {
-    "DCF normalizado (3 cenários)": 1.71844,
-    "EPV de meio de ciclo": 0.631829,
+    "DCF normalizado (3 cenários)": 2.620361,
+    "EPV de meio de ciclo": 0.362543,
     "Valor de reprodução": 7.73118
    },
-   "bogle_nom": 0.144056,
-   "central": 1.71844,
+   "bogle_nom": 0.137172,
+   "central": 2.620361,
    "cobertura_juros": 1.57882,
    "data_preco": "02/10/2026",
-   "dy": 0.06881,
-   "fator_defasagem": 0.899765,
+   "dy": 0.061926,
+   "fator_defasagem": 0.920245,
    "lote": 3,
-   "nota_geral": 3.51812,
+   "nota_geral": 2.952339,
    "palavra": "NÃO CONCLUSIVO",
-   "pc": 10.83541,
+   "pc": 7.105892,
    "vence_rf": "Não"
   },
   "LEVE3": {
    "ancoras": {
-    "DCF (3 cenários)": 36.306879,
+    "DCF (3 cenários)": 36.30688,
     "EPV": 33.711152,
-    "Owner Earnings ÷ (Ke − g)": 36.459429
+    "Owner Earnings ÷ (Ke − g)": 36.665759
    },
-   "bogle_nom": 0.185568,
-   "central": 36.306879,
+   "bogle_nom": 0.186296,
+   "central": 36.30688,
    "cobertura_juros": 11.989037,
    "data_preco": "02/10/2026",
-   "dy": 0.128723,
+   "dy": 0.129452,
    "fator_defasagem": 0.984468,
    "lote": 6,
-   "nota_geral": 7.187536,
+   "nota_geral": 7.194343,
    "palavra": "NÃO CONCLUSIVO",
    "pc": 0.948305,
    "vence_rf": "Sim"
@@ -405,14 +405,14 @@
     "EPV de meio de ciclo": 53.483901,
     "Valor de reprodução": 33.090004
    },
-   "bogle_nom": 0.22018,
+   "bogle_nom": 0.219043,
    "central": 53.483901,
    "cobertura_juros": 17.019058,
    "data_preco": "02/10/2026",
-   "dy": 0.144934,
+   "dy": 0.143797,
    "fator_defasagem": 0.960578,
    "lote": 5,
-   "nota_geral": 5.440938,
+   "nota_geral": 5.43042,
    "palavra": "JUSTA",
    "pc": 0.956736,
    "vence_rf": "Sim"
@@ -454,30 +454,30 @@
   },
   "RANI3": {
    "ancoras": {
-    "DCF normalizado (3 cenários)": 3.104973,
-    "EPV de meio de ciclo": 2.66946,
+    "DCF normalizado (3 cenários)": 3.186829,
+    "EPV de meio de ciclo": 2.66574,
     "Valor de reprodução": 6.182883
    },
    "bogle_nom": 0.075246,
-   "central": 3.104973,
+   "central": 3.186829,
    "cobertura_juros": 1.531314,
    "data_preco": "02/10/2026",
    "dy": 0.0,
-   "fator_defasagem": 0.989049,
+   "fator_defasagem": 0.989138,
    "lote": 3,
    "nota_geral": 2.916681,
    "palavra": "CARA",
-   "pc": 2.557188,
+   "pc": 2.491505,
    "vence_rf": "Não"
   },
   "RECV3": {
    "ancoras": {
-    "DCF normalizado (3 cenários)": -4.185951,
+    "DCF normalizado (3 cenários)": 0.0,
     "EPV de meio de ciclo": -3.669973,
     "Valor de reprodução": 14.791824
    },
    "bogle_nom": 0.032662,
-   "central": -3.669973,
+   "central": 0.0,
    "cobertura_juros": 2.385249,
    "data_preco": "02/10/2026",
    "dy": 0.0,
@@ -485,7 +485,7 @@
    "lote": 5,
    "nota_geral": 2.723159,
    "palavra": "NÃO CONCLUSIVO",
-   "pc": Infinity,
+   "pc": null,
    "vence_rf": "Não"
   },
   "SANB11": {
@@ -577,20 +577,20 @@
   },
   "SUZB3": {
    "ancoras": {
-    "DCF normalizado (3 cenários)": 21.45537,
-    "EPV de meio de ciclo": 22.036359,
+    "DCF normalizado (3 cenários)": 22.77773,
+    "EPV de meio de ciclo": 21.918255,
     "Valor de reprodução": 40.211619
    },
-   "bogle_nom": 0.112483,
-   "central": 22.036359,
+   "bogle_nom": 0.112495,
+   "central": 22.77773,
    "cobertura_juros": 1.812817,
    "data_preco": "02/10/2026",
-   "dy": 0.037237,
-   "fator_defasagem": 0.975395,
+   "dy": 0.037249,
+   "fator_defasagem": 0.9757,
    "lote": 3,
    "nota_geral": 3.318875,
    "palavra": "CARA",
-   "pc": 2.012583,
+   "pc": 1.947077,
    "vence_rf": "Não"
   },
   "TAEE11": {
@@ -632,7 +632,7 @@
    "ancoras": {
     "DCF (3 cenários)": 15.78387,
     "EPV": 16.72089,
-    "Owner Earnings ÷ (Ke − g)": 9.111214
+    "Owner Earnings ÷ (Ke − g)": 8.689584
    },
    "bogle_nom": 0.096001,
    "central": 15.78387,
@@ -652,14 +652,14 @@
     "EPV de meio de ciclo": 47.765923,
     "Valor de reprodução": 17.907037
    },
-   "bogle_nom": 0.157103,
+   "bogle_nom": 0.15643,
    "central": 47.321429,
    "cobertura_juros": 1.52938,
    "data_preco": "02/10/2026",
-   "dy": 0.081857,
+   "dy": 0.081184,
    "fator_defasagem": 0.991806,
    "lote": 6,
-   "nota_geral": 3.908779,
+   "nota_geral": 3.902142,
    "palavra": "CARA",
    "pc": 1.204951,
    "vence_rf": "Empate"
@@ -668,13 +668,13 @@
    "ancoras": {
     "DCF (3 cenários)": 10.415051,
     "EPV": 12.056162,
-    "Owner Earnings ÷ (Ke − g)": 6.124969
+    "Owner Earnings ÷ (Ke − g)": 6.246745
    },
-   "bogle_nom": 0.104004,
+   "bogle_nom": 0.10449,
    "central": 10.415051,
    "cobertura_juros": 2.9702,
    "data_preco": "02/10/2026",
-   "dy": 0.028758,
+   "dy": 0.029244,
    "fator_defasagem": 0.845691,
    "lote": 5,
    "nota_geral": 3.096443,
@@ -686,7 +686,7 @@
    "ancoras": {
     "DCF (3 cenários)": 16.922537,
     "EPV": 16.729782,
-    "Owner Earnings ÷ (Ke − g)": 19.721621
+    "Owner Earnings ÷ (Ke − g)": 19.691493
    },
    "bogle_nom": 0.112964,
    "central": 16.922537,
@@ -702,20 +702,20 @@
   },
   "WEGE3": {
    "ancoras": {
-    "DCF (3 cenários)": 11.085843,
-    "EPV": 10.051555,
-    "Owner Earnings ÷ (Ke − g)": 11.764608
+    "DCF (3 cenários)": 11.085968,
+    "EPV": 10.051652,
+    "Owner Earnings ÷ (Ke − g)": 11.081542
    },
    "bogle_nom": 0.128324,
-   "central": 11.085843,
+   "central": 11.081542,
    "cobertura_juros": 37.346503,
    "data_preco": "02/10/2026",
    "dy": 0.01495,
-   "fator_defasagem": 0.872977,
+   "fator_defasagem": 0.872976,
    "lote": 4,
-   "nota_geral": 5.204455,
+   "nota_geral": 5.204466,
    "palavra": "CARA",
-   "pc": 4.641054,
+   "pc": 4.642856,
    "vence_rf": "Não"
   }
  }

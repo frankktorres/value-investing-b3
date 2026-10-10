@@ -25,7 +25,7 @@ from motor_financeiras import (ANOS_ROIC_MINIMO, HORIZONTE, IR_JCP, NOTA_QUALIDA
                                precos_de_referencia)
 
 AQUI = pathlib.Path(__file__).parent
-CVM = json.loads((AQUI / "dados" / "cvm_series.json").read_text(encoding="utf-8"))
+CVM = series_vigente.carregar_cvm()     # AUD-103: com o LTM da temporada por cima, quando houver
 SI = series_vigente.carregar()
 ANOS = [str(a) for a in range(2016, 2026)]
 LIMITE_QUEBRA = 0.25      # §11.4: divergência entre a mediana de 5 anos e a da janela que levanta suspeita de quebra
@@ -302,7 +302,9 @@ def owner_earnings_ano(emp: Industrial, ano, anterior, kd_real, ciclica=False, t
     cm, _ = capex_manutencao(emp.ticker, ano, anterior, ciclica, expansao_do_ano(emp, ano))
     if cm is None or d.get("lucro") is None or d.get("da") is None or not p:
         return None
-    lucro = d["lucro"]
+    # AUD-15 (v2.6): o OE é fluxo do ACIONISTA da controladora — lucro do controlador, como EPV e DCF descontam os minoritários;
+    # sem a linha (zerada na CVM, AUD-68) fica o consolidado
+    lucro = d["lucro_controlador"] if d.get("lucro_controlador") is not None else d["lucro"]
     if t_retributar is not None:
         if d.get("lair") is None or d.get("ir") is None:
             return None             # sem a linha do imposto não dá para retributar: o ano sai (nada silencioso)
@@ -708,13 +710,17 @@ def valores(emp: Industrial, mk: Mercado, ke_nom=None, margem=None, g_real=None,
         # Abaixo disso g = 0 e o DCF converge para o EPV; acima, reinvestimento = g real ÷ ROIC.
         # Etapa 2/F2: a trava usa o MENOR dos dois ROIC — crescer exige retorno acima do WACC sobre o capital a
         # preços de hoje, que é o que a empresa terá de repor. O reinvestimento segue pelo ROIC contábil (é o
-        # capital que ela de fato emprega). A trava é avaliada POR CENÁRIO, então o efeito é gradual.
+        # capital que ela de fato emprega). A trava é avaliada POR CENÁRIO: é um degrau em cada cenário (AUD-14), e só a
+        # ponderação dos três suaviza.
         roic_rep_c = nop / cap_rep if cap_rep > 0 else None
         cria = roic_c is not None and min(roic_c, roic_rep_c if roic_rep_c is not None else roic_c) > w_nom
         g_ef = gr if (gr <= 0 or cria) else 0.0   # só zera crescimento positivo
         # reinvestimento = g REAL ÷ ROIC REAL (Fisher) — real com real (doutrina §4); até 05/10 dividia pelo ROIC nominal (adversário do Lote 4)
         roic_r = (1 + roic_c) / (1 + mk.pi) - 1 if roic_c is not None else None
-        reinv = g_ef / roic_r if (g_ef != 0 and roic_r and not (g_ef < 0 and emp.declinio_sem_liberacao)) else 0.0
+        # AUD-34 (v2.6): declínio com ROIC < WACC não devolve capital por padrão — o "reinvestimento negativo" g ÷ ROIC com ROIC
+        # pequeno fazia o DCF explodir (KLBN11: 3,79 em g = 0 e 357 em g = −5%); antes só a RECV3 tinha o freio declarado
+        freio = g_ef < 0 and (emp.declinio_sem_liberacao or not cria)
+        reinv = g_ef / roic_r if (g_ef != 0 and roic_r and not freio) else 0.0
         if g1_ is None:
             fcff1 = nop * (1 + g_ef) * (1 - reinv)
             return (fcff1 / (w_real - g_ef) + bf - dl - minor) / n
@@ -727,7 +733,8 @@ def valores(emp: Industrial, mk: Mercado, ke_nom=None, margem=None, g_real=None,
         terminal = nop_t * (1 + g_ef) * (1 - reinv) / (w_real - g_ef)
         return (vp + terminal / (1 + w_real) ** emp.anos_g1 + bf - dl - minor) / n
     dcf_c = {"pessimista": dcf(op["m25"]), "base": dcf(m), "otimista": dcf(op["m75"])}
-    dcf_pond = 0.25 * dcf_c["pessimista"] + 0.5 * dcf_c["base"] + 0.25 * dcf_c["otimista"]
+    # AUD-53 (v2.6): cenário negativo entra como zero (o acionista não deve além do que pôs) — antes puxava a média para baixo
+    dcf_pond = 0.25 * max(dcf_c["pessimista"], 0) + 0.5 * max(dcf_c["base"], 0) + 0.25 * max(dcf_c["otimista"], 0)
 
     oes = []
     anos = op["anos"]
@@ -762,7 +769,10 @@ def valores(emp: Industrial, mk: Mercado, ke_nom=None, margem=None, g_real=None,
         anc["EPV"] = epv
         if oe_val:
             anc["Owner Earnings ÷ (Ke − g)"] = oe_val
-    return dict(anc=anc, op=op, wacc=w_nom, wacc_real=w_real, kd=kd, kd_info=cdiv, e=e, e_peso=e_w, d=d, dl=dl, bruta=bruta, caixa=caixa,
+    # AUD-47: a âncora OE que some (OE normalizado ausente/zero ou Ke real ≤ g) fica registrada — a confiança segue a §11.3
+    descartadas = ([] if emp.perfil == "ciclica" or oe_val else
+                   ["Owner Earnings ÷ (Ke − g): " + ("OE normalizado ausente ou zero" if not oe_norm else "Ke real ≤ g")])
+    return dict(anc=anc, ancoras_descartadas=descartadas, op=op, wacc=w_nom, wacc_real=w_real, kd=kd, kd_info=cdiv, e=e, e_peso=e_w, d=d, dl=dl, bruta=bruta, caixa=caixa,
                 minor=minor, nopat=nopat, roic=roic, epv=epv, dcf=dcf_c, dcf_pond=dcf_pond, oe=oes, oe_norm=oe_norm,
                 oe_val=oe_val, reprod=reprod, reprod_reposicao=reprod_reposicao, cap_inv=cap_inv, n=n, m=m, gr=gr, aliquota=t_ef, aliquota_regra=t_regra,
                 aliquota_mediana=mediana_efetiva(emp), aliquota_fase=fase_fiscal(emp), beneficio_fiscal_acao=benef_firma / n,
@@ -866,6 +876,14 @@ def g_implicito(emp, mk, e_peso=None):
     return (lo + hi) / 2
 
 
+def nota_alavancagem(dl_ebitda_norm: float | None) -> float:
+    """Nota 1–10 da DL/EBITDA normalizada na Solidez. Indefinida (EBITDA normalizado ≤ 0) é o pior caso, não "sem dívida":
+    antes o ausente virava 0 e a nota 10 (AUD-54)."""
+    if dl_ebitda_norm is None:
+        return 1
+    return interp(-dl_ebitda_norm, [(-5, 1), (-4, 3), (-3, 5), (-2, 7), (-1, 9), (0, 10)])
+
+
 def avaliar(emp: Industrial, mk: Mercado) -> dict:
     exigir_declaracoes(emp)
     a, ltm = serie(emp.ticker)
@@ -957,7 +975,7 @@ def avaliar(emp: Industrial, mk: Mercado) -> dict:
     def cls(x):
         return "Sim" if x >= mk.rf_liq_real + 0.03 else ("Empate" if x >= mk.rf_liq_real + 0.015 else "Não")
     rf, rf_inv = cls(bogle_liq_real), cls(so_inv_liq_real)
-    trava = abs(bogle_nom - mk.ke_nom) <= TRAVA_PP if p0 == "JUSTA" else None
+    trava = abs(bogle_nom - mk.ke_nom) <= TRAVA_PP if p == "JUSTA" else None    # AUD-10 (v2.6): palavra final
     p_trava = aplicar_trava(p0, p, trava, emp.trava_razao)
     if p_trava != p:
         p, conf = p_trava, "não conclusivo (trava de coerência, §9)"
@@ -976,7 +994,7 @@ def avaliar(emp: Industrial, mk: Mercado) -> dict:
     # o qualitativo é a média da regra 11 (v2.3): controlador com peso 2 quando discricionário
     qual = media_qualitativa(emp.qualitativo, emp.controlador_discricionario) * 2
     n_qual = 0.5 * nota_spread(r["roic_filtro"] or 0, r["wacc"]) + 0.5 * qual
-    alav_n = interp(-(dl_ebitda_norm if dl_ebitda_norm is not None else 0), [(-5, 1), (-4, 3), (-3, 5), (-2, 7), (-1, 9), (0, 10)])
+    alav_n = nota_alavancagem(dl_ebitda_norm)
     z_n = {"segura": 10, "cinzenta": 6, "perigo": 2}[zona]
     cob_n = interp(cobertura or 0, [(1, 1), (2, 3), (3, 5), (5, 8), (8, 10)])
     n_sol = (alav_n + z_n + cob_n) / 3
@@ -1005,6 +1023,10 @@ def avaliar(emp: Industrial, mk: Mercado) -> dict:
                 ke_implicito=ke_implicito(emp, mk, ep), g_implicito=g_implicito(emp, mk, ep), sens=sens,
                 ke_real_emp=mk.ke_real, ke_nom_emp=mk.ke_nom, premio_ke=mk.premio, de_peso=r["d"] / ep,
                 ponto_fixo=ec["ponto_fixo"], ponto_fixo_nota=ec["nota"],
+                # AUD-51: mediana efetiva a menos de 1 p.p. do limiar de 15% (degrau deliberado da v2.3 para 34%) — só aviso
+                aliquota_perto_do_limiar=(r["aliquota_regra"] in ("mediana", "permanente", "sem_origem")
+                                          and r["aliquota_mediana"] is not None
+                                          and abs(r["aliquota_mediana"] - LIMIAR_ORIGEM) < 0.01),
                 notas=dict(qualidade=n_qual, solidez=n_sol, renda=n_renda, preco=n_preco, geral=n_geral),
                 qualitativo_origem=emp.qualitativo_origem, controlador_peso=2 if emp.controlador_discricionario else 1,
                 ret_investimento=dy + g_nom, ret_especulativo=dmult, ticker=emp.ticker)

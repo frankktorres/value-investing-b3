@@ -31,7 +31,9 @@ def salvar(snap, motivo):
         raise ValueError(f"golden com NaN não é gravado (AUD-30): {ruins}")
     from datetime import datetime
     GOLDEN.parent.mkdir(exist_ok=True)
-    GOLDEN.write_text(json.dumps({"motivo": motivo, "tickers": snap}, ensure_ascii=False, indent=1, sort_keys=True), encoding="utf-8")
+    GOLDEN.write_text(json.dumps({"motivo": motivo, "tickers": snap}, ensure_ascii=False, indent=1, sort_keys=True,
+                                     allow_nan=False),   # AUD-52: Infinity também não entra
+                      encoding="utf-8")
     with LOG.open("a", encoding="utf-8") as f:
         f.write(f"- {datetime.now():%Y-%m-%d %H:%M} — {motivo}\n")
 

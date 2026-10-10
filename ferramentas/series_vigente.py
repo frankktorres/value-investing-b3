@@ -15,6 +15,21 @@ VIGENTE = "series_2026-10-05.json"
 TICKERS_ESPERADOS = 41            # o universo dos 6 lotes (tests/test_regressao.py::test_universo_completo)
 
 
+# AUD-103: LTM novo (temporada do ITR) aplicado ANTES do import dos lotes. Os lotes calculam premissas no import a partir do
+# LTM (follow-on e solidez do lote 2, receita de meio do E&P e de GGBR4/UNIP6, EGIE3); o `temporada.injetar` depois do import
+# não alcançava esses números. {ticker: {"ltm": {...}, "ltm_ref": "3T26"}}
+CVM_SOBREPOSTO: dict = {}
+
+
+def carregar_cvm(pasta: pathlib.Path = AQUI / "dados") -> dict:
+    """O `cvm_series.json` do hall com o LTM de `CVM_SOBREPOSTO` por cima (só o LTM; a série anual fica como está)."""
+    dados = json.loads((pasta / "cvm_series.json").read_text(encoding="utf-8"))
+    for tk, reg in CVM_SOBREPOSTO.items():
+        if tk in dados:
+            dados[tk].update({"ltm": reg["ltm"], "ltm_ref": reg["ltm_ref"], f"ltm_{reg['ltm_ref']}": reg["ltm"]})
+    return dados
+
+
 def carregar(nome: str = VIGENTE, pasta: pathlib.Path = AQUI / "dados",
              minimo: int = TICKERS_ESPERADOS) -> dict:
     dados = json.loads((pasta / nome).read_text(encoding="utf-8"))

@@ -1,5 +1,5 @@
 # PROMPT DE REAVALIAÇÃO (v2, 04/10/2026)
-*Use quando sair DRE nova, mudar uma premissa (Selic, Ke, ciclo) ou ocorrer evento societário. Para refazer um lote inteiro pela doutrina v2.5, use `08-prompt-recalculo-lote.md`.*
+*Use quando sair DRE nova, mudar uma premissa (Selic, Ke, ciclo) ou ocorrer evento societário. Para refazer um lote inteiro pela doutrina v2.6, use `08-prompt-recalculo-lote.md`.*
 
 ---
 

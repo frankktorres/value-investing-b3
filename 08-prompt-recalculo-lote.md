@@ -1,5 +1,5 @@
 # PROMPT DE RECÁLCULO EM LOTE (v1.1, 07/10/2026)
-*Use para refazer um lote inteiro de fichas pela doutrina **v2.5** (08/10/2026). Um lote por conversa. Anexe o PDF vigente do lote e substitua `<LOTE>`.*
+*Use para refazer um lote inteiro de fichas pela doutrina **v2.6** (10/10/2026). Um lote por conversa. Anexe o PDF vigente do lote e substitua `<LOTE>`.*
 
 ---
 
@@ -42,6 +42,12 @@ Você é o analista independente de value investing desta mesa. **Recalcule o `<
 - **Outros passivos (§11.1):** com juros ou financeiro (passivo de contrato) em `outros_passivos_financeiros`; o **provento já ex** (passivo de proventos do balanço + aprovado depois do balanço e ex até a data do preço) o motor soma sozinho (`proventos_ex.py`, v2.3.1) — não digitar de novo (entra na dívida líquida, no DL/EBITDA e no ROIC); operacional em `outros_passivos` (só ponte). Fonte obrigatória.
 - **Capex de expansão (§11.1):** só projeto nomeado, com valor e prazo em fonte A/B e sem receita (`capex_expansao`); o resto é manutenção.
 - **Margem ao preço de meio (§11.1):** só cíclica com dossiê e janela ≥ 7 exercícios (`fator_preco`).
+
+**PASSO 6 — Doutrina v2.6 (10/10/2026), conferir em cada ticker** (o motor já aplica; a ficha não pode contradizer)
+- **Trava de coerência (§9, 3b):** vale para a JUSTA **final** — RADAR que sobe a JUSTA pela dispersão também precisa de Bogle a ±2 p.p. do Ke ou da `trava_razao`.
+- **Entrada parcial (§9):** o texto da ficha sai de `entrada_parcial` (Qualidade ≥ 8, Solidez ≥ 7, zero armadilha, círculo, dispersão ≤ 1,8× **e** preço ≤ 0,80×); armadilha/defeito do lote entra como motivo.
+- **DCF (§11):** declínio com ROIC < WACC não libera capital; cenário negativo entra como zero. **Owner Earnings** pelo lucro do controlador.
+- **NÃO CONCLUSIVO com central ≤ 0:** sem preço de compra nem de saída (o motor devolve vazio).
 
 ---
 

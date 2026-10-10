@@ -26,7 +26,8 @@ METODO_ONDA_1_1 = {
     # Onda 1.2 (08/10/2026): Kd sintético (AUD-07), Ke pela alavancagem e pesos no ponto fixo (AUD-12/13), trava do §9 (AUD-08)
     "BLAU3-2026-10-02": dict(central=8.2998, pc=1.3036, palavra="NÃO CONCLUSIVO"),  # 1.1: 8,798
     "HYPE3-2026-10-06": dict(central=16.9224, pc=1.5955, palavra="CARA"),           # 1.1: 18,3522
-    "LEVE3-2026-10-06": dict(central=38.3732, pc=0.9525, palavra="NÃO CONCLUSIVO"), # 1.1: 42,5717 RADAR; agora JUSTA com trava falha
+    # Onda 3 (v2.6, 10/10/2026): OE pelo lucro do controlador (AUD-15) — LEVE3 38,3732 → 38,4467; HYPE3 igual
+    "LEVE3-2026-10-06": dict(central=38.4467, pc=0.9507, palavra="NÃO CONCLUSIVO"), # 1.1: 42,5717 RADAR; agora JUSTA com trava falha
     "CMIN3-2026-10-06": dict(central=3.3668, pc=1.4673, palavra="CARA"),            # salvo 3,6329
 }
 

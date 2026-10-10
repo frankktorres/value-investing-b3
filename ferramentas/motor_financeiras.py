@@ -31,10 +31,12 @@ TRAVA_PP = 0.02            # §9: JUSTA exige retorno de Bogle a ±2 p.p. do Ke 
 
 
 def aplicar_trava(p0: str, p: str, trava: bool | None, razao: str = "") -> str:
-    """§9, trava de coerência (v2.4, AUD-08): JUSTA pela régua com Bogle fora de ±2 p.p. do Ke quer dizer que uma das duas contas
+    """§9, trava de coerência (v2.4, AUD-08): JUSTA com Bogle fora de ±2 p.p. do Ke quer dizer que uma das duas contas
     está errada, e a doutrina manda corrigir ANTES de publicar. Até a ficha escrever qual premissa diverge (`trava_razao`), a
-    palavra é NÃO CONCLUSIVO — antes a trava era só um campo, e a LEVE3 saía JUSTA com ela falha."""
-    if p0 == "JUSTA" and p == "JUSTA" and trava is False and not razao.strip():
+    palavra é NÃO CONCLUSIVO — antes a trava era só um campo, e a LEVE3 saía JUSTA com ela falha.
+    v2.6 (AUD-10, decisão do Frank em 10/10/2026): vale para a JUSTA FINAL — a RADAR que sobe a JUSTA pela dispersão também
+    passa pela trava (antes só a JUSTA da régua; `p0` fica na assinatura por compatibilidade)."""
+    if p == "JUSTA" and trava is False and not razao.strip():
         return "NÃO CONCLUSIVO"
     return p
 
@@ -82,6 +84,7 @@ def liquido_diferido(taxa_nom: float, anos: int = HORIZONTE, ir: float = IR_RESG
 
 # ---------------------------------------------------------------- régua e notas
 def palavra(pc: float) -> str:
+    pc = round(pc, 9)    # AUD-46: preço = 0,70 × central dava 0,7000000000000001 e caía em RADAR
     if pc <= 0.70: return "BARATA"
     if pc <= 0.90: return "RADAR"
     if pc <= 1.10: return "JUSTA"
@@ -92,10 +95,39 @@ ORDEM = ["BARATA", "RADAR", "JUSTA", "CARA"]
 
 
 def precos_de_referencia(central: float, saida_por_qualidade: bool = False) -> dict:
-    """§9: compra, 1ª parcela e saída a partir do central. Fonte única — os dois motores chamam esta função."""
+    """§9: compra, 1ª parcela e saída a partir do central. Fonte única — os dois motores chamam esta função.
+    Central ≤ 0 (NÃO CONCLUSIVO) não tem preço de referência: None, não um preço negativo (AUD-52)."""
+    if central <= 0:
+        return dict(compra=None, compra_parcial=None, saida=None, saida_por_qualidade=False)
     return dict(compra=COMPRA * central, compra_parcial=COMPRA_PARCIAL * central,
                 saida=(SAIDA_QUALIDADE if saida_por_qualidade else SAIDA_PADRAO) * central,
                 saida_por_qualidade=saida_por_qualidade)
+
+
+def _v(x: float, casas: int) -> str:
+    return f"{x:.{casas}f}".replace(".", ",")      # vírgula decimal, como o resto da ficha
+
+
+def entrada_parcial(r: dict, fora_circulo: bool = False, armadilhas=()) -> tuple[bool, list]:
+    """§9, exceção escrita (Buffett: "empresa excelente a preço justo"): 1ª parcela de no máximo 1/3 a preço ≤ 0,80 × central,
+    só com Qualidade ≥ 8, Solidez ≥ 7, zero armadilhas, dentro do círculo e dispersão ≤ 1,8×. Fonte única (AUD-42, v2.6):
+    antes cada PDF testava um subconjunto (só um conferia o preço; nenhum, o círculo). Devolve (elegível, motivos de recusa).
+    `armadilhas`: os carimbos de defeito estrutural/ARMADILHA do ticker (o motor não os calcula; vêm do lote/ficha)."""
+    n, m = r["notas"], []
+    if r["palavra"] == "NÃO CONCLUSIVO" or r["central"] <= 0:
+        m.append("sem palavra (NÃO CONCLUSIVO)")
+    if n["qualidade"] < NOTA_QUALIDADE_MINIMA:
+        m.append(f"qualidade {_v(n['qualidade'], 1)} < 8")
+    if n["solidez"] < 7:
+        m.append(f"solidez {_v(n['solidez'], 1)} < 7")
+    m += [f"armadilha: {a}" for a in armadilhas]
+    if fora_circulo:
+        m.append("fora do círculo de competência")
+    if r["dispersao"] > 1.8:
+        m.append("dispersão das âncoras > 1,8×")
+    if not m and round(r["pc"], 9) > COMPRA_PARCIAL:
+        m.append(f"preço {_v(r['pc'], 2)}× o central (a exceção exige ≤ 0,80×)")
+    return not m, m
 
 
 def descontar(anc: dict, desc: float) -> dict:
@@ -163,7 +195,7 @@ class Financeira:
     vpa: float
     lpa_12m: float
     roe_lp: float                     # ROE de longo prazo (normalizado), fração
-    roe_inicio: float                 # ROE esperado no ano 1 (guidance/consenso/atual)
+    roe_inicio: float                 # ROE de partida, t = 0 (guidance/consenso/atual); o ano 1 já anda 1/5 até o roe_lp (AUD-63)
     payout: float                     # payout de longo prazo
     dpa_medio_5a: float               # DPA médio 5 anos ajustado, R$
     jcp_share: float = 0.5            # fração dos proventos paga como JCP
@@ -321,10 +353,13 @@ def avaliar(emp: Financeira, mk: Mercado) -> dict:
         anc, desc_pct = dict(base), 0.0
 
     vals = list(anc.values())
-    nao_conclusivo = any(v <= 0 for v in vals)
     central = median(vals)
+    # AUD-11: as guardas do motor de não financeiras — âncora ≤ 0, central ≤ 0 ou LPA normalizado ≤ 0 (§11, Bogle N/A) →
+    # NÃO CONCLUSIVO; antes o P/C negativo saía BARATA com nota de preço 10 e o ROE negativo derrubava o Bogle (número complexo)
+    lpa_norm = emp.roe_lp * emp.vpa
+    nao_conclusivo = any(v <= 0 for v in vals) or central <= 0 or lpa_norm <= 0
     dispersao = max(vals) / min(vals) if not nao_conclusivo else float("inf")
-    pc = emp.preco / central
+    pc = emp.preco / central if central > 0 else float("inf")
 
     # palavra com precedência: régua → círculo → dispersão → (carimbos no texto)
     p0 = palavra(pc)
@@ -342,7 +377,6 @@ def avaliar(emp: Financeira, mk: Mercado) -> dict:
             p = ORDEM[ORDEM.index(p) + 1]
 
     # informativos
-    lpa_norm = emp.roe_lp * emp.vpa
     graham_orig = math.sqrt(22.5 * lpa_norm * emp.vpa) if lpa_norm > 0 else None
     graham_br = math.sqrt(22.5 * mk.fator_graham * lpa_norm * emp.vpa) if lpa_norm > 0 else None
     if emp.perfil == "holding_seguro":       # capital-leve: o FCFE é o lucro; o limite é a política de payout
@@ -362,9 +396,9 @@ def avaliar(emp: Financeira, mk: Mercado) -> dict:
 
     # Bogle (10 anos) sobre LPA normalizado
     dy = dpa_sust_vp / emp.preco
-    pl_atual = emp.preco / lpa_norm
+    pl_atual = emp.preco / lpa_norm if lpa_norm > 0 else None
     pl_final = emp.pl_hist if emp.pl_hist else None
-    dmult = (pl_final / pl_atual) ** (1 / HORIZONTE) - 1 if pl_final else 0.0
+    dmult = (pl_final / pl_atual) ** (1 / HORIZONTE) - 1 if (pl_final and pl_atual) else 0.0
     bogle_nom = dy + g + dmult
     gc = g + dmult
     dy_liq = dy * (1 - emp.jcp_share * IR_JCP)
@@ -385,7 +419,7 @@ def avaliar(emp: Financeira, mk: Mercado) -> dict:
     so_com_rerating = rf != rf_inv
 
     trava = None
-    if p0 == "JUSTA":
+    if p == "JUSTA":                         # AUD-10 (v2.6): a palavra final, depois do círculo e da dispersão
         trava = abs(bogle_nom - ke) <= TRAVA_PP
     p_trava = aplicar_trava(p0, p, trava, emp.trava_razao)
     if p_trava != p:
@@ -420,7 +454,7 @@ def avaliar(emp: Financeira, mk: Mercado) -> dict:
         n_sol = sum(partes) / len(partes) if partes else 5
     n_renda = (0.5 * nota_yield(dy_liq / mk.rf_liq_nom) + 0.25 * (10 if emp.cobertura_caixa else 2)
                + 0.25 * emp.anos_pagos_10)
-    n_preco = nota_preco(pc)
+    n_preco = nota_preco(pc) if central > 0 else 0
     n_geral = 0.30 * n_qual + 0.20 * n_sol + 0.25 * n_renda + 0.25 * n_preco
 
     fluxo = None
