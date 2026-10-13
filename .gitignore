@@ -15,6 +15,11 @@ __pycache__/
 # Segredos
 .env*
 *.key
+*.pem
+*.p12
+# Carteira real (quantidade, preço médio, corretora) — nunca no git
+carteira.local*
+carteira-real*
 # Log da última execução do monitor semanal (Etapa 4)
 ferramentas/monitor/ultimo.log
 
