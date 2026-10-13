@@ -1,5 +1,5 @@
 # PROJECT BRIEF — Mesa de Value Investing B3
-*Versão de 10/10/2026 (rev. Onda 3 concluída, doutrina v2.6) · gerado por `/brief` · fonte: repositório, memória do projeto e `docs/auditoria/AUDITORIA_2026-10-08.md`*
+*Versão de 13/10/2026 (rev. Onda 3 concluída, doutrina v2.6; B09/B10 da rotina) · gerado por `/brief` · fonte: repositório, memória do projeto e `docs/auditoria/AUDITORIA_2026-10-08.md`*
 
 ## 1. Projeto
 Mesa de análise fundamentalista da B3 para dividendos/JCP e longo prazo: doutrina escrita (v2.6) + motores de valuation em Python que
@@ -99,3 +99,4 @@ MVP de uso pessoal, maduro no cálculo. Um usuário real, sem terceiros. Prazo e
 - 09/10/2026 (dados): `cvm_series.json` regravado com o LTM novo (decisão do Frank); nenhuma palavra mudou, SMTO3 central 16,03 → 14,68 (segue CARA); golden, 03, prompt de sexta e PDFs dos lotes 3 e 5 regravados.
 - 10/10/2026 (checkup e rodada): monitor semanal rodado (boletim de 10/10, histórico em upsert); `python -m dossie.gerar HYPE3` sem `--data` sobrescreveu o veredito de 02/10 (restaurado do git, cópia em `_historico/2026-10-10 hype3 regerado pelo passo 4/`); poka-yoke: `gerar` recusa regravar veredito já registrado no prospectivo (`dossie/tests/test_gerar_recusa.py`); cabeçalhos do `03`, README, prompt de sexta e `04` alinhados; Onda 3 aberta como marco 3.
 - 10/10/2026 (Onda 3): doutrina v2.6 (AUD-10 trava na palavra final; AUD-15/34/53 OE do controlador, freio do declínio, DCF sem cenário negativo; AUD-42 `entrada_parcial`); `series_vigente.carregar_cvm` + `CVM_SOBREPOSTO` (o LTM do 3T26 chega às premissas do import, AUD-103/85); coletor da CVM sem lucro do controlador zerado e com ações do ITR (AUD-68); golden, 03 e prompt de sexta regravados; nenhuma palavra mudou; estágio e marco 3 atualizados.
+- 13/10/2026 (rotina na nuvem): carteira do monitor saiu do código para `ferramentas/carteira_tickers.json` (só tickers); `requirements.lock` (fechamento transitivo, referência) ao lado de `requirements.txt`; rodada de 10/10 conferida (já registrada no `09` e acima).

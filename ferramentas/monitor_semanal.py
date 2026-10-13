@@ -26,6 +26,7 @@ import argparse
 import csv
 import datetime as dt
 import io
+import json
 import math
 import shutil
 import sys
@@ -45,7 +46,8 @@ DIAS_VELHO = 7                 # último pregão mais antigo que isso -> "DADO V
 FAIXA_OBSERVACAO = 0.10        # até 10% acima da compra -> observação
 # Carteira do Frank (PROMPT-AGENTE-NOTICIAS-SEXTA.md e diário 09, 05/10/2026: vender ITSA4, ABCB4,
 # RANI3; manter ISAE4). Atualizar quando a carteira mudar — a F6 cria o registro real.
-CARTEIRA = ("ISAE4", "ITSA4", "ABCB4", "RANI3")
+# Só tickers (sem quantidade/preço/corretora — dado pessoal fora do git): `carteira_tickers.json`.
+CARTEIRA = tuple(json.loads((AQUI / "carteira_tickers.json").read_text(encoding="utf-8"))["tickers"])
 
 COMPRA, OBSERVA, SAIDA, NEUTRO, SEM = "≤ COMPRA", "perto da compra", "≥ SAÍDA", "", "sem central"
 NC = "sem palavra"             # NÃO CONCLUSIVO: nem compra nem saída pela régua

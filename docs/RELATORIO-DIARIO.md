@@ -1,6 +1,11 @@
 # RELATORIO-DIARIO
 *Uma entrada por dia/turno, a mais nova em cima: o que foi feito (com commit), decisões tomadas, o que ficou, erros. Máx. 10 linhas por entrada.*
 
+## 13/10/2026 — turno noite (B09, B10)
+- Feito: B09 (já registrado, nada a completar) e B10 (carteira em JSON só com tickers; `requirements.lock`). 473 passed, 19 skipped.
+- Descobri: `python` padrão da nuvem não tem pytest (use `/usr/bin/python3`); 19 testes pulam por falta de dado da CVM.
+- Precisa de você: nada novo. Próxima: B12.
+
 ## 13/10/2026 — preparação da rotina na nuvem
 - Repo `frankktorres/value-investing-b3` (privado), `master` = `origin/master`.
 - Varredura de segredos: arquivo atual e histórico sem tokens/chaves. Tickers da carteira ficam (decisão A, ver `DECISOES.md`).

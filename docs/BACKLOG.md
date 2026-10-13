@@ -16,8 +16,8 @@
 | B06 | Pré-registro AUD-32/98/99: critério contínuo (postos P/C × retorno excedente), comparador = média do hall (não Ibovespa), regra de uma linha por (ticker, rodada) | P2 | pendente de decisão | decisão Frank | Auditoria Onda 3 |
 | B07 | Perguntas do brief §11: orçamento mensal, SaaS só seu ou de terceiros (enquadramento CVM), objetivo acadêmico, agente de sexta no Desktop ainda roda?, fonte paga no lugar da StatusInvest, licença do código | P2 | aberto | decisão Frank | Brief §11 |
 | B08 | Dossiês das finalistas da triagem (5 de 104 passaram no portão; fila em `prospectivo/triagem.jsonl`); parecer de saúde/farma é do Frank | P2 | aberto | decisão Frank | Plano F5 |
-| B09 | Registrar no `09` e no brief a rodada de 10/10 (boletim, 2 pastas em `_historico/`) se ainda não estiver | P2 | aberto | executável | Checkup 10/10 |
-| B10 | Onda 4 (qualidade): AUD-49 (config da carteira, lock de dependências, requirements) | P2 | aberto | executável | Auditoria Onda 4 |
+| B09 | Registrar no `09` e no brief a rodada de 10/10 (boletim, 2 pastas em `_historico/`) se ainda não estiver | P2 | feito 13/10 (já estava) | executável | Checkup 10/10 |
+| B10 | Onda 4 (qualidade): AUD-49 (config da carteira, lock de dependências, requirements) | P2 | feito 13/10 | executável | Auditoria Onda 4 |
 | B11 | Onda 4: AUD-106 termos de uso das fontes (B3 COTAHIST, StatusInvest) para redistribuição — só fonte nota A | P3 | aberto | executável | Auditoria Onda 4 |
 | B12 | Onda 4: AUD-96 rótulos, AUD-64/65 fichas, AUD-48/105 textos de documentação, AUD-87 encoding | P3 | aberto | executável | Auditoria Onda 4 |
 | B13 | Onda 4: AUD-57/60 premissas provisórias e sensibilidade | P3 | aberto | executável | Auditoria Onda 4 |
