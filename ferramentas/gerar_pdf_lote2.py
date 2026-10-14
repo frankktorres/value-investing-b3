@@ -46,7 +46,7 @@ def extras(emp, r):
     x["dle"], x["cob"], x["dl"] = alavancagem(emp.ticker)
     x["ke14"] = central_ao_ke(emp, MK, KE_REF)
     e2 = copy.deepcopy(emp)
-    e2.desconto_controlador = {"tipo": "zero", "razao": ""}
+    e2.desconto_controlador = {"tipo": "zero", "razao": "sensibilidade: sem o desconto de controlador"}
     x["central_sem_desc"] = avaliar(e2, MK)["central"]
     e3 = copy.deepcopy(emp)
     e3.roe_lp = max(emp.roe_inicio, emp.roe_lp)

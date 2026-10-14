@@ -20,7 +20,7 @@ from inflacao import DEFLATOR, deflator_ltm, deflator_periodo, fator_entre, fato
 from juros import juros_do_periodo
 from proventos_ex import ajuste_b3
 from motor_financeiras import (ANOS_ROIC_MINIMO, HORIZONTE, IR_JCP, NOTA_QUALIDADE_MINIMA, ORDEM, PREMIO_KE, TRAVA_PP, Mercado,
-                               aplicar_trava, descontar,
+                               aplicar_trava, descontar, falta_razao_desconto,
                                interp, liquido_diferido, media_qualitativa, nota_preco, nota_spread, nota_yield, palavra,
                                precos_de_referencia)
 
@@ -103,6 +103,8 @@ class Industrial:
 def exigir_declaracoes(emp: Industrial) -> None:
     """Premissa da casa sem fonte escrita não roda (doutrina §11.4 e §6.3). Falha alto, não silenciosa."""
     faltas = []
+    if (falta := falta_razao_desconto(emp)):      # AUD-41 (B24)
+        faltas.append(falta)
     if list(emp.anos_ciclo) != list(ANOS) and not emp.janela_razao.strip():
         faltas.append(f"janela {emp.anos_ciclo[0]}-{emp.anos_ciclo[-1]} sem janela_razao (§11.4)")
     if emp.da_receita is not None and min(int(x) for x in emp.anos_ciclo) < ANO_IFRS16:

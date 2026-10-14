@@ -35,6 +35,7 @@ def _serie(tk, receita=10_000.0, anos=range(2016, 2026), **campos):
 def _emp(tk, **kw):
     kw.setdefault("defasagem_meses", 0.0)
     kw.setdefault("defasagem_fonte", "teste sintético")
+    kw.setdefault("desconto_controlador", {"tipo": "zero", "razao": "teste sintético"})
     return M.Industrial(tk, tk, kw.pop("perfil", "servicos"), preco=kw.pop("preco", 10.0), n_acoes=1_000_000.0, **kw)
 
 
@@ -99,7 +100,7 @@ def test_3_peso_2_sem_fonte_nao_roda_nos_dois_motores():
         M.exigir_declaracoes(_emp("TESTEV23Q", controlador_discricionario=True))
     fin = F.Financeira("TESTEV23QF", "x", "banco", preco=10.0, vpa=10.0, lpa_12m=1.0, roe_lp=0.15, roe_inicio=0.15,
                        payout=0.5, dpa_medio_5a=0.5, defasagem_meses=0.0, defasagem_fonte="teste",
-                       controlador_discricionario=True)
+                       controlador_discricionario=True, desconto_controlador={"tipo": "zero", "razao": "teste sintético"})
     with pytest.raises(ValueError, match="controlador_discricionario_fonte"):
         F.avaliar(fin, MK)
 

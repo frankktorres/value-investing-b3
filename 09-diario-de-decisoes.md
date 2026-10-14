@@ -670,3 +670,15 @@ consolidado onde o controlador está sem dado (SBSP3, SAPR11, TIMS3 2021–25, K
 
 ## 14/10/2026 — B12, Onda 4 textual (rotina autônoma)
 Corrigidos, **sem mudar motor nem palavra** (473 passed, 19 skipped; golden intacto): AUD-96 (rótulos "Ke ±1 p.p." dos PDFs agora dizem "prêmio de Ke" nas não financeiras e "rf real" nas financeiras; comentários dos motores), AUD-65 (texto da PETR4: o p25 de margem é de 2018, Brent ~US$ 71, não de 2016–17), AUD-87 (`encoding="utf-8"` nas leituras de macro de `lote5_petroleo.py`), AUD-48 (`02` lista as 5 condições da entrada parcial; parágrafo da exceção 1,50× no `01` sem o texto de 05/10 duplicado), AUD-105 (contagem de 76 testes datada de 05/10). **Fica aberto:** AUD-64 (tabela única de P/C por premissa na ficha da PETR4) → `BACKLOG.md` B23.
+
+## 14/10/2026 — B24 (AUD-41): razão obrigatória no desconto de controlador
+Decisão do Frank de 14/10 (`docs/DECISOES.md`). O §5 manda declarar o desconto "sempre, inclusive zero"; 29 tickers tinham zero com razão vazia. **Motor:**
+`motor_financeiras.exigir_razao_desconto` (início do `avaliar` das financeiras) e a mesma falta em `exigir_declaracoes` (não financeiras): razão vazia em qualquer
+`tipo` não roda. A função `filtros_1a4` citada na auditoria não existe; a trava ficou junto das outras declarações obrigatórias. **Razões:** só LEVE3 tinha fonte
+nota A (D3 do dossiê: FRE 2026, CVM id 158212; DFP 2025 nota 11) e recebeu a razão; os outros 28 recebem o marcador `SEM_RAZAO` = "sem razão documentada" — o texto
+das fichas cita só os PDFs de 07/09 e 03/10 ou nada, e não vira fonte. **Palavras: nenhuma mudou** (33 CARA, 5 NÃO CONCLUSIVO, 3 JUSTA antes e depois; golden
+intacto; a razão é texto e não entra em número). Suíte 499 passed, 1 skipped. Teste novo trava a contagem de 28 `SEM_RAZAO`; cada fonte A/B achada (FRE) reduz a
+conta (BACKLOG B26).
+**Revisão adversarial (14/10/2026).** Corrigidos antes do commit: a sensibilidade "sem desconto" do `gerar_pdf_lote2.py` montava razão vazia e derrubaria o PDF do
+lote 2 (agora tem razão; teste novo proíbe `"razao": ""` fora do default dos motores); a razão da LEVE3 citava a nota 11 para a compra de 2024 — a fonte é a DFP
+2025 nota 13 — e omitia a ressalva do D3 (se a compra contar como interferência consumada, o desconto vira cenários; decisão não tomada). Suíte 500 passed, 1 skipped.

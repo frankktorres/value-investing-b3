@@ -36,3 +36,4 @@
 executável: 8 (B09–B16) · decisão Frank: 9 (B04–B08, B17–B19, B22) · local: 5 (B01–B03, B20, B21) · total 22.
 | B24 | AUD-41 implementar: motor exige razão não vazia no desconto de controlador (decisão 14/10) | P2 | aberto | executável | B05 |
 | B25 | AUD-32/98/99 implementar: pré-registro contínuo, comparador = média do hall, uma linha por ticker×rodada (decisão 14/10) | P2 | aberto | executável | B06 |
+| B26 | Razão do desconto de controlador com fonte A (FRE de cada empresa) para os 28 tickers com `SEM_RAZAO`; cada uma achada baixa a contagem do `test_b24` | P3 | aberto | executável | B24 |

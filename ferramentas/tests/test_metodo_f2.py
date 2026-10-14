@@ -72,6 +72,7 @@ def test_d9_nao_vale_para_ciclica():
 
 # ---------------------------------------------------------------- D8: janela e quebra estrutural
 def _emp(tk, **kw):
+    kw.setdefault("desconto_controlador", {"tipo": "zero", "razao": "teste sintético"})
     return M.Industrial(tk, tk, kw.pop("perfil", "servicos"), preco=10.0, n_acoes=1_000_000.0, **kw)
 
 
@@ -192,7 +193,8 @@ def test_defasagem_manual_exige_fonte_nos_dois_motores():
         M.exigir_declaracoes(_emp("TESTEDEF", defasagem_meses=9))
     M.exigir_declaracoes(_emp("TESTEDEF", defasagem_meses=9, defasagem_fonte="JCP pago até 30/04/2027 (RI)"))
     fin = Financeira("TESTEF", "x", "banco", preco=10.0, vpa=10.0, lpa_12m=1.0, roe_lp=0.15,
-                     roe_inicio=0.15, payout=0.5, dpa_medio_5a=0.5, defasagem_meses=8)
+                     roe_inicio=0.15, payout=0.5, dpa_medio_5a=0.5, defasagem_meses=8,
+                     desconto_controlador={"tipo": "zero", "razao": "teste sintético"})
     with pytest.raises(ValueError, match="defasagem_fonte"):
         avaliar_fin(fin, __import__("lote1_bancos").MK)
 

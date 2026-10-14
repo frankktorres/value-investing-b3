@@ -79,7 +79,7 @@ def extras(emp, r):
     if tk == "PETR4":
         x["abandono"] = central_nopat(emp, r, r["nopat"], PETR_ABANDONO * (1 - 0.34))
         e2 = copy.deepcopy(emp)
-        e2.desconto_controlador = {"tipo": "zero", "razao": ""}
+        e2.desconto_controlador = {"tipo": "zero", "razao": "sensibilidade: sem o desconto de controlador"}
         x["sem_desc"] = central_rapido(e2)
         e3 = copy.deepcopy(emp)
         e3.da_receita = None

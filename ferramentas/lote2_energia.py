@@ -19,7 +19,7 @@ import sys
 
 from lote1_bancos import MK
 from juros import juros_do_periodo
-from motor_financeiras import Financeira, avaliar, interp
+from motor_financeiras import SEM_RAZAO, Financeira, avaliar, interp
 
 AQUI = pathlib.Path(__file__).parent
 CVM = series_vigente.carregar_cvm()     # AUD-103: com o LTM da temporada por cima, quando houver
@@ -114,7 +114,7 @@ def F(tk, nome, preco, payout, roe_inicio=None, desconto=None, qual=None, roe=No
     return Financeira(tk, nome, "utility", preco=preco, vpa=vpa, lpa_12m=ind(tk, "lpa"),
                       roe_lp=r_lp, roe_inicio=r_ini,
                       payout=payout, dpa_medio_5a=dpa5(tk), jcp_share=jcp(tk), pl_hist=pl_hist(tk),
-                      desconto_controlador=desconto or {"tipo": "zero", "razao": ""}, solidez_manual=solidez(tk),
+                      desconto_controlador=desconto or dict(tipo="zero", razao=SEM_RAZAO), solidez_manual=solidez(tk),
                       anos_pagos_10=anos_pagos(tk), qualitativo=qual or {},
                       # v2.3: peso 2 do controlador onde a interferência consumada está declarada no desconto (provisório, até o dossiê)
                       controlador_discricionario=desconto is not None,

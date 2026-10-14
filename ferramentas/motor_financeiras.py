@@ -157,6 +157,24 @@ def exigir_controlador(emp) -> None:
     if emp.controlador_discricionario and not emp.controlador_discricionario_fonte.strip():
         raise ValueError(f"{emp.ticker}: controlador_discricionario sem controlador_discricionario_fonte (§10)")
 
+
+# AUD-41 (B24, decisão de 14/10/2026): razão sem fonte nota A/B não se inventa — fica este marcador, que conta como declarado
+SEM_RAZAO = "sem razão documentada"
+
+
+def falta_razao_desconto(emp) -> str | None:
+    """§5: o desconto de controlador é "sempre declarado, inclusive zero" — razão vazia é afirmação sem fonte (AUD-41)."""
+    dc = emp.desconto_controlador
+    if not isinstance(dc, dict) or not str(dc.get("razao") or "").strip():
+        return f"desconto_controlador ({dc.get('tipo') if isinstance(dc, dict) else dc}) sem razão (§5; sem fonte A/B use SEM_RAZAO)"
+    return None
+
+
+def exigir_razao_desconto(emp) -> None:
+    falta = falta_razao_desconto(emp)
+    if falta:
+        raise ValueError(f"{emp.ticker}: {falta}")
+
 ESCALA_PRECO = [(0.60, 10), (0.65, 9), (0.70, 8), (0.80, 7), (0.90, 6), (1.00, 5),
                 (1.10, 4), (1.20, 3), (1.30, 2), (1.40, 1), (1.50, 0)]
 
@@ -336,6 +354,7 @@ def ke_implicito(emp: Financeira, mk: Mercado) -> float | None:
 
 
 def avaliar(emp: Financeira, mk: Mercado) -> dict:
+    exigir_razao_desconto(emp)
     ke, pi = mk.ke_nom, mk.pi
     g = g_perpetuo(emp, mk)
     base = ancoras(emp, mk, emp.roe_lp)

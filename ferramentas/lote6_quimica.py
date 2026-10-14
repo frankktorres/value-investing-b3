@@ -31,7 +31,7 @@ from derivados_zip import obter
 from lote1_bancos import MK
 from lote2_energia import pl_hist, solidez
 from lote3_agro import jcp
-from motor_financeiras import Financeira
+from motor_financeiras import SEM_RAZAO, Financeira
 from motor_financeiras import avaliar as avaliar_fin
 from motor_nao_financeiras import CVM, SI, Industrial, avaliar
 
@@ -157,7 +157,7 @@ def egie():
     # P/VP justificado é linear no ROE: ROE combinado = média ponderada (antigo × Ke no dinheiro novo) ⇔ valor antigo + caixa captado
     blend = lambda r: (1 - w) * r + w * MK.ke_nom
     dados = dict(pl_old=pl_old, pl_new=pl_new, roes=roes, roe_old_lp=roe_old_lp, roe_old_ini=roe_old_ini, peso_novo=w)
-    return Financeira("EGIE3", "Engie Brasil Energia", "utility", preco=30.70, vpa=pl_new * 1000 / N["EGIE3"], lpa_12m=l["lucro_controlador"] * 1000 / N["EGIE3"],
+    return Financeira("EGIE3", "Engie Brasil Energia", "utility", desconto_controlador=dict(tipo="zero", razao=SEM_RAZAO), preco=30.70, vpa=pl_new * 1000 / N["EGIE3"], lpa_12m=l["lucro_controlador"] * 1000 / N["EGIE3"],
                       roe_lp=blend(roe_old_lp), roe_inicio=blend(roe_old_ini), payout=0.55,
                       dpa_medio_5a=sum(SI["EGIE3"]["dpa_por_ano_datacom"].get(str(a), 0) for a in range(2021, 2026)) / 5,
                       jcp_share=jcp("EGIE3"), pl_hist=pl_hist("EGIE3"), solidez_manual=solidez("EGIE3"),
@@ -169,18 +169,25 @@ EGIE, EGIE_DADOS = egie()
 
 # ---------------------------------------------------------------- não financeiras
 # Preços = fechamento oficial (PREULT do COTAHIST) de 02/10/2026 — data e fonte em precos_hall.py (AUD-67).
+# B24 (AUD-41): a única razão com fonte nota A — o D3 do dossiê de 06–08/10 (`dossie/insumos/LEVE3.json`)
+LEVE3_RAZAO = ("zero pelo §5 (consumado × prospectivo), conclusão do D3 do dossiê: MAHLE com 61,0% do votante [FRE 2026, CVM id 158212, "
+               "nota A]; nenhuma interferência desfavorável consumada em 2017–2026; a compra de R$ 668 mi do dono (2024) passou por comitê "
+               "independente e dois laudos [DFP 2025 nota 13, nota A]; partes relacionadas (nota 11) já na nota do controlador e no peso 2 "
+               "do discricionário (descontar de novo violaria o §5). Ressalva do D3: se a compra de 2024 contar como interferência "
+               "consumada, o desconto vira 'cenarios' — decisão não tomada; ver dossie/insumos/LEVE3.json")
+
 EMPRESAS = [
-    Industrial("GGBR4", "Gerdau (PN)", "ciclica", preco=26.10, n_acoes=N["GGBR4"], g_real=0.01, jcp_share=jcp("GGBR4"),
+    Industrial("GGBR4", "Gerdau (PN)", "ciclica", desconto_controlador=dict(tipo="zero", razao=SEM_RAZAO), preco=26.10, n_acoes=N["GGBR4"], g_real=0.01, jcp_share=jcp("GGBR4"),
                receita_meio=ltm_de(CVM["GGBR4"])["receita"] * ACO["fator"], outras_liquidas=True, impairment_normalizado=True,
                receita_meio_fonte="receita 12m × aço de meio de ciclo ÷ aço dos 12m (BLS WPU1017 × PTAX, R$ de hoje)",
                qualitativo=QUAL(3, 4, 4, 2, 3)),
-    Industrial("UNIP6", "Unipar Carbocloro (PNB)", "ciclica", preco=57.02, n_acoes=N["UNIP6"], g_real=0.01, jcp_share=jcp("UNIP6"),
+    Industrial("UNIP6", "Unipar Carbocloro (PNB)", "ciclica", desconto_controlador=dict(tipo="zero", razao=SEM_RAZAO), preco=57.02, n_acoes=N["UNIP6"], g_real=0.01, jcp_share=jcp("UNIP6"),
                anos_ciclo=[str(a) for a in range(2017, 2026)], receita_meio=ltm_de(CVM["UNIP6"])["receita"] * CLORO["fator"], outras_liquidas=True,
                janela_razao="Indupa consolidada em dez/2016: 2016 traz ganho de compra vantajosa e 1 mês de receita da Argentina "
                             "(e a série de soda não cobre jan–set/2016)",
                receita_meio_fonte="receita 12m × cesta soda/PVC de meio de ciclo ÷ cesta dos 12m (BLS × PTAX, R$ de hoje)",
                qualitativo=QUAL(3, 2, 2, 2, 2)),
-    Industrial("LEVE3", "Mahle Metal Leve", "servicos", preco=34.43, n_acoes=N["LEVE3"], g_real=0.01, jcp_share=jcp("LEVE3"),
+    Industrial("LEVE3", "Mahle Metal Leve", "servicos", desconto_controlador=dict(tipo="zero", razao=LEVE3_RAZAO), preco=34.43, n_acoes=N["LEVE3"], g_real=0.01, jcp_share=jcp("LEVE3"),
                outras_liquidas=True, pl_hist=pl_hist("LEVE3"),
                # 08/10/2026: notas por evidência do dossiê (regra 11, DOSSIES/2026-10-08-LEVE3.md) no lugar das arbitradas (4, 3, 3, 3, 3)
                qualitativo=QUAL(4, 1, 2, 3, 2), qualitativo_origem="regra 11 (dossiê 06/10/2026)", controlador_discricionario=True,

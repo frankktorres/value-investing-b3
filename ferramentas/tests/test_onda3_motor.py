@@ -16,7 +16,8 @@ MK = Mercado(rf_real=0.05, pi=0.05)
 
 def _emp(**kw):
     base = dict(ticker="T", nome="T", perfil="banco", preco=10.0, vpa=20.0, lpa_12m=2.0, roe_lp=0.10, roe_inicio=0.10,
-                payout=0.5, dpa_medio_5a=1.0, defasagem_meses=0, defasagem_fonte="teste")
+                payout=0.5, dpa_medio_5a=1.0, defasagem_meses=0, defasagem_fonte="teste",
+                desconto_controlador={"tipo": "zero", "razao": "teste sintético"})
     base.update(kw)
     return Financeira(**base)
 
