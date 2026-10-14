@@ -1,5 +1,5 @@
 # PROJECT BRIEF — Mesa de Value Investing B3
-*Versão de 13/10/2026 (rev. Onda 3 concluída, doutrina v2.6; B09/B10 da rotina) · gerado por `/brief` · fonte: repositório, memória do projeto e `docs/auditoria/AUDITORIA_2026-10-08.md`*
+*Versão de 14/10/2026 (rev. B24/B25/B23/B15/B11; doutrina v2.6) · gerado por `/brief` · fonte: repositório, memória do projeto e `docs/auditoria/AUDITORIA_2026-10-08.md`*
 
 ## 1. Projeto
 Mesa de análise fundamentalista da B3 para dividendos/JCP e longo prazo: doutrina escrita (v2.6) + motores de valuation em Python que
@@ -37,9 +37,9 @@ MVP de uso pessoal, maduro no cálculo. Um usuário real, sem terceiros. Prazo e
    AUD-03 IFRS 16 na PETR4; AUD-04 follow-on ISAE4 — corrigidos na Onda 1.1). Na 1.2 (v2.4) o custo de capital passou a depender da dívida
    (Ke por Hamada, pesos no ponto fixo, Kd sintético): os muito alavancados ficaram com Ke real de 21–27% (KLBN11 77%) — a vigiar.
 2. **Premissas digitadas no código e dados em data fixa.** Mercado de 02–06/10, premissas nos `lote*.py`, parte dos dados da StatusInvest (C);
-   sem banco nem coleta diária — bloqueia o SaaS.
+   sem banco nem coleta diária — bloqueia o SaaS. Inventário e proposta de migração em `docs/PREMISSAS-B15.md` (445 campos fora do default; nada movido).
 3. **Régua sem validação empírica.** Backtest parou: proxy reproduziu a palavra em 70,7% (portão ≥ 80%). Validação agora só prospectiva,
-   lenta por natureza.
+   lenta por natureza. Pré-registro fixado em 14/10 (B25): IC de postos P/C × retorno excedente sobre a média do hall; 1ª leitura possível em out/2027.
 4. **Universo que não gera compra.** Blue chips eficientes: quase tudo JUSTA/CARA, zero compra; triagem de toda a B3 deixou 5 de 104 no portão.
 5. **Risco de burocracia.** O projeto paralelo (`analisador/`) morreu por regra nova a cada sessão sem decisão; o próprio repo registra sinais
    da mesma doença. Comitê único (mesma família de modelo; 2º comitê pausado).
@@ -57,7 +57,8 @@ MVP de uso pessoal, maduro no cálculo. Um usuário real, sem terceiros. Prazo e
 - **Dados sensíveis:** sem dados de saúde/pacientes. Dados financeiros pessoais (carteira) — tratar como privados.
 - **Regulatório:** hoje uso próprio. Para SaaS com veredito a terceiros, provável enquadramento CVM (analista — Res. CVM 20/2021; consultor —
   Res. CVM 19/2021) — **a confirmar com fonte A**.
-- **Licenças:** repo sem LICENSE. Termos de uso da B3 (COTAHIST) e da StatusInvest para redistribuição: não informado.
+- **Licenças:** repo sem LICENSE. B3 (lido, nota A): site só para uso pessoal; dados históricos/fim de dia livres para distribuidor/redistribuidor
+  (Política de Market Data v3.0.4, §7.9–7.10) — SaaS exige enquadramento. StatusInvest: termos bloqueados (403). Ver `docs/TERMOS-DE-USO-FONTES.md`.
 
 ## 8. Ferramentas usadas / descartadas
 - **Usadas:** Claude Code (análise, coleta, agente `adversario`, auditoria multiagente), git + GitHub privado, pytest + golden, reportlab,
@@ -100,3 +101,4 @@ MVP de uso pessoal, maduro no cálculo. Um usuário real, sem terceiros. Prazo e
 - 10/10/2026 (checkup e rodada): monitor semanal rodado (boletim de 10/10, histórico em upsert); `python -m dossie.gerar HYPE3` sem `--data` sobrescreveu o veredito de 02/10 (restaurado do git, cópia em `_historico/2026-10-10 hype3 regerado pelo passo 4/`); poka-yoke: `gerar` recusa regravar veredito já registrado no prospectivo (`dossie/tests/test_gerar_recusa.py`); cabeçalhos do `03`, README, prompt de sexta e `04` alinhados; Onda 3 aberta como marco 3.
 - 10/10/2026 (Onda 3): doutrina v2.6 (AUD-10 trava na palavra final; AUD-15/34/53 OE do controlador, freio do declínio, DCF sem cenário negativo; AUD-42 `entrada_parcial`); `series_vigente.carregar_cvm` + `CVM_SOBREPOSTO` (o LTM do 3T26 chega às premissas do import, AUD-103/85); coletor da CVM sem lucro do controlador zerado e com ações do ITR (AUD-68); golden, 03 e prompt de sexta regravados; nenhuma palavra mudou; estágio e marco 3 atualizados.
 - 13/10/2026 (rotina na nuvem): carteira do monitor saiu do código para `ferramentas/carteira_tickers.json` (só tickers); `requirements.lock` (fechamento transitivo, referência) ao lado de `requirements.txt`; rodada de 10/10 conferida (já registrada no `09` e acima).
+- 14/10/2026 (rotina, B24/B25/B23/B15/B11): motor exige razão no desconto de controlador (28 com "sem razão documentada", LEVE3 com FRE nota A; nenhuma palavra mudou); pré-registro contínuo no `registro_prospectivo.py`; tabela de P/C por premissa da PETR4 no gerador do lote 5 (PDF não reemitido); relatório B15; termos da B3 lidos, StatusInvest 403.

@@ -29,6 +29,7 @@ gerar_pdf_lote1.P = P
 from lote1_bancos import DATA_BASE, MK
 from lote5_petroleo import (EMPRESAS, FATOR_BARRIL, FORA_DO_HALL, FX_SPOT, M, PETR_ABANDONO, PETR_ATUARIAL, PETR_CENARIOS)
 from lote5_textos import AGENDA, ANTES, T
+from motor_financeiras import palavra as faixa_regua
 from motor_nao_financeiras import CVM, SI, avaliar, estrutura_de_capital, valores
 
 sys.stdout.reconfigure(encoding="utf-8")
@@ -89,6 +90,27 @@ def extras(emp, r):
         e4.outros_passivos = PETR_ATUARIAL
         e4.outros_passivos_fonte = "déficit atuarial (sensibilidade; o custo atuarial já está no EBIT)"
         x["com_atuarial"] = central_rapido(e4)
+        # B23 (AUD-64): as premissas que movem a palavra, uma de cada vez, numa tabela só
+        e5 = copy.deepcopy(emp)
+        e5.anos_ciclo = [str(y) for y in range(2016, 2026)]
+        x["janela_10a"] = central_rapido(e5)            # sem o corte IFRS 16 (2016–18 de volta, com o aluguel contado duas vezes)
+        e6 = copy.deepcopy(emp)
+        e6.outras_liquidas = False
+        x["sem_outras"] = central_rapido(e6)            # outras receitas/despesas sem o corte do não recorrente
+        R = r["op"]["receita_meio"]
+        x["capex_ltm_pct"] = ltm["capex"] / ltm["receita"]
+        aj_ltm = min(0.0, emp.da_receita - x["capex_ltm_pct"])   # todo o capex LTM como manutenção, no lugar da mediana de 10 anos
+        x["capex_ltm"] = central_nopat(emp, r, r["nopat"] + R * (aj_ltm - r["op"]["ajuste_manut"]) * (1 - r["aliquota"]))
+        x["pc_premissa"] = [(nome, c, emp.preco / c if c > 0 else None) for nome, c in (
+            ("Caso base (central publicado)", r["central"]),
+            ("Sem desconto de controlador", x["sem_desc"]),
+            ("Janela 2016–25 (sem o corte IFRS 16)", x["janela_10a"]),
+            ("Sem corte de \"outras\" (não recorrente)", x["sem_outras"]),
+            ("Margem pela regra EBIT do Lote 3", x["regra_ebit"]),
+            ("Brent US$ 70 permanente", x["brent"][70]),
+            ("Déficit atuarial como dívida", x["com_atuarial"]),
+            ("Abandono como dívida (líquido de IR)", x["abandono"]),
+            (f"Capex LTM ({pct(x['capex_ltm_pct'])} da receita) todo manutenção", x["capex_ltm"]))]
     if tk == "PRIO3":
         R = r["op"]["receita_meio"]
         x["imposto"] = central_nopat(emp, r, r["nopat"] - IMPOSTO_EXPORT * R * (1 - r["aliquota"]))
@@ -310,6 +332,13 @@ def ficha(emp, r, rank, story):
                             [52 * mm] + [21.6 * mm] * 6))
         story.append(P(f"Sensibilidade ao Brent permanente: {pct(CAPTURA, 0)} da receita incremental vira EBIT (royalties, participação especial e "
                        "custos atrelados ao preço — HIPÓTESE), g = 0. Não é cenário de valor: o central usa o barril de meio de ciclo.", "pi"))
+        story.append(Spacer(1, 2))
+    if "pc_premissa" in x:
+        story.append(tabela([["P/C por premissa (uma de cada vez; preço R$ " + br(emp.preco) + ")", "Central (R$)", "P/C", "Faixa da régua"]] +
+                            [[n, br(c), br(q, 3) if q is not None else "—", faixa_regua(q) if q is not None else "NÃO CONCLUSIVO"]
+                             for n, c, q in x["pc_premissa"]],
+                            [100 * mm, 26 * mm, 20 * mm, 36 * mm]))
+        story.append(P("Faixa da régua = só o corte de preço (0,70/0,90/1,10); a palavra publicada segue a ordem de precedência do §9.", "pi"))
         story.append(Spacer(1, 2))
     story.append(P(f"<b>Controlador.</b> {tx['controlador']}", "p"))
     if emp.desconto_controlador["tipo"] == "cenarios":
