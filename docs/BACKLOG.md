@@ -12,8 +12,8 @@
 | B02 | Monitor semanal (sexta 08:00, Agendador) → `BOLETINS/AAAA-MM-DD-monitor.md`; ler quem cruzou compra/saída | P1 | rodando | local | README |
 | B03 | `registro_prospectivo.py` a cada rodada aprovada (validação da régua é só prospectiva) | P1 | recorrente | local | Brief §5.3 |
 | B04 | Etapa 6 / F6 Carteira: §12 da doutrina (tamanho de posição, concentração, caixa, regra de troca ≥ 3 p.p. líquidos) | P2 | bloqueado (respostas do Frank) | decisão Frank | Plano F6 |
-| B05 | AUD-41: 29 de 41 tickers com desconto de controlador zero sem razão registrada — dar razão ou exigir razão não vazia no motor (`filtros_1a4`) | P2 | aceito no 09, pendente de decisão | decisão Frank | Auditoria Onda 3 |
-| B06 | Pré-registro AUD-32/98/99: critério contínuo (postos P/C × retorno excedente), comparador = média do hall (não Ibovespa), regra de uma linha por (ticker, rodada) | P2 | pendente de decisão | decisão Frank | Auditoria Onda 3 |
+| B05 | AUD-41: 29 de 41 tickers com desconto de controlador zero sem razão registrada — dar razão ou exigir razão não vazia no motor (`filtros_1a4`) | P2 | decidido 14/10 → missão B24 | executável | Auditoria Onda 3 |
+| B06 | Pré-registro AUD-32/98/99: critério contínuo (postos P/C × retorno excedente), comparador = média do hall (não Ibovespa), regra de uma linha por (ticker, rodada) | P2 | decidido 14/10 → missão B25 | executável | Auditoria Onda 3 |
 | B07 | Perguntas do brief §11: orçamento mensal, SaaS só seu ou de terceiros (enquadramento CVM), objetivo acadêmico, agente de sexta no Desktop ainda roda?, fonte paga no lugar da StatusInvest, licença do código | P2 | aberto | decisão Frank | Brief §11 |
 | B08 | Dossiês das finalistas da triagem (5 de 104 passaram no portão; fila em `prospectivo/triagem.jsonl`); parecer de saúde/farma é do Frank | P2 | aberto | decisão Frank | Plano F5 |
 | B09 | Registrar no `09` e no brief a rodada de 10/10 (boletim, 2 pastas em `_historico/`) se ainda não estiver | P2 | feito 13/10 (já estava) | executável | Checkup 10/10 |
@@ -34,3 +34,5 @@
 
 ## Contagem por tipo
 executável: 8 (B09–B16) · decisão Frank: 9 (B04–B08, B17–B19, B22) · local: 5 (B01–B03, B20, B21) · total 22.
+| B24 | AUD-41 implementar: motor exige razão não vazia no desconto de controlador (decisão 14/10) | P2 | aberto | executável | B05 |
+| B25 | AUD-32/98/99 implementar: pré-registro contínuo, comparador = média do hall, uma linha por ticker×rodada (decisão 14/10) | P2 | aberto | executável | B06 |
