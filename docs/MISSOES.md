@@ -29,3 +29,4 @@
 ## Passagem de turno
 *A skill `/fechar` reescreve esta seção: o que ficou pendente, onde parou, próximo passo.*
 - 13/10/2026: infraestrutura da rotina criada (hooks, backlog, skill). Nada em andamento.
+- 14/10/2026 (fim do dia): B24, B25, B23, B15 e B11 (parte B3) feitas e publicadas (f03636e, 9bde979, 8d780f8); nada em andamento. Próximas executáveis: B11 (StatusInvest, 403), B26 (FRE nota A para os 28 `SEM_RAZAO`). Marco seguinte é local: ITR 3T26 (`temporada.py`, B01), que também reemite o PDF do lote 5 com a tabela da B23.
