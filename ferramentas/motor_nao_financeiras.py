@@ -983,7 +983,7 @@ def avaliar(emp: Industrial, mk: Mercado) -> dict:
     peg = (pl_atual / (100 * g_nom)) if pl_atual else None
     pegy = (pl_atual / (100 * (g_nom + dy))) if pl_atual else None
 
-    # sensibilidade: WACC via Ke ±1 p.p. × margem ±2 p.p.
+    # sensibilidade: Ke do acionista ±1 p.p. (prêmio; Kd fixo; rf não move — difere das financeiras, AUD-96) × margem ±2 p.p.
     sens = {}
     for dk in (-0.01, 0, 0.01):
         for dm in (-0.02, 0, 0.02):

@@ -286,7 +286,7 @@ def ficha(emp, r, rank, story):
     for k, nome in tx["sens_extra"]:
         rec.append([nome, f"R$ {br(x[k])}", f"P/C {br(emp.preco / x[k])} — sensibilidade"])
     ts = [["Central (R$)", "margem −2 p.p.", "margem base", "margem +2 p.p."]]
-    for dk, nome in ((-0.01, "Ke −1 p.p."), (0, "Ke da casa"), (0.01, "Ke +1 p.p.")):
+    for dk, nome in ((-0.01, "Ke −1 p.p. (prêmio de Ke)"), (0, "Ke da casa"), (0.01, "Ke +1 p.p. (prêmio de Ke)")):
         ts.append([nome] + [br(r["sens"][(dk, dm)]) for dm in (-0.02, 0, 0.02)])
     lado = Table([[tabela(rec, [44 * mm, 18 * mm, 30 * mm]), tabela(ts, [24 * mm, 20 * mm, 20 * mm, 20 * mm])]], colWidths=[94 * mm, 88 * mm])
     lado.setStyle(TableStyle([("VALIGN", (0, 0), (-1, -1), "TOP"), ("LEFTPADDING", (0, 0), (-1, -1), 0)]))
@@ -399,7 +399,7 @@ def ficha_itsa(r, story):
     rec += [[f"SOTP com as demais a mercado (RI 31/08, R$ 16,6 bi [H])", f"R$ {br(x['outras_merc'])}", "sensibilidade"],
             [f"SOTP com o Itaú a mercado (R$ {br(ITUB4.preco)})", f"R$ {br(x['nav_merc'])}", "sensibilidade — não é valor da casa"]]
     ts = [["Central (R$)", "ROE −2 p.p.", "ROE base", "ROE +2 p.p."]]
-    for dk, nome in ((-0.01, "Ke −1 p.p."), (0, "Ke da casa"), (0.01, "Ke +1 p.p.")):
+    for dk, nome in ((-0.01, "Ke −1 p.p. (rf real)"), (0, "Ke da casa"), (0.01, "Ke +1 p.p. (rf real)")):
         ts.append([nome] + [br(r["sens"][(dk, dr)]) for dr in (-0.02, 0, 0.02)])
     lado = Table([[tabela(rec, [44 * mm, 18 * mm, 30 * mm]), tabela(ts, [24 * mm, 20 * mm, 20 * mm, 20 * mm])]], colWidths=[94 * mm, 88 * mm])
     lado.setStyle(TableStyle([("VALIGN", (0, 0), (-1, -1), "TOP"), ("LEFTPADDING", (0, 0), (-1, -1), 0)]))

@@ -19,7 +19,7 @@
 | B09 | Registrar no `09` e no brief a rodada de 10/10 (boletim, 2 pastas em `_historico/`) se ainda não estiver | P2 | feito 13/10 (já estava) | executável | Checkup 10/10 |
 | B10 | Onda 4 (qualidade): AUD-49 (config da carteira, lock de dependências, requirements) | P2 | feito 13/10 | executável | Auditoria Onda 4 |
 | B11 | Onda 4: AUD-106 termos de uso das fontes (B3 COTAHIST, StatusInvest) para redistribuição — só fonte nota A | P3 | aberto | executável | Auditoria Onda 4 |
-| B12 | Onda 4: AUD-96 rótulos, AUD-64/65 fichas, AUD-48/105 textos de documentação, AUD-87 encoding | P3 | aberto | executável | Auditoria Onda 4 |
+| B12 | Onda 4: AUD-96 rótulos, AUD-64/65 fichas, AUD-48/105 textos de documentação, AUD-87 encoding | P3 | feito 14/10 (AUD-64 → B23) | executável | Auditoria Onda 4 |
 | B13 | Onda 4: AUD-57/60 premissas provisórias e sensibilidade | P3 | aberto | executável | Auditoria Onda 4 |
 | B14 | Ke real de 21–27% nos muito alavancados (KLBN11 77%): vigiar/revisar o Kd sintético e Hamada | P3 | aberto | executável | Brief §5.1 |
 | B15 | Premissas digitadas nos `lote*.py` e mercado em data fixa: mover para dados + coleta periódica (bloqueia o SaaS) | P3 | aberto | executável | Brief §5.2 |
@@ -29,6 +29,7 @@
 | B19 | Backtest: proxy 70,7% (portão ≥ 80%) — retomar ou abandonar de vez | P4 | parado | decisão Frank | Plano F3 |
 | B20 | Backup `backup_dados.py` (OneDrive + git bundle) em dia; disco C com pouco espaço (~4,6 GB) | P3 | recorrente | local | Brief §4, §7 |
 | B21 | Suíte do backtest (308 testes, ~13 min) rodar sozinha e com a máquina folgada após mudança em `Mercado`/motores | P3 | sob demanda | local | Brief §4 |
+| B23 | AUD-64: tabela única de P/C por premissa (janela IFRS 16, sem desconto de controlador, sem corte de "outras", atuarial, capex LTM) na ficha da PETR4 (`lote5_textos.py`) | P3 | aberto | executável | Auditoria Onda 4 |
 | B22 | Executar compras/vendas (ex.: posição em ITSA4 acima da saída) — **nunca pelo Claude** | — | do Frank | decisão Frank | Regra: sem ordem de compra/venda |
 
 ## Contagem por tipo

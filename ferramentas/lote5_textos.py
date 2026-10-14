@@ -33,7 +33,7 @@ T = {
             "ciclo vem de 10 anos de Brent × câmbio em reais de hoje (R$ {barril}/bbl, ≈ US$ {brent_eq}), com arrendamentos (FPSOs) na dívida, "
             "ganhos de desinvestimento de 2019–22 fora da margem e o mesmo desconto de ~8% em cenários. Razão (c): método v1 sem conta reproduzível.",
     autocritica=["A palavra depende do barril: a US$ 70 permanente seria CARA (R$ {b70}); a US$ 90, R$ {b90}. O preço embute Ke de {ke_impl}.",
-                 "O DCF pondera margem p25 ({m25}, anos de 2016–17 com Brent ~US$ 50) a 25%; sem esse peso o central iria ao EPV (R$ {epv}).",
+                 "O DCF pondera margem p25 ({m25}, 25º percentil da margem EBIT dos 10 anos — é de 2018, Brent ~US$ 71, e não dos anos de petróleo barato) a 25%; sem esse peso o central iria ao EPV (R$ {epv}).",
                  "Impairment recorrente ({imp_rec} da receita, mediana de 10 anos) entra como custo; pela regra de margem EBIT do Lote 3 o central seria R$ {regra_ebit}. "
                  "Déficit atuarial fora da ponte porque o custo já está no EBIT; se ele também fosse dívida, R$ {com_atuarial}.",
                  "Abandono fora da ponte é a premissa mais frágil: a D&A mediana supera o capex mediano, mas a onda de descomissionamento da Bacia de Campos "

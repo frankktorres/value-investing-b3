@@ -150,7 +150,7 @@ def ficha(emp, r, story):
     rec = [["Âncora", "Valor", "Peso"]] + [[k, f"R$ {br(v)}", "mediana"] for k, v in r["ancoras"].items()]
     rec.append(["<b>Valor central</b>", f"<b>R$ {br(r['central'])}</b>", f"dispersão {br(r['dispersao'])}× · {r['confianca']}"])
     ts = [["Central (R$)", "ROE −2 p.p.", "ROE base", "ROE +2 p.p."]]
-    for dk, nome in ((-0.01, "Ke −1 p.p."), (0, "Ke da casa"), (0.01, "Ke +1 p.p.")):
+    for dk, nome in ((-0.01, "Ke −1 p.p. (rf real)"), (0, "Ke da casa"), (0.01, "Ke +1 p.p. (rf real)")):
         ts.append([nome] + [br(r["sens"][(dk, dr)]) for dr in (-0.02, 0, 0.02)])
     lado = Table([[tabela(rec, [40 * mm, 20 * mm, 30 * mm]), tabela(ts, [24 * mm, 20 * mm, 20 * mm, 20 * mm])]], colWidths=[92 * mm, 90 * mm])
     lado.setStyle(TableStyle([("VALIGN", (0, 0), (-1, -1), "TOP"), ("LEFTPADDING", (0, 0), (-1, -1), 0)]))

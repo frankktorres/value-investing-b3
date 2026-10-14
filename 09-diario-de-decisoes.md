@@ -667,3 +667,6 @@ do golden; motivos de `entrada_parcial` com vírgula decimal. Ficam registrados:
 única (BBSE3) pode ser elegível; os PDFs antigos davam "aplicável" a B3SA3, CPFE3 e CXSE3 já CARA, o que a regra nova corrige; (b) ações do LTM da HYPE3 seguem
 as do DFP (632,95 mi contra 703,99 mi no ITR, emissão real) — o central não muda (lote 4 usa as ações do ZIP) e a temporada do 3T26 troca; (c) o OE usa o
 consolidado onde o controlador está sem dado (SBSP3, SAPR11, TIMS3 2021–25, KLBN11 2025, KEPL3 2021): série heterogênea, fallback declarado no §11.
+
+## 14/10/2026 — B12, Onda 4 textual (rotina autônoma)
+Corrigidos, **sem mudar motor nem palavra** (473 passed, 19 skipped; golden intacto): AUD-96 (rótulos "Ke ±1 p.p." dos PDFs agora dizem "prêmio de Ke" nas não financeiras e "rf real" nas financeiras; comentários dos motores), AUD-65 (texto da PETR4: o p25 de margem é de 2018, Brent ~US$ 71, não de 2016–17), AUD-87 (`encoding="utf-8"` nas leituras de macro de `lote5_petroleo.py`), AUD-48 (`02` lista as 5 condições da entrada parcial; parágrafo da exceção 1,50× no `01` sem o texto de 05/10 duplicado), AUD-105 (contagem de 76 testes datada de 05/10). **Fica aberto:** AUD-64 (tabela única de P/C por premissa na ficha da PETR4) → `BACKLOG.md` B23.

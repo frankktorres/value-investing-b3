@@ -297,7 +297,7 @@ def ficha(emp, r, story):
     rec.append(["<b>Valor central</b>", f"<b>R$ {br(r['central'])}</b>", f"dispersão {br(r['dispersao'])}× · confiança {r['confianca']}"])
     sens = r["sens"]
     tsens = [["Central (R$)", "ROE −2 p.p.", "ROE base", "ROE +2 p.p."]]
-    for dk, nome in ((-0.01, "Ke −1 p.p."), (0, "Ke da casa"), (0.01, "Ke +1 p.p.")):
+    for dk, nome in ((-0.01, "Ke −1 p.p. (rf real)"), (0, "Ke da casa"), (0.01, "Ke +1 p.p. (rf real)")):
         tsens.append([nome] + [br(sens[(dk, dr)]) for dr in (-0.02, 0, 0.02)])
     lado = Table([[tabela(rec, [38 * mm, 22 * mm, 30 * mm]), tabela(tsens, [24 * mm, 20 * mm, 20 * mm, 20 * mm])]],
                  colWidths=[92 * mm, 90 * mm])

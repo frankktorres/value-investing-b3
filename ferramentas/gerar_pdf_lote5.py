@@ -298,7 +298,7 @@ def ficha(emp, r, rank, story):
     if nc:
         rec += [[f"Preço ÷ {k}", (br(v_) + "×") if v_ else "n.a. (âncora ≤ 0)", "margem por método"] for k, v_ in x["por_metodo"].items()]
     ts = [["Central (R$)", "margem −2 p.p.", "margem base", "margem +2 p.p."]]
-    for dk, nome in ((-0.01, "Ke −1 p.p."), (0, "Ke da casa"), (0.01, "Ke +1 p.p.")):
+    for dk, nome in ((-0.01, "Ke −1 p.p. (prêmio de Ke)"), (0, "Ke da casa"), (0.01, "Ke +1 p.p. (prêmio de Ke)")):
         ts.append([nome] + [br(r["sens"][(dk, dm)]) for dm in (-0.02, 0, 0.02)])
     lado = Table([[tabela(rec, [40 * mm, 20 * mm, 30 * mm]), tabela(ts, [24 * mm, 20 * mm, 20 * mm, 20 * mm])]], colWidths=[92 * mm, 90 * mm])
     lado.setStyle(TableStyle([("VALIGN", (0, 0), (-1, -1), "TOP"), ("LEFTPADDING", (0, 0), (-1, -1), 0)]))

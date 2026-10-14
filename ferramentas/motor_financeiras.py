@@ -430,7 +430,7 @@ def avaliar(emp: Financeira, mk: Mercado) -> dict:
         g_r = g_de(emp, mk, roe_implicito)
         roe_implicito = g_r + (emp.preco / emp.vpa) * (ke - g_r)
 
-    # sensibilidade do central: Ke ±1 p.p. e ROE_lp ±2 p.p.
+    # sensibilidade do central: Ke ±1 p.p. movendo a rf real (financeiras; AUD-96) e ROE_lp ±2 p.p.
     def central_com(ke_shift=0.0, roe_shift=0.0):
         mk2 = Mercado(mk.rf_real + ke_shift, mk.pi, premio=mk.premio)
         a = ancoras(emp, mk2, emp.roe_lp + roe_shift)
