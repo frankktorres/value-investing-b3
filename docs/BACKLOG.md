@@ -18,10 +18,10 @@
 | B08 | Dossiês das finalistas da triagem (5 de 104 passaram no portão; fila em `prospectivo/triagem.jsonl`); parecer de saúde/farma é do Frank | P2 | aberto | decisão Frank | Plano F5 |
 | B09 | Registrar no `09` e no brief a rodada de 10/10 (boletim, 2 pastas em `_historico/`) se ainda não estiver | P2 | feito 13/10 (já estava) | executável | Checkup 10/10 |
 | B10 | Onda 4 (qualidade): AUD-49 (config da carteira, lock de dependências, requirements) | P2 | feito 13/10 | executável | Auditoria Onda 4 |
-| B11 | Onda 4: AUD-106 termos de uso das fontes (B3 COTAHIST, StatusInvest) para redistribuição — só fonte nota A | P3 | aberto | executável | Auditoria Onda 4 |
+| B11 | Onda 4: AUD-106 termos de uso das fontes (B3 COTAHIST, StatusInvest) para redistribuição — só fonte nota A | P3 | aberto (14/10: páginas de termos B3 500 / StatusInvest 403; tentar de novo ou Frank cola o texto) | executável | Auditoria Onda 4 |
 | B12 | Onda 4: AUD-96 rótulos, AUD-64/65 fichas, AUD-48/105 textos de documentação, AUD-87 encoding | P3 | feito 14/10 (AUD-64 → B23) | executável | Auditoria Onda 4 |
-| B13 | Onda 4: AUD-57/60 premissas provisórias e sensibilidade | P3 | aberto | executável | Auditoria Onda 4 |
-| B14 | Ke real de 21–27% nos muito alavancados (KLBN11 77%): vigiar/revisar o Kd sintético e Hamada | P3 | aberto | executável | Brief §5.1 |
+| B13 | Onda 4: AUD-57/60 premissas provisórias e sensibilidade | P3 | relatório feito 14/10 (propostas pendentes) | executável | Auditoria Onda 4 |
+| B14 | Ke real de 21–27% nos muito alavancados (KLBN11 77%): vigiar/revisar o Kd sintético e Hamada | P3 | relatório feito 14/10 (KLBN11 hoje 54,7%) | executável | Brief §5.1 |
 | B15 | Premissas digitadas nos `lote*.py` e mercado em data fixa: mover para dados + coleta periódica (bloqueia o SaaS) | P3 | aberto | executável | Brief §5.2 |
 | B16 | Confirmar com fonte A o enquadramento CVM (Res. 20/2021 analista; Res. 19/2021 consultor) se houver SaaS | P4 | aberto | executável | Brief §7 |
 | B17 | Rumo SaaS (front-end, dados diários, licença) | P4 | parado (sem prazo) | decisão Frank | Brief §2 |

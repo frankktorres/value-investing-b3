@@ -3,8 +3,9 @@
 
 ## 14/10/2026 — turno noite (B12)
 - Feito: B12 (AUD-96/65/87/48/105; só texto, rótulos e encoding). 473 passed, 19 skipped; nenhuma palavra mudou.
-- Descobri: AUD-64 pede tabela nova na ficha da PETR4 — virou B23. Sessão rodou no ramo `claude/keen-babbage-7m0ksr` (não `master`).
-- Precisa de você: nada novo. Próximas: B13/B14 (só relatório), B11.
+- Descobri: AUD-64 pede tabela nova na ficha da PETR4 — virou B23. Rodou no ramo `claude/keen-babbage-7m0ksr`, não `master`.
+- Também: B13/B14 → `docs/SENSIBILIDADE-B13-B14.md` (5/41 mudam de palavra com π 4% ou rf ±1 p.p.; Ke KLBN11 54,7%). B11 travou: termos B3 (500) e StatusInvest (403) inacessíveis.
+- Precisa de você: nada urgente; se quiser B11, cole os termos de uso.
 
 ## 13/10/2026 — turno noite (B09, B10)
 - Feito: B09 (já registrado, nada a completar) e B10 (carteira em JSON só com tickers; `requirements.lock`). 473 passed, 19 skipped.
