@@ -682,3 +682,14 @@ conta (BACKLOG B26).
 **Revisão adversarial (14/10/2026).** Corrigidos antes do commit: a sensibilidade "sem desconto" do `gerar_pdf_lote2.py` montava razão vazia e derrubaria o PDF do
 lote 2 (agora tem razão; teste novo proíbe `"razao": ""` fora do default dos motores); a razão da LEVE3 citava a nota 11 para a compra de 2024 — a fonte é a DFP
 2025 nota 13 — e omitia a ressalva do D3 (se a compra contar como interferência consumada, o desconto vira cenários; decisão não tomada). Suíte 500 passed, 1 skipped.
+
+## 14/10/2026 — B25 (AUD-32/98/99): pré-registro da validação prospectiva
+Decisão do Frank de 14/10 (`docs/DECISOES.md`), aplicada **antes de qualquer horizonte vencido** (o 1º vence em 02/10/2027). `registro_prospectivo.py` ganha a
+avaliação em funções puras (sem preço; o retorno entra como função): (1) **uma linha por (ticker, rodada)**, rodada = `data_preco`; hall e dossiê na mesma rodada →
+vale o dossiê (HYPE3 02/10); `retroativa` = registrada depois do pregão (todo o hall de 02/10, registrado em 06/10) e a leitura sem elas é sensibilidade
+obrigatória; (2) **comparador = média simples do retorno total do hall** (rodada hall mais recente ≤ a data da linha) no mesmo período; Ibovespa só informativo;
+(3) **critério contínuo** = IC de postos (Spearman) entre P/C e retorno excedente por rodada (n ≥ 10), hipótese IC < 0; leitura com ≥ 4 rodadas: "apoia" se a média
+< 0 e t ≤ −2, "contraria" se a média ≥ 0, senão "inconclusiva". Horizonte 1 ano (direção em 3). Retorno ausente (None/NaN/inf) sai e é contado, inclusive no
+comparador (`hall_sem_retorno`). Gravação, append-only e corrente intactos (`--verificar`: íntegro). **Revisão adversarial:** corrigidos NaN do retorno (a máquina do
+backtest marca falta com NaN; um só por rodada virava "apoia" em "contraria"), contagem do hall sem retorno, origem desconhecida e a sensibilidade sem retroativas
+(o hall volta quando o dossiê é retroativo). Nenhuma palavra muda (não é motor).

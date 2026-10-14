@@ -23,13 +23,19 @@ Regras:
     preço é a dele; fora disso cai em pc × central arredondado (None se a P/C não existe). Linhas já gravadas
     em 02/10/2026 (PRIO3, UGPA3, UNIP6, VBBR3 com preço de site; RECV3 None) ficam como estão: o passado não se edita.
 
-Avaliação DECLARADA AGORA, antes de existir resultado (mudar depois = olhar o resultado):
-  · horizonte principal 1 ano, direção em 3 anos, a partir de `data_preco`;
-  · retorno total (proventos brutos reinvestidos, eventos ajustados) pela máquina de
-    `backtest/precos/retorno.py`, contra o Ibovespa total no mesmo período;
-  · tabela por palavra (BARATA, RADAR, JUSTA, CARA): retorno mediano e % que bateu o Ibovespa;
-  · a pergunta é ordinal: BARATA/RADAR ganham de CARA? Um único registro não decide nada — a
-    leitura começa quando houver >= 4 datas de registro com horizonte de 1 ano vencido.
+Avaliação PRÉ-REGISTRADA (revisão de 14/10/2026, B25 — AUD-32/98/99, decisão do Frank; antes de qualquer horizonte vencido).
+A versão de 06/10 (palavra × Ibovespa, "BARATA/RADAR ganham de CARA?") não tinha poder: 1 RADAR contra 34 CARA (AUD-32) e o
+Ibovespa favorecia o hall (AUD-98). Mudar o que segue depois de existir resultado = olhar o resultado:
+  · uma linha por (ticker, rodada), rodada = `data_preco`; hall e dossiê na mesma rodada → vale o dossiê; linha registrada
+    depois do pregão do preço é marcada `retroativa` e a leitura sem elas é sensibilidade obrigatória (AUD-99);
+  · horizonte principal 1 ano (`HORIZONTE_DIAS`), direção em 3 anos, a partir de `data_preco`;
+  · retorno total (proventos brutos reinvestidos, eventos ajustados) pela máquina de `backtest/precos/retorno.py`;
+    **retorno excedente = retorno do ticker − média simples do retorno do hall no mesmo período** (hall = rodada de origem
+    "hall" mais recente com data <= a da linha). O Ibovespa fica só informativo (AUD-98);
+  · **critério contínuo**: IC de postos (Spearman) entre P/C e retorno excedente em cada rodada com >= `N_MIN_IC` linhas
+    válidas; hipótese IC < 0. Leitura só com >= `RODADAS_MIN` rodadas: "apoia" se a média dos IC < 0 com t <= −2 entre
+    rodadas; "contraria" se a média >= 0; senão "inconclusiva" (função `avaliar`). P/C ausente e retorno ausente
+    (None/NaN/inf) saem e são contados — do ticker em `excluidas`, do comparador em `hall_sem_retorno`; a tabela por palavra vira descrição, não critério.
 
 Uso: python registro_prospectivo.py --data-preco 2026-10-02 --doutrina v2.2
      python registro_prospectivo.py --dossie     (data do preço e doutrina vêm de cada veredito)
@@ -206,6 +212,151 @@ def registrar_dossies(pasta: pathlib.Path = VEREDITOS, caminho: pathlib.Path = R
                       hoje: str | None = None) -> int:
     """Acrescenta os vereditos de dossiê (origem "dossie"). Idempotente; muda o valor → erro."""
     return _gravar(linhas_dos_vereditos(pasta, hoje or dt.date.today().isoformat()), caminho)
+
+
+
+# ---------------------------------------------------------------- avaliação pré-registrada (B25, 14/10/2026: AUD-32/98/99)
+# Funções puras: o retorno total entra como função injetada `retorno(ticker, inicio_iso, fim_iso) -> float | None` (fração),
+# a mesma máquina do `backtest/precos/retorno.py` na leitura real. Nada aqui lê preço; a 1ª leitura possível é out/2027.
+HORIZONTE_DIAS = 365          # horizonte principal: 1 ano a partir de data_preco (direção em 3 anos = 1095)
+N_MIN_IC = 10                 # rodada com menos linhas válidas não entra no IC (só descrita)
+RODADAS_MIN = 4               # leitura só com >= 4 rodadas vencidas
+T_CRITICO = 2.0               # |t| da média dos IC entre rodadas
+
+
+def retroativa(linha: dict) -> bool:
+    """AUD-99: registrada depois do pregão do preço (o mercado já andou quando a linha entrou)."""
+    return str(linha.get("registrado_em", "")) > str(linha["data_preco"])
+
+
+def linhas_validas(registro: list[dict], sem_retroativas: bool = False) -> list[dict]:
+    """Uma linha por (ticker, rodada), rodada = data_preco (AUD-99). Hall e dossiê na mesma rodada: vale o dossiê (análise
+    completa, posterior ao lote); a outra segue no registro (append-only), fora da leitura. Cada linha sai com `retroativa`.
+    `sem_retroativas`: as retroativas saem ANTES da escolha — um dossiê retroativo devolve a vez à linha do hall, se ela não for."""
+    por: dict[tuple[str, str], dict] = {}
+    for l in registro:
+        l = {**l, "origem": l.get("origem", "hall")}
+        if l["origem"] not in ("hall", "dossie"):
+            raise ValueError(f"{l['ticker']}: origem desconhecida {l['origem']!r} em {l['data_preco']}")
+        if sem_retroativas and retroativa(l):
+            continue
+        k = (l["data_preco"], l["ticker"])
+        velho = por.get(k)
+        if velho is None or (velho["origem"] == "hall" and l["origem"] == "dossie"):
+            por[k] = l
+        elif velho["origem"] == l["origem"]:
+            raise ValueError(f"{l['ticker']} ({l['origem']}) duas vezes em {l['data_preco']}: registro inválido")
+    return [{**l, "retroativa": retroativa(l)} for _, l in sorted(por.items())]
+
+
+def _postos(xs: list[float]) -> list[float]:
+    """Postos 1..n; empates recebem o posto médio."""
+    ordem = sorted(range(len(xs)), key=lambda i: xs[i])
+    r = [0.0] * len(xs)
+    i = 0
+    while i < len(ordem):
+        j = i
+        while j + 1 < len(ordem) and xs[ordem[j + 1]] == xs[ordem[i]]:
+            j += 1
+        for k in range(i, j + 1):
+            r[ordem[k]] = (i + j) / 2 + 1
+        i = j + 1
+    return r
+
+
+def ic_postos(xs: list[float], ys: list[float]) -> float | None:
+    """IC de postos (Spearman = Pearson dos postos). None se n < 2 ou um dos lados não varia."""
+    if len(xs) != len(ys):
+        raise ValueError("ic_postos: listas de tamanhos diferentes")
+    if len(xs) < 2:
+        return None
+    rx, ry = _postos(xs), _postos(ys)
+    mx, my = sum(rx) / len(rx), sum(ry) / len(ry)
+    sxy = sum((a - mx) * (b - my) for a, b in zip(rx, ry))
+    sxx = sum((a - mx) ** 2 for a in rx)
+    syy = sum((b - my) ** 2 for b in ry)
+    return sxy / math.sqrt(sxx * syy) if sxx > 0 and syy > 0 else None
+
+
+def _fim(data_iso: str, dias: int) -> str:
+    return (dt.date.fromisoformat(data_iso) + dt.timedelta(days=dias)).isoformat()
+
+
+def hall_da_rodada(registro: list[dict], data_preco: str) -> list[str]:
+    """Comparador (AUD-98): os tickers da rodada de origem "hall" mais recente com data <= data_preco."""
+    datas = sorted({l["data_preco"] for l in registro if l.get("origem", "hall") == "hall" and l["data_preco"] <= data_preco})
+    if not datas:
+        return []
+    return sorted({l["ticker"] for l in registro if l.get("origem", "hall") == "hall" and l["data_preco"] == datas[-1]})
+
+
+def _retorno_ok(r) -> float | None:
+    """None, NaN e ±inf são retorno AUSENTE (a máquina do backtest marca falta de fator com NaN): nunca entram em conta."""
+    return float(r) if isinstance(r, (int, float)) and math.isfinite(r) else None
+
+
+def excedentes(registro: list[dict], retorno, hoje: str, horizonte_dias: int = HORIZONTE_DIAS,
+               sem_retroativas: bool = False) -> list[dict]:
+    """Linhas válidas com horizonte vencido + retorno total, média simples do hall no MESMO período e excedente (AUD-98).
+    Retorno ausente (None/NaN/inf: sem cotação, delisting sem valor de saída) do ticker → excedente None, sai do IC e é
+    contado; de um ticker do hall → sai da média e é contado em `hall_sem_retorno` (viés de sobrevivência visível)."""
+    medias: dict[tuple[str, str], tuple[float | None, int, int]] = {}
+    out = []
+    for l in linhas_validas(registro, sem_retroativas):
+        fim = _fim(l["data_preco"], horizonte_dias)
+        if fim > hoje:
+            continue
+        chave = (l["data_preco"], fim)
+        if chave not in medias:
+            hall = hall_da_rodada(registro, l["data_preco"])
+            rs = [r for tk in hall if (r := _retorno_ok(retorno(tk, l["data_preco"], fim))) is not None]
+            medias[chave] = (sum(rs) / len(rs) if rs else None, len(hall), len(hall) - len(rs))
+        r = _retorno_ok(retorno(l["ticker"], l["data_preco"], fim))
+        m, n_hall, sem = medias[chave]
+        out.append({**l, "fim": fim, "retorno": r, "media_hall": m, "n_hall": n_hall, "hall_sem_retorno": sem,
+                    "excedente": None if r is None or m is None else r - m})
+    return out
+
+
+def _pc_ok(pc) -> bool:
+    return isinstance(pc, (int, float)) and math.isfinite(pc)
+
+
+def avaliar(registro: list[dict], retorno, hoje: str, sem_retroativas: bool = False,
+            horizonte_dias: int = HORIZONTE_DIAS) -> dict:
+    """Critério pré-registrado (AUD-32): IC de postos entre P/C e retorno excedente, por rodada; hipótese IC < 0 (P/C menor,
+    excedente maior). Leitura com >= RODADAS_MIN rodadas no IC: "apoia" se a média dos IC < 0 e t <= −T_CRITICO; "contraria"
+    se a média >= 0 (a régua não ordena); senão "inconclusiva". `sem_retroativas=True` é a sensibilidade obrigatória."""
+    ex = excedentes(registro, retorno, hoje, horizonte_dias, sem_retroativas)
+    por: dict[str, list[dict]] = {}
+    for e in ex:
+        por.setdefault(e["data_preco"], []).append(e)
+    rodadas, pequenas = [], []
+    for data, ls in sorted(por.items()):
+        ok = [e for e in ls if _pc_ok(e["pc"]) and e["excedente"] is not None]
+        linha = {"data_preco": data, "n": len(ok), "excluidas": len(ls) - len(ok),
+                 "hall_sem_retorno": max(e["hall_sem_retorno"] for e in ls)}
+        if len(ok) < N_MIN_IC:
+            pequenas.append(linha)
+            continue
+        linha["ic"] = ic_postos([e["pc"] for e in ok], [e["excedente"] for e in ok])
+        rodadas.append(linha)
+    ics = [r["ic"] for r in rodadas if r["ic"] is not None]
+    media = sum(ics) / len(ics) if ics else None
+    t = None
+    if len(ics) >= 2:
+        dp = math.sqrt(sum((x - media) ** 2 for x in ics) / (len(ics) - 1))
+        t = media / (dp / math.sqrt(len(ics))) if dp > 0 else (math.copysign(math.inf, media) if media else None)
+    if len(ics) < RODADAS_MIN:
+        leitura = f"inconclusiva: {len(ics)} rodada(s) no IC, mínimo {RODADAS_MIN}"
+    elif media >= 0:
+        leitura = "contraria: IC médio >= 0 (a régua não ordena o retorno excedente)"
+    elif t is not None and t <= -T_CRITICO:
+        leitura = "apoia: IC médio < 0 com t <= -2"
+    else:
+        leitura = "inconclusiva: IC médio < 0 sem t <= -2"
+    return {"rodadas": rodadas, "fora_do_ic": pequenas, "ic_medio": media, "t": t, "leitura": leitura,
+            "sem_retroativas": sem_retroativas, "horizonte_dias": horizonte_dias}
 
 
 def main(argv: list[str] | None = None) -> int:
