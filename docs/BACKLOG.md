@@ -22,7 +22,7 @@
 | B12 | Onda 4: AUD-96 rótulos, AUD-64/65 fichas, AUD-48/105 textos de documentação, AUD-87 encoding | P3 | feito 14/10 (AUD-64 → B23) | executável | Auditoria Onda 4 |
 | B13 | Onda 4: AUD-57/60 premissas provisórias e sensibilidade | P3 | relatório feito 14/10 (propostas pendentes) | executável | Auditoria Onda 4 |
 | B14 | Ke real de 21–27% nos muito alavancados (KLBN11 77%): vigiar/revisar o Kd sintético e Hamada | P3 | relatório feito 14/10 (KLBN11 hoje 54,7%) | executável | Brief §5.1 |
-| B15 | Premissas digitadas nos `lote*.py` e mercado em data fixa: mover para dados + coleta periódica (bloqueia o SaaS) | P3 | relatório 14/10 (`docs/PREMISSAS-B15.md`); migração proposta, não aplicada | executável | Brief §5.2 |
+| B15 | Premissas digitadas nos `lote*.py` e mercado em data fixa: mover para dados + coleta periódica (bloqueia o SaaS) | P3 | relatório 14/10 (`docs/PREMISSAS-B15.md`); **fase 3 em execução** (plano `~/.claude/plans/tingly-gliding-flute.md`): fatia 1 feita 19/10 (procedência por campo); fatias 2–5 em `MISSOES.md` | executável | Brief §5.2 |
 | B16 | Confirmar com fonte A o enquadramento CVM (Res. 20/2021 analista; Res. 19/2021 consultor) se houver SaaS | P4 | aberto | executável | Brief §7 |
 | B17 | Rumo SaaS (front-end, dados diários, licença) | P4 | parado (sem prazo) | decisão Frank | Brief §2 |
 | B18 | 2º comitê de outra família de modelo (D14) e reenvio da pasta de upload ao Desktop | P4 | suspenso ("não tem ajudado") | decisão Frank | Plano F7; memória |

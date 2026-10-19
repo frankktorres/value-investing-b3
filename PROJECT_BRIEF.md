@@ -1,5 +1,5 @@
 # PROJECT BRIEF — Mesa de Value Investing B3
-*Versão de 19/10/2026 (rev. tela, fatia 1: Hall no navegador; doutrina v2.6) · gerado por `/brief` · fonte: repositório, memória do projeto e `docs/auditoria/AUDITORIA_2026-10-08.md`*
+*Versão de 19/10/2026 (rev. fase 3, fatia 1: procedência por campo; doutrina v2.6) · gerado por `/brief` · fonte: repositório, memória do projeto e `docs/auditoria/AUDITORIA_2026-10-08.md`*
 
 ## 1. Projeto
 Mesa de análise fundamentalista da B3 para dividendos/JCP e longo prazo: doutrina escrita (v2.6) + motores de valuation em Python que
@@ -42,7 +42,9 @@ MVP de uso pessoal, maduro no cálculo. Um usuário real, sem terceiros. Prazo e
    AUD-03 IFRS 16 na PETR4; AUD-04 follow-on ISAE4 — corrigidos na Onda 1.1). Na 1.2 (v2.4) o custo de capital passou a depender da dívida
    (Ke por Hamada, pesos no ponto fixo, Kd sintético): os muito alavancados ficaram com Ke real de 21–27% (KLBN11 77%) — a vigiar.
 2. **Premissas digitadas no código e dados em data fixa.** Mercado de 02–06/10, premissas nos `lote*.py`, parte dos dados da StatusInvest (C);
-   sem banco nem coleta diária — bloqueia o SaaS. Inventário e proposta de migração em `docs/PREMISSAS-B15.md` (445 campos fora do default; nada movido).
+   sem banco nem coleta diária — bloqueia o SaaS. Inventário e proposta de migração em `docs/PREMISSAS-B15.md` (445 campos fora do default).
+   **Fase 3 em execução (19/10):** fatia 1 fez a nota POR CAMPO (`insumos_a.py` + `relatorio/procedencia.py`): das 19 não financeiras do lote,
+   11 têm central B (Kd sintético Damodaran), 8 seguem C por dado ainda digitado; as 20 financeiras seguem C/— (fatia 4). Ordem no `MISSOES.md`.
 3. **Régua sem validação empírica.** Backtest parou: proxy reproduziu a palavra em 70,7% (portão ≥ 80%). Validação agora só prospectiva,
    lenta por natureza. Pré-registro fixado em 14/10 (B25): IC de postos P/C × retorno excedente sobre a média do hall; 1ª leitura possível em out/2027.
 4. **Universo que não gera compra.** Blue chips eficientes: quase tudo JUSTA/CARA, zero compra; triagem de toda a B3 deixou 5 de 104 no portão.
@@ -62,8 +64,9 @@ MVP de uso pessoal, maduro no cálculo. Um usuário real, sem terceiros. Prazo e
    Falta só o Frank usar e dizer o que muda.
    **Tela (front end, 19/10):** `painel` → navegador em 127.0.0.1:8765; fatia 1 (Hall) FEITA; faltam 2 Empresa, 3 Carteira
    (privado), 4 Monitor + exportação na tarefa de sexta. Plano: `~/.claude/plans/greedy-imagining-church.md`.
-   Plano da fase 2: `~/.claude/plans/frolicking-sauteeing-snowglobe.md`. Depois: dados vivos sem premissa digitada (fase 3), triagem contínua
-   (fase 4), SaaS.
+   Plano da fase 2: `~/.claude/plans/frolicking-sauteeing-snowglobe.md`. **Fase 3 (dados vivos sem premissa digitada) EM EXECUÇÃO:** plano
+   `~/.claude/plans/tingly-gliding-flute.md`; fatia 1 FEITA (procedência por campo, golden intacto); depois 2 (DPA/JCP B3), 2b (bug PN do
+   dossiê), 3 (literais NF), temporada 3T26 em commit próprio, 4 (financeiras), 5 (trava). Depois: triagem contínua (fase 4), SaaS.
 
 ## 7. Restrições
 - **Orçamento:** não informado.
@@ -124,3 +127,4 @@ MVP de uso pessoal, maduro no cálculo. Um usuário real, sem terceiros. Prazo e
 - 19/10/2026 (fase 2, fatia 1): painel `relatorio CARTEIRA` (`relatorio/renda.py` + `relatorio/carteira.py`): renda líquida de 12 meses pela data-com (B3, nota A) × quantidade local, % da meta, régua por posição; dado pessoal só em `carteira.local.json` e `RELATORIOS/privado/` (ignorados; gravação recusa destino versionável); 567 testes verdes, golden intacto.
 - 19/10/2026 (fase 2, fatias 2 e 3): PDF + calendário de pagamento (StatusInvest nota C, anunciado fora da renda); histórico `ferramentas/dados/privado/renda.jsonl` (ignorado, uma linha por pregão) com a tabela "Evolução rumo à meta"; `monitor_semanal.vbs` gera o painel após o monitor; adversário sobre renda/calendário/carteira; README e DECISOES atualizados; 586 testes verdes.
 - 19/10/2026 (tela, fatia 1): `ferramentas/painel/` (exportar → JSON ignorado; servir em 127.0.0.1) + `painel.cmd`; Hall no navegador com palavra vigente, régua, nota da fonte, filtro A/B, tema claro/escuro (Playwright conferido); achado: só 8 de 47 centrais têm fonte A/B (todos de dossiê) — o hall segue com premissa digitada (nota C/—); LEVE3 com régua suspensa (motor diverge do veredito); design do Claude Design em `docs/design/`; adversário rodado.
+- 19/10/2026 (fase 3, fatia 1): `ferramentas/insumos_a.py` (registro valor+origem) + `relatorio/procedencia.py` por campo nas não financeiras do lote (ações registradas da CVM, âncoras no provento já ex da B3, Kd sintético B, dado digitado = C); 11 de 19 NF com central B (antes C), 8 C, golden intacto; achado: `dossie/base.py:130` filtra ON fixo (FESA4/SHUL4 PN) → fatia 2b.

@@ -43,7 +43,7 @@ import zipfile
 import pandas as pd
 
 from derivados_zip import obter
-from insumos_a import ACOES_ITR_JUN26, registrar
+from insumos_a import ACOES_ITR_JUN26, RECEITA_CVM, registrar
 from fiscal import ALIQUOTA_FASE, TIMS3_ALIQUOTA
 from lote1_bancos import EMPRESAS as LOTE1
 from lote1_bancos import MK
@@ -154,7 +154,7 @@ def receita_media(tk, anos, ltm=True):
     """Média em R$ de hoje (AUD-01, 08/10/2026: era nominal, como a receita de meio padrão do motor)."""
     a, l = CVM[tk]["anual"], ltm_de(CVM[tk])
     xs = [a[y]["receita"] * DEFLATOR[y] for y in anos] + ([l["receita"] * deflator_ltm(ltm_ref_de(CVM[tk]))] if ltm else [])
-    return sum(xs) / len(xs)
+    return registrar(tk, "receita_meio", sum(xs) / len(xs), RECEITA_CVM)   # fase 3: procedência; o número não muda
 
 
 # ---------------------------------------------------------------- WEGE3: g do 1º estágio

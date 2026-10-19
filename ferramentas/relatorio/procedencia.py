@@ -32,11 +32,14 @@ INSUMOS_DOSSIE = pathlib.Path(__file__).resolve().parent.parent / "dossie" / "in
 # (tests/test_fase3_procedencia.py), senão um dado digitado entraria no central sem pesar na nota.
 IDENTIDADE_NF = ("ticker", "nome", "perfil")
 DADO_PROPRIO_NF = {"preco": "preco", "n_acoes": "acoes", "jcp_share": "proventos", "anos_pagos_10": "proventos",
-                   "pl_hist": "pl_hist", "defasagem_meses": "defasagem"}
-DADO_ANCORA_NF = ("outros_passivos", "outros_passivos_financeiros", "reproducao_por_acao", "kd_ri", "spread_kd",
-                  "fator_preco", "custo_variavel_preco", "capex_expansao", "deflator")
-JULGAMENTO_NF = ("anos_ciclo", "janela_razao", "receita_meio", "receita_meio_fonte", "da_receita", "aliquota", "aliquota_fase",
-                 "aliquota_permanente_fonte", "aliquota_fonte", "aliquota_desde", "spread_fonte", "g_real", "g1_real",
+                   "pl_hist": "pl_hist", "defasagem_meses": "defasagem", "kd_ri": "kd", "spread_kd": "kd"}
+# adversário (19/10): receita de meio (receita da CVM × índice de preço de commodity), D&A ÷ receita de meio, alíquota digitada,
+# crédito de IR com prazo e g do 1º estágio (medido na StatusInvest, WEGE3) são NÚMEROS que chegam ao central — dado, não julgamento
+DADO_ANCORA_NF = ("outros_passivos", "outros_passivos_financeiros", "reproducao_por_acao", "fator_preco",
+                  "custo_variavel_preco", "capex_expansao", "deflator", "receita_meio", "da_receita", "aliquota",
+                  "aliquota_fase", "g1_real")
+JULGAMENTO_NF = ("anos_ciclo", "janela_razao", "receita_meio_fonte",
+                 "aliquota_permanente_fonte", "aliquota_fonte", "aliquota_desde", "spread_fonte", "g_real",
                  "anos_g1", "qualitativo", "qualitativo_origem", "desconto_controlador", "reproducao_fonte",
                  "usar_reproducao_como_ancora", "fora_circulo", "outras_liquidas", "anos_outras", "capex_ciclico",
                  "outros_passivos_fonte", "declinio_sem_liberacao", "impairment_normalizado", "defasagem_fonte",
@@ -69,6 +72,20 @@ def dados_ancora(emp, serie: Origem) -> Origem:
     """A pior origem entre os campos de DADO_ANCORA_NF fora do default; sem nenhum, as âncoras só usam a série (= `serie`)."""
     origens = [_origem_do_dado(emp, k) for k in DADO_ANCORA_NF if _fora_do_default(emp, k)]
     return max(origens, key=lambda o: NOTAS.index(o.nota)) if origens else serie
+
+
+def kd(emp) -> Origem:
+    """Custo da dívida que entra no WACC (motor_nao_financeiras.custo_divida, mesma ordem): Kd do RI ou spread declarado só com
+    registro em `insumos_a` (senão C); padrão = rf (A) + spread sintético da tabela de rating (Damodaran, nota B)."""
+    import credito
+    import insumos_a
+    if emp.kd_ri:
+        return (insumos_a.origem(emp.ticker, "kd_ri", emp.kd_ri.get("valor"))
+                or Origem("lote (digitado): kd_ri", "C", f"Kd do RI digitado no lote: {emp.kd_ri.get('fonte', '')}"))
+    if emp.spread_kd is not None:
+        return (insumos_a.origem(emp.ticker, "spread_kd", emp.spread_kd)
+                or Origem("lote (digitado): spread_kd", "C", f"spread de crédito digitado no lote: {emp.spread_fonte}"))
+    return Origem("Kd sintético (Damodaran)", "B", f"rf + spread pela cobertura de juros normalizada — {credito.FONTE}")
 
 
 def _insumos_dossie(tk: str, serie: Origem) -> Origem:
@@ -115,7 +132,7 @@ def tabela(c: dict) -> dict[str, Origem]:
               "acoes": Origem("CVM ITR (ações)", "A", "CVM, composição do capital do ITR (sem tesouraria)"),
               "proventos": Origem("B3 proventos", "A", "B3, proventos em dinheiro por data-com (API pública)"),
               "pl_hist": Origem("CVM + COTAHIST", "A", "P/L histórico: lucro e ações do DFP (CVM) × fechamento do ano (B3)"),
-              "proventos_ja_ex": B3_JA_EX, "dados_lote": _insumos_dossie(emp.ticker, serie)}
+              "proventos_ja_ex": B3_JA_EX, "dados_lote": _insumos_dossie(emp.ticker, serie), "kd": kd(emp)}
     elif c["financeira"]:
         t |= {k: C_LOTE for k in ("vpa", "roe_lp", "roe_inicio", "payout", "dpa_medio_5a", "pl_hist")}
         t["proventos"] = t["dpa_medio_5a"]
@@ -130,7 +147,7 @@ def tabela(c: dict) -> dict[str, Origem]:
         serie = Origem("CVM DFP/ITR", "A", "CVM, DFP 2016–25 + ITR de 2026 (LTM), dados abertos")
         t |= {"serie": serie, "acoes": insumos_a.origem(emp.ticker, "acoes", emp.n_acoes) or C_LOTE,
               "proventos": Origem("StatusInvest (DPA)", "C", "DPA por data-com da StatusInvest"), "pl_hist": C_LOTE,
-              "proventos_ja_ex": B3_JA_EX, "dados_lote": dados_ancora(emp, serie)}
+              "proventos_ja_ex": B3_JA_EX, "dados_lote": dados_ancora(emp, serie), "kd": kd(emp)}
     if emp.defasagem_meses is not None and emp.defasagem_fonte.strip():
         t["defasagem"] = Origem("defasagem declarada", "C", f"declarada na ficha: {emp.defasagem_fonte}")
     else:
@@ -161,11 +178,12 @@ def de(t: dict[str, Origem], *campos: str) -> tuple[Origem, ...]:
 # insumos de cada âncora (nome do motor) e de cada informativo
 ANCORA = {
     # não financeira: o provento que entra no central é o já ex da B3 (dívida líquida, §11.1), não o DPA (só informativos)
-    "DCF (3 cenários)": ("serie", "acoes", "proventos_ja_ex", "dados_lote", "mercado"),
-    "DCF normalizado (3 cenários)": ("serie", "acoes", "proventos_ja_ex", "dados_lote", "mercado"),
-    "EPV": ("serie", "acoes", "proventos_ja_ex", "dados_lote", "mercado"),
-    "EPV de meio de ciclo": ("serie", "acoes", "proventos_ja_ex", "dados_lote", "mercado"),
-    "Owner Earnings ÷ (Ke − g)": ("serie", "acoes", "proventos_ja_ex", "dados_lote", "mercado"),
+    # e o Kd (WACC) entra nas âncoras de fluxo (adversário, 19/10); o valor de reprodução não usa Kd
+    "DCF (3 cenários)": ("serie", "acoes", "proventos_ja_ex", "dados_lote", "kd", "mercado"),
+    "DCF normalizado (3 cenários)": ("serie", "acoes", "proventos_ja_ex", "dados_lote", "kd", "mercado"),
+    "EPV": ("serie", "acoes", "proventos_ja_ex", "dados_lote", "kd", "mercado"),
+    "EPV de meio de ciclo": ("serie", "acoes", "proventos_ja_ex", "dados_lote", "kd", "mercado"),
+    "Owner Earnings ÷ (Ke − g)": ("serie", "acoes", "proventos_ja_ex", "dados_lote", "kd", "mercado"),
     "Valor de reprodução": ("serie", "acoes", "proventos_ja_ex", "dados_lote"),
     "P/VP justificado": ("vpa", "roe_lp", "payout", "mercado"),
     "DDM 2 estágios": ("vpa", "roe_inicio", "roe_lp", "payout", "mercado"),
@@ -173,11 +191,14 @@ ANCORA = {
     "SOTP": ("sotp", "mercado"),
 }
 INFO_NF = {
-    "graham_orig": ("serie", "acoes"), "graham_br": ("serie", "acoes", "mercado"),
-    "graham_rev": ("serie", "acoes", "mercado"), "bazin6": ("proventos", "serie", "acoes"),
-    "teto_renda": ("proventos", "defasagem", "serie", "acoes", "mercado"),
-    "bogle_nom": ("proventos", "defasagem", "pl_hist", "serie", "acoes", "preco", "mercado"),
-    "peg": ("preco", "serie", "acoes", "mercado"), "dy": ("proventos", "defasagem", "preco", "mercado"),
+    # lucro normalizado (Graham, PEG, Bogle) = NOPAT de meio − juros ao Kd; DPA sustentável (Bazin, teto, DY) ≤ FCFE do OE
+    "graham_orig": ("serie", "acoes", "dados_lote", "kd"), "graham_br": ("serie", "acoes", "dados_lote", "kd", "mercado"),
+    "graham_rev": ("serie", "acoes", "dados_lote", "kd", "mercado"),
+    "bazin6": ("proventos", "serie", "acoes", "dados_lote"),
+    "teto_renda": ("proventos", "defasagem", "serie", "acoes", "dados_lote", "mercado"),
+    "bogle_nom": ("proventos", "defasagem", "pl_hist", "serie", "acoes", "dados_lote", "kd", "preco", "mercado"),
+    "peg": ("preco", "serie", "acoes", "dados_lote", "kd", "mercado"),
+    "dy": ("proventos", "defasagem", "serie", "acoes", "dados_lote", "preco", "mercado"),
 }
 INFO_FIN = {
     "graham_orig": ("roe_lp", "vpa"), "graham_br": ("roe_lp", "vpa", "mercado"),

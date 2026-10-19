@@ -1,6 +1,8 @@
 # B15 — premissas digitadas e mercado em data fixa (14/10/2026)
 
 **Escopo:** só relatório e proposta. Nenhum código foi movido e nenhuma palavra mudou. A decisão está em `DECISOES.md`.
+**Atualização 19/10/2026:** a migração virou a fase 3 (plano `~/.claude/plans/tingly-gliding-flute.md`, fatias em `MISSOES.md` 9c–9g). Fatia 1
+feita: nota por campo (`ferramentas/insumos_a.py`, `relatorio/procedencia.py`), sem mover número.
 
 ## O que já está em dados
 | Insumo | Onde | Data | Coleta |

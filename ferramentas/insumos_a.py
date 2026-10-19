@@ -56,5 +56,7 @@ ACOES_DFP = lambda ano, unit: Origem(
     + (f"; em units ({unit:g} ações por unit)" if unit and unit != 1 else "") + " (lote3_agro.acoes)")
 IPCA_BCB = Origem("BCB (IPCA)", "A", "BCB, SGS 433 (IPCA mensal, dados/macro/ipca_mensal.json, coletar_macro.py): deflator "
                   "anual até a data-base")
+RECEITA_CVM = Origem("CVM DFP/ITR", "A", "CVM, receita líquida do DFP/ITR (LTM) em R$ de hoje (IPCA, BCB): média dos "
+                     "exercícios declarados no lote (receita_media)")
 ACOES_ITR_JUN26 = Origem("CVM (ações)", "A", "CVM, composição do capital do ITR de 30/06/2026, sem tesouraria (snapshot "
                          "derivados_zip quando o ZIP falta)")

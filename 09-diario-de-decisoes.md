@@ -693,3 +693,21 @@ obrigatória; (2) **comparador = média simples do retorno total do hall** (roda
 comparador (`hall_sem_retorno`). Gravação, append-only e corrente intactos (`--verificar`: íntegro). **Revisão adversarial:** corrigidos NaN do retorno (a máquina do
 backtest marca falta com NaN; um só por rodada virava "apoia" em "contraria"), contagem do hall sem retorno, origem desconhecida e a sensibilidade sem retroativas
 (o hall volta quando o dossiê é retroativo). Nenhuma palavra muda (não é motor).
+
+## 19/10/2026 — DECISÃO DE MÉTODO: nota de fonte por campo nas não financeiras do lote (fase 3, fatia 1)
+Plano da fase 3 aprovado pelo Frank (`~/.claude/plans/tingly-gliding-flute.md`): trocar a premissa digitada (nota C) por dado oficial, uma fonte por
+vez, com data-base fixa (preço/mercado 02/10, LTM 2T26); temporada 3T26 e data-base nova em commits próprios. Fatia 1 = **só a nota, nenhum
+número**: `rodar_tudo.py` sem `--motivo` → "sem mudanças em relação ao golden"; **nenhuma palavra mudou** (33 CARA, 3 JUSTA, 5 NÃO CONCLUSIVO).
+Regras (em `relatorio/procedencia.py` + `ferramentas/insumos_a.py`): (1) um campo só tem a nota da fonte se o valor que a empresa carrega é o
+que o lote registrou da fonte oficial (`insumos_a.registrar/origem`); literal ou valor sobrescrito = C; (2) o central das não financeiras usa o
+provento já ex da B3 (A), não o DPA da StatusInvest — provado por teste (mexer no DPA e no `jcp_share` não mexe no central); o DPA C fica só nos
+informativos (DY, Bazin, teto, Bogle); (3) o Kd entra nas âncoras de fluxo: sintético = B (Damodaran), `kd_ri`/`spread_kd` sem registro = C;
+(4) todo campo de dado do `Industrial` fora do default que chega ao central pesa na nota (`DADO_ANCORA_NF`); julgamento (janela, g, desconto,
+QUAL…) não é nota de fonte; teste obriga classificar todo campo novo.
+Resultado nos 39 do caminho do lote: centrais **B 11** (ABEV3, B3SA3, FLRY3, KEPL3, KLBN11, RANI3, SMTO3, SUZB3, UGPA3, VBBR3, VIVT3; antes C),
+**C 26**, **— 2**. As 8 NF ainda C e o porquê: SLCE3 (NAV das terras digitado, Itaú BBA), TIMS3 (alíquota 18,3% digitada), WEGE3 (g1 medido na
+StatusInvest), PETR4/PRIO3/RECV3/GGBR4/UNIP6 (receita de meio pelo índice de commodity do FRED/BLS, sem nota registrada) → fatia 3. As 20
+financeiras seguem C/— → fatia 4. Os 8 dossiês passam de A para **B** (mesmo Kd sintético; continuam decidindo).
+**Revisão adversarial (19/10):** 2 achados corrigidos antes do commit — o Kd sintético entrava no central sem nota (as 18 que saíam A eram, na
+verdade, B) e `receita_meio`/`da_receita`/`aliquota`/`aliquota_fase`/`g1_real` estavam classificados como julgamento, mas são números que chegam
+ao central (dado). Achado lateral para a fatia 2b: `dossie/base.py:130` filtra `tipo_acao == "ON"` fixo; FESA4 e SHUL4 são PN.
