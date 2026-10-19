@@ -11,6 +11,8 @@
 7. **B11** — StatusInvest: termos em `statusinvest.com.br/condicoes-de-uso` dão 403 — tentar de novo ou o Frank cola o texto (B3 feita 14/10).
 8. **B26** — Razão do desconto de controlador com fonte A (FRE) para os 28 com `SEM_RAZAO`; cada uma baixa a contagem do `test_b24`.
 
+8b. **B27** (local, Frank presente; fase 1 do relatório) — fatia 2: `relatorio/quali.py` (moat, gestão, dívida, governança, dividendos, riscos) + `render_pdf.py`; depois fatia 3 (ALLD3 = B08) e 4 (adversário + verificador-fonte). Plano: `~/.claude/plans/pasted-content-id-9e9e-tome-as-sparkling-ocean.md`. *Pronto quando:* `relatorio BBSE3` gera PDF com os 6 blocos, testes verdes.
+
 9. **B08** — Dossiê ALLD3 (depois FESA4, SHUL4, VLID3): `python -m dossie.gerar ALLD3 --data <hoje>` na máquina do Frank; palavra só com fonte A/B.
 10. **B01** — Temporada 3T26: a tarefa de sexta já detecta o ITR (`monitor/temporada.log` + boletim); quando aparecer ticker com 3T26, rodar `temporada.py --gravar` + `rodar_tudo.py --motivo`.
 
