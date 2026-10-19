@@ -1,5 +1,5 @@
 # PROJECT BRIEF — Mesa de Value Investing B3
-*Versão de 19/10/2026 (rev. fase 1 do relatório, fatia 2; doutrina v2.6) · gerado por `/brief` · fonte: repositório, memória do projeto e `docs/auditoria/AUDITORIA_2026-10-08.md`*
+*Versão de 19/10/2026 (rev. tela, fatia 1: Hall no navegador; doutrina v2.6) · gerado por `/brief` · fonte: repositório, memória do projeto e `docs/auditoria/AUDITORIA_2026-10-08.md`*
 
 ## 1. Projeto
 Mesa de análise fundamentalista da B3 para dividendos/JCP e longo prazo: doutrina escrita (v2.6) + motores de valuation em Python que
@@ -15,6 +15,8 @@ MVP de uso pessoal, maduro no cálculo. Um usuário real, sem terceiros. Prazo e
 - **Libs usadas no código:** pandas 2.3.3 · numpy 2.3.4 · reportlab 4.4.9 (PDFs dos lotes) · matplotlib 3.10.7 · requests 2.33.0 · pytest 9.0.2.
 - **Banco:** nenhum. Dados em JSON/CSV/ZIP em `ferramentas/dados/` e `ferramentas/backtest/dados/` (~2,1 GB fora do git); registros
   append-only em `.jsonl` (`prospectivo/`).
+- **Tela:** HTML + CSS + JS (módulos ES) sem build nem npm, servida pelo `http.server` da biblioteca padrão só em 127.0.0.1;
+  fontes IBM Plex e Source Serif 4 locais (OFL); tokens do Claude Design (`docs/design/`). Nenhuma dependência nova.
 - **Infra:** máquina local; Agendador do Windows (monitor semanal, sexta 08:00); GitHub privado + backup em pendrive. Sem nuvem.
 - **APIs/fontes externas:** CVM dados abertos (DFP/ITR/FRE, RAD) — fonte A; B3 COTAHIST e proventos; BCB SGS (IPCA, PTAX); Tesouro
   Transparente (curva IPCA+); FRED (preços de commodities); StatusInvest (scraping, nota C).
@@ -28,6 +30,9 @@ MVP de uso pessoal, maduro no cálculo. Um usuário real, sem terceiros. Prazo e
 - **Lotes:** `loteN_*.py` (premissas digitadas) → `gerar_pdf_loteN.py`; `rodar_tudo.py` regrava o golden. O quadro do `03` e o hall do
   prompt de sexta são gerados do motor por `hall03.py` (Onda 1.3); preço oficial com data e fonte em `precos_hall.py`.
 - **`dossie/`:** anexo mecânico por ticker (FRE, notas por evidência, vereditos). **`triagem/`:** fila de toda a B3, sem veredito.
+- **Tela (`ferramentas/painel/`):** `painel.exportar` roda os motores uma vez (~100 s) e grava `web/dados/hall.json` +
+  `empresas/<TK>.json` (ignorados; contrato versionado); `painel.servir` só serve arquivos. A tela não calcula: palavra
+  vigente, régua e nota da fonte vêm do relatório; o preço de hoje só move o marcador.
 - **`backtest/`:** ledger point-in-time + COTAHIST (parado no portão do proxy). **`monitor_semanal.py`**, **`temporada.py`**, **`registro_prospectivo.py`**.
 - **Testes:** pytest com golden dos 41 tickers: 458 no hall (09/10, Onda 2 concluída; `EXIGIR_DADOS=1` transforma skip em falha) + 308 no backtest (09/10; rodar SOZINHO, ~13 min, e com a máquina folgada: a suíte inteira estoura memória se algo mais estiver aberto). Mudança no `Mercado` ou nos motores exige rodar as duas suítes.
 
@@ -51,8 +56,14 @@ MVP de uso pessoal, maduro no cálculo. Um usuário real, sem terceiros. Prazo e
 3. **Onda 3 da auditoria — CONCLUÍDA em 10/10/2026 (doutrina v2.6).** Motor blindado (guardas de NÃO CONCLUSIVO nas financeiras, sem preço negativo nem Infinity, fronteira da régua, LTM da temporada chegando às premissas calculadas no import); decisões do Frank: trava na palavra final, OE do controlador, freio do declínio, cenário negativo como zero, entrada parcial numa função só; 26 aceitos com motivo (`09`). Pendente de decisão própria: pré-registro (AUD-32/98/99) e razões do desconto zero em 29 tickers (AUD-41). Onda 4 (qualidade e rumo SaaS) a abrir.
 4. Etapa 6 / F6 — construção de carteira (tamanho de posição, concentração, caixa); depende de respostas do Frank.
 5. **Roteiro de 19/10 (produto):** fase 1 = `relatorio <TICKER>` (PDF por empresa, quanti + quali, fonte por número) — fatias 1
-   e 2 feitas (f1bb010 preço/veredito; 20f7818 quali 6 blocos + PDF, BBSE3 e HYPE3); faltam ALLD3 (B08) e revisão (adversário + verificador-fonte). Depois: painel da carteira e da meta
-   (fase 2), dados vivos sem premissa digitada (fase 3), triagem contínua (fase 4), SaaS.
+   a 4 feitas (f1bb010 preço/veredito; 20f7818 quali + PDF; 2ad5f36 ALLD3 BARATA, P/C 0,42; 143b872 revisão). Fase 2 = painel da carteira e
+   da meta, `relatorio CARTEIRA` → `RELATORIOS/privado/` (fora do git): fatias 1-3 FEITAS (MD+PDF: renda 12m pela data-com, meta, régua por
+   posição, calendário de pagamento, evolução rumo à meta em `dados/privado/renda.jsonl`; a tarefa de sexta gera o painel; adversário rodado).
+   Falta só o Frank usar e dizer o que muda.
+   **Tela (front end, 19/10):** `painel` → navegador em 127.0.0.1:8765; fatia 1 (Hall) FEITA; faltam 2 Empresa, 3 Carteira
+   (privado), 4 Monitor + exportação na tarefa de sexta. Plano: `~/.claude/plans/greedy-imagining-church.md`.
+   Plano da fase 2: `~/.claude/plans/frolicking-sauteeing-snowglobe.md`. Depois: dados vivos sem premissa digitada (fase 3), triagem contínua
+   (fase 4), SaaS.
 
 ## 7. Restrições
 - **Orçamento:** não informado.
@@ -107,3 +118,8 @@ MVP de uso pessoal, maduro no cálculo. Um usuário real, sem terceiros. Prazo e
 - 14/10/2026 (rotina, B24/B25/B23/B15/B11): motor exige razão no desconto de controlador (28 com "sem razão documentada", LEVE3 com FRE nota A; nenhuma palavra mudou); pré-registro contínuo no `registro_prospectivo.py`; tabela de P/C por premissa da PETR4 no gerador do lote 5 (PDF não reemitido); relatório B15; termos da B3 lidos, StatusInvest 403.
 - 19/10/2026 (fase 1, fatia 1): pacote `ferramentas/relatorio/` + `relatorio.cmd` → `RELATORIOS/<TK>-<data>.md`, vista dos motores com nota A/B/C/— por número; BBSE3 CARA com central apoiado em premissa arbitrada (AUD-58); marco 5 aberto.
 - 19/10/2026 (fase 1, fatia 2): `relatorio/quali.py` (moat, gestão, dívida, governança, dividendos, riscos; FRE e proventos B3 por ticker) + `render_pdf.py`; `relatorio BBSE3|HYPE3` geram PDF; cortes de risco fora da doutrina marcados "a conferir"; 542 testes verdes, golden intacto; B27 feita.
+- 19/10/2026 (fase 1, fatia 3 / B08): dossiê ALLD3 (data 15/10, BARATA, central R$ 14,91, margem 4,0% vs ~3,1% recorrente de 2025 a testar) e `relatorio ALLD3`; registrado no prospectivo; 543 testes verdes, golden intacto.
+- 19/10/2026 (fase 1, fatia 4): relatório revisado por adversário e verificador-fonte; 4 defeitos corrigidos, 2 aceitos; Graham/Bazin/EPV seguem nota C; cortes do quali são heurística; margem ALLD3 2025 conferida na CVM (3,1%; ~2,4% sem todas as 'outras').
+- 19/10/2026 (B08): dossiês FESA4 (RADAR, P/C 0,82), SHUL4 (CARA, 1,28) e VLID3 (CARA, 1,14) com data 15/10 e `relatorio` dos três; B08 fechada (4 de 4); suíte 546 passed.
+- 19/10/2026 (fase 2, fatia 1): painel `relatorio CARTEIRA` (`relatorio/renda.py` + `relatorio/carteira.py`): renda líquida de 12 meses pela data-com (B3, nota A) × quantidade local, % da meta, régua por posição; dado pessoal só em `carteira.local.json` e `RELATORIOS/privado/` (ignorados; gravação recusa destino versionável); 567 testes verdes, golden intacto.
+- 19/10/2026 (fase 2, fatias 2 e 3): PDF + calendário de pagamento (StatusInvest nota C, anunciado fora da renda); histórico `ferramentas/dados/privado/renda.jsonl` (ignorado, uma linha por pregão) com a tabela "Evolução rumo à meta"; `monitor_semanal.vbs` gera o painel após o monitor; adversário sobre renda/calendário/carteira; README e DECISOES atualizados; 586 testes verdes.
