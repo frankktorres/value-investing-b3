@@ -13,6 +13,7 @@ from __future__ import annotations
 
 import json
 import math
+import os
 import subprocess
 from datetime import date
 from pathlib import Path
@@ -29,6 +30,7 @@ LOCAL = FERR / "carteira.local.json"
 EXEMPLO = FERR / "carteira.exemplo.json"
 TICKERS = FERR / "carteira_tickers.json"
 SAIDA = RAIZ / "RELATORIOS" / "privado"
+HISTORICO = FERR / "dados" / "privado" / "renda.jsonl"
 NAO_CONCLUSIVO = "NÃO CONCLUSIVO"
 
 O_PRECO = Origem("COTAHIST", "A", "B3, cotações históricas: fechamento (PREULT) do último pregão")
@@ -302,3 +304,77 @@ def gravar(rel: Relatorio, pasta: Path = SAIDA) -> list[Path]:
     md.write_text(render(rel), encoding="utf-8")
     render_pdf.render(rel, pdf, intro=[f"Preços de {rel.data} · {rel.origem}", *INTRO_PDF], rotulo=f"{rel.tk} {rel.data} · pessoal")
     return [md, pdf]
+
+
+# ------------------------------------------------------------------------------ histórico rumo à meta
+_CAMPOS = ("data", "meta_mensal", "renda_liquida_mensal", "renda_bruta_mensal", "pct_meta", "patrimonio", "incompleta")
+BARRA = 20                                       # "#" por 100% da meta
+
+
+def resumo(rel: Relatorio) -> dict:
+    """A linha do histórico: os números do painel de hoje (tudo em R$ por mês, salvo `patrimonio`)."""
+    def n(rotulo: str) -> Numero:
+        return next(x for x in rel.numeros() if x.rotulo.startswith(rotulo))
+    liq = n("Renda líquida por mês")
+    return {"data": rel.data, "meta_mensal": n("Meta (R$").valor, "renda_liquida_mensal": liq.valor,
+            "renda_bruta_mensal": n("Renda bruta por mês").valor, "pct_meta": n("Meta atingida").valor,
+            "patrimonio": n("Patrimônio em ações").valor, "incompleta": bool(liq.obs.startswith("INCOMPLETA"))}
+
+
+def ler_historico(caminho: Path = HISTORICO) -> list[dict]:
+    """Linhas por data (uma por geração). Arquivo ausente → []; linha estragada falha alto (não perde renda calada)."""
+    if not caminho.exists():
+        return []
+    out = []
+    for i, linha in enumerate(caminho.read_text(encoding="utf-8").splitlines(), 1):
+        if not linha.strip():
+            continue
+        r = None
+        try:
+            r = json.loads(linha)
+            ok = isinstance(r, dict) and all(c in r for c in _CAMPOS) and isinstance(r["data"], str)
+        except ValueError:
+            ok = False
+        if not ok:
+            raise ValueError(f"{caminho.name} linha {i} inválida — corrija ou apague a linha (o resto do histórico fica)")
+        out.append(r)
+    return sorted(out, key=lambda r: r["data"])
+
+
+def com_linha(hist: list[dict], nova: dict) -> list[dict]:
+    """Histórico com a linha de hoje: mesma data (pregão) substitui, data nova acrescenta."""
+    return sorted([r for r in hist if r["data"] != nova["data"]] + [nova], key=lambda r: r["data"])
+
+
+def escrever_historico(hist: list[dict], caminho: Path = HISTORICO) -> None:
+    garantir_ignorado(caminho)                       # renda em R$ é dado pessoal
+    caminho.parent.mkdir(parents=True, exist_ok=True)
+    tmp = caminho.with_name(caminho.name + ".tmp")
+    tmp.write_text("".join(json.dumps(r, ensure_ascii=False) + "\n" for r in hist), encoding="utf-8", newline="\n")
+    os.replace(tmp, caminho)
+
+
+def evolucao_secao(hist: list[dict]) -> Secao:
+    """Evolução rumo à meta: uma linha por pregão gerado. Linha INCOMPLETA (sem provento de algum ticker) não compara."""
+    linhas, ant = [], None
+    for r in hist:
+        pct = r["pct_meta"]
+        var = "—" if ant is None or r["incompleta"] or ant["incompleta"] else fmt(r["renda_liquida_mensal"] - ant["renda_liquida_mensal"], "R$")
+        linhas.append([r["data"], fmt(r["renda_liquida_mensal"], "R$") + (" (incompleta)" if r["incompleta"] else ""),
+                       fmt(r["meta_mensal"], "R$"), fmt(pct, "%"), var, "#" * min(BARRA, round(pct * BARRA))])
+        ant = r
+    return Secao("Evolução rumo à meta", tabelas=[(
+        "Uma linha por geração do painel (pregão do preço)",
+        ["Pregão", "Renda líquida/mês", "Meta/mês", "% da meta", "Variação", f"Meta ({BARRA} # = 100%)"], linhas)],
+        texto=["A renda de cada linha é a de 12 meses pela data-com com a quantidade da época em que o painel foi gerado: "
+               "muda com preço, proventos e aporte, e não é previsão. Fica em ferramentas/dados/privado/ (fora do git)."])
+
+
+def painel(rel: Relatorio, pasta: Path = SAIDA, caminho_hist: Path = HISTORICO) -> list[Path]:
+    """Acrescenta a evolução ao painel, grava MD+PDF e só então registra a linha do dia (falha ao gravar não suja o histórico)."""
+    garantir_ignorado(caminho_hist)
+    hist = com_linha(ler_historico(caminho_hist), resumo(rel))
+    rel.secoes.append(evolucao_secao(hist))
+    arquivos = gravar(rel, pasta)
+    escrever_historico(hist, caminho_hist)
+    return arquivos

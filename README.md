@@ -21,6 +21,9 @@
 **Relatório de uma empresa (um comando)**
 `relatorio BBSE3` na raiz (ou `cd ferramentas && python -m relatorio BBSE3`) → `RELATORIOS/<TICKER>-<data>.md` (+ `.json`): palavra, compra/saída, cada método de preço (DCF, EPV, Buffett OE, Graham, Bazin, DDM…) separado entre "entra no central" e "informativo", sensibilidade e premissas de julgamento; cada número com fonte e nota A/B/C/—. É uma vista dos motores: não grava veredito. Vale para os 41 do hall e para quem tem ficha de dossiê (BLAU3, CMIN3, HYPE3, LEVE3). Fase 1 revisada (adversário + verificador-fonte, 19/10): quali, PDF e ALLD3 prontos; cortes do bloco qualitativo são heurística do projeto, não de fonte.
 
+**Painel da carteira e da meta (um comando)**
+`python -m relatorio CARTEIRA` (em `ferramentas/`) → `RELATORIOS/privado/CARTEIRA-<pregão>.md` + `.pdf`: renda líquida de 12 meses (dividendo + JCP pela data-com × quantidade de hoje), % da meta de renda mensal, quanto falta, posição do preço na régua da doutrina, calendário de pagamento e a evolução rumo à meta (uma linha por geração em `ferramentas/dados/privado/renda.jsonl`). Quantidade, preço médio e meta ficam em `ferramentas/carteira.local.json` (modelo fictício: `carteira.exemplo.json`); painel, histórico e arquivo local são ignorados pelo git. A tarefa de sexta (`agendador/monitor_semanal.vbs`) gera o painel logo após o monitor. Nunca é ordem de compra ou venda.
+
 **Analisar uma ação nova**
 `06-triagem` (se ainda não estiver na fila) → `02-prompt` (dossiê; no Claude Code, `cd ferramentas && python -m dossie.gerar <TICKER>` gera o anexo mecânico) → `04-checklist` → dossiê aprovado em `DOSSIES/` + atualizar `03-hall` → `python registro_prospectivo.py --dossie` (registra o veredito com `origem` "dossie")
 

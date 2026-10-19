@@ -22,6 +22,8 @@ carteira.local*
 carteira-real*
 # Painel da carteira (quantidades, valores, renda em R$) — relatorio CARTEIRA grava só aqui e confere antes (git check-ignore)
 RELATORIOS/privado/
+# Histórico da renda rumo à meta (R$ por pregão) — pessoal, escrito por relatorio CARTEIRA
+ferramentas/dados/privado/
 # Log da última execução do monitor semanal (Etapa 4)
 ferramentas/monitor/ultimo.log
 

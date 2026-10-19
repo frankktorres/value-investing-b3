@@ -261,3 +261,91 @@ def test_anunciado_so_na_statusinvest_entra_a_receber_com_nota_c_e_fora_da_renda
     assert cal.tabelas[1][2] == [["TESTA3", "2026-11-30", "2027-01-04", "StatusInvest", "DIVIDENDO", "0,30", "R$ 30,00",
                                   "não (data-com futura; só StatusInvest, C)"]]
     assert _num(rel, "A receber da renda").valor == 0.0 and isinstance(_num(rel, "A receber da renda").valor, float)
+
+
+# ------------------------------------------------------------------------------ histórico rumo à meta (fase 2, fatia 3)
+def _hist_tmp():
+    import uuid
+    return carteira.HISTORICO.parent / f"_teste_{uuid.uuid4().hex[:8]}" / "renda.jsonl"   # dentro de dados/privado/ (ignorado)
+
+
+def _limpa(caminho):
+    import shutil
+    shutil.rmtree(caminho.parent, ignore_errors=True)
+
+
+def test_resumo_traz_os_numeros_do_painel():
+    r = carteira.resumo(_painel())
+    assert r["data"] == DATA and r["incompleta"] is False
+    assert r["renda_liquida_mensal"] == pytest.approx(193 / 12) and r["pct_meta"] == pytest.approx(193 / 12 / 100)
+    assert r["patrimonio"] == pytest.approx(2000) and r["meta_mensal"] == 100.0
+    assert carteira.resumo(_painel(rendas={"TESTA3": Renda12m(1.0, 0.0), "TESTB4": "ValueError: x"}))["incompleta"] is True
+
+
+def test_historico_mesma_data_substitui_e_data_nova_acrescenta():
+    a = {**carteira.resumo(_painel()), "data": "2026-10-09"}
+    b = carteira.resumo(_painel())
+    h = carteira.com_linha(carteira.com_linha([], b), a)
+    assert [r["data"] for r in h] == ["2026-10-09", DATA]                   # ordenado por data
+    h2 = carteira.com_linha(h, {**b, "renda_liquida_mensal": 1.0})
+    assert len(h2) == 2 and h2[-1]["renda_liquida_mensal"] == 1.0           # rodar de novo no mesmo pregão não duplica
+
+
+def test_historico_ida_e_volta_ausente_e_linha_estragada(tmp_path):
+    assert carteira.ler_historico(tmp_path / "nao-existe.jsonl") == []
+    cam = _hist_tmp()
+    try:
+        h = [carteira.resumo(_painel())]
+        carteira.escrever_historico(h, cam)
+        assert carteira.ler_historico(cam) == h
+        cam.write_text(cam.read_text(encoding="utf-8") + "{quebrado\n", encoding="utf-8")
+        with pytest.raises(ValueError, match="linha 2"):
+            carteira.ler_historico(cam)
+    finally:
+        _limpa(cam)
+
+
+def test_historico_so_grava_em_caminho_ignorado(tmp_path):
+    with pytest.raises(PermissionError):
+        carteira.escrever_historico([carteira.resumo(_painel())], tmp_path / "renda.jsonl")
+    assert not (tmp_path / "renda.jsonl").exists()
+
+
+def test_evolucao_desenha_variacao_barra_e_nao_compara_incompleta():
+    base = carteira.resumo(_painel())
+    h = [{**base, "data": "2026-10-09", "renda_liquida_mensal": 10.0, "pct_meta": 0.10},
+         {**base, "data": "2026-10-15", "renda_liquida_mensal": 15.0, "pct_meta": 0.15},
+         {**base, "data": "2026-10-22", "renda_liquida_mensal": 5.0, "pct_meta": 0.05, "incompleta": True}]
+    linhas = carteira.evolucao_secao(h).tabelas[0][2]
+    assert linhas[0][4] == "—" and linhas[1][4] == "R$ 5,00" and linhas[2][4] == "—"
+    assert "(incompleta)" in linhas[2][1]
+    assert linhas[1][5] == "###" and carteira.evolucao_secao([{**base, "pct_meta": 3.0}]).tabelas[0][2][0][5] == "#" * carteira.BARRA
+
+
+def test_painel_registra_depois_de_gravar_e_falha_ao_gravar_nao_suja_o_historico(monkeypatch):
+    import uuid
+    cam = _hist_tmp()
+    pasta = carteira.SAIDA / f"_teste_{uuid.uuid4().hex[:8]}"
+    try:
+        md, pdf = carteira.painel(_painel_com_datas(), pasta, cam)
+        assert "## Evolução rumo à meta" in md.read_text(encoding="utf-8")
+        assert [r["data"] for r in carteira.ler_historico(cam)] == [DATA]
+        carteira.painel(_painel_com_datas(), pasta, cam)                    # mesmo pregão de novo: continua uma linha
+        assert len(carteira.ler_historico(cam)) == 1
+        antes = cam.read_bytes()
+        monkeypatch.setattr(carteira, "gravar", lambda *a, **k: (_ for _ in ()).throw(OSError("disco cheio")))
+        rel = _painel_com_datas()
+        rel.data = "2026-10-22"
+        with pytest.raises(OSError):
+            carteira.painel(rel, pasta, cam)
+        assert cam.read_bytes() == antes
+    finally:
+        import shutil
+        _limpa(cam)
+        shutil.rmtree(pasta, ignore_errors=True)
+
+
+def test_historico_nunca_vai_para_o_git():
+    import subprocess
+    r = subprocess.run(["git", "check-ignore", "-q", "--", str(carteira.HISTORICO)], cwd=RAIZ)
+    assert r.returncode == 0
