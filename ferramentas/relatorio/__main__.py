@@ -1,5 +1,5 @@
 """python -m relatorio TICKER [--data AAAA-MM-DD] → RELATORIOS/<TK>-<data>.pdf (+ .md e .json).
-python -m relatorio CARTEIRA → RELATORIOS/privado/CARTEIRA-<pregão>.md (painel da carteira e da meta; ver carteira.py)."""
+python -m relatorio CARTEIRA → RELATORIOS/privado/CARTEIRA-<pregão>.md e .pdf (painel da carteira e da meta; ver carteira.py)."""
 from __future__ import annotations
 
 import argparse
@@ -44,7 +44,8 @@ def main(argv=None) -> int:
         from relatorio import carteira
         try:
             rel = carteira.carregar()
-            print(carteira.gravar(rel))
+            for p in carteira.gravar(rel):
+                print(p)
         except (KeyError, ValueError, FileNotFoundError, PermissionError) as ex:
             print(f"ERRO: {ex}", file=sys.stderr)
             return 2

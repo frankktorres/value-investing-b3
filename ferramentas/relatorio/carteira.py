@@ -1,8 +1,9 @@
-"""Painel da carteira e da meta de renda: `python -m relatorio CARTEIRA` → RELATORIOS/privado/CARTEIRA-<pregão>.md.
+"""Painel da carteira e da meta de renda: `python -m relatorio CARTEIRA` → RELATORIOS/privado/CARTEIRA-<pregão>.md e .pdf.
 
 Mostra quanto a carteira rende por mês (dividendo + JCP dos últimos 12 meses pela data-com × quantidade de hoje), quanto
 falta para a meta, e onde o preço de cada posição está na régua da doutrina (palavra vigente do motor; o P/C ao preço de
 hoje é informativo, como no monitor — palavra nova só com veredito novo). Não sugere compra nem venda.
+O calendário (`calendario.py`) mostra o mês em que cada provento cai e o que ainda está a receber.
 
 Dado pessoal (quantidade, preço médio, meta, valores) só no `carteira.local.json` (fora do git, `.gitignore`) e no painel
 gravado em `RELATORIOS/privado/` — `gravar` confere com `git check-ignore` e recusa destino versionável. No git ficam só
@@ -16,10 +17,11 @@ import subprocess
 from datetime import date
 from pathlib import Path
 
-from relatorio import render_md
+from relatorio import render_md, render_pdf
+from relatorio.calendario import ESTIMADO, SEM_DATA, STATUSINVEST, anotar, meses
 from relatorio.modelo import Numero, Origem, Relatorio, Secao
 from relatorio.render_md import fmt
-from relatorio.renda import Renda12m, inicio_da_janela, provento_12m
+from relatorio.renda import JCP, RENDA, Renda12m, inicio_da_janela, provento_12m
 
 FERR = Path(__file__).resolve().parents[1]
 RAIZ = FERR.parent
@@ -35,6 +37,8 @@ O_PROV = Origem("B3 proventos", "A", "API da B3 GetListedCashDividends, data-com
 O_LOCAL = Origem("carteira local", "B", "quantidade digitada pelo Frank a partir do extrato da corretora (arquivo fora do git)")
 O_META = Origem("meta do Frank", "B", "meta de renda mensal decidida em 19/10/2026 (DECISOES.md); valor fora do git")
 O_IR = Origem("LC 224/2025", "A", "IR retido no JCP, a mesma alíquota do motor (motor_financeiras.IR_JCP)")
+O_PAG = Origem("StatusInvest pagamento", "C", "data de pagamento da StatusInvest casada pela data-com, ou estimada pela "
+                                             "defasagem média medida nela (defasagem.py); a B3 não publica a data na API")
 
 
 # ------------------------------------------------------------------------------ entrada
@@ -118,7 +122,7 @@ def montar(local: dict, precos: dict, pregao: str, refs: dict, rendas: dict, dat
             avisos.append(f"{tk} sem palavra no motor do hall.")
 
     bruta = liquida = 0.0
-    linhas_renda, anunciados, ignorados = [], [], []
+    linhas_renda, caixa, ignorados = [], [], []
     for tk in sorted(pos, key=lambda t: -valor[t]):
         r, q, pm = rendas.get(tk), pos[tk]["quantidade"], pos[tk]["preco_medio"]
         if not isinstance(r, Renda12m):
@@ -128,8 +132,15 @@ def montar(local: dict, precos: dict, pregao: str, refs: dict, rendas: dict, dat
         bruta, liquida = bruta + b, liquida + liq
         linhas_renda.append([tk, fmt(r.total), fmt(r.jcp), fmt(r.total / precos[tk], "%"), fmt(b, "R$"), fmt(liq, "R$"),
                              fmt(r.total / pm, "%") if pm else "—"])
-        anunciados += [[tk, e["data_com"], e["tipo"], fmt(e["por_acao"])] for e in r.futuros]
+        for e, na_conta in [(e, True) for e in r.eventos] + [(e, False) for e in r.futuros if e["tipo"] in RENDA]:
+            v = e.get("ajustado", e["por_acao"])
+            caixa.append({"tk": tk, "data_com": e["data_com"], "tipo": e["tipo"], "por_acao": v,
+                          "liquido": q * v * ((1 - ir_jcp) if e["tipo"] == JCP else 1.0), "na_conta": na_conta,
+                          "so_si": e.get("so_statusinvest", False),
+                          "pagamento": e.get("pagamento", SEM_DATA), "origem": e.get("pag_origem", SEM_DATA)})
         ignorados += [f"{tk} {e['data_com']} {e['tipo']} R$ {fmt(e['por_acao'])}" for e in r.ignorados]
+        ignorados += [f"{tk} {e['data_com']} {e['tipo']} R$ {fmt(e['por_acao'])} (anunciado)" for e in r.futuros
+                      if e["tipo"] not in RENDA]
     linhas_renda.append(["Total", "", "", fmt(bruta / total, "%"), fmt(bruta, "R$"), fmt(liquida, "R$"), ""])
     if ignorados:
         avisos.append("Fora da renda (não é dividendo/JCP/rendimento): " + "; ".join(ignorados) + ".")
@@ -158,16 +169,56 @@ def montar(local: dict, precos: dict, pregao: str, refs: dict, rendas: dict, dat
         linhas_pos)],
         texto=[f"Palavra, central, compra e saída: motor do hall com preço de {data_palavra}. O P/C usa o fechamento de "
                f"{pregao} e é informativo — palavra nova só com veredito novo. Nada aqui é ordem de compra ou venda."])
-    tabs = [("Renda de 12 meses por ticker (R$ por ação de hoje)",
-             ["Ticker", "Provento/ação", "dos quais JCP", "DY 12m", "Renda bruta/ano", "Renda líquida/ano",
-              "Yield on cost"], linhas_renda)]
-    if anunciados:
-        tabs.append(("Anunciados com data-com depois de " + pregao + " (fora da conta)",
-                     ["Ticker", "Data-com", "Tipo", "R$/ação"], anunciados))
-    renda_sec = Secao("Renda", tabelas=tabs)
+    renda_sec = Secao("Renda", tabelas=[(
+        "Renda de 12 meses por ticker (R$ por ação de hoje)",
+        ["Ticker", "Provento/ação", "dos quais JCP", "DY 12m", "Renda bruta/ano", "Renda líquida/ano", "Yield on cost"],
+        linhas_renda)])
     return Relatorio(tk="CARTEIRA", nome="Painel da carteira e da meta", data=pregao,
                      origem=f"carteira local + motor do hall ({data_palavra})", palavra="—",
-                     secoes=[meta_sec, pos_sec, renda_sec], avisos=avisos)
+                     secoes=[meta_sec, pos_sec, renda_sec, calendario_secao(caixa, pregao, obs)], avisos=avisos)
+
+
+_ORIGEM_PAG = {STATUSINVEST: "StatusInvest", ESTIMADO: "estimada", SEM_DATA: "sem data"}
+
+
+def calendario_secao(caixa: list[dict], pregao: str, obs: str = "") -> Secao:
+    """Mês em que cai cada provento líquido: os da renda de 12 meses (pela data-com) e os anunciados ainda não pagos."""
+    conta = [c for c in caixa if c["na_conta"]]
+    por_mes: dict[str, list[dict]] = {}
+    for c in conta:
+        por_mes.setdefault(c["pagamento"][:7] or SEM_DATA, []).append(c)
+    datados = sorted(m for m in por_mes if m)
+    linhas = []
+    for m in (meses(datados[0], datados[-1]) if datados else []) + ([SEM_DATA] if SEM_DATA in por_mes else []):
+        cs = por_mes.get(m, [])
+        if not cs:
+            linhas.append([m, "—", "", "sem pagamento", ""])
+            continue
+        a_receber = [c["pagamento"] > pregao for c in cs]
+        sit = ("sem data" if m == SEM_DATA else "a receber" if all(a_receber) else
+               "parte a receber" if any(a_receber) else "pago")
+        linhas.append([m or "sem data", fmt(sum(c["liquido"] for c in cs), "R$"), ", ".join(sorted({c["tk"] for c in cs})),
+                       sit, " + ".join(sorted({_ORIGEM_PAG[c["origem"]] for c in cs}))])
+    pendentes = sorted((c for c in caixa if not c["na_conta"] or c["pagamento"] > pregao),
+                       key=lambda c: (c["pagamento"] or "9999", c["tk"], c["data_com"]))
+    tabs = [("Pagamento por mês (renda líquida de 12 meses)", ["Mês", "Líquido", "Tickers", "Situação", "Data de"], linhas)]
+    if pendentes:
+        tabs.append((f"A receber (pagamento depois de {pregao} ou data-com futura)",
+                     ["Ticker", "Data-com", "Pagamento", "Data de", "Tipo", "R$/ação", "Líquido", "Na renda de 12m"],
+                     [[c["tk"], c["data_com"], c["pagamento"] or "sem data", _ORIGEM_PAG[c["origem"]], c["tipo"],
+                       fmt(c["por_acao"]), fmt(c["liquido"], "R$"),
+                       "sim" if c["na_conta"] else "não (data-com futura" + ("; só StatusInvest, C)" if c["so_si"] else ")")]
+                      for c in pendentes]))
+    src, futuros = (O_LOCAL, O_PROV, O_IR), [c for c in caixa if not c["na_conta"]]
+    return Secao("Calendário de pagamento", numeros=[
+        Numero("A receber da renda de 12 meses (já passou a data-com)",
+               sum((c["liquido"] for c in conta if c["pagamento"] > pregao), 0.0), "R$", (*src, O_PAG), obs=obs),
+        Numero("Anunciado com data-com futura (fora da renda de 12 meses)", sum((c["liquido"] for c in futuros), 0.0), "R$",
+               (*src, O_PAG) if any(c["so_si"] for c in futuros) else src),
+    ], tabelas=tabs, texto=["Data de pagamento: StatusInvest (nota C), casada pela data-com; sem ela, estimada = data-com + "
+                            "defasagem média do ticker (também C). A renda do painel continua contada pela data-com — o "
+                            "calendário só mostra quando o dinheiro cai. Anunciado que a B3 ainda não lista e a StatusInvest "
+                            "já mostra entra só na tabela de a receber, marcado C."])
 
 
 def render(rel: Relatorio) -> str:
@@ -189,7 +240,17 @@ def _registros(tk: str, pregao: str, baixar: bool) -> list[dict]:
     return proventos_ex.registros(tk, pregao)
 
 
+def _statusinvest() -> dict:
+    """Séries vigentes da StatusInvest (datas de pagamento); fora do disco → {} e o calendário sai "sem data"."""
+    import series_vigente
+    try:
+        return series_vigente.carregar()
+    except (FileNotFoundError, ValueError):
+        return {}
+
+
 def carregar(hoje: str | None = None, caminho: Path = LOCAL, baixar: bool = True) -> Relatorio:
+    import defasagem
     import hall03
     import monitor_semanal
     import proventos_ex
@@ -204,6 +265,7 @@ def carregar(hoje: str | None = None, caminho: Path = LOCAL, baixar: bool = True
     refs = {tk: todas[tk] for tk in tks if tk in todas}
     sup = carregar_suplemento()
     sup = sup[sup["data_com"].astype(str).str[:10] > inicio_da_janela(pregao)]   # só evento da janela ajusta
+    si = _statusinvest()
     rendas: dict = {}
     for tk in tks:
         try:
@@ -211,6 +273,11 @@ def carregar(hoje: str | None = None, caminho: Path = LOCAL, baixar: bool = True
                                       eventos_em_acoes(tk, sup))
         except (KeyError, ValueError, FileNotFoundError, NotImplementedError) as ex:
             rendas[tk] = f"{type(ex).__name__}: {ex}"
+            continue
+        if tk in si:                                   # calendário: data de pagamento (C); sem StatusInvest → sem data
+            anotar(rendas[tk], si[tk]["eventos"], defasagem.defasagem_meses(tk, si), pregao)
+        else:
+            anotar(rendas[tk], [], None)
     return montar(local, precos, pregao, refs, rendas, proventos_ex.data_do_preco(),
                   fora_do_hall=frozenset(hall03.FORA_DO_HALL) & set(tks), ir_jcp=IR_JCP)
 
@@ -223,9 +290,15 @@ def garantir_ignorado(caminho: Path) -> None:
                               f"{SAIDA.relative_to(RAIZ)}/ (ver .gitignore)")
 
 
-def gravar(rel: Relatorio, pasta: Path = SAIDA) -> Path:
-    md = pasta / f"{rel.tk}-{rel.data}.md"
-    garantir_ignorado(md)
+INTRO_PDF = ["**Documento pessoal** (quantidades e valores): fica só em RELATORIOS/privado/, fora do git. "
+             "Mostra a renda, a meta e a posição do preço na régua da doutrina — não é ordem de compra nem de venda."]
+
+
+def gravar(rel: Relatorio, pasta: Path = SAIDA) -> list[Path]:
+    md, pdf = pasta / f"{rel.tk}-{rel.data}.md", pasta / f"{rel.tk}-{rel.data}.pdf"
+    for p in (md, pdf):                                  # confere os dois antes de gravar qualquer um
+        garantir_ignorado(p)
     pasta.mkdir(parents=True, exist_ok=True)
     md.write_text(render(rel), encoding="utf-8")
-    return md
+    render_pdf.render(rel, pdf, intro=[f"Preços de {rel.data} · {rel.origem}", *INTRO_PDF], rotulo=f"{rel.tk} {rel.data} · pessoal")
+    return [md, pdf]

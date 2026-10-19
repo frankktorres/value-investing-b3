@@ -175,3 +175,89 @@ def test_painel_real_com_o_exemplo_monta_sem_rede():
     linhas = rel.secoes[1].tabelas[0][2]
     assert {x[0] for x in linhas} == set(json.loads(carteira.TICKERS.read_text(encoding="utf-8"))["tickers"])
     assert not math.isnan(_num(rel, "Patrimônio em ações").valor)
+
+
+# ------------------------------------------------------------------------------ calendário de pagamento
+from relatorio.calendario import ESTIMADO, STATUSINVEST, anotar, data_de_pagamento, meses  # noqa: E402
+
+
+def ev(data_com, por_acao=1.0):
+    return {"data_com": data_com, "por_acao": por_acao}
+
+
+def test_pagamento_da_statusinvest_casado_pela_data_com():
+    si = [{"data_com": "06/08/2026", "pagamento": "03/09/2026", "valor": 1.98}]
+    assert data_de_pagamento(ev("2026-08-06", 1.98), si, 0.5) == ("2026-09-03", STATUSINVEST)
+
+
+def test_duas_datas_na_mesma_data_com_casa_pelo_valor():
+    si = [{"data_com": "01/09/2026", "pagamento": "11/09/2026", "valor": 0.10},
+          {"data_com": "01/09/2026", "pagamento": "30/12/2026", "valor": 0.50}]
+    assert data_de_pagamento(ev("2026-09-01", 0.501), si, 1.0) == ("2026-12-30", STATUSINVEST)
+
+
+def test_sem_statusinvest_estima_pela_defasagem_e_sem_defasagem_nao_inventa():
+    si = [{"data_com": "30/11/2026", "pagamento": "-", "valor": 0.02}]          # anunciado, ainda sem data
+    assert data_de_pagamento(ev("2026-11-30"), si, 1.0) == ("2026-12-30", ESTIMADO)
+    assert data_de_pagamento(ev("2026-11-30"), [], None) == ("", "")
+
+
+def test_meses_atravessa_o_ano():
+    assert meses("2025-11", "2026-02") == ["2025-11", "2025-12", "2026-01", "2026-02"]
+
+
+def _painel_com_datas():
+    a = provento_12m([reg("2026-03-02", 1.0), reg("2026-08-03", 0.5, "JRS CAP PROPRIO"), reg("2026-11-30", 0.2)], "ON", DATA)
+    b = provento_12m([reg("2026-03-10", 2.0)], "ON", DATA)
+    anotar(a, [{"data_com": "02/03/2026", "pagamento": "20/03/2026", "valor": 1.0},
+               {"data_com": "03/08/2026", "pagamento": "20/10/2026", "valor": 0.5}], 1.0)
+    anotar(b, [], None)
+    return _painel(rendas={"TESTA3": a, "TESTB4": b})
+
+
+def test_calendario_soma_a_renda_liquida_e_separa_o_a_receber():
+    rel = _painel_com_datas()
+    cal = next(s for s in rel.secoes if s.titulo == "Calendário de pagamento")
+    linhas = cal.tabelas[0][2]
+    assert [x[0] for x in linhas] == ["2026-03", "2026-04", "2026-05", "2026-06", "2026-07", "2026-08", "2026-09",
+                                      "2026-10", "sem data"]
+    assert linhas[0][1:4] == ["R$ 100,00", "TESTA3", "pago"]
+    assert linhas[1][3] == "sem pagamento"
+    assert linhas[7][3] == "a receber" and linhas[-1][2] == "TESTB4"
+    # 100×1 (mar) + 100×0,5×(1 − 0,175) (out, a receber) + 50×2 (sem data) = líquida anual do painel
+    assert _num(rel, "Renda líquida por mês").valor * 12 == pytest.approx(100 + 41.25 + 100)
+    assert _num(rel, "A receber da renda").valor == pytest.approx(41.25)
+    assert _num(rel, "A receber da renda").nota == "C"                 # a data vem da StatusInvest
+    assert _num(rel, "Anunciado com data-com futura").valor == pytest.approx(100 * 0.2)
+    pend = cal.tabelas[1][2]
+    assert [(x[0], x[1], x[-1]) for x in pend] == [("TESTA3", "2026-08-03", "sim"),
+                                                    ("TESTA3", "2026-11-30", "não (data-com futura)")]
+    assert pend[1][2:4] == ["2026-12-30", "estimada"]
+
+
+def test_pdf_do_painel_sai_e_gravar_escreve_md_e_pdf_so_em_pasta_ignorada():
+    import shutil
+    import uuid
+    rel = _painel_com_datas()
+    pasta = carteira.SAIDA / f"_teste_{uuid.uuid4().hex[:8]}"         # dentro de RELATORIOS/privado/ (ignorado)
+    try:
+        md, pdf = carteira.gravar(rel, pasta)
+        assert md.read_text(encoding="utf-8").startswith("# Painel da carteira")
+        assert pdf.read_bytes()[:5] == b"%PDF-" and pdf.stat().st_size > 3000
+    finally:
+        shutil.rmtree(pasta, ignore_errors=True)
+
+
+def test_anunciado_so_na_statusinvest_entra_a_receber_com_nota_c_e_fora_da_renda():
+    a = provento_12m([reg("2026-03-02", 1.0)], "ON", DATA)
+    anotar(a, [{"data_com": "02/03/2026", "pagamento": "20/03/2026", "valor": 1.0, "tipo": "Dividendo"},
+               {"data_com": "30/11/2026", "pagamento": "04/01/2027", "valor": 0.3, "tipo": "Dividendo"},
+               {"data_com": "30/11/2026", "pagamento": "04/01/2027", "valor": 9.0, "tipo": "Amortização"}], 1.0, DATA)
+    rel = _painel(rendas={"TESTA3": a, "TESTB4": Renda12m(0.0, 0.0)})
+    assert _num(rel, "Renda líquida por mês").valor * 12 == pytest.approx(100)          # o anunciado não entra na renda
+    n = _num(rel, "Anunciado com data-com futura")
+    assert n.valor == pytest.approx(30) and n.nota == "C"
+    cal = next(s for s in rel.secoes if s.titulo == "Calendário de pagamento")
+    assert cal.tabelas[1][2] == [["TESTA3", "2026-11-30", "2027-01-04", "StatusInvest", "DIVIDENDO", "0,30", "R$ 30,00",
+                                  "não (data-com futura; só StatusInvest, C)"]]
+    assert _num(rel, "A receber da renda").valor == 0.0 and isinstance(_num(rel, "A receber da renda").valor, float)

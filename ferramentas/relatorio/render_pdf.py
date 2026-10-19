@@ -131,8 +131,10 @@ def _desenha_rodape(canvas, doc, rotulo):
     canvas.restoreState()
 
 
-def historia(rel: Relatorio, larg: float) -> list:
-    H = [Paragraph(_md(f"{rel.tk} — {rel.nome}"), S["h1"]), _caixa_palavra(rel, larg), Spacer(1, 3 * mm),
+def historia(rel: Relatorio, larg: float, intro: list[str] | None = None) -> list:
+    """`intro` (painel da carteira, que não tem palavra) troca a caixa da palavra por parágrafos."""
+    topo = [P(x, "p") for x in intro] if intro is not None else [_caixa_palavra(rel, larg)]
+    H = [Paragraph(_md(f"{rel.tk} — {rel.nome}"), S["h1"]), *topo, Spacer(1, 3 * mm),
          P("Nota da fonte: A oficial (CVM, B3, Tesouro, ANBIMA, BCB); B primária com ressalva; C agregador ou não conferido; "
            "— sem fonte numérica. Só A/B embasa decisão; C e — aparecem em vermelho em vez de escondidos.", "pi")]
     if rel.avisos:
@@ -154,10 +156,11 @@ def historia(rel: Relatorio, larg: float) -> list:
     return H
 
 
-def render(rel: Relatorio, destino: pathlib.Path) -> pathlib.Path:
+def render(rel: Relatorio, destino: pathlib.Path, intro: list[str] | None = None,
+           rotulo: str | None = None) -> pathlib.Path:
     larg = A4[0] - 30 * mm
     doc = SimpleDocTemplate(str(destino), pagesize=A4, leftMargin=15 * mm, rightMargin=15 * mm, topMargin=14 * mm,
                             bottomMargin=16 * mm, title=_seguro(f"{rel.tk} — relatório"), author="Mesa de Value Investing")
-    rodape = _rodape(f"{rel.tk} {rel.data}")
-    doc.build(historia(rel, larg), onFirstPage=rodape, onLaterPages=rodape)
+    rodape = _rodape(rotulo or f"{rel.tk} {rel.data}")
+    doc.build(historia(rel, larg, intro), onFirstPage=rodape, onLaterPages=rodape)
     return destino
