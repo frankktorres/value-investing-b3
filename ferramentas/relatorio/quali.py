@@ -26,7 +26,7 @@ ANO_FRE = 2026
 CADASTRO = {"BBSE3": ("17.344.597/0001-94", "BBSEGURIDADE")}
 CORTE_BENEISH, CORTE_SLOAN, CORTE_COBERTURA, CORTE_DL_EBITDA = -1.78, 0.10, 1.5, 3.0
 CORTE_DISPERSAO, CORTE_DILUICAO, CORTE_DEFASAGEM = 1.8, 0.02, 12.0
-INFO_CORTE = "informativo — corte do relatório (a conferir)"
+INFO_CORTE = "informativo — corte do relatório (heurística do projeto, sem fonte)"
 
 
 def _n(rot, valor, origens=(), unidade="", obs="", papel="informativo"):
