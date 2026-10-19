@@ -1,5 +1,5 @@
 # PROJECT BRIEF — Mesa de Value Investing B3
-*Versão de 19/10/2026 (rev. fase 2, fatia 3: painel da carteira + histórico; doutrina v2.6) · gerado por `/brief` · fonte: repositório, memória do projeto e `docs/auditoria/AUDITORIA_2026-10-08.md`*
+*Versão de 19/10/2026 (rev. tela, fatia 1: Hall no navegador; doutrina v2.6) · gerado por `/brief` · fonte: repositório, memória do projeto e `docs/auditoria/AUDITORIA_2026-10-08.md`*
 
 ## 1. Projeto
 Mesa de análise fundamentalista da B3 para dividendos/JCP e longo prazo: doutrina escrita (v2.6) + motores de valuation em Python que
@@ -15,6 +15,8 @@ MVP de uso pessoal, maduro no cálculo. Um usuário real, sem terceiros. Prazo e
 - **Libs usadas no código:** pandas 2.3.3 · numpy 2.3.4 · reportlab 4.4.9 (PDFs dos lotes) · matplotlib 3.10.7 · requests 2.33.0 · pytest 9.0.2.
 - **Banco:** nenhum. Dados em JSON/CSV/ZIP em `ferramentas/dados/` e `ferramentas/backtest/dados/` (~2,1 GB fora do git); registros
   append-only em `.jsonl` (`prospectivo/`).
+- **Tela:** HTML + CSS + JS (módulos ES) sem build nem npm, servida pelo `http.server` da biblioteca padrão só em 127.0.0.1;
+  fontes IBM Plex e Source Serif 4 locais (OFL); tokens do Claude Design (`docs/design/`). Nenhuma dependência nova.
 - **Infra:** máquina local; Agendador do Windows (monitor semanal, sexta 08:00); GitHub privado + backup em pendrive. Sem nuvem.
 - **APIs/fontes externas:** CVM dados abertos (DFP/ITR/FRE, RAD) — fonte A; B3 COTAHIST e proventos; BCB SGS (IPCA, PTAX); Tesouro
   Transparente (curva IPCA+); FRED (preços de commodities); StatusInvest (scraping, nota C).
@@ -28,6 +30,9 @@ MVP de uso pessoal, maduro no cálculo. Um usuário real, sem terceiros. Prazo e
 - **Lotes:** `loteN_*.py` (premissas digitadas) → `gerar_pdf_loteN.py`; `rodar_tudo.py` regrava o golden. O quadro do `03` e o hall do
   prompt de sexta são gerados do motor por `hall03.py` (Onda 1.3); preço oficial com data e fonte em `precos_hall.py`.
 - **`dossie/`:** anexo mecânico por ticker (FRE, notas por evidência, vereditos). **`triagem/`:** fila de toda a B3, sem veredito.
+- **Tela (`ferramentas/painel/`):** `painel.exportar` roda os motores uma vez (~100 s) e grava `web/dados/hall.json` +
+  `empresas/<TK>.json` (ignorados; contrato versionado); `painel.servir` só serve arquivos. A tela não calcula: palavra
+  vigente, régua e nota da fonte vêm do relatório; o preço de hoje só move o marcador.
 - **`backtest/`:** ledger point-in-time + COTAHIST (parado no portão do proxy). **`monitor_semanal.py`**, **`temporada.py`**, **`registro_prospectivo.py`**.
 - **Testes:** pytest com golden dos 41 tickers: 458 no hall (09/10, Onda 2 concluída; `EXIGIR_DADOS=1` transforma skip em falha) + 308 no backtest (09/10; rodar SOZINHO, ~13 min, e com a máquina folgada: a suíte inteira estoura memória se algo mais estiver aberto). Mudança no `Mercado` ou nos motores exige rodar as duas suítes.
 
@@ -55,7 +60,9 @@ MVP de uso pessoal, maduro no cálculo. Um usuário real, sem terceiros. Prazo e
    da meta, `relatorio CARTEIRA` → `RELATORIOS/privado/` (fora do git): fatias 1-3 FEITAS (MD+PDF: renda 12m pela data-com, meta, régua por
    posição, calendário de pagamento, evolução rumo à meta em `dados/privado/renda.jsonl`; a tarefa de sexta gera o painel; adversário rodado).
    Falta só o Frank usar e dizer o que muda.
-   Plano: `~/.claude/plans/frolicking-sauteeing-snowglobe.md`. Depois: dados vivos sem premissa digitada (fase 3), triagem contínua
+   **Tela (front end, 19/10):** `painel` → navegador em 127.0.0.1:8765; fatia 1 (Hall) FEITA; faltam 2 Empresa, 3 Carteira
+   (privado), 4 Monitor + exportação na tarefa de sexta. Plano: `~/.claude/plans/greedy-imagining-church.md`.
+   Plano da fase 2: `~/.claude/plans/frolicking-sauteeing-snowglobe.md`. Depois: dados vivos sem premissa digitada (fase 3), triagem contínua
    (fase 4), SaaS.
 
 ## 7. Restrições
@@ -116,3 +123,4 @@ MVP de uso pessoal, maduro no cálculo. Um usuário real, sem terceiros. Prazo e
 - 19/10/2026 (B08): dossiês FESA4 (RADAR, P/C 0,82), SHUL4 (CARA, 1,28) e VLID3 (CARA, 1,14) com data 15/10 e `relatorio` dos três; B08 fechada (4 de 4); suíte 546 passed.
 - 19/10/2026 (fase 2, fatia 1): painel `relatorio CARTEIRA` (`relatorio/renda.py` + `relatorio/carteira.py`): renda líquida de 12 meses pela data-com (B3, nota A) × quantidade local, % da meta, régua por posição; dado pessoal só em `carteira.local.json` e `RELATORIOS/privado/` (ignorados; gravação recusa destino versionável); 567 testes verdes, golden intacto.
 - 19/10/2026 (fase 2, fatias 2 e 3): PDF + calendário de pagamento (StatusInvest nota C, anunciado fora da renda); histórico `ferramentas/dados/privado/renda.jsonl` (ignorado, uma linha por pregão) com a tabela "Evolução rumo à meta"; `monitor_semanal.vbs` gera o painel após o monitor; adversário sobre renda/calendário/carteira; README e DECISOES atualizados; 586 testes verdes.
+- 19/10/2026 (tela, fatia 1): `ferramentas/painel/` (exportar → JSON ignorado; servir em 127.0.0.1) + `painel.cmd`; Hall no navegador com palavra vigente, régua, nota da fonte, filtro A/B, tema claro/escuro (Playwright conferido); achado: só 8 de 47 centrais têm fonte A/B (todos de dossiê) — o hall segue com premissa digitada (nota C/—); LEVE3 com régua suspensa (motor diverge do veredito); design do Claude Design em `docs/design/`; adversário rodado.

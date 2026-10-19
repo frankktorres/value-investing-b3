@@ -24,6 +24,10 @@ carteira-real*
 RELATORIOS/privado/
 # Histórico da renda rumo à meta (R$ por pregão) — pessoal, escrito por relatorio CARTEIRA
 ferramentas/dados/privado/
+# Dados da tela (painel web): JSON regerável por `python -m painel.exportar`; a parte pessoal vai em dados/privado/
+ferramentas/painel/web/dados/
+# Capturas e logs do Playwright MCP (conferência da tela no navegador)
+.playwright-mcp/
 # Log da última execução do monitor semanal (Etapa 4)
 ferramentas/monitor/ultimo.log
 # Logs do painel e da temporada (o painel pode ecoar valor pessoal em mensagem de erro)
