@@ -18,6 +18,9 @@
 
 ## Fluxos de trabalho
 
+**Relatório de uma empresa (um comando)**
+`relatorio BBSE3` na raiz (ou `cd ferramentas && python -m relatorio BBSE3`) → `RELATORIOS/<TICKER>-<data>.md` (+ `.json`): palavra, compra/saída, cada método de preço (DCF, EPV, Buffett OE, Graham, Bazin, DDM…) separado entre "entra no central" e "informativo", sensibilidade e premissas de julgamento; cada número com fonte e nota A/B/C/—. É uma vista dos motores: não grava veredito. Vale para os 41 do hall e para quem tem ficha de dossiê (BLAU3, CMIN3, HYPE3, LEVE3). Em construção (fase 1): quali e PDF, ALLD3.
+
 **Analisar uma ação nova**
 `06-triagem` (se ainda não estiver na fila) → `02-prompt` (dossiê; no Claude Code, `cd ferramentas && python -m dossie.gerar <TICKER>` gera o anexo mecânico) → `04-checklist` → dossiê aprovado em `DOSSIES/` + atualizar `03-hall` → `python registro_prospectivo.py --dossie` (registra o veredito com `origem` "dossie")
 

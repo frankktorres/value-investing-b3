@@ -1,0 +1,1060 @@
+{
+ "tk": "LEVE3",
+ "nome": "MAHLE Metal Leve",
+ "data": "2026-10-06",
+ "origem": "dossiê",
+ "palavra": "NÃO CONCLUSIVO",
+ "secoes": [
+  {
+   "titulo": "Veredito",
+   "numeros": [
+    {
+     "rotulo": "Preço",
+     "valor": 36.55,
+     "unidade": "R$",
+     "origens": [
+      {
+       "fonte": "COTAHIST",
+       "nota": "A",
+       "detalhe": "B3, COTAHIST, fechamento (PREULT) de 2026-10-06"
+      }
+     ],
+     "papel": "",
+     "obs": ""
+    },
+    {
+     "rotulo": "Valor central",
+     "valor": 38.44671270910715,
+     "unidade": "R$",
+     "origens": [
+      {
+       "fonte": "CVM DFP/ITR",
+       "nota": "A",
+       "detalhe": "CVM, DFP 2016–2025 + ITR de 2026 (LTM), dados abertos"
+      },
+      {
+       "fonte": "CVM ITR (ações)",
+       "nota": "A",
+       "detalhe": "CVM, composição do capital do ITR (sem tesouraria)"
+      },
+      {
+       "fonte": "B3 proventos",
+       "nota": "A",
+       "detalhe": "B3, proventos em dinheiro por data-com (API pública)"
+      },
+      {
+       "fonte": "Tesouro + ANBIMA",
+       "nota": "A",
+       "detalhe": "rf: Tesouro Transparente; π: ETTJ ANBIMA — dados/mercado_2026-10-06.json"
+      },
+      {
+       "fonte": "CVM DFP/ITR",
+       "nota": "A",
+       "detalhe": "CVM, DFP 2016–2025 + ITR de 2026 (LTM), dados abertos"
+      },
+      {
+       "fonte": "CVM ITR (ações)",
+       "nota": "A",
+       "detalhe": "CVM, composição do capital do ITR (sem tesouraria)"
+      },
+      {
+       "fonte": "B3 proventos",
+       "nota": "A",
+       "detalhe": "B3, proventos em dinheiro por data-com (API pública)"
+      },
+      {
+       "fonte": "Tesouro + ANBIMA",
+       "nota": "A",
+       "detalhe": "rf: Tesouro Transparente; π: ETTJ ANBIMA — dados/mercado_2026-10-06.json"
+      },
+      {
+       "fonte": "CVM DFP/ITR",
+       "nota": "A",
+       "detalhe": "CVM, DFP 2016–2025 + ITR de 2026 (LTM), dados abertos"
+      },
+      {
+       "fonte": "CVM ITR (ações)",
+       "nota": "A",
+       "detalhe": "CVM, composição do capital do ITR (sem tesouraria)"
+      },
+      {
+       "fonte": "B3 proventos",
+       "nota": "A",
+       "detalhe": "B3, proventos em dinheiro por data-com (API pública)"
+      },
+      {
+       "fonte": "Tesouro + ANBIMA",
+       "nota": "A",
+       "detalhe": "rf: Tesouro Transparente; π: ETTJ ANBIMA — dados/mercado_2026-10-06.json"
+      }
+     ],
+     "papel": "",
+     "obs": ""
+    },
+    {
+     "rotulo": "Preço ÷ central (P/C)",
+     "valor": 0.9506664529823933,
+     "unidade": "x",
+     "origens": [
+      {
+       "fonte": "CVM DFP/ITR",
+       "nota": "A",
+       "detalhe": "CVM, DFP 2016–2025 + ITR de 2026 (LTM), dados abertos"
+      },
+      {
+       "fonte": "CVM ITR (ações)",
+       "nota": "A",
+       "detalhe": "CVM, composição do capital do ITR (sem tesouraria)"
+      },
+      {
+       "fonte": "B3 proventos",
+       "nota": "A",
+       "detalhe": "B3, proventos em dinheiro por data-com (API pública)"
+      },
+      {
+       "fonte": "Tesouro + ANBIMA",
+       "nota": "A",
+       "detalhe": "rf: Tesouro Transparente; π: ETTJ ANBIMA — dados/mercado_2026-10-06.json"
+      },
+      {
+       "fonte": "CVM DFP/ITR",
+       "nota": "A",
+       "detalhe": "CVM, DFP 2016–2025 + ITR de 2026 (LTM), dados abertos"
+      },
+      {
+       "fonte": "CVM ITR (ações)",
+       "nota": "A",
+       "detalhe": "CVM, composição do capital do ITR (sem tesouraria)"
+      },
+      {
+       "fonte": "B3 proventos",
+       "nota": "A",
+       "detalhe": "B3, proventos em dinheiro por data-com (API pública)"
+      },
+      {
+       "fonte": "Tesouro + ANBIMA",
+       "nota": "A",
+       "detalhe": "rf: Tesouro Transparente; π: ETTJ ANBIMA — dados/mercado_2026-10-06.json"
+      },
+      {
+       "fonte": "CVM DFP/ITR",
+       "nota": "A",
+       "detalhe": "CVM, DFP 2016–2025 + ITR de 2026 (LTM), dados abertos"
+      },
+      {
+       "fonte": "CVM ITR (ações)",
+       "nota": "A",
+       "detalhe": "CVM, composição do capital do ITR (sem tesouraria)"
+      },
+      {
+       "fonte": "B3 proventos",
+       "nota": "A",
+       "detalhe": "B3, proventos em dinheiro por data-com (API pública)"
+      },
+      {
+       "fonte": "Tesouro + ANBIMA",
+       "nota": "A",
+       "detalhe": "rf: Tesouro Transparente; π: ETTJ ANBIMA — dados/mercado_2026-10-06.json"
+      },
+      {
+       "fonte": "COTAHIST",
+       "nota": "A",
+       "detalhe": "B3, COTAHIST, fechamento (PREULT) de 2026-10-06"
+      }
+     ],
+     "papel": "",
+     "obs": ""
+    },
+    {
+     "rotulo": "Compra (0,70 × central)",
+     "valor": 26.912698896375005,
+     "unidade": "R$",
+     "origens": [
+      {
+       "fonte": "CVM DFP/ITR",
+       "nota": "A",
+       "detalhe": "CVM, DFP 2016–2025 + ITR de 2026 (LTM), dados abertos"
+      },
+      {
+       "fonte": "CVM ITR (ações)",
+       "nota": "A",
+       "detalhe": "CVM, composição do capital do ITR (sem tesouraria)"
+      },
+      {
+       "fonte": "B3 proventos",
+       "nota": "A",
+       "detalhe": "B3, proventos em dinheiro por data-com (API pública)"
+      },
+      {
+       "fonte": "Tesouro + ANBIMA",
+       "nota": "A",
+       "detalhe": "rf: Tesouro Transparente; π: ETTJ ANBIMA — dados/mercado_2026-10-06.json"
+      },
+      {
+       "fonte": "CVM DFP/ITR",
+       "nota": "A",
+       "detalhe": "CVM, DFP 2016–2025 + ITR de 2026 (LTM), dados abertos"
+      },
+      {
+       "fonte": "CVM ITR (ações)",
+       "nota": "A",
+       "detalhe": "CVM, composição do capital do ITR (sem tesouraria)"
+      },
+      {
+       "fonte": "B3 proventos",
+       "nota": "A",
+       "detalhe": "B3, proventos em dinheiro por data-com (API pública)"
+      },
+      {
+       "fonte": "Tesouro + ANBIMA",
+       "nota": "A",
+       "detalhe": "rf: Tesouro Transparente; π: ETTJ ANBIMA — dados/mercado_2026-10-06.json"
+      },
+      {
+       "fonte": "CVM DFP/ITR",
+       "nota": "A",
+       "detalhe": "CVM, DFP 2016–2025 + ITR de 2026 (LTM), dados abertos"
+      },
+      {
+       "fonte": "CVM ITR (ações)",
+       "nota": "A",
+       "detalhe": "CVM, composição do capital do ITR (sem tesouraria)"
+      },
+      {
+       "fonte": "B3 proventos",
+       "nota": "A",
+       "detalhe": "B3, proventos em dinheiro por data-com (API pública)"
+      },
+      {
+       "fonte": "Tesouro + ANBIMA",
+       "nota": "A",
+       "detalhe": "rf: Tesouro Transparente; π: ETTJ ANBIMA — dados/mercado_2026-10-06.json"
+      }
+     ],
+     "papel": "",
+     "obs": ""
+    },
+    {
+     "rotulo": "1ª parcela, exceção de qualidade (0,80 × central)",
+     "valor": 30.757370167285725,
+     "unidade": "R$",
+     "origens": [
+      {
+       "fonte": "CVM DFP/ITR",
+       "nota": "A",
+       "detalhe": "CVM, DFP 2016–2025 + ITR de 2026 (LTM), dados abertos"
+      },
+      {
+       "fonte": "CVM ITR (ações)",
+       "nota": "A",
+       "detalhe": "CVM, composição do capital do ITR (sem tesouraria)"
+      },
+      {
+       "fonte": "B3 proventos",
+       "nota": "A",
+       "detalhe": "B3, proventos em dinheiro por data-com (API pública)"
+      },
+      {
+       "fonte": "Tesouro + ANBIMA",
+       "nota": "A",
+       "detalhe": "rf: Tesouro Transparente; π: ETTJ ANBIMA — dados/mercado_2026-10-06.json"
+      },
+      {
+       "fonte": "CVM DFP/ITR",
+       "nota": "A",
+       "detalhe": "CVM, DFP 2016–2025 + ITR de 2026 (LTM), dados abertos"
+      },
+      {
+       "fonte": "CVM ITR (ações)",
+       "nota": "A",
+       "detalhe": "CVM, composição do capital do ITR (sem tesouraria)"
+      },
+      {
+       "fonte": "B3 proventos",
+       "nota": "A",
+       "detalhe": "B3, proventos em dinheiro por data-com (API pública)"
+      },
+      {
+       "fonte": "Tesouro + ANBIMA",
+       "nota": "A",
+       "detalhe": "rf: Tesouro Transparente; π: ETTJ ANBIMA — dados/mercado_2026-10-06.json"
+      },
+      {
+       "fonte": "CVM DFP/ITR",
+       "nota": "A",
+       "detalhe": "CVM, DFP 2016–2025 + ITR de 2026 (LTM), dados abertos"
+      },
+      {
+       "fonte": "CVM ITR (ações)",
+       "nota": "A",
+       "detalhe": "CVM, composição do capital do ITR (sem tesouraria)"
+      },
+      {
+       "fonte": "B3 proventos",
+       "nota": "A",
+       "detalhe": "B3, proventos em dinheiro por data-com (API pública)"
+      },
+      {
+       "fonte": "Tesouro + ANBIMA",
+       "nota": "A",
+       "detalhe": "rf: Tesouro Transparente; π: ETTJ ANBIMA — dados/mercado_2026-10-06.json"
+      }
+     ],
+     "papel": "",
+     "obs": ""
+    },
+    {
+     "rotulo": "Saída (1,30 × central)",
+     "valor": 49.9807265218393,
+     "unidade": "R$",
+     "origens": [
+      {
+       "fonte": "CVM DFP/ITR",
+       "nota": "A",
+       "detalhe": "CVM, DFP 2016–2025 + ITR de 2026 (LTM), dados abertos"
+      },
+      {
+       "fonte": "CVM ITR (ações)",
+       "nota": "A",
+       "detalhe": "CVM, composição do capital do ITR (sem tesouraria)"
+      },
+      {
+       "fonte": "B3 proventos",
+       "nota": "A",
+       "detalhe": "B3, proventos em dinheiro por data-com (API pública)"
+      },
+      {
+       "fonte": "Tesouro + ANBIMA",
+       "nota": "A",
+       "detalhe": "rf: Tesouro Transparente; π: ETTJ ANBIMA — dados/mercado_2026-10-06.json"
+      },
+      {
+       "fonte": "CVM DFP/ITR",
+       "nota": "A",
+       "detalhe": "CVM, DFP 2016–2025 + ITR de 2026 (LTM), dados abertos"
+      },
+      {
+       "fonte": "CVM ITR (ações)",
+       "nota": "A",
+       "detalhe": "CVM, composição do capital do ITR (sem tesouraria)"
+      },
+      {
+       "fonte": "B3 proventos",
+       "nota": "A",
+       "detalhe": "B3, proventos em dinheiro por data-com (API pública)"
+      },
+      {
+       "fonte": "Tesouro + ANBIMA",
+       "nota": "A",
+       "detalhe": "rf: Tesouro Transparente; π: ETTJ ANBIMA — dados/mercado_2026-10-06.json"
+      },
+      {
+       "fonte": "CVM DFP/ITR",
+       "nota": "A",
+       "detalhe": "CVM, DFP 2016–2025 + ITR de 2026 (LTM), dados abertos"
+      },
+      {
+       "fonte": "CVM ITR (ações)",
+       "nota": "A",
+       "detalhe": "CVM, composição do capital do ITR (sem tesouraria)"
+      },
+      {
+       "fonte": "B3 proventos",
+       "nota": "A",
+       "detalhe": "B3, proventos em dinheiro por data-com (API pública)"
+      },
+      {
+       "fonte": "Tesouro + ANBIMA",
+       "nota": "A",
+       "detalhe": "rf: Tesouro Transparente; π: ETTJ ANBIMA — dados/mercado_2026-10-06.json"
+      }
+     ],
+     "papel": "",
+     "obs": ""
+    },
+    {
+     "rotulo": "Ke nominal (custo do acionista)",
+     "valor": 0.19113149814951003,
+     "unidade": "%",
+     "origens": [
+      {
+       "fonte": "Tesouro + ANBIMA",
+       "nota": "A",
+       "detalhe": "rf: Tesouro Transparente; π: ETTJ ANBIMA — dados/mercado_2026-10-06.json"
+      }
+     ],
+     "papel": "",
+     "obs": ""
+    },
+    {
+     "rotulo": "Dispersão das âncoras (maior ÷ menor)",
+     "valor": 1.0882676626817969,
+     "unidade": "x",
+     "origens": [
+      {
+       "fonte": "CVM DFP/ITR",
+       "nota": "A",
+       "detalhe": "CVM, DFP 2016–2025 + ITR de 2026 (LTM), dados abertos"
+      },
+      {
+       "fonte": "CVM ITR (ações)",
+       "nota": "A",
+       "detalhe": "CVM, composição do capital do ITR (sem tesouraria)"
+      },
+      {
+       "fonte": "B3 proventos",
+       "nota": "A",
+       "detalhe": "B3, proventos em dinheiro por data-com (API pública)"
+      },
+      {
+       "fonte": "Tesouro + ANBIMA",
+       "nota": "A",
+       "detalhe": "rf: Tesouro Transparente; π: ETTJ ANBIMA — dados/mercado_2026-10-06.json"
+      },
+      {
+       "fonte": "CVM DFP/ITR",
+       "nota": "A",
+       "detalhe": "CVM, DFP 2016–2025 + ITR de 2026 (LTM), dados abertos"
+      },
+      {
+       "fonte": "CVM ITR (ações)",
+       "nota": "A",
+       "detalhe": "CVM, composição do capital do ITR (sem tesouraria)"
+      },
+      {
+       "fonte": "B3 proventos",
+       "nota": "A",
+       "detalhe": "B3, proventos em dinheiro por data-com (API pública)"
+      },
+      {
+       "fonte": "Tesouro + ANBIMA",
+       "nota": "A",
+       "detalhe": "rf: Tesouro Transparente; π: ETTJ ANBIMA — dados/mercado_2026-10-06.json"
+      },
+      {
+       "fonte": "CVM DFP/ITR",
+       "nota": "A",
+       "detalhe": "CVM, DFP 2016–2025 + ITR de 2026 (LTM), dados abertos"
+      },
+      {
+       "fonte": "CVM ITR (ações)",
+       "nota": "A",
+       "detalhe": "CVM, composição do capital do ITR (sem tesouraria)"
+      },
+      {
+       "fonte": "B3 proventos",
+       "nota": "A",
+       "detalhe": "B3, proventos em dinheiro por data-com (API pública)"
+      },
+      {
+       "fonte": "Tesouro + ANBIMA",
+       "nota": "A",
+       "detalhe": "rf: Tesouro Transparente; π: ETTJ ANBIMA — dados/mercado_2026-10-06.json"
+      }
+     ],
+     "papel": "",
+     "obs": ""
+    },
+    {
+     "rotulo": "Ke implícito no preço (o retorno que o mercado aceita)",
+     "valor": 0.1968447851427339,
+     "unidade": "%",
+     "origens": [
+      {
+       "fonte": "CVM DFP/ITR",
+       "nota": "A",
+       "detalhe": "CVM, DFP 2016–2025 + ITR de 2026 (LTM), dados abertos"
+      },
+      {
+       "fonte": "CVM ITR (ações)",
+       "nota": "A",
+       "detalhe": "CVM, composição do capital do ITR (sem tesouraria)"
+      },
+      {
+       "fonte": "B3 proventos",
+       "nota": "A",
+       "detalhe": "B3, proventos em dinheiro por data-com (API pública)"
+      },
+      {
+       "fonte": "Tesouro + ANBIMA",
+       "nota": "A",
+       "detalhe": "rf: Tesouro Transparente; π: ETTJ ANBIMA — dados/mercado_2026-10-06.json"
+      },
+      {
+       "fonte": "CVM DFP/ITR",
+       "nota": "A",
+       "detalhe": "CVM, DFP 2016–2025 + ITR de 2026 (LTM), dados abertos"
+      },
+      {
+       "fonte": "CVM ITR (ações)",
+       "nota": "A",
+       "detalhe": "CVM, composição do capital do ITR (sem tesouraria)"
+      },
+      {
+       "fonte": "B3 proventos",
+       "nota": "A",
+       "detalhe": "B3, proventos em dinheiro por data-com (API pública)"
+      },
+      {
+       "fonte": "Tesouro + ANBIMA",
+       "nota": "A",
+       "detalhe": "rf: Tesouro Transparente; π: ETTJ ANBIMA — dados/mercado_2026-10-06.json"
+      },
+      {
+       "fonte": "CVM DFP/ITR",
+       "nota": "A",
+       "detalhe": "CVM, DFP 2016–2025 + ITR de 2026 (LTM), dados abertos"
+      },
+      {
+       "fonte": "CVM ITR (ações)",
+       "nota": "A",
+       "detalhe": "CVM, composição do capital do ITR (sem tesouraria)"
+      },
+      {
+       "fonte": "B3 proventos",
+       "nota": "A",
+       "detalhe": "B3, proventos em dinheiro por data-com (API pública)"
+      },
+      {
+       "fonte": "Tesouro + ANBIMA",
+       "nota": "A",
+       "detalhe": "rf: Tesouro Transparente; π: ETTJ ANBIMA — dados/mercado_2026-10-06.json"
+      },
+      {
+       "fonte": "COTAHIST",
+       "nota": "A",
+       "detalhe": "B3, COTAHIST, fechamento (PREULT) de 2026-10-06"
+      }
+     ],
+     "papel": "informativo",
+     "obs": ""
+    },
+    {
+     "rotulo": "g real implícito no preço",
+     "valor": 0.003939619886767942,
+     "unidade": "%",
+     "origens": [
+      {
+       "fonte": "CVM DFP/ITR",
+       "nota": "A",
+       "detalhe": "CVM, DFP 2016–2025 + ITR de 2026 (LTM), dados abertos"
+      },
+      {
+       "fonte": "CVM ITR (ações)",
+       "nota": "A",
+       "detalhe": "CVM, composição do capital do ITR (sem tesouraria)"
+      },
+      {
+       "fonte": "B3 proventos",
+       "nota": "A",
+       "detalhe": "B3, proventos em dinheiro por data-com (API pública)"
+      },
+      {
+       "fonte": "Tesouro + ANBIMA",
+       "nota": "A",
+       "detalhe": "rf: Tesouro Transparente; π: ETTJ ANBIMA — dados/mercado_2026-10-06.json"
+      },
+      {
+       "fonte": "CVM DFP/ITR",
+       "nota": "A",
+       "detalhe": "CVM, DFP 2016–2025 + ITR de 2026 (LTM), dados abertos"
+      },
+      {
+       "fonte": "CVM ITR (ações)",
+       "nota": "A",
+       "detalhe": "CVM, composição do capital do ITR (sem tesouraria)"
+      },
+      {
+       "fonte": "B3 proventos",
+       "nota": "A",
+       "detalhe": "B3, proventos em dinheiro por data-com (API pública)"
+      },
+      {
+       "fonte": "Tesouro + ANBIMA",
+       "nota": "A",
+       "detalhe": "rf: Tesouro Transparente; π: ETTJ ANBIMA — dados/mercado_2026-10-06.json"
+      },
+      {
+       "fonte": "CVM DFP/ITR",
+       "nota": "A",
+       "detalhe": "CVM, DFP 2016–2025 + ITR de 2026 (LTM), dados abertos"
+      },
+      {
+       "fonte": "CVM ITR (ações)",
+       "nota": "A",
+       "detalhe": "CVM, composição do capital do ITR (sem tesouraria)"
+      },
+      {
+       "fonte": "B3 proventos",
+       "nota": "A",
+       "detalhe": "B3, proventos em dinheiro por data-com (API pública)"
+      },
+      {
+       "fonte": "Tesouro + ANBIMA",
+       "nota": "A",
+       "detalhe": "rf: Tesouro Transparente; π: ETTJ ANBIMA — dados/mercado_2026-10-06.json"
+      },
+      {
+       "fonte": "COTAHIST",
+       "nota": "A",
+       "detalhe": "B3, COTAHIST, fechamento (PREULT) de 2026-10-06"
+      }
+     ],
+     "papel": "informativo",
+     "obs": ""
+    }
+   ],
+   "texto": [
+    "Palavra: **NÃO CONCLUSIVO** (régua pelo P/C: JUSTA; confiança: não conclusivo (trava de coerência, §9)).",
+    "Trava de coerência (Bogle a ±2 p.p. do Ke): falha.",
+    "Vence a renda fixa (Bogle líquido real ≥ rf líquida + 3 p.p.)? Sim.",
+    "Exceção da 1ª parcela a 0,80×: não — sem palavra (NÃO CONCLUSIVO); qualidade 7,3 < 8 (carimbos de armadilha escritos no texto da ficha não entram nesta conta)."
+   ],
+   "avisos": [],
+   "tabelas": []
+  },
+  {
+   "titulo": "Preço justo por método",
+   "numeros": [
+    {
+     "rotulo": "DCF — fluxo de caixa descontado, 3 cenários de margem (25/50/25)",
+     "valor": 38.44671270910715,
+     "unidade": "R$",
+     "origens": [
+      {
+       "fonte": "CVM DFP/ITR",
+       "nota": "A",
+       "detalhe": "CVM, DFP 2016–2025 + ITR de 2026 (LTM), dados abertos"
+      },
+      {
+       "fonte": "CVM ITR (ações)",
+       "nota": "A",
+       "detalhe": "CVM, composição do capital do ITR (sem tesouraria)"
+      },
+      {
+       "fonte": "B3 proventos",
+       "nota": "A",
+       "detalhe": "B3, proventos em dinheiro por data-com (API pública)"
+      },
+      {
+       "fonte": "Tesouro + ANBIMA",
+       "nota": "A",
+       "detalhe": "rf: Tesouro Transparente; π: ETTJ ANBIMA — dados/mercado_2026-10-06.json"
+      }
+     ],
+     "papel": "central",
+     "obs": ""
+    },
+    {
+     "rotulo": "EPV (Greenwald) — lucro operacional sem crescimento ÷ WACC",
+     "valor": 35.46745560231097,
+     "unidade": "R$",
+     "origens": [
+      {
+       "fonte": "CVM DFP/ITR",
+       "nota": "A",
+       "detalhe": "CVM, DFP 2016–2025 + ITR de 2026 (LTM), dados abertos"
+      },
+      {
+       "fonte": "CVM ITR (ações)",
+       "nota": "A",
+       "detalhe": "CVM, composição do capital do ITR (sem tesouraria)"
+      },
+      {
+       "fonte": "B3 proventos",
+       "nota": "A",
+       "detalhe": "B3, proventos em dinheiro por data-com (API pública)"
+      },
+      {
+       "fonte": "Tesouro + ANBIMA",
+       "nota": "A",
+       "detalhe": "rf: Tesouro Transparente; π: ETTJ ANBIMA — dados/mercado_2026-10-06.json"
+      }
+     ],
+     "papel": "central",
+     "obs": ""
+    },
+    {
+     "rotulo": "Buffett — Owner Earnings ÷ (Ke − g)",
+     "valor": 38.59808500959736,
+     "unidade": "R$",
+     "origens": [
+      {
+       "fonte": "CVM DFP/ITR",
+       "nota": "A",
+       "detalhe": "CVM, DFP 2016–2025 + ITR de 2026 (LTM), dados abertos"
+      },
+      {
+       "fonte": "CVM ITR (ações)",
+       "nota": "A",
+       "detalhe": "CVM, composição do capital do ITR (sem tesouraria)"
+      },
+      {
+       "fonte": "B3 proventos",
+       "nota": "A",
+       "detalhe": "B3, proventos em dinheiro por data-com (API pública)"
+      },
+      {
+       "fonte": "Tesouro + ANBIMA",
+       "nota": "A",
+       "detalhe": "rf: Tesouro Transparente; π: ETTJ ANBIMA — dados/mercado_2026-10-06.json"
+      }
+     ],
+     "papel": "central",
+     "obs": ""
+    },
+    {
+     "rotulo": "Graham — √(22,5 × LPA normalizado × VPA)",
+     "valor": 24.842831941731564,
+     "unidade": "R$",
+     "origens": [
+      {
+       "fonte": "CVM DFP/ITR",
+       "nota": "A",
+       "detalhe": "CVM, DFP 2016–2025 + ITR de 2026 (LTM), dados abertos"
+      },
+      {
+       "fonte": "CVM ITR (ações)",
+       "nota": "A",
+       "detalhe": "CVM, composição do capital do ITR (sem tesouraria)"
+      }
+     ],
+     "papel": "informativo",
+     "obs": ""
+    },
+    {
+     "rotulo": "Graham-BR — o 22,5 reescalado ao Ke real de hoje",
+     "valor": 23.89004528567732,
+     "unidade": "R$",
+     "origens": [
+      {
+       "fonte": "CVM DFP/ITR",
+       "nota": "A",
+       "detalhe": "CVM, DFP 2016–2025 + ITR de 2026 (LTM), dados abertos"
+      },
+      {
+       "fonte": "CVM ITR (ações)",
+       "nota": "A",
+       "detalhe": "CVM, composição do capital do ITR (sem tesouraria)"
+      },
+      {
+       "fonte": "Tesouro + ANBIMA",
+       "nota": "A",
+       "detalhe": "rf: Tesouro Transparente; π: ETTJ ANBIMA — dados/mercado_2026-10-06.json"
+      }
+     ],
+     "papel": "informativo",
+     "obs": ""
+    },
+    {
+     "rotulo": "Graham revisado — LPA × (8,5 + 2g), reescalado ao Ke",
+     "valor": 37.441573537455184,
+     "unidade": "R$",
+     "origens": [
+      {
+       "fonte": "CVM DFP/ITR",
+       "nota": "A",
+       "detalhe": "CVM, DFP 2016–2025 + ITR de 2026 (LTM), dados abertos"
+      },
+      {
+       "fonte": "CVM ITR (ações)",
+       "nota": "A",
+       "detalhe": "CVM, composição do capital do ITR (sem tesouraria)"
+      },
+      {
+       "fonte": "Tesouro + ANBIMA",
+       "nota": "A",
+       "detalhe": "rf: Tesouro Transparente; π: ETTJ ANBIMA — dados/mercado_2026-10-06.json"
+      }
+     ],
+     "papel": "informativo",
+     "obs": ""
+    },
+    {
+     "rotulo": "Bazin — DPA sustentável ÷ 6%",
+     "valor": 75.4318454812041,
+     "unidade": "R$",
+     "origens": [
+      {
+       "fonte": "B3 proventos",
+       "nota": "A",
+       "detalhe": "B3, proventos em dinheiro por data-com (API pública)"
+      },
+      {
+       "fonte": "CVM DFP/ITR",
+       "nota": "A",
+       "detalhe": "CVM, DFP 2016–2025 + ITR de 2026 (LTM), dados abertos"
+      },
+      {
+       "fonte": "CVM ITR (ações)",
+       "nota": "A",
+       "detalhe": "CVM, composição do capital do ITR (sem tesouraria)"
+      }
+     ],
+     "papel": "informativo",
+     "obs": ""
+    },
+    {
+     "rotulo": "Teto de renda — DPA líquido ÷ rf líquida (valor presente)",
+     "valor": null,
+     "unidade": "R$",
+     "origens": [
+      {
+       "fonte": "B3 proventos",
+       "nota": "A",
+       "detalhe": "B3, proventos em dinheiro por data-com (API pública)"
+      },
+      {
+       "fonte": "defasagem declarada",
+       "nota": "C",
+       "detalhe": "declarada na ficha: datas de pagamento da StatusInvest (C, só datas), média ponderada pelo valor"
+      },
+      {
+       "fonte": "CVM DFP/ITR",
+       "nota": "A",
+       "detalhe": "CVM, DFP 2016–2025 + ITR de 2026 (LTM), dados abertos"
+      },
+      {
+       "fonte": "CVM ITR (ações)",
+       "nota": "A",
+       "detalhe": "CVM, composição do capital do ITR (sem tesouraria)"
+      },
+      {
+       "fonte": "Tesouro + ANBIMA",
+       "nota": "A",
+       "detalhe": "rf: Tesouro Transparente; π: ETTJ ANBIMA — dados/mercado_2026-10-06.json"
+      }
+     ],
+     "papel": "informativo",
+     "obs": ""
+    },
+    {
+     "rotulo": "Bogle — retorno esperado em 10 anos (DY + g + re-rating)",
+     "valor": 0.15914003517027253,
+     "unidade": "%",
+     "origens": [
+      {
+       "fonte": "B3 proventos",
+       "nota": "A",
+       "detalhe": "B3, proventos em dinheiro por data-com (API pública)"
+      },
+      {
+       "fonte": "defasagem declarada",
+       "nota": "C",
+       "detalhe": "declarada na ficha: datas de pagamento da StatusInvest (C, só datas), média ponderada pelo valor"
+      },
+      {
+       "fonte": "CVM + COTAHIST",
+       "nota": "A",
+       "detalhe": "P/L histórico: lucro e ações do DFP (CVM) × fechamento do ano (B3)"
+      },
+      {
+       "fonte": "CVM DFP/ITR",
+       "nota": "A",
+       "detalhe": "CVM, DFP 2016–2025 + ITR de 2026 (LTM), dados abertos"
+      },
+      {
+       "fonte": "CVM ITR (ações)",
+       "nota": "A",
+       "detalhe": "CVM, composição do capital do ITR (sem tesouraria)"
+      },
+      {
+       "fonte": "COTAHIST",
+       "nota": "A",
+       "detalhe": "B3, COTAHIST, fechamento (PREULT) de 2026-10-06"
+      },
+      {
+       "fonte": "Tesouro + ANBIMA",
+       "nota": "A",
+       "detalhe": "rf: Tesouro Transparente; π: ETTJ ANBIMA — dados/mercado_2026-10-06.json"
+      }
+     ],
+     "papel": "informativo",
+     "obs": ""
+    },
+    {
+     "rotulo": "Lynch — PEG (P/L ÷ crescimento nominal)",
+     "valor": 1.4091339288763003,
+     "unidade": "x",
+     "origens": [
+      {
+       "fonte": "COTAHIST",
+       "nota": "A",
+       "detalhe": "B3, COTAHIST, fechamento (PREULT) de 2026-10-06"
+      },
+      {
+       "fonte": "CVM DFP/ITR",
+       "nota": "A",
+       "detalhe": "CVM, DFP 2016–2025 + ITR de 2026 (LTM), dados abertos"
+      },
+      {
+       "fonte": "CVM ITR (ações)",
+       "nota": "A",
+       "detalhe": "CVM, composição do capital do ITR (sem tesouraria)"
+      },
+      {
+       "fonte": "Tesouro + ANBIMA",
+       "nota": "A",
+       "detalhe": "rf: Tesouro Transparente; π: ETTJ ANBIMA — dados/mercado_2026-10-06.json"
+      }
+     ],
+     "papel": "informativo",
+     "obs": ""
+    },
+    {
+     "rotulo": "Dividend yield sustentável (valor presente)",
+     "valor": 0.12203618607067702,
+     "unidade": "%",
+     "origens": [
+      {
+       "fonte": "B3 proventos",
+       "nota": "A",
+       "detalhe": "B3, proventos em dinheiro por data-com (API pública)"
+      },
+      {
+       "fonte": "defasagem declarada",
+       "nota": "C",
+       "detalhe": "declarada na ficha: datas de pagamento da StatusInvest (C, só datas), média ponderada pelo valor"
+      },
+      {
+       "fonte": "COTAHIST",
+       "nota": "A",
+       "detalhe": "B3, COTAHIST, fechamento (PREULT) de 2026-10-06"
+      },
+      {
+       "fonte": "Tesouro + ANBIMA",
+       "nota": "A",
+       "detalhe": "rf: Tesouro Transparente; π: ETTJ ANBIMA — dados/mercado_2026-10-06.json"
+      }
+     ],
+     "papel": "informativo",
+     "obs": ""
+    },
+    {
+     "rotulo": "Valor central (mediana das âncoras, já com o desconto de controlador)",
+     "valor": 38.44671270910715,
+     "unidade": "R$",
+     "origens": [
+      {
+       "fonte": "CVM DFP/ITR",
+       "nota": "A",
+       "detalhe": "CVM, DFP 2016–2025 + ITR de 2026 (LTM), dados abertos"
+      },
+      {
+       "fonte": "CVM ITR (ações)",
+       "nota": "A",
+       "detalhe": "CVM, composição do capital do ITR (sem tesouraria)"
+      },
+      {
+       "fonte": "B3 proventos",
+       "nota": "A",
+       "detalhe": "B3, proventos em dinheiro por data-com (API pública)"
+      },
+      {
+       "fonte": "Tesouro + ANBIMA",
+       "nota": "A",
+       "detalhe": "rf: Tesouro Transparente; π: ETTJ ANBIMA — dados/mercado_2026-10-06.json"
+      },
+      {
+       "fonte": "CVM DFP/ITR",
+       "nota": "A",
+       "detalhe": "CVM, DFP 2016–2025 + ITR de 2026 (LTM), dados abertos"
+      },
+      {
+       "fonte": "CVM ITR (ações)",
+       "nota": "A",
+       "detalhe": "CVM, composição do capital do ITR (sem tesouraria)"
+      },
+      {
+       "fonte": "B3 proventos",
+       "nota": "A",
+       "detalhe": "B3, proventos em dinheiro por data-com (API pública)"
+      },
+      {
+       "fonte": "Tesouro + ANBIMA",
+       "nota": "A",
+       "detalhe": "rf: Tesouro Transparente; π: ETTJ ANBIMA — dados/mercado_2026-10-06.json"
+      },
+      {
+       "fonte": "CVM DFP/ITR",
+       "nota": "A",
+       "detalhe": "CVM, DFP 2016–2025 + ITR de 2026 (LTM), dados abertos"
+      },
+      {
+       "fonte": "CVM ITR (ações)",
+       "nota": "A",
+       "detalhe": "CVM, composição do capital do ITR (sem tesouraria)"
+      },
+      {
+       "fonte": "B3 proventos",
+       "nota": "A",
+       "detalhe": "B3, proventos em dinheiro por data-com (API pública)"
+      },
+      {
+       "fonte": "Tesouro + ANBIMA",
+       "nota": "A",
+       "detalhe": "rf: Tesouro Transparente; π: ETTJ ANBIMA — dados/mercado_2026-10-06.json"
+      }
+     ],
+     "papel": "",
+     "obs": ""
+    }
+   ],
+   "texto": [],
+   "avisos": [],
+   "tabelas": []
+  },
+  {
+   "titulo": "Sensibilidade do valor central",
+   "numeros": [],
+   "texto": [],
+   "avisos": [],
+   "tabelas": [
+    [
+     "Central (R$/ação) com Ke ±1 p.p. × margem ±2 p.p.",
+     [
+      "Ke \\ margem",
+      "-2 p.p.",
+      "+0 p.p.",
+      "+2 p.p."
+     ],
+     [
+      [
+       "-1 p.p.",
+       "38,70",
+       "41,99",
+       "44,76"
+      ],
+      [
+       "+0 p.p.",
+       "35,22",
+       "38,45",
+       "41,19"
+      ],
+      [
+       "+1 p.p.",
+       "32,22",
+       "35,23",
+       "38,08"
+      ]
+     ]
+    ]
+   ]
+  },
+  {
+   "titulo": "Premissas de julgamento (método, não dado)",
+   "numeros": [],
+   "texto": [
+    "Perfil do motor: servicos.",
+    "Desconto de controlador: zero (0,0% no valor) — Doutrina §5: consumado vs prospectivo. Consumado: nenhuma interferência desfavorável comprovada em 2017-2026 (busca documentada no campo 'interferencias'); a compra de R$ 668 mi do dono em 2024 saiu dentro da faixa de dois laudos independentes, com comitê independente, abstenção do controlador e apr",
+    "g real perpétuo: 1,0% (só conta com ROIC acima do WACC).",
+    "Notas qualitativas: regra 11 (dossiê)."
+   ],
+   "avisos": [],
+   "tabelas": []
+  }
+ ],
+ "avisos": [
+  "DIVERGE do veredito vigente: dossie/vereditos/LEVE3-2026-10-06.json diz JUSTA, o motor hoje diz NÃO CONCLUSIVO — dado ou premissa mudou; a palavra vigente não é trocada por este relatório."
+ ]
+}
