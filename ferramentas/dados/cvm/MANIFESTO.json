@@ -1,6 +1,6 @@
 {
  "nota": "sha256 dos ZIPs da CVM em dados/cvm (fora do git). A CVM reescreve arquivos; ver manifesto_cvm.py.",
- "atualizado_em": "2026-10-09",
+ "atualizado_em": "2026-10-19",
  "arquivos": {
   "dfp_2010.zip": {
    "sha256": "c6a9c95c2510e8a71bb583084492e9c52c3f423a3be56f1c5d2dd4f6960677ff",
@@ -307,8 +307,8 @@
    "bytes": 31660219
   },
   "itr_2026.zip": {
-   "sha256": "0e1ef74291d2143e7bb55247b01c8bbd94995d995536f70f0d19de1d79d7e38c",
-   "bytes": 19634453
+   "sha256": "56a82941d1c381b421a8075a584b498e4f183986ad526546e14682422773e6a1",
+   "bytes": 19690261
   }
  }
 }

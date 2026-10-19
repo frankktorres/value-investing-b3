@@ -17,6 +17,9 @@ If Not fso.FolderExists(ferramentas & "\monitor") Then fso.CreateFolder(ferramen
 sh.CurrentDirectory = ferramentas
 cmd = "cmd /c ""set PYTHONIOENCODING=utf-8&& """ & py & """ monitor_semanal.py > monitor\ultimo.log 2>&1"""
 rc = sh.Run(cmd, 0, True)
+' Temporada (19/10/2026): detecta ITR novo toda sexta; sem --gravar so escreve boletim; sai 0 sem ITR novo.
+' O codigo dela nao muda o rc do monitor; log em monitor\temporada.log.
+sh.Run "cmd /c ""set PYTHONIOENCODING=utf-8&& """ & py & """ temporada.py > monitor\temporada.log 2>&1""", 0, True
 If rc <> 0 Then
     If rc = 20 Then
         msg = "Monitor semanal: DADO VELHO - o ultimo pregao tem mais de 7 dias (o download da B3 falhou?)."
