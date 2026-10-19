@@ -11,6 +11,7 @@ const NA_REGUA = {   // rótulos do monitor_semanal.alerta → texto neutro (nã
   'sem palavra': 'sem régua (NÃO CONCLUSIVO)',
   'sem central': 'sem régua',
   'sem preço de hoje': 'sem preço de hoje',
+  'régua suspensa': 'régua suspensa: motor de hoje diverge do veredito',
   erro: 'erro ao montar',
 };
 const ESCALA = [0.5, 1.6];   // régua fixa: 50%..160% do central, igual em todas as linhas
@@ -34,7 +35,9 @@ function ordenar(lista) {
 function regua(e) {
   if (e.erro) return h('div', { class: 'reg-nc', text: 'sem régua: o relatório não montou' });
   if (e.compra === null || e.saida === null || !e.central) {
-    return h('div', { class: 'reg-nc', text: e.palavra === 'NÃO CONCLUSIVO' ? 'sem central firme · só informativo' : 'sem régua' });
+    const txt = e.situacao === 'régua suspensa' ? 'suspensa até veredito novo'
+      : (e.palavra === 'NÃO CONCLUSIVO' ? 'sem central firme · só informativo' : 'sem régua');
+    return h('div', { class: 'reg-nc', text: txt });
   }
   const [a, b] = ESCALA;
   const lo = e.central * a, hi = e.central * b;
@@ -85,7 +88,8 @@ function linha(e) {
       h('div', { class: 'small', title: 'Métodos com valor que entram na mediana do central', text: `${e.n_central} no central` })),
     h('div', { class: 'r num', role: 'cell' }, e.saida === null ? TRACO : valor(e.saida, e.nota_central),
       e.saida === null ? null : h('div', { class: 'small', text: e.saida_exc ? 'exc. 1,50×' : '1,30×' })),
-    h('div', { class: 'r num', role: 'cell', title: 'Preço de hoje ÷ central — informativo' }, h('b', { text: num(e.pc_hoje) })),
+    h('div', { class: 'r num', role: 'cell', title: 'Preço de hoje ÷ central — informativo; nota = a do central' },
+      h('b', {}, valor(e.pc_hoje, e.nota_central))),
     h('div', { role: 'cell', class: 'small' }, NA_REGUA[e.situacao] ?? e.situacao),
     h('div', { class: 'small num', role: 'cell' }, data(e.data_palavra), h('div', {}, ...tags)));
 }

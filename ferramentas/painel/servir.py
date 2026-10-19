@@ -21,6 +21,25 @@ TIPOS = {".html": "text/html; charset=utf-8", ".js": "text/javascript; charset=u
 class Leitura(SimpleHTTPRequestHandler):
     extensions_map = TIPOS
 
+    def send_head(self):
+        # DNS rebinding: só atende quem chamou pelo nome local (um site de fora não lê os dados pelo navegador)
+        host = (self.headers.get("Host") or "").rsplit(":", 1)[0].strip("[]").lower()
+        if host not in ("127.0.0.1", "localhost"):
+            self.send_error(403, "só 127.0.0.1")
+            return None
+        caminho = self.path.split("?", 1)[0].split("#", 1)[0]
+        if "%00" in caminho or "\x00" in caminho:
+            self.send_error(400)
+            return None
+        try:
+            if ":" in self.translate_path(self.path)[2:]:       # fluxo alternativo do NTFS (arquivo::$DATA)
+                self.send_error(404)
+                return None
+            return super().send_head()
+        except ValueError:                                      # caractere inválido no caminho
+            self.send_error(400)
+            return None
+
     def end_headers(self):
         self.send_header("Cache-Control", "no-store")             # o JSON muda a cada exportação
         self.send_header("X-Content-Type-Options", "nosniff")

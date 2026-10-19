@@ -38,12 +38,69 @@ def test_palavra_e_a_vigente_e_o_preco_de_hoje_nao_troca_a_palavra():
     assert x["situacao"] == "≤ COMPRA" and x["pc_hoje"] == pytest.approx(0.3)   # só o marcador e o P/C mudam
 
 
-def test_motor_divergente_vira_palavra_motor_com_aviso():
-    x = linha_hall(rel("NÃO CONCLUSIVO"), "JUSTA", 11.0, **MARCA)
+def test_motor_divergente_suspende_a_regua_e_mantem_a_palavra_vigente():
+    """Adversário 19/10 (LEVE3): a régua do motor de hoje (que diz NÃO CONCLUSIVO) não aparece sob a palavra JUSTA."""
+    x = linha_hall(rel("NÃO CONCLUSIVO"), "JUSTA", 11.0, central_vigente=9.5, **MARCA)
     assert x["palavra"] == "JUSTA" and x["palavra_motor"] == "NÃO CONCLUSIVO"
-    assert any("veredito novo" in a for a in x["avisos"])
+    assert (x["central"], x["compra"], x["saida"], x["pc_hoje"]) == (None, None, None, None)
+    assert x["situacao"] == exportar.SUSPENSA
+    assert any("veredito novo" in a and "9,50" in a and "10,00" in a for a in x["avisos"])
     sem = linha_hall(rel("CARA"), None, 11.0, **MARCA)
     assert sem["palavra"] == "CARA" and any("Sem veredito vigente" in a for a in sem["avisos"])
+    vazio = linha_hall(rel("CARA"), "", 11.0, **MARCA)                     # "" = sem vigente, não "diverge de ''"
+    assert vazio["palavra"] == "CARA" and vazio["compra"] == pytest.approx(7.0) and vazio["palavra_motor"] is None
+
+
+@pytest.mark.parametrize("palavra", [None, "", "XYZ"])
+def test_sem_palavra_valida_nao_tem_regua(palavra):
+    """AUD-43: sem palavra final não há preço de compra nem de saída."""
+    x = linha_hall(rel(palavra), None, 5.0, **MARCA)
+    assert x["compra"] is None and x["saida"] is None and x["pc_hoje"] is None
+    assert x["situacao"] not in ("≤ COMPRA", "≥ SAÍDA", "perto da compra")
+
+
+def test_falha_ao_gravar_empresa_da_uma_linha_de_erro_sem_tmp_nem_caminho(monkeypatch):
+    destino = exportar.DADOS / f"_teste_{uuid.uuid4().hex[:8]}"
+    monkeypatch.setattr(exportar, "tickers", lambda: (["TESTA3", "TESTB4"], set()))
+    monkeypatch.setattr(exportar, "palavra_vigente", lambda tk, d, dos: ("CARA", 10.0))
+    def montar(tk):
+        r = rel()
+        r.tk = tk
+        return r
+    monkeypatch.setattr("relatorio.montar.montar", montar)
+    monkeypatch.setattr("monitor_semanal.ultimos_precos", lambda tks, hoje: ({"TESTA3": 11.0}, "2026-10-15"))
+    real = exportar._gravar_json
+
+    def quebra(caminho, obj, tentativas=5):
+        if caminho.name == "TESTA3.json":
+            raise PermissionError(f"[WinError 5] Acesso negado: '{caminho}.tmp' -> '{caminho}'")
+        return real(caminho, obj, tentativas)
+    monkeypatch.setattr(exportar, "_gravar_json", quebra)
+    try:
+        hall = exportar.exportar(destino, hoje="2026-10-16", log=lambda *_: None)
+        assert [x["tk"] for x in hall["empresas"]] == ["TESTA3", "TESTB4"]                 # uma linha por ticker
+        a = hall["empresas"][0]
+        assert a["erro"].startswith("PermissionError") and str(exportar.RAIZ_REPO) not in a["erro"]
+        assert not list(destino.rglob("*.tmp"))
+    finally:
+        shutil.rmtree(destino, ignore_errors=True)
+
+
+def test_gravar_json_tenta_de_novo_e_limpa_tmp(monkeypatch):
+    destino = exportar.DADOS / f"_teste_{uuid.uuid4().hex[:8]}"
+    chamadas = []
+
+    def replace(a, b):
+        chamadas.append(a)
+        raise PermissionError("ocupado")
+    monkeypatch.setattr(exportar.os, "replace", replace)
+    monkeypatch.setattr(exportar.time, "sleep", lambda s: None)
+    try:
+        with pytest.raises(PermissionError):
+            exportar._gravar_json(destino / "x.json", {"a": 1}, tentativas=3)
+        assert len(chamadas) == 3 and not list(destino.glob("*.tmp"))
+    finally:
+        shutil.rmtree(destino, ignore_errors=True)
 
 
 def test_regua_nota_e_metodos():

@@ -51,6 +51,31 @@ def test_nao_lista_pasta_nem_sai_da_web(srv):
     assert r.status == 404 and b"fora" not in corpo
 
 
+def _get_host(s, caminho, host):
+    c = http.client.HTTPConnection(*s.server_address, timeout=5)
+    c.putrequest("GET", caminho, skip_host=True)
+    c.putheader("Host", host)
+    c.endheaders()
+    r = c.getresponse()
+    r.read()
+    c.close()
+    return r.status
+
+
+def test_dns_rebinding_host_de_fora_e_recusado(srv):
+    porta = srv.server_address[1]
+    assert _get_host(srv, "/dados/hall.json", "evil.example") == 403
+    assert _get_host(srv, "/dados/hall.json", f"evil.example:{porta}") == 403
+    assert _get_host(srv, "/dados/hall.json", f"localhost:{porta}") == 200
+    assert _get_host(srv, "/dados/hall.json", f"127.0.0.1:{porta}") == 200
+
+
+@pytest.mark.parametrize("caminho,status", [("/app.js%00.txt", 400), ("/index.html::$DATA", 404)])
+def test_caminho_estranho_responde_sem_derrubar(srv, caminho, status):
+    assert _get(srv, caminho)[0].status == status
+    assert _get(srv, "/")[0].status == 200                  # o servidor segue de pé
+
+
 @pytest.mark.parametrize("metodo", ["POST", "PUT", "DELETE"])
 def test_somente_leitura(srv, metodo):
     assert _get(srv, "/dados/hall.json", metodo)[0].status in (405, 501)
