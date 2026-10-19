@@ -1,5 +1,5 @@
 # PROJECT BRIEF — Mesa de Value Investing B3
-*Versão de 19/10/2026 (rev. B08 concluída: FESA4/SHUL4/VLID3; doutrina v2.6) · gerado por `/brief` · fonte: repositório, memória do projeto e `docs/auditoria/AUDITORIA_2026-10-08.md`*
+*Versão de 19/10/2026 (rev. fase 2, fatia 1: painel da carteira; doutrina v2.6) · gerado por `/brief` · fonte: repositório, memória do projeto e `docs/auditoria/AUDITORIA_2026-10-08.md`*
 
 ## 1. Projeto
 Mesa de análise fundamentalista da B3 para dividendos/JCP e longo prazo: doutrina escrita (v2.6) + motores de valuation em Python que
@@ -51,8 +51,11 @@ MVP de uso pessoal, maduro no cálculo. Um usuário real, sem terceiros. Prazo e
 3. **Onda 3 da auditoria — CONCLUÍDA em 10/10/2026 (doutrina v2.6).** Motor blindado (guardas de NÃO CONCLUSIVO nas financeiras, sem preço negativo nem Infinity, fronteira da régua, LTM da temporada chegando às premissas calculadas no import); decisões do Frank: trava na palavra final, OE do controlador, freio do declínio, cenário negativo como zero, entrada parcial numa função só; 26 aceitos com motivo (`09`). Pendente de decisão própria: pré-registro (AUD-32/98/99) e razões do desconto zero em 29 tickers (AUD-41). Onda 4 (qualidade e rumo SaaS) a abrir.
 4. Etapa 6 / F6 — construção de carteira (tamanho de posição, concentração, caixa); depende de respostas do Frank.
 5. **Roteiro de 19/10 (produto):** fase 1 = `relatorio <TICKER>` (PDF por empresa, quanti + quali, fonte por número) — fatias 1
-   a 3 feitas (f1bb010 preço/veredito; 20f7818 quali + PDF; 2ad5f36 ALLD3 BARATA, P/C 0,42); falta a revisão (adversário + verificador-fonte). Depois: painel da carteira e da meta
-   (fase 2), dados vivos sem premissa digitada (fase 3), triagem contínua (fase 4), SaaS.
+   a 4 feitas (f1bb010 preço/veredito; 20f7818 quali + PDF; 2ad5f36 ALLD3 BARATA, P/C 0,42; 143b872 revisão). Fase 2 = painel da carteira e
+   da meta, `relatorio CARTEIRA` → `RELATORIOS/privado/` (fora do git): fatia 1 feita (MD: renda 12m pela data-com, meta, régua por
+   posição); faltam PDF + calendário de pagamento (fatia 2) e histórico rumo à meta + monitor de sexta + adversário (fatia 3).
+   Plano: `~/.claude/plans/frolicking-sauteeing-snowglobe.md`. Depois: dados vivos sem premissa digitada (fase 3), triagem contínua
+   (fase 4), SaaS.
 
 ## 7. Restrições
 - **Orçamento:** não informado.
@@ -110,3 +113,4 @@ MVP de uso pessoal, maduro no cálculo. Um usuário real, sem terceiros. Prazo e
 - 19/10/2026 (fase 1, fatia 3 / B08): dossiê ALLD3 (data 15/10, BARATA, central R$ 14,91, margem 4,0% vs ~3,1% recorrente de 2025 a testar) e `relatorio ALLD3`; registrado no prospectivo; 543 testes verdes, golden intacto.
 - 19/10/2026 (fase 1, fatia 4): relatório revisado por adversário e verificador-fonte; 4 defeitos corrigidos, 2 aceitos; Graham/Bazin/EPV seguem nota C; cortes do quali são heurística; margem ALLD3 2025 conferida na CVM (3,1%; ~2,4% sem todas as 'outras').
 - 19/10/2026 (B08): dossiês FESA4 (RADAR, P/C 0,82), SHUL4 (CARA, 1,28) e VLID3 (CARA, 1,14) com data 15/10 e `relatorio` dos três; B08 fechada (4 de 4); suíte 546 passed.
+- 19/10/2026 (fase 2, fatia 1): painel `relatorio CARTEIRA` (`relatorio/renda.py` + `relatorio/carteira.py`): renda líquida de 12 meses pela data-com (B3, nota A) × quantidade local, % da meta, régua por posição; dado pessoal só em `carteira.local.json` e `RELATORIOS/privado/` (ignorados; gravação recusa destino versionável); 567 testes verdes, golden intacto.

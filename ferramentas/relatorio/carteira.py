@@ -1,0 +1,231 @@
+"""Painel da carteira e da meta de renda: `python -m relatorio CARTEIRA` → RELATORIOS/privado/CARTEIRA-<pregão>.md.
+
+Mostra quanto a carteira rende por mês (dividendo + JCP dos últimos 12 meses pela data-com × quantidade de hoje), quanto
+falta para a meta, e onde o preço de cada posição está na régua da doutrina (palavra vigente do motor; o P/C ao preço de
+hoje é informativo, como no monitor — palavra nova só com veredito novo). Não sugere compra nem venda.
+
+Dado pessoal (quantidade, preço médio, meta, valores) só no `carteira.local.json` (fora do git, `.gitignore`) e no painel
+gravado em `RELATORIOS/privado/` — `gravar` confere com `git check-ignore` e recusa destino versionável. No git ficam só
+os tickers (`carteira_tickers.json`, DECISOES 13/10 e 19/10).
+"""
+from __future__ import annotations
+
+import json
+import math
+import subprocess
+from datetime import date
+from pathlib import Path
+
+from relatorio import render_md
+from relatorio.modelo import Numero, Origem, Relatorio, Secao
+from relatorio.render_md import fmt
+from relatorio.renda import Renda12m, inicio_da_janela, provento_12m
+
+FERR = Path(__file__).resolve().parents[1]
+RAIZ = FERR.parent
+LOCAL = FERR / "carteira.local.json"
+EXEMPLO = FERR / "carteira.exemplo.json"
+TICKERS = FERR / "carteira_tickers.json"
+SAIDA = RAIZ / "RELATORIOS" / "privado"
+NAO_CONCLUSIVO = "NÃO CONCLUSIVO"
+
+O_PRECO = Origem("COTAHIST", "A", "B3, cotações históricas: fechamento (PREULT) do último pregão")
+O_PROV = Origem("B3 proventos", "A", "API da B3 GetListedCashDividends, data-com nos últimos 12 meses, ajustado por "
+                                     "bonificação/desdobramento (GetListedSupplementCompany)")
+O_LOCAL = Origem("carteira local", "B", "quantidade digitada pelo Frank a partir do extrato da corretora (arquivo fora do git)")
+O_META = Origem("meta do Frank", "B", "meta de renda mensal decidida em 19/10/2026 (DECISOES.md); valor fora do git")
+O_IR = Origem("LC 224/2025", "A", "IR retido no JCP, a mesma alíquota do motor (motor_financeiras.IR_JCP)")
+
+
+# ------------------------------------------------------------------------------ entrada
+def ler_local(caminho: Path = LOCAL, tickers=None) -> dict:
+    """{'meta_mensal': float, 'posicoes': {tk: {'quantidade', 'preco_medio' | None}}}. Falta ou erro → falha alto."""
+    if not caminho.exists():
+        raise FileNotFoundError(f"sem {caminho.name}: copie {EXEMPLO.name} para {caminho.name} (fica fora do git) e "
+                                "preencha a quantidade de cada ticker")
+    j = json.loads(caminho.read_text(encoding="utf-8"))
+    meta = j.get("meta_mensal")
+    if not isinstance(meta, (int, float)) or isinstance(meta, bool) or not meta > 0:
+        raise ValueError(f"{caminho.name}: meta_mensal tem de ser um número > 0 (R$ por mês), veio {meta!r}")
+    pos = j.get("posicoes")
+    if not isinstance(pos, dict) or not pos:
+        raise ValueError(f"{caminho.name}: 'posicoes' vazio — um item por ticker, com a quantidade")
+    out = {}
+    for tk, p in pos.items():
+        q = (p or {}).get("quantidade")
+        if not isinstance(q, (int, float)) or isinstance(q, bool) or not q > 0:
+            raise ValueError(f"{caminho.name}: {tk} sem quantidade (> 0) — preencha com o número de ações do extrato")
+        pm = p.get("preco_medio")
+        if pm is not None and (not isinstance(pm, (int, float)) or isinstance(pm, bool) or not pm > 0):
+            raise ValueError(f"{caminho.name}: {tk} com preco_medio inválido {pm!r} (número > 0 ou null)")
+        out[tk] = {"quantidade": q, "preco_medio": float(pm) if pm is not None else None}
+    if tickers is not None and set(out) != set(tickers):
+        faltam, sobram = sorted(set(tickers) - set(out)), sorted(set(out) - set(tickers))
+        raise ValueError(f"{caminho.name} e {TICKERS.name} com tickers diferentes — faltam {faltam}, sobram {sobram}")
+    return {"meta_mensal": float(meta), "posicoes": out}
+
+
+def situacao(preco: float, ref: dict | None) -> str:
+    """Onde o preço está na régua da doutrina (texto neutro; não é ordem)."""
+    if ref is None:
+        return "sem palavra do motor"
+    if ref["palavra"] == NAO_CONCLUSIVO:
+        return "sem régua (NÃO CONCLUSIVO)"
+    compra, saida = ref.get("compra", math.nan), ref.get("saida", math.nan)
+    if not (math.isfinite(compra) and compra > 0 and math.isfinite(saida)):
+        return "sem régua"
+    if preco <= compra:
+        return "no preço de compra ou abaixo"
+    if preco >= saida:
+        return "na saída ou acima"
+    return "entre compra e saída"
+
+
+# ------------------------------------------------------------------------------ painel (puro)
+def _q(q) -> str:
+    return f"{q:,.0f}".replace(",", ".") if float(q).is_integer() else fmt(float(q))
+
+
+def montar(local: dict, precos: dict, pregao: str, refs: dict, rendas: dict, data_palavra: str,
+           fora_do_hall=frozenset(), ir_jcp: float = 0.175) -> Relatorio:
+    """`rendas[tk]` = Renda12m ou o texto do erro (a renda total sai marcada INCOMPLETA, nunca soma zero calado)."""
+    pos = local["posicoes"]
+    sem_preco = sorted(tk for tk in pos if not (precos.get(tk, 0) > 0))
+    if sem_preco:
+        raise ValueError(f"sem fechamento no COTAHIST até {pregao}: {sem_preco}")
+    valor = {tk: pos[tk]["quantidade"] * precos[tk] for tk in pos}
+    total = sum(valor.values())
+    avisos, falhas = [], sorted(tk for tk in pos if not isinstance(rendas.get(tk), Renda12m))
+    for tk in falhas:
+        avisos.append(f"Renda INCOMPLETA: {tk} sem provento da B3 ({rendas.get(tk) or 'não calculado'}).")
+
+    linhas_pos = []
+    for tk in sorted(pos, key=lambda t: -valor[t]):
+        ref, p = refs.get(tk), precos[tk]
+        central = ref["central"] if ref else math.nan
+        compra, saida = (ref["compra"], ref["saida"]) if ref and ref["palavra"] != NAO_CONCLUSIVO else (None, None)
+        reg = situacao(p, ref) + (" · fora do hall" if tk in fora_do_hall else "")
+        linhas_pos.append([tk, _q(pos[tk]["quantidade"]), fmt(p, "R$"), fmt(valor[tk], "R$"), fmt(valor[tk] / total, "%"),
+                           ref["palavra"] if ref else "—", fmt(central, "R$") if central > 0 else "—",
+                           fmt(p / central, "x") if central > 0 else "—",
+                           fmt(compra, "R$") if compra is not None else "—",
+                           fmt(saida, "R$") if saida is not None else "—", reg])
+        if tk in fora_do_hall:
+            avisos.append(f"{tk} está fora do hall (falha filtro de qualidade): a palavra do motor é só referência.")
+        if ref and ref["palavra"] == NAO_CONCLUSIVO:
+            avisos.append(f"{tk} NÃO CONCLUSIVO: sem preço de compra nem de saída pela régua.")
+        if ref is None:
+            avisos.append(f"{tk} sem palavra no motor do hall.")
+
+    bruta = liquida = 0.0
+    linhas_renda, anunciados, ignorados = [], [], []
+    for tk in sorted(pos, key=lambda t: -valor[t]):
+        r, q, pm = rendas.get(tk), pos[tk]["quantidade"], pos[tk]["preco_medio"]
+        if not isinstance(r, Renda12m):
+            linhas_renda.append([tk, "—", "—", "—", "—", "—", "—"])
+            continue
+        b, liq = q * r.total, q * (r.total - r.jcp * ir_jcp)
+        bruta, liquida = bruta + b, liquida + liq
+        linhas_renda.append([tk, fmt(r.total), fmt(r.jcp), fmt(r.total / precos[tk], "%"), fmt(b, "R$"), fmt(liq, "R$"),
+                             fmt(r.total / pm, "%") if pm else "—"])
+        anunciados += [[tk, e["data_com"], e["tipo"], fmt(e["por_acao"])] for e in r.futuros]
+        ignorados += [f"{tk} {e['data_com']} {e['tipo']} R$ {fmt(e['por_acao'])}" for e in r.ignorados]
+    linhas_renda.append(["Total", "", "", fmt(bruta / total, "%"), fmt(bruta, "R$"), fmt(liquida, "R$"), ""])
+    if ignorados:
+        avisos.append("Fora da renda (não é dividendo/JCP/rendimento): " + "; ".join(ignorados) + ".")
+
+    meta = local["meta_mensal"]
+    mensal_liq, mensal_bruta = liquida / 12, bruta / 12
+    dy_liq = liquida / total
+    obs = f"INCOMPLETA: sem {', '.join(falhas)}" if falhas else ""
+    fonte_renda = (O_LOCAL, O_PROV, O_IR)
+    meta_sec = Secao("Meta de renda", numeros=[
+        Numero("Meta (R$ por mês)", meta, "R$", (O_META,)),
+        Numero("Renda líquida por mês (média de 12 meses)", mensal_liq, "R$", fonte_renda, obs=obs),
+        Numero("Renda bruta por mês (antes do IR do JCP)", mensal_bruta, "R$", (O_LOCAL, O_PROV), obs=obs),
+        Numero("Meta atingida", mensal_liq / meta, "%", (*fonte_renda, O_META), obs=obs),
+        Numero("Falta por mês", max(0.0, meta - mensal_liq), "R$", (*fonte_renda, O_META), obs=obs),
+        Numero("Patrimônio em ações B3 hoje", total, "R$", (O_LOCAL, O_PRECO)),
+        Numero("DY líquido de 12 meses da carteira", dy_liq, "%", (*fonte_renda, O_PRECO), obs=obs),
+        Numero("Patrimônio que a meta exige a esse DY", meta * 12 / dy_liq if dy_liq > 0 else None, "R$",
+               (*fonte_renda, O_PRECO, O_META), obs=obs or "conta da meta, não indica onde investir"),
+    ], texto=[f"Renda = provento por ação com data-com de {inicio_da_janela(pregao)} (exclusive) a {pregao} × quantidade "
+              "de hoje. É o que a carteira de hoje teria recebido em 12 meses, não previsão. Líquida = JCP menos "
+              f"{fmt(ir_jcp, '%')} de IR. Fora da B3 (exterior, cripto) não entra."])
+    pos_sec = Secao("Posições na régua da doutrina", tabelas=[(
+        "Posições (maior valor primeiro)",
+        ["Ticker", "Qtd", "Preço", "Valor", "Peso", "Palavra", "Central", "P/C hoje", "Compra", "Saída", "Na régua"],
+        linhas_pos)],
+        texto=[f"Palavra, central, compra e saída: motor do hall com preço de {data_palavra}. O P/C usa o fechamento de "
+               f"{pregao} e é informativo — palavra nova só com veredito novo. Nada aqui é ordem de compra ou venda."])
+    tabs = [("Renda de 12 meses por ticker (R$ por ação de hoje)",
+             ["Ticker", "Provento/ação", "dos quais JCP", "DY 12m", "Renda bruta/ano", "Renda líquida/ano",
+              "Yield on cost"], linhas_renda)]
+    if anunciados:
+        tabs.append(("Anunciados com data-com depois de " + pregao + " (fora da conta)",
+                     ["Ticker", "Data-com", "Tipo", "R$/ação"], anunciados))
+    renda_sec = Secao("Renda", tabelas=tabs)
+    return Relatorio(tk="CARTEIRA", nome="Painel da carteira e da meta", data=pregao,
+                     origem=f"carteira local + motor do hall ({data_palavra})", palavra="—",
+                     secoes=[meta_sec, pos_sec, renda_sec], avisos=avisos)
+
+
+def render(rel: Relatorio) -> str:
+    cab = [f"# {rel.nome}", "", f"Preços de {rel.data} · {rel.origem}", "",
+           "Documento PESSOAL (quantidades e valores): fica só em RELATORIOS/privado/, fora do git. Nota da fonte: A oficial, "
+           "B primária com ressalva, C agregador, — sem fonte.", ""]
+    return render_md.render(rel, cabecalho=cab)
+
+
+# ------------------------------------------------------------------------------ dados reais e gravação
+def _registros(tk: str, pregao: str, baixar: bool) -> list[dict]:
+    import proventos_ex
+    try:
+        return proventos_ex.registros(tk, pregao)
+    except (FileNotFoundError, ValueError):
+        if not baixar:
+            raise
+    proventos_ex.baixar([tk])
+    return proventos_ex.registros(tk, pregao)
+
+
+def carregar(hoje: str | None = None, caminho: Path = LOCAL, baixar: bool = True) -> Relatorio:
+    import hall03
+    import monitor_semanal
+    import proventos_ex
+    from backtest.precos.proventos_b3 import carregar_suplemento
+    from dossie.base import eventos_em_acoes
+    from motor_financeiras import IR_JCP
+
+    local = ler_local(caminho, json.loads(TICKERS.read_text(encoding="utf-8"))["tickers"])
+    tks = sorted(local["posicoes"])
+    precos, pregao = monitor_semanal.ultimos_precos(tks, hoje or date.today().isoformat())
+    todas = monitor_semanal.referencias_do_hall()
+    refs = {tk: todas[tk] for tk in tks if tk in todas}
+    sup = carregar_suplemento()
+    sup = sup[sup["data_com"].astype(str).str[:10] > inicio_da_janela(pregao)]   # só evento da janela ajusta
+    rendas: dict = {}
+    for tk in tks:
+        try:
+            rendas[tk] = provento_12m(_registros(tk, pregao, baixar), proventos_ex.CLASSE.get(tk, "ON"), pregao,
+                                      eventos_em_acoes(tk, sup))
+        except (KeyError, ValueError, FileNotFoundError, NotImplementedError) as ex:
+            rendas[tk] = f"{type(ex).__name__}: {ex}"
+    return montar(local, precos, pregao, refs, rendas, proventos_ex.data_do_preco(),
+                  fora_do_hall=frozenset(hall03.FORA_DO_HALL) & set(tks), ir_jcp=IR_JCP)
+
+
+def garantir_ignorado(caminho: Path) -> None:
+    """O painel tem dado pessoal: só grava em caminho que o git ignora (fora do repo ou versionável → recusa)."""
+    r = subprocess.run(["git", "check-ignore", "-q", "--", str(caminho)], cwd=RAIZ, capture_output=True)
+    if r.returncode != 0:
+        raise PermissionError(f"{caminho} não é ignorado pelo git — o painel tem dado pessoal e só grava em "
+                              f"{SAIDA.relative_to(RAIZ)}/ (ver .gitignore)")
+
+
+def gravar(rel: Relatorio, pasta: Path = SAIDA) -> Path:
+    md = pasta / f"{rel.tk}-{rel.data}.md"
+    garantir_ignorado(md)
+    pasta.mkdir(parents=True, exist_ok=True)
+    md.write_text(render(rel), encoding="utf-8")
+    return md

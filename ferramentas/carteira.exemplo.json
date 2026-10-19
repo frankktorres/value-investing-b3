@@ -1,0 +1,12 @@
+{
+ "_leia": "MODELO FICTÍCIO. Copie para carteira.local.json (fora do git) e troque pelos seus números. meta_mensal em R$ por mês; quantidade = ações no extrato; preco_medio opcional (null).",
+ "meta_mensal": 500,
+ "posicoes": {
+  "BBAS3": {"quantidade": 10, "preco_medio": null},
+  "BBSE3": {"quantidade": 10, "preco_medio": null},
+  "ABCB4": {"quantidade": 10, "preco_medio": null},
+  "ITSA4": {"quantidade": 10, "preco_medio": null},
+  "ISAE4": {"quantidade": 10, "preco_medio": null},
+  "RANI3": {"quantidade": 10, "preco_medio": null}
+ }
+}

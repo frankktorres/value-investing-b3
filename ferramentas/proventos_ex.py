@@ -33,8 +33,11 @@ PREGAO = {"SUZB3": "SUZANO S.A.", "KLBN11": "KLABIN SA", "RANI3": "IRANI", "B3SA
           "HYPE3": "HYPERA", "ABEV3": "AMBEV SA", "WEGE3": "WEG", "PETR4": "PETROBRAS", "PRIO3": "PETRORIO",
           "RECV3": "PETRORECSA", "UGPA3": "ULTRAPAR", "VBBR3": "VIBRA", "GGBR4": "GERDAU", "UNIP6": "UNIPAR",
           "LEVE3": "METAL LEVE", "CMIN3": "CSNMINERACAO", "BLAU3": "BLAU", "ALLD3": "ALLIED",
-          "FESA4": "FERBASA", "SHUL4": "SCHULZ", "VLID3": "VALID"}
-CLASSE = {"PETR4": "PN", "GGBR4": "PN", "FESA4": "PN", "SHUL4": "PN", "UNIP6": "PNB", "KLBN11": "UNT"}   # classe do ticker avaliado; o resto é ON
+          "FESA4": "FERBASA", "SHUL4": "SCHULZ", "VLID3": "VALID",
+          # carteira (painel `relatorio CARTEIRA`, renda de 12 meses); NOMRES conferido no COTAHIST de 15/10/2026
+          "BBAS3": "BRASIL", "BBSE3": "BBSEGURIDADE", "ABCB4": "ABC BRASIL", "ITSA4": "ITAUSA", "ISAE4": "ISA ENERGIA"}
+CLASSE = {"PETR4": "PN", "GGBR4": "PN", "FESA4": "PN", "SHUL4": "PN", "UNIP6": "PNB", "KLBN11": "UNT",
+          "ABCB4": "PN", "ITSA4": "PN", "ISAE4": "PN"}   # classe do ticker avaliado; o resto é ON
 
 
 def data_do_preco() -> str:

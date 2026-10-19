@@ -1,4 +1,5 @@
-"""python -m relatorio TICKER [--data AAAA-MM-DD] → RELATORIOS/<TK>-<data>.pdf (+ .md e .json)."""
+"""python -m relatorio TICKER [--data AAAA-MM-DD] → RELATORIOS/<TK>-<data>.pdf (+ .md e .json).
+python -m relatorio CARTEIRA → RELATORIOS/privado/CARTEIRA-<pregão>.md (painel da carteira e da meta; ver carteira.py)."""
 from __future__ import annotations
 
 import argparse
@@ -39,6 +40,16 @@ def main(argv=None) -> int:
     ap.add_argument("ticker")
     ap.add_argument("--data", help="data-base AAAA-MM-DD (só ticker com ficha de dossiê)")
     a = ap.parse_args(argv)
+    if a.ticker.upper() == "CARTEIRA":                       # painel da carteira e da meta (dado pessoal, fora do git)
+        from relatorio import carteira
+        try:
+            rel = carteira.carregar()
+            print(carteira.gravar(rel))
+        except (KeyError, ValueError, FileNotFoundError, PermissionError) as ex:
+            print(f"ERRO: {ex}", file=sys.stderr)
+            return 2
+        print("CARTEIRA" + (f" · {len(rel.avisos)} aviso(s)" if rel.avisos else ""))
+        return 0
     try:
         rel = montar(a.ticker, a.data)
     except (KeyError, ValueError, FileNotFoundError) as ex:
