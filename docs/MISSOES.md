@@ -11,7 +11,7 @@
 7. **B11** — StatusInvest: termos em `statusinvest.com.br/condicoes-de-uso` dão 403 — tentar de novo ou o Frank cola o texto (B3 feita 14/10).
 8. **B26** — Razão do desconto de controlador com fonte A (FRE) para os 28 com `SEM_RAZAO`; cada uma baixa a contagem do `test_b24`.
 
-8b. **B27** (local, Frank presente; fase 1 do relatório) — fatia 2: `relatorio/quali.py` (moat, gestão, dívida, governança, dividendos, riscos) + `render_pdf.py`; depois fatia 3 (ALLD3 = B08) e 4 (adversário + verificador-fonte). Plano: `~/.claude/plans/pasted-content-id-9e9e-tome-as-sparkling-ocean.md`. *Pronto quando:* `relatorio BBSE3` gera PDF com os 6 blocos, testes verdes.
+~~8b. **B27** — fatia 2 do relatório (quali + PDF).~~ (feita 19/10; faltam fatia 3 = B08/ALLD3 e fatia 4 = adversário + verificador-fonte)
 
 9. **B08** — Dossiê ALLD3 (depois FESA4, SHUL4, VLID3): `python -m dossie.gerar ALLD3 --data <hoje>` na máquina do Frank; palavra só com fonte A/B.
 10. **B01** — Temporada 3T26: a tarefa de sexta já detecta o ITR (`monitor/temporada.log` + boletim); quando aparecer ticker com 3T26, rodar `temporada.py --gravar` + `rodar_tudo.py --motivo`.
@@ -20,6 +20,7 @@
 (nenhuma)
 
 ## Feitas
+- **B27** (19/10): `relatorio/quali.py` (6 blocos) + `render_pdf.py`; `relatorio BBSE3` e `HYPE3` geram PDF; suíte 542 passed, 1 skipped; golden intacto.
 - **B24** (14/10): motor exige razão no desconto de controlador; 28 "sem razão documentada", LEVE3 com fonte A; nenhuma palavra mudou (33 CARA, 5 NC, 3 JUSTA).
 - **B25** (14/10): pré-registro contínuo (IC de postos, média do hall, 1 linha por ticker×rodada) em `registro_prospectivo.py`.
 - **B23** (14/10): tabela de P/C por premissa da PETR4 no gerador do lote 5; PDF não reemitido (outros campos informativos mudaram desde 09/10).
