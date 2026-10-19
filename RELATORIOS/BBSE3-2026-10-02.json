@@ -711,6 +711,857 @@
    ]
   },
   {
+   "titulo": "Vantagem competitiva (moat)",
+   "numeros": [
+    {
+     "rotulo": "ROE de longo prazo (premissa do lote)",
+     "valor": 0.687,
+     "unidade": "%",
+     "origens": [
+      {
+       "fonte": "lote (digitado)",
+       "nota": "C",
+       "detalhe": "escalar digitado no lote a partir da StatusInvest ou dos fatos do lote, sem fonte primária por campo (cabeçalho do lote)"
+      }
+     ],
+     "papel": "informativo",
+     "obs": ""
+    },
+    {
+     "rotulo": "ROE inicial (premissa do lote)",
+     "valor": 0.84,
+     "unidade": "%",
+     "origens": [
+      {
+       "fonte": "lote (digitado)",
+       "nota": "C",
+       "detalhe": "escalar digitado no lote a partir da StatusInvest ou dos fatos do lote, sem fonte primária por campo (cabeçalho do lote)"
+      }
+     ],
+     "papel": "informativo",
+     "obs": ""
+    },
+    {
+     "rotulo": "Ke nominal",
+     "valor": 0.19299076000000004,
+     "unidade": "%",
+     "origens": [
+      {
+       "fonte": "Tesouro + ANBIMA",
+       "nota": "A",
+       "detalhe": "rf: Tesouro IPCA+ sem juros 15/08/2050 (o mais longo sem cupom à venda no Tesouro Direto), taxa de compra da manhã (Tesouro Transparente, PrecoTaxaTesouroDireto.csv); π: inflação implícita da ETTJ ANBIMA de fechamento, vértice 2520 du (~10 anos), arredondada a 4 casas (6,4593%) — 2026-10-02 (mercado_vigente.json)"
+      }
+     ],
+     "papel": "informativo",
+     "obs": ""
+    },
+    {
+     "rotulo": "Spread ROE LP − Ke (o retorno acima do custo do acionista)",
+     "valor": 0.49400924,
+     "unidade": "%",
+     "origens": [
+      {
+       "fonte": "lote (digitado)",
+       "nota": "C",
+       "detalhe": "escalar digitado no lote a partir da StatusInvest ou dos fatos do lote, sem fonte primária por campo (cabeçalho do lote)"
+      },
+      {
+       "fonte": "Tesouro + ANBIMA",
+       "nota": "A",
+       "detalhe": "rf: Tesouro IPCA+ sem juros 15/08/2050 (o mais longo sem cupom à venda no Tesouro Direto), taxa de compra da manhã (Tesouro Transparente, PrecoTaxaTesouroDireto.csv); π: inflação implícita da ETTJ ANBIMA de fechamento, vértice 2520 du (~10 anos), arredondada a 4 casas (6,4593%) — 2026-10-02 (mercado_vigente.json)"
+      }
+     ],
+     "papel": "informativo",
+     "obs": "vantagem se positivo; sem série anual no motor de financeiras (informativo)"
+    },
+    {
+     "rotulo": "ROE implícito no preço",
+     "valor": 0.8584205236419619,
+     "unidade": "%",
+     "origens": [
+      {
+       "fonte": "COTAHIST",
+       "nota": "A",
+       "detalhe": "B3, COTAHIST, fechamento (PREULT) de 2026-10-02"
+      },
+      {
+       "fonte": "lote (digitado)",
+       "nota": "C",
+       "detalhe": "escalar digitado no lote a partir da StatusInvest ou dos fatos do lote, sem fonte primária por campo (cabeçalho do lote)"
+      },
+      {
+       "fonte": "lote (digitado)",
+       "nota": "C",
+       "detalhe": "escalar digitado no lote a partir da StatusInvest ou dos fatos do lote, sem fonte primária por campo (cabeçalho do lote)"
+      },
+      {
+       "fonte": "Tesouro + ANBIMA",
+       "nota": "A",
+       "detalhe": "rf: Tesouro IPCA+ sem juros 15/08/2050 (o mais longo sem cupom à venda no Tesouro Direto), taxa de compra da manhã (Tesouro Transparente, PrecoTaxaTesouroDireto.csv); π: inflação implícita da ETTJ ANBIMA de fechamento, vértice 2520 du (~10 anos), arredondada a 4 casas (6,4593%) — 2026-10-02 (mercado_vigente.json)"
+      }
+     ],
+     "papel": "informativo",
+     "obs": ""
+    },
+    {
+     "rotulo": "Nota de moat (0–5)",
+     "valor": 4,
+     "unidade": "",
+     "origens": [
+      {
+       "fonte": "nota arbitrada (pré-v4)",
+       "nota": "—",
+       "detalhe": "nota 0–5 do QUAL do lote, arbitrada antes da regra 11 (02 v4); o dossiê do ticker a substitui por nota com evidência"
+      }
+     ],
+     "papel": "informativo",
+     "obs": "arbitrada no lote"
+    }
+   ],
+   "texto": [
+    "Financeira: o moat por ROIC × WACC não se aplica (dívida é matéria-prima); a vista é ROE × Ke. Não há série anual de ROE no motor de financeiras: os dois ROEs são escalares do lote."
+   ],
+   "avisos": [],
+   "tabelas": []
+  },
+  {
+   "titulo": "Gestão e alocação de capital",
+   "numeros": [
+    {
+     "rotulo": "Nota de gestão (0–5)",
+     "valor": 3,
+     "unidade": "",
+     "origens": [
+      {
+       "fonte": "nota arbitrada (pré-v4)",
+       "nota": "—",
+       "detalhe": "nota 0–5 do QUAL do lote, arbitrada antes da regra 11 (02 v4); o dossiê do ticker a substitui por nota com evidência"
+      }
+     ],
+     "papel": "informativo",
+     "obs": "arbitrada no lote (pré-v4)"
+    }
+   ],
+   "texto": [],
+   "avisos": [
+    "Ticker do hall sem dossiê: R$ 1 retido, diluição e M&A não foram medidos (precisam de ficha: CVM + FRE + insumos A/B)."
+   ],
+   "tabelas": [
+    [
+     "Remuneração total da administração (R$ mi; 2026 = prevista no FRE) — fonte: CVM FRE 2026, nota A",
+     [
+      "Exercício",
+      "Total",
+      "Diretoria",
+      "Conselho adm.",
+      "Conselho fiscal"
+     ],
+     [
+      [
+       "2023",
+       "6,8",
+       "6,2",
+       "0,3",
+       "0,2"
+      ],
+      [
+       "2024",
+       "6,7",
+       "6,2",
+       "0,3",
+       "0,2"
+      ],
+      [
+       "2025",
+       "7,8",
+       "7,2",
+       "0,3",
+       "0,3"
+      ],
+      [
+       "2026",
+       "12,4",
+       "11,5",
+       "0,6",
+       "0,3"
+      ]
+     ]
+    ]
+   ]
+  },
+  {
+   "titulo": "Endividamento e solidez",
+   "numeros": [
+    {
+     "rotulo": "Nota de solidez (0–10) declarada",
+     "valor": 8.0,
+     "unidade": "",
+     "origens": [
+      {
+       "fonte": "nota declarada no lote",
+       "nota": "—",
+       "detalhe": "solidez_manual do lote: 8.0; razão no texto da ficha, sem fonte numérica"
+      }
+     ],
+     "papel": "informativo",
+     "obs": "não se aplica a leitura de DL/EBITDA"
+    },
+    {
+     "rotulo": "Cobertura de caixa dos dividendos (lote)",
+     "valor": "sim",
+     "unidade": "",
+     "origens": [
+      {
+       "fonte": "lote (digitado)",
+       "nota": "C",
+       "detalhe": "escalar digitado no lote a partir da StatusInvest ou dos fatos do lote, sem fonte primária por campo (cabeçalho do lote)"
+      }
+     ],
+     "papel": "informativo",
+     "obs": ""
+    }
+   ],
+   "texto": [
+    "Não se aplica a financeira — a dívida é a matéria-prima do negócio. Para seguradora a solidez é prudencial (índice de solvência), fora do motor."
+   ],
+   "avisos": [],
+   "tabelas": []
+  },
+  {
+   "titulo": "Governança e controlador",
+   "numeros": [
+    {
+     "rotulo": "Tem acionista controlador (FRE)?",
+     "valor": "sim",
+     "unidade": "",
+     "origens": [
+      {
+       "fonte": "CVM FRE 2026",
+       "nota": "A",
+       "detalhe": "CVM, FRE 2026 (id_doc 158372, versão 1), tabela posicao_acionaria, dados abertos"
+      }
+     ],
+     "papel": "informativo",
+     "obs": ""
+    },
+    {
+     "rotulo": "Ações em circulação (free float, FRE)",
+     "valor": 0.31742000000000004,
+     "unidade": "%",
+     "origens": [
+      {
+       "fonte": "CVM FRE 2026",
+       "nota": "A",
+       "detalhe": "CVM, FRE 2026 (id_doc 158372, versão 1), tabela distribuicao_capital, dados abertos"
+      }
+     ],
+     "papel": "informativo",
+     "obs": ""
+    },
+    {
+     "rotulo": "Acionistas pessoa física / jurídica / institucionais",
+     "valor": "606.047 / 2.988 / 1.262",
+     "unidade": "",
+     "origens": [
+      {
+       "fonte": "CVM FRE 2026",
+       "nota": "A",
+       "detalhe": "CVM, FRE 2026 (id_doc 158372, versão 1), tabela distribuicao_capital, dados abertos"
+      }
+     ],
+     "papel": "informativo",
+     "obs": ""
+    },
+    {
+     "rotulo": "Administradores e fiscais eleitos pelo controlador",
+     "valor": "10 de 16",
+     "unidade": "",
+     "origens": [
+      {
+       "fonte": "CVM FRE 2026",
+       "nota": "A",
+       "detalhe": "CVM, FRE 2026 (id_doc 158372, versão 1), tabela administrador_membro_conselho_fiscal, dados abertos"
+      }
+     ],
+     "papel": "informativo",
+     "obs": "Pertence apenas ao Conselho de Administração: 5/6; Pertence apenas à Diretoria: 0/3; Conselho Fiscal: 4/6; Pertence à Diretoria e ao Conselho de Administração: 1/1"
+    },
+    {
+     "rotulo": "Transações com partes relacionadas (FRE)",
+     "valor": "5 — montante bruto 53,38 bi",
+     "unidade": "",
+     "origens": [
+      {
+       "fonte": "CVM FRE 2026",
+       "nota": "A",
+       "detalhe": "CVM, FRE 2026 (id_doc 158372, versão 1), tabela transacao_parte_relacionada, dados abertos"
+      }
+     ],
+     "papel": "informativo",
+     "obs": "bruto: o montante do FRE é o valor do contrato, não o fluxo do ano (pista, não nota)"
+    },
+    {
+     "rotulo": "Vínculos familiares entre administradores e pessoas ligadas ao emissor",
+     "valor": "0",
+     "unidade": "",
+     "origens": [
+      {
+       "fonte": "CVM FRE 2026",
+       "nota": "A",
+       "detalhe": "CVM, FRE 2026 (id_doc 158372, versão 1), tabela relacao_familiar, dados abertos"
+      }
+     ],
+     "papel": "informativo",
+     "obs": ""
+    },
+    {
+     "rotulo": "Desconto de controlador no valor central",
+     "valor": 0.0,
+     "unidade": "%",
+     "origens": [
+      {
+       "fonte": "premissa de julgamento",
+       "nota": "—",
+       "detalhe": "desconto declarado na ficha/insumo (§5 da doutrina)"
+      }
+     ],
+     "papel": "informativo",
+     "obs": "zero: sem razão documentada"
+    },
+    {
+     "rotulo": "Nota de controlador (0–5)",
+     "valor": 3,
+     "unidade": "",
+     "origens": [
+      {
+       "fonte": "nota arbitrada (pré-v4)",
+       "nota": "—",
+       "detalhe": "nota 0–5 do QUAL do lote, arbitrada antes da regra 11 (02 v4); o dossiê do ticker a substitui por nota com evidência"
+      }
+     ],
+     "papel": "informativo",
+     "obs": "arbitrada no lote"
+    }
+   ],
+   "texto": [],
+   "avisos": [],
+   "tabelas": [
+    [
+     "Acionistas de 1º nível (pessoa física anonimizada) — fonte: CVM FRE 2026, nota A",
+     [
+      "Acionista",
+      "% do capital",
+      "Papel",
+      "Acordo"
+     ],
+     [
+      [
+       "BANCO DO BRASIL S.A.",
+       "68,25%",
+       "controlador",
+       ""
+      ],
+      [
+       "Ações Tesouraria",
+       "0,01%",
+       "",
+       ""
+      ],
+      [
+       "Outros",
+       "31,74%",
+       "",
+       ""
+      ]
+     ]
+    ]
+   ]
+  },
+  {
+   "titulo": "Dividendos e JCP",
+   "numeros": [
+    {
+     "rotulo": "Exercícios completos com provento (últimos 10)",
+     "valor": "10 de 10",
+     "unidade": "",
+     "origens": [
+      {
+       "fonte": "B3 proventos",
+       "nota": "A",
+       "detalhe": "B3, proventos em dinheiro por data-com (API pública), R$ por ação ON de hoje"
+      }
+     ],
+     "papel": "informativo",
+     "obs": ""
+    },
+    {
+     "rotulo": "DPA médio dos últimos 5 exercícios completos",
+     "valor": 2.6727513522899997,
+     "unidade": "R$",
+     "origens": [
+      {
+       "fonte": "B3 proventos",
+       "nota": "A",
+       "detalhe": "B3, proventos em dinheiro por data-com (API pública), R$ por ação ON de hoje"
+      }
+     ],
+     "papel": "informativo",
+     "obs": ""
+    },
+    {
+     "rotulo": "DPA sustentável (menor entre a média 5a e o FCFE)",
+     "valor": 2.673,
+     "unidade": "R$",
+     "origens": [
+      {
+       "fonte": "lote (digitado)",
+       "nota": "C",
+       "detalhe": "escalar digitado no lote a partir da StatusInvest ou dos fatos do lote, sem fonte primária por campo (cabeçalho do lote)"
+      }
+     ],
+     "papel": "informativo",
+     "obs": ""
+    },
+    {
+     "rotulo": "Payout (premissa do lote)",
+     "valor": 0.9,
+     "unidade": "%",
+     "origens": [
+      {
+       "fonte": "lote (digitado)",
+       "nota": "C",
+       "detalhe": "escalar digitado no lote a partir da StatusInvest ou dos fatos do lote, sem fonte primária por campo (cabeçalho do lote)"
+      }
+     ],
+     "papel": "informativo",
+     "obs": ""
+    },
+    {
+     "rotulo": "Exercícios com provento nos últimos 10 (lote)",
+     "valor": 10,
+     "unidade": "",
+     "origens": [
+      {
+       "fonte": "lote (digitado)",
+       "nota": "C",
+       "detalhe": "escalar digitado no lote a partir da StatusInvest ou dos fatos do lote, sem fonte primária por campo (cabeçalho do lote)"
+      }
+     ],
+     "papel": "informativo",
+     "obs": "entra na nota de renda"
+    },
+    {
+     "rotulo": "Dividend yield sustentável (valor presente)",
+     "valor": 0.06559748987091166,
+     "unidade": "%",
+     "origens": [
+      {
+       "fonte": "lote (digitado)",
+       "nota": "C",
+       "detalhe": "escalar digitado no lote a partir da StatusInvest ou dos fatos do lote, sem fonte primária por campo (cabeçalho do lote)"
+      },
+      {
+       "fonte": "lote (digitado)",
+       "nota": "C",
+       "detalhe": "escalar digitado no lote a partir da StatusInvest ou dos fatos do lote, sem fonte primária por campo (cabeçalho do lote)"
+      },
+      {
+       "fonte": "lote (digitado)",
+       "nota": "C",
+       "detalhe": "escalar digitado no lote a partir da StatusInvest ou dos fatos do lote, sem fonte primária por campo (cabeçalho do lote)"
+      },
+      {
+       "fonte": "lote (digitado)",
+       "nota": "C",
+       "detalhe": "escalar digitado no lote a partir da StatusInvest ou dos fatos do lote, sem fonte primária por campo (cabeçalho do lote)"
+      },
+      {
+       "fonte": "StatusInvest (datas)",
+       "nota": "C",
+       "detalhe": "datas de pagamento da StatusInvest, só para a defasagem do provento (§6.3)"
+      },
+      {
+       "fonte": "COTAHIST",
+       "nota": "A",
+       "detalhe": "B3, COTAHIST, fechamento (PREULT) de 2026-10-02"
+      },
+      {
+       "fonte": "Tesouro + ANBIMA",
+       "nota": "A",
+       "detalhe": "rf: Tesouro IPCA+ sem juros 15/08/2050 (o mais longo sem cupom à venda no Tesouro Direto), taxa de compra da manhã (Tesouro Transparente, PrecoTaxaTesouroDireto.csv); π: inflação implícita da ETTJ ANBIMA de fechamento, vértice 2520 du (~10 anos), arredondada a 4 casas (6,4593%) — 2026-10-02 (mercado_vigente.json)"
+      }
+     ],
+     "papel": "informativo",
+     "obs": ""
+    },
+    {
+     "rotulo": "Teto de Bazin (DPA ÷ 6%)",
+     "valor": 44.550000000000004,
+     "unidade": "R$",
+     "origens": [
+      {
+       "fonte": "lote (digitado)",
+       "nota": "C",
+       "detalhe": "escalar digitado no lote a partir da StatusInvest ou dos fatos do lote, sem fonte primária por campo (cabeçalho do lote)"
+      },
+      {
+       "fonte": "lote (digitado)",
+       "nota": "C",
+       "detalhe": "escalar digitado no lote a partir da StatusInvest ou dos fatos do lote, sem fonte primária por campo (cabeçalho do lote)"
+      },
+      {
+       "fonte": "lote (digitado)",
+       "nota": "C",
+       "detalhe": "escalar digitado no lote a partir da StatusInvest ou dos fatos do lote, sem fonte primária por campo (cabeçalho do lote)"
+      },
+      {
+       "fonte": "lote (digitado)",
+       "nota": "C",
+       "detalhe": "escalar digitado no lote a partir da StatusInvest ou dos fatos do lote, sem fonte primária por campo (cabeçalho do lote)"
+      }
+     ],
+     "papel": "informativo",
+     "obs": ""
+    },
+    {
+     "rotulo": "Teto de renda (DPA líquido ÷ rf líquida)",
+     "valor": 20.954941775238304,
+     "unidade": "R$",
+     "origens": [
+      {
+       "fonte": "lote (digitado)",
+       "nota": "C",
+       "detalhe": "escalar digitado no lote a partir da StatusInvest ou dos fatos do lote, sem fonte primária por campo (cabeçalho do lote)"
+      },
+      {
+       "fonte": "lote (digitado)",
+       "nota": "C",
+       "detalhe": "escalar digitado no lote a partir da StatusInvest ou dos fatos do lote, sem fonte primária por campo (cabeçalho do lote)"
+      },
+      {
+       "fonte": "lote (digitado)",
+       "nota": "C",
+       "detalhe": "escalar digitado no lote a partir da StatusInvest ou dos fatos do lote, sem fonte primária por campo (cabeçalho do lote)"
+      },
+      {
+       "fonte": "lote (digitado)",
+       "nota": "C",
+       "detalhe": "escalar digitado no lote a partir da StatusInvest ou dos fatos do lote, sem fonte primária por campo (cabeçalho do lote)"
+      },
+      {
+       "fonte": "StatusInvest (datas)",
+       "nota": "C",
+       "detalhe": "datas de pagamento da StatusInvest, só para a defasagem do provento (§6.3)"
+      },
+      {
+       "fonte": "Tesouro + ANBIMA",
+       "nota": "A",
+       "detalhe": "rf: Tesouro IPCA+ sem juros 15/08/2050 (o mais longo sem cupom à venda no Tesouro Direto), taxa de compra da manhã (Tesouro Transparente, PrecoTaxaTesouroDireto.csv); π: inflação implícita da ETTJ ANBIMA de fechamento, vértice 2520 du (~10 anos), arredondada a 4 casas (6,4593%) — 2026-10-02 (mercado_vigente.json)"
+      }
+     ],
+     "papel": "informativo",
+     "obs": ""
+    },
+    {
+     "rotulo": "Defasagem do pagamento (meses)",
+     "valor": 0.5,
+     "unidade": "",
+     "origens": [
+      {
+       "fonte": "StatusInvest (datas)",
+       "nota": "C",
+       "detalhe": "datas de pagamento da StatusInvest, só para a defasagem do provento (§6.3)"
+      }
+     ],
+     "papel": "informativo",
+     "obs": "desconta o dividendo a valor presente (§6.3); data de pagamento é StatusInvest (C)"
+    }
+   ],
+   "texto": [],
+   "avisos": [],
+   "tabelas": [
+    [
+     "Proventos por exercício (data-com) — fonte: B3 proventos, nota A",
+     [
+      "Ano",
+      "DPA total",
+      "dos quais JCP",
+      "% JCP"
+     ],
+     [
+      [
+       "2016",
+       "R$ 1,67",
+       "R$ 0,00",
+       "0,0%"
+      ],
+      [
+       "2017",
+       "R$ 1,64",
+       "R$ 0,00",
+       "0,0%"
+      ],
+      [
+       "2018",
+       "R$ 3,10",
+       "R$ 0,00",
+       "0,0%"
+      ],
+      [
+       "2019",
+       "R$ 1,58",
+       "R$ 0,00",
+       "0,0%"
+      ],
+      [
+       "2020",
+       "R$ 4,14",
+       "R$ 0,00",
+       "0,0%"
+      ],
+      [
+       "2021",
+       "R$ 1,00",
+       "R$ 0,00",
+       "0,0%"
+      ],
+      [
+       "2022",
+       "R$ 1,97",
+       "R$ 0,00",
+       "0,0%"
+      ],
+      [
+       "2023",
+       "R$ 3,49",
+       "R$ 0,00",
+       "0,0%"
+      ],
+      [
+       "2024",
+       "R$ 2,65",
+       "R$ 0,00",
+       "0,0%"
+      ],
+      [
+       "2025",
+       "R$ 4,26",
+       "R$ 0,00",
+       "0,0%"
+      ],
+      [
+       "2026 (parcial)",
+       "R$ 4,59",
+       "R$ 0,00",
+       "0,0%"
+      ]
+     ]
+    ]
+   ]
+  },
+  {
+   "titulo": "Riscos e bandeiras",
+   "numeros": [
+    {
+     "rotulo": "Payout acima de 100%",
+     "valor": 0.9,
+     "unidade": "%",
+     "origens": [
+      {
+       "fonte": "lote (digitado)",
+       "nota": "C",
+       "detalhe": "escalar digitado no lote a partir da StatusInvest ou dos fatos do lote, sem fonte primária por campo (cabeçalho do lote)"
+      }
+     ],
+     "papel": "informativo",
+     "obs": "ok; informativo — corte do relatório (a conferir)"
+    },
+    {
+     "rotulo": "ROE de longo prazo abaixo do Ke",
+     "valor": 0.49400924,
+     "unidade": "%",
+     "origens": [
+      {
+       "fonte": "lote (digitado)",
+       "nota": "C",
+       "detalhe": "escalar digitado no lote a partir da StatusInvest ou dos fatos do lote, sem fonte primária por campo (cabeçalho do lote)"
+      },
+      {
+       "fonte": "Tesouro + ANBIMA",
+       "nota": "A",
+       "detalhe": "rf: Tesouro IPCA+ sem juros 15/08/2050 (o mais longo sem cupom à venda no Tesouro Direto), taxa de compra da manhã (Tesouro Transparente, PrecoTaxaTesouroDireto.csv); π: inflação implícita da ETTJ ANBIMA de fechamento, vértice 2520 du (~10 anos), arredondada a 4 casas (6,4593%) — 2026-10-02 (mercado_vigente.json)"
+      }
+     ],
+     "papel": "informativo",
+     "obs": "ok — spread negativo destrói valor; informativo — corte do relatório (a conferir)"
+    },
+    {
+     "rotulo": "Contrato com prazo: renovação é premissa arbitrada",
+     "valor": "7 anos; renovação 80%; haircut 40%",
+     "unidade": "",
+     "origens": [
+      {
+       "fonte": "arbitrado (contrato)",
+       "nota": "—",
+       "detalhe": "probabilidade de renovação e haircut de margem do contrato arbitrados no lote, sem fonte numérica (AUD-58)"
+      }
+     ],
+     "papel": "informativo",
+     "obs": "DISPARA — central depende de insumo sem fonte (AUD-58); informativo — corte do relatório (a conferir)"
+    },
+    {
+     "rotulo": "Dispersão das âncoras acima de 1,8×",
+     "valor": 1.0,
+     "unidade": "x",
+     "origens": [
+      {
+       "fonte": "lote (digitado)",
+       "nota": "C",
+       "detalhe": "escalar digitado no lote a partir da StatusInvest ou dos fatos do lote, sem fonte primária por campo (cabeçalho do lote)"
+      },
+      {
+       "fonte": "lote (digitado)",
+       "nota": "C",
+       "detalhe": "escalar digitado no lote a partir da StatusInvest ou dos fatos do lote, sem fonte primária por campo (cabeçalho do lote)"
+      },
+      {
+       "fonte": "lote (digitado)",
+       "nota": "C",
+       "detalhe": "escalar digitado no lote a partir da StatusInvest ou dos fatos do lote, sem fonte primária por campo (cabeçalho do lote)"
+      },
+      {
+       "fonte": "lote (digitado)",
+       "nota": "C",
+       "detalhe": "escalar digitado no lote a partir da StatusInvest ou dos fatos do lote, sem fonte primária por campo (cabeçalho do lote)"
+      },
+      {
+       "fonte": "Tesouro + ANBIMA",
+       "nota": "A",
+       "detalhe": "rf: Tesouro IPCA+ sem juros 15/08/2050 (o mais longo sem cupom à venda no Tesouro Direto), taxa de compra da manhã (Tesouro Transparente, PrecoTaxaTesouroDireto.csv); π: inflação implícita da ETTJ ANBIMA de fechamento, vértice 2520 du (~10 anos), arredondada a 4 casas (6,4593%) — 2026-10-02 (mercado_vigente.json)"
+      },
+      {
+       "fonte": "arbitrado (contrato)",
+       "nota": "—",
+       "detalhe": "probabilidade de renovação e haircut de margem do contrato arbitrados no lote, sem fonte numérica (AUD-58)"
+      }
+     ],
+     "papel": "informativo",
+     "obs": "ok — desce um nível na régua; > 3× = não conclusivo; corte da doutrina"
+    },
+    {
+     "rotulo": "Âncora única (menos de 2 âncoras calculáveis)",
+     "valor": 1,
+     "unidade": "",
+     "origens": [
+      {
+       "fonte": "lote (digitado)",
+       "nota": "C",
+       "detalhe": "escalar digitado no lote a partir da StatusInvest ou dos fatos do lote, sem fonte primária por campo (cabeçalho do lote)"
+      },
+      {
+       "fonte": "lote (digitado)",
+       "nota": "C",
+       "detalhe": "escalar digitado no lote a partir da StatusInvest ou dos fatos do lote, sem fonte primária por campo (cabeçalho do lote)"
+      },
+      {
+       "fonte": "lote (digitado)",
+       "nota": "C",
+       "detalhe": "escalar digitado no lote a partir da StatusInvest ou dos fatos do lote, sem fonte primária por campo (cabeçalho do lote)"
+      },
+      {
+       "fonte": "lote (digitado)",
+       "nota": "C",
+       "detalhe": "escalar digitado no lote a partir da StatusInvest ou dos fatos do lote, sem fonte primária por campo (cabeçalho do lote)"
+      },
+      {
+       "fonte": "Tesouro + ANBIMA",
+       "nota": "A",
+       "detalhe": "rf: Tesouro IPCA+ sem juros 15/08/2050 (o mais longo sem cupom à venda no Tesouro Direto), taxa de compra da manhã (Tesouro Transparente, PrecoTaxaTesouroDireto.csv); π: inflação implícita da ETTJ ANBIMA de fechamento, vértice 2520 du (~10 anos), arredondada a 4 casas (6,4593%) — 2026-10-02 (mercado_vigente.json)"
+      },
+      {
+       "fonte": "arbitrado (contrato)",
+       "nota": "—",
+       "detalhe": "probabilidade de renovação e haircut de margem do contrato arbitrados no lote, sem fonte numérica (AUD-58)"
+      }
+     ],
+     "papel": "informativo",
+     "obs": "DISPARA — confiança baixa (§11); corte da doutrina"
+    },
+    {
+     "rotulo": "Defasagem do provento ≥ 12 meses",
+     "valor": 0.5,
+     "unidade": "",
+     "origens": [
+      {
+       "fonte": "StatusInvest (datas)",
+       "nota": "C",
+       "detalhe": "datas de pagamento da StatusInvest, só para a defasagem do provento (§6.3)"
+      }
+     ],
+     "papel": "informativo",
+     "obs": "ok; informativo — corte do relatório (a conferir)"
+    },
+    {
+     "rotulo": "Não vence a renda fixa (Bogle líquido real < rf líquida + 3 p.p.)",
+     "valor": "Não",
+     "unidade": "",
+     "origens": [
+      {
+       "fonte": "Tesouro + ANBIMA",
+       "nota": "A",
+       "detalhe": "rf: Tesouro IPCA+ sem juros 15/08/2050 (o mais longo sem cupom à venda no Tesouro Direto), taxa de compra da manhã (Tesouro Transparente, PrecoTaxaTesouroDireto.csv); π: inflação implícita da ETTJ ANBIMA de fechamento, vértice 2520 du (~10 anos), arredondada a 4 casas (6,4593%) — 2026-10-02 (mercado_vigente.json)"
+      }
+     ],
+     "papel": "informativo",
+     "obs": "DISPARA; corte da doutrina"
+    },
+    {
+     "rotulo": "Valor central depende de insumo C ou sem fonte",
+     "valor": "—",
+     "unidade": "",
+     "origens": [
+      {
+       "fonte": "lote (digitado)",
+       "nota": "C",
+       "detalhe": "escalar digitado no lote a partir da StatusInvest ou dos fatos do lote, sem fonte primária por campo (cabeçalho do lote)"
+      },
+      {
+       "fonte": "lote (digitado)",
+       "nota": "C",
+       "detalhe": "escalar digitado no lote a partir da StatusInvest ou dos fatos do lote, sem fonte primária por campo (cabeçalho do lote)"
+      },
+      {
+       "fonte": "lote (digitado)",
+       "nota": "C",
+       "detalhe": "escalar digitado no lote a partir da StatusInvest ou dos fatos do lote, sem fonte primária por campo (cabeçalho do lote)"
+      },
+      {
+       "fonte": "lote (digitado)",
+       "nota": "C",
+       "detalhe": "escalar digitado no lote a partir da StatusInvest ou dos fatos do lote, sem fonte primária por campo (cabeçalho do lote)"
+      },
+      {
+       "fonte": "Tesouro + ANBIMA",
+       "nota": "A",
+       "detalhe": "rf: Tesouro IPCA+ sem juros 15/08/2050 (o mais longo sem cupom à venda no Tesouro Direto), taxa de compra da manhã (Tesouro Transparente, PrecoTaxaTesouroDireto.csv); π: inflação implícita da ETTJ ANBIMA de fechamento, vértice 2520 du (~10 anos), arredondada a 4 casas (6,4593%) — 2026-10-02 (mercado_vigente.json)"
+      },
+      {
+       "fonte": "arbitrado (contrato)",
+       "nota": "—",
+       "detalhe": "probabilidade de renovação e haircut de margem do contrato arbitrados no lote, sem fonte numérica (AUD-58)"
+      }
+     ],
+     "papel": "informativo",
+     "obs": "DISPARA — só A/B embasa decisão (doutrina §2); corte da doutrina"
+    }
+   ],
+   "texto": [
+    "**4 bandeira(s) disparada(s):** Contrato com prazo: renovação é premissa arbitrada (7 anos; renovação 80%; haircut 40%); Âncora única (menos de 2 âncoras calculáveis) (1); Não vence a renda fixa (Bogle líquido real < rf líquida + 3 p.p.) (Não); Valor central depende de insumo C ou sem fonte (—)."
+   ],
+   "avisos": [],
+   "tabelas": []
+  },
+  {
    "titulo": "Premissas de julgamento (método, não dado)",
    "numeros": [],
    "texto": [
@@ -723,6 +1574,7 @@
   }
  ],
  "avisos": [
+  "Comentários do analista (um por bloco qualitativo): a escrever em relatorio/textos/BBSE3.json, cada um com fonte A/B — nenhum texto é inventado; os blocos mostram só números com fonte.",
   "Premissas do hall digitadas no lote (data-base do hall); o dossiê do ticker troca os escalares por dado A da CVM/B3.",
   "O valor central depende de insumo com nota — (só A/B embasa decisão): escalar digitado no lote a partir da StatusInvest ou dos fatos do lote, sem fonte primária por campo (cabeçalho do lote); probabilidade de renovação e haircut de margem do contrato arbitrados no lote, sem fonte numérica (AUD-58)."
  ]

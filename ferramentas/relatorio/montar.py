@@ -5,7 +5,7 @@ import json
 import pathlib
 
 from relatorio import procedencia as pr
-from relatorio import quanti
+from relatorio import quali, quanti
 from relatorio.caso import caso
 from relatorio.modelo import Relatorio, Secao
 
@@ -26,13 +26,16 @@ def montar(tk: str, data: str | None = None) -> Relatorio:
     r = c["r"]
     rel = Relatorio(c["tk"], c["empresa"].nome, c["data"], c["origem"], r["palavra"])
     rel.secoes += [quanti.secao_veredito(c), quanti.secao_preco(c), quanti.secao_sensibilidade(c),
-                   Secao("Premissas de julgamento (método, não dado)", texto=pr.premissas(c))]
+                   *quali.secoes(c), Secao("Premissas de julgamento (método, não dado)", texto=pr.premissas(c))]
     onde, p = vigente(c)
     if p is None:
         rel.avisos.append(f"Sem veredito vigente gravado para conferir ({onde}).")
     elif p != r["palavra"]:
         rel.avisos.append(f"DIVERGE do veredito vigente: {onde} diz {p}, o motor hoje diz {r['palavra']} — "
                           "dado ou premissa mudou; a palavra vigente não é trocada por este relatório.")
+    if not (quali.TEXTOS / f"{c['tk']}.json").exists():
+        rel.avisos.append(f"Comentários do analista (um por bloco qualitativo): a escrever em relatorio/textos/{c['tk']}.json, "
+                          "cada um com fonte A/B — nenhum texto é inventado; os blocos mostram só números com fonte.")
     if c["dossie"] is None:
         rel.avisos.append("Premissas do hall digitadas no lote (data-base do hall); o dossiê do ticker troca os escalares "
                           "por dado A da CVM/B3.")

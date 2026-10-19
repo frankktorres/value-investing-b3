@@ -80,7 +80,8 @@ def test_dossie_hype3_bate_com_o_veredito_gravado_e_e_todo_a(hype3):
 def test_gerar_nao_toca_veredito_nem_golden(tmp_path, bbse3, hype3):
     antes = [_hash(p) for p in INTOCADOS]
     for rel in (bbse3, hype3):
-        md, js = gravar(rel, tmp_path)
+        md, js, pdf = gravar(rel, tmp_path)
+        assert pdf.read_bytes().startswith(b"%PDF")
         assert md.read_text(encoding="utf-8").startswith(f"# {rel.tk} — ")
         json.loads(js.read_text(encoding="utf-8"))          # JSON válido (inf → null)
     assert [_hash(p) for p in INTOCADOS] == antes

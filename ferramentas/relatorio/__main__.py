@@ -1,4 +1,4 @@
-"""python -m relatorio TICKER [--data AAAA-MM-DD] [--json] → RELATORIOS/<TK>-<data>.md (e .json)."""
+"""python -m relatorio TICKER [--data AAAA-MM-DD] → RELATORIOS/<TK>-<data>.pdf (+ .md e .json)."""
 from __future__ import annotations
 
 import argparse
@@ -7,7 +7,7 @@ import pathlib
 import sys
 from dataclasses import asdict
 
-from relatorio import render_md
+from relatorio import render_md, render_pdf
 from relatorio.montar import montar
 
 SAIDA = pathlib.Path(__file__).resolve().parents[2] / "RELATORIOS"
@@ -19,7 +19,8 @@ def gravar(rel, pasta: pathlib.Path = SAIDA) -> list[pathlib.Path]:
     md.write_text(render_md.render(rel), encoding="utf-8")
     js = pasta / f"{rel.tk}-{rel.data}.json"
     js.write_text(json.dumps(_sem_inf(asdict(rel)), ensure_ascii=False, indent=1), encoding="utf-8")   # inf → null
-    return [md, js]
+    pdf = render_pdf.render(rel, pasta / f"{rel.tk}-{rel.data}.pdf")
+    return [md, js, pdf]
 
 
 def _sem_inf(x):

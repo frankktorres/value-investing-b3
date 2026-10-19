@@ -11,6 +11,10 @@ def fmt(v, unidade: str = "") -> str:
         return "—"
     if isinstance(v, str):
         return v
+    if isinstance(v, int) and not isinstance(v, bool):
+        return str(v)
+    if unidade == "R$ mil":          # valores do balanço da CVM, em R$ mil
+        return fmt(v / 1e6, "") + " bi" if abs(v) >= 1e6 else fmt(v / 1e3, "") + " mi"
     if unidade == "%":
         return f"{100 * v:.1f}%".replace(".", ",")
     if unidade == "x":
