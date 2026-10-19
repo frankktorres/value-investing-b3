@@ -45,3 +45,4 @@
 {"central": 3.6329, "data_preco": "2026-10-06", "doutrina": "v2.3", "golden_sha": "b07cced64cbe33ab", "lote": null, "origem": "dossie", "palavra": "CARA", "pc": 1.3598, "preco": 4.94, "registrado_em": "2026-10-07", "ticker": "CMIN3"}
 {"central": 18.122, "data_preco": "2026-10-06", "doutrina": "v2.3", "golden_sha": "a3b5d63f677b05bb", "lote": null, "origem": "dossie", "palavra": "CARA", "pc": 1.4899, "preco": 27.0, "registrado_em": "2026-10-07", "ticker": "HYPE3"}
 {"central": 35.7479, "data_preco": "2026-10-06", "doutrina": "v2.3", "golden_sha": "e0889a9cc716f17e", "lote": null, "origem": "dossie", "palavra": "JUSTA", "pc": 1.0224, "preco": 36.55, "registrado_em": "2026-10-08", "ticker": "LEVE3"}
+{"central": 14.9142, "data_preco": "2026-10-15", "doutrina": "v2.3", "golden_sha": "de83daff50dc6644", "lote": null, "origem": "dossie", "palavra": "BARATA", "pc": 0.4224, "preco": 6.3, "registrado_em": "2026-10-19", "ticker": "ALLD3"}

@@ -1,0 +1,21 @@
+{
+ "data_base": "2026-10-15",
+ "coletado_em": "2026-10-19",
+ "uso": "Mercado do dossiê ALLD3 com data-base 15/10/2026 (último pregão no COTAHIST local): rf e preço do mesmo dia (§4). Mesmo método do mercado_2026-10-06.json.",
+ "rf_real": 0.0674,
+ "pi": 0.0575,
+ "rf": {
+  "valor": 6.74,
+  "titulo": "Tesouro IPCA+ 15/08/2050 (mais longo sem cupom à venda em 15/10/2026)",
+  "tipo": "Tesouro Transparente, Taxa Compra Manhã (% a.a.); taxa venda manhã 6,86",
+  "fonte_url": "https://www.tesourotransparente.gov.br/ckan/dataset/df56aa42-484a-4a59-8184-7676580c81e3/resource/796d2059-14e9-44e3-80c9-2d9e30b405c1/download/PrecoTaxaTesouroDireto.csv",
+  "nota_fonte": "A"
+ },
+ "pi_implicita": {
+  "valor": 5.7496,
+  "tipo": "ANBIMA ETTJ, inflação implícita no vértice de 2520 du (~10a); ETTJ IPCA 6,8360 / PREF 12,9787; 1260 du: 5,7228",
+  "fonte_url": "https://www.anbima.com.br/informacoes/est-termo/CZ-down.asp (POST Idioma=PT&Dt_Ref=15/10/2026&saida=csv)",
+  "conferencia": "o mesmo CSV do Tesouro e o mesmo POST para 06/10/2026 devolvem 6,51 e 5,6672, iguais ao mercado_2026-10-06.json",
+  "nota_fonte": "A"
+ }
+}
