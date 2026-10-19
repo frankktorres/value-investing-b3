@@ -26,6 +26,8 @@ RELATORIOS/privado/
 ferramentas/dados/privado/
 # Log da última execução do monitor semanal (Etapa 4)
 ferramentas/monitor/ultimo.log
+# Logs do painel e da temporada (o painel pode ecoar valor pessoal em mensagem de erro)
+ferramentas/monitor/*.log
 
 # Projeto antigo arquivado em 08/10/2026 (git próprio; ver analisador/ARQUIVADO.md)
 analisador/

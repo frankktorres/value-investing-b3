@@ -349,3 +349,47 @@ def test_historico_nunca_vai_para_o_git():
     import subprocess
     r = subprocess.run(["git", "check-ignore", "-q", "--", str(carteira.HISTORICO)], cwd=RAIZ)
     assert r.returncode == 0
+
+
+# ------------------------------------------------------------------------------ achados do adversário (fatia 3)
+def test_provento_sem_data_de_pagamento_avisa_em_vez_de_sumir_calado():
+    rel = _painel(rendas={"TESTA3": Renda12m(0.0, 0.0), "TESTB4": _sem_data()})
+    assert any("Sem data de pagamento" in a and "TESTB4" in a for a in rel.avisos)
+
+
+def _sem_data():
+    r = provento_12m([reg("2026-10-01", 2.0)], "ON", DATA)
+    anotar(r, [], None)
+    return r
+
+
+def test_historico_rejeita_valor_nao_numerico_e_aceita_bom(tmp_path):
+    bom = carteira.resumo(_painel())
+    cam = tmp_path / "h.jsonl"
+    for campo, ruim in [("pct_meta", None), ("renda_liquida_mensal", "abc"), ("patrimonio", float("nan")),
+                        ("incompleta", "nao")]:
+        cam.write_text(json.dumps({**bom, campo: ruim}) + "\n", encoding="utf-8")
+        with pytest.raises(ValueError, match="linha 1"):
+            carteira.ler_historico(cam)
+    cam.write_text("\ufeff" + json.dumps(bom) + "\n", encoding="utf-8")        # BOM de editor do Windows
+    assert carteira.ler_historico(cam) == [bom]
+
+
+def test_regua_nan_vira_traco_e_nao_texto_nan():
+    refs = {**REFS, "TESTA3": {"palavra": "CARA", "central": -5.0, "compra": math.nan, "saida": math.nan}}
+    local = {"meta_mensal": 100.0, "posicoes": {"TESTA3": {"quantidade": 1, "preco_medio": None}}}
+    rel = montar(local, {"TESTA3": 10.0}, DATA, refs, {"TESTA3": Renda12m(1.0, 0.0)}, "2026-10-02")
+    assert "nan" not in " ".join(c for s in rel.secoes for _, _, ls in s.tabelas for l in ls for c in l).lower()
+
+
+def test_anunciado_da_statusinvest_de_outro_tipo_na_mesma_data_com_nao_some():
+    r = provento_12m([reg("2026-11-03", 0.5)], "ON", DATA)
+    anotar(r, [{"data_com": "03/11/2026", "pagamento": "20/11/2026", "valor": 0.5, "tipo": "Dividendo"},
+               {"data_com": "03/11/2026", "pagamento": "20/11/2026", "valor": 0.3, "tipo": "JCP"}], 1.0, DATA)
+    assert sorted((e["tipo"], e["por_acao"]) for e in r.futuros) == [("DIVIDENDO", 0.5), ("JRS CAP PROPRIO", 0.3)]
+
+
+def test_logs_do_agendador_sao_ignorados_pelo_git():
+    import subprocess
+    for nome in ("carteira.log", "temporada.log", "ultimo.log"):
+        assert subprocess.run(["git", "check-ignore", "-q", "--", f"ferramentas/monitor/{nome}"], cwd=RAIZ).returncode == 0

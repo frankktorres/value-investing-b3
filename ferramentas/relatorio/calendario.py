@@ -47,10 +47,10 @@ def anotar(renda, si_eventos: list[dict], defasagem: float | None, data: str | N
         ev["pagamento"], ev["pag_origem"] = data_de_pagamento(ev, si_eventos, defasagem)
     if data is None:
         return
-    na_b3 = {e["data_com"] for e in (*renda.eventos, *renda.futuros, *renda.ignorados)}
+    na_b3 = {(e["data_com"], e["tipo"]) for e in (*renda.eventos, *renda.futuros, *renda.ignorados)}
     for e in si_eventos:
         com, tipo = _iso(e.get("data_com")), TIPO_SI.get((e.get("tipo") or "").strip())
-        if com > data and com not in na_b3 and tipo and (e.get("valor") or 0) > 0:
+        if com > data and (com, tipo) not in na_b3 and tipo and (e.get("valor") or 0) > 0:
             ev = {"data_com": com, "tipo": tipo, "por_acao": float(e["valor"]), "so_statusinvest": True}
             ev["pagamento"], ev["pag_origem"] = data_de_pagamento(ev, [e], defasagem)
             renda.futuros.append(ev)

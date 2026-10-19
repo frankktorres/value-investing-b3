@@ -110,6 +110,8 @@ def montar(local: dict, precos: dict, pregao: str, refs: dict, rendas: dict, dat
         ref, p = refs.get(tk), precos[tk]
         central = ref["central"] if ref else math.nan
         compra, saida = (ref["compra"], ref["saida"]) if ref and ref["palavra"] != NAO_CONCLUSIVO else (None, None)
+        compra = compra if compra is not None and math.isfinite(compra) else None
+        saida = saida if saida is not None and math.isfinite(saida) else None
         reg = situacao(p, ref) + (" · fora do hall" if tk in fora_do_hall else "")
         linhas_pos.append([tk, _q(pos[tk]["quantidade"]), fmt(p, "R$"), fmt(valor[tk], "R$"), fmt(valor[tk] / total, "%"),
                            ref["palavra"] if ref else "—", fmt(central, "R$") if central > 0 else "—",
@@ -143,6 +145,10 @@ def montar(local: dict, precos: dict, pregao: str, refs: dict, rendas: dict, dat
         ignorados += [f"{tk} {e['data_com']} {e['tipo']} R$ {fmt(e['por_acao'])}" for e in r.ignorados]
         ignorados += [f"{tk} {e['data_com']} {e['tipo']} R$ {fmt(e['por_acao'])} (anunciado)" for e in r.futuros
                       if e["tipo"] not in RENDA]
+    sem_data = sorted({c["tk"] for c in caixa if c["na_conta"] and not c["pagamento"]})
+    if sem_data:
+        avisos.append(f"Sem data de pagamento (fora da StatusInvest e sem defasagem): {', '.join(sem_data)} — não dá para dizer "
+                      "se o provento já caiu; ele aparece em \"sem data\" no calendário e fica fora de \"a receber\".")
     linhas_renda.append(["Total", "", "", fmt(bruta / total, "%"), fmt(bruta, "R$"), fmt(liquida, "R$"), ""])
     if ignorados:
         avisos.append("Fora da renda (não é dividendo/JCP/rendimento): " + "; ".join(ignorados) + ".")
@@ -326,13 +332,16 @@ def ler_historico(caminho: Path = HISTORICO) -> list[dict]:
     if not caminho.exists():
         return []
     out = []
-    for i, linha in enumerate(caminho.read_text(encoding="utf-8").splitlines(), 1):
+    for i, linha in enumerate(caminho.read_text(encoding="utf-8-sig").splitlines(), 1):
         if not linha.strip():
             continue
         r = None
         try:
             r = json.loads(linha)
-            ok = isinstance(r, dict) and all(c in r for c in _CAMPOS) and isinstance(r["data"], str)
+            ok = (isinstance(r, dict) and all(c in r for c in _CAMPOS) and isinstance(r["data"], str)
+                  and isinstance(r["incompleta"], bool)
+                  and all(isinstance(r[c], (int, float)) and not isinstance(r[c], bool) and math.isfinite(r[c])
+                          for c in _CAMPOS[1:6]))
         except ValueError:
             ok = False
         if not ok:
