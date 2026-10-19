@@ -1,0 +1,27 @@
+{
+ "ticker": "FESA4",
+ "data_preco": "2026-10-15",
+ "preco": 6.23,
+ "central": 7.6189,
+ "pc": 0.8177,
+ "palavra": "RADAR",
+ "palavra_regua": "RADAR",
+ "notas_regra11": {
+  "moat": 0,
+  "gestao": 1,
+  "controlador": 3,
+  "ciclo": 1,
+  "fisher": 1
+ },
+ "desc_controlador": 0.01,
+ "desc_controlador_razao": "regra 8 (probabilidade x magnitude do risco prospectivo), sem evidência de interferência consumada (IPE 2017-26, ver 'interferencias'). Controlador permanente e institucional: Fundação José Carvalho com 98,83% das ON e 50,6% do capital, finalidade educacional/social descrita no relatório da administração 2025 ('cinquentenário da FUNDAÇÃO'). A FESA4 é PN (sem voto; dividendo estatutário 10% maior que a ON, art. 6 do estatuto). Riscos que a nota e o valor central não capturam: (a) venda/transferência do controle sem OPA para as PN, já que o estatuto (versão 20/04/2026, Nível 1) não traz cláusula de oferta na alienação de controle e a PN não vota; a disputa judicial do herdeiro José Eduardo Cabral de Carvalho contra a FJC e a FERBASA sobre doações de ações dos anos 70 (Comunicados 12/01/2022 e 23/09/2022) é o gatilho conhecido; (b) cargas sociais da FJC sobre o caixa da empresa: R$ 16,3 mi em 2025 = 8,7% do lucro líquido de R$ 188,7 mi, em convênios aprovados por conselho que a FJC elege (nota 28 da DFP 2025; FRE 2026 b.1), com chance de crescer; (c) payout de 127% em 2025 (R$ 240 mi de JCP) é pro rata e mais lento que o caixa líquido de R$ 718,4 mi; não conta como extração. As probabilidades e perdas são estimativas minhas (não saem de fonte), no mesmo molde do ALLD3",
+ "media_regra11": 1.5,
+ "discricionario": true,
+ "doutrina": "v2.3",
+ "template": "02 v4",
+ "rf_real": 0.0674,
+ "pi": 0.0575,
+ "aliquota": 0.34,
+ "aliquota_regra": "sem_origem",
+ "gerado_em": "2026-10-19"
+}

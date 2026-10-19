@@ -1,0 +1,86 @@
+{
+  "_doc": "Insumos não mecânicos do dossiê VLID3 / Valid Soluções S.A. (CNPJ 33.113.309/0001-47, cód. CVM 020028; 02 v4, regra 11). Data-base 19/10/2026. Documentos baixados em ferramentas/dados/cvm/docs/VALID/ (DFP 2021 v2, 2022 v2, 2024 v1, 2025 v3 com release 4T25; ITR 2T26 v1 em itr202606_v1; IPE 2017-2026 em ipe/: todos os fatos relevantes, comunicados de M&A/venda/TCC/participação relevante, estatutos de 29/04/2024 e 03/11/2025, atas e mapas da AGE de abril/2024). Janela real do IPE lido = 2017-2026 (1.112 documentos indexados da Valid; 45 fatos relevantes, todos baixados). A DFP 2023 não foi baixada; FRE 2026 v4 lido pelo dossie.fre (id 160404). Valid está no Novo Mercado desde 12/04/2006, só ações ON, SEM acionista controlador desde antes de 2017 (FRE 2026 v4: tem_controlador = falso, sem acordo de acionistas). A cláusula de proteção à dispersão (poison pill, essencialmente o art. 45 do estatuto antigo) foi alvo de proposta de exclusão em 2024. Maior acionista: Alaska Investimentos/Asset Management (gestora, vários fundos), 46,262% das ON no FRE 2026 v4; sem declaração de intenção de controle. NÃO COLOCADO NO JSON por falta de fonte A/B lida: r1_retido (não é preciso: VLID3 está na triagem de 02/10/2026, Q4 = R$ -3,05, lido por evidencia.r1_da_triagem); o preço pago pela Agrotopus/Nexitera (2018), pela Valid USA e pelo Cubic Telecom em 2017 não foi lido. Itens de Fisher sem fonte A/B ficam em 'sem'. Imagens sem texto extraível (pdftotext vazio): ipe/2018-09-19_Comu..., FRE/AGE 2018 (proposta de acionistas sobre a cláusula de dispersão), lidos só pelos comunicados de 25/10/2018.",
+  "ma_ruim": {
+    "valor": false,
+    "fonte": "Nenhuma aquisição > 20% do ativo e nenhum impairment relevante nos documentos lidos. Ativo total consolidado: R$ 3.147.366 mil em 2025 e R$ 2.943.849 mil em 2024 (DFP 2025 balanço). Aquisições da era listada: VSoft e Via Soft (15/01/2025; DFP 2025 nota 9.1a: contraprestação total R$ 94.944 mil, ágio R$ 51.706 mil = 3,0% do ativo de 2025); HST Card Technology (FR 03/08/2026: 'O valor da aquisição será de R$73MM pagos em 3 anos' = 2,3% do ativo de 2025); Flexdoc (FR 23/05/2023: R$ 20 mi à vista + até R$ 20 mi por lucro 2023-24 + 80% do lucro por 4 anos; ágio de R$ 47.072 mil na nota 10); Contiplan (01/10/2024; DFP 2025 nota 9.1c: R$ 23.970 mil; ágio R$ 13.297 mil); minoritários da Mitra (17/03/2025, R$ 33.566 mil, DFP 2025 nota 9.1b); Agrotopus/Nexitera 51,8% via Interprint (FR 22/10/2018) e Cubic Telecom 5,39% (comunicado 21/08/2017), preços não lidos. Impairment: 2024, baixa de R$ 24.029 mil de ativos da investida VCMC (DFP 2025 nota 10, coluna Impairment 2024: 'indicativos de impairment ... após discussões com o sócio controlador dessa investida') = 0,8% do ativo de 2024; DFP 2025 nota 10: sem coluna de impairment em 2025 e teste anual dos ágios (Carteiras, Mitra, Flexdoc, Mobile) sem perda divulgada. DFP 2022: linha 'Impairment e resultado na alienação da operação dos USA' R$ (1.501) mil. Contrário ao M&A ruim: desinvestimentos com ganho — Cubic Telecom 67,5% por R$ 173,4 mi (FR 06/03/2024; ganho estimado R$ 135,5 mi no FR 29/11/2023), ativos de Pagamentos e Identificação da Valid USA à G+D (comunicados 30/06/2022 e 02/12/2022), Colômbia à Topaz/Stefanini por até US$ 7 mi (comunicado 01/04/2025). Limite: DFP 2023 e os impairments de 2019-2021 não foram lidos linha a linha; ágio total vida útil indefinida R$ 605.208 mil (19% do ativo, DFP 2025 nota 10) é relevante e depende de testes do próprio administrador",
+    "nota_fonte": "A"
+  },
+  "interferencias": {
+    "valor": 0,
+    "fonte": "Busca no IPE da CVM 2017-2026 (1.112 documentos da Valid; 45 fatos relevantes e os comunicados de aquisição/venda/esclarecimento/TCC/participação relevante lidos). Valid não tem controlador, logo não há operação de controlador contra o minoritário: sem aumento de capital dirigido, sem compra/venda de ativo com acionista de referência, sem recompra do controlador, sem corte de payout imposto. CASOS EXAMINADOS E NÃO CONTADOS: (1) aumento de capital privado de jan-mar/2021 de R$ 65,7 a 131,4 mi com bônus de subscrição, em que a Alaska declarou interesse no direito de preferência e nas sobras (FR 07/01/2021 e 12/03/2021): preferência pro rata, sobras abertas a todos, e Alaska é minoritária, não controladora; (2) proposta do ORGANON MASTER FIA (3,72%) de excluir a poison pill (art. 45 do estatuto antigo): carta de 29/02/2024 (FR 29/02/2024), Conselho de Administração decidiu por unanimidade divulgar a carta e levá-la à AGE (ata de 29/02/2024); AGE de 29/04/2024 aprovou por maioria a alteração e consolidação do estatuto (43.117.546 votos a favor x 7.957.671 contra, mapa detalhado; quórum de 63,71% do capital votante em segunda convocação). O estatuto consolidado de 29/04/2024 e o de 03/11/2025 (arts. 43-47) trazem só as regras padrão do Novo Mercado; (3) em 2018 a assembleia sobre a cláusula de proteção à dispersão não foi instalada em primeira convocação por falta de quórum (comunicado 25/10/2018) e a B3 perguntou do direito de recesso na compra da Agrotopus (Ofício B3 1820/2018, comunicado 25/10/2018): conflito de governança, sem dano identificado ao minoritário; (4) Termo de Compromisso de Cessação com o CADE por 'condutas ocorridas antes de 2019' (comunicado 09/07/2025, contribuição de R$ 14.636.685,54, paga: DFP 2025 nota 13): problema de integridade da empresa, não de interferência de acionista, ver Fisher 15; (5) compras em bolsa da Alaska (30,51% em 08/11/2024; 35,40% em 14/03/2025; 40,02% em 20/08/2025; 45,13% em 27/05/2026, comunicados de participação relevante) são operações entre acionistas, com declaração de que 'não objetiva alterar a composição do controle'. Sem OPA e sem proposta de fechamento de capital nos documentos de 2017-2026",
+    "nota_fonte": "A"
+  },
+  "partes_rel_sobre_receita": {
+    "valor": 0.0,
+    "fonte": "DFP 2025 nota 14 (Transações com partes relacionadas): as contas a receber e a pagar listadas são todas entre a controladora e suas controladas (Valid Argentina, Valid Espanha, Valid Sucursal Colômbia, Valid Certificadora, VSoft, Via Soft, Mitra, Valid Hub, Blu Pay, Contiplan Indústria); a nota diz 'Outras transações entre partes relacionadas relativas à venda de insumos integralmente eliminadas no consolidado'; os únicos mútuos são Valid-Valid Hub (R$ 4.000 mil, saldo R$ 1.817 mil, 8% a.a.) e VSoft-Via Soft (R$ 3.401 mil), ambos intragrupo. FRE 2026 v4 (CVM, id 160404): tabela transacao_parte_relacionada vazia. Não há acionista controlador nem acordo de acionistas (FRE: tem_controlador = falso), logo nenhuma transação com dono ou coligada externa. 0 / receita líquida consolidada de 2025 R$ 2.062.563 mil (DFP 2025, DRE) = 0%. Remuneração dos administradores (R$ 47.482 mil em 2025, nota 14) não entra: é remuneração, não transação do dono",
+    "nota_fonte": "A"
+  },
+  "tag_along": {
+    "valor": 1.0,
+    "fonte": "Estatuto social da Valid (IPE, versão de 03/11/2025), art. 43: a alienação direta ou indireta do Controle, 'tanto por meio de uma única operação, como por meio de operações sucessivas', só pode ser contratada se o adquirente 'se obrigue a realizar oferta pública de aquisição de ações' dos demais acionistas 'de forma a lhes assegurar tratamento igualitário àquele dado ao alienante'; parágrafo único define Controle como 'o poder efetivamente utilizado por acionista de dirigir as atividades sociais e orientar o funcionamento dos órgãos da Companhia ... de fato ou de direito, independentemente da participação acionária detida'; art. 7º: capital 'representado exclusivamente por ações ordinárias'; arts. 45-46: saída voluntária do Novo Mercado exige OPA, dispensável por AGE com 2/3 das ações em circulação em primeira convocação (qualquer número em segunda). Atenção: sem controlador a cláusula só dispara se alguém passar a exercer o poder de fato, e o estatuto não traz gatilho percentual (a poison pill foi retirada na alteração aprovada em AGE de 29/04/2024). O quórum do art. 46 é de instalação, não de aprovação",
+    "nota_fonte": "A"
+  },
+  "discricionario": {
+    "valor": false,
+    "fonte": "FRE 2026 v4 (CVM, id 160404, recebido em 11/08/2026): posição acionária com Alaska Asset Management 46,262% das ON, BTG Pactual Gestão e Consultoria 11,917%, tesouraria 2,086%, outros 39,735%; nenhum acionista marcado como controlador, sem acordo de acionistas; free float 94,581% das ON; tabela relacao_familiar vazia. Comunicados de participação relevante (IPE): Alaska declarou 'mera realização de operações financeiras; não objetiva alterar a composição do controle ou a estrutura administrativa da Companhia' (comunicados de 14/03/2025, 20/08/2025 e 27/05/2026, este com 36.933.530 ações = 45,13%). Estatuto 03/11/2025: capital ON único, Novo Mercado. Não há dono com poder discricionário sobre payout, capital ou contratos; o bloco da Alaska (várias carteiras, gestora, sem acordo de voto) é risco a precificar no desconto de controlador, não peso 2 na média",
+    "nota_fonte": "A"
+  },
+  "fisher": {
+    "respostas": [
+      "sem",
+      "sim",
+      "sem",
+      "sem",
+      "sim",
+      "sim",
+      "sem",
+      "sem",
+      "sem",
+      "sem",
+      "sem",
+      "sim",
+      "sim",
+      "sim",
+      "nao"
+    ],
+    "itens": [
+      "1 potencial de mercado: sem — receita líquida 2025 de R$ 2.063 mi, -5% contra 2024, e Meios de Pagamento -39% no 4T25 (release 4T25, A); só os Novos Negócios crescem (R$ 330 mi, +53%); sem dado de mercado endereçável em fonte A/B",
+      "2 decisão de seguir lançando: sim — Novos Negócios passaram de 11% para 16% da receita (R$ 330 mi, +53%) e o time de tecnologia desses negócios foi de 244 para 362 pessoas entre 2023 e 2025 (release 4T25, comentários da administração, A, alegação da companhia); aquisições de software e identidade digital em 2025-26 (VSoft/Via Soft, HST: FR 03/08/2026)",
+      "3 eficácia do P&D: sem — a DFP não separa despesa de P&D de forma que meça retorno; sem métrica nos documentos lidos",
+      "4 força de vendas: sem — ID & Gov. Digital +17% e Conectividade +9% no 4T25, mas Meios de Pagamento -39% e receita total -10% no trimestre (release 4T25, A); participação de mercado não encontrada em fonte A/B (a Valid se diz com mais de 60% dos documentos de identificação do Brasil no rodapé do comunicado de 25/10/2018, alegação antiga da companhia, não conferida)",
+      "5 margem que vale a pena: sim — EBITDA de R$ 432 mi em 2025 (release 4T25: margem de 22%, em linha com 2024; pela divisão simples 432/2.063 = 20,9%), lucro líquido de R$ 269 mi e margem líquida de 13% (release 4T25, A); conversão de EBITDA em caixa de 93% (R$ 401 mi). Observação: o release é da administração e a base da margem não é reconciliada aqui",
+      "6 o que faz pela margem: sim — margem EBITDA mantida em ~22% mesmo com receita -5% e queda de 11% do EBITDA, com 'ajustes feitos na estrutura comercial e operacional durante o ano' em Pagamentos (release 4T25, A, alegação da companhia); alavancagem foi de dívida líquida positiva para caixa líquido de R$ 93 mi (-0,2x EBITDA)",
+      "7 relações de trabalho: sem — não encontrado em fonte A/B (a provisão trabalhista consolidada é R$ 22.743 mil em 2025, nota 13, sem série de clima/turnover)",
+      "8 relações entre executivos: sem — não encontrado",
+      "9 profundidade da gestão: sem — trocas frequentes: Diretor Presidente em 08/09/2020 e 19/02/2024, CFO/DRI em 07/12/2020, 07/05/2021, 28/08/2023 e 21/05/2026 (FRs); a sucessão de 2026 foi interna (Walter Silva, 13 anos na Valid, FR 21/05/2026), mas sem evidência de profundidade além disso",
+      "10 controles de custo e contábeis: sem — DFP 2025 sem ressalva não basta como prova (mesma régua de BLAU3 e ALLD3); a conduta objeto do TCC com o CADE foi anterior a 2019 (comunicado 09/07/2025)",
+      "11 aspectos do setor: sem — não encontrado",
+      "12 visão de longo prazo: sim — o plano estratégico de 2021 (foco em linhas de negócio e geografias competitivas) foi executado ao longo de cinco anos: venda dos ativos de Pagamentos e Identificação dos EUA (comunicados 30/06/2022 e 02/12/2022), Cubic Telecom (FR 29/11/2023 e 06/03/2024: 'em linha com o Planejamento Estratégico que, desde 2021, tem buscado o foco'), Colômbia (comunicado 01/04/2025: 'já fazia parte do Plano Estratégico da Valid desde 2021'), com recursos para desalavancagem e aquisições de identidade digital. Texto da companhia (A de existência); a execução em si está nos fatos relevantes",
+      "13 crescimento sem diluição: sim — média ponderada de ações de 79.996 mil em 2024 para 78.634 mil em 2025 (DFP 2025 nota 17), com 3.376.430 ações em tesouraria em 31/12/2025 (nota 16) e recompras repetidas (FRs 19/10/2021, 22/04/2022, 21/05/2024, 22/04/2025, 17/06/2026, este com cancelamento de 2.000.000 ações). Ressalva: houve aumento de capital privado de R$ 65,7 a 131,4 mi em jan-mar/2021 (FR 07/01/2021 e 12/03/2021), dilutivo para quem não subscreveu; a série antes de 2021 não foi conferida",
+      "14 fala dos problemas: sim — divulgou a baixa de ativos da investida VCMC (DFP 2025 nota 10) e o TCC com o CADE em comunicado próprio, com o valor de R$ 14.636.685,54 (09/07/2025); o release 4T25 atribui a queda de 11% do EBITDA à elevada base de comparação no segmento Pay (cenário favorável na Argentina em 2024); a administração descreve 2025 como saída de 'um ciclo de reestruturação'",
+      "15 integridade inquestionável: nao — TCC com o CADE por condutas anteriores a 2019, 'todos os funcionários envolvidos ... já não fazem mais parte dos quadros da Companhia há mais de quatro anos', com pagamento de R$ 14.636.685,54 ao Fundo de Direitos Difusos e obrigação de cooperar (comunicado 09/07/2025; DFP 2025 nota 13, pagamento de R$ 14.640 mil); o processo administrativo segue suspenso em relação à Valid"
+    ],
+    "fonte": "DFP 2025 v3 (notas 9, 10, 13, 14, 16, 17 e release 4T25, CVM/RAD, A); IPE 2017-2026 (FRs e comunicados citados, A). Nota = arredondar(5 x 6 sim / 15) = 2. Conferido em 19/10/2026. As alegações da companhia (itens 2, 5, 6, 12) são nota A de existência do texto, não prova do fato. Itens 2 e 12 são os mais subjetivos e merecem olhar do adversário"
+  },
+  "desconto_controlador": {
+    "tipo": "cenarios",
+    "razao": "regra 8 (probabilidade x magnitude do risco prospectivo), sem evidência de interferência consumada (IPE 2017-26, ver 'interferencias'). Contexto: a Valid é uma empresa de capital disperso sem controlador (FRE 2026 v4), mas a Alaska (gestora) acumulou 45,13% das ON em 27/05/2026 (comunicado) e 46,262% no FRE de 11/08/2026, vindo de 30,51% em 08/11/2024; BTG Gestão tem 11,917%; free float 94,581%. A poison pill foi retirada em abril de 2024 (AGE aprovou a consolidação do estatuto; o estatuto de 03/11/2025 só tem regras padrão do Novo Mercado) e o art. 43 só dispara com 'Controle' efetivamente exercido, sem gatilho percentual. O risco de extração do controlador antigo não existe: partes relacionadas 0% da receita, sem contrato com acionista. Entram só os riscos que a nota e o valor central não capturam: (a) o bloco da Alaska (que repetidamente declara só 'operações financeiras', sem acordo de voto) virar controle de fato sem OPA para os demais, hoje 46% e sem o escudo da poison pill; (b) fechamento de capital/saída do Novo Mercado a preço abaixo do valor, mitigado pelos arts. 45-46 do estatuto (OPA exigida, dispensável por AGE com 2/3 das ações em circulação em primeira convocação). Não há OPA, nem proposta de fechamento de capital, nem fato relevante nesse sentido em 2017-2026. As probabilidades e perdas são estimativas minhas (não saem de fonte), no mesmo molde da ALLD3 e da BLAU3",
+    "cenarios": [
+      {
+        "nome": "Sem extração: governança de capital disperso se mantém, sem transações com acionistas relevantes",
+        "prob": 0.85,
+        "perda": 0.0
+      },
+      {
+        "nome": "Bloco da Alaska (~46%, sem acordo de voto) passa a controlar de fato sem prêmio ao minoritário (art. 43 sem gatilho percentual) e coloca transações ligadas",
+        "prob": 0.1,
+        "perda": 0.05
+      },
+      {
+        "nome": "OPA de fechamento de capital ou saída do Novo Mercado a preço abaixo do valor (arts. 45-46 exigem OPA, dispensável por 2/3 das ações em circulação)",
+        "prob": 0.05,
+        "perda": 0.1
+      }
+    ]
+  }
+}

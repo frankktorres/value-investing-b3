@@ -1,5 +1,5 @@
 # PROJECT BRIEF — Mesa de Value Investing B3
-*Versão de 19/10/2026 (rev. fase 1 do relatório, fatia 4; doutrina v2.6) · gerado por `/brief` · fonte: repositório, memória do projeto e `docs/auditoria/AUDITORIA_2026-10-08.md`*
+*Versão de 19/10/2026 (rev. B08 concluída: FESA4/SHUL4/VLID3; doutrina v2.6) · gerado por `/brief` · fonte: repositório, memória do projeto e `docs/auditoria/AUDITORIA_2026-10-08.md`*
 
 ## 1. Projeto
 Mesa de análise fundamentalista da B3 para dividendos/JCP e longo prazo: doutrina escrita (v2.6) + motores de valuation em Python que
@@ -109,3 +109,4 @@ MVP de uso pessoal, maduro no cálculo. Um usuário real, sem terceiros. Prazo e
 - 19/10/2026 (fase 1, fatia 2): `relatorio/quali.py` (moat, gestão, dívida, governança, dividendos, riscos; FRE e proventos B3 por ticker) + `render_pdf.py`; `relatorio BBSE3|HYPE3` geram PDF; cortes de risco fora da doutrina marcados "a conferir"; 542 testes verdes, golden intacto; B27 feita.
 - 19/10/2026 (fase 1, fatia 3 / B08): dossiê ALLD3 (data 15/10, BARATA, central R$ 14,91, margem 4,0% vs ~3,1% recorrente de 2025 a testar) e `relatorio ALLD3`; registrado no prospectivo; 543 testes verdes, golden intacto.
 - 19/10/2026 (fase 1, fatia 4): relatório revisado por adversário e verificador-fonte; 4 defeitos corrigidos, 2 aceitos; Graham/Bazin/EPV seguem nota C; cortes do quali são heurística; margem ALLD3 2025 conferida na CVM (3,1%; ~2,4% sem todas as 'outras').
+- 19/10/2026 (B08): dossiês FESA4 (RADAR, P/C 0,82), SHUL4 (CARA, 1,28) e VLID3 (CARA, 1,14) com data 15/10 e `relatorio` dos três; B08 fechada (4 de 4); suíte 546 passed.

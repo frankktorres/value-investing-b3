@@ -1,0 +1,86 @@
+{
+  "_doc": "Insumos não mecânicos do dossiê SHUL4 / Schulz S.A. (CNPJ 84.693.183/0001-68, cód. CVM 1466-4; 02 v4, regra 11). Data-base 19/10/2026. Documentos baixados em ferramentas/dados/cvm/docs/SCHULZ/ (DFP 2025 v1, DFP 2024 v2; IPE 2020-2026 em ipe/: 8 fatos relevantes, comunicados de M&A/energia/diretoria, 5 versões do estatuto de 2021 a 12/2025). A varredura do IPE (360 documentos indexados da Schulz) triou os títulos de todos os fatos relevantes e comunicados; comunicados SEM assunto no índice (≈20, incl. 28-29/09/2026) NÃO foram abertos. O texto do FR da Wetzel/UPI Ferro de 26/11/2024 saiu ilegível do PDF (fonte embutida); o preço da UPI não foi lido no original (vem do relatório da administração 2025). FRE 2026 v4 (id 161554) lido pelo módulo dossie.fre. SEM INSUMO (deixados de fora de propósito): r1_retido (SHUL4 é ticker do hall e não está na triagem; o gerador exige 'r1_retido' e o Q4 não foi rodado aqui) e ajustes (nenhum pedido). Controle: família com três pessoas físicas marcadas como controladoras no FRE, sem acordo de acionistas registrado. SHUL4 = ação PREFERENCIAL (sem voto, sem OPA de controle): tag_along e desconto_controlador valem para a PN.",
+  "ma_ruim": {
+    "valor": false,
+    "fonte": "Nenhuma aquisição > 20% do ativo no histórico lido. Aquisições: Attrezzi (start up de acoplamentos, 100% das quotas, comunicados 04/03/2021 e 30/04/2021: 'o valor pago ... não representa investimento relevante'; sem preço divulgado); Janus & Pergher (comunicado reapresentado 04/07/2024: preço de R$ 10.000.000, pago em até 3 anos); UPI Fundição de Ferro da Wetzel S/A (compra judicial em recuperação judicial; FR 30/10/2024 'Potencial Investimento' e FR 26/11/2024 'Aquisição UPI Fundição Ferro - Wetzel'; incorporada pela Schulz em 2025, FR 07/05/2025, operação intragrupo sem emissão de ações). Relatório da administração 2025 (DFP 2025): 'em 2024 foram investidos R$ 125,2 milhões adicionais para a aquisição da UPI Fundição de Ferro Ltda e da Janus & Pergher Ltda'. R$ 125,2 mi ÷ ativo total consolidado 2024 de R$ 2.602.298 mil (DFP 2024, BPA) = 4,8%. Autoprodução de energia: 89% da Irapuru VII por R$ 6,25 mi (comunicado 18/12/2024, fechamento 30/05/2025), ínfimo. Impairment: DFP 2025 nota 13 só registra perdas de contas a receber e estoques (consolidado: R$ 18,9 mi e R$ 13,4 mi em 31/12/2025); nenhuma perda de ágio ou de ativo imobilizado/intangível aparece na nota. Limite: o preço da UPI em separado não foi lido (FR de 26/11/2024 ilegível no PDF)",
+    "nota_fonte": "A"
+  },
+  "interferencias": {
+    "valor": 0,
+    "fonte": "Busca no IPE da CVM 2020-2026 (360 documentos da Schulz; 8 fatos relevantes e comunicados de M&A, energia, diretoria, JCP e recompra triados por título; 22 PDFs de fato relevante, comunicado e estatuto baixados e lidos nos pontos relevantes). Nenhuma operação do controlador contra o minoritário: sem aumento de capital dirigido, sem compra/venda de ativo com os controladores, sem OPA de fechamento de capital, sem conversão forçada de PN, sem corte de payout imposto. CASOS EXAMINADOS E NÃO CONTADOS: (1) bonificação de ações 1:1 por capitalização de reserva de incentivos fiscais (R$ 160,8 mi; 178.687.390 ações novas, 76.346.382 ON e 102.341.008 PN; FR 11/03/2022; capital passou de 178.687.390 para 357.374.780 ações, estatutos de 19/04/2021 e 22/04/2022): proporcional a cada espécie, sem diluição; (2) programas de recompra de ações ON e PN a preço de mercado na B3 (FR 31/08/2021, FR 05/06/2024 e FR 18/05/2026): operação com o mercado; (3) incorporação da UPI Ferro pela controladora, subsidiária integral, sem relação de troca e sem direito de recesso (FR 07/05/2025): intragrupo; (4) compra de 89% da Irapuru VII (comunicado 18/12/2024): contraparte é a coligada Irapuru Holding / Grupo Elera, sem vínculo com os controladores no documento; (5) criação do cargo de CEO com contratação de executivo externo (comunicado 23/10/2024). Sem OPA e sem proposta de fechamento de capital nos documentos de 2020-2026. Limite: ≈20 comunicados sem assunto no índice do IPE não foram abertos",
+    "nota_fonte": "A"
+  },
+  "partes_rel_sobre_receita": {
+    "valor": 0.0,
+    "fonte": "DFP 2025 nota 20 (partes relacionadas): 20.1 transações apenas com a controlada Schulz Compressores Ltda (vendas de R$ 6.734 mil e custo de R$ 5.197 mil na controladora, 'a preços normais de mercado'), eliminadas na consolidação; 20.2 com acionistas e diretores só saldos de JCP e dividendos a pagar (R$ 145,5 mi no consolidado em 31/12/2025, distribuição pro rata); 20.3 remuneração do pessoal-chave (curto prazo; não é transação do dono). FRE 2026 v4 (CVM, id 161554), tabela de partes relacionadas: única contraparte é Schulz Compressores Ltda (controlada direta; vendas de R$ 25,4 mi e compras de R$ 1,7 mi em 2025), também eliminada. Nenhuma venda, compra, aluguel ou empréstimo com os três acionistas pessoas físicas controladores no consolidado. Receita líquida consolidada 2025 R$ 1.938.864 mil (relatório da administração 2025). Limite: o PPA de 15 anos com a Irapuru VII (investida de 89%, comunicados 18/12/2024 e 30/05/2025) não é quantificado em nota na DFP 2025 lida",
+    "nota_fonte": "A"
+  },
+  "tag_along": {
+    "valor": 0.0,
+    "fonte": "Estatuto social da Schulz (IPE, versão de 26/12/2025), art. 4º §3º: as ações preferenciais têm 'os direitos que a lei confere às ordinárias, exceto o de voto e o de serem incluídas em eventual oferta pública de alienação de controle'; preferências: prioridade no reembolso e 'dividendo 10% maior que o atribuído às ações ordinárias'. A SHUL4 é PN, logo tag along da PN = 0% (fora da OPA de controle). O estatuto não trata de OPA para as ON (sem segmento especial da B3: FR 07/05/2025 'ações ... admitidas à negociação na B3 ... sem segmento especial'); para as ON vale só a lei (Lei 6.404/76 art. 254-A), não conferida em fonte A/B nesta rodada. Estatuto anterior (25/04/2025 v2) com o mesmo texto no art. 4º. O FRE 2026 v4 não traz tag along por classe",
+    "nota_fonte": "A"
+  },
+  "discricionario": {
+    "valor": true,
+    "fonte": "FRE 2026 v4 (CVM, id 161554), tabela de acionistas: três pessoas físicas marcadas como controladoras, com 22,304% + 18,308% + 22,345% das ON (62,96% do capital votante; 12,629% + 10,300% + 12,513% = 35,44% do capital total), sem acordo de acionistas marcado; PN sem voto (estatuto 26/12/2025, art. 4º §2º e §3º: 'cada ação ordinária dará direito a um voto'). Outros dois acionistas pessoas físicas têm 18,293% e 18,673% das ON, sem marca de controlador. FRE: um Diretor Vice-Presidente tem relação de parentesco (sogro) com um conselheiro de administração. Diretor-presidente e Vice-Presidente assinam o relatório da administração 2025 (Ovandi Rosenstock e Waldir Carlos Schulz). Com a maioria dos votos, o bloco decide payout (dividendo mínimo de 25% do lucro, estatuto art. 31), capital e contratos; a PN não vota. Limite: o vínculo entre as três pessoas físicas controladoras não está descrito no FRE lido (a marca 'controlador' é a declarada pela companhia)",
+    "nota_fonte": "A"
+  },
+  "fisher": {
+    "respostas": [
+      "sem",
+      "sim",
+      "sem",
+      "sem",
+      "sim",
+      "sem",
+      "sem",
+      "sem",
+      "sem",
+      "sem",
+      "sem",
+      "sim",
+      "sim",
+      "sim",
+      "sem"
+    ],
+    "itens": [
+      "1 potencial de mercado: sem — receita líquida estável (R$ 1.938,9 mi em 2025 contra R$ 1.945,9 mi em 2024, -0,4%) com queda de 14% no 4T25 por 'retração significativa no mercado doméstico de caminhões pesados e semipesados' (relatório da administração 2025, A); sem evidência A/B de mercado endereçável em expansão",
+      "2 decisão de seguir lançando: sim — 55,8% da receita líquida da unidade Compressores em 2025 veio de produtos lançados nos últimos cinco anos e foram lançadas 41 famílias de produtos no exercício (relatório da administração 2025, A, alegação da companhia); primeiro sistema de purificação de biogás lançado",
+      "3 eficácia do P&D: sem — sem gasto de P&D nem retorno por projeto nos documentos lidos",
+      "4 força de vendas: sem — compressores +9,8% no mercado doméstico em 2025 e e-commerce/Schulz Store com alta 'acima de dois dígitos' (relatório da administração 2025, A), mas participação de mercado não encontrada em fonte A/B e a unidade Automotiva caiu",
+      "5 margem que vale a pena: sim — margem bruta 24%, EBITDA R$ 326,5 mi (17%) e margem líquida 15% em 2025 (relatório da administração 2025, A); em 2024 bruta 26%, EBITDA 18%, líquida 13%. Margem bruta em queda de 2 pp, mas ainda alta para metalmecânica",
+      "6 o que faz pela margem: sem — EBITDA caiu 9% e a margem bruta 2 pp em 2025; a administração cita 'ajustes de turnos e redução temporária de jornadas' na Automotiva, sem número de ganho; o lucro líquido subiu 13% por menor imposto (IR/CSLL de R$ -1,5 mi contra R$ -31,9 mi), não por margem operacional",
+      "7 relações de trabalho: sem — não encontrado em fonte A/B (houve redução temporária de jornadas em 2025, sem dado de rotatividade ou greves)",
+      "8 relações entre executivos: sem — não encontrado; o FRE 2026 registra parentesco entre um Diretor Vice-Presidente e um conselheiro (sogro), sem dado sobre o clima entre executivos",
+      "9 profundidade da gestão: sem — comunicado de 04/02/2026 promove internamente dois diretores (18 anos e mais de 40 anos de casa) e contrata CEO externo em 10/2024, mas histórico curto de CEO para julgar profundidade",
+      "10 controles de custo e contábeis: sem — não conferi o parecer do auditor (o parecer do auditor VGA não está entre os 3 PDFs extraídos da DFP 2025; o 02_pdf2 é a proposta de orçamento de capital 2026) e parecer limpo, mesmo conferido, não bastaria como prova",
+      "11 aspectos do setor: sem — não encontrado",
+      "12 visão de longo prazo: sim — contrato de 15 anos de energia (PPA, Irapuru VII, comunicados 18/12/2024 e 30/05/2025), investimento de R$ 1,035 bilhão desde 2018 e plano de expansão de capacidade da unidade Automotiva (relatório da administração 2025, A, alegação da companhia; compromissos contratuais de longo prazo são fato, o resto é alegação)",
+      "13 crescimento sem diluição: sim — 357.374.780 ações desde a bonificação 1:1 de 2022 (estatutos de 22/04/2022, 29/03/2023, 25/04/2025 e 26/12/2025); a bonificação foi proporcional por espécie (FR 11/03/2022); recompras em 2021, 2024 e 2026 reduzem as ações em circulação (229,3 mi em 15/05/2026 contra 230,7 mi em 04/06/2024, FR 05/06/2024 e FR 18/05/2026)",
+      "14 fala dos problemas: sim — relatório da administração 2025 reconhece a 'retração significativa' no segmento de caminhões pesados e semipesados e a queda de 14% da receita no 4T25, e descreve as medidas adotadas (ajuste de turnos); atende às perguntas da CVM sobre a compra da Janus & Pergher reapresentando o comunicado com preço e prazo (comunicado de 04/07/2024)",
+      "15 integridade inquestionável: sem — nenhuma sanção, acordo de leniência ou ação de integridade encontrado nos fatos relevantes e comunicados triados (2020-2026) nem no FRE, mas ausência de achado em triagem por título não prova integridade; ≈20 comunicados sem assunto ficaram sem abrir"
+    ],
+    "fonte": "DFP 2025 v1 (relatório da administração e notas 13 e 20, CVM/RAD, A); IPE 2020-2026 (FRs, comunicados e estatutos citados, A); FRE 2026 v4 (id 161554, A). Nota = arredondar(5 x 5 sim / 15) = 2. Conferido em 19/10/2026. As alegações da companhia (itens 2, 4, 12, 14) são nota A de existência do texto, não prova do fato"
+  },
+  "desconto_controlador": {
+    "tipo": "cenarios",
+    "razao": "regra 8 (probabilidade x magnitude do risco prospectivo), sem evidência de interferência consumada (IPE 2020-26, ver 'interferencias'). SHUL4 é PN: sem voto e fora da OPA de alienação de controle (estatuto 26/12/2025, art. 4º §3º), com dividendo 10% maior que o da ON e dividendo mínimo de 25% (art. 31). Três pessoas físicas controlam 62,96% do capital votante (FRE 2026 v4), de modo que o risco que a nota e o valor central não capturam é a PN ficar fora do prêmio de controle: (a) venda do bloco de controle com OPA só para as ON (a PN não participa e a lei não a obriga), (b) fechamento de capital ou conversão/reorganização que trate a PN a preço abaixo do valor. Atenuantes: companhia com caixa líquido de R$ 133,6 mi após R$ 115,5 mi de dividendos em 2025 (relatório da administração 2025), recompras em ON e PN em 2021, 2024 e 2026, sem transação com controladores no consolidado. Não há OPA, proposta de fechamento de capital nem fato relevante nesse sentido em 2020-2026 no IPE. As probabilidades e perdas são estimativas minhas (não saem de fonte), no mesmo molde da BLAU3 e da ALLD3",
+    "cenarios": [
+      {
+        "nome": "Sem extração: controle familiar estável, payout e recompras em ON e PN continuam, sem transação relevante com os controladores",
+        "prob": 0.88,
+        "perda": 0.0
+      },
+      {
+        "nome": "Venda do bloco de controle com prêmio pago só às ON (PN fora da OPA, estatuto art. 4º §3º) ou transações ligadas aos controladores",
+        "prob": 0.07,
+        "perda": 0.08
+      },
+      {
+        "nome": "Fechamento de capital ou reorganização societária com preço abaixo do valor para a PN",
+        "prob": 0.05,
+        "perda": 0.1
+      }
+    ]
+  }
+}

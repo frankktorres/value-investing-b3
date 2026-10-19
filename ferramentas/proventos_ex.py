@@ -32,8 +32,9 @@ PREGAO = {"SUZB3": "SUZANO S.A.", "KLBN11": "KLABIN SA", "RANI3": "IRANI", "B3SA
           "KEPL3": "KEPLER WEBER", "SLCE3": "SLC AGRICOLA", "TIMS3": "TIM", "VIVT3": "TELEF BRASIL", "FLRY3": "FLEURY",
           "HYPE3": "HYPERA", "ABEV3": "AMBEV SA", "WEGE3": "WEG", "PETR4": "PETROBRAS", "PRIO3": "PETRORIO",
           "RECV3": "PETRORECSA", "UGPA3": "ULTRAPAR", "VBBR3": "VIBRA", "GGBR4": "GERDAU", "UNIP6": "UNIPAR",
-          "LEVE3": "METAL LEVE", "CMIN3": "CSNMINERACAO", "BLAU3": "BLAU", "ALLD3": "ALLIED"}
-CLASSE = {"PETR4": "PN", "GGBR4": "PN", "UNIP6": "PNB", "KLBN11": "UNT"}   # classe do ticker avaliado; o resto é ON
+          "LEVE3": "METAL LEVE", "CMIN3": "CSNMINERACAO", "BLAU3": "BLAU", "ALLD3": "ALLIED",
+          "FESA4": "FERBASA", "SHUL4": "SCHULZ", "VLID3": "VALID"}
+CLASSE = {"PETR4": "PN", "GGBR4": "PN", "FESA4": "PN", "SHUL4": "PN", "UNIP6": "PNB", "KLBN11": "UNT"}   # classe do ticker avaliado; o resto é ON
 
 
 def data_do_preco() -> str:

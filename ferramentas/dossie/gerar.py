@@ -27,7 +27,8 @@ from motor_nao_financeiras import avaliar
 AQUI = pathlib.Path(__file__).resolve().parent
 RAIZ = AQUI.parent.parent
 FICHAS = {"BLAU3": "dossie.fichas.blau3", "CMIN3": "dossie.fichas.cmin3", "HYPE3": "dossie.fichas.hype3",
-          "LEVE3": "dossie.fichas.leve3", "ALLD3": "dossie.fichas.alld3"}
+          "LEVE3": "dossie.fichas.leve3", "ALLD3": "dossie.fichas.alld3",
+          "FESA4": "dossie.fichas.fesa4", "SHUL4": "dossie.fichas.shul4", "VLID3": "dossie.fichas.vlid3"}
 ANO_FRE = 2026
 DOUTRINA, TEMPLATE = "v2.3", "02 v4"
 NOTAS = ("moat", "gestao", "controlador", "ciclo", "fisher")
