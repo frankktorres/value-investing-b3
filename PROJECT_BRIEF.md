@@ -1,5 +1,5 @@
 # PROJECT BRIEF — Mesa de Value Investing B3
-*Versão de 19/10/2026 (rev. fase 1 do relatório, fatia 1; doutrina v2.6) · gerado por `/brief` · fonte: repositório, memória do projeto e `docs/auditoria/AUDITORIA_2026-10-08.md`*
+*Versão de 19/10/2026 (rev. fase 1 do relatório, fatia 2; doutrina v2.6) · gerado por `/brief` · fonte: repositório, memória do projeto e `docs/auditoria/AUDITORIA_2026-10-08.md`*
 
 ## 1. Projeto
 Mesa de análise fundamentalista da B3 para dividendos/JCP e longo prazo: doutrina escrita (v2.6) + motores de valuation em Python que
@@ -50,8 +50,8 @@ MVP de uso pessoal, maduro no cálculo. Um usuário real, sem terceiros. Prazo e
 2. Temporada 3T26: `python ferramentas/temporada.py` ao sair o ITR; régua congelada até lá.
 3. **Onda 3 da auditoria — CONCLUÍDA em 10/10/2026 (doutrina v2.6).** Motor blindado (guardas de NÃO CONCLUSIVO nas financeiras, sem preço negativo nem Infinity, fronteira da régua, LTM da temporada chegando às premissas calculadas no import); decisões do Frank: trava na palavra final, OE do controlador, freio do declínio, cenário negativo como zero, entrada parcial numa função só; 26 aceitos com motivo (`09`). Pendente de decisão própria: pré-registro (AUD-32/98/99) e razões do desconto zero em 29 tickers (AUD-41). Onda 4 (qualidade e rumo SaaS) a abrir.
 4. Etapa 6 / F6 — construção de carteira (tamanho de posição, concentração, caixa); depende de respostas do Frank.
-5. **Roteiro de 19/10 (produto):** fase 1 = `relatorio <TICKER>` (PDF por empresa, quanti + quali, fonte por número) — fatia 1
-   feita (f1bb010: preço/veredito em MD); faltam quali + PDF, ALLD3 (B08) e revisão. Depois: painel da carteira e da meta
+5. **Roteiro de 19/10 (produto):** fase 1 = `relatorio <TICKER>` (PDF por empresa, quanti + quali, fonte por número) — fatias 1
+   e 2 feitas (f1bb010 preço/veredito; 20f7818 quali 6 blocos + PDF, BBSE3 e HYPE3); faltam ALLD3 (B08) e revisão (adversário + verificador-fonte). Depois: painel da carteira e da meta
    (fase 2), dados vivos sem premissa digitada (fase 3), triagem contínua (fase 4), SaaS.
 
 ## 7. Restrições
@@ -106,3 +106,4 @@ MVP de uso pessoal, maduro no cálculo. Um usuário real, sem terceiros. Prazo e
 - 13/10/2026 (rotina na nuvem): carteira do monitor saiu do código para `ferramentas/carteira_tickers.json` (só tickers); `requirements.lock` (fechamento transitivo, referência) ao lado de `requirements.txt`; rodada de 10/10 conferida (já registrada no `09` e acima).
 - 14/10/2026 (rotina, B24/B25/B23/B15/B11): motor exige razão no desconto de controlador (28 com "sem razão documentada", LEVE3 com FRE nota A; nenhuma palavra mudou); pré-registro contínuo no `registro_prospectivo.py`; tabela de P/C por premissa da PETR4 no gerador do lote 5 (PDF não reemitido); relatório B15; termos da B3 lidos, StatusInvest 403.
 - 19/10/2026 (fase 1, fatia 1): pacote `ferramentas/relatorio/` + `relatorio.cmd` → `RELATORIOS/<TK>-<data>.md`, vista dos motores com nota A/B/C/— por número; BBSE3 CARA com central apoiado em premissa arbitrada (AUD-58); marco 5 aberto.
+- 19/10/2026 (fase 1, fatia 2): `relatorio/quali.py` (moat, gestão, dívida, governança, dividendos, riscos; FRE e proventos B3 por ticker) + `render_pdf.py`; `relatorio BBSE3|HYPE3` geram PDF; cortes de risco fora da doutrina marcados "a conferir"; 542 testes verdes, golden intacto; B27 feita.
