@@ -34,9 +34,9 @@ ZIP = RAIZ / "dados" / "cvm"
 DATA_BASE = "2026-10-02"      # o mesmo dia do hall e da triagem: rf e preço do mesmo dia (§4)
 
 # nome de pregão (= NOMRES do COTAHIST = tradingName da B3) e CNPJ (FCA/FRE)
-PREGAO = {"BLAU3": "BLAU", "CMIN3": "CSNMINERACAO", "HYPE3": "HYPERA", "LEVE3": "METAL LEVE"}
+PREGAO = {"BLAU3": "BLAU", "CMIN3": "CSNMINERACAO", "HYPE3": "HYPERA", "LEVE3": "METAL LEVE", "ALLD3": "ALLIED"}
 CNPJ = {"BLAU3": "58.430.828/0001-60", "CMIN3": "08.902.291/0001-15", "HYPE3": "02.932.074/0001-91",
-        "LEVE3": "60.476.884/0001-87"}
+        "LEVE3": "60.476.884/0001-87", "ALLD3": "20.247.322/0001-47"}
 
 
 # Tipos de evento com semântica conferida contra a contagem de ações da CVM (fonte A). Nos dois o `fator_b3` é o % de ações

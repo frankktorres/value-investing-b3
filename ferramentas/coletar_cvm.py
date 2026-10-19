@@ -34,7 +34,7 @@ EMPRESAS = {
     "TIMS3": ("cvm:017639|024929", 1), "VIVT3": ("cvm:017671", 1), "FLRY3": ("cvm:021881", 1), "HYPE3": ("cvm:021431", 1),
     "ABEV3": ("cvm:023264", 1), "WEGE3": ("cvm:005410", 1), "ITSA4": ("cvm:007617", 1),
     # dossiês fora do hall (Etapa 5): gravam em dossie/dados/, nunca no cvm_series.json do hall
-    "BLAU3": ("cvm:024627", 1), "CMIN3": ("cvm:025585", 1),
+    "BLAU3": ("cvm:024627", 1), "CMIN3": ("cvm:025585", 1), "ALLD3": ("cvm:025330", 1),
 }
 DRE = {"receita": "3.01", "custo": "3.02", "lucro_bruto": "3.03", "desp_vendas": "3.04.01", "desp_ga": "3.04.02",
        "outras_receitas_op": "3.04.04", "outras_despesas_op": "3.04.05", "ebit": "3.05", "res_fin": "3.06", "desp_fin": "3.06.02", "lair": "3.07", "ir": "3.08", "lucro": "3.11",

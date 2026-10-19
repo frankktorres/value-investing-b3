@@ -1,0 +1,86 @@
+{
+  "_doc": "Insumos não mecânicos do dossiê ALLD3 / Allied Tecnologia (02 v4, regra 11). Data-base 19/10/2026. Documentos baixados em ferramentas/dados/cvm/docs/ALLIED/ (DFP 2021 v2, 2022 v1, 2024 v1, 2025 v1; IPE 2020-2026 em ipe/: fatos relevantes, comunicados, estatuto de 24/04/2026, FRE 2026 v4). Janela real do IPE = 2020-2026 (725 documentos indexados da Allied; o IPO foi em 04/2021), não 15 anos. Mudança de controle em 27/08/2026: os FIPs da Advent deixaram de exercer o controle de fato; a companhia passou a capital disperso (ver desconto_controlador).",
+  "ma_ruim": {
+    "valor": false,
+    "fonte": "Nenhuma aquisição > 20% do ativo no histórico lido. Aquisições da era listada: BrUsed (comunicados ao mercado de 30/08/2021 e 01/11/2021, IPE; DFP 2021 nota 9(d): 'os montantes dos ativos e passivos identificáveis não são materiais para divulgações adicionais'; incorporada na AGO de 30/03/2022) e Kaaru (03/04/2021: R$ 30 mil + R$ 5,0 mi de AFAC, DFP 2021 nota 9(c)), ambas ínfimas frente ao ativo de R$ 4.529 mi (DFP 2021, consolidado). Wooza e Mobcom (ágio de R$ 171,5 mi reclassificado em 2020, DFP 2021 nota 9) foram compras de 2015 do próprio fundo da Advent, anteriores ao IPO e incorporadas em 2020; 171,5 / ativo 2021 de R$ 4.529 mi = 3,8%. Nenhum impairment relevante em 2022, 2024 e 2025 (DFP 2024 e 2025, nota de teste de recuperabilidade: 'não possui perdas relevantes'). Operações encerradas: Soudi (crédito, provisão de R$ 14,3 mi no 3T24) e Store (relatório da administração 2025, A) são pequenas. Componente da rubrica = 0. Limite: o preço pago pela BrUsed não consta nos documentos lidos",
+    "nota_fonte": "A"
+  },
+  "interferencias": {
+    "valor": 0,
+    "fonte": "Busca no IPE da CVM 2020-2026 (725 documentos da Allied; 22 fatos relevantes, 85 comunicados ao mercado, 57 avisos aos acionistas, assembleias 2021-2026; títulos de todos os fatos relevantes e comunicados triados, 40 PDFs baixados e lidos nos pontos relevantes). Nenhuma operação do controlador (Advent, via FIPs Brasil Investimentos 2015 I e II) contra o minoritário: sem aumento de capital dirigido, sem compra/venda de ativo com o controlador, sem recompra do controlador, sem corte de payout imposto. CASOS EXAMINADOS E NÃO CONTADOS: (1) redução de capital de R$ 180 mi 'por considerá-lo excessivo', restituição em dinheiro a todos os acionistas sem cancelar ações, aprovada em AGE de 12/09/2025 (FR 13/08/2025 e 12/09/2025; DFP 2025 nota 18a): pro rata; (2) cessão a vencimento do crédito judicial da Lei do Bem (R$ 873 mi) ao IA FIDC, cujo gestor e cotista único é o Itaú Unibanco (FR 31/07/2025): contraparte de mercado, sem relação com o controlador; (3) acordo de leniência com MPF e acordo de não persecução cível com MPSP (Operação Triuno), ~R$ 23,8 mi (FR 03/05/2022): fatos anteriores a 26/02/2015, de responsabilidade dos ex-controladores, e a companhia recebeu R$ 32,5 mi deles em indenização (comunicado 01/06/2023) — é problema de integridade pré-Advent, não interferência do controlador atual; (4) renúncia de 3 conselheiros ligados à Advent em 08/08/2023 'para tornar a governança mais eficiente' (FR 08/08/2023): reestruturação, sem fato prejudicial identificado; (5) venda de ações dos FIPs em bolsa e em bloco (IPE 2026) é operação entre acionistas. Sem OPA e sem proposta de fechamento de capital nos documentos de 2020-2026",
+    "nota_fonte": "A"
+  },
+  "partes_rel_sobre_receita": {
+    "valor": 0.0006,
+    "fonte": "DFP 2025 nota 15 (consolidado, fluxo do exercício 2025): as únicas movimentações com partes relacionadas são adições de R$ 3.177 mil (valores a receber de acionistas por compra de opções de ações; recebimentos de R$ 3.023 mil) e R$ 154 mil de saldo com a Allied Miami; no consolidado não há compra, venda, aluguel, royalty nem serviço com controlador ou coligada. O item 'Serviços compartilhados - partes relacionadas' da nota 24 é R$ 0 em 2025 e R$ 2.250 mil em 2024 (só na controladora, com a subsidiária Allied Miami, eliminado na consolidação). FRE 2026 v4 (CVM, id 161321): tabela transacao_parte_relacionada vazia. R$ 3.177 mil ÷ receita líquida consolidada de 2025 R$ 5.504.620 mil (DRE) = 0,06%. Remuneração do pessoal-chave (R$ 23.052 mil em 2025) não entra: é remuneração, não transação do dono",
+    "nota_fonte": "A"
+  },
+  "tag_along": {
+    "valor": 1.0,
+    "fonte": "Estatuto social da Allied (IPE, versão de 24/04/2026), art. 46: a alienação direta ou indireta de controle, em uma ou em operações sucessivas, só pode ser contratada se o adquirente fizer OPA das ações dos demais acionistas 'de forma a lhes assegurar tratamento igualitário àquele dado ao alienante' (Regulamento do Novo Mercado; só há ações ordinárias); §2º define 'controle' como o poder efetivamente utilizado, de fato ou de direito, independentemente da participação detida; art. 48: saída do Novo Mercado exige OPA a preço justo aceita por mais de 1/3 das ações em circulação. A versão de 09/06/2026 (IPE, só alteração do art. 5º por aumento de capital) é imagem sem texto extraível; vale a de 24/04/2026. Atenção: sem acionista controlador a cláusula só dispara se alguém passar a exercer o controle, e o estatuto não traz gatilho percentual (poison pill)",
+    "nota_fonte": "A"
+  },
+  "discricionario": {
+    "valor": false,
+    "fonte": "Comunicado ao mercado de 27/08/2026 (IPE): os FIPs Brasil Investimentos 2015 I e II (Advent) venderam 11,58% a Ricardo Radomysler e família e 'deixam de exercer o controle de fato da Companhia a partir desta data', sem acordo de acionistas nem de voto; FR de 14/08/2026: 'nenhum acionista ou grupo de acionistas passará a deter a maioria dos votos nem o poder de eleger a maioria dos administradores' (full corporation). Comunicado de 11/09/2026: FIPs com 24,9% (23.917.000 ações). FRE 2026 v4 (14/09/2026): FIP I 18,064% + FIP II 6,859%; três pessoas físicas com 16,087%, 7,338% e 5,705%; free float 91,6%; nenhum acionista marcado como controlador; sem acordo de acionistas. Antes da saída (DFP 2025 nota 1) os FIPs eram os controladores com 44,85% (07/04/2026), logo o poder sobre payout, capital e contratos era discricionário até 27/08/2026; hoje não há dono com maioria nem acordo. Risco: o bloco de ~29% da família Radomysler (sem vínculo formal) pode virar controle de fato; vai para o desconto de controlador, não para o peso 2 da média",
+    "nota_fonte": "A"
+  },
+  "fisher": {
+    "respostas": [
+      "sem",
+      "sem",
+      "sem",
+      "sem",
+      "nao",
+      "sim",
+      "sem",
+      "sem",
+      "sem",
+      "sem",
+      "sem",
+      "sem",
+      "sim",
+      "sim",
+      "nao"
+    ],
+    "itens": [
+      "1 potencial de mercado: sem — receita líquida estável (R$ 5.504,6 mi em 2025 contra R$ 5.521,4 mi em 2024, -0,3%) em distribuição e varejo de eletrônicos; sem evidência de mercado endereçável em expansão (relatório da administração 4T25, A)",
+      "2 decisão de seguir lançando: sem — distribuidora/varejista; a inovação é de canal e crédito (Trocafy, crédito a parceiros), sem métrica de retorno nos documentos lidos",
+      "3 eficácia do P&D: sem — não aplicável/sem P&D relevante",
+      "4 força de vendas: sem — Distribuição Brasil +4,4% em 2025 (R$ 2.905,9 mi) e online +12,8% (relatório da administração 4T25, A), mas varejo físico -6,1% e a participação de mercado não foi encontrada em fonte A/B",
+      "5 margem que vale a pena: nao — margem bruta 11,5% (R$ 630,5 mi sobre R$ 5.504,6 mi), EBITDA recorrente 4,0% em 2025 e 4,0% em 2024 (relatório da administração 4T25, A); o lucro contábil de 2025 (R$ 332,7 mi) veio de crédito tributário não recorrente",
+      "6 o que faz pela margem: sim — despesas operacionais recorrentes -6,1% em 2025 (R$ 459,7 mi contra R$ 489,6 mi) e aging dos estoques -30% (relatório da administração 4T25, A, alegação da companhia)",
+      "7 relações de trabalho: sem — não encontrado",
+      "8 relações entre executivos: sem — não encontrado",
+      "9 profundidade da gestão: sem — cinco diretores novos eleitos em 28/02/2025 (FRE 2026 / IPE 'Eleição de Diretoria Estatutária'); histórico curto para avaliar a profundidade",
+      "10 controles de custo e contábeis: sem — parecer sem ressalvas em 2025 (DFP 2025, relatório do auditor), mas o parecer limpo não basta como prova (mesma régua da BLAU3)",
+      "11 aspectos do setor: sem — não encontrado",
+      "12 visão de longo prazo: sem — a administração fala em 'cinco alavancas' (crédito, logística, eficiência fiscal, estoques, canais), mas a estratégia de 2024-25 foi encerrar Soudi e Store; sem horizonte longo provado",
+      "13 crescimento sem diluição: sim — 94.058.972 ações em 31/12/2024 e 94.930.925 em 31/12/2025 (+0,93%, só exercício de opções, DFP 2025 nota 18a); IPO primário de R$ 180 mi a R$ 18,00 em 04/2021 foi a última emissão relevante (FR 08/04/2021). Série anterior a 2024 não conferida",
+      "14 fala dos problemas: sim — comunicou ao mercado o fim das operações de crédito Soudi e Store com provisão para perdas (R$ 14,3 mi no 3T24) e separou o lucro recorrente (R$ 113,0 mi) do contábil (R$ 332,7 mi) (relatório da administração 4T25, A); revisou o guidance da Allied Miami em 2023 (FR 09/08/2023)",
+      "15 integridade inquestionável: nao — acordo de leniência com o MPF e acordo de não persecução cível com o MPSP (Operação Triuno, ~R$ 23,8 mi, FR 03/05/2022); fatos anteriores a 26/02/2015, sob os ex-controladores, e a companhia foi indenizada em R$ 32,5 mi (comunicado 01/06/2023), mas o programa de integridade segue sob monitoramento por 5 anos (FR 03/05/2022)"
+    ],
+    "fonte": "DFP 2025 v1 (notas e relatório da administração 4T25, CVM/RAD, A); IPE 2021-2026 (FRs e comunicados citados, A). Nota = arredondar(5 x 3 sim / 15) = 1. Conferido em 19/10/2026. As alegações da companhia (itens 1, 4, 6, 12) são nota A de existência do texto, não prova do fato"
+  },
+  "desconto_controlador": {
+    "tipo": "cenarios",
+    "razao": "regra 8 (probabilidade x magnitude do risco prospectivo), sem evidência de interferência consumada (IPE 2020-26, ver 'interferencias'). Contexto novo: em 27/08/2026 a Advent (FIPs) deixou de exercer o controle e cai para 24,9% (11/09/2026), ainda vendendo; as três famílias Radomysler somam 29,1% em ações, sem acordo de voto, num free float de 91,6% (FRE 2026 v4). O risco do controlador antigo (extração) praticamente se extinguiu: partes relacionadas 0,06% da receita, sem contrato com a Advent no consolidado. Entram só os riscos que a nota e o valor central não capturam: (a) um bloco familiar de ~29% virar controle de fato sem OPA, porque o estatuto (art. 46) só dispara com 'controle' efetivamente exercido e não tem gatilho percentual; (b) fechamento de capital/OPA por esse bloco a preço abaixo do valor, mitigado pelo art. 48 (aceitação de mais de 1/3 do free float). Não há OPA, nem proposta de fechamento de capital, nem fato relevante nesse sentido em 2025-2026 no IPE. As probabilidades e perdas são estimativas minhas (não saem de fonte), no mesmo molde da BLAU3",
+    "cenarios": [
+      {
+        "nome": "Sem extração: governança de capital disperso se mantém, sem transações com acionistas relevantes",
+        "prob": 0.85,
+        "perda": 0.0
+      },
+      {
+        "nome": "Bloco familiar (~29%, sem acordo de voto) passa a controlar de fato sem prêmio ao minoritário (art. 46 sem gatilho percentual) e coloca transações ligadas",
+        "prob": 0.1,
+        "perda": 0.05
+      },
+      {
+        "nome": "OPA de fechamento de capital ou saída do Novo Mercado a preço abaixo do valor (art. 48 exige aceitação de mais de 1/3 do free float)",
+        "prob": 0.05,
+        "perda": 0.1
+      }
+    ]
+  }
+}
