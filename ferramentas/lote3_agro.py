@@ -1,13 +1,15 @@
 """Lote 3 — Papel e celulose, infraestrutura de mercado e agro · data-base 02/10/2026 · doutrina v2.0.
 
-Demonstrações: CVM (DFP 2016–25 + ITR, LTM até 2T26; SMTO3 exercício abr–mar até mar/2026). Preço, ações, proventos e P/L
-histórico: StatusInvest. Mercado: mesmo do Lote 1 (Tesouro Transparente, ANBIMA, BCB).
+Demonstrações e ações: CVM (DFP 2016–25 + ITR, LTM até 2T26; SMTO3 exercício abr–mar até mar/2026; ações da composição do
+capital do último DFP, `acoes`). Preço: COTAHIST (precos_hall). Proventos (DPA/JCP) e P/L histórico: StatusInvest / literal
+(nota C — fase 3, fatias 2 e 3). Mercado: mesmo do Lote 1 (Tesouro Transparente, ANBIMA, BCB).
 P/L histórico só entra no Bogle quando o lucro não é dominado por câmbio/ciclo (B3SA3, SMTO3, SLCE3); nas demais o Bogle
 vai sem re-rating — declarado.
 """
 import sys
 
 from lote1_bancos import MK
+from insumos_a import ACOES_DFP, registrar
 from motor_financeiras import SEM_RAZAO
 from motor_nao_financeiras import CVM, SI, Industrial, avaliar
 
@@ -23,11 +25,12 @@ def jcp(tk):
 
 def acoes(tk):
     """Ações em circulação (sem tesouraria) do último DFP na CVM; KLBN11 em units (5 ações)."""
-    d = CVM[tk]["anual"]["2026" if tk == "SMTO3" else "2025"]
-    n = d["acoes"]
+    ano = "2026" if tk == "SMTO3" else "2025"
+    n = CVM[tk]["anual"][ano]["acoes"]
     if n < 1e7:          # alguns formulários da CVM informam a quantidade em milhares
         n *= 1000
-    return n / CVM[tk]["acoes_por_unit"]
+    unit = CVM[tk]["acoes_por_unit"]
+    return registrar(tk, "acoes", n / unit, ACOES_DFP(ano, unit))   # fase 3: procedência por campo; o número não muda
 
 
 # Preços = fechamento oficial (PREULT do COTAHIST) de 02/10/2026 — data e fonte em precos_hall.py (AUD-67).

@@ -2,17 +2,96 @@
 
 Dossiê (dossie/base.py): demonstrações e ações da CVM, preço do COTAHIST e proventos da B3 = A; datas de pagamento da
 StatusInvest = C (só a defasagem). Lote: demonstrações da CVM = A (não financeiras); preço = COTAHIST (A, precos_hall); os
-escalares digitados das financeiras (VPA, ROE, payout, DPA, P/L) e os proventos/ações das não financeiras vêm da
-StatusInvest ou dos fatos do lote sem fonte primária por campo = C; o que o lote marca como arbitrado = "—".
+escalares digitados das financeiras (VPA, ROE, payout, DPA, P/L) e o DPA/P/L das não financeiras vêm da StatusInvest ou dos
+fatos do lote sem fonte primária por campo = C; o que o lote marca como arbitrado = "—".
+Fase 3, fatia 1 (19/10/2026) — não financeira do lote, POR CAMPO: `acoes` só é A se o valor que a empresa carrega é o que o
+lote registrou de uma fonte oficial (`insumos_a`); as âncoras usam o provento já ex da B3 (`proventos_ja_ex`, A), não o DPA
+da StatusInvest (que só entra nos informativos); e todo campo de DADO do `Industrial` fora do default que entra nas âncoras
+(`DADO_ANCORA_NF`) pesa na nota do central (`dados_lote`): registrado → a nota da fonte; senão C. Julgamento
+(`JULGAMENTO_NF`: janela, g, alíquota, receita de meio, desconto…) é premissa da casa com razão escrita, não dado: não mexe
+na nota de fonte (as principais saem em `premissas()`).
 Campo que não está aqui não ganha nota boa: `de()` devolve C ("não classificado").
 """
 from __future__ import annotations
 
-from relatorio.modelo import SEM_FONTE, Origem
+import dataclasses
+import json
+import pathlib
+
+from relatorio.modelo import NOTAS, SEM_FONTE, Origem
 
 C_SI_DATAS = Origem("StatusInvest (datas)", "C", "datas de pagamento da StatusInvest, só para a defasagem do provento (§6.3)")
 C_LOTE = Origem("lote (digitado)", "C", "escalar digitado no lote a partir da StatusInvest ou dos fatos do lote, sem fonte "
                 "primária por campo (cabeçalho do lote)")
+B3_JA_EX = Origem("B3 proventos (já ex)", "A", "B3, proventos em dinheiro (API pública GetListedCashDividends): o provento "
+                  "já ex ainda no caixa do balanço, na dívida líquida (proventos_ex.py, §11.1)")
+INSUMOS_DOSSIE = pathlib.Path(__file__).resolve().parent.parent / "dossie" / "insumos"
+
+# campos do `Industrial` (motor_nao_financeiras): identidade, DADO com chave própria na tabela, DADO que entra nas âncoras do
+# central e JULGAMENTO (premissa da casa, escrita — não é nota de fonte). Todo campo novo do dataclass tem de cair num deles
+# (tests/test_fase3_procedencia.py), senão um dado digitado entraria no central sem pesar na nota.
+IDENTIDADE_NF = ("ticker", "nome", "perfil")
+DADO_PROPRIO_NF = {"preco": "preco", "n_acoes": "acoes", "jcp_share": "proventos", "anos_pagos_10": "proventos",
+                   "pl_hist": "pl_hist", "defasagem_meses": "defasagem"}
+DADO_ANCORA_NF = ("outros_passivos", "outros_passivos_financeiros", "reproducao_por_acao", "kd_ri", "spread_kd",
+                  "fator_preco", "custo_variavel_preco", "capex_expansao", "deflator")
+JULGAMENTO_NF = ("anos_ciclo", "janela_razao", "receita_meio", "receita_meio_fonte", "da_receita", "aliquota", "aliquota_fase",
+                 "aliquota_permanente_fonte", "aliquota_fonte", "aliquota_desde", "spread_fonte", "g_real", "g1_real",
+                 "anos_g1", "qualitativo", "qualitativo_origem", "desconto_controlador", "reproducao_fonte",
+                 "usar_reproducao_como_ancora", "fora_circulo", "outras_liquidas", "anos_outras", "capex_ciclico",
+                 "outros_passivos_fonte", "declinio_sem_liberacao", "impairment_normalizado", "defasagem_fonte",
+                 "controlador_discricionario", "controlador_discricionario_fonte", "trava_razao")
+
+
+def _fora_do_default(emp, nome: str) -> bool:
+    f = next(x for x in dataclasses.fields(emp) if x.name == nome)
+    if f.default is not dataclasses.MISSING:
+        padrao = f.default
+    elif f.default_factory is not dataclasses.MISSING:
+        padrao = f.default_factory()
+    else:
+        return True                       # campo obrigatório: sempre informado
+    return getattr(emp, nome) != padrao
+
+
+def _origem_do_dado(emp, nome: str) -> Origem:
+    """Nota de um campo de dado do lote: o registro em `insumos_a` (valor igual ao usado), a nota declarada no próprio campo
+    (`capex_expansao.nota_fonte`) ou C."""
+    import insumos_a
+    v = getattr(emp, nome)
+    o = insumos_a.origem(emp.ticker, nome, v)
+    if o is None and isinstance(v, dict) and v.get("nota_fonte") in NOTAS and str(v.get("fonte") or "").strip():
+        o = Origem(f"{nome} (declarado)", v["nota_fonte"], str(v["fonte"]))
+    return o or Origem(f"lote (digitado): {nome}", "C", f"{nome} digitado no lote sem fonte primária registrada (insumos_a)")
+
+
+def dados_ancora(emp, serie: Origem) -> Origem:
+    """A pior origem entre os campos de DADO_ANCORA_NF fora do default; sem nenhum, as âncoras só usam a série (= `serie`)."""
+    origens = [_origem_do_dado(emp, k) for k in DADO_ANCORA_NF if _fora_do_default(emp, k)]
+    return max(origens, key=lambda o: NOTAS.index(o.nota)) if origens else serie
+
+
+def _insumos_dossie(tk: str, serie: Origem) -> Origem:
+    """Dados da ficha do dossiê que entram nas âncoras: insumos com fonte A/B obrigatória (dossie/gerar._valor); vale a pior
+    nota declarada em dossie/insumos/<TK>.json (sem insumo: só a série)."""
+    arq = INSUMOS_DOSSIE / f"{tk}.json"
+    notas = []
+
+    def anda(x):
+        if isinstance(x, dict):
+            if "nota_fonte" in x:
+                notas.append(x["nota_fonte"])
+            for v in x.values():
+                anda(v)
+        elif isinstance(x, list):
+            for v in x:
+                anda(v)
+    if arq.exists():
+        anda(json.loads(arq.read_text(encoding="utf-8")))
+    nota = max(notas, key=NOTAS.index, default="A")
+    if nota == "A":
+        return serie
+    return Origem("insumos do dossiê", nota, f"pior nota declarada em dossie/insumos/{tk}.json")
 
 
 def _mercado(c: dict) -> Origem:
@@ -31,10 +110,12 @@ def tabela(c: dict) -> dict[str, Origem]:
     t = {"preco": Origem("COTAHIST", "A", f"B3, COTAHIST, fechamento (PREULT) de {data}"), "mercado": _mercado(c)}
     if c["dossie"] is not None:
         anos = c["dossie"]["anos"]
-        t |= {"serie": Origem("CVM DFP/ITR", "A", f"CVM, DFP {anos[0]}–{anos[-1]} + ITR de 2026 (LTM), dados abertos"),
+        serie = Origem("CVM DFP/ITR", "A", f"CVM, DFP {anos[0]}–{anos[-1]} + ITR de 2026 (LTM), dados abertos")
+        t |= {"serie": serie,
               "acoes": Origem("CVM ITR (ações)", "A", "CVM, composição do capital do ITR (sem tesouraria)"),
               "proventos": Origem("B3 proventos", "A", "B3, proventos em dinheiro por data-com (API pública)"),
-              "pl_hist": Origem("CVM + COTAHIST", "A", "P/L histórico: lucro e ações do DFP (CVM) × fechamento do ano (B3)")}
+              "pl_hist": Origem("CVM + COTAHIST", "A", "P/L histórico: lucro e ações do DFP (CVM) × fechamento do ano (B3)"),
+              "proventos_ja_ex": B3_JA_EX, "dados_lote": _insumos_dossie(emp.ticker, serie)}
     elif c["financeira"]:
         t |= {k: C_LOTE for k in ("vpa", "roe_lp", "roe_inicio", "payout", "dpa_medio_5a", "pl_hist")}
         t["proventos"] = t["dpa_medio_5a"]
@@ -45,8 +126,11 @@ def tabela(c: dict) -> dict[str, Origem]:
             t["sotp"] = Origem("SOTP do lote", SEM_FONTE, "soma das partes do lote: participações e descontos sem nota "
                                "por campo")
     else:
-        t |= {"serie": Origem("CVM DFP/ITR", "A", "CVM, DFP 2016–25 + ITR de 2026 (LTM), dados abertos"), "acoes": C_LOTE,
-              "proventos": Origem("StatusInvest (DPA)", "C", "DPA por data-com da StatusInvest"), "pl_hist": C_LOTE}
+        import insumos_a
+        serie = Origem("CVM DFP/ITR", "A", "CVM, DFP 2016–25 + ITR de 2026 (LTM), dados abertos")
+        t |= {"serie": serie, "acoes": insumos_a.origem(emp.ticker, "acoes", emp.n_acoes) or C_LOTE,
+              "proventos": Origem("StatusInvest (DPA)", "C", "DPA por data-com da StatusInvest"), "pl_hist": C_LOTE,
+              "proventos_ja_ex": B3_JA_EX, "dados_lote": dados_ancora(emp, serie)}
     if emp.defasagem_meses is not None and emp.defasagem_fonte.strip():
         t["defasagem"] = Origem("defasagem declarada", "C", f"declarada na ficha: {emp.defasagem_fonte}")
     else:
@@ -76,12 +160,13 @@ def de(t: dict[str, Origem], *campos: str) -> tuple[Origem, ...]:
 
 # insumos de cada âncora (nome do motor) e de cada informativo
 ANCORA = {
-    "DCF (3 cenários)": ("serie", "acoes", "proventos", "mercado"),
-    "DCF normalizado (3 cenários)": ("serie", "acoes", "proventos", "mercado"),
-    "EPV": ("serie", "acoes", "proventos", "mercado"),
-    "EPV de meio de ciclo": ("serie", "acoes", "proventos", "mercado"),
-    "Owner Earnings ÷ (Ke − g)": ("serie", "acoes", "proventos", "mercado"),
-    "Valor de reprodução": ("serie", "acoes", "proventos"),
+    # não financeira: o provento que entra no central é o já ex da B3 (dívida líquida, §11.1), não o DPA (só informativos)
+    "DCF (3 cenários)": ("serie", "acoes", "proventos_ja_ex", "dados_lote", "mercado"),
+    "DCF normalizado (3 cenários)": ("serie", "acoes", "proventos_ja_ex", "dados_lote", "mercado"),
+    "EPV": ("serie", "acoes", "proventos_ja_ex", "dados_lote", "mercado"),
+    "EPV de meio de ciclo": ("serie", "acoes", "proventos_ja_ex", "dados_lote", "mercado"),
+    "Owner Earnings ÷ (Ke − g)": ("serie", "acoes", "proventos_ja_ex", "dados_lote", "mercado"),
+    "Valor de reprodução": ("serie", "acoes", "proventos_ja_ex", "dados_lote"),
     "P/VP justificado": ("vpa", "roe_lp", "payout", "mercado"),
     "DDM 2 estágios": ("vpa", "roe_inicio", "roe_lp", "payout", "mercado"),
     "DDM até o fim do contrato": ("vpa", "roe_inicio", "roe_lp", "payout", "mercado", "horizonte_finito"),
@@ -102,3 +187,23 @@ INFO_FIN = {
     "dy": ("dpa_medio_5a", "roe_lp", "vpa", "payout", "defasagem", "preco", "mercado"),
     "roe_implicito": ("preco", "vpa", "payout", "mercado"),
 }
+
+
+def resumo_hall() -> dict:
+    """Métrica da fase 3, no caminho do lote (os tickers do hall sem ficha de dossiê): {ticker: nota do central} e quantos
+    insumos de âncora ainda são C do lote. Mesma conta do relatório (`quanti`: pior nota das âncoras), sem gerar PDF."""
+    import universo
+    from dossie import gerar
+    from relatorio.modelo import pior
+    centrais, c_lote = {}, 0
+    for tk, it in universo.avaliar_todos().items():
+        if tk in gerar.FICHAS:
+            continue
+        emp = it["empresa"]
+        c = dict(tk=tk, empresa=emp, r=it["r"], mk=universo.MK, data=it["data_preco"], dossie=None,
+                 financeira=hasattr(emp, "roe_lp"))
+        t = tabela(c)
+        origens = [o for nome in it["r"]["ancoras"] for o in de(t, *ANCORA.get(nome, ()))]
+        centrais[tk] = pior(origens)
+        c_lote += sum(1 for o in origens if o.fonte.startswith("lote (digitado)"))
+    return {"centrais": centrais, "c_lote_nas_ancoras": c_lote}

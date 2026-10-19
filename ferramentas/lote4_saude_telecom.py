@@ -43,6 +43,7 @@ import zipfile
 import pandas as pd
 
 from derivados_zip import obter
+from insumos_a import ACOES_ITR_JUN26, registrar
 from fiscal import ALIQUOTA_FASE, TIMS3_ALIQUOTA
 from lote1_bancos import EMPRESAS as LOTE1
 from lote1_bancos import MK
@@ -80,6 +81,8 @@ def _acoes_zip(tk):
 
 
 N = obter("lote4.acoes_jun26", ["itr_2026.zip"], lambda: {tk: _acoes_zip(tk) for tk in (*PRECO, "ITUB")})   # AUD-38: snapshot sem os ZIPs
+for _tk in PRECO:                         # fase 3: procedência por campo (insumos_a); o número não muda
+    registrar(_tk, "acoes", N[_tk], ACOES_ITR_JUN26)
 
 
 # ---------------------------------------------------------------- proventos corrigidos (StatusInvest)

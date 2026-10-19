@@ -23,6 +23,7 @@ from statistics import mean
 import pandas as pd
 
 from derivados_zip import obter
+from insumos_a import IPCA_BCB, registrar
 from fiscal import ALIQUOTA_FASE
 from lote1_bancos import MK
 from lote3_agro import acoes, jcp
@@ -68,6 +69,8 @@ def macro():
 
 
 M = macro()
+for _tk in ("UGPA3", "VBBR3"):           # fase 3: procedência por campo (insumos_a); o número não muda
+    registrar(_tk, "deflator", M["deflator"], IPCA_BCB)
 FX_SPOT = 5.216                       # R$/US$ comercial 02/10/2026 (BCB, citado no PDF rev. 03/10 do Lote 3)
 FATOR_BARRIL = M["barril_meio"] / M["barril_ltm"]
 

@@ -28,6 +28,7 @@ import sys
 import pandas as pd
 
 from derivados_zip import obter
+from insumos_a import ACOES_ITR_JUN26, registrar
 from lote1_bancos import MK
 from lote2_energia import pl_hist, solidez
 from lote3_agro import jcp
@@ -124,6 +125,8 @@ def ajustar_dpa(tk, n_atual):
 
 
 N = obter("lote6.acoes_jun26", ["itr_2026.zip"], lambda: {tk: _acoes_zip(tk) for tk in ("LEVE3", "EGIE3", "UNIP6", "GGBR4")})   # AUD-38
+for _tk in ("LEVE3", "UNIP6", "GGBR4"):   # fase 3: procedência por campo (insumos_a); o número não muda
+    registrar(_tk, "acoes", N[_tk], ACOES_ITR_JUN26)
 EGIE_FOLLOW_ON = dict(acoes=274.1e6, valor=8_360_000, data="jul/2026")        # R$ mil; [PDF 07/09 e 03/10]
 EGIE_DIV_AGO26 = 770_800      # R$ mil, data-com 20/08/2026 (R$ 0,5442 × 1.416 mi): sai do PL de 30/06 — o preço de 02/10 já é ex
 N["EGIE3"] += EGIE_FOLLOW_ON["acoes"]
