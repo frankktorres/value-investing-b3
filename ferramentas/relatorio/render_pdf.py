@@ -23,7 +23,7 @@ from relatorio.render_md import PAPEL, fmt
 
 FONTES = {"Arial": "arial.ttf", "Arial-B": "arialbd.ttf", "Arial-I": "ariali.ttf", "Arial-BI": "arialbi.ttf"}
 PASTA_FONTES = pathlib.Path("C:/Windows/Fonts")
-TROCAS = {"≥": ">=", "≤": "<=", "→": "->", "−": "-", "√": "raiz ", "Σ": "soma", "≈": "~", "±": "+/-"}
+TROCAS = {"≥": ">=", "≤": "<=", "→": "->", "−": "-", "√": "raiz ", "Σ": "soma", "≈": "~", "±": "+/-", "π": "pi"}
 
 
 def _registrar() -> tuple[str, str, str]:

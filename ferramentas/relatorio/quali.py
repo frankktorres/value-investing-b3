@@ -338,7 +338,10 @@ def secao_dividendos(c: dict) -> Secao:
     ano_corrente = c["data"][:4]
     o_b3 = Origem("B3 proventos", "A", "B3, proventos em dinheiro por data-com (API pública), R$ por ação ON de hoje")
     if dpa:
-        anos = [a for a in sorted(dpa) if a < ano_corrente][-10:]
+        # ano civil sem provento conta como zero (proventos_b3 só devolve anos com pagamento); começa no 1º ano com dado
+        ini = max(int(min(dpa)), int(ano_corrente) - 10)
+        anos = [str(a) for a in range(ini, int(ano_corrente))]
+        dpa = {**{a: 0.0 for a in anos}, **dpa}
         linhas = [[a, fmt(dpa[a], "R$"), fmt(jcp.get(a, 0.0), "R$"), _pct(jcp.get(a, 0.0) / dpa[a]) if dpa[a] else "—"] for a in anos]
         if ano_corrente in dpa:
             linhas.append([f"{ano_corrente} (parcial)", fmt(dpa[ano_corrente], "R$"), fmt(jcp.get(ano_corrente, 0.0), "R$"),
@@ -347,7 +350,8 @@ def secao_dividendos(c: dict) -> Secao:
         pagos = sum(1 for a in anos if dpa[a] > 0)
         s.numeros += [
             _n("Exercícios completos com provento (últimos 10)", f"{pagos} de {len(anos)}", [o_b3]),
-            _n("DPA médio dos últimos 5 exercícios completos", sum(dpa[a] for a in anos[-5:]) / len(anos[-5:]), [o_b3], "R$"),
+            _n("DPA médio dos últimos 5 exercícios completos", sum(dpa[a] for a in anos[-5:]) / len(anos[-5:]) if anos else None,
+               [o_b3], "R$"),
         ]
     else:
         s.avisos.append(f"Série de proventos da B3 não disponível: {motivo}. Valores abaixo são os do motor.")
@@ -412,13 +416,17 @@ def secao_riscos(c: dict) -> Secao:
         teste("ROIC real < WACC real na maioria dos exercícios", f"{r.get('roic_anos_acima')} de {total} acima", [o],
               total > 0 and r["roic_anos_acima"] < total / 2, "menos da metade dos anos acima do WACC")
         pay = r["dpa_sust"] / r["lpa_norm"] if r.get("lpa_norm") and r["lpa_norm"] > 0 else None
-        teste("Payout sustentável acima de 100%", pay, pr.de(t, "proventos", "serie", "acoes"), pay is not None and pay > 1, "", "%")
+        teste("Payout sustentável acima de 100%", pay, pr.de(t, "proventos", "serie", "acoes"), (pay is not None and pay > 1) or (pay is None and r["dpa_sust"] > 0 and r.get("lpa_norm") is not None
+                                                  and r["lpa_norm"] <= 0),
+              "prejuízo normalizado com dividendo conta como disparo" if pay is None else "", "%")
         if c["dossie"] is not None and c["dossie"]["dil"] is not None:
             teste("Diluição: CAGR das ações ≥ 2% a.a.", c["dossie"]["dil"], [t["acoes"]], c["dossie"]["dil"] >= CORTE_DILUICAO,
                   "regra da nota de gestão (notas.gestao)", "%", doutrina=True)
     else:
         pay = emp.payout
-        teste("Payout acima de 100%", pay, pr.de(t, "payout"), pay is not None and pay > 1, "", "%")
+        teste("Payout acima de 100%", pay, pr.de(t, "payout"), (pay is not None and pay > 1) or (pay is None and r["dpa_sust"] > 0 and r.get("lpa_norm") is not None
+                                                  and r["lpa_norm"] <= 0),
+              "prejuízo normalizado com dividendo conta como disparo" if pay is None else "", "%")
         teste("ROE de longo prazo abaixo do Ke", (emp.roe_lp - r["ke"]) if emp.roe_lp is not None else None,
               pr.de(t, "roe_lp", "mercado"), emp.roe_lp is not None and emp.roe_lp < r["ke"], "spread negativo destrói valor", "%")
         if emp.horizonte_finito:
