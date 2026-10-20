@@ -349,7 +349,7 @@ def ficha(emp, r, rank, story):
     story.append(Spacer(1, 3))
     dpa, jc = SI[emp.ticker]["dpa_por_ano_datacom"], SI[emp.ticker]["jcp_por_ano_datacom"]
     yrs = list(range(2021, 2027))
-    story.append(tabela([["Proventos por data-com [SI]"] + [str(y) if y < 2026 else "2026 até 02/10" for y in yrs],
+    story.append(tabela([["Proventos por data-com [B3]"] + [str(y) if y < 2026 else "2026 até 02/10" for y in yrs],
                          ["DPA total (R$)"] + [br(dpa.get(str(y), 0), 3) for y in yrs],
                          ["dos quais JCP (R$)"] + [br(jc.get(str(y), 0), 3) for y in yrs]], [38 * mm] + [24 * mm] * 6))
     story.append(Spacer(1, 2))
@@ -447,7 +447,7 @@ def capa(res, rank, story):
     story.append(P("Metodologia (o que é novo em relação aos Lotes 1–3)", "h2"))
     met = [["Item", "Regra"],
            ["Dados", "Demonstrações consolidadas da CVM (DFP 2016–25 + ITR; 12m até jun/2026) — fonte A. Preço: fechamento de 02/10 (PDF rev. 03/10). "
-                     "Ações: composição do capital na CVM. Proventos: StatusInvest. Contas: ferramentas/motor_nao_financeiras.py + lote5_petroleo.py."],
+                     "Ações: composição do capital na CVM. Proventos: B3 por data-com, ajustados pelos eventos em ações (fase 3). Contas: ferramentas/motor_nao_financeiras.py + lote5_petroleo.py."],
            ["E&P: receita", "Receita do período-base × barril de meio ÷ barril do período (volume atual a preço de meio de ciclo). Base = 12m até jun/2026; "
                             "PRIO3 = 1T26 e 2T26 anualizados, cada um pelo seu barril (Peregrino consolidado no meio dos 12m)."],
            ["E&P: margem", "EBITDA sem impairment, mediana de 10 anos (RECV3 2020–25; PRIO3 2019–25, desde Frade) − D&A atual (exaustão do portfólio de hoje, "
@@ -500,7 +500,8 @@ def main():
     story.append(P("Apêndice — fontes", "h2"))
     story.append(tabela([["Rótulo", "Fonte"],
                          ["[CVM]", "https://dados.cvm.gov.br/dados/CIA_ABERTA/DOC/DFP/DADOS/ e /ITR/DADOS/ (cache em ferramentas/dados/cvm)"],
-                         ["[SI]", "https://statusinvest.com.br (proventos por data-com) — 05/10/2026"],
+                         ["[B3]", "https://sistemaswebb3-listados.b3.com.br (API pública: proventos em dinheiro por data-com e eventos em ações; cache em ferramentas/dados/proventos_hall, proventos_hall.py) + FRE da CVM para os eventos que a B3 omite"],
+                         ["[SI]", "https://statusinvest.com.br (datas de pagamento dos proventos) — 05/10/2026"],
                          ["[EIA] [BCB] [IBGE]", "fred.stlouisfed.org/series/DCOILBRENTEU e CPIAUCSL; api.bcb.gov.br SGS 3698 (PTAX) e 433 (IPCA) — ferramentas/dados/macro"],
                          ["Mercado", "Tesouro Transparente (IPCA+ 2050 sem cupom 7,06%), ANBIMA ETTJ (inflação implícita 6,46%) — o mesmo dos Lotes 1–3"],
                          ["PDF 06/09 · 03/10", "Fichas anteriores (pasta PETROLEO E GÁS): produção, política de preços, subvenção, imposto de exportação, cenários "

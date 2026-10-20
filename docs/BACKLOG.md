@@ -22,7 +22,7 @@
 | B12 | Onda 4: AUD-96 rótulos, AUD-64/65 fichas, AUD-48/105 textos de documentação, AUD-87 encoding | P3 | feito 14/10 (AUD-64 → B23) | executável | Auditoria Onda 4 |
 | B13 | Onda 4: AUD-57/60 premissas provisórias e sensibilidade | P3 | relatório feito 14/10 (propostas pendentes) | executável | Auditoria Onda 4 |
 | B14 | Ke real de 21–27% nos muito alavancados (KLBN11 77%): vigiar/revisar o Kd sintético e Hamada | P3 | relatório feito 14/10 (KLBN11 hoje 54,7%) | executável | Brief §5.1 |
-| B15 | Premissas digitadas nos `lote*.py` e mercado em data fixa: mover para dados + coleta periódica (bloqueia o SaaS) | P3 | relatório 14/10 (`docs/PREMISSAS-B15.md`); **fase 3 em execução** (plano `~/.claude/plans/tingly-gliding-flute.md`): fatia 1 feita 19/10 (procedência por campo); fatias 2–5 em `MISSOES.md` | executável | Brief §5.2 |
+| B15 | Premissas digitadas nos `lote*.py` e mercado em data fixa: mover para dados + coleta periódica (bloqueia o SaaS) | P3 | relatório 14/10 (`docs/PREMISSAS-B15.md`); **fase 3 em execução** (plano `~/.claude/plans/tingly-gliding-flute.md`): fatia 1 feita 19/10 (procedência por campo), fatia 2 feita 20/10 (DPA/JCP da B3); fatias 2b–5 em `MISSOES.md` | executável | Brief §5.2 |
 | B16 | Confirmar com fonte A o enquadramento CVM (Res. 20/2021 analista; Res. 19/2021 consultor) se houver SaaS | P4 | aberto | executável | Brief §7 |
 | B17 | Rumo SaaS (front-end, dados diários, licença) | P4 | parado (sem prazo) | decisão Frank | Brief §2 |
 | B18 | 2º comitê de outra família de modelo (D14) e reenvio da pasta de upload ao Desktop | P4 | suspenso ("não tem ajudado") | decisão Frank | Plano F7; memória |
@@ -37,3 +37,5 @@ executável: 8 (B09–B16) · decisão Frank: 9 (B04–B08, B17–B19, B22) · l
 | B24 | AUD-41 implementar: motor exige razão não vazia no desconto de controlador (decisão 14/10) | P2 | feito 14/10 | executável | B05 |
 | B25 | AUD-32/98/99 implementar: pré-registro contínuo, comparador = média do hall, uma linha por ticker×rodada (decisão 14/10) | P2 | feito 14/10 | executável | B06 |
 | B26 | Razão do desconto de controlador com fonte A (FRE de cada empresa) para os 28 tickers com `SEM_RAZAO`; cada uma achada baixa a contagem do `test_b24` | P3 | aberto | executável | B24 |
+| B28 | Linhagem de código nos proventos da B3: TIMS3 perde 2016–19 (TIM Participações, TIMP3) e SUZB3 2016 (PNA, SUZB5) nos "anos pagos"; casar o predecessor (cache do backtest tem `TIM PART S/A`) com a razão de troca conferida no FRE | P3 | aberto | local | 09 de 20/10 (fatia 2) |
+| B29 | Backtest: `sem_repeticao` (AUD-23) junta linhas iguais da B3 que são PARCELAS (DMPL: KLBN11, PETR4, B3SA3, TIMS3, WEGE3…) — o retorno total do ledger subconta provento; revisar antes de religar o backtest | P4 | aberto | local | 09 de 20/10 (fatia 2) |

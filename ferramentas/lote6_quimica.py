@@ -1,7 +1,7 @@
 """Lote 6 — Química e metalurgia · data-base 02/10/2026 (preços do PDF rev. 03/10) · doutrina v2.2.
 
 Demonstrações: CVM (DFP 2016–25 + ITR, 12m até jun/2026). Preço: PDF rev. 03/10 (fechamento de 02/10, StatusInvest). Ações: composição do capital
-do ITR de jun/2026 (CVM), sem tesouraria; EGIE3 com o follow-on de jul/2026. Proventos: StatusInvest, ajustados por bonificação (abaixo).
+do ITR de jun/2026 (CVM), sem tesouraria; EGIE3 com o follow-on de jul/2026. Proventos: B3 (proventos_hall.py, fase 3) nas não financeiras; EGIE3 StatusInvest ajustada pela bonificação (abaixo).
 Ciclo declarado ANTES do veredito (doutrina §2, regra 4; §11.1 "preço de commodity declarado"):
   · Nenhum dos PDFs anteriores declara preço de aço, PVC ou soda. Fonte usada: índices de preço ao produtor dos EUA (BLS, via FRED) — a única
     série pública mensal e longa; não há preço em R$/t por API com fonte A/B. Convertidos a reais pela PTAX média mensal (BCB SGS 3698) e
@@ -102,6 +102,8 @@ def _acoes_zip(tk):
 
 # ---------------------------------------------------------------- proventos ajustados (StatusInvest não ajusta bonificação)
 def ajustar_dpa(tk, n_atual):
+    """EGIE3 (financeira, StatusInvest até a fase 3, fatia 4). GGBR4, UNIP6 e LEVE3 têm o DPA da B3 com os eventos em ações
+    exatos (`proventos_hall`, fatia 2) — o ajuste aproximado por contagem de ações saiu."""
     s = SI[tk]
     if tk == "EGIE3":       # bonificação de 40% em 01/12/2025 [PDF 03/10]: data-com anterior ÷ 1,4
         dpa, jc = {}, {}
@@ -112,16 +114,6 @@ def ajustar_dpa(tk, n_atual):
             if "JCP" in (e["tipo"] or "").upper():
                 jc[a] = jc.get(a, 0) + e["valor"] * f
         s["dpa_por_ano_datacom"], s["jcp_por_ano_datacom"] = dict(sorted(dpa.items())), dict(sorted(jc.items()))
-    elif tk in ("GGBR4", "UNIP6"):   # bonificações (GGBR4 2023–24; UNIP6 2022 e 2024): × ações no fim do ano ÷ ações de hoje (aprox.)
-        a = CVM[tk]["anual"]
-        def n_ano(y):
-            x = (a.get(str(y), {}).get("acoes") or 0)
-            x = x * 1000 if 0 < x < 1e7 else x
-            return x or None
-        ref = next(n_ano(y) for y in range(2016, 2026) if n_ano(y))
-        for chave in ("dpa_por_ano_datacom", "jcp_por_ano_datacom"):
-            # só bonificação reduz o DPA antigo (fator < 1); recompra (ações de antes > hoje) não infla o passado
-            s[chave] = {y: val * min(1.0, (n_ano(int(y)) or ref) / n_atual) if int(y) <= 2025 else val for y, val in s[chave].items()}
 
 
 N = obter("lote6.acoes_jun26", ["itr_2026.zip"], lambda: {tk: _acoes_zip(tk) for tk in ("LEVE3", "EGIE3", "UNIP6", "GGBR4")})   # AUD-38

@@ -1,6 +1,6 @@
 """Lote 5 — Petróleo, gás e combustíveis · data-base 02/10/2026 (preços do PDF rev. 03/10) · doutrina v2.2.
 
-Demonstrações: CVM (DFP 2016–25 + ITR, 12m até jun/2026). Preço: PDF rev. 03/10 (fechamento de 02/10). Ações, proventos: CVM/StatusInvest.
+Demonstrações: CVM (DFP 2016–25 + ITR, 12m até jun/2026). Preço: PDF rev. 03/10 (fechamento de 02/10). Ações: CVM. Proventos: B3 (proventos_hall.py, fase 3).
 Ciclo declarado ANTES do veredito (doutrina §2, regra 4):
   · Barril de meio de ciclo = média de 10 anos (2016–25) do Brent em R$ de hoje = Brent (EIA, via FRED) × PTAX média mensal (BCB SGS 3698),
     corrigido pelo IPCA (BCB SGS 433) até ago/2026. Decomposto: Brent US$ 82 (média real 10a, em US$ de ago/2026, CPI-EUA) ×

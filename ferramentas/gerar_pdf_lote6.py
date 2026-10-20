@@ -324,8 +324,8 @@ def ficha(emp, r, rank, story):
     story.append(Spacer(1, 3))
     dpa, jc = SI[emp.ticker]["dpa_por_ano_datacom"], SI[emp.ticker]["jcp_por_ano_datacom"]
     yrs = list(range(2021, 2027))
-    aj = {"GGBR4": " — ajustado por bonificação (ações CVM)", "UNIP6": " — ajustado por bonificação (ações CVM)"}.get(emp.ticker, "")
-    story.append(tabela([[f"Proventos por data-com [SI]{aj}"] + [str(y) if y < 2026 else "2026 até 02/10" for y in yrs],
+    aj = {"GGBR4": " — ajustado pelas bonificações (B3 + FRE)", "UNIP6": " — ajustado pelas bonificações (B3 + FRE)"}.get(emp.ticker, "")
+    story.append(tabela([[f"Proventos por data-com [B3]{aj}"] + [str(y) if y < 2026 else "2026 até 02/10" for y in yrs],
                          ["DPA total (R$)"] + [br(dpa.get(str(y), 0), 3) for y in yrs],
                          ["dos quais JCP (R$)"] + [br(jc.get(str(y), 0), 3) for y in yrs]], [50 * mm] + [22 * mm] * 6))
     story.append(Spacer(1, 2))
@@ -600,7 +600,7 @@ def capa(res, rank, story):
     met = [["Item", "Regra"],
            ["Dados", "Demonstrações consolidadas da CVM (DFP 2016–25 + ITR; 12m até jun/2026) — fonte A. Preço: fechamento de 02/10 (PDF rev. 03/10). "
                      "Ações: composição do capital do ITR de jun/2026, sem tesouraria (GGBR4: ON + PN ao preço da PN; UNIP6: ON + PNA + PNB ao preço da PNB). "
-                     "Proventos: StatusInvest, ajustados por bonificação (EGIE3 ÷ 1,4 antes de 01/12/25; GGBR4 e UNIP6 pela contagem de ações da CVM). "
+                     "Proventos: B3 por data-com nas não financeiras, ajustados pelos eventos em ações (B3 + FRE; fase 3); EGIE3: StatusInvest ÷ 1,4 antes de 01/12/25. "
                      "Contas: ferramentas/motor_nao_financeiras.py, motor_financeiras.py e lote6_quimica.py."],
            ["Cíclicas (GGBR4, UNIP6)", "Receita de meio = receita de 12m × fator do índice (meio ÷ 12m), preço e margem na mesma janela; margem EBIT mediana do ciclo sem não recorrentes "
                                        "(3.04.04 + 3.04.05 acima da mediana); capex de manutenção pela regra de commodity; âncoras EPV, DCF e reprodução (PL). "
@@ -658,7 +658,8 @@ def main():
     story.append(P("Apêndice — fontes", "h2"))
     story.append(tabela([["Rótulo", "Fonte"],
                          ["[CVM]", "https://dados.cvm.gov.br/dados/CIA_ABERTA/DOC/DFP/DADOS/ e /ITR/DADOS/ (cache em ferramentas/dados/cvm)"],
-                         ["[SI]", "https://statusinvest.com.br (proventos por data-com; ROE histórico) — 05/10/2026"],
+                         ["[B3]", "https://sistemaswebb3-listados.b3.com.br (API pública: proventos em dinheiro por data-com e eventos em ações; cache em ferramentas/dados/proventos_hall, proventos_hall.py) + FRE da CVM para os eventos que a B3 omite"],
+                         ["[SI]", "https://statusinvest.com.br (proventos da EGIE3 por data-com; datas de pagamento; ROE histórico) — 05/10/2026"],
                          ["[BLS] [BCB] [IBGE]", "fred.stlouisfed.org/series/" + ", ".join(SERIES) + "; api.bcb.gov.br SGS 3698 (PTAX) e 433 (IPCA) — ferramentas/dados/macro"],
                          ["Mercado", "Tesouro Transparente (IPCA+ 2050 sem cupom 7,06%), ANBIMA ETTJ (inflação implícita 6,46%) — o mesmo dos Lotes 1–5"],
                          ["PDF 07/09 · 03/10", "Fichas anteriores (pasta QUÍMICA E METALÚRGIA): controle, ativos, contratos, follow-on da EGIE3, gatilhos, partes "

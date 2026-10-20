@@ -19,6 +19,7 @@ from defasagem import defasagem_meses
 from inflacao import DEFLATOR, deflator_ltm, deflator_periodo, fator_entre, fator_idade, inflacao_do_ano, reposicao
 from juros import juros_do_periodo
 from proventos_ex import ajuste_b3
+import proventos_hall
 from motor_financeiras import (ANOS_ROIC_MINIMO, HORIZONTE, IR_JCP, NOTA_QUALIDADE_MINIMA, ORDEM, PREMIO_KE, TRAVA_PP, Mercado,
                                aplicar_trava, descontar, falta_razao_desconto,
                                interp, liquido_diferido, media_qualitativa, nota_preco, nota_spread, nota_yield, palavra,
@@ -27,6 +28,8 @@ from motor_financeiras import (ANOS_ROIC_MINIMO, HORIZONTE, IR_JCP, NOTA_QUALIDA
 AQUI = pathlib.Path(__file__).parent
 CVM = series_vigente.carregar_cvm()     # AUD-103: com o LTM da temporada por cima, quando houver
 SI = series_vigente.carregar()
+# fase 3, fatia 2: DPA/JCP das não financeiras do hall da B3 (A), no carregamento — nenhum lote corrige o SI depois
+proventos_hall.aplicar(SI)
 ANOS = [str(a) for a in range(2016, 2026)]
 LIMITE_QUEBRA = 0.25      # §11.4: divergência entre a mediana de 5 anos e a da janela que levanta suspeita de quebra
 JANELA_MINIMA_SAIDA = 10  # §9: a exceção de qualidade exige histórico de ciclo inteiro; janela curta não a permite

@@ -1,14 +1,15 @@
 """Lote 3 — Papel e celulose, infraestrutura de mercado e agro · data-base 02/10/2026 · doutrina v2.0.
 
 Demonstrações e ações: CVM (DFP 2016–25 + ITR, LTM até 2T26; SMTO3 exercício abr–mar até mar/2026; ações da composição do
-capital do último DFP, `acoes`). Preço: COTAHIST (precos_hall). Proventos (DPA/JCP) e P/L histórico: StatusInvest / literal
-(nota C — fase 3, fatias 2 e 3). Mercado: mesmo do Lote 1 (Tesouro Transparente, ANBIMA, BCB).
+capital do último DFP, `acoes`). Preço: COTAHIST (precos_hall). Proventos (DPA/JCP): B3 por data-com (`proventos_hall`,
+nota A — fase 3, fatia 2). P/L histórico: literal (nota C — fatia 3). Mercado: mesmo do Lote 1 (Tesouro Transparente, ANBIMA, BCB).
 P/L histórico só entra no Bogle quando o lucro não é dominado por câmbio/ciclo (B3SA3, SMTO3, SLCE3); nas demais o Bogle
 vai sem re-rating — declarado.
 """
 import sys
 
 from lote1_bancos import MK
+import proventos_hall
 from insumos_a import ACOES_DFP, registrar
 from motor_financeiras import SEM_RAZAO
 from motor_nao_financeiras import CVM, SI, Industrial, avaliar
@@ -17,10 +18,14 @@ QUAL = lambda moat, gestao, controlador, ciclo, fisher: dict(moat=moat, gestao=g
 
 
 def jcp(tk):
+    """Fatia do JCP no provento de 2024–25. Registrado com a nota da B3 quando o DPA/JCP do SI é o da B3 (fase 3, fatia 2);
+    as financeiras (ITSA4, EGIE3) seguem na StatusInvest."""
     s = SI[tk]
     tot = sum(s["dpa_por_ano_datacom"].get(a, 0) for a in ("2024", "2025"))
     j = sum(s["jcp_por_ano_datacom"].get(a, 0) for a in ("2024", "2025"))
-    return j / tot if tot else 0.0
+    share = j / tot if tot else 0.0
+    o = proventos_hall.origem(tk, SI)
+    return registrar(tk, "jcp_share", share, o) if o else share
 
 
 def acoes(tk):

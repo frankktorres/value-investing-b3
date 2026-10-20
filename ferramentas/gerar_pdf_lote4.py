@@ -185,7 +185,8 @@ def bloco_final(story, emp_ticker, preco, r, tx, cor, excecao):
 def tabela_proventos(story, tk, nota):
     dpa, jc = SI[tk]["dpa_por_ano_datacom"], SI[tk]["jcp_por_ano_datacom"]
     yrs = list(range(2021, 2027))
-    story.append(tabela([[f"Proventos por data-com [SI]{nota}"] + [str(y) if y < 2026 else "2026 até 02/10" for y in yrs],
+    fonte = "[SI]" if tk == "ITSA4" else "[B3]"
+    story.append(tabela([[f"Proventos por data-com {fonte}{nota}"] + [str(y) if y < 2026 else "2026 até 02/10" for y in yrs],
                          ["DPA total (R$)"] + [br(dpa.get(str(y), 0), 3) for y in yrs],
                          ["dos quais JCP (R$)"] + [br(jc.get(str(y), 0), 3) for y in yrs]], [50 * mm] + [22 * mm] * 6))
     story.append(Spacer(1, 2))
@@ -566,7 +567,8 @@ def main():
     story.append(tabela([["Rótulo", "Fonte"],
                          ["[CVM]", "https://dados.cvm.gov.br/dados/CIA_ABERTA/DOC/DFP/DADOS/ e /ITR/DADOS/ (cache em ferramentas/dados/cvm)"],
                          ["[FRE]", "https://dados.cvm.gov.br/dados/CIA_ABERTA/DOC/FRE/DADOS/fre_cia_aberta_2026.zip — posição acionária (controladores; Itaúsa/IUPAR no Itaú)"],
-                         ["[SI]", "https://statusinvest.com.br (proventos por data-com; ROE, LPA e P/L históricos) — 05/10/2026"],
+                         ["[B3]", "https://sistemaswebb3-listados.b3.com.br (API pública: proventos em dinheiro por data-com e eventos em ações; cache em ferramentas/dados/proventos_hall, proventos_hall.py) + FRE da CVM para os eventos que a B3 omite"],
+                         ["[SI]", "https://statusinvest.com.br (proventos da ITSA4 por data-com; datas de pagamento; ROE, LPA e P/L históricos) — 05/10/2026"],
                          ["Mercado", "Tesouro Transparente (IPCA+ 2050 sem cupom 7,06%), ANBIMA ETTJ (inflação implícita 6,46%) — o mesmo dos Lotes 1–6"],
                          ["PDF 06/09 · 03/10", "Fichas anteriores (pasta SAÚDE, TELECOM E BLUECHIPS): eventos, proventos declarados, defasagens, gatilhos, "
                                                "agenda — fontes primárias citadas lá; extraídas em ferramentas/dados/fatos_lote4.json"]],

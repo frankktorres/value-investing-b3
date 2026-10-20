@@ -711,3 +711,70 @@ financeiras seguem C/— → fatia 4. Os 8 dossiês passam de A para **B** (mesm
 **Revisão adversarial (19/10):** 2 achados corrigidos antes do commit — o Kd sintético entrava no central sem nota (as 18 que saíam A eram, na
 verdade, B) e `receita_meio`/`da_receita`/`aliquota`/`aliquota_fase`/`g1_real` estavam classificados como julgamento, mas são números que chegam
 ao central (dado). Achado lateral para a fatia 2b: `dossie/base.py:130` filtra `tipo_acao == "ON"` fixo; FESA4 e SHUL4 são PN.
+
+## 20/10/2026 — DECISÃO DE FONTE: DPA/JCP das não financeiras do lote saem da B3, não da StatusInvest (fase 3, fatia 2)
+Plano da fase 3 (aprovado em 19/10). O DPA/JCP por ano da data-com das **21 não financeiras dos lotes** (as 19 do caminho do lote + HYPE3 e LEVE3,
+que a tela mostra pelo dossiê) vem agora do cache da API pública da B3 (`dados/proventos_hall/`, nota A), por `ferramentas/proventos_hall.py`,
+aplicado no carregamento do motor (antes de qualquer lote: o resultado não depende mais da ordem de import, AUD-26). Saíram as correções à mão
+`lote4.corrigir_proventos` (VIVT3 sem "Amortização", vírgula da ABEV3) e o ajuste aproximado de GGBR4/UNIP6 pela contagem de ações
+(`lote6.ajustar_dpa`; EGIE3, financeira, fica). As financeiras (lote 1, lote 2, ITSA4, EGIE3) seguem na StatusInvest até a fatia 4; a g1 da WEGE3
+continua medida na série da StatusInvest até a fatia 3 (por isso o central dela não muda).
+Regras (generalizam `dossie.base.proventos_b3`): classe do ticker (`proventos_ex.CLASSE`: PN, PNB, unit); lista fechada de tipos — dividendo,
+JCP e rendimento (atualização do dividendo, PETR4) entram, **restituição de capital fica fora (§6.4)**, tipo novo falha alto; data-com de 2016
+até a data do preço; eventos em ações = suplemento da B3 + os que a B3 omite e o **FRE da CVM** traz (KEPL3 desdobramento 1:3 de 2022; SLCE3
+2019, 2021 e 2023; GGBR4 2023; UNIP6 2018, 2019 e 2022; Klabin +10% em 2024, que nem a B3 nem a tabela de desdobramento do FRE publicam — saiu
+do capital integralizado do FRE e foi achada pela conferência das ações da CVM ano a ano, agora teste); provento com data-com até a do evento
+(inclusive o mesmo dia) é dividido pelo multiplicador.
+**Achado que derruba o AUD-23:** linhas iguais na API (mesma data-com e tipo) são, quase sempre, **parcelas**, e cada linha traz o valor da parcela.
+Conferido contra o total declarado na DMPL da CVM (nota A): KLBN11 dez/25 (4 × R$ 0,228/unit = R$ 1,112 bi de intercalares), B3SA3 2025
+(R$ 3,024 bi de JCP), PETR4 2024 (R$ 100,9 bi) e 2025, TIMS3 2024 (R$ 1,310 bi de dividendos) e 2025, WEGE3 dez/25 (o extraordinário em 3
+parcelas), FLRY3 e RECV3 — a soma bate, a linha única não. Repetição de verdade só na HYPE3 em 01/02/2024 (DMPL = uma linha). Os 14 grupos estão
+classificados com a prova em `GRUPOS_CONFERIDOS`; grupo novo falha alto. A StatusInvest às vezes soma as parcelas (KLBN11) e às vezes perde
+(PETR4 2024, WEGE3 2025, UGPA3 mar/2024). O dossiê e o backtest ainda usam a regra antiga (`sem_repeticao`) → fatia 2b.
+**B3 × StatusInvest, DPA por ação de hoje** (negrito = difere mais de 0,5%; entre parênteses a StatusInvest bruta, antes das correções do lote):
+
+| Ticker | 2021 | 2022 | 2023 | 2024 | 2025 | 2016–25 B3 × SI |
+|---|---|---|---|---|---|---|
+| SUZB3 | 0,00 | 3,13 | 1,16 | 2,02 | 1,12 | 8,25 × 8,82 |
+| KLBN11 | **0,33** (0,37) | **1,36** (1,51) | **1,22** (1,35) | **1,32** (1,37) | **1,68** (1,70) | 8,57 × 9,15 |
+| RANI3 | 0,35 | 0,64 | 0,85 | 0,53 | 0,73 | 3,22 × 3,22 |
+| B3SA3 | 0,97 | 0,48 | 0,42 | 0,37 | **0,59** (0,45) | 4,48 × 4,33 |
+| SMTO3 | 2,33 | 1,13 | 1,24 | 1,35 | 0,46 | 8,67 × 8,99 |
+| KEPL3 | **0,28** (1,81) | 1,00 | 0,86 | 0,84 | 0,84 | 3,97 × 5,51 |
+| SLCE3 | **0,39** (0,53) | **1,12** (1,39) | **1,10** (1,35) | **0,74** (0,83) | **1,29** (1,45) | 6,26 × 8,99 |
+| TIMS3 | 0,43 | 0,58 | 0,91 | **1,14** (0,96) | **2,51** (2,23) | 6,02 × 6,70 |
+| VIVT3 | 1,73 | 1,53 | 1,03 | **0,95** (1,40) | **1,05** (1,60) | 13,71 × 14,71 |
+| FLRY3 | **0,91** (0,96) | **0,96** (1,00) | 0,43 | 0,70 | **1,68** (1,55) | 8,82 × 8,99 |
+| HYPE3 | 1,23 | 1,23 | 1,23 | 1,17 | 1,17 | 11,32 × 11,32 |
+| ABEV3 | 0,68 | 0,76 | 0,73 | 0,67 | 1,11 | 6,59 × 6,59 |
+| WEGE3 | 0,42 | 0,52 | 0,61 | 0,76 | **2,45** (1,62) | 5,59 × 4,86 |
+| PETR4 | 5,65 | 16,77 | 7,32 | **7,90** (6,53) | **3,27** (2,94) | 42,75 × 41,09 |
+| PRIO3 | 0,00 | 0,00 | 0,07 | 0,00 | 0,00 | 0,07 × 0,07 |
+| RECV3 | 0,00 | 0,78 | 0,99 | 2,75 | 0,90 | 5,42 × 5,42 |
+| UGPA3 | 0,64 | 0,58 | 0,35 | **0,65** (0,25) | 1,75 | 7,15 × 6,75 |
+| VBBR3 | **1,90** (2,04) | **0,80** (0,86) | **0,78** (0,83) | **1,47** (1,27) | **1,48** (1,58) | 11,10 × 11,66 |
+| GGBR4 | **2,44** (3,07) | **2,88** (3,63) | **1,33** (1,61) | **0,78** (0,80) | 0,62 | 8,91 × 10,81 |
+| UNIP6 | **12,76** (15,44) | **12,46** (13,95) | **3,16** (3,48) | **4,09** (4,23) | 12,48 | 51,41 × 59,17 |
+| LEVE3 | 1,47 | 4,49 | 9,88 | 2,36 | 2,72 | 26,17 × 26,17 |
+
+Causas: eventos em ações que a StatusInvest não ajusta (KLBN11 +10% em 2024 e +1% em 2025; SLCE3 ×2,75 desde 2016; FLRY3 +5% em 2023; VBBR3
++7,1% em nov/25; GGBR4 e UNIP6 bonificações); restituição de capital que ela soma (KEPL3 2021, VIVT3 2024–25); parcelas que ela perde (PETR4 2024–25,
+WEGE3 2025, B3SA3 2025, TIMS3, FLRY3) ou provento ausente (UGPA3 R$ 0,40 de 07/03/2024); VIVT3 2025 a StatusInvest dividiu o JCP de fev e abr/25
+por 4 em vez de 2. As mesmas na HYPE3 e LEVE3 dão o DPA do dossiê (oráculo, teste).
+**Efeito no golden (antes → depois), com `--motivo`:** nenhuma palavra, central ou âncora muda (teste: com o DPA da StatusInvest no lugar,
+central/âncoras/palavra das 21 são idênticos). 15 mudanças em 7 tickers, só em informativos e na nota de renda: B3SA3 DY 3,29% → 3,45%, Bogle
+11,42% → 11,58%; GGBR4 DY 7,87% → 7,36%, Bogle 15,39% → 14,88%, **vence a RF Empate → Não**, nota 4,70 → 4,65; KEPL3 nota 5,70 → 6,20 (DPA médio
+sem a restituição passa a caber no caixa); SUZB3 nota 3,32 → 3,26; TIMS3 DY 5,73% → 5,85%, Bogle 13,67% → 13,80%, nota 4,06 → 3,33; UGPA3 DY
+2,08% → 2,30%, Bogle 9,60% → 9,83%; WEGE3 DY 1,49% → 1,79%, Bogle 12,83% → 13,13%. A `nota_geral` não estava prevista na missão (só DY/Bogle/RF):
+a nota de renda usa o DY líquido, a cobertura do DPA pelo caixa e os anos pagos — consequência direta, não de método.
+**Limitação declarada:** "anos pagos" conta só o próprio ticker na B3 — TIMS3 perde 2016–19 (eram da TIM Participações, TIMP3) e SUZB3 2016 (a
+PNA, SUZB5); linhagem de código fica no `BACKLOG.md`. Nota de fonte: o DPA das 21 passa de C para A em `procedencia` só se o valor que o motor lê é
+o registrado (anti-lavagem testado); DY/Bogle continuam C pela defasagem (datas da StatusInvest) e pelo P/L histórico digitado (fatia 3).
+**Revisão adversarial (20/10):** nenhum defeito que mude central, âncora ou palavra (conferidos: ITSA4/EGIE3/lote 2 idênticos, g1 da WEGE3
+idêntica, `dossie.isolado`, anti-lavagem da nota, regra do mesmo dia, pares TIMS/VIVT, classe por ISIN, eventos do fim de 2025 contra o DFP).
+Corrigidos: (1) o mesmo evento nas duas fontes com a data-com deslocada um pregão entrava 1,1 × 1,1 — agora mesmo tipo a até 45 dias falha
+alto (teste); (2) o teste das ações da CVM aceitava evento contado duas vezes (piso 0,5 → 0,92; a maior recompra medida é 0,938) e declara o que
+não cobre (SMTO3 2016, SLCE3 2016–19: só o teste local de FRE/COTAHIST). Aceitos: a trava de coerência (§9) usa o Bogle, que usa o DPA — uma
+JUSTA pode virar NÃO CONCLUSIVO só pelo DPA; hoje a folga é grande (KEPL3 0,2 p.p. e PETR4 0,6 p.p. do Ke, limite 2 p.p.) e o teste por ticker
+pega a próxima; VBBR3 18/04/2024 como parcela tem prova fraca (o JCP bate exato com a DMPL, os dividendos não batem com nenhuma das duas
+leituras — fica a mais próxima). Suíte: 723 passed, 0 skipped.

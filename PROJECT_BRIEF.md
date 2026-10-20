@@ -1,5 +1,5 @@
 # PROJECT BRIEF — Mesa de Value Investing B3
-*Versão de 19/10/2026 (rev. fase 3, fatia 1: procedência por campo; doutrina v2.6) · gerado por `/brief` · fonte: repositório, memória do projeto e `docs/auditoria/AUDITORIA_2026-10-08.md`*
+*Versão de 20/10/2026 (rev. fase 3, fatia 2: DPA/JCP da B3; doutrina v2.6) · gerado por `/brief` · fonte: repositório, memória do projeto e `docs/auditoria/AUDITORIA_2026-10-08.md`*
 
 ## 1. Projeto
 Mesa de análise fundamentalista da B3 para dividendos/JCP e longo prazo: doutrina escrita (v2.6) + motores de valuation em Python que
@@ -45,6 +45,8 @@ MVP de uso pessoal, maduro no cálculo. Um usuário real, sem terceiros. Prazo e
    sem banco nem coleta diária — bloqueia o SaaS. Inventário e proposta de migração em `docs/PREMISSAS-B15.md` (445 campos fora do default).
    **Fase 3 em execução (19/10):** fatia 1 fez a nota POR CAMPO (`insumos_a.py` + `relatorio/procedencia.py`): das 19 não financeiras do lote,
    11 têm central B (Kd sintético Damodaran), 8 seguem C por dado ainda digitado; as 20 financeiras seguem C/— (fatia 4). Ordem no `MISSOES.md`.
+   Fatia 2 (20/10): DPA/JCP das 21 não financeiras dos lotes saem da API da B3 (`proventos_hall.py`, A); a StatusInvest fica para datas,
+   financeiras e a g1 da WEGE3. Achado: linhas iguais da B3 são parcelas (DMPL), o AUD-23 do dossiê/backtest subconta (fatia 2b, B29).
 3. **Régua sem validação empírica.** Backtest parou: proxy reproduziu a palavra em 70,7% (portão ≥ 80%). Validação agora só prospectiva,
    lenta por natureza. Pré-registro fixado em 14/10 (B25): IC de postos P/C × retorno excedente sobre a média do hall; 1ª leitura possível em out/2027.
 4. **Universo que não gera compra.** Blue chips eficientes: quase tudo JUSTA/CARA, zero compra; triagem de toda a B3 deixou 5 de 104 no portão.
@@ -65,7 +67,7 @@ MVP de uso pessoal, maduro no cálculo. Um usuário real, sem terceiros. Prazo e
    **Tela (front end, 19/10):** `painel` → navegador em 127.0.0.1:8765; fatia 1 (Hall) FEITA; faltam 2 Empresa, 3 Carteira
    (privado), 4 Monitor + exportação na tarefa de sexta. Plano: `~/.claude/plans/greedy-imagining-church.md`.
    Plano da fase 2: `~/.claude/plans/frolicking-sauteeing-snowglobe.md`. **Fase 3 (dados vivos sem premissa digitada) EM EXECUÇÃO:** plano
-   `~/.claude/plans/tingly-gliding-flute.md`; fatia 1 FEITA (procedência por campo, golden intacto); depois 2 (DPA/JCP B3), 2b (bug PN do
+   `~/.claude/plans/tingly-gliding-flute.md`; fatias 1 (procedência por campo) e 2 (DPA/JCP B3, 20/10) FEITAS; depois 2b (bug PN do
    dossiê), 3 (literais NF), temporada 3T26 em commit próprio, 4 (financeiras), 5 (trava). Depois: triagem contínua (fase 4), SaaS.
 
 ## 7. Restrições
@@ -128,3 +130,4 @@ MVP de uso pessoal, maduro no cálculo. Um usuário real, sem terceiros. Prazo e
 - 19/10/2026 (fase 2, fatias 2 e 3): PDF + calendário de pagamento (StatusInvest nota C, anunciado fora da renda); histórico `ferramentas/dados/privado/renda.jsonl` (ignorado, uma linha por pregão) com a tabela "Evolução rumo à meta"; `monitor_semanal.vbs` gera o painel após o monitor; adversário sobre renda/calendário/carteira; README e DECISOES atualizados; 586 testes verdes.
 - 19/10/2026 (tela, fatia 1): `ferramentas/painel/` (exportar → JSON ignorado; servir em 127.0.0.1) + `painel.cmd`; Hall no navegador com palavra vigente, régua, nota da fonte, filtro A/B, tema claro/escuro (Playwright conferido); achado: só 8 de 47 centrais têm fonte A/B (todos de dossiê) — o hall segue com premissa digitada (nota C/—); LEVE3 com régua suspensa (motor diverge do veredito); design do Claude Design em `docs/design/`; adversário rodado.
 - 19/10/2026 (fase 3, fatia 1): `ferramentas/insumos_a.py` (registro valor+origem) + `relatorio/procedencia.py` por campo nas não financeiras do lote (ações registradas da CVM, âncoras no provento já ex da B3, Kd sintético B, dado digitado = C); 11 de 19 NF com central B (antes C), 8 C, golden intacto; achado: `dossie/base.py:130` filtra ON fixo (FESA4/SHUL4 PN) → fatia 2b.
+- 20/10/2026 (fase 3, fatia 2): `ferramentas/proventos_hall.py` — DPA/JCP das 21 não financeiras dos lotes da API da B3 (classe, tipos fechados, eventos B3 + FRE, parcelas conferidas na DMPL) no carregamento do motor; saem `lote4.corrigir_proventos` e o ajuste aproximado GGBR4/UNIP6; golden regravado (7 tickers, só DY/Bogle/RF/nota; 0 palavras); B28 (linhagem) e B29 (AUD-23 no backtest) no backlog.

@@ -1,7 +1,7 @@
 """Lote 4 — Saúde, telecom e blue chips · data-base 02/10/2026 (preços do PDF rev. 03/10) · doutrina v2.2.
 
 Demonstrações: CVM (DFP 2016–25 + ITR, 12m até jun/2026). Preço: PDF rev. 03/10 (fechamento de 02/10). Ações: composição do capital do ITR de
-jun/2026 (CVM), sem tesouraria. Proventos: StatusInvest por data-com, com as correções abaixo. Controladores: FRE 2026 da CVM (posição acionária).
+jun/2026 (CVM), sem tesouraria. Proventos: B3 por data-com (proventos_hall.py, fase 3). Controladores: FRE 2026 da CVM (posição acionária).
 Premissas declaradas ANTES do veredito:
   · IFRS 16 desde 2019: TIMS3, VIVT3 e FLRY3 têm arrendamento relevante dentro da dívida (2.01.04.03/2.02.01.03 ou linha própria). A margem de
     antes de 2019 traz o aluguel dentro do EBIT — usar essa margem E a dívida de arrendamento de hoje contaria o aluguel duas vezes. Janela da
@@ -23,8 +23,8 @@ Premissas declaradas ANTES do veredito:
   · Defasagem do provento (doutrina §6.3, a valor presente ao Ke nominal): HYPE3 18 meses (JCP de 2026 pago até 31/12/2027) · VIVT3 10 (JCP
     pago até 30/04/2027) · FLRY3 9 (dividendo de dez/25 em 3 parcelas até set/2027; JCP antecipado) · WEGE3 9 (JCP de 2026 pago em 10/03/2027;
     extraordinário em 3 parcelas até 2028) · ABEV3 6 · TIMS3 4 (JCP de set/26 pago até 22/01/2027). ITSA4: ~2 meses, desprezado.
-  · Proventos: VIVT3 sem "Amortização" (redução de capital, não lucro — §6.4); ABEV3 JCP de 22/06/2026 = R$ 0,0449 (a StatusInvest grava
-    0,449, erro de vírgula confirmado no RI pelo PDF 03/10).
+  · Proventos (fase 3, fatia 2, 20/10/2026): da B3 (`proventos_hall`), que já tira a restituição de capital (o "Amortização" da VIVT3,
+    §6.4) e não tem o erro de vírgula da StatusInvest no JCP da ABEV3 de 22/06/2026 (R$ 0,0449). As correções à mão saíram.
   · ITSA4 (holding, doutrina §11.2: SOTP + DDM): SOTP = patrimônio da holding (controladora, jun/26) − Itaú a valor contábil + Itaú ao valor
     central da casa (ITUB4 do Lote 1, recalculado ao mesmo Ke) − custo da holding capitalizado (G&A 12m ÷ Ke real) − PIS/Cofins sobre o
     JCP recebido até o fim de 2027 (R$ 860 mi/ano × 15 meses, a valor presente). Participação no Itaú pelo
@@ -85,34 +85,6 @@ for _tk in PRECO:                         # fase 3: procedência por campo (insu
     registrar(_tk, "acoes", N[_tk], ACOES_ITR_JUN26)
 
 
-# ---------------------------------------------------------------- proventos corrigidos (StatusInvest)
-def corrigir_proventos():
-    """Reescreve em SI (memória compartilhada com os outros lotes e o dossiê) o DPA/JCP por data-com dos 7 tickers do lote.
-
-    AUD-26: IDEMPOTENTE — recalcula tudo a partir de `s["eventos"]`, nunca do resultado anterior —, mas o efeito é por
-    import: quem lê SI antes de importar este módulo vê o DPA da StatusInvest sem correção (VIVT3 2026: 2,098 antes
-    contra 0,846 depois). `tests/test_aud24_26_estado.py` fixa a idempotência e a igualdade entre as ordens de import."""
-    for tk in PRECO:
-        s = SI[tk]
-        dpa, jc = {}, {}
-        for e in s["eventos"]:
-            if not e["data_com"]:
-                continue
-            tipo, val = (e["tipo"] or ""), e["valor"] or 0
-            if tk == "VIVT3" and tipo.startswith("Amortiza"):
-                continue                                  # redução de capital (§6.4)
-            if tk == "ABEV3" and e["data_com"] == "22/06/2026" and abs(val - 0.449) < 0.001:
-                val = 0.0449                              # erro de vírgula da StatusInvest [PDF 03/10, RI]
-            a = e["data_com"][-4:]
-            dpa[a] = dpa.get(a, 0) + val
-            if "JCP" in tipo.upper():
-                jc[a] = jc.get(a, 0) + val
-        s["dpa_por_ano_datacom"], s["jcp_por_ano_datacom"] = dict(sorted(dpa.items())), dict(sorted(jc.items()))
-
-
-corrigir_proventos()
-
-
 def _arrendamento_zip():
     """Owner Earnings (IFRS 16): o aluguel pago sai do OE. VIVT3 e WEGE3 pagam o arrendamento dentro da linha de amortização de empréstimos da DFC
     → proxy = parcela circulante do passivo de arrendamento no fim do ano anterior (principal que vence no ano), limitada ao principal total pago
@@ -164,7 +136,7 @@ def g1_sustentavel(tk):
     parcela (R$ 0,4128, data-com 19/12/2025) — é ela que sai (achado do adversário 05/10)."""
     i = SI[tk]["indicadores"]
     roe = st.median(i["roe"]["anos"][str(a)] for a in range(2021, 2026)) / 100
-    dpa = dict(SI[tk]["dpa_por_ano_datacom"])
+    dpa = dict(SI[tk]["dpa_statusinvest"])     # fase 3: g1 segue na StatusInvest até a fatia 3 (CVM); o DPA da B3 traz as 3 parcelas
     dpa["2025"] = dpa["2025"] - 0.4128
     pay = st.median(dpa[str(a)] / i["lpa"]["anos"][str(a)] for a in range(2021, 2026))
     g_nom = roe * (1 - pay)

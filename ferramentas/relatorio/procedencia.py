@@ -10,6 +10,8 @@ da StatusInvest (que só entra nos informativos); e todo campo de DADO do `Indus
 (`DADO_ANCORA_NF`) pesa na nota do central (`dados_lote`): registrado → a nota da fonte; senão C. Julgamento
 (`JULGAMENTO_NF`: janela, g, alíquota, receita de meio, desconto…) é premissa da casa com razão escrita, não dado: não mexe
 na nota de fonte (as principais saem em `premissas()`).
+Fatia 2 (20/10/2026): o DPA/JCP das não financeiras do lote é da B3 (`proventos_hall`, A) quando o valor que o motor lê é o
+registrado (`proventos_nf`); só os informativos (DY, Bazin, teto, Bogle) o usam.
 Campo que não está aqui não ganha nota boa: `de()` devolve C ("não classificado").
 """
 from __future__ import annotations
@@ -66,6 +68,18 @@ def _origem_do_dado(emp, nome: str) -> Origem:
     if o is None and isinstance(v, dict) and v.get("nota_fonte") in NOTAS and str(v.get("fonte") or "").strip():
         o = Origem(f"{nome} (declarado)", v["nota_fonte"], str(v["fonte"]))
     return o or Origem(f"lote (digitado): {nome}", "C", f"{nome} digitado no lote sem fonte primária registrada (insumos_a)")
+
+
+def proventos_nf(emp) -> Origem:
+    """DPA/JCP da não financeira do lote (fase 3, fatia 2): B3 (A) só se o DPA e o JCP que o motor lê (SI) e a fatia de JCP da
+    empresa são os registrados por `proventos_hall`; senão a StatusInvest (C)."""
+    import insumos_a
+    import proventos_hall
+    from motor_nao_financeiras import SI
+    o = proventos_hall.origem(emp.ticker, SI)
+    if o is not None and insumos_a.origem(emp.ticker, "jcp_share", emp.jcp_share) is not None:
+        return o
+    return Origem("StatusInvest (DPA)", "C", "DPA por data-com da StatusInvest")
 
 
 def dados_ancora(emp, serie: Origem) -> Origem:
@@ -146,7 +160,7 @@ def tabela(c: dict) -> dict[str, Origem]:
         import insumos_a
         serie = Origem("CVM DFP/ITR", "A", "CVM, DFP 2016–25 + ITR de 2026 (LTM), dados abertos")
         t |= {"serie": serie, "acoes": insumos_a.origem(emp.ticker, "acoes", emp.n_acoes) or C_LOTE,
-              "proventos": Origem("StatusInvest (DPA)", "C", "DPA por data-com da StatusInvest"), "pl_hist": C_LOTE,
+              "proventos": proventos_nf(emp), "pl_hist": C_LOTE,
               "proventos_ja_ex": B3_JA_EX, "dados_lote": dados_ancora(emp, serie), "kd": kd(emp)}
     if emp.defasagem_meses is not None and emp.defasagem_fonte.strip():
         t["defasagem"] = Origem("defasagem declarada", "C", f"declarada na ficha: {emp.defasagem_fonte}")
