@@ -1,0 +1,59 @@
+"""Tela v0.2 (web/): guarda das regras do HANDOFF que dá para conferir sem navegador — dado só por textContent, nada de
+fora da máquina, nenhum fator de valuation fixo no front (vêm de hall.fatores), leitura só do contrato."""
+import pathlib
+import re
+
+import pytest
+
+WEB = pathlib.Path(__file__).resolve().parents[1] / "web"
+JS = sorted(p for p in WEB.rglob("*.js") if "dados" not in p.parts)
+TEXTO = JS + sorted(WEB.glob("*.html")) + sorted(WEB.glob("*.css"))
+
+
+def _sem_comentarios(txt: str) -> str:
+    txt = re.sub(r"/\*.*?\*/", "", txt, flags=re.S)
+    return re.sub(r"(^|[^:])//.*$", r"\1", txt, flags=re.M)
+
+
+def test_tem_as_quatro_telas():
+    assert {p.name for p in (WEB / "telas").glob("*.js")} >= {"hall.js", "empresa.js", "carteira.js", "monitor.js"}
+
+
+@pytest.mark.parametrize("arq", JS, ids=lambda p: p.name)
+def test_dado_so_por_textcontent(arq):
+    txt = _sem_comentarios(arq.read_text(encoding="utf-8"))
+    for proibido in ("innerHTML", "outerHTML", "insertAdjacentHTML", "document.write", "eval(", "new Function"):
+        assert proibido not in txt, f"{arq.name}: {proibido}"
+
+
+@pytest.mark.parametrize("arq", TEXTO, ids=lambda p: p.name)
+def test_nada_sai_da_maquina(arq):
+    txt = _sem_comentarios(arq.read_text(encoding="utf-8"))
+    urls = [u for u in re.findall(r"https?://[^\s'\")]+", txt) if not u.startswith("http://www.w3.org/2000/svg")]
+    assert not urls, f"{arq.name}: {urls}"
+
+
+@pytest.mark.parametrize("arq", JS, ids=lambda p: p.name)
+def test_sem_fator_de_valuation_fixo(arq):
+    """Compra 0,70×, parcial 0,80×, saída 1,30×/1,50× e a mediana do central vêm do motor (hall.fatores)."""
+    txt = _sem_comentarios(arq.read_text(encoding="utf-8"))
+    assert not re.search(r"(?<![\d.])(0?\.70?|0?\.80?|1\.30?|1\.50?)(?![\d])", txt), arq.name
+    assert not re.search(r"median\w*\s*\(", txt, flags=re.I), arq.name
+
+
+def test_le_so_o_contrato():
+    txt = (WEB / "app.js").read_text(encoding="utf-8")
+    caminhos = re.findall(r"['`](dados/[^'`]+)['`]", txt)
+    assert caminhos and all(c.startswith(("dados/contrato/", "dados/privado/")) for c in caminhos), caminhos
+    for arq in JS:
+        if arq.name != "app.js":
+            assert "fetch(" not in arq.read_text(encoding="utf-8"), arq.name
+
+
+def test_fontes_locais_e_tema_escuro_padrao():
+    html = (WEB / "index.html").read_text(encoding="utf-8")
+    assert 'data-tema="escuro"' in html
+    css = (WEB / "estilo.css").read_text(encoding="utf-8")
+    for f in re.findall(r"url\((fontes/[^)]+)\)", css):
+        assert (WEB / f).exists(), f
+    assert "Space Grotesk" in css

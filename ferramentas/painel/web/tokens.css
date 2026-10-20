@@ -1,31 +1,37 @@
-/* Mesa de Value — tokens v0.1 (Claude Design, 19/10/2026; docs/design/). Uso: <html data-tema="claro|escuro">.
-   Acréscimo da mesa: RADAR (palavra do motor das financeiras/dossiê que o Design não previu) = contorno frio, sem tinta. */
-:root,[data-tema="claro"]{
-  --f-ui:'IBM Plex Sans',system-ui,sans-serif; --f-mono:'IBM Plex Mono',ui-monospace,monospace; --f-serif:'Source Serif 4',Georgia,serif;
-  --bg:#F3F3EF; --sf:#FFFFFF; --sf2:#EBEBE6; --ln:#D6D6CE; --ln2:#B9B9AF;
-  --ink:#15181C; --ink2:#454B53; --ink3:#5E646D; --ac:#23405F;
-  --barata-fg:#0B5560; --barata-bg:#DDEEF0; --barata-ln:#7FB6BD;
-  --radar-fg:#0B5560;  --radar-ln:#7FB6BD;
-  --justa-fg:#38424F;  --justa-ln:#AAB3C0;
-  --cara-fg:#7A3B04;   --cara-bg:#F5E6D3;   --cara-ln:#D2A06B;
-  --nc-fg:#454B53;     --nc-ln:#8A9099;
-  --serie-div:#2D5A7B; --serie-jcp:#5F8FB3;
-  --hatch:repeating-linear-gradient(135deg,transparent 0 4px,rgba(21,24,28,.10) 4px 5px);
-  --sh-popover:0 4px 16px rgba(21,24,28,.10);
-  --s1:4px; --s2:8px; --s3:12px; --s4:16px; --s5:24px; --s6:32px;
-  --r1:3px; --r2:6px; --r3:10px;
+:root,[data-tema="escuro"]{
+  --f-ui:'IBM Plex Sans',system-ui,sans-serif; --f-mono:'IBM Plex Mono',ui-monospace,monospace; --f-display:'Space Grotesk','IBM Plex Sans',sans-serif;
+  --bg:#070B12; --sf:#0E1520; --sf2:#141D2B; --ln:#1E2A3B; --ln2:#2B3C54;
+  --ink:#EAF0F8; --ink2:#A9B8CC; --ink3:#8496AE; --ac:#8A97FF;
+  --barata-fg:#5EE0CF; --barata-bg:#0B2E31; --barata-ln:#1C6B68;
+  --justa-fg:#B4C3D9; --justa-ln:#3B4F6B;
+  --cara-fg:#FFC06E; --cara-bg:#33220B; --cara-ln:#8C5C1F;
+  --nc-fg:#A9B8CC; --nc-ln:#5A6C86;
+  --serie-div:#6CA8FF; --serie-jcp:#3E6FC0;
+  --hatch:repeating-linear-gradient(135deg,transparent 0 4px,rgba(169,184,204,.16) 4px 5px);
+  --s1:4px; --s2:8px; --s3:12px; --s4:16px; --s5:24px; --s6:32px; --r1:4px; --r2:8px; --r3:12px;
 }
-[data-tema="escuro"]{
-  --bg:#0E1114; --sf:#161A1F; --sf2:#1D2229; --ln:#2C333B; --ln2:#424B55;
-  --ink:#E8EAED; --ink2:#B2B8C0; --ink3:#929AA5; --ac:#8FB6E0;
-  --barata-fg:#7FD0DA; --barata-bg:#12333A; --barata-ln:#2F6F79;
-  --radar-fg:#7FD0DA;  --radar-ln:#2F6F79;
-  --justa-fg:#BCC6D4;  --justa-ln:#46556A;
-  --cara-fg:#F0B979;   --cara-bg:#3A2810;   --cara-ln:#8A5F2B;
-  --nc-fg:#B2B8C0;     --nc-ln:#6B7480;
-  --serie-div:#8FB6E0; --serie-jcp:#4F86B0;
-  --hatch:repeating-linear-gradient(135deg,transparent 0 4px,rgba(232,234,237,.14) 4px 5px);
-  --sh-popover:0 8px 24px rgba(0,0,0,.5);
+[data-tema="claro"]{
+  --bg:#F3F6FB; --sf:#FFFFFF; --sf2:#ECF0F7; --ln:#DCE3EE; --ln2:#BFCADA;
+  --ink:#0A1220; --ink2:#42516A; --ink3:#566680; --ac:#3646D6;
+  --barata-fg:#0A6660; --barata-bg:#DAF4F0; --barata-ln:#62C2B8;
+  --justa-fg:#384866; --justa-ln:#A5B3C9;
+  --cara-fg:#874900; --cara-bg:#FFEDD2; --cara-ln:#E0A85F;
+  --nc-fg:#42516A; --nc-ln:#8493AA;
+  --serie-div:#2C55B5; --serie-jcp:#5A85D8;
+  --hatch:repeating-linear-gradient(135deg,transparent 0 4px,rgba(10,18,32,.10) 4px 5px);
 }
-/* Nota de fonte: A sólido, B contorno, C tracejado, — pontilhado. Número com nota C/— => cor --ink3 + underline dotted. */
-/* Escala da régua: 50%..160% do central, fixa em todas as linhas. Números: font-variant-numeric: tabular-nums lining-nums. */
+/* Régua: escala fixa 50%..160% do central; compra 0,70x; saída 1,30x (1,50x com exceção de qualidade). */
+/* Nota de fonte: A sólido, B contorno, C tracejado, — pontilhado. Números: tabular-nums lining-nums. */
+
+/* ---- Complemento da tela v0.2 (não altera os tokens acima). Valores tirados dos mockups (referencia/telas/Main.dc.html:14-24).
+   RADAR: palavra do motor que o HANDOFF não previa (P/C entre 0,70 e 0,90) — contorno turquesa, sem preenchimento, glifo ▽. */
+:root,[data-tema="escuro"]{
+  --dot:rgba(138,151,255,.11); --hi:rgba(255,255,255,.035);
+  --glow-b:0 0 14px rgba(94,224,207,.22); --glow-p:0 0 12px rgba(234,240,248,.55);
+  --radar-fg:var(--barata-fg); --radar-ln:var(--barata-ln);
+}
+[data-tema="claro"]{
+  --dot:rgba(54,70,214,.09); --hi:rgba(255,255,255,.9);
+  --glow-b:none; --glow-p:none;
+  --radar-fg:var(--barata-fg); --radar-ln:var(--barata-ln);
+}
