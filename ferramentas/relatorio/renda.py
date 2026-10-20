@@ -1,8 +1,10 @@
 """Provento por ação dos últimos 12 meses, pela data-com (API da B3 GetListedCashDividends, nota A).
 
 Conta da renda do painel da carteira: quantidade de HOJE × provento por ação de HOJE. Por isso o provento com data-com
-anterior a uma bonificação ou desdobramento (até a data do preço) é dividido pelo multiplicador, como em
-`dossie.base.proventos_b3` (mesma convenção: data-com do provento ANTES da do evento). Janela: data-com em
+anterior a uma bonificação ou desdobramento (até a data do preço) é dividido pelo multiplicador (data-com do provento
+ANTES da do evento, estrito). Atenção: é a regra ANTERIOR à fase 3 — o dossiê e o hall (`proventos_hall.proventos`) dividem
+também o provento do mesmo dia e SOMAM as linhas iguais (parcelas, conferidas na DMPL); aqui uma linha igual conta uma vez e
+a renda sai baixa quando há parcelas (VLID3 nov/25: 1 de 4). Troca pela regra do hall na fatia 4 (docs/MISSOES.md 9f). Janela: data-com em
 (data − 12 meses, data]. Data-com depois da data do preço = anunciado, ainda não conta (sai à parte).
 
 Só dinheiro que é renda: dividendo, JCP e rendimento. Restituição de capital e o que mais vier sai em `ignorados`.

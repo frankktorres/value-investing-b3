@@ -816,3 +816,7 @@ nenhum central, P/C, palavra ou desconto muda nos 10 JSON de `dossie/vereditos/`
 igual. O JSON salvo fica (registro append-only); o recálculo na mesma data está fixado em `test_dossie_fichas.CORRIGIDO_FATIA_2B`. Veredito novo
 só com `--data` nova; nenhum foi gerado. Golden do hall intacto. Testes: `tests/test_fase3_proventos_dossie.py` (PN, parcelas, repetição,
 restituição, eventos do FRE, grupos dos 8 dossiês, ações × eventos, diluição) e o oráculo da fatia 2 passou a comparar o hall com a regra antiga. Suíte: 747 passed, 0 failed.
+**Revisão adversarial (20/10):** nenhum defeito reproduzido — provas dos 7 grupos refeitas na DMPL (ALLD3: os R$ 67,5 mi do 1T24 só
+se explicam com 2 parcelas), data-base sempre pelo `na_data`/`c["data"]`, nenhum consumidor lê DPA antes de 2016, sem vazamento para o hall,
+ISIN da PN certo, consumidores intactos. Aceito e declarado: a renda de 12 meses da carteira (`relatorio/renda.py`) segue a regra antiga e
+subconta parcelas (VLID3 0,74 × 1,87 em 15/10) — docstring corrigida, troca na fatia 4 (9f).
