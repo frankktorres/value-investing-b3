@@ -118,12 +118,14 @@ def test_receita_de_meio_da_cvm_registrada_no_flry3():
                                         ("WEGE3", "g1_real"), ("PRIO3", "aliquota_fase")])
 def test_dado_da_fatia_3_registrado_e_literal_por_cima_cai(tk, campo):
     """Fatia 3: receita de meio (CVM × Brent EIA / PPI BLS × PTAX), alíquota da TIM (CVM + conciliação), g1 da WEGE3 (CVM + B3) e
-    o prazo do crédito da PRIO3 (nota declarada) saem registrados → o central é B (Kd sintético); valor por cima → C."""
+    o prazo do crédito da PRIO3 (DFP) saem registrados → o central é B (Kd sintético); valor por cima → C."""
     e = _emp(tk)
     assert pr._fora_do_default(e, campo)
     assert _nota_central(e) == "B"
     v = getattr(e, campo)
-    outro = {**v, "nota_fonte": "C"} if isinstance(v, dict) else v * 1.01
+    outro = {**v, "ate": v["ate"] + 13} if isinstance(v, dict) else v * 1.01
+    if isinstance(v, dict):
+        assert _nota_central(replace(e, **{campo: {**v, "fonte": "inventei"}})) == "C"
     assert _nota_central(replace(e, **{campo: outro})) == "C"
 
 
@@ -159,9 +161,14 @@ def test_pl_hist_da_cvm_registrado_e_smto3_em_marco():
     assert pl_historico.fim_do_exercicio(2024, 2) == "2024-02-29"
     ev = [{"aprovacao": "2025-12-10", "data_com": "2026-01-05", "multiplicador": 2.0}]
     anual = {"2025": {"lucro_controlador": 1.0, "acoes": 200.0}}     # R$ mil; 200 ações novas no DFP, o preço é da ação antiga
-    assert pl_historico.mediana("X", anual, ev, lambda q: q, fechamento=lambda tk, d: 10.0) == pytest.approx(1.0)
-    assert pl_historico.mediana("X", anual, [], lambda q: q, fechamento=lambda tk, d: 10.0) == pytest.approx(2.0)
-    assert pl_historico.mediana("X", {"2025": {"lucro": -5.0, "acoes": 1.0}}, [], lambda q: q, lambda tk, d: 1.0) is None
+    px = lambda tk, d: ("2025-12-30", 10.0)
+    assert pl_historico.mediana("X", anual, ev, lambda q: q, fechamento=px) == pytest.approx(1.0)
+    assert pl_historico.mediana("X", anual, [], lambda q: q, fechamento=px) == pytest.approx(2.0)
+    no_dia = [{**ev[0], "data_com": "2025-12-30"}]                   # data-com no último pregão: o fechamento ainda é "com"
+    assert pl_historico.mediana("X", anual, no_dia, lambda q: q, fechamento=px) == pytest.approx(1.0)
+    antes = [{**ev[0], "data_com": "2025-12-29"}]                    # já ex no fechamento: preço e DFP na base nova
+    assert pl_historico.mediana("X", anual, antes, lambda q: q, fechamento=px) == pytest.approx(2.0)
+    assert pl_historico.mediana("X", {"2025": {"lucro": -5.0, "acoes": 1.0}}, [], lambda q: q, px) is None
     with pytest.raises(ValueError, match="units"):
         pl_historico.do_hall("KLBN11", 1e9)
 

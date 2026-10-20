@@ -2,8 +2,10 @@
 
 P/L do ano = fechamento do último pregão até o fim do exercício (B3, COTAHIST, lote padrão) × ações do DFP ÷ lucro do
 controlador (CVM); mediana dos anos com 0 < P/L < 40 (o corte do `pl_hist` antigo, que lia o P/L da StatusInvest, nota C).
-Evento em ações aprovado até o fim do exercício e ex depois dele: o DFP já conta as ações novas, o preço ainda não → as ações
-voltam à base antiga. Exercício fora do ano civil (SMTO3, abr–mar: o DFP de mar/2026 é o "2026" da CVM) usa `mes_fim`.
+Evento em ações aprovado até o fim do exercício cuja data-com é o dia do fechamento usado ou depois: o DFP já conta as ações
+novas, o preço ainda é "com" (no dia da data-com o papel é da ação antiga, como em `proventos_hall`) → as ações voltam à base
+antiga. Data-com no último pregão do ano (SLCE3 30/12/2021 e 30/12/2025) conta (adversário, 20/10). Exercício fora do ano
+civil (SMTO3, abr–mar: o DFP de mar/2026 é o "2026" da CVM) usa `mes_fim`.
 
 No hall, sem o COTAHIST no disco (clone limpo), o valor vem do snapshot versionado (`derivados_zip`, chave `pl_hist.<TK>`).
 """
@@ -32,11 +34,11 @@ def fim_do_exercicio(ano: int | str, mes_fim: int = 12) -> str:
     return f"{ano}-{mes_fim:02d}-{calendar.monthrange(ano, mes_fim)[1]:02d}"
 
 
-def fechamento_ate(tk: str, data: str) -> float | None:
-    """Último PREULT do ticker no ano de `data`, até `data` inclusive."""
+def fechamento_ate(tk: str, data: str) -> tuple[str, float] | None:
+    """(pregão, PREULT) do último pregão do ticker no ano de `data`, até `data` inclusive."""
     p = _precos(int(data[:4]))
     x = p[(p["ticker"] == tk) & (p["data"].astype(str).str[:10] <= data)].sort_values("data")
-    return float(x["preult"].iloc[-1]) if len(x) else None
+    return (str(x["data"].iloc[-1])[:10], float(x["preult"].iloc[-1])) if len(x) else None
 
 
 def mediana(tk: str, anual: dict, eventos: list[dict], escala, mes_fim: int = 12, fechamento=fechamento_ate) -> float | None:
@@ -47,12 +49,13 @@ def mediana(tk: str, anual: dict, eventos: list[dict], escala, mes_fim: int = 12
         if not (lucro and acoes and lucro > 0):
             continue
         fim = fim_do_exercicio(ano, mes_fim)
-        px = fechamento(tk, fim)
-        if not px:
+        f = fechamento(tk, fim)
+        if not f:
             continue
+        dia, px = f
         n = escala(acoes)
         for x in eventos:
-            if x["aprovacao"] <= fim < x["data_com"]:
+            if x["aprovacao"] <= fim and x["data_com"] >= dia:
                 n /= x["multiplicador"]
         pl = px * n / (lucro * 1000)          # lucro em R$ mil
         if 0 < pl < 40:

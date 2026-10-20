@@ -46,7 +46,7 @@ from derivados_zip import obter
 import proventos_hall
 from pl_historico import do_hall
 from precos_hall import preco
-from insumos_a import ACOES_ITR_JUN26, ALIQUOTA_TIMS3, G1_CVM, RECEITA_CVM, registrar
+from insumos_a import ALIQUOTA_FASE_DFP, ACOES_ITR_JUN26, ALIQUOTA_TIMS3, G1_CVM, RECEITA_CVM, registrar
 from fiscal import ALIQUOTA_FASE, tims3_aliquota
 from lote1_bancos import EMPRESAS as LOTE1
 from lote1_bancos import MK
@@ -184,7 +184,7 @@ EMPRESAS = [
                desconto_controlador=ZERO("controle compartilhado (médicos fundadores + Bradesco Seguros), sem interferência consumada"),
                qualitativo=QUAL(3, 3, 4, 4, 3)),
     Industrial("HYPE3", "Hypera Pharma", "servicos", preco=PRECO["HYPE3"], n_acoes=N["HYPE3"], outras_liquidas=True, g_real=0.01,
-               aliquota_fase=ALIQUOTA_FASE["HYPE3"], jcp_share=jcp("HYPE3"), pl_hist=do_hall("HYPE3", N["HYPE3"]),   # v2.3: crédito com prazo
+               aliquota_fase=registrar("HYPE3", "aliquota_fase", ALIQUOTA_FASE["HYPE3"], ALIQUOTA_FASE_DFP), jcp_share=jcp("HYPE3"), pl_hist=do_hall("HYPE3", N["HYPE3"]),   # v2.3: crédito com prazo
                defasagem_meses=18, defasagem_fonte="JCP de 2026 pago até 31/12/2027 (calendário declarado, PDF rev. 03/10)",
                desconto_controlador=ZERO("controlador privado (J. A. de Queiroz Filho + Maiorem, 39,3% pelo FRE 2026), sem extração consumada registrada; "
                                          "a defasagem de 15–21 meses do JCP já está no valor presente do provento"),

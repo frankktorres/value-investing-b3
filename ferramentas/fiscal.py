@@ -11,7 +11,6 @@ ALIQUOTA_FASE = {
         "fonte": "ágio amortizável fiscalmente até 2030, R$ 475 mi restantes (release 4T25, p. 11) [A]; a subvenção de ICMS de Goiás "
                  "termina com a reforma tributária, mas a EC 132/2023 e a LC 214/2025 não foram conferidas na fonte (planalto.gov.br "
                  "recusou a conexão em 07/10/2026) → a fase acaba no 1º prazo documentado, 2030",
-        "nota_fonte": "A",        # fase 3, fatia 3: nota declarada (procedencia._origem_do_dado); a efetiva da fase vem da CVM
     },
     # PRIO3 (08/10/2026): o IR baixo vem do uso de prejuízo fiscal acumulado — crédito FINITO: base de R$ 28,8 bi, crédito de
     # R$ 9,39 bi, R$ 8,09 bi reconhecidos (inclui os R$ 6,37 bi da Forte reconhecidos em 2024), uso limitado a 30% do lucro
@@ -22,7 +21,6 @@ ALIQUOTA_FASE = {
         "ate": 2032,
         "fonte": "PRIO DFP 2025 nota 16 (p. impressas 78–79): cronograma de realização dos prejuízos fiscais, R$ 8,09 bi "
                  "reconhecidos, 96,5% até 2032 — projeção da administração [A]",
-        "nota_fonte": "A",
     },
 }
 

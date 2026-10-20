@@ -866,3 +866,10 @@ Cada campo passou a ser calculado de fonte oficial e registrado em `insumos_a` (
 WEGE3 saíram de C); insumos C do lote nas âncoras 158 → 134. Trava de `tests/test_fase3_procedencia.py` subiu (`CENTRAIS_AB_MINIMO` 19,
 `C_LOTE_NAS_ANCORAS_MAXIMO` 134), com testes de cada campo (registro + literal por cima → C, SMTO3 em março, TIM × CVM, 3 parcelas da WEGE3,
 CMIN3 sem o insumo falha). Nenhuma ordem de compra ou venda decorre desta mudança.
+**Revisão adversarial (20/10):** 3 defeitos reproduzidos, todos corrigidos, nenhum mudava número: **(1)** `--derivados` passou a exigir o COTAHIST
+do backtest (sem os parquets, nem o snapshot da CVM regravava) → `CHAVES_CVM` exigidas, `CHAVES_COTAHIST` tudo-ou-nada e mantidas sem o
+COTAHIST (teste); **(2)** `aliquota_fase` com nota declarada no próprio dict ficava A mesmo alterado (prazo 2045, fonte inventada) → o prazo agora é
+REGISTRADO (`insumos_a` aceita texto dentro do dict, comparado igual) e a nota declarada saiu do `fiscal.py`; **(3)** bonificação com data-com no
+último pregão do ano (SLCE3 30/12/2021 e 30/12/2025) entrava com ações novas e preço "com" → a regra usa o dia do fechamento usado
+(`data_com >= pregão`); mediana da SLCE3 igual (os dois anos estavam nas pontas). O dossiê passou a usar a mesma conta (`base.pl_hist` →
+`pl_historico.mediana`); os 10 vereditos recalculados não mudam (`test_dossie_fichas`). Texto da SLCE3 que ainda dizia "NAV de terceiro" corrigido.

@@ -21,9 +21,10 @@ def _num(x) -> float:
 
 
 def _congela(v):
-    """Número → float; {chave: número} → {str: float} (cópia: mudar o dict da empresa depois não muda o registro)."""
+    """Número → float; {chave: número ou texto} → {str: float | str} (cópia: mudar o dict da empresa depois não muda o registro).
+    Texto só dentro de dict (o prazo do crédito fiscal: {"ate": 2032, "fonte": "..."}) e comparado igual, letra a letra."""
     if isinstance(v, dict):
-        return {str(k): _num(x) for k, x in v.items()}
+        return {str(k): (x if isinstance(x, str) else _num(x)) for k, x in v.items()}
     return _num(v)
 
 
@@ -31,11 +32,13 @@ def _igual(a, b) -> bool:
     if isinstance(a, dict) or isinstance(b, dict):
         return (isinstance(a, dict) and isinstance(b, dict) and a.keys() == b.keys()
                 and all(_igual(a[k], b[k]) for k in a))
+    if isinstance(a, str) or isinstance(b, str):
+        return a == b
     return math.isclose(a, b, rel_tol=1e-12, abs_tol=0.0)
 
 
 def registrar(tk: str, campo: str, valor, origem: Origem):
-    """Guarda (valor, origem) do campo do ticker e devolve o valor sem mexer nele. Valor: número ou {chave: número}."""
+    """Guarda (valor, origem) do campo do ticker e devolve o valor sem mexer nele. Valor: número ou {chave: número ou texto}."""
     _REG[(tk, campo)] = (_congela(valor), origem)
     return valor
 
@@ -86,3 +89,5 @@ NAV_SLCE3 = Origem("SLC (fato relevante)", "A", "SLC Agrícola, fato relevante '
                    "de 31/03/2026 (lote3_agro.SLCE3_NAV_MI)")
 PL_HIST_CVM = Origem("CVM + COTAHIST", "A", "P/L histórico: mediana dos anos com 0 < P/L < 40 de fechamento do fim do exercício (B3, "
                      "COTAHIST) × ações do DFP ÷ lucro do controlador (CVM) — pl_historico.do_hall")
+ALIQUOTA_FASE_DFP = Origem("DFP/release (prazo do crédito)", "A", "prazo do crédito de IR declarado em fiscal.ALIQUOTA_FASE com a fonte "
+                           "no próprio campo (DFP/release da companhia); a alíquota efetiva da fase é a mediana da CVM (motor)")
