@@ -4,7 +4,7 @@ Cíclica (minério de ferro). Ciclo normalizado EM NÚMERO antes do veredito (02
   · Janela da margem 2019–2025 (7 exercícios): o 1º DFP com DRE da companhia na CVM é o de 2020 (comparativo 2019; registro
     pré-IPO, IPO em fev/2021). É o máximo disponível (02 regra 4), não uma janela escolhida — e é curta para um ciclo de
     minério: 2020–23 tiveram o minério acima do meio, com o pico de 2021.
-  · PREÇO: minério 62% Fe CFR China (FMI, série PIORECRUSDM do FRED, US$/t seca, nota B) × PTAX média mensal (BCB SGS 3698)
+  · PREÇO: minério 62% Fe CFR China (FMI, série PIORECRUSDM do FRED, US$/t seca, nota A — verificador-fonte 20/10/2026; insumo `preco_minerio`) × PTAX média mensal (BCB SGS 3698)
     corrigido pelo IPCA (BCB SGS 433) até o último mês com as três séries. Meio de ciclo = média de 10 anos 2016–25 em R$ de hoje
     (§11.1, como o barril do Lote 5) — a janela do preço NÃO encolhe com a da margem: encolher para 2019–25 poria o pico
     no meio de ciclo.
@@ -59,7 +59,8 @@ def minerio() -> dict:
     ptax = pd.Series(p["valor"].astype(float).values, index=pd.to_datetime(p["data"], dayfirst=True))
     i = pd.DataFrame(json.loads((MACRO / "ipca_mensal.json").read_text()))
     ipca = pd.Series((1 + i["valor"].astype(float) / 100).cumprod().values, index=pd.to_datetime(i["data"], dayfirst=True))
-    df = pd.DataFrame({"usd": _fred("fred_PIORECRUSDM.csv"), "ptax": ptax, "ipca": ipca, "cpi": _fred("cpi_us_fred.csv")})
+    serie = _num("preco_minerio")        # fase 3, fatia 3: a série com fonte e nota no insumo (procedencia._insumos_dossie a vê)
+    df = pd.DataFrame({"usd": _fred(serie), "ptax": ptax, "ipca": ipca, "cpi": _fred("cpi_us_fred.csv")})
     df["cpi"] = df["cpi"].interpolate(limit_area="inside")     # out/2025 sem CPI (paralisação do governo dos EUA)
     df = df.dropna()
     bi, bc = df["ipca"].iloc[-1], df["cpi"].iloc[-1]

@@ -12,6 +12,8 @@ da StatusInvest (que só entra nos informativos); e todo campo de DADO do `Indus
 na nota de fonte (as principais saem em `premissas()`).
 Fatia 2 (20/10/2026): o DPA/JCP das não financeiras do lote é da B3 (`proventos_hall`, A) quando o valor que o motor lê é o
 registrado (`proventos_nf`); só os informativos (DY, Bazin, teto, Bogle) o usam.
+Fatia 3 (20/10/2026): no caminho do lote NF o preço e o P/L histórico só são A se o valor é o registrado (`precos_hall.preco`,
+`pl_historico.do_hall`).
 Campo que não está aqui não ganha nota boa: `de()` devolve C ("não classificado").
 """
 from __future__ import annotations
@@ -161,7 +163,9 @@ def tabela(c: dict) -> dict[str, Origem]:
         import insumos_a
         serie = Origem("CVM DFP/ITR", "A", "CVM, DFP 2016–25 + ITR de 2026 (LTM), dados abertos")
         t |= {"serie": serie, "acoes": insumos_a.origem(emp.ticker, "acoes", emp.n_acoes) or C_LOTE,
-              "proventos": proventos_nf(emp), "pl_hist": C_LOTE,
+              "preco": insumos_a.origem(emp.ticker, "preco", emp.preco) or Origem(
+                  "lote (digitado): preco", "C", "preço digitado no lote, não lido do snapshot do COTAHIST (precos_hall.preco)"),
+              "proventos": proventos_nf(emp), "pl_hist": insumos_a.origem(emp.ticker, "pl_hist", emp.pl_hist) or C_LOTE,
               "proventos_ja_ex": B3_JA_EX, "dados_lote": dados_ancora(emp, serie), "kd": kd(emp)}
     if emp.defasagem_meses is not None and emp.defasagem_fonte.strip():
         t["defasagem"] = Origem("defasagem declarada", "C", f"declarada na ficha: {emp.defasagem_fonte}")

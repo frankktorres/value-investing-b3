@@ -43,8 +43,11 @@ import zipfile
 import pandas as pd
 
 from derivados_zip import obter
-from insumos_a import ACOES_ITR_JUN26, RECEITA_CVM, registrar
-from fiscal import ALIQUOTA_FASE, TIMS3_ALIQUOTA
+import proventos_hall
+from pl_historico import do_hall
+from precos_hall import preco
+from insumos_a import ALIQUOTA_FASE_DFP, ACOES_ITR_JUN26, ALIQUOTA_TIMS3, G1_CVM, RECEITA_CVM, registrar
+from fiscal import ALIQUOTA_FASE, tims3_aliquota
 from lote1_bancos import EMPRESAS as LOTE1
 from lote1_bancos import MK
 from lote2_energia import pl_hist
@@ -56,7 +59,8 @@ from motor_nao_financeiras import ANOS, CVM, SI, Industrial, avaliar
 AQUI = pathlib.Path(__file__).parent
 ZIP = AQUI / "dados" / "cvm"
 QUAL = lambda moat, gestao, controlador, ciclo, fisher: dict(moat=moat, gestao=gestao, controlador=controlador, ciclo=ciclo, fisher=fisher)
-PRECO = {"TIMS3": 18.55, "VIVT3": 30.14, "ITSA4": 14.67, "FLRY3": 23.50, "HYPE3": 25.16, "ABEV3": 15.84, "WEGE3": 51.45}   # fechamento oficial de 02/10 (precos_hall.py, AUD-67)
+# fechamento oficial de 02/10 (precos_hall.py, AUD-67); fase 3, fatia 3: as NF leem o snapshot (preco, registrado); ITSA4 na fatia 4
+PRECO = {tk: preco(tk) for tk in ("TIMS3", "VIVT3", "FLRY3", "HYPE3", "ABEV3", "WEGE3")} | {"ITSA4": 14.67}
 NOME_CVM = {"TIMS3": "TIM S.A.", "VIVT3": "TELEF", "FLRY3": "FLEURY", "HYPE3": "HYPERA", "ABEV3": "AMBEV", "WEGE3": "WEG S.A.",
             "ITSA4": "ITAÚSA", "ITUB": "ITAU UNIBANCO HOLDING"}
 IFRS16 = [str(a) for a in range(2019, 2026)]
@@ -130,17 +134,26 @@ def receita_media(tk, anos, ltm=True):
 
 
 # ---------------------------------------------------------------- WEGE3: g do 1º estágio
-def g1_sustentavel(tk):
+def g1_sustentavel(tk, extra_data_com="2025-12-19"):
     """g sustentável nominal = ROE mediano 2021–25 × (1 − payout recorrente mediano 2021–25), deflacionado pela π implícita.
-    Payout recorrente = DPA ÷ LPA, sem o extraordinário de dez/2025 (R$ 1,2385 em 3 parcelas — PDF 03/10). A série da StatusInvest só traz a 1ª
-    parcela (R$ 0,4128, data-com 19/12/2025) — é ela que sai (achado do adversário 05/10)."""
-    i = SI[tk]["indicadores"]
-    roe = st.median(i["roe"]["anos"][str(a)] for a in range(2021, 2026)) / 100
-    dpa = dict(SI[tk]["dpa_statusinvest"])     # fase 3: g1 segue na StatusInvest até a fatia 3 (CVM); o DPA da B3 traz as 3 parcelas
-    dpa["2025"] = dpa["2025"] - 0.4128
-    pay = st.median(dpa[str(a)] / i["lpa"]["anos"][str(a)] for a in range(2021, 2026))
+    Fase 3, fatia 3 (20/10/2026): tudo de fonte oficial — ROE = lucro do controlador ÷ PL do controlador (PL − não
+    controladores) do DFP (CVM); LPA = lucro do controlador ÷ ações do DFP; DPA por data-com da B3 (`proventos_hall`, já no SI)
+    sem o extraordinário de dez/2025 (R$ 1,2385 em 3 parcelas de data-com 19/12/2025 — PDF 03/10; antes, pela StatusInvest,
+    só saía a 1ª parcela). Registrado em `insumos_a` só se o DPA lido é o da B3."""
+    a = CVM[tk]["anual"]
+    anos = [str(x) for x in range(2021, 2026)]
+    roe = st.median(a[y]["lucro_controlador"] / (a[y]["pl"] - (a[y]["nao_controladores"] or 0)) for y in anos)
+    dpa = dict(SI[tk]["dpa_por_ano_datacom"])
+    extra = [r for r in proventos_hall.proventos(tk) if r["data_com"] == extra_data_com]
+    assert len(extra) == 3, f"{tk}: extraordinário de {extra_data_com} deveria ter 3 parcelas na B3: {extra}"
+    dpa[extra_data_com[:4]] -= sum(r["valor_hoje"] for r in extra)
+    lpa = {y: a[y]["lucro_controlador"] * 1000 / (a[y]["acoes"] * (1000 if a[y]["acoes"] < 1e7 else 1)) for y in anos}
+    pay = st.median(dpa[y] / lpa[y] for y in anos)
     g_nom = roe * (1 - pay)
-    return (1 + g_nom) / (1 + MK.pi) - 1, roe, pay
+    g1 = (1 + g_nom) / (1 + MK.pi) - 1
+    if proventos_hall.origem(tk, SI) is not None:
+        g1 = registrar(tk, "g1_real", g1, G1_CVM)
+    return g1, roe, pay
 
 
 WEG_G1, WEG_ROE5, WEG_PAYOUT = g1_sustentavel("WEGE3")
@@ -148,30 +161,30 @@ ZERO = lambda razao: {"tipo": "zero", "razao": razao}
 
 EMPRESAS = [
     Industrial("TIMS3", "TIM Brasil", "servicos", preco=PRECO["TIMS3"], n_acoes=N["TIMS3"], anos_ciclo=IFRS16, anos_outras=ANOS, outras_liquidas=True, capex_ciclico=True, janela_razao=RAZAO_IFRS16,
-               g_real=0.01, jcp_share=jcp("TIMS3"), pl_hist=pl_hist("TIMS3"), defasagem_meses=4,
+               g_real=0.01, jcp_share=jcp("TIMS3"), pl_hist=do_hall("TIMS3", N["TIMS3"]), defasagem_meses=4,
                # v2.3 (08/10): alíquota perpétua = mediana 2021–25 SEM a SUDENE/SUDAM (crédito com prazo: laudos de 10 anos por UF,
                # vigência não encontrada nos DFPs → prazo zero) e sem os itens pontuais (2021: Selic sobre indébito, venda da
                # I-Systems, reversão TIM Nordeste; 2022: prejuízo fiscal não reconhecido); fica o JCP (permanente). Conciliação da
                # alíquota efetiva, DFP TIM 2023–25 nota 8.d e DFP 2022 nota 35 [A]: 19,3% · 4,5% · 18,3% · 22,1% · 15,1% → 18,3%
-               aliquota=TIMS3_ALIQUOTA,
+               aliquota=registrar("TIMS3", "aliquota", tims3_aliquota(CVM["TIMS3"]["anual"]), ALIQUOTA_TIMS3),   # fase 3, fatia 3
                aliquota_fonte="conciliação da alíquota efetiva, DFP TIM 2023–25 nota 8.d e DFP 2022 nota 35 [A]: mediana 2021–25 sem SUDENE/SUDAM e itens pontuais",
                defasagem_fonte="JCP de set/2026 pago até 22/01/2027 (calendário declarado, PDF rev. 03/10)",
                desconto_controlador=ZERO("nenhuma interferência consumada; Poste Italiane (estatal italiana) controla a TI desde 18/09/2026 — risco "
                                          "prospectivo V4/V5 sem evento; tag along pendente é opção, não desconto"),
                qualitativo=QUAL(3, 4, 3, 4, 3)),
     Industrial("VIVT3", "Telefônica Brasil (Vivo)", "servicos", preco=PRECO["VIVT3"], n_acoes=N["VIVT3"], anos_ciclo=IFRS16, anos_outras=ANOS, outras_liquidas=True, capex_ciclico=True, janela_razao=RAZAO_IFRS16,
-               g_real=0.01, jcp_share=jcp("VIVT3"), pl_hist=pl_hist("VIVT3"), defasagem_meses=10,
+               g_real=0.01, jcp_share=jcp("VIVT3"), pl_hist=do_hall("VIVT3", N["VIVT3"]), defasagem_meses=10,
                defasagem_fonte="JCP declarado pago até 30/04/2027 (calendário declarado, PDF rev. 03/10)",
                desconto_controlador=ZERO("nenhuma interferência consumada pela Telefónica S.A. (39,3% do capital pelo FRE 2026; controle com acordo)"),
                qualitativo=QUAL(4, 3, 3, 4, 3)),
     Industrial("FLRY3", "Grupo Fleury", "servicos", preco=PRECO["FLRY3"], n_acoes=N["FLRY3"], anos_ciclo=IFRS16, anos_outras=ANOS, outras_liquidas=True, janela_razao=RAZAO_IFRS16,
                receita_meio=receita_media("FLRY3", ["2024", "2025"]), g_real=0.01, jcp_share=jcp("FLRY3"),
-               pl_hist=pl_hist("FLRY3"), defasagem_meses=9,
+               pl_hist=do_hall("FLRY3", N["FLRY3"]), defasagem_meses=9,
                defasagem_fonte="dividendo de dez/2025 em 3 parcelas até set/2027, mais JCP antecipado (calendário declarado, PDF rev. 03/10)",
                desconto_controlador=ZERO("controle compartilhado (médicos fundadores + Bradesco Seguros), sem interferência consumada"),
                qualitativo=QUAL(3, 3, 4, 4, 3)),
     Industrial("HYPE3", "Hypera Pharma", "servicos", preco=PRECO["HYPE3"], n_acoes=N["HYPE3"], outras_liquidas=True, g_real=0.01,
-               aliquota_fase=ALIQUOTA_FASE["HYPE3"], jcp_share=jcp("HYPE3"), pl_hist=pl_hist("HYPE3"),   # v2.3: crédito com prazo
+               aliquota_fase=registrar("HYPE3", "aliquota_fase", ALIQUOTA_FASE["HYPE3"], ALIQUOTA_FASE_DFP), jcp_share=jcp("HYPE3"), pl_hist=do_hall("HYPE3", N["HYPE3"]),   # v2.3: crédito com prazo
                defasagem_meses=18, defasagem_fonte="JCP de 2026 pago até 31/12/2027 (calendário declarado, PDF rev. 03/10)",
                desconto_controlador=ZERO("controlador privado (J. A. de Queiroz Filho + Maiorem, 39,3% pelo FRE 2026), sem extração consumada registrada; "
                                          "a defasagem de 15–21 meses do JCP já está no valor presente do provento"),
@@ -181,11 +194,11 @@ EMPRESAS = [
                # com 2 exercícios a regra dá 34% (`sem_dado`) até o DFP 2026 completar 3
                aliquota_desde=dict(ano=2024, fonte="Lei 14.789/2023 (subvenção de ICMS tributada desde 01/01/2024), planalto.gov.br [A]"),
                # ABEV3 (Etapa 2/F2): os 6 meses não tinham evento declarado — §6.3 manda usar o medido na StatusInvest (1,5 mês)
-               jcp_share=jcp("ABEV3"), pl_hist=pl_hist("ABEV3"),
+               jcp_share=jcp("ABEV3"), pl_hist=do_hall("ABEV3", N["ABEV3"]),
                desconto_controlador=ZERO("AB InBev sem interferência consumada; contratos com a controladora (V4) já estão no EBIT histórico"),
                qualitativo=QUAL(5, 3, 3, 4, 3)),
     Industrial("WEGE3", "WEG", "servicos", preco=PRECO["WEGE3"], n_acoes=N["WEGE3"], outras_liquidas=True, g_real=0.02, g1_real=WEG_G1, anos_g1=10,
-               jcp_share=jcp("WEGE3"), pl_hist=pl_hist("WEGE3"), defasagem_meses=9,
+               jcp_share=jcp("WEGE3"), pl_hist=do_hall("WEGE3", N["WEGE3"]), defasagem_meses=9,
                defasagem_fonte="JCP de 2026 pago em 10/03/2027 e extraordinário em 3 parcelas até 2028 (calendário declarado, PDF rev. 03/10)",
                desconto_controlador=ZERO("famílias fundadoras, sem conflito identificado"),
                qualitativo=QUAL(5, 5, 5, 3, 5)),

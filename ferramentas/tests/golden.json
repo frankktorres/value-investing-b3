@@ -1,5 +1,5 @@
 {
- "motivo": "Fase 3, fatia 2 (20/10/2026): DPA/JCP das 21 não financeiras dos lotes da API da B3 (proventos_hall.py: classe do ticker, tipos fechados, data-com até o preço, eventos em ações B3 + FRE, parcelas somadas conferidas na DMPL) em vez da StatusInvest; saem lote4.corrigir_proventos e o ajuste aproximado de GGBR4/UNIP6. Muda só dy, Bogle nominal, vence a RF e nota geral (renda) em 7 tickers; nenhuma palavra, central ou âncora muda (teste)",
+ "motivo": "Fase 3, fatia 3 (B15/9e): P/L histórico das NF pela CVM + COTAHIST (pl_historico.do_hall; SMTO3 em março; janela 2020-25 por falta de ações no DFP antes de 2020) no lugar da StatusInvest/literais -> só o Bogle de 10 tickers; NAV da SLCE3 do fato relevante de 15/06/2026 (27,12 -> 27,72; central e palavra iguais). Preço (snapshot COTAHIST), receita de meio (CVM x EIA/BLS), alíquota TIMS3 (CVM + nota 8.d) e g1 WEGE3 (CVM + B3) registrados sem mudar número no golden. 0 trocas de palavra.",
  "tickers": {
   "ABCB4": {
    "ancoras": {
@@ -24,7 +24,7 @@
     "EPV": 9.19281,
     "Owner Earnings ÷ (Ke − g)": 7.042854
    },
-   "bogle_nom": 0.153659,
+   "bogle_nom": 0.13119,
    "central": 9.19281,
    "cobertura_juros": 27.944195,
    "data_preco": "02/10/2026",
@@ -42,7 +42,7 @@
     "EPV": 8.177214,
     "Owner Earnings ÷ (Ke − g)": 8.006306
    },
-   "bogle_nom": 0.115771,
+   "bogle_nom": 0.096328,
    "central": 8.177214,
    "cobertura_juros": 4.29225,
    "data_preco": "02/10/2026",
@@ -246,7 +246,7 @@
     "EPV": 10.873637,
     "Owner Earnings ÷ (Ke − g)": 5.322253
    },
-   "bogle_nom": 0.091291,
+   "bogle_nom": 0.084323,
    "central": 10.873637,
    "cobertura_juros": 2.166042,
    "data_preco": "02/10/2026",
@@ -282,7 +282,7 @@
     "EPV": 17.874929,
     "Owner Earnings ÷ (Ke − g)": 10.895524
    },
-   "bogle_nom": 0.09785,
+   "bogle_nom": 0.095584,
    "central": 16.22481,
    "cobertura_juros": 1.8858,
    "data_preco": "02/10/2026",
@@ -387,7 +387,7 @@
     "EPV": 33.711152,
     "Owner Earnings ÷ (Ke − g)": 36.665759
    },
-   "bogle_nom": 0.186296,
+   "bogle_nom": 0.178005,
    "central": 36.30688,
    "cobertura_juros": 11.989037,
    "data_preco": "02/10/2026",
@@ -543,9 +543,9 @@
    "ancoras": {
     "DCF normalizado (3 cenários)": 7.590601,
     "EPV de meio de ciclo": 6.35209,
-    "Valor de reprodução": 27.12
+    "Valor de reprodução": 27.717519
    },
-   "bogle_nom": -0.078564,
+   "bogle_nom": -0.084383,
    "central": 7.590601,
    "cobertura_juros": 2.190263,
    "data_preco": "02/10/2026",
@@ -563,7 +563,7 @@
     "EPV de meio de ciclo": 13.577016,
     "Valor de reprodução": 22.850686
    },
-   "bogle_nom": 0.006666,
+   "bogle_nom": 0.001891,
    "central": 14.678938,
    "cobertura_juros": 1.7395,
    "data_preco": "02/10/2026",
@@ -616,7 +616,7 @@
     "EPV": 9.736408,
     "Owner Earnings ÷ (Ke − g)": 7.953352
    },
-   "bogle_nom": 0.137956,
+   "bogle_nom": 0.103444,
    "central": 9.736408,
    "cobertura_juros": 3.50333,
    "data_preco": "02/10/2026",
@@ -688,7 +688,7 @@
     "EPV": 16.729782,
     "Owner Earnings ÷ (Ke − g)": 19.691493
    },
-   "bogle_nom": 0.113347,
+   "bogle_nom": 0.117195,
    "central": 16.922537,
    "cobertura_juros": 4.324351,
    "data_preco": "02/10/2026",
@@ -702,11 +702,11 @@
   },
   "WEGE3": {
    "ancoras": {
-    "DCF (3 cenários)": 11.085968,
+    "DCF (3 cenários)": 11.086329,
     "EPV": 10.051652,
     "Owner Earnings ÷ (Ke − g)": 11.081542
    },
-   "bogle_nom": 0.131254,
+   "bogle_nom": 0.14152,
    "central": 11.081542,
    "cobertura_juros": 37.346503,
    "data_preco": "02/10/2026",

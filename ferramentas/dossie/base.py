@@ -195,22 +195,9 @@ def acoes_itr(tk: str, ano: int = 2026, mes: int = 6) -> float:
 
 def pl_hist(tk: str) -> float | None:
     """Mediana do P/L de fim de exercício (fechamento do último pregão do ano × ações do DFP ÷ lucro do controlador),
-    só anos com 0 < P/L < 40 — o mesmo corte do `pl_hist` do hall, mas com fonte A em vez do agregador."""
-    a = CVM[tk]["anual"]
-    ev = eventos(tk)
-    xs = []
-    for ano, d in a.items():
-        lucro, acoes = d.get("lucro_controlador") or d.get("lucro"), d.get("acoes")
-        px = fechamento_do_ano(tk, int(ano)) if lucro and acoes else None
-        if px and lucro > 0:
-            n = escala(tk, acoes)
-            for x in ev:      # aprovada até o fim do ano e ex depois dele: o DFP já conta as ações novas, o preço ainda não
-                if x["aprovacao"] <= f"{ano}-12-31" < x["data_com"]:
-                    n /= x["multiplicador"]
-            pl = px * n / (lucro * 1000)          # lucro em R$ mil
-            if 0 < pl < 40:
-                xs.append(pl)
-    return st.median(xs) if xs else None
+    só anos com 0 < P/L < 40 — a mesma conta do hall (`pl_historico.mediana`, fase 3 fatia 3), com a escala das ações pelo FRE."""
+    import pl_historico
+    return pl_historico.mediana(tk, CVM[tk]["anual"], eventos(tk), lambda q: escala(tk, q))
 
 
 @contextmanager

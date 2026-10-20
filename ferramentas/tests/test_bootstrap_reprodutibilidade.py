@@ -50,11 +50,14 @@ def test_obter_sem_zip_e_sem_snapshot_da_chave_da_a_receita(tmp_path, monkeypatc
 
 @pytest.mark.skipif(not TEM_ZIPS, reason="ZIPs da CVM ausentes (clone limpo): snapshot não é conferível aqui")
 def test_snapshot_igual_ao_recalculo_dos_zips():
+    import lote3_agro  # noqa: F401  (P/L histórico, fase 3 fatia 3)
     import lote4_saude_telecom  # noqa: F401  (o import recalcula e preenche CALCULADOS)
     import lote5_petroleo  # noqa: F401
     import lote6_quimica  # noqa: F401
     snap = json.loads(derivados_zip.SNAPSHOT.read_text(encoding="utf-8"))
-    for chave in CHAVES:
+    import pl_historico
+    tem_cotahist = all((pl_historico.COTAHIST / f"precos_{a}.parquet").exists() for a in pl_historico.ANOS)
+    for chave in CHAVES if tem_cotahist else derivados_zip.CHAVES_CVM:
         assert derivados_zip.CALCULADOS[chave] == snap[chave], f"{chave} defasada: rode `python bootstrap_dados.py --derivados`"
 
 
@@ -121,3 +124,17 @@ def test_baixar_itr_recusa_resposta_que_nao_e_zip(tmp_path, monkeypatch):
         temporada.baixar_itr(2026)
     assert (tmp_path / "itr_2026.zip").read_bytes() == b"original"
     assert not (tmp_path / "itr_2026.zip.novo").exists() and not (tmp_path / "M.json").exists()
+
+
+def test_gravar_snapshot_sem_cotahist_mantem_o_pl_historico(tmp_path, monkeypatch):
+    """--derivados com os ZIPs da CVM e sem o COTAHIST do backtest: regrava as chaves da CVM e mantém as do P/L (adversário 20/10)."""
+    snap = tmp_path / "s.json"
+    snap.write_text(json.dumps({"pl_hist.B3SA3": 1.0}), encoding="utf-8")
+    monkeypatch.setattr(derivados_zip, "SNAPSHOT", snap)
+    monkeypatch.setattr(derivados_zip, "CALCULADOS", {c: 2 for c in derivados_zip.CHAVES_CVM})
+    derivados_zip.gravar_snapshot()
+    novo = json.loads(snap.read_text(encoding="utf-8"))
+    assert novo["pl_hist.B3SA3"] == 1.0 and novo["lote4.itsa"] == 2
+    monkeypatch.setattr(derivados_zip, "CALCULADOS", {c: 2 for c in (*derivados_zip.CHAVES_CVM, "pl_hist.B3SA3")})
+    with pytest.raises(RuntimeError, match="só em parte"):
+        derivados_zip.gravar_snapshot()

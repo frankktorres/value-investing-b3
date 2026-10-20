@@ -25,16 +25,18 @@ def _snapshot() -> dict:
     return json.loads(SNAPSHOT.read_text(encoding="utf-8")) if SNAPSHOT.exists() else {}
 
 
-def obter(chave: str, zips: list[str], calcular):
-    """`calcular()` se todos os `zips` existem em dados/cvm; senão o snapshot da `chave`."""
-    if all((CVM / z).exists() for z in zips):
+def obter(chave: str, zips: list[str], calcular, pasta: pathlib.Path | None = None):
+    """`calcular()` se todos os `zips` existem em `pasta` (padrão dados/cvm, lido na chamada; o P/L histórico usa os parquets
+    do COTAHIST); senão o snapshot da `chave`."""
+    pasta = CVM if pasta is None else pasta
+    if all((pasta / z).exists() for z in zips):
         valor = calcular()
         CALCULADOS[chave] = json.loads(json.dumps(valor))       # forma que o JSON preserva (chaves str, listas)
         return valor
     snap = _snapshot()
     if chave not in snap:
-        faltam = [z for z in zips if not (CVM / z).exists()]
-        raise FileNotFoundError(f"'{chave}' precisa de {faltam} em dados/cvm e não há snapshot em {SNAPSHOT.name}: "
+        faltam = [z for z in zips if not (pasta / z).exists()]
+        raise FileNotFoundError(f"'{chave}' precisa de {faltam} em {pasta} e não há snapshot em {SNAPSHOT.name}: "
                                 "rode `python bootstrap_dados.py --baixar`")
     if chave not in _AVISADO:
         _AVISADO.add(chave)
@@ -42,15 +44,24 @@ def obter(chave: str, zips: list[str], calcular):
     return snap[chave]
 
 
-CHAVES = ("lote4.acoes_jun26", "lote4.arrendamento_pago", "lote4.itsa", "lote5.base_prio3", "lote6.acoes_jun26")
+# fase 3, fatia 3: P/L histórico das não financeiras do hall (pl_historico.do_hall). Vem dos parquets do COTAHIST (backtest), não
+# dos ZIPs da CVM: entra no snapshot quando foi recalculado, mas não é exigido — sem o COTAHIST, o --derivados regrava as chaves da
+# CVM e mantém as do P/L como estavam (adversário, 20/10).
+PL_HIST = ("B3SA3", "SMTO3", "SLCE3", "TIMS3", "VIVT3", "FLRY3", "HYPE3", "ABEV3", "WEGE3", "LEVE3")
+CHAVES_CVM = ("lote4.acoes_jun26", "lote4.arrendamento_pago", "lote4.itsa", "lote5.base_prio3", "lote6.acoes_jun26")
+CHAVES_COTAHIST = tuple(f"pl_hist.{tk}" for tk in PL_HIST)
+CHAVES = CHAVES_CVM + CHAVES_COTAHIST
 
 
 def gravar_snapshot() -> int:
     """Grava os valores recalculados nesta execução (merge com o snapshot atual). Devolve quantas chaves.
-    Exige TODAS as chaves: ZIPs parciais misturariam versões de ZIP no mesmo snapshot."""
-    faltam = [c for c in CHAVES if c not in CALCULADOS]
+    Exige TODAS as chaves da CVM (ZIPs parciais misturariam versões de ZIP no mesmo snapshot) e, do COTAHIST, tudo ou nada."""
+    faltam = [c for c in CHAVES_CVM if c not in CALCULADOS]
     if faltam:
         raise RuntimeError(f"não recalculadas dos ZIPs (ZIPs ausentes?): {faltam}; snapshot não gravado")
+    cot = [c for c in CHAVES_COTAHIST if c in CALCULADOS]
+    if cot and len(cot) != len(CHAVES_COTAHIST):
+        raise RuntimeError(f"P/L histórico recalculado só em parte: {sorted(set(CHAVES_COTAHIST) - set(cot))}; snapshot não gravado")
     snap = _snapshot()
     snap.update(CALCULADOS)
     SNAPSHOT.write_text(json.dumps(snap, ensure_ascii=False, indent=1, sort_keys=True) + "\n", encoding="utf-8", newline="\n")

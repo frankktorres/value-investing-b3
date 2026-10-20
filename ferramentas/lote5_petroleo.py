@@ -1,6 +1,6 @@
 """Lote 5 — Petróleo, gás e combustíveis · data-base 02/10/2026 (preços do PDF rev. 03/10) · doutrina v2.2.
 
-Demonstrações: CVM (DFP 2016–25 + ITR, 12m até jun/2026). Preço: PDF rev. 03/10 (fechamento de 02/10). Ações: CVM. Proventos: B3 (proventos_hall.py, fase 3).
+Demonstrações: CVM (DFP 2016–25 + ITR, 12m até jun/2026). Preço: COTAHIST de 02/10 (precos_hall.preco). Ações: CVM. Proventos: B3 (proventos_hall.py, fase 3).
 Ciclo declarado ANTES do veredito (doutrina §2, regra 4):
   · Barril de meio de ciclo = média de 10 anos (2016–25) do Brent em R$ de hoje = Brent (EIA, via FRED) × PTAX média mensal (BCB SGS 3698),
     corrigido pelo IPCA (BCB SGS 433) até ago/2026. Decomposto: Brent US$ 82 (média real 10a, em US$ de ago/2026, CPI-EUA) ×
@@ -23,7 +23,8 @@ from statistics import mean
 import pandas as pd
 
 from derivados_zip import obter
-from insumos_a import IPCA_BCB, registrar
+from precos_hall import preco
+from insumos_a import ALIQUOTA_FASE_DFP, IPCA_BCB, RECEITA_MEIO_BRENT, registrar
 from fiscal import ALIQUOTA_FASE
 from lote1_bancos import MK
 from lote3_agro import acoes, jcp
@@ -100,12 +101,12 @@ def base_ep(tk):
 BASE = {tk: base_ep(tk) for tk in ("PETR4", "PRIO3", "RECV3")}
 
 
-def receita_ep(tk):
-    return BASE[tk][0]
+def receita_ep(tk):        # fase 3, fatia 3: procedência por campo (insumos_a); o número não muda
+    return registrar(tk, "receita_meio", BASE[tk][0], RECEITA_MEIO_BRENT)
 
 
 def da_ep(tk):
-    return BASE[tk][1] / BASE[tk][0]
+    return registrar(tk, "da_receita", BASE[tk][1] / BASE[tk][0], RECEITA_MEIO_BRENT)
 
 
 # Passivo atuarial (pensão e saúde, R$ 92,5 bi: 2.01.06.02.04 + 2.02.04.02.04 do ITR de jun/2026) NÃO entra na ponte: o custo atuarial
@@ -122,9 +123,9 @@ PETR_CENARIOS = [
     dict(nome="Repetição de 2011–14: preço abaixo da paridade por 3–4 anos, alavancagem e corte de dividendo — V1 + V3 + V5", prob=0.15, perda=0.30),
 ]
 
-# Preços = fechamento oficial (PREULT do COTAHIST) de 02/10/2026 — data e fonte em precos_hall.py (AUD-67).
+# Preços = fechamento oficial (PREULT do COTAHIST) de 02/10/2026, lido do snapshot por precos_hall.preco (fase 3, fatia 3; AUD-67).
 EMPRESAS = [
-    Industrial("PETR4", "Petrobras (PN)", "ciclica", preco=51.17, n_acoes=acoes("PETR4"), g_real=0.01, jcp_share=jcp("PETR4"),
+    Industrial("PETR4", "Petrobras (PN)", "ciclica", preco=preco("PETR4"), n_acoes=acoes("PETR4"), g_real=0.01, jcp_share=jcp("PETR4"),
                # AUD-03 (08/10/2026): a margem de E&P é EBITDA − D&A ATUAL, e a D&A atual já tem a depreciação do direito de uso;
                # o EBITDA de 2016–18 é pré-IFRS 16 e carrega o aluguel como custo → aluguel descontado duas vezes (as 3 menores margens)
                anos_ciclo=[str(a) for a in range(2019, 2026)], anos_outras=[str(a) for a in range(2016, 2026)],
@@ -137,20 +138,20 @@ EMPRESAS = [
                controlador_discricionario_fonte="interferência consumada declarada no desconto do lote (critério provisório v2.3, até o "
                                                 "dossiê): União — V1 preços 2011–14 e diesel abaixo da paridade desde mar/26, V3, V5",
                qualitativo=QUAL(4, 2, 1, 2, 2)),
-    Industrial("PRIO3", "PRIO", "ciclica", desconto_controlador=dict(tipo="zero", razao=SEM_RAZAO), preco=63.01, n_acoes=acoes("PRIO3"), g_real=0.01, jcp_share=jcp("PRIO3"),
+    Industrial("PRIO3", "PRIO", "ciclica", desconto_controlador=dict(tipo="zero", razao=SEM_RAZAO), preco=preco("PRIO3"), n_acoes=acoes("PRIO3"), g_real=0.01, jcp_share=jcp("PRIO3"),
                anos_ciclo=[str(a) for a in range(2019, 2026)], anos_outras=[str(a) for a in range(2016, 2026)],
                janela_razao="perímetro operado atual: Frade a partir de 2019 (receita de R$ 849 mi em 2018 para R$ 1,64 bi em 2019); antes de 2019 a escala e os ativos são de outra empresa",
                receita_meio=receita_ep("PRIO3"), da_receita=da_ep("PRIO3"), outras_liquidas=True, qualitativo=QUAL(3, 4, 4, 1, 3),
-               aliquota_fase=ALIQUOTA_FASE["PRIO3"]),   # v2.3 (08/10): prejuízo fiscal com uso projetado até 2032 (fiscal.py)
-    Industrial("RECV3", "PetroReconcavo", "ciclica", desconto_controlador=dict(tipo="zero", razao=SEM_RAZAO), preco=11.20, n_acoes=acoes("RECV3"), g_real=-0.03, jcp_share=jcp("RECV3"),
+               aliquota_fase=registrar("PRIO3", "aliquota_fase", ALIQUOTA_FASE["PRIO3"], ALIQUOTA_FASE_DFP)),   # v2.3 (08/10): prejuízo fiscal com uso projetado até 2032 (fiscal.py)
+    Industrial("RECV3", "PetroReconcavo", "ciclica", desconto_controlador=dict(tipo="zero", razao=SEM_RAZAO), preco=preco("RECV3"), n_acoes=acoes("RECV3"), g_real=-0.03, jcp_share=jcp("RECV3"),
                anos_ciclo=[str(a) for a in range(2020, 2026)], receita_meio=receita_ep("RECV3"), da_receita=da_ep("RECV3"), declinio_sem_liberacao=True,
                janela_razao="a série da CVM começa em 2020 (IPO em set/2020); não há exercício anterior",
                qualitativo=QUAL(1, 2, 3, 2, 2)),
-    Industrial("UGPA3", "Ultrapar", "servicos", desconto_controlador=dict(tipo="zero", razao=SEM_RAZAO), preco=38.61, n_acoes=acoes("UGPA3"), g_real=0.01, jcp_share=jcp("UGPA3"),
+    Industrial("UGPA3", "Ultrapar", "servicos", desconto_controlador=dict(tipo="zero", razao=SEM_RAZAO), preco=preco("UGPA3"), n_acoes=acoes("UGPA3"), g_real=0.01, jcp_share=jcp("UGPA3"),
                anos_ciclo=[str(a) for a in range(2021, 2026)], deflator=M["deflator"], capex_ciclico=True,
                janela_razao="perímetro comparável: Oxiteno e Extrafarma descontinuadas em 2021 — antes a margem é de outro conjunto de negócios",
                qualitativo=QUAL(3, 3, 4, 3, 3)),
-    Industrial("VBBR3", "Vibra Energia", "servicos", desconto_controlador=dict(tipo="zero", razao=SEM_RAZAO), preco=38.15, n_acoes=acoes("VBBR3"), g_real=0.01, jcp_share=jcp("VBBR3"),
+    Industrial("VBBR3", "Vibra Energia", "servicos", desconto_controlador=dict(tipo="zero", razao=SEM_RAZAO), preco=preco("VBBR3"), n_acoes=acoes("VBBR3"), g_real=0.01, jcp_share=jcp("VBBR3"),
                anos_ciclo=[str(a) for a in range(2020, 2026)], deflator=M["deflator"], capex_ciclico=True,
                janela_razao="gestão privada desde jul/2019 (saída da Petrobras): a margem anterior é de empresa estatal",
                outras_liquidas=True, anos_outras=[str(a) for a in range(2016, 2026)], fora_circulo=False,

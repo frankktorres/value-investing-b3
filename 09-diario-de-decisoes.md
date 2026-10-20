@@ -820,3 +820,56 @@ restituição, eventos do FRE, grupos dos 8 dossiês, ações × eventos, dilui�
 se explicam com 2 parcelas), data-base sempre pelo `na_data`/`c["data"]`, nenhum consumidor lê DPA antes de 2016, sem vazamento para o hall,
 ISIN da PN certo, consumidores intactos. Aceito e declarado: a renda de 12 meses da carteira (`relatorio/renda.py`) segue a regra antiga e
 subconta parcelas (VLID3 0,74 × 1,87 em 15/10) — docstring corrigida, troca na fatia 4 (9f).
+
+## 20/10/2026 — Fase 3, fatia 3 (B15/9e): literais de dado das não financeiras → dado oficial registrado
+Cada campo passou a ser calculado de fonte oficial e registrado em `insumos_a` (a nota só sobe se o valor usado é o registrado; literal por cima → C):
+1. **Preço** — os lotes 3–6 leem `precos_hall.preco(tk)` (snapshot do COTAHIST de 02/10, A); a procedência do preço da NF do lote deixou de ser A
+   incondicional. Os 21 literais eram iguais ao snapshot: nenhum número muda. Financeiras (ITSA4, EGIE3, lotes 1–2) seguem digitadas até a fatia 4.
+2. **Receita de meio** — PETR4/PRIO3/RECV3 (`receita_meio` e `da_receita`: CVM × Brent EIA/DCOILBRENTEU × PTAX BCB × IPCA, A), GGBR4 (PPI BLS
+   WPU1017, A), UNIP6 (PPI BLS soda A + WPU0662, página do FRED não aberta na conferência → **B**). `verificador-fonte` 20/10: o FRED espelha
+   EIA/BLS/FMI sem transformar — a nota é a da fonte primária. Número não muda.
+3. **CMIN3 (dossiê)** — a série do minério (FMI PIORECRUSDM via FRED, nota **A** pela conferência; o docstring dizia B) virou o insumo
+   `preco_minerio` de `dossie/insumos/CMIN3.json`, exigido por `fichas/cmin3.minerio()` (sem ele, falha alto) e visto por `_insumos_dossie`.
+   Central do CMIN3 segue B (Kd sintético); nada muda.
+4. **Alíquota TIMS3** — `fiscal.tims3_aliquota`: 2024–25 calculadas = (IR registrado + incentivo SUDENE/SUDAM) ÷ LAIR, IR e LAIR dos dados
+   abertos da CVM e o incentivo da nota 8.d da DFP 2025 (R$ 333,4 mi e R$ 442,1 mi; conferida no PDF do RI hoje): 22,1% e 15,1%, iguais às lidas
+   em 08/10. 2021–23 seguem as lidas em 08/10 (19,3% · 4,5% · 18,3%; itens pontuais não estão nos dados abertos). Mediana 18,3% = antes.
+   PRIO3 `aliquota_fase` (e HYPE3) ganharam `nota_fonte: "A"` declarada (o prazo vem do DFP; a efetiva da fase já era da CVM).
+5. **g1 WEGE3** — `g1_sustentavel` com ROE = lucro ÷ PL do controlador (CVM), LPA da CVM e DPA da B3 sem as **3** parcelas do extraordinário de
+   19/12/2025 (pela StatusInvest só saía a 1ª, arredondada em 0,4128): g1 real 6,874% → 6,876%, ROE 28,37% (= StatusInvest), payout 51,43% →
+   51,42%. Central não muda na precisão do golden.
+6. **NAV SLCE3** — o R$ 27,12 atribuído ao Itaú BBA não foi encontrado pelo verificador; a própria SLC publica o NAV (fato relevante "Portfólio
+   de Terras: Atualização 2026", 15/06/2026: terras avaliadas pela Deloitte, R$ 13,53 bi; NAV R$ 13.824 mi ÷ 498.745.930 ações = **R$ 27,72**, A).
+   Âncora de reprodução 27,12 → 27,72; central (7,59) e palavra (NÃO CONCLUSIVO) iguais.
+7. **P/L histórico** — `pl_historico.do_hall`: fechamento do fim do exercício (COTAHIST) × ações do DFP ÷ lucro do controlador (CVM), mediana dos
+   anos com 0 < P/L < 40 — a conta do dossiê, agora num módulo só; SMTO3 no fechamento de **março** (exercício abr–mar). Snapshot
+   `pl_hist.<TK>` em `dados/derivados_zip.json` para clone sem COTAHIST. **Decisão (reversível):** janela 2020–25 — o DFP antes de 2020 não traz a
+   composição do capital (a CVM não tem `acoes` 2016–19); é a mesma janela que o dossiê já usa. Estender com o LPA básico da DRE 2016–19 fica
+   no BACKLOG. A StatusInvest errava a TIMS3 de 2023–25 (P/L 29/26/26 × 15/11/12 pela CVM: lucro do controlador zerado no consolidado).
+
+**Antes → depois** (golden regravado com `--motivo`; 11 mudanças em 10 tickers, **0 trocas de palavra**, nenhum central, P/C ou vence-RF muda):
+
+| Ticker | P/L hist. antes (fonte) | depois (CVM+COTAHIST) | Bogle nominal antes → depois | Palavra |
+|---|---|---|---|---|
+| ABEV3 | 19,16 (SI) | 15,36 | 15,37% → 13,12% | CARA = |
+| B3SA3 | 20,3 (literal) | 16,67 | 11,58% → 9,63% | CARA = |
+| FLRY3 | 18,62 (SI) | 17,34 | 9,13% → 8,43% | CARA = |
+| HYPE3 (hall) | 13,88 (SI) | 13,57 | 9,79% → 9,56% | CARA = |
+| LEVE3 (hall) | 7,60 (SI) | 6,98 | 18,63% → 17,80% | NÃO CONCLUSIVO = |
+| SLCE3 | 10,6 (literal) | 9,89 | −7,86% → −8,44% | NÃO CONCLUSIVO = |
+| SMTO3 | 9,7 (literal) | 9,21 (março) | 0,67% → 0,19% | CARA = |
+| TIMS3 | 19,24 (SI) | 13,56 | 13,80% → 10,34% | CARA = |
+| VIVT3 | 15,43 (SI) | 16,04 | 11,33% → 11,72% | CARA = |
+| WEGE3 | 33,01 (SI) | 36,64 | 13,13% → 14,15% | CARA = |
+
+**Procedência:** as 19 não financeiras do caminho do lote passam a ter o central A/B (eram 11; GGBR4, PETR4, PRIO3, RECV3, SLCE3, TIMS3, UNIP6 e
+WEGE3 saíram de C); insumos C do lote nas âncoras 158 → 134. Trava de `tests/test_fase3_procedencia.py` subiu (`CENTRAIS_AB_MINIMO` 19,
+`C_LOTE_NAS_ANCORAS_MAXIMO` 134), com testes de cada campo (registro + literal por cima → C, SMTO3 em março, TIM × CVM, 3 parcelas da WEGE3,
+CMIN3 sem o insumo falha). Nenhuma ordem de compra ou venda decorre desta mudança.
+**Revisão adversarial (20/10):** 3 defeitos reproduzidos, todos corrigidos, nenhum mudava número: **(1)** `--derivados` passou a exigir o COTAHIST
+do backtest (sem os parquets, nem o snapshot da CVM regravava) → `CHAVES_CVM` exigidas, `CHAVES_COTAHIST` tudo-ou-nada e mantidas sem o
+COTAHIST (teste); **(2)** `aliquota_fase` com nota declarada no próprio dict ficava A mesmo alterado (prazo 2045, fonte inventada) → o prazo agora é
+REGISTRADO (`insumos_a` aceita texto dentro do dict, comparado igual) e a nota declarada saiu do `fiscal.py`; **(3)** bonificação com data-com no
+último pregão do ano (SLCE3 30/12/2021 e 30/12/2025) entrava com ações novas e preço "com" → a regra usa o dia do fechamento usado
+(`data_com >= pregão`); mediana da SLCE3 igual (os dois anos estavam nas pontas). O dossiê passou a usar a mesma conta (`base.pl_hist` →
+`pl_historico.mediana`); os 10 vereditos recalculados não mudam (`test_dossie_fichas`). Texto da SLCE3 que ainda dizia "NAV de terceiro" corrigido.
