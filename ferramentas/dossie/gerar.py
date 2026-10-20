@@ -61,7 +61,7 @@ def _calcular(tk: str) -> dict:
     anos = ficha.ANOS
     ins = insumos(tk)
     cnpj = base.CNPJ[tk]
-    eventos = base.eventos_em_acoes(tk)
+    eventos = base.eventos(tk)          # B3 + FRE (SHUL4 2021), os mesmos que ajustam o DPA
 
     mg = ev.margens(tk, anos, r0["op"]["med_outras"], True)
     rec = ev.receitas_reais(tk, anos)
@@ -69,7 +69,7 @@ def _calcular(tk: str) -> dict:
     rem = fr["remuneracao"]["dados"]
     rem_l, rem_txt = ev.remuneracao_sobre_lucro(tk, rem, anos)
     listado = min(a for a in anos if base.fechamento_do_ano(tk, int(a)))
-    dil, dil_txt = ev.diluicao(tk, anos, eventos, listado)
+    dil, dil_txt = ev.diluicao(tk, anos, eventos, listado, lambda q: base.escala(tk, q))
     r1, r1_f = ev.r1_da_triagem(tk), "Q4 da última triagem"
     if r1 is None:      # ticker do hall fica fora da triagem: o mesmo Q4, rodado só para ele, entra como insumo com fonte
         r1, r1_f = _valor(ins, "r1_retido")

@@ -313,13 +313,14 @@ def _tag_along(c: dict):
 
 # ------------------------------------------------------------------------------------------------------------ DIVIDENDOS
 def _proventos(c: dict):
-    """(DPA por ano, JCP por ano, motivo) da B3 — vazio se o ticker não tem nome de pregão cadastrado. Não financeira do hall:
-    o coletor do hall (`proventos_hall`, o mesmo DPA que o motor lê — classe certa, parcelas somadas, eventos B3 + FRE)."""
+    """(DPA por ano, JCP por ano, motivo) da B3 — vazio se o ticker não tem nome de pregão cadastrado. Não financeira do hall
+    e dossiê: o coletor do hall (`proventos_hall`, o mesmo DPA que o motor lê — classe certa, parcelas somadas, eventos B3 +
+    FRE; no dossiê, data-com até a data do veredito). Financeira: a regra antiga (`base.proventos_b3_legado`) até a fatia 4."""
     import proventos_hall
     from dossie import base
-    if c["tk"] in proventos_hall.NF_HALL and c["dossie"] is None:
+    if _regra_do_hall(c):
         try:
-            d, j = proventos_hall.dpa_jcp(c["tk"])
+            d, j = proventos_hall.dpa_jcp(c["tk"], c["data"] if c["dossie"] is not None else None)
             return d, j, ""
         except Exception as ex:  # noqa: BLE001 — falha do dado vira aviso, nunca número inventado
             return {}, {}, f"proventos da B3 indisponíveis: {type(ex).__name__}: {ex}"
@@ -330,7 +331,7 @@ def _proventos(c: dict):
     if tk not in base.PREGAO:
         base.PREGAO[tk], inserido = pregao, True
     try:
-        d, j = base.proventos_b3(tk)
+        d, j = base.proventos_b3_legado(tk)
         return d, j, ""
     except Exception as ex:  # noqa: BLE001 — qualquer falha do dado vira aviso, nunca número inventado
         return {}, {}, f"proventos da B3 indisponíveis: {type(ex).__name__}: {ex}"
@@ -339,14 +340,20 @@ def _proventos(c: dict):
             base.PREGAO.pop(tk, None)
 
 
+def _regra_do_hall(c: dict) -> bool:
+    import proventos_hall
+    return c["tk"] in proventos_hall.NF_HALL or c["dossie"] is not None
+
+
 def secao_dividendos(c: dict) -> Secao:
     r, t, emp = c["r"], pr.tabela(c), c["empresa"]
     s = Secao("Dividendos e JCP")
     dpa, jcp, motivo = _proventos(c)
     ano_corrente = c["data"][:4]
     import proventos_hall
-    o_b3 = (proventos_hall.ORIGEM_B3 if c["tk"] in proventos_hall.NF_HALL and c["dossie"] is None else
-            Origem("B3 proventos", "A", "B3, proventos em dinheiro por data-com (API pública), R$ por ação ON de hoje"))
+    o_b3 = (proventos_hall.ORIGEM_B3 if _regra_do_hall(c) else
+            Origem("B3 proventos", "A", "B3, proventos em dinheiro por data-com (API pública), R$ por ação de hoje na classe "
+                   "do ticker (regra anterior à fase 3: linha igual conta uma vez)"))
     if dpa:
         # ano civil sem provento conta como zero (proventos_b3 só devolve anos com pagamento); começa no 1º ano com dado
         ini = max(int(min(dpa)), int(ano_corrente) - 10)

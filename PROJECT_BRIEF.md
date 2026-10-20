@@ -1,5 +1,5 @@
 # PROJECT BRIEF — Mesa de Value Investing B3
-*Versão de 20/10/2026 (rev. fase 3, fatia 2: DPA/JCP da B3; doutrina v2.6) · gerado por `/brief` · fonte: repositório, memória do projeto e `docs/auditoria/AUDITORIA_2026-10-08.md`*
+*Versão de 20/10/2026 (rev. fase 3, fatia 2b: DPA/JCP do dossiê com as regras do hall; doutrina v2.6) · gerado por `/brief` · fonte: repositório, memória do projeto e `docs/auditoria/AUDITORIA_2026-10-08.md`*
 
 ## 1. Projeto
 Mesa de análise fundamentalista da B3 para dividendos/JCP e longo prazo: doutrina escrita (v2.6) + motores de valuation em Python que
@@ -46,7 +46,8 @@ MVP de uso pessoal, maduro no cálculo. Um usuário real, sem terceiros. Prazo e
    **Fase 3 em execução (19/10):** fatia 1 fez a nota POR CAMPO (`insumos_a.py` + `relatorio/procedencia.py`): das 19 não financeiras do lote,
    11 têm central B (Kd sintético Damodaran), 8 seguem C por dado ainda digitado; as 20 financeiras seguem C/— (fatia 4). Ordem no `MISSOES.md`.
    Fatia 2 (20/10): DPA/JCP das 21 não financeiras dos lotes saem da API da B3 (`proventos_hall.py`, A); a StatusInvest fica para datas,
-   financeiras e a g1 da WEGE3. Achado: linhas iguais da B3 são parcelas (DMPL), o AUD-23 do dossiê/backtest subconta (fatia 2b, B29).
+   financeiras e a g1 da WEGE3. Achado: linhas iguais da B3 são parcelas (DMPL), o AUD-23 subconta. Fatia 2b (20/10): os 8 dossiês usam as
+   mesmas regras (classe PN, parcelas conferidas, restituição fora, eventos do FRE); a regra antiga resta nas financeiras/carteira (9f) e no backtest (B29).
 3. **Régua sem validação empírica.** Backtest parou: proxy reproduziu a palavra em 70,7% (portão ≥ 80%). Validação agora só prospectiva,
    lenta por natureza. Pré-registro fixado em 14/10 (B25): IC de postos P/C × retorno excedente sobre a média do hall; 1ª leitura possível em out/2027.
 4. **Universo que não gera compra.** Blue chips eficientes: quase tudo JUSTA/CARA, zero compra; triagem de toda a B3 deixou 5 de 104 no portão.
@@ -131,3 +132,4 @@ MVP de uso pessoal, maduro no cálculo. Um usuário real, sem terceiros. Prazo e
 - 19/10/2026 (tela, fatia 1): `ferramentas/painel/` (exportar → JSON ignorado; servir em 127.0.0.1) + `painel.cmd`; Hall no navegador com palavra vigente, régua, nota da fonte, filtro A/B, tema claro/escuro (Playwright conferido); achado: só 8 de 47 centrais têm fonte A/B (todos de dossiê) — o hall segue com premissa digitada (nota C/—); LEVE3 com régua suspensa (motor diverge do veredito); design do Claude Design em `docs/design/`; adversário rodado.
 - 19/10/2026 (fase 3, fatia 1): `ferramentas/insumos_a.py` (registro valor+origem) + `relatorio/procedencia.py` por campo nas não financeiras do lote (ações registradas da CVM, âncoras no provento já ex da B3, Kd sintético B, dado digitado = C); 11 de 19 NF com central B (antes C), 8 C, golden intacto; achado: `dossie/base.py:130` filtra ON fixo (FESA4/SHUL4 PN) → fatia 2b.
 - 20/10/2026 (fase 3, fatia 2): `ferramentas/proventos_hall.py` — DPA/JCP das 21 não financeiras dos lotes da API da B3 (classe, tipos fechados, eventos B3 + FRE, parcelas conferidas na DMPL) no carregamento do motor; saem `lote4.corrigir_proventos` e o ajuste aproximado GGBR4/UNIP6; golden regravado (7 tickers, só DY/Bogle/RF/nota; 0 palavras); B28 (linhagem) e B29 (AUD-23 no backtest) no backlog.
+- 20/10/2026 (fase 3, fatia 2b): `dossie.base.proventos_b3` → `proventos_hall.dpa_jcp` (FESA4/SHUL4 PN, 7 grupos de parcelas conferidos na DMPL, restituição fora, bonificações da SHUL4 de 2018 e 2021 do FRE); diluição do dossiê com eventos do FRE e escala das ações; 0 palavras/centrais, SHUL4 gestão 0 → 1.

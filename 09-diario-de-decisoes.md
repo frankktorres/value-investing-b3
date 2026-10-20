@@ -778,3 +778,41 @@ não cobre (SMTO3 2016, SLCE3 2016–19: só o teste local de FRE/COTAHIST). Ace
 JUSTA pode virar NÃO CONCLUSIVO só pelo DPA; hoje a folga é grande (KEPL3 0,2 p.p. e PETR4 0,6 p.p. do Ke, limite 2 p.p.) e o teste por ticker
 pega a próxima; VBBR3 18/04/2024 como parcela tem prova fraca (o JCP bate exato com a DMPL, os dividendos não batem com nenhuma das duas
 leituras — fica a mais próxima). Suíte: 723 passed, 0 skipped.
+
+## 20/10/2026 — DECISÃO DE FONTE: o DPA/JCP do dossiê usa as regras do coletor do hall (fase 3, fatia 2b)
+`dossie.base.proventos_b3` agora chama `proventos_hall.dpa_jcp(tk, DATA_BASE)` — cache da B3 do hall (`dados/proventos_hall/`, nota A), as mesmas
+regras das 21 não financeiras do lote: **(a)** classe do ticker por `proventos_ex.CLASSE` (FESA4 e SHUL4 são PN; o dossiê filtrava ON fixo, e a
+PN paga 10% a mais); **(b)** linhas iguais = parcelas que somam, salvo repetição conferida; os grupos dos 8 dossiês foram classificados contra a
+DMPL da CVM e estão em `GRUPOS_CONFERIDOS` (grupo novo falha alto) — todos **parcelas**: SHUL4 dez/25 (ON e PN somadas × ações = R$ 100,0 mi =
+5.04.06 da DMPL; uma por valor = 65,0), VLID3 2025 (4 parcelas de JCP em fev e 4 em nov: R$ 241,8 mi × 242,3 da DMPL; uma por data = 60,4),
+VLID3 2019 (2 × R$ 0,35 = R$ 49,2 mi da DMPL) e 2016 (a DMPL lista três JCP de "R$ 0,23529 por ação"), ALLD3 dez/23 (DMPL 2023 R$ 22,5 mi +
+ITR 1T24 R$ 67,5 mi além do JCP de mar/24 = R$ 90 mi = as 2 linhas; acumulado DMPL 2023–1S26 R$ 421,7 mi × linhas somadas 422,6, uma só 377,6);
+HYPE3 01/02/2024 segue a única repetição; **(c)** restituição de capital fora (§6.4: HYPE3 2017 R$ 1,30; ALLD3 nov/25 R$ 1,90, que bate com a
+5.04.08 da DMPL 2025); **(d)** eventos em ações = suplemento da B3 + os que ela omite e o FRE traz — **SHUL4 bonificações de 04/12/2018 (×1,4) e
+15/04/2021 (×2,0)**, achadas pela conferência das ações do DFP do dossiê ano a ano (agora teste; a de 2021 dobrava as ações 2020 → 2021 sem
+evento). Data-com até a data do veredito; série desde 2016 (os anos anteriores saem do dicionário — nenhum consumidor do dossiê os lia: motor
+2016–25 e 2021–25, relatório 10 anos). Os mesmos eventos (B3 + FRE, `base.eventos`) passam a alimentar `pl_hist` e a diluição do dossiê.
+**Achado de carona:** `evidencia.diluicao` não aplicava a escala das ações (`base.escala`): a VLID3 com o DFP 2020 em milhares saía 308% a.a. (o
+certo é 2,5% a.a. pela subscrição de 2021 — continua ≥ 2%, a nota não muda). E `PARES_CONFERIDOS` (desdobramento + grupamento na mesma data)
+aceitava o par pela data, com qualquer fator; agora exige o produto conferido (LEVE ×3, TIMS ×1, VIVT ×2) — nenhum número do hall muda.
+A regra antiga (`sem_repeticao`, restituição somada) fica só em `base.proventos_b3_legado`, que o relatório das financeiras usa até a fatia 4
+(9f), em `relatorio/renda.py` (renda de 12 meses da carteira) e no backtest (B29).
+**Antes → depois, DPA por ação de hoje no veredito mais recente de cada dossiê** (negrito = muda; entre parênteses o de antes):
+
+| Dossiê | 2021 | 2022 | 2023 | 2024 | 2025 | 2016–25 depois × antes | DY (informativo) |
+|---|---|---|---|---|---|---|---|
+| ALLD3 (15/10) | 0,76 | 0,92 | **0,97** (0,48) | 2,37 | **0,74** (2,64) | 5,76 × 7,17 | 16,62% = |
+| BLAU3 (02/10) | 0,19 | 0,65 | 0,32 | 0,28 | 0,79 | 2,24 × 2,24 | 0,00% = |
+| CMIN3 (06/10) | 0,47 | 0,92 | 0,78 | 0,74 | 0,44 | 3,35 × 3,35 | 0,00% = |
+| FESA4 (15/10) | **0,21** (0,19) | **1,36** (1,24) | **0,69** (0,62) | **0,53** (0,48) | **0,73** (0,66) | 4,89 × 4,44 | 8,69% = |
+| HYPE3 (06/10) | 1,23 | 1,23 | 1,23 | 1,17 | 1,17 | 11,32 × 12,62 (2017 sem a restituição) | 3,95% = |
+| LEVE3 (06/10) | 1,47 | 4,49 | 9,88 | 2,36 | 2,72 | 26,17 × 26,17 | 12,20% = |
+| SHUL4 (15/10) | **0,09** (0,08) | **0,22** (0,20) | **0,29** (0,27) | **0,48** (0,43) | **0,63** (0,41) | 1,96 × 1,92 (2016–20 caem: eventos do FRE) | 5,79% → 6,85% |
+| VLID3 (15/10) | 0,00 | 0,29 | 1,22 | 1,78 | **3,08** (0,77) | 9,26 × 6,39 | 4,59% → 7,06% |
+
+(DY = DPA sustentável, limitado pelo FCFE por ação; nas que não mudam o teto é o caixa.) **Efeito nos vereditos, recalculados na mesma data:**
+nenhum central, P/C, palavra ou desconto muda nos 10 JSON de `dossie/vereditos/`. Única nota que muda: **SHUL4 15/10, gestão 0 → 1** (a
+"diluição" de 14,8% a.a. era a bonificação de 2021 que faltava; CAGR das ações certo −0,03% a.a.), média da regra 11 1,83 → 2,00, palavra CARA
+igual. O JSON salvo fica (registro append-only); o recálculo na mesma data está fixado em `test_dossie_fichas.CORRIGIDO_FATIA_2B`. Veredito novo
+só com `--data` nova; nenhum foi gerado. Golden do hall intacto. Testes: `tests/test_fase3_proventos_dossie.py` (PN, parcelas, repetição,
+restituição, eventos do FRE, grupos dos 8 dossiês, ações × eventos, diluição) e o oráculo da fatia 2 passou a comparar o hall com a regra antiga. Suíte: 747 passed, 0 failed.

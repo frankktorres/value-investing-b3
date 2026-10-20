@@ -6,16 +6,17 @@ aplicado em `motor_nao_financeiras.SI` no carregamento (`aplicar`), antes de qua
 ordem de import (AUD-26). A série da StatusInvest fica ao lado (`dpa_statusinvest`/`jcp_statusinvest`) só para a tabela
 B3 × StatusInvest e para quem ainda a usa de propósito (g1 da WEGE3, fatia 3).
 
-Regras (generaliza `dossie.base.proventos_b3`):
-  · classe do ticker avaliado = `proventos_ex.CLASSE` (PN, PNB, unit; o resto ON) — o dossiê ainda filtra ON fixo (fatia 2b);
+Regras — as mesmas do dossiê (`dossie.base.proventos_b3` chama `dpa_jcp` desde a fatia 2b, 20/10/2026):
+  · classe do ticker avaliado = `proventos_ex.CLASSE` (PN, PNB, unit; o resto ON);
   · lista FECHADA de tipos (`TIPOS`): dividendo, JCP e rendimento (atualização do dividendo pela Selic, PETR4) entram;
     restituição de capital em dinheiro fica fora (redução de capital, não lucro — doutrina §6.4; era o "Amortização" da VIVT3
     tirado à mão no lote 4). Tipo novo na B3 falha alto em vez de entrar ou sumir em silêncio;
   · só data-com ATÉ a data do preço (o que foi declarado depois não existia para o preço) e o cache baixado depois dela;
   · linhas iguais (mesma data-com e tipo, valor a ≤ 1%) são, quase sempre, PARCELAS e somam — conferido na DMPL da CVM
-    (KLBN11 2025: 4 × R$ 0,228/unit = os R$ 1,112 bi de intercalares; PETR4, TIMS3, B3SA3, WEGE3, FLRY3, RECV3); a repetição
-    de verdade (HYPE3 01/02/2024) sai. Cada grupo está classificado com a prova em `GRUPOS_CONFERIDOS`; grupo novo falha alto.
-    A regra do AUD-23 (`sem_repeticao`, uma linha só) cortava provento real e segue só no dossiê/backtest (fatia 2b);
+    (KLBN11 2025: 4 × R$ 0,228/unit = os R$ 1,112 bi de intercalares; PETR4, TIMS3, B3SA3, WEGE3, FLRY3, RECV3; nos dossiês
+    ALLD3, SHUL4, VLID3); a repetição de verdade (HYPE3 01/02/2024) sai. Cada grupo está classificado com a prova em
+    `GRUPOS_CONFERIDOS`; grupo novo falha alto. A regra do AUD-23 (`sem_repeticao`, uma linha só) cortava provento real e
+    segue só no backtest, na renda da carteira e no relatório das financeiras (`dossie.base.proventos_b3_legado`, fatia 4);
   · eventos em ações: suplemento da B3 (cache dados/proventos_hall/suplemento/) + os que a B3 omite e o FRE da CVM traz
     (`EVENTOS_FRE`, conferidos). Provento com data-com ATÉ a data-com do evento (inclusive: no mesmo dia, quem recebe o
     provento é a ação antiga) é dividido pelo multiplicador — R$ por ação de HOJE, a mesma base de `n_acoes`;
@@ -43,6 +44,8 @@ NF_HALL = ("SUZB3", "KLBN11", "RANI3", "B3SA3", "SMTO3", "KEPL3", "SLCE3",      
            "TIMS3", "VIVT3", "FLRY3", "HYPE3", "ABEV3", "WEGE3",                     # lote 4
            "PETR4", "PRIO3", "RECV3", "UGPA3", "VBBR3",                              # lote 5
            "GGBR4", "UNIP6", "LEVE3")                                                # lote 6
+# os dossiês fora do hall (dossie.base.PREGAO); HYPE3 e LEVE3 já estão em NF_HALL
+DOSSIES = ("BLAU3", "CMIN3", "ALLD3", "FESA4", "SHUL4", "VLID3")
 
 # corporateAction da B3 → o que é (None = fora do DPA). Lista fechada: tipo novo falha alto.
 TIPOS = {"DIVIDENDO": "dividendo", "JRS CAP PROPRIO": "jcp", "RENDIMENTO": "rendimento", "REST CAP DIN": None}
@@ -59,11 +62,12 @@ ISIN_CLASSE = {"ON": "ACNOR", "PN": "ACNPR", "PNA": "ACNPA", "PNB": "ACNPB", "UN
 # GRUPAMENTO (08/10/2026, dossiê LEVE3): a B3 publica o fator como RAZÃO nova ÷ antiga (MGLU 2024: 0,1 = 10 para 1), não
 # como percentual — multiplicador = fator, e fator >= 1 falha alto. Os demais tipos falham alto em vez de ajustar errado.
 SEMANTICA_CONFERIDA = ("BONIFICACAO", "DESDOBRAMENTO", "GRUPAMENTO")
-# par desdobramento + grupamento na mesma data, conferido contra a contagem de ações da CVM (multiplicador = produto):
+# par desdobramento + grupamento na mesma data, conferido contra a contagem de ações da CVM (multiplicador = produto, e o
+# produto tem de ser o conferido — a data sozinha aceitaria fator errado, ex. 100% e 0,01 = ×0,02; fatia 2b):
 #   LEVE 14/05/2012: 29.900% e 0,01 = ×3 (FRE: 42.769.500 → 128.308.500 ações);
 #   TIMS 02/07/2025: 9.900% e 0,01 = ×1 (DFP 2024 → 2025: 0,987, só recompra);
 #   VIVT 14/04/2025: 7.900% e 0,025 = ×2 (DFP 2024 → 2025: 1,965 = 2 × recompra de 1,8%).
-PARES_CONFERIDOS = {("LEVE", "2012-05-14"), ("TIMS", "2025-07-02"), ("VIVT", "2025-04-14")}
+PARES_CONFERIDOS = {("LEVE", "2012-05-14"): 3.0, ("TIMS", "2025-07-02"): 1.0, ("VIVT", "2025-04-14"): 2.0}
 
 # Eventos em ações que o suplemento da B3 NÃO traz (ele é incompleto: backtest/precos/eventos.py) e o FRE da CVM traz
 # (tabela capital_social_desdobramento: ações antes e depois da aprovação, nota A). Data-com = último pregão antes do 1º dia
@@ -92,6 +96,14 @@ EVENTOS_FRE = {
     "KLBN11": [dict(tipo="BONIFICACAO", data_com="2024-05-06", aprovacao="2024-04-16", multiplicador=1.1,
                     fonte="CVM, FRE 2023/2024 (capital integralizado 5.617.892.756 → 6.179.682.031 ações, aprovação "
                           "16/04/2024); data-com pelo COTAHIST (marca EDB 07/05/2024)")],
+    # dossiê (fatia 2b): o suplemento da B3 só traz a bonificação de 2022 da Schulz; a de 2021 dobrava as ações do DFP 2020 → 2021
+    # (89.252.424 → 178.510.448) sem evento, e a diluição do dossiê saía 14,8% a.a.
+    "SHUL4": [dict(tipo="BONIFICACAO", data_com="2018-12-04", aprovacao="2018-12-04", multiplicador=1.4,
+                   fonte=_FRE.format(ano=2021, antes="63.816.925 → 89.343.695 ações = 1,4", aprov="04/12/2018",
+                                     marca="EB 05/12/2018")),
+              dict(tipo="BONIFICACAO", data_com="2021-04-15", aprovacao="2021-04-15", multiplicador=2.0,
+                   fonte=_FRE.format(ano=2021, antes="89.343.695 → 178.687.390 ações = 2,0", aprov="15/04/2021",
+                                     marca="EB 16/04/2021"))],
 }
 
 # Linhas iguais (mesma data-com e tipo, valor a ≤ 1%) na API de proventos em dinheiro: a B3 lista UMA LINHA POR PARCELA, e
@@ -130,6 +142,24 @@ GRUPOS_CONFERIDOS = {
     ("VBBR3", "2024-04-18", "DIVIDENDO"): (PARCELAS, _DMPL.format(ano=2024, linha="5.04.06 + 5.04.07", total="2.007 mi",
                                            conta="soma das linhas aprovadas em 2024 = R$ 1.750 mi (mais perto que uma só, "
                                            "R$ 1.412 mi)")),
+    # dossiês (fatia 2b)
+    ("ALLD3", "2023-12-19", "JRS CAP PROPRIO"): (PARCELAS, "CVM: DMPL 2023 (5.04.07 JCP R$ 22,5 mi) + ITR 1T24 (R$ 167,5 mi = "
+                                                 "R$ 100 mi de mar/24 + 67,5) = R$ 90 mi = 2 × R$ 0,4827 × 93,2 mi ações; "
+                                                 "acumulado DMPL 2023–1S26 = R$ 421,7 mi × linhas somadas R$ 422,6 mi (uma só: "
+                                                 "R$ 377,6 mi)"),
+    ("SHUL4", "2025-12-26", "DIVIDENDO"): (PARCELAS, _DMPL.format(ano=2025, linha="5.04.06 dividendos", total="100,0 mi",
+                                           conta="ON (3 linhas) e PN (3 linhas) somadas × ações em circulação = R$ 100,0 mi; "
+                                           "uma por valor = 65,0")),
+    ("VLID3", "2025-03-13", "JRS CAP PROPRIO"): (PARCELAS, _DMPL.format(ano=2025, linha="5.04.07 JCP", total="242,3 mi",
+                                                 conta="as 8 linhas aprovadas em 2025 (4 de fev, 4 de nov) × 78,46 mi ações "
+                                                 "em circulação = R$ 241,8 mi; uma por data = 60,4")),
+    ("VLID3", "2025-11-28", "JRS CAP PROPRIO"): (PARCELAS, "idem VLID3 2025-03-13 (mesma DMPL 2025)"),
+    ("VLID3", "2019-11-14", "JRS CAP PROPRIO"): (PARCELAS, _DMPL.format(ano=2019, linha="5.04.12 pagamento de JCP",
+                                                 total="49,2 mi", conta="2 × R$ 0,35 × ~70,3 mi ações em circulação (71,2 mi "
+                                                 "integralizadas no FRE); uma só = 24,6")),
+    ("VLID3", "2016-12-15", "JRS CAP PROPRIO"): (PARCELAS, _DMPL.format(ano=2016, linha="5.04.10 a 5.04.12", total="45,7 mi",
+                                                 conta="três JCP de 'R$ 0,23529 por ação' = a linha de set/16 + as 2 de dez/16; "
+                                                 "uma só em dez = dois")),
     ("HYPE3", "2024-02-01", "JRS CAP PROPRIO"): (REPETICAO, _DMPL.format(ano=2024, linha="5.04.07 JCP", total="661,9 mi",
                                                  conta="uma linha só: JCP aprovado em 2024 sem a repetida = R$ 662 mi; "
                                                  "somando = 723")),
@@ -190,12 +220,16 @@ def eventos_em_acoes(tk: str, suplemento, isin_de=lambda tk: None) -> list[dict]
         out[k] = x
     # desdobramento + grupamento na MESMA data-com: a B3 não publica o par de um jeito só (adversário, 08/10). Só passa o par
     # conferido contra a contagem de ações da CVM; o resto falha alto
-    datas = {}
+    datas, produto = {}, {}
     for x in out.values():
         datas.setdefault(x["data_com"], set()).add(x["tipo"])
+        produto[x["data_com"]] = produto.get(x["data_com"], 1.0) * x["multiplicador"]
     for d, tipos in datas.items():
-        if {"DESDOBRAMENTO", "GRUPAMENTO"} <= tipos and (tk[:4], d) not in PARES_CONFERIDOS:
-            raise NotImplementedError(f"{tk}: desdobramento e grupamento na mesma data ({d}) sem conferência na CVM — ajustar à mão")
+        if {"DESDOBRAMENTO", "GRUPAMENTO"} <= tipos:
+            conf = PARES_CONFERIDOS.get((tk[:4], d))
+            if conf is None or abs(produto[d] / conf - 1) > 1e-9:
+                raise NotImplementedError(f"{tk}: desdobramento e grupamento na mesma data ({d}), produto ×{produto[d]:g}, sem "
+                                          f"conferência na CVM (conferido: {conf}) — ajustar à mão")
     return list(out.values())
 
 

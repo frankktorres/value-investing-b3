@@ -228,11 +228,12 @@ def test_sem_evento_declarado_nao_tem_marca_no_cotahist():
 @pytest.mark.skipif(not (AQUI / "backtest" / "dados" / "proventos" / "dinheiro").exists(),
                     reason="sem o cache de proventos do backtest (dado local)")
 @pytest.mark.parametrize("tk", ["HYPE3", "LEVE3"])
-def test_oraculo_igual_ao_dossie(tk):
-    """O coletor do hall e `dossie.base.proventos_b3` (outro cache, outro código) dão o mesmo DPA/JCP de 2016 a 2025. Única
-    diferença conhecida: o dossiê soma a restituição de capital da HYPE3 de 2017 (R$ 1,30, fatia 2b)."""
-    from dossie.base import proventos_b3
-    dpa_d, jcp_d = proventos_b3(tk)
+def test_oraculo_igual_a_regra_antiga(tk):
+    """O coletor do hall (que o dossiê usa desde a fatia 2b) e a regra antiga do dossiê (`base.proventos_b3_legado`: outro
+    cache, outro código) dão o mesmo DPA/JCP de 2016 a 2025. Única diferença conhecida: a regra antiga soma a restituição de
+    capital da HYPE3 de 2017 (R$ 1,30; §6.4)."""
+    from dossie.base import proventos_b3_legado
+    dpa_d, jcp_d = proventos_b3_legado(tk)
     dpa_h, jcp_h = ph.dpa_jcp(tk)
     conhecida = {("HYPE3", "2017"): 1.300515236}
     for a in map(str, range(2016, 2026)):

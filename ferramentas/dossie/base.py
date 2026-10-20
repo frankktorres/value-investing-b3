@@ -6,7 +6,10 @@ nos dicionários do motor só em memória (`carregar`). Um ticker novo num lote 
 Fontes (doutrina §2, regra 1 do 02):
   · demonstrações e ações em circulação — CVM, DFP/ITR (A), coletadas por `coletar_cvm.main(..., arq=SERIES)`;
   · preço — COTAHIST da B3, fechamento de DATA_BASE (A); outra data só com o mercado do mesmo dia (`na_data`, `mercado`);
-  · proventos por data-com — API pública da B3, cache do backtest (A);
+  · proventos por data-com — API pública da B3, cache do hall em dados/proventos_hall/ (A), com as regras do coletor do
+    hall (`proventos_hall.dpa_jcp`: classe do ticker, parcelas × repetição conferidas na DMPL, restituição de capital fora,
+    eventos em ações da B3 + FRE). Cache e suplemento baixados DEPOIS da data-base (`python proventos_ex.py TK` e
+    `python proventos_hall.py --suplemento TK`), senão falha alto;
   · data de pagamento, só para a defasagem do §6.3 — StatusInvest (C; a B3 não publica a data de pagamento nessa API).
 """
 from __future__ import annotations
@@ -41,20 +44,6 @@ CNPJ = {"BLAU3": "58.430.828/0001-60", "CMIN3": "08.902.291/0001-15", "HYPE3": "
         "FESA4": "15.141.799/0001-03", "SHUL4": "84.693.183/0001-68", "VLID3": "33.113.309/0001-47"}
 
 
-# Tipos de evento com semântica conferida contra a contagem de ações da CVM (fonte A). Nos dois o `fator_b3` é o % de ações
-# novas sobre as antigas, e o multiplicador da quantidade é 1 + fator/100:
-#   · BONIFICACAO — BLAU 30,0 em 2026 = 30 novas por 100, batendo 177,7 → 228,8 mi no DFP;
-#   · DESDOBRAMENTO — BBAS 100,0 em 15/04/2024 (2 por 1): DFP 2023 → 2024, 2.865.417.020 → 5.730.834.040 ações integralizadas
-#     (×2 exato). O fator NÃO é a razão (seria ×100): MGLU 300,0 em 2020 é o 4 por 1.
-# Grupamento (o fator é a razão, ex.: MGLU 0,1 em 2024) e os demais tipos falham alto em vez de ajustar errado.
-SEMANTICA_CONFERIDA = ("BONIFICACAO", "DESDOBRAMENTO", "GRUPAMENTO")
-# par desdobramento + grupamento na mesma data, conferido contra a contagem de ações da CVM (FRE): LEVE3 14/05/2012,
-# 42.769.500 → 128.308.500 ações (×3 = 300 × 0,01)
-PARES_CONFERIDOS = {("LEVE", "2012-05-14")}
-# GRUPAMENTO (08/10/2026, dossiê LEVE3): a B3 publica o fator como RAZÃO nova ÷ antiga (MGLU 2024: 0,1 = 10 para 1), não
-# como percentual — multiplicador = fator, e fator >= 1 falha alto. Na LEVE3 o evento é de 14/05/2012 (desdobramento ×300
-# + grupamento ÷100 na mesma data = ×3 líquido), fora da janela do dossiê; não move número.
-
 
 def isin_do_ticker(tk: str) -> str | None:
     """ISIN do ticker no COTAHIST mais recente (lote padrão), para escolher a classe certa entre os eventos da B3."""
@@ -67,68 +56,42 @@ def isin_do_ticker(tk: str) -> str | None:
 
 
 def eventos_em_acoes(tk: str, suplemento=None) -> list[dict]:
-    """Eventos em ações da B3 (GetListedSupplementCompany, fonte A) pela raiz do ticker, com o multiplicador da quantidade
-    de ações (`SEMANTICA_CONFERIDA`); qualquer outro tipo falha alto. `suplemento` = DataFrame no formato de
-    `carregar_suplemento` (testes)."""
+    """Eventos em ações do SUPLEMENTO da B3 (cache do backtest, ou `suplemento` no formato de `carregar_suplemento`), com as
+    regras de `proventos_hall.eventos_em_acoes` (semântica conferida na CVM; tipo novo falha alto) e a classe pelo ISIN do
+    COTAHIST. Não traz os eventos que só o FRE tem — o dossiê usa `eventos(tk)`; isto fica para a renda da carteira e testes."""
+    import proventos_hall
     if suplemento is None:
         from backtest.precos.proventos_b3 import carregar_suplemento
         suplemento = carregar_suplemento()
-    s = suplemento[suplemento["raiz"] == tk[:4]]
-    isins = sorted({str(i) for i in s.get("isin", []) if str(i)})
-    proprio = isin_do_ticker(tk) if len(isins) > 1 else None
-    if proprio in isins:
-        # a classe do próprio ticker decide (LEVE3: a ON tem o par de 2012; a PN, extinta, só os eventos de 1992)
-        s = s[s["isin"] == proprio]
-        chave = lambda x, f: (x["tipo"], x["data_com"], f)
-    elif len(isins) > 1:
-        # com o ISIN: cada classe tem o seu conjunto de eventos; conjuntos iguais = o mesmo evento repetido (conta uma vez);
-        # conjuntos diferentes = fator diferente por classe, sem semântica conferida. Isso aceita dois eventos do MESMO tipo
-        # na mesma data com fatores diferentes (LEVE3, 28/04/1992: bonificações de 20% e 1.080% em ON e PN)
-        por_isin = {i: sorted((r["tipo"], str(r["data_com"])[:10], float(r["fator_b3"])) for _, r in s[s["isin"] == i].iterrows())
-                    for i in isins}
-        if len({tuple(v) for v in por_isin.values()}) > 1:
-            raise NotImplementedError(f"{tk}: eventos diferentes por classe {sorted(por_isin)} — ajustar à mão")
-        s = s[s["isin"] == isins[0]]
-        chave = lambda x, f: (x["tipo"], x["data_com"], f)
-    else:
-        chave = lambda x, f: (x["tipo"], x["data_com"])
-    out = {}
-    for _, e in s.iterrows():
-        if e["tipo"] not in SEMANTICA_CONFERIDA:
-            raise NotImplementedError(f"{tk}: evento {e['tipo']} sem semântica conferida — ajustar à mão")
-        f = float(e["fator_b3"])
-        if not f > 0:
-            raise ValueError(f"{tk}: {e['tipo']} de {e['data_com']} com fator {e['fator_b3']!r}")
-        if e["tipo"] == "GRUPAMENTO" and not f < 1:
-            raise ValueError(f"{tk}: GRUPAMENTO de {e['data_com']} com fator {f} >= 1 (a B3 publica a razão, ex. 0,1)")
-        x = {"tipo": e["tipo"], "data_com": str(e["data_com"])[:10], "aprovacao": str(e["data_aprovacao"])[:10],
-             "multiplicador": f if e["tipo"] == "GRUPAMENTO" else 1 + f / 100}
-        # a B3 repete o evento por ISIN (ON, PN, UNIT): um só por (tipo, data-com), senão o multiplicador entra ao quadrado
-        # (adversário, 07/10); fatores diferentes entre classes na mesma data não têm semântica conferida → falha alto
-        k = chave(x, f)
-        if k in out and out[k]["multiplicador"] != x["multiplicador"]:
-            raise NotImplementedError(f"{tk}: {k} com fatores diferentes por classe — ajustar à mão")
-        out[k] = x
-    # desdobramento + grupamento na MESMA data-com: a B3 não publica o par de um jeito só (LEVE3 2012: 29.900% e 0,01 = ×3; TIMS3
-    # 2025: 100 e 0,01 = ×1; VIVT3 2025: 80 e 0,025 = ×2 — adversário, 08/10). Só passa o par conferido contra a contagem de ações
-    # da CVM; o resto falha alto
-    datas = {}
-    for x in out.values():
-        datas.setdefault(x["data_com"], set()).add(x["tipo"])
-    for d, tipos in datas.items():
-        if {"DESDOBRAMENTO", "GRUPAMENTO"} <= tipos and (tk[:4], d) not in PARES_CONFERIDOS:
-            raise NotImplementedError(f"{tk}: desdobramento e grupamento na mesma data ({d}) sem conferência na CVM — ajustar à mão")
-    return list(out.values())
+    return proventos_hall.eventos_em_acoes(tk, suplemento, isin_do_ticker)
+
+
+def eventos(tk: str) -> list[dict]:
+    """Eventos em ações do ticker com data-com até DATA_BASE: suplemento da B3 (cache do hall) + os que a B3 omite e o FRE da
+    CVM traz (`proventos_hall.EVENTOS_FRE`; SHUL4 2018 e 2021). O mesmo conjunto que ajusta o DPA (`proventos_b3`)."""
+    import proventos_hall
+    return proventos_hall.eventos(tk, DATA_BASE)
 
 
 def proventos_b3(tk: str) -> tuple[dict[str, float], dict[str, float]]:
-    """DPA e JCP por ano da data-com (R$ por ação ON de HOJE), da API da B3: o provento com data-com anterior a uma
-    bonificação ou desdobramento é dividido pelo multiplicador, para comparar com a quantidade atual de ações."""
+    """DPA e JCP por ano da data-com (R$ por ação de HOJE, na classe do ticker), com data-com até DATA_BASE — as regras do
+    coletor do hall (`proventos_hall.dpa_jcp`, fase 3 fatia 2b): classe por `proventos_ex.CLASSE` (FESA4/SHUL4 são PN),
+    linhas iguais = parcelas que somam salvo repetição conferida na DMPL (`GRUPOS_CONFERIDOS`; grupo novo falha alto),
+    restituição de capital fora (§6.4), eventos da B3 + FRE com o provento do mesmo dia na base antiga. Série desde 2016."""
+    import proventos_hall
+    return proventos_hall.dpa_jcp(tk, DATA_BASE)
+
+
+def proventos_b3_legado(tk: str) -> tuple[dict[str, float], dict[str, float]]:
+    """A regra ANTERIOR à fatia 2b (cache do backtest pelo nome de pregão, `sem_repeticao` do AUD-23, restituição de capital
+    somada, evento só da B3 e estrito na data-com), agora na classe do ticker. Só o relatório das financeiras a usa, até elas
+    terem os grupos de linhas iguais conferidos na DMPL (fatia 4, docs/MISSOES.md 9f); e o oráculo do teste da fatia 2."""
     from backtest.precos.proventos_b3 import carregar_dinheiro, sem_repeticao
+    import proventos_ex
     ev = eventos_em_acoes(tk)
     d = carregar_dinheiro()
-    d = d[(d["nome"] == PREGAO[tk]) & (d["tipo_acao"] == "ON")]
-    d = sem_repeticao(d, ["nome", "data_com", "tipo"])        # AUD-23: a B3 repete a linha (HYPE3 01/02/2024 duas vezes)
+    d = d[(d["nome"] == PREGAO[tk]) & (d["tipo_acao"] == proventos_ex.CLASSE.get(tk, "ON"))]
+    d = sem_repeticao(d, ["nome", "data_com", "tipo"])
     dpa, jcp = defaultdict(float), defaultdict(float)
     for _, e in d.iterrows():
         com = str(e["data_com"])[:10]
@@ -234,7 +197,7 @@ def pl_hist(tk: str) -> float | None:
     """Mediana do P/L de fim de exercício (fechamento do último pregão do ano × ações do DFP ÷ lucro do controlador),
     só anos com 0 < P/L < 40 — o mesmo corte do `pl_hist` do hall, mas com fonte A em vez do agregador."""
     a = CVM[tk]["anual"]
-    ev = eventos_em_acoes(tk)
+    ev = eventos(tk)
     xs = []
     for ano, d in a.items():
         lucro, acoes = d.get("lucro_controlador") or d.get("lucro"), d.get("acoes")

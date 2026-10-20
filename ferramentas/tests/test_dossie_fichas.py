@@ -43,9 +43,21 @@ def test_veredito_refeito_pela_onda_1_1(nome):
     assert v["central"] != pytest.approx(salvo["central"], abs=1e-3)      # o JSON antigo continua sendo o do método antigo
 
 
+# Fase 3, fatia 2b (20/10/2026): a bonificação de 2021 da Schulz (FRE; a B3 não publica) entra nos eventos e desfaz a
+# "diluição" de 14,8% a.a. → CAGR das ações −0,03% a.a. e gestão 0 → 1. Central, P/C e palavra iguais; o JSON salvo fica (o
+# registro é append-only, veredito novo = data nova). Ver 09-diario de 20/10.
+CORRIGIDO_FATIA_2B = {
+    "SHUL4-2026-10-15": {"notas_regra11": {"moat": 0, "gestao": 1, "controlador": 3, "ciclo": 3, "fisher": 2},
+                         "media_regra11": 2.0},
+}
+
+
 @pytest.mark.parametrize("nome", [n for n in ARQUIVOS if n not in SUPERADOS and n not in METODO_ONDA_1_1])
 def test_veredito_salvo_reproduz(nome):
     salvo = json.loads((VEREDITOS / f"{nome}.json").read_text(encoding="utf-8"))
+    if nome in CORRIGIDO_FATIA_2B:
+        assert all(salvo[k] != v for k, v in CORRIGIDO_FATIA_2B[nome].items())     # o JSON antigo segue o de antes
+        salvo |= CORRIGIDO_FATIA_2B[nome]
     v = gerar.veredito(gerar.calcular(salvo["ticker"], salvo["data_preco"]))
     for k in ("central", "pc", "desc_controlador", "media_regra11", "preco"):
         assert v[k] == pytest.approx(salvo[k], abs=1e-4), k
@@ -128,7 +140,6 @@ def test_aud23_b3_repete_linha_de_jcp_e_a_soma_nao_dobra():
     assert len(u) == 4 and u["valor"].sum() == pytest.approx(0.09725 * 2 + 0.16911 + 0.12170)
 
 
-@requer_suplemento_b3
 def test_aud23_dpa_real_da_hype3_2024_bate_com_a_statusinvest():
     from dossie import base
     dpa, _ = base.proventos_b3("HYPE3")

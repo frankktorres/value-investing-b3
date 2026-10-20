@@ -140,11 +140,12 @@ def tabela(c: dict) -> dict[str, Origem]:
     emp, data = c["empresa"], c["data"]
     t = {"preco": Origem("COTAHIST", "A", f"B3, COTAHIST, fechamento (PREULT) de {data}"), "mercado": _mercado(c)}
     if c["dossie"] is not None:
+        import proventos_hall          # o dossiê lê o DPA com as regras do coletor do hall (fatia 2b)
         anos = c["dossie"]["anos"]
         serie = Origem("CVM DFP/ITR", "A", f"CVM, DFP {anos[0]}–{anos[-1]} + ITR de 2026 (LTM), dados abertos")
         t |= {"serie": serie,
               "acoes": Origem("CVM ITR (ações)", "A", "CVM, composição do capital do ITR (sem tesouraria)"),
-              "proventos": Origem("B3 proventos", "A", "B3, proventos em dinheiro por data-com (API pública)"),
+              "proventos": proventos_hall.ORIGEM_B3,
               "pl_hist": Origem("CVM + COTAHIST", "A", "P/L histórico: lucro e ações do DFP (CVM) × fechamento do ano (B3)"),
               "proventos_ja_ex": B3_JA_EX, "dados_lote": _insumos_dossie(emp.ticker, serie), "kd": kd(emp)}
     elif c["financeira"]:
