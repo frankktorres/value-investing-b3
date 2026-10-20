@@ -58,7 +58,7 @@ def test_linha_hall_traduz_sem_inventar():
     assert x["fator_saida"] == 1.5 and x["central_nota"] == "B" and x["metodos_total"] == 5
     # o que o motor não entrega fica None: setor, yield (sem seção de dividendos), série, defasagem
     assert x["setor"] is None and x["yield_sust"] is None and x["yield_nota"] == "—"
-    assert x["serie_12m"] is None and x["dias_defasagem"] is None and x["velho"] is False
+    assert x["serie_12m"] is None and x["dias_defasagem"] is None and x["velho"] is None
 
 
 def test_linha_hall_sem_regua_e_dado_velho():
@@ -147,7 +147,7 @@ def test_monitor_entrou_e_saiu():
                  r("2026-10-16", "A", "≤ COMPRA", "0.69"), r("2026-10-16", "B", "", "1.2"), r("2026-10-16", "C", "", "1"),
                  r("2026-10-16", "D", "", "1")])
     assert [x["ticker"] for x in m["entraram_compra"]] == ["A"] and m["entraram_compra"][0]["pc_anterior"] == 0.8
-    assert [x["ticker"] for x in m["sairam_saida"]] == ["B"] and m["sem_mudanca"] == 1 and m["novos"] == ["D"]
+    assert [x["ticker"] for x in m["sairam_saida"]] == ["B"] and m["sem_mudanca"] == 2 and m["novos"] == ["D"]   # C e D (novo, sem alerta)
     assert monitor([])["rodada"] is None
 
 
@@ -166,3 +166,56 @@ def test_real_contrato_sem_valor_inventado():
         assert e["setor"] is None
         assert e["palavra"] == palavra_codigo(bruto[e["ticker"]]["palavra"])
         assert e["central"] == bruto[e["ticker"]]["central"] and e["compra"] == bruto[e["ticker"]]["compra"]
+
+
+# ------------------------------------------------------------------------------ regressões do adversário (20/10/2026)
+def test_sem_cotacao_velho_e_desconhecido():
+    assert linha_hall(bruta(), None, None, None, "2026-10-20", 7, FAT)["velho"] is None
+
+
+def test_monitor_ticker_removido_e_novo_ja_em_alerta():
+    def r(rod, tk, alerta):
+        return {"rodada": rod, "pregao": rod, "ticker": tk, "preco": "10", "central": "10", "pc": "1", "alerta": alerta}
+    m = monitor([r("2026-10-10", "AAA3", "≤ COMPRA"), r("2026-10-10", "BBB3", "≥ SAÍDA"),
+                 r("2026-10-16", "CCC3", "≤ COMPRA")])
+    assert [x["ticker"] for x in m["sairam_compra"]] == ["AAA3"] and m["sairam_compra"][0]["removido"]
+    assert [x["ticker"] for x in m["sairam_saida"]] == ["BBB3"]
+    assert [x["ticker"] for x in m["entraram_compra"]] == ["CCC3"] and m["entraram_compra"][0]["novo"]
+    assert m["removidos"] == ["AAA3", "BBB3"] and m["novos"] == ["CCC3"]
+    so_uma = monitor([r("2026-10-16", "CCC3", "≤ COMPRA")])
+    assert so_uma["entraram_compra"] == [] and so_uma["rodada_anterior"] is None   # 1ª rodada: nada "entrou"
+
+
+@pytest.mark.parametrize("cab,linhas", [(["Ke \\ m", "+0 p.p."], [[]]), ([], [["+0 p.p.", "1,00"]]),
+                                        (["Ke \\ m", "-2 p.p.", "+0 p.p."], [["+0 p.p.", "10,00"]])])
+def test_sensibilidade_irregular_vira_none(cab, linhas):
+    tab = {"titulo": "x", "cabecalho": cab, "linhas": linhas}
+    assert contrato.sensibilidade(bruto_emp([secao("Sensibilidade", tabelas=[tab])]), 10.0, FAT, 1.3) is None
+
+
+def test_pagamento_sem_data_nao_e_declarado_e_valor_por_acao_fica_texto():
+    rel = Relatorio("CARTEIRA", "Painel", "2026-10-15", "x", "—", secoes=[
+        Secao("Calendário de pagamento", tabelas=[("A receber (x)", [""] * 8, [
+            ["T3", "2026-10-01", "sem data", "sem data", "JCP", "0,00", "R$ 0,41", "sim"],
+            ["T3", "2026-10-01", "2026-11-01", "estimada", "JCP", "0,03", "R$ 0,41", "sim"]])])])
+    pg = contrato.carteira(rel, {}, [])["pagamentos"]
+    assert [p["status"] for p in pg] == [None, "estimado"] and pg[0]["por_acao_txt"] == "0,00"
+    assert "por_acao" not in pg[0]
+
+
+def test_carteira_quebrada_nao_derruba_o_resto(tmp_path, monkeypatch):
+    from relatorio import carteira as mod
+    monkeypatch.setattr(mod, "carregar", lambda *a, **k: (_ for _ in ()).throw(ValueError("renda.jsonl linha 1")))
+    monkeypatch.setattr(mod, "garantir_ignorado", lambda p: None)
+    monkeypatch.setattr(contrato, "series_12m", lambda tks, hoje: ({}, {}))
+    import monitor_semanal
+    monkeypatch.setattr(monitor_semanal, "HISTORICO", tmp_path / "nao_existe.csv")
+    origem = tmp_path / "bruto"
+    (origem / "empresas").mkdir(parents=True)
+    (origem / "hall.json").write_text(json.dumps({"gerado_em": "x", "pregao_hoje": None, "avisos": [],
+                                                  "empresas": [bruta()]}), encoding="utf-8")
+    (origem / "empresas" / "TESTA3.json").write_text(json.dumps(bruto_emp([])), encoding="utf-8")
+    r = contrato.gerar(origem, tmp_path / "c", tmp_path / "p", hoje="2026-10-20", log=lambda *_: None)
+    assert r["carteira"]["vazia"] and "renda.jsonl" in r["carteira"]["erro"]
+    assert r["monitor"]["aviso"] and (tmp_path / "c" / "monitor.json").exists()
+    assert any("Sem série" in a for a in r["hall"]["avisos"]) and r["hall"]["empresas"][0]["velho"] is None

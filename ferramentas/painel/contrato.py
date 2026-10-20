@@ -125,6 +125,8 @@ def sensibilidade(bruto: dict, preco: float | None, fat: dict, fator_saida: floa
         return None
     t = s["tabelas"][0]
     cab, linhas = t["cabecalho"], t["linhas"]
+    if len(cab) < 2 or not linhas or any(len(ln) != len(cab) for ln in linhas):
+        return None                                        # grade irregular: a tela mostra "sem fonte", não chuta
     eixo_linha, _, eixo_coluna = cab[0].partition("\\")
     valores = [[br_num(c) for c in ln[1:]] for ln in linhas]
     saida = fator_saida or fat["saida"]
@@ -178,7 +180,7 @@ def riscos(bruto: dict) -> dict:
     return {"itens": itens, "texto": list(s["texto"]) if s else []}
 
 
-def proventos(bruto: dict, serie_b3: tuple[dict, dict] | None = None) -> dict:
+def proventos(bruto: dict, serie_b3: tuple[dict, dict] | None = None, hoje: str | None = None) -> dict:
     """Histórico por exercício (tabela do dossiê, B3 nota A; senão a série B3 do hall) + números da seção Dividendos."""
     s = _secao(bruto, "Dividendos e JCP")
     historico, fonte_hist = None, None
@@ -192,7 +194,7 @@ def proventos(bruto: dict, serie_b3: tuple[dict, dict] | None = None) -> dict:
         fonte_hist = {"fonte": "B3 proventos", "nota": "A"}
     elif serie_b3:
         dpa, jcp = serie_b3
-        hoje_ano = str(date.today().year)
+        hoje_ano = (hoje or date.today().isoformat())[:4]
         historico = [{"ano": a, "parcial": a == hoje_ano, "total": dpa[a], "jcp": jcp.get(a, 0.0),
                       "dividendos": round(dpa[a] - jcp.get(a, 0.0), 10)} for a in sorted(dpa)]
         fonte_hist = {"fonte": "B3 proventos", "nota": "A"}
@@ -240,12 +242,12 @@ def linha_hall(bruta: dict, bruto_emp: dict | None, serie: list | None, ultimo: 
         "pc": bruta["pc_hoje"], "situacao": bruta["situacao"] or None,
         "yield_sust": _finito(dy["valor"]) if dy else None, "yield_nota": dy["nota"] if dy else SEM_FONTE,
         "serie_12m": serie, "ultimo_pregao": ultimo, "dias_defasagem": dias,
-        "velho": dias is not None and dias > dias_velho,
+        "velho": None if dias is None else dias > dias_velho,       # sem cotação: desconhecido, não "novo"
         "fora_do_hall": bruta["fora_do_hall"], "na_carteira": bruta["na_carteira"],
         "avisos": list(bruta["avisos"]), "erro": bruta["erro"]}
 
 
-def empresa(linha: dict, bruto: dict, fat: dict, serie_b3=None) -> dict:
+def empresa(linha: dict, bruto: dict, fat: dict, serie_b3=None, hoje: str | None = None) -> dict:
     met, ind = metodos(bruto)
     centrais = [m for m in met if m["entra_no_central"] and m["base"] is not None]
     return {
@@ -255,7 +257,7 @@ def empresa(linha: dict, bruto: dict, fat: dict, serie_b3=None) -> dict:
         "metodos": met, "indicadores": ind,
         "sensibilidade": sensibilidade(bruto, linha["preco"], fat, linha["fator_saida"]),
         "premissas": premissas(bruto), "qualitativo": qualitativo(bruto), "riscos": riscos(bruto),
-        "proventos": proventos(bruto, serie_b3), "fontes": fontes(bruto),
+        "proventos": proventos(bruto, serie_b3, hoje), "fontes": fontes(bruto),
         "avisos": list(bruto.get("avisos", [])), "data_relatorio": bruto.get("data")}
 
 
@@ -296,9 +298,9 @@ def carteira(rel, linhas_hall: dict[str, dict], historico: list[dict]) -> dict:
                   for ln in (cal[1] if cal else [])]
     rec = _tabela(rel, "Calendário de pagamento", "A receber")
     pagamentos = [{"ticker": ln[0], "data_com": ln[1], "data": None if ln[2] == "sem data" else ln[2],
-                   "data_de": ln[3], "tipo": ln[4], "por_acao": br_num(ln[5]), "valor": br_num(ln[6]),
+                   "data_de": ln[3], "tipo": ln[4], "por_acao_txt": ln[5], "valor": br_num(ln[6]),
                    "na_renda_12m": ln[7] == "sim",
-                   "status": "estimado" if ln[3] == "estimada" else "declarado",     # a data de pagamento
+                   "status": {"estimada": "estimado", "sem data": None}.get(ln[3], "declarado"),  # da data
                    "so_statusinvest": "só StatusInvest" in ln[7], "nota": "C", "obs": ln[7]}
                   for ln in (rec[1] if rec else [])]
     renda_liq = _kpi(rel, "Meta de renda", "Renda líquida")
@@ -333,23 +335,23 @@ def monitor(linhas: list[dict]) -> dict:
     rodadas = sorted(por_rodada)
     if not rodadas:
         return {"versao": VERSAO, "rodada": None, "rodada_anterior": None, "entraram_compra": [], "sairam_compra": [],
-                "entraram_saida": [], "sairam_saida": [], "sem_mudanca": 0, "novos": [], "tickers": 0}
+                "entraram_saida": [], "sairam_saida": [], "sem_mudanca": 0, "novos": [], "removidos": [],
+                "tickers": 0, "aviso": None}
     atual = por_rodada[rodadas[-1]]
     ant = por_rodada[rodadas[-2]] if len(rodadas) > 1 else {}
 
     def item(tk):
-        a, b = ant.get(tk, {}), atual[tk]
-        return {"ticker": tk, "alerta_anterior": a.get("alerta") or None, "alerta_atual": b["alerta"] or None,
-                "preco_anterior": br_num(_f(a.get("preco"))), "preco_atual": br_num(_f(b["preco"])),
-                "central_anterior": br_num(_f(a.get("central"))), "central_atual": br_num(_f(b["central"])),
-                "pc_anterior": br_num(_f(a.get("pc"))), "pc_atual": br_num(_f(b["pc"]))}
+        a, b = ant.get(tk, {}), atual.get(tk, {})
+        return {"ticker": tk, "alerta_anterior": a.get("alerta") or None, "alerta_atual": b.get("alerta") or None,
+                "preco_anterior": _f(a.get("preco")), "preco_atual": _f(b.get("preco")),
+                "central_anterior": _f(a.get("central")), "central_atual": _f(b.get("central")),
+                "pc_anterior": _f(a.get("pc")), "pc_atual": _f(b.get("pc")),
+                "novo": tk not in ant, "removido": tk not in atual}
 
     listas = {"entraram_compra": [], "sairam_compra": [], "entraram_saida": [], "sairam_saida": []}
     sem = 0
-    for tk in sorted(atual):
-        if tk not in ant:
-            continue
-        a, b = ant[tk]["alerta"], atual[tk]["alerta"]
+    for tk in (sorted(set(atual) | set(ant)) if ant else []):     # 1ª rodada: nada "entrou"
+        a, b = ant.get(tk, {}).get("alerta"), atual.get(tk, {}).get("alerta")
         mudou = False
         for alvo, ent, sai in ((COMPRA_A, "entraram_compra", "sairam_compra"), (SAIDA_A, "entraram_saida", "sairam_saida")):
             if b == alvo and a != alvo:
@@ -359,11 +361,15 @@ def monitor(linhas: list[dict]) -> dict:
         sem += not mudou
     return {"versao": VERSAO, "rodada": rodadas[-1], "pregao": next(iter(atual.values()))["pregao"],
             "rodada_anterior": rodadas[-2] if len(rodadas) > 1 else None, **listas, "sem_mudanca": sem,
-            "novos": sorted(set(atual) - set(ant)) if ant else [], "tickers": len(atual)}
+            "novos": sorted(set(atual) - set(ant)) if ant else [], "removidos": sorted(set(ant) - set(atual)),
+            "tickers": len(atual), "aviso": None}
 
 
 def _f(x):
-    return float(x) if x not in (None, "") else None
+    try:
+        return _finito(float(x)) if x not in (None, "") else None
+    except ValueError:
+        return None
 
 
 # ------------------------------------------------------------------------------ dados reais
@@ -416,6 +422,8 @@ def gerar(origem: Path = DADOS, destino: Path = DESTINO, privado: Path = PRIVADO
     avisos = list(hall_bruto["avisos"])
     try:
         series, ultimo = series_12m(tks, hoje)
+        if not series:
+            avisos.append("Sem série de 12 meses nem último pregão: COTAHIST ausente ou sem os tickers.")
     except (FileNotFoundError, OSError, ValueError) as ex:
         series, ultimo = {}, {}
         avisos.append(_sem_caminho(f"Sem série de 12 meses ({type(ex).__name__}: {ex})."))
@@ -425,7 +433,7 @@ def gerar(origem: Path = DADOS, destino: Path = DESTINO, privado: Path = PRIVADO
               for x in hall_bruto["empresas"]}
     for tk in tks:
         if brutos[tk] is not None:
-            _gravar_json(destino / "empresa" / f"{tk}.json", empresa(linhas[tk], brutos[tk], fat, _serie_b3(tk)))
+            _gravar_json(destino / "empresa" / f"{tk}.json", empresa(linhas[tk], brutos[tk], fat, _serie_b3(tk), hoje))
     hall = {"versao": VERSAO, "gerado_em": datetime.now().isoformat(timespec="seconds"), "hoje": hoje,
             "exportado_em": hall_bruto["gerado_em"], "cotacao_em": hall_bruto["pregao_hoje"],
             "demonstracoes_ref": None, "dias_velho": dias_velho, "fatores": fat, "avisos": avisos,
@@ -439,17 +447,17 @@ def gerar(origem: Path = DADOS, destino: Path = DESTINO, privado: Path = PRIVADO
     _gravar_json(destino / "hall.json", hall)
 
     # dado pessoal: só aqui, só em privado/ (ignorado e conferido acima)
-    rel_cart, cart_erro = None, None
     try:
-        rel_cart = mod_carteira.carregar(hoje, baixar=False)
-    except (FileNotFoundError, ValueError, KeyError, OSError) as ex:
-        cart_erro = _sem_caminho(f"{type(ex).__name__}: {ex}")
-    cart = (carteira(rel_cart, linhas, mod_carteira.ler_historico()) if rel_cart is not None
-            else carteira_vazia(cart_erro or "carteira não montou"))
+        cart = carteira(mod_carteira.carregar(hoje, baixar=False), linhas, mod_carteira.ler_historico())
+    except Exception as ex:                                # noqa: BLE001 — carteira quebrada não derruba hall/monitor
+        cart = carteira_vazia(_sem_caminho(f"{type(ex).__name__}: {ex}"))
     _gravar_json(privado / "carteira.json", cart)
 
-    with open(monitor_semanal.HISTORICO, encoding="utf-8", newline="") as f:
-        mon = monitor(list(csv.DictReader(f)))
+    try:
+        with open(monitor_semanal.HISTORICO, encoding="utf-8", newline="") as f:
+            mon = monitor(list(csv.DictReader(f)))
+    except (OSError, KeyError, csv.Error) as ex:
+        mon = {**monitor([]), "aviso": _sem_caminho(f"Não foi possível ler monitor/historico.csv ({type(ex).__name__}: {ex}).")}
     _gravar_json(destino / "monitor.json", mon)
     log(f"contrato: {len(linhas)} empresas · carteira {'vazia' if cart['vazia'] else 'ok'} · monitor {mon['rodada']}")
     return {"hall": hall, "carteira": cart, "monitor": mon}
