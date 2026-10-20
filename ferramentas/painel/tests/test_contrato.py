@@ -219,3 +219,13 @@ def test_carteira_quebrada_nao_derruba_o_resto(tmp_path, monkeypatch):
     assert r["carteira"]["vazia"] and "renda.jsonl" in r["carteira"]["erro"]
     assert r["monitor"]["aviso"] and (tmp_path / "c" / "monitor.json").exists()
     assert any("Sem série" in a for a in r["hall"]["avisos"]) and r["hall"]["empresas"][0]["velho"] is None
+
+
+def test_vence_renda_fixa_vem_do_motor():
+    """Comparação com a renda fixa sempre na tela (Frank, 20/10/2026): a resposta é a do motor, sem conta nova."""
+    b = bruto_emp([secao("Riscos e bandeiras", [
+        num("Não vence a renda fixa (Bogle líquido real < rf líquida + 3 p.p.)", "Empate", "", obs="ok")])])
+    x = linha_hall(bruta(), b, None, None, "2026-10-20", 7, FAT)
+    assert x["vence_rf"] == "Empate" and x["vence_rf_nota"] == "A"
+    y = linha_hall(bruta(), bruto_emp([]), None, None, "2026-10-20", 7, FAT)
+    assert y["vence_rf"] is None and y["vence_rf_nota"] == "—" and y["vence_rf_criterio"] is None

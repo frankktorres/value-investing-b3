@@ -229,6 +229,7 @@ def linha_hall(bruta: dict, bruto_emp: dict | None, serie: list | None, ultimo: 
     preco, saida = bruta["preco_hoje"], bruta["saida"]
     fator_saida = None if saida is None else fat["saida_qualidade"] if bruta["saida_exc"] else fat["saida"]
     dy = _num(_secao(bruto_emp or {}, "Dividendos e JCP"), "Dividend yield sustentável")
+    rf = _num(_secao(bruto_emp or {}, "Riscos"), "Não vence a renda fixa")       # comparação sempre visível (20/10)
     dias = (date.fromisoformat(hoje) - date.fromisoformat(ultimo)).days if ultimo else None
     return {
         "ticker": bruta["tk"], "nome": bruta["nome"] or None, "setor": None, "origem": bruta["origem"],
@@ -241,6 +242,10 @@ def linha_hall(bruta: dict, bruto_emp: dict | None, serie: list | None, ultimo: 
         "metodos_central": bruta["n_central"], "metodos_total": bruta["n_central"] + bruta["n_informativo"],
         "pc": bruta["pc_hoje"], "situacao": bruta["situacao"] or None,
         "yield_sust": _finito(dy["valor"]) if dy else None, "yield_nota": dy["nota"] if dy else SEM_FONTE,
+        # "Sim" | "Não" | "Empate", como o motor responde a "vence a renda fixa?" (Bogle líquido real ≥ rf líq. + 3 p.p.)
+        "vence_rf": rf["valor"] if rf and isinstance(rf["valor"], str) else None,
+        "vence_rf_nota": rf["nota"] if rf else SEM_FONTE,
+        "vence_rf_criterio": "Bogle líquido real ≥ rf líquida + 3 p.p." if rf else None,
         "serie_12m": serie, "ultimo_pregao": ultimo, "dias_defasagem": dias,
         "velho": None if dias is None else dias > dias_velho,       # sem cotação: desconhecido, não "novo"
         "fora_do_hall": bruta["fora_do_hall"], "na_carteira": bruta["na_carteira"],
