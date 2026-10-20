@@ -57,6 +57,7 @@ def test_snapshot_igual_ao_recalculo_dos_zips():
     snap = json.loads(derivados_zip.SNAPSHOT.read_text(encoding="utf-8"))
     import pl_historico
     tem_cotahist = all((pl_historico.COTAHIST / f"precos_{a}.parquet").exists() for a in pl_historico.ANOS)
+    tem_cotahist = tem_cotahist and all((pl_historico.DFP / f"dfp_{a}.zip").exists() for a in pl_historico.ANOS_LPA)   # B30
     for chave in CHAVES if tem_cotahist else derivados_zip.CHAVES_CVM:
         assert derivados_zip.CALCULADOS[chave] == snap[chave], f"{chave} defasada: rode `python bootstrap_dados.py --derivados`"
 

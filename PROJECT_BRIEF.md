@@ -1,5 +1,5 @@
 # PROJECT BRIEF — Mesa de Value Investing B3
-*Versão de 20/10/2026 (rev. fase 3, fatia 3: literais de dado das não financeiras → dado oficial; doutrina v2.6) · gerado por `/brief` · fonte: repositório, memória do projeto e `docs/auditoria/AUDITORIA_2026-10-08.md`*
+*Versão de 20/10/2026 (rev. B30/B31: P/L histórico 2016–19 pelo LPA; TIMS3 e WPU0662 conferidas; doutrina v2.6) · gerado por `/brief` · fonte: repositório, memória do projeto e `docs/auditoria/AUDITORIA_2026-10-08.md`*
 
 ## 1. Projeto
 Mesa de análise fundamentalista da B3 para dividendos/JCP e longo prazo: doutrina escrita (v2.6) + motores de valuation em Python que
@@ -134,3 +134,4 @@ MVP de uso pessoal, maduro no cálculo. Um usuário real, sem terceiros. Prazo e
 - 20/10/2026 (fase 3, fatia 2): `ferramentas/proventos_hall.py` — DPA/JCP das 21 não financeiras dos lotes da API da B3 (classe, tipos fechados, eventos B3 + FRE, parcelas conferidas na DMPL) no carregamento do motor; saem `lote4.corrigir_proventos` e o ajuste aproximado GGBR4/UNIP6; golden regravado (7 tickers, só DY/Bogle/RF/nota; 0 palavras); B28 (linhagem) e B29 (AUD-23 no backtest) no backlog.
 - 20/10/2026 (fase 3, fatia 2b): `dossie.base.proventos_b3` → `proventos_hall.dpa_jcp` (FESA4/SHUL4 PN, 7 grupos de parcelas conferidos na DMPL, restituição fora, bonificações da SHUL4 de 2018 e 2021 do FRE); diluição do dossiê com eventos do FRE e escala das ações; 0 palavras/centrais, SHUL4 gestão 0 → 1.
 - 20/10/2026 (fase 3, fatia 3): preço (`precos_hall.preco`), receita de meio (CVM × EIA/BLS), alíquota TIMS3 (CVM + nota 8.d), g1 WEGE3 (CVM + B3), NAV SLCE3 (fato relevante 15/06/2026), P/L histórico das NF por `pl_historico.py` (CVM + COTAHIST, SMTO3 em março, janela 2020–25 → B30; o dossiê usa a mesma conta) e `preco_minerio` do CMIN3 registrados em `insumos_a`; 19/19 NF do lote com central A/B; snapshot `derivados_zip` com chaves do COTAHIST opcionais; 0 palavras mudam
+- 20/10/2026 (B30/B31): `pl_historico` estende o P/L histórico a 2016–19 pelo LPA básico da DRE (trava nas ações implícitas, evento ambíguo → ano fora), hall e dossiê juntos; golden só Bogle (8 tickers, 0 palavras). Alíquotas TIMS3 2021–23 conferidas nos PDFs do RI; WPU0662 no BLS → receita de meio do UNIP6 A.

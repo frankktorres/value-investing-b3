@@ -70,9 +70,10 @@ RECEITA_MEIO_BRENT = Origem("CVM + EIA/BCB", "A", "receita e D&A do DFP/ITR (CVM
                             "lote5_petroleo.base_ep; nota da série conferida pelo verificador-fonte em 20/10/2026")
 RECEITA_MEIO_ACO = Origem("CVM + BLS/BCB", "A", "receita 12m do ITR (CVM) × aço de meio de ciclo ÷ aço dos 12m: BLS PPI WPU1017 (via FRED, "
                           "sem transformação) × PTAX (BCB SGS 3698), IPCA (BCB SGS 433) — lote6_quimica.indice; nota conferida em 20/10/2026")
-RECEITA_MEIO_CLORO = Origem("CVM + BLS/BCB", "B", "receita 12m do ITR (CVM) × cesta soda/PVC de meio de ciclo ÷ cesta dos 12m: BLS PPI "
-                            "PCU3251803251804 (A) e WPU0662 (página do FRED não aberta na conferência de 20/10/2026 → B até conferir) "
-                            "× PTAX, IPCA (BCB) — lote6_quimica.indice")
+RECEITA_MEIO_CLORO = Origem("CVM + BLS/BCB", "A", "receita 12m do ITR (CVM) × cesta soda/PVC de meio de ciclo ÷ cesta dos 12m: BLS PPI "
+                            "PCU3251803251804 e WPU0662 (Thermoplastic Resins and Plastics Materials, NSA; FRED e API v1 do BLS "
+                            "conferidos em 20/10/2026 — B31: os meses publicados batem com o CSV, salvo as revisões dos preliminares "
+                            "de mai–ago/2026) × PTAX, IPCA (BCB) — lote6_quimica.indice")
 
 
 def _aliquota_tims3():

@@ -36,7 +36,9 @@ TIMS3_SUDENE = {"2024": 333_359, "2025": 442_136}
 TIMS3_AJUSTADA_LIDA = {"2021": 0.193, "2022": 0.045, "2023": 0.183}
 TIMS3_FONTE = ("conciliação da alíquota efetiva das DFPs da TIM: 2024–25 = (IR registrado + incentivo SUDENE/SUDAM) ÷ LAIR, IR e LAIR "
                "dos dados abertos da CVM e o incentivo da nota 8.d da DFP 2025 (conferida 20/10/2026); 2021–23 da nota 8.d (DFP 2024), "
-               "nota 35 (DFP 2022) e controladora (2021), lidas em 08/10/2026; mediana 2021–25 (fiscal.tims3_aliquota)")
+               "nota 35 (DFP 2022) e controladora (2021), lidas em 08/10/2026 e conferidas nos PDFs do RI em 20/10/2026 (B31: "
+               "19,32% · 4,50% · 18,29%, sem SUDENE e sem os pontuais — I-Systems, Selic do indébito, TIM Nordeste, Cozani); "
+               "mediana 2021–25 (fiscal.tims3_aliquota)")
 
 
 def tims3_ajustada(cvm_anual: dict) -> dict[str, float]:
