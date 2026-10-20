@@ -138,12 +138,12 @@ EMPRESAS = [
                controlador_discricionario_fonte="interferência consumada declarada no desconto do lote (critério provisório v2.3, até o "
                                                 "dossiê): União — V1 preços 2011–14 e diesel abaixo da paridade desde mar/26, V3, V5",
                qualitativo=QUAL(4, 2, 1, 2, 2)),
-    Industrial("PRIO3", "PRIO", "ciclica", desconto_controlador=dict(tipo="zero", razao=SEM_RAZAO), preco=preco("PRIO3"), n_acoes=acoes("PRIO3"), g_real=0.01, jcp_share=jcp("PRIO3"),
+    Industrial("PRIO3", "PRIO", "ciclica", desconto_controlador=dict(tipo="zero", razao="zero pelo §5: o FRE 2026 não marca nenhum acionista como controlador e não registra acordo de acionistas [FRE 2026, CVM id 161257, nota A]; maior acionista listado BlackRock, 7,5%; sem dono que o exerça, os vetores V1–V6 não se aplicam; não cobre risco de gestão (já na nota qualitativa)"), preco=preco("PRIO3"), n_acoes=acoes("PRIO3"), g_real=0.01, jcp_share=jcp("PRIO3"),
                anos_ciclo=[str(a) for a in range(2019, 2026)], anos_outras=[str(a) for a in range(2016, 2026)],
                janela_razao="perímetro operado atual: Frade a partir de 2019 (receita de R$ 849 mi em 2018 para R$ 1,64 bi em 2019); antes de 2019 a escala e os ativos são de outra empresa",
                receita_meio=receita_ep("PRIO3"), da_receita=da_ep("PRIO3"), outras_liquidas=True, qualitativo=QUAL(3, 4, 4, 1, 3),
                aliquota_fase=registrar("PRIO3", "aliquota_fase", ALIQUOTA_FASE["PRIO3"], ALIQUOTA_FASE_DFP)),   # v2.3 (08/10): prejuízo fiscal com uso projetado até 2032 (fiscal.py)
-    Industrial("RECV3", "PetroReconcavo", "ciclica", desconto_controlador=dict(tipo="zero", razao=SEM_RAZAO), preco=preco("RECV3"), n_acoes=acoes("RECV3"), g_real=-0.03, jcp_share=jcp("RECV3"),
+    Industrial("RECV3", "PetroReconcavo", "ciclica", desconto_controlador=dict(tipo="zero", razao="zero pelo §5: o FRE 2026 não marca nenhum acionista como controlador e não registra acordo de acionistas [FRE 2026, CVM id 161485, nota A]; maior acionista listado PetroSantander Luxembourg, 19,6%; sem dono que o exerça, os vetores V1–V6 não se aplicam; não cobre risco de gestão (já na nota qualitativa)"), preco=preco("RECV3"), n_acoes=acoes("RECV3"), g_real=-0.03, jcp_share=jcp("RECV3"),
                anos_ciclo=[str(a) for a in range(2020, 2026)], receita_meio=receita_ep("RECV3"), da_receita=da_ep("RECV3"), declinio_sem_liberacao=True,
                janela_razao="a série da CVM começa em 2020 (IPO em set/2020); não há exercício anterior",
                qualitativo=QUAL(1, 2, 3, 2, 2)),
@@ -151,7 +151,7 @@ EMPRESAS = [
                anos_ciclo=[str(a) for a in range(2021, 2026)], deflator=M["deflator"], capex_ciclico=True,
                janela_razao="perímetro comparável: Oxiteno e Extrafarma descontinuadas em 2021 — antes a margem é de outro conjunto de negócios",
                qualitativo=QUAL(3, 3, 4, 3, 3)),
-    Industrial("VBBR3", "Vibra Energia", "servicos", desconto_controlador=dict(tipo="zero", razao=SEM_RAZAO), preco=preco("VBBR3"), n_acoes=acoes("VBBR3"), g_real=0.01, jcp_share=jcp("VBBR3"),
+    Industrial("VBBR3", "Vibra Energia", "servicos", desconto_controlador=dict(tipo="zero", razao="zero pelo §5: o FRE 2026 não marca nenhum acionista como controlador e não registra acordo de acionistas [FRE 2026, CVM id 159172, nota A]; maior acionista listado Nova Futura Gestora, 12,5%; sem dono que o exerça, os vetores V1–V6 não se aplicam; não cobre risco de gestão (já na nota qualitativa)"), preco=preco("VBBR3"), n_acoes=acoes("VBBR3"), g_real=0.01, jcp_share=jcp("VBBR3"),
                anos_ciclo=[str(a) for a in range(2020, 2026)], deflator=M["deflator"], capex_ciclico=True,
                janela_razao="gestão privada desde jul/2019 (saída da Petrobras): a margem anterior é de empresa estatal",
                outras_liquidas=True, anos_outras=[str(a) for a in range(2016, 2026)], fora_circulo=False,

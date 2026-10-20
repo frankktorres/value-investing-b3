@@ -921,3 +921,13 @@ zerado não caía no individual (VLID3 2016–17) → cai; **(2)** a referência
 2021) → só ações e preço; **(3)** bonificação pequena entre o fechamento e a entrega do DFP passava pela trava com LPA reexpresso → ano fora pela
 regra (b). Também: viés de classe declarado e o teste do snapshot passou a exigir os DFP 2016–19. 2ª passada: os 5 fechados, nenhum defeito novo;
 2020+ idêntico (`==`). Aceito: dossiê com COTAHIST e sem os DFP 2016–19 falha alto (o bootstrap baixa os dois). Suíte: 760 passed. Nenhuma ordem de compra ou venda decorre desta mudança.
+
+## 20/10/2026 — B26: razão do desconto de controlador pelo FRE 2026 (28 → 23 `SEM_RAZAO`)
+Leitura do FRE 2026 (`dossie/fre.py`, LGPD-safe: PF anonimizada) para os 28 tickers. **Critério (decidido pelo Claude, reversível):** só vira razão o que o FRE
+*prova*. Ele diz **quem** é o controlador e as partes relacionadas do ano, mas não prova que ele **não interferiu** em 15 anos (§5, regra 1); então "controlador X
+com Y%" não substitui `SEM_RAZAO` (seria o marcador disfarçado). Ficam de fora também o campo "controlador" vazio contradito pela tabela de partes relacionadas
+(SANB11, CSMG3, SBSP3, CPLE3: citam acionista controlador ou o Estado) e a UGPA3 (acordo de acionistas Ultra+Parth, 32,7%). **Razão escrita (5):** PRIO3 (id 161257),
+KEPL3 (161068), RECV3 (161485), VBBR3 (159172), B3SA3 (161005): FRE 2026 sem acionista marcado controlador, sem acordo de acionistas, lista de acionistas não vazia
+e sem parte relacionada "controlador"; sem dono que o exerça, os vetores V1-V6 não se aplicam; não cobre risco de gestão. Os outros 23 seguem "sem razão
+documentada" (razão de verdade exige dossiê com D3, como LEVE3). `test_b24`: 28 → 23 e confere o id do FRE de cada uma das 5. **Palavras: nenhuma mudou**
+(33 CARA, 3 JUSTA, 5 NÃO CONCLUSIVO); golden intacto (a razão é texto). Suíte 760 passed. Nenhuma ordem de compra ou venda decorre desta mudança.
