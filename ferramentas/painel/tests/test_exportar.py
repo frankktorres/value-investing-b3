@@ -184,11 +184,16 @@ def test_destino_padrao_e_ignorado_e_destino_versionavel_e_recusado(tmp_path):
 
 
 def test_painel_nao_importa_carteira_local():
-    """A tela pública não lê o arquivo de quantidades (dado pessoal entra só na fatia da carteira, em pasta ignorada)."""
+    """A tela não lê o arquivo de quantidades; o dado pessoal entra só pela carteira do contrato v0.2
+    (`contrato.py` → `relatorio.carteira.carregar`), gravado só em web/dados/privado/ (ignorado)."""
     for arq in (FERR / "painel").rglob("*.py"):
         if "tests" not in arq.parts:
             txt = arq.read_text(encoding="utf-8")
-            assert "carteira.local" not in txt and "ler_local" not in txt and "carregar(" not in txt, arq
+            assert "carteira.local" not in txt and "ler_local" not in txt, arq
+            if arq.name != "contrato.py":
+                assert "carregar(" not in txt, arq
+    txt = (FERR / "painel" / "contrato.py").read_text(encoding="utf-8")
+    assert txt.count("mod_carteira.carregar(") == 1 and '_gravar_json(privado / "carteira.json", cart)' in txt
 
 
 # ------------------------------------------------------------------------------ real (dados locais)
