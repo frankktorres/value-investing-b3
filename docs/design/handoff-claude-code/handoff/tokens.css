@@ -1,0 +1,24 @@
+:root,[data-tema="escuro"]{
+  --f-ui:'IBM Plex Sans',system-ui,sans-serif; --f-mono:'IBM Plex Mono',ui-monospace,monospace; --f-display:'Space Grotesk','IBM Plex Sans',sans-serif;
+  --bg:#070B12; --sf:#0E1520; --sf2:#141D2B; --ln:#1E2A3B; --ln2:#2B3C54;
+  --ink:#EAF0F8; --ink2:#A9B8CC; --ink3:#8496AE; --ac:#8A97FF;
+  --barata-fg:#5EE0CF; --barata-bg:#0B2E31; --barata-ln:#1C6B68;
+  --justa-fg:#B4C3D9; --justa-ln:#3B4F6B;
+  --cara-fg:#FFC06E; --cara-bg:#33220B; --cara-ln:#8C5C1F;
+  --nc-fg:#A9B8CC; --nc-ln:#5A6C86;
+  --serie-div:#6CA8FF; --serie-jcp:#3E6FC0;
+  --hatch:repeating-linear-gradient(135deg,transparent 0 4px,rgba(169,184,204,.16) 4px 5px);
+  --s1:4px; --s2:8px; --s3:12px; --s4:16px; --s5:24px; --s6:32px; --r1:4px; --r2:8px; --r3:12px;
+}
+[data-tema="claro"]{
+  --bg:#F3F6FB; --sf:#FFFFFF; --sf2:#ECF0F7; --ln:#DCE3EE; --ln2:#BFCADA;
+  --ink:#0A1220; --ink2:#42516A; --ink3:#566680; --ac:#3646D6;
+  --barata-fg:#0A6660; --barata-bg:#DAF4F0; --barata-ln:#62C2B8;
+  --justa-fg:#384866; --justa-ln:#A5B3C9;
+  --cara-fg:#874900; --cara-bg:#FFEDD2; --cara-ln:#E0A85F;
+  --nc-fg:#42516A; --nc-ln:#8493AA;
+  --serie-div:#2C55B5; --serie-jcp:#5A85D8;
+  --hatch:repeating-linear-gradient(135deg,transparent 0 4px,rgba(10,18,32,.10) 4px 5px);
+}
+/* Régua: escala fixa 50%..160% do central; compra 0,70x; saída 1,30x (1,50x com exceção de qualidade). */
+/* Nota de fonte: A sólido, B contorno, C tracejado, — pontilhado. Números: tabular-nums lining-nums. */
