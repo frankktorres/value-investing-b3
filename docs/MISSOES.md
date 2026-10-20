@@ -13,13 +13,23 @@
 
 ~~8b. **B27** — fatia 2 do relatório (quali + PDF).~~ (feita 19/10; faltam fatia 3 = B08/ALLD3 e fatia 4 = adversário + verificador-fonte)
 
-9. **B08** — Dossiê ALLD3 (depois FESA4, SHUL4, VLID3): `python -m dossie.gerar ALLD3 --data <hoje>` na máquina do Frank; palavra só com fonte A/B.
+~~9. **B08** — Dossiês FESA4, SHUL4, VLID3.~~ (feita 19/10, ver Feitas)
+~~9b. **Fatia 4 do relatório** — `adversario` + `verificador-fonte` no pacote (inclui: margem normalizada da ALLD3 4,0% vs EBIT recorrente 2025 ~3,1%; cenários do desconto de controlador estimados), README, DECISOES.~~ (feita 19/10)
+~~9c. **B15 / fase 3, fatia 2** — DPA/JCP StatusInvest → API B3 nas não financeiras do lote.~~ (feita 20/10, ver Feitas)
+9f. **B15 / fatia 4** — financeiras (L2 utilities → ITSA4/EGIE3 → L1 bancos/seguradoras; conferir códigos do DFP de IF no ZIP real antes): `vpa`, `lpa_12m`, `roe_lp`, `roe_inicio` da CVM; DPA/JCP/anos pagos da B3; `pl_hist` CVM+COTAHIST; `payout` medido (mediana 5a), valor diferente só como julgamento declarado. Palavra pode mudar → `09` por ticker. Depois da temporada 3T26 (commit próprio, B01). Junto: o relatório das financeiras (`relatorio/quali.py` → `dossie.base.proventos_b3_legado`) e a renda de 12 meses da carteira (`relatorio/renda.py._sem_repeticao`) ainda usam a regra do AUD-23 (linha igual conta uma vez) — classificar os grupos de linhas iguais das financeiras e da carteira na DMPL (`proventos_hall.GRUPOS_CONFERIDOS`) e trocar pelas regras do hall (fatia 2b, 09 de 20/10).
+9g. **B15 / fatia 5** — trava final: StatusInvest só para datas (defasagem); zero `lote (digitado)` em campo de dado do central.
 10. **B01** — Temporada 3T26: a tarefa de sexta já detecta o ITR (`monitor/temporada.log` + boletim); quando aparecer ticker com 3T26, rodar `temporada.py --gravar` + `rodar_tudo.py --motivo`.
 
 ## Em andamento
 (nenhuma)
 
 ## Feitas
+- **B15 / fase 3, fatia 3** (20/10): preço (`precos_hall.preco`), receita de meio PETR4/PRIO3/RECV3/GGBR4/UNIP6 (CVM × EIA/BLS, `verificador-fonte`), alíquota TIMS3 (CVM + nota 8.d), g1 WEGE3 (CVM + B3, 3 parcelas do extraordinário), NAV SLCE3 (fato relevante 15/06/2026: 27,12 → 27,72), `pl_hist` das NF por `pl_historico` (CVM + COTAHIST; SMTO3 em março; janela 2020–25, B30) e `preco_minerio` no insumo do CMIN3 — tudo em `insumos_a`; 19/19 NF do lote com central A/B (eram 11), C do lote 158 → 134; golden: 11 mudanças em 10 tickers (Bogle e a âncora de reprodução da SLCE3), 0 palavras; tabela no `09`.
+- **B15 / fase 3, fatia 2b** (20/10): `dossie.base.proventos_b3` → `proventos_hall.dpa_jcp` (classe PN da FESA4/SHUL4, parcelas × repetição conferidas na DMPL — 7 grupos novos, todos parcelas —, restituição de capital fora, eventos do FRE: SHUL4 2018 e 2021); `base.eventos` (B3 + FRE) no `pl_hist` e na diluição; diluição com a escala das ações (VLID3 308% → 2,5% a.a.); `PARES_CONFERIDOS` exige o produto; 0 palavras/centrais; SHUL4 15/10 gestão 0 → 1 (fixado no teste); tabela antes/depois no `09`.
+- **B15 / fase 3, fatia 2** (20/10): `proventos_hall.py` — DPA/JCP das 21 NF dos lotes da API da B3 (classe, tipos fechados, data-com ≤ preço, eventos B3 + FRE, parcelas × repetição conferidas na DMPL); saíram `lote4.corrigir_proventos` e o ajuste aproximado GGBR4/UNIP6; golden regravado (15 mudanças em 7 tickers, só DY/Bogle/vence RF/nota geral; 0 palavras); tabela B3 × StatusInvest no `09`.
+- **B08/FESA4, SHUL4, VLID3** (19/10): fichas + coleta CVM 2016–25 + insumos A/B (FRE 2026, DFP, IPE) + mercado de 15/10; vereditos 15/10: **FESA4 RADAR** (6,23 × central 7,62, P/C 0,82), **SHUL4 CARA** (5,00 × 3,90, P/C 1,28), **VLID3 CARA** (18,85 × 16,61, P/C 1,14); `relatorio` gera PDF dos três; suíte 546 passed; golden intacto. B08 fechada (4 de 4).
+- **Fatia 4 do relatório (9b)** (19/10): adversário (4 defeitos corrigidos, 2 aceitos) + verificador-fonte (só OE/Buffett confere em fonte A; Graham/Bazin/EPV nota C; cortes do quali = heurística); margem ALLD3 2025 conferida na CVM; suíte 543 passed; palavra e golden intactos.
+- **B08/ALLD3** (19/10, fatia 3): ficha + coleta CVM 2019–25 + insumos A/B + mercado de 15/10; veredito ALLD3 15/10 **BARATA** (preço 6,30, central 14,91, P/C 0,42; notas moat 0, gestão 1, controlador 5, ciclo 3, fisher 1; desconto 1%); `relatorio ALLD3` gera PDF; suíte 543 passed; golden intacto.
 - **B27** (19/10): `relatorio/quali.py` (6 blocos) + `render_pdf.py`; `relatorio BBSE3` e `HYPE3` geram PDF; suíte 542 passed, 1 skipped; golden intacto.
 - **B24** (14/10): motor exige razão no desconto de controlador; 28 "sem razão documentada", LEVE3 com fonte A; nenhuma palavra mudou (33 CARA, 5 NC, 3 JUSTA).
 - **B25** (14/10): pré-registro contínuo (IC de postos, média do hall, 1 linha por ticker×rodada) em `registro_prospectivo.py`.

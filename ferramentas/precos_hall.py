@@ -1,7 +1,7 @@
 """Preço de referência do hall com data e fonte declaradas (AUD-67).
 
-Os preços continuam digitados em cada lote (`preco=` no construtor; é o insumo que a ficha cita), mas TODOS
-são o fechamento oficial (PREULT do COTAHIST da B3) do mesmo pregão, `PRECO_DATA`. A fonte com data é o
+Fase 3, fatia 3 (20/10/2026): as não financeiras leem o preço com `preco(tk)` (sem literal, registrado em `insumos_a`);
+as financeiras ainda digitam (`preco=` no construtor; fatia 4). TODOS são o fechamento oficial (PREULT do COTAHIST da B3) do mesmo pregão, `PRECO_DATA`. A fonte com data é o
 snapshot versionado `dados/precos_hall_<data>.csv`; `tests/test_precos_hall.py` confere lote × snapshot
 (sempre) e snapshot × parquet do COTAHIST (quando o parquet está no disco).
 
@@ -49,6 +49,18 @@ def ler(caminho: Path = SNAPSHOT) -> dict[str, float]:
     if datas != {PRECO_DATA}:
         raise ValueError(f"snapshot {caminho.name} com data {datas}, esperado {PRECO_DATA}")
     return {x["ticker"]: float(x["preult"]) for x in linhas}
+
+
+_SNAP: dict[str, float] = {}
+
+
+def preco(tk: str) -> float:
+    """Fase 3, fatia 3 (20/10/2026): o lote não digita o preço — lê o fechamento do snapshot e registra a procedência
+    (`insumos_a`); literal por cima do lido fica sem registro e a nota do preço cai para C."""
+    import insumos_a
+    if not _SNAP:
+        _SNAP.update(ler())
+    return insumos_a.registrar(tk, "preco", _SNAP[tk], insumos_a.PRECO_COTAHIST)
 
 
 def gerar(tickers, caminho: Path = SNAPSHOT) -> dict[str, float]:

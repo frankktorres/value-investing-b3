@@ -1,5 +1,5 @@
 {
- "motivo": "Onda 3 da auditoria (doutrina v2.6, 10/10/2026): OE pelo lucro do controlador (AUD-15), declínio sem liberação com ROIC < WACC (AUD-34), cenário de DCF negativo como zero (AUD-53), P/C infinito gravado como null (AUD-52). Nenhuma palavra muda; KLBN11 e RECV3 seguem NÃO CONCLUSIVO",
+ "motivo": "Fase 3, fatia 3 (B15/9e): P/L histórico das NF pela CVM + COTAHIST (pl_historico.do_hall; SMTO3 em março; janela 2020-25 por falta de ações no DFP antes de 2020) no lugar da StatusInvest/literais -> só o Bogle de 10 tickers; NAV da SLCE3 do fato relevante de 15/06/2026 (27,12 -> 27,72; central e palavra iguais). Preço (snapshot COTAHIST), receita de meio (CVM x EIA/BLS), alíquota TIMS3 (CVM + nota 8.d) e g1 WEGE3 (CVM + B3) registrados sem mudar número no golden. 0 trocas de palavra.",
  "tickers": {
   "ABCB4": {
    "ancoras": {
@@ -24,7 +24,7 @@
     "EPV": 9.19281,
     "Owner Earnings ÷ (Ke − g)": 7.042854
    },
-   "bogle_nom": 0.153659,
+   "bogle_nom": 0.13119,
    "central": 9.19281,
    "cobertura_juros": 27.944195,
    "data_preco": "02/10/2026",
@@ -42,11 +42,11 @@
     "EPV": 8.177214,
     "Owner Earnings ÷ (Ke − g)": 8.006306
    },
-   "bogle_nom": 0.114168,
+   "bogle_nom": 0.096328,
    "central": 8.177214,
    "cobertura_juros": 4.29225,
    "data_preco": "02/10/2026",
-   "dy": 0.032898,
+   "dy": 0.034501,
    "fator_defasagem": 0.976749,
    "lote": 3,
    "nota_geral": 5.707621,
@@ -246,7 +246,7 @@
     "EPV": 10.873637,
     "Owner Earnings ÷ (Ke − g)": 5.322253
    },
-   "bogle_nom": 0.091291,
+   "bogle_nom": 0.084323,
    "central": 10.873637,
    "cobertura_juros": 2.166042,
    "data_preco": "02/10/2026",
@@ -264,17 +264,17 @@
     "EPV de meio de ciclo": 16.922666,
     "Valor de reprodução": 27.04439
    },
-   "bogle_nom": 0.153939,
+   "bogle_nom": 0.148843,
    "central": 18.491146,
    "cobertura_juros": 3.013061,
    "data_preco": "02/10/2026",
-   "dy": 0.078693,
+   "dy": 0.073597,
    "fator_defasagem": 0.992087,
    "lote": 6,
-   "nota_geral": 4.698002,
+   "nota_geral": 4.647697,
    "palavra": "CARA",
    "pc": 1.411486,
-   "vence_rf": "Empate"
+   "vence_rf": "Não"
   },
   "HYPE3": {
    "ancoras": {
@@ -282,7 +282,7 @@
     "EPV": 17.874929,
     "Owner Earnings ÷ (Ke − g)": 10.895524
    },
-   "bogle_nom": 0.09785,
+   "bogle_nom": 0.095584,
    "central": 16.22481,
    "cobertura_juros": 1.8858,
    "data_preco": "02/10/2026",
@@ -351,14 +351,14 @@
     "EPV de meio de ciclo": 6.759572,
     "Valor de reprodução": 4.601972
    },
-   "bogle_nom": 0.202732,
+   "bogle_nom": 0.202493,
    "central": 6.685064,
    "cobertura_juros": 3.495395,
    "data_preco": "02/10/2026",
-   "dy": 0.127486,
+   "dy": 0.127247,
    "fator_defasagem": 0.99227,
    "lote": 3,
-   "nota_geral": 5.703875,
+   "nota_geral": 6.201566,
    "palavra": "JUSTA",
    "pc": 1.014201,
    "vence_rf": "Sim"
@@ -376,7 +376,7 @@
    "dy": 0.061926,
    "fator_defasagem": 0.920245,
    "lote": 3,
-   "nota_geral": 2.952339,
+   "nota_geral": 2.952061,
    "palavra": "NÃO CONCLUSIVO",
    "pc": 7.105892,
    "vence_rf": "Não"
@@ -387,14 +387,14 @@
     "EPV": 33.711152,
     "Owner Earnings ÷ (Ke − g)": 36.665759
    },
-   "bogle_nom": 0.186296,
+   "bogle_nom": 0.178005,
    "central": 36.30688,
    "cobertura_juros": 11.989037,
    "data_preco": "02/10/2026",
    "dy": 0.129452,
    "fator_defasagem": 0.984468,
    "lote": 6,
-   "nota_geral": 7.194343,
+   "nota_geral": 7.194357,
    "palavra": "NÃO CONCLUSIVO",
    "pc": 0.948305,
    "vence_rf": "Sim"
@@ -412,7 +412,7 @@
    "dy": 0.143797,
    "fator_defasagem": 0.960578,
    "lote": 5,
-   "nota_geral": 5.43042,
+   "nota_geral": 5.444071,
    "palavra": "JUSTA",
    "pc": 0.956736,
    "vence_rf": "Sim"
@@ -543,9 +543,9 @@
    "ancoras": {
     "DCF normalizado (3 cenários)": 7.590601,
     "EPV de meio de ciclo": 6.35209,
-    "Valor de reprodução": 27.12
+    "Valor de reprodução": 27.717519
    },
-   "bogle_nom": -0.078564,
+   "bogle_nom": -0.084383,
    "central": 7.590601,
    "cobertura_juros": 2.190263,
    "data_preco": "02/10/2026",
@@ -563,7 +563,7 @@
     "EPV de meio de ciclo": 13.577016,
     "Valor de reprodução": 22.850686
    },
-   "bogle_nom": 0.006666,
+   "bogle_nom": 0.001891,
    "central": 14.678938,
    "cobertura_juros": 1.7395,
    "data_preco": "02/10/2026",
@@ -588,7 +588,7 @@
    "dy": 0.037249,
    "fator_defasagem": 0.9757,
    "lote": 3,
-   "nota_geral": 3.318875,
+   "nota_geral": 3.256375,
    "palavra": "CARA",
    "pc": 1.947077,
    "vence_rf": "Não"
@@ -616,14 +616,14 @@
     "EPV": 9.736408,
     "Owner Earnings ÷ (Ke − g)": 7.953352
    },
-   "bogle_nom": 0.136747,
+   "bogle_nom": 0.103444,
    "central": 9.736408,
    "cobertura_juros": 3.50333,
    "data_preco": "02/10/2026",
-   "dy": 0.057336,
+   "dy": 0.058545,
    "fator_defasagem": 0.934886,
    "lote": 4,
-   "nota_geral": 4.062644,
+   "nota_geral": 3.329663,
    "palavra": "CARA",
    "pc": 1.90522,
    "vence_rf": "Não"
@@ -634,11 +634,11 @@
     "EPV": 16.72089,
     "Owner Earnings ÷ (Ke − g)": 8.689584
    },
-   "bogle_nom": 0.096001,
+   "bogle_nom": 0.098256,
    "central": 15.78387,
    "cobertura_juros": 2.920173,
    "data_preco": "02/10/2026",
-   "dy": 0.020755,
+   "dy": 0.02301,
    "fator_defasagem": 0.991186,
    "lote": 5,
    "nota_geral": 3.959147,
@@ -688,11 +688,11 @@
     "EPV": 16.729782,
     "Owner Earnings ÷ (Ke − g)": 19.691493
    },
-   "bogle_nom": 0.112964,
+   "bogle_nom": 0.117195,
    "central": 16.922537,
    "cobertura_juros": 4.324351,
    "data_preco": "02/10/2026",
-   "dy": 0.041605,
+   "dy": 0.041989,
    "fator_defasagem": 0.853471,
    "lote": 4,
    "nota_geral": 4.037009,
@@ -702,15 +702,15 @@
   },
   "WEGE3": {
    "ancoras": {
-    "DCF (3 cenários)": 11.085968,
+    "DCF (3 cenários)": 11.086329,
     "EPV": 10.051652,
     "Owner Earnings ÷ (Ke − g)": 11.081542
    },
-   "bogle_nom": 0.128324,
+   "bogle_nom": 0.14152,
    "central": 11.081542,
    "cobertura_juros": 37.346503,
    "data_preco": "02/10/2026",
-   "dy": 0.01495,
+   "dy": 0.017879,
    "fator_defasagem": 0.872976,
    "lote": 4,
    "nota_geral": 5.204466,

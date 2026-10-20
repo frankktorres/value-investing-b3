@@ -25,16 +25,18 @@ def _snapshot() -> dict:
     return json.loads(SNAPSHOT.read_text(encoding="utf-8")) if SNAPSHOT.exists() else {}
 
 
-def obter(chave: str, zips: list[str], calcular):
-    """`calcular()` se todos os `zips` existem em dados/cvm; senão o snapshot da `chave`."""
-    if all((CVM / z).exists() for z in zips):
+def obter(chave: str, zips: list[str], calcular, pasta: pathlib.Path | None = None):
+    """`calcular()` se todos os `zips` existem em `pasta` (padrão dados/cvm, lido na chamada; o P/L histórico usa os parquets
+    do COTAHIST); senão o snapshot da `chave`."""
+    pasta = CVM if pasta is None else pasta
+    if all((pasta / z).exists() for z in zips):
         valor = calcular()
         CALCULADOS[chave] = json.loads(json.dumps(valor))       # forma que o JSON preserva (chaves str, listas)
         return valor
     snap = _snapshot()
     if chave not in snap:
-        faltam = [z for z in zips if not (CVM / z).exists()]
-        raise FileNotFoundError(f"'{chave}' precisa de {faltam} em dados/cvm e não há snapshot em {SNAPSHOT.name}: "
+        faltam = [z for z in zips if not (pasta / z).exists()]
+        raise FileNotFoundError(f"'{chave}' precisa de {faltam} em {pasta} e não há snapshot em {SNAPSHOT.name}: "
                                 "rode `python bootstrap_dados.py --baixar`")
     if chave not in _AVISADO:
         _AVISADO.add(chave)
@@ -42,7 +44,10 @@ def obter(chave: str, zips: list[str], calcular):
     return snap[chave]
 
 
-CHAVES = ("lote4.acoes_jun26", "lote4.arrendamento_pago", "lote4.itsa", "lote5.base_prio3", "lote6.acoes_jun26")
+# fase 3, fatia 3: P/L histórico das não financeiras do hall (pl_historico.do_hall; parquets do COTAHIST)
+PL_HIST = ("B3SA3", "SMTO3", "SLCE3", "TIMS3", "VIVT3", "FLRY3", "HYPE3", "ABEV3", "WEGE3", "LEVE3")
+CHAVES = ("lote4.acoes_jun26", "lote4.arrendamento_pago", "lote4.itsa", "lote5.base_prio3", "lote6.acoes_jun26",
+          *(f"pl_hist.{tk}" for tk in PL_HIST))
 
 
 def gravar_snapshot() -> int:

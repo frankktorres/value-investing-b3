@@ -7,6 +7,11 @@
   "fonte": "Vendas (Mt): 2019 = 38,2 citado como recorde anterior (RA23:7); 2020 e 2021 = 31,155 e 33,238 (RA21:934-938); 2022 = 42,662 ÷ 1,28 (RA23:1308, '+28,0% sobre 2022'; derivado); 2023 = 42,662 (RA23:1308); 2024 não publicado em valor absoluto; 2025 = 45,8 (RA25:716). 12m jul/25–jun/26 = 3T25 12,396 (release ITR 3T25) + 4T25 11,985 (= 9,636 ÷ (1 − 19,6%), release ITR 1T26: 1T26 'queda de 19,6% em relação ao 4T25'; derivado) + 1T26 9,636 + 2T26 11,849 (release ITR 2T26). Meio: fato relevante de 29/09/2026 (produção + compras 2026 de 45,0–47,0 para 39,0–41,0 Mt; C1 de US$ 22,0–23,5 para 25,0–26,0/t), linhas 22-28",
   "nota_fonte": "A"
  },
+ "preco_minerio": {
+  "valor": "fred_PIORECRUSDM.csv",
+  "fonte": "Minério 62% Fe CFR China, US$/t seca, média mensal: FMI, Primary Commodity Prices (série PIORECRUSDM, espelhada pelo FRED sem transformação; conferida pelo verificador-fonte em 20/10/2026) × PTAX média mensal (BCB SGS 3698), IPCA (BCB SGS 433) — receita_meio e fator_preco (fichas/cmin3.minerio)",
+  "nota_fonte": "A"
+ },
  "custo_variavel_preco": {
   "valor": {"fracao": 0.2479, "por_ano": {"2020": 0.1918, "2021": 0.2655, "2022": 0.2674, "2023": 0.2877, "2024": 0.1825, "2025": 0.2302}},
   "fonte": "Mediana 2020–25 de (material de terceiros + impostos e taxas) ÷ receita líquida, nota de custos e despesas por natureza (D25 nota 28, pdf p.52; D23 nota 26, p.39; D21 nota 26, p.39). Material de terceiros = minério comprado (o RA25:742-744 liga o aumento do CPV às compras de terceiros), comprado a preço de índice; impostos e taxas contêm a CFEM (royalty sobre a receita), que a nota não separa. Frete, mão de obra, manutenção, serviços, suprimentos e D&A ficam como custo fixo no ano (C1 de US$ 21,0–21,8/t em 2021–25: RA25:744-746, RA23:1327). 2019 sem nota (PDF do DFP 2020 corrompido): o mesmo v para todos os anos",

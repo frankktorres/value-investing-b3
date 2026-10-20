@@ -50,6 +50,7 @@ def baixar() -> int:
 
 def derivados() -> int:
     import derivados_zip
+    import lote3_agro            # noqa: F401  (P/L histórico, fatia 3)
     import lote4_saude_telecom   # noqa: F401  (o import recalcula dos ZIPs e preenche derivados_zip.CALCULADOS)
     import lote5_petroleo        # noqa: F401
     import lote6_quimica         # noqa: F401

@@ -127,7 +127,7 @@ T = {
     circulo="Produtora de grãos e algodão com terras próprias e arrendadas no cerrado. Ganha com escala, produtividade e valorização "
             "de terra; pararia com quebra climática repetida ou queda longa de soja e algodão.",
     controlador="Desconto de controlador: zero — família Logemann (53,7%), sem interferência consumada [PDF 03/10].",
-    sustentam=["Valor de reprodução: NAV das terras R$ 27,12/ação (Itaú BBA, nota B) [PDF 03/10]",
+    sustentam=["Valor de reprodução: NAV R$ 27,72/ação (fato relevante SLC 15/06/2026, terras pela Deloitte) [A]",
                "Terra valorizando ~8% real ao ano em 5 anos (Genial) [PDF 03/10]",
                "Altman Z'' {altman}"],
     ameacam=["Dívida líquida/EBITDA {dl_ebitda}× com cobertura de juros {cobertura}×",
@@ -137,7 +137,7 @@ T = {
     renda="Não. Sem provento em 2026.",
     capital="Não. {palavra} ({pc}×) mesmo contando o NAV de terceiro; compra ≤ R$ {compra}.",
     autocritica=["Ke: preço embute {ke_impl}.",
-                 "O NAV (R$ 27,12) é de terceiro e não auditado — é a âncora mais alta, e mesmo com ela a palavra é {palavra}.",
+                 "O NAV (R$ 27,72) é da própria SLC: terras por laudo independente (Deloitte), mas não auditado — é a âncora mais alta, e mesmo com ela a palavra é {palavra}.",
                  "Ciclo: algodão (78,88 c/lb) e soja (12,78 US$/bu) perto do hedge [PDF 03/10].",
                  "Aquisições (Sierentz, Radar) aumentaram a dívida — o ROIC de {roic} fica abaixo do WACC ({wacc}).",
                  "Na rev. 03/10 o central (18) era NAV × (1 − 33%) sem conta de fluxo."],

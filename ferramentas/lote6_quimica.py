@@ -1,7 +1,7 @@
 """Lote 6 — Química e metalurgia · data-base 02/10/2026 (preços do PDF rev. 03/10) · doutrina v2.2.
 
-Demonstrações: CVM (DFP 2016–25 + ITR, 12m até jun/2026). Preço: PDF rev. 03/10 (fechamento de 02/10, StatusInvest). Ações: composição do capital
-do ITR de jun/2026 (CVM), sem tesouraria; EGIE3 com o follow-on de jul/2026. Proventos: StatusInvest, ajustados por bonificação (abaixo).
+Demonstrações: CVM (DFP 2016–25 + ITR, 12m até jun/2026). Preço: COTAHIST de 02/10 (precos_hall.preco; EGIE3 digitado até a fatia 4). Ações: composição do capital
+do ITR de jun/2026 (CVM), sem tesouraria; EGIE3 com o follow-on de jul/2026. Proventos: B3 (proventos_hall.py, fase 3) nas não financeiras; EGIE3 StatusInvest ajustada pela bonificação (abaixo).
 Ciclo declarado ANTES do veredito (doutrina §2, regra 4; §11.1 "preço de commodity declarado"):
   · Nenhum dos PDFs anteriores declara preço de aço, PVC ou soda. Fonte usada: índices de preço ao produtor dos EUA (BLS, via FRED) — a única
     série pública mensal e longa; não há preço em R$/t por API com fonte A/B. Convertidos a reais pela PTAX média mensal (BCB SGS 3698) e
@@ -28,6 +28,9 @@ import sys
 import pandas as pd
 
 from derivados_zip import obter
+from pl_historico import do_hall
+from precos_hall import preco
+from insumos_a import ACOES_ITR_JUN26, RECEITA_MEIO_ACO, RECEITA_MEIO_CLORO, registrar
 from lote1_bancos import MK
 from lote2_energia import pl_hist, solidez
 from lote3_agro import jcp
@@ -101,6 +104,8 @@ def _acoes_zip(tk):
 
 # ---------------------------------------------------------------- proventos ajustados (StatusInvest não ajusta bonificação)
 def ajustar_dpa(tk, n_atual):
+    """EGIE3 (financeira, StatusInvest até a fase 3, fatia 4). GGBR4, UNIP6 e LEVE3 têm o DPA da B3 com os eventos em ações
+    exatos (`proventos_hall`, fatia 2) — o ajuste aproximado por contagem de ações saiu."""
     s = SI[tk]
     if tk == "EGIE3":       # bonificação de 40% em 01/12/2025 [PDF 03/10]: data-com anterior ÷ 1,4
         dpa, jc = {}, {}
@@ -111,19 +116,11 @@ def ajustar_dpa(tk, n_atual):
             if "JCP" in (e["tipo"] or "").upper():
                 jc[a] = jc.get(a, 0) + e["valor"] * f
         s["dpa_por_ano_datacom"], s["jcp_por_ano_datacom"] = dict(sorted(dpa.items())), dict(sorted(jc.items()))
-    elif tk in ("GGBR4", "UNIP6"):   # bonificações (GGBR4 2023–24; UNIP6 2022 e 2024): × ações no fim do ano ÷ ações de hoje (aprox.)
-        a = CVM[tk]["anual"]
-        def n_ano(y):
-            x = (a.get(str(y), {}).get("acoes") or 0)
-            x = x * 1000 if 0 < x < 1e7 else x
-            return x or None
-        ref = next(n_ano(y) for y in range(2016, 2026) if n_ano(y))
-        for chave in ("dpa_por_ano_datacom", "jcp_por_ano_datacom"):
-            # só bonificação reduz o DPA antigo (fator < 1); recompra (ações de antes > hoje) não infla o passado
-            s[chave] = {y: val * min(1.0, (n_ano(int(y)) or ref) / n_atual) if int(y) <= 2025 else val for y, val in s[chave].items()}
 
 
 N = obter("lote6.acoes_jun26", ["itr_2026.zip"], lambda: {tk: _acoes_zip(tk) for tk in ("LEVE3", "EGIE3", "UNIP6", "GGBR4")})   # AUD-38
+for _tk in ("LEVE3", "UNIP6", "GGBR4"):   # fase 3: procedência por campo (insumos_a); o número não muda
+    registrar(_tk, "acoes", N[_tk], ACOES_ITR_JUN26)
 EGIE_FOLLOW_ON = dict(acoes=274.1e6, valor=8_360_000, data="jul/2026")        # R$ mil; [PDF 07/09 e 03/10]
 EGIE_DIV_AGO26 = 770_800      # R$ mil, data-com 20/08/2026 (R$ 0,5442 × 1.416 mi): sai do PL de 30/06 — o preço de 02/10 já é ex
 N["EGIE3"] += EGIE_FOLLOW_ON["acoes"]
@@ -168,7 +165,7 @@ def egie():
 EGIE, EGIE_DADOS = egie()
 
 # ---------------------------------------------------------------- não financeiras
-# Preços = fechamento oficial (PREULT do COTAHIST) de 02/10/2026 — data e fonte em precos_hall.py (AUD-67).
+# Preços = fechamento oficial (PREULT do COTAHIST) de 02/10/2026, lido do snapshot por precos_hall.preco (fase 3, fatia 3; AUD-67).
 # B24 (AUD-41): a única razão com fonte nota A — o D3 do dossiê de 06–08/10 (`dossie/insumos/LEVE3.json`)
 LEVE3_RAZAO = ("zero pelo §5 (consumado × prospectivo), conclusão do D3 do dossiê: MAHLE com 61,0% do votante [FRE 2026, CVM id 158212, "
                "nota A]; nenhuma interferência desfavorável consumada em 2017–2026; a compra de R$ 668 mi do dono (2024) passou por comitê "
@@ -177,18 +174,18 @@ LEVE3_RAZAO = ("zero pelo §5 (consumado × prospectivo), conclusão do D3 do do
                "consumada, o desconto vira 'cenarios' — decisão não tomada; ver dossie/insumos/LEVE3.json")
 
 EMPRESAS = [
-    Industrial("GGBR4", "Gerdau (PN)", "ciclica", desconto_controlador=dict(tipo="zero", razao=SEM_RAZAO), preco=26.10, n_acoes=N["GGBR4"], g_real=0.01, jcp_share=jcp("GGBR4"),
-               receita_meio=ltm_de(CVM["GGBR4"])["receita"] * ACO["fator"], outras_liquidas=True, impairment_normalizado=True,
+    Industrial("GGBR4", "Gerdau (PN)", "ciclica", desconto_controlador=dict(tipo="zero", razao=SEM_RAZAO), preco=preco("GGBR4"), n_acoes=N["GGBR4"], g_real=0.01, jcp_share=jcp("GGBR4"),
+               receita_meio=registrar("GGBR4", "receita_meio", ltm_de(CVM["GGBR4"])["receita"] * ACO["fator"], RECEITA_MEIO_ACO), outras_liquidas=True, impairment_normalizado=True,
                receita_meio_fonte="receita 12m × aço de meio de ciclo ÷ aço dos 12m (BLS WPU1017 × PTAX, R$ de hoje)",
                qualitativo=QUAL(3, 4, 4, 2, 3)),
-    Industrial("UNIP6", "Unipar Carbocloro (PNB)", "ciclica", desconto_controlador=dict(tipo="zero", razao=SEM_RAZAO), preco=57.02, n_acoes=N["UNIP6"], g_real=0.01, jcp_share=jcp("UNIP6"),
-               anos_ciclo=[str(a) for a in range(2017, 2026)], receita_meio=ltm_de(CVM["UNIP6"])["receita"] * CLORO["fator"], outras_liquidas=True,
+    Industrial("UNIP6", "Unipar Carbocloro (PNB)", "ciclica", desconto_controlador=dict(tipo="zero", razao=SEM_RAZAO), preco=preco("UNIP6"), n_acoes=N["UNIP6"], g_real=0.01, jcp_share=jcp("UNIP6"),
+               anos_ciclo=[str(a) for a in range(2017, 2026)], receita_meio=registrar("UNIP6", "receita_meio", ltm_de(CVM["UNIP6"])["receita"] * CLORO["fator"], RECEITA_MEIO_CLORO), outras_liquidas=True,
                janela_razao="Indupa consolidada em dez/2016: 2016 traz ganho de compra vantajosa e 1 mês de receita da Argentina "
                             "(e a série de soda não cobre jan–set/2016)",
                receita_meio_fonte="receita 12m × cesta soda/PVC de meio de ciclo ÷ cesta dos 12m (BLS × PTAX, R$ de hoje)",
                qualitativo=QUAL(3, 2, 2, 2, 2)),
-    Industrial("LEVE3", "Mahle Metal Leve", "servicos", desconto_controlador=dict(tipo="zero", razao=LEVE3_RAZAO), preco=34.43, n_acoes=N["LEVE3"], g_real=0.01, jcp_share=jcp("LEVE3"),
-               outras_liquidas=True, pl_hist=pl_hist("LEVE3"),
+    Industrial("LEVE3", "Mahle Metal Leve", "servicos", desconto_controlador=dict(tipo="zero", razao=LEVE3_RAZAO), preco=preco("LEVE3"), n_acoes=N["LEVE3"], g_real=0.01, jcp_share=jcp("LEVE3"),
+               outras_liquidas=True, pl_hist=do_hall("LEVE3", N["LEVE3"]),
                # 08/10/2026: notas por evidência do dossiê (regra 11, DOSSIES/2026-10-08-LEVE3.md) no lugar das arbitradas (4, 3, 3, 3, 3)
                qualitativo=QUAL(4, 1, 2, 3, 2), qualitativo_origem="regra 11 (dossiê 06/10/2026)", controlador_discricionario=True,
                controlador_discricionario_fonte="FRE 2026: MAHLE Indústria e Comércio 56,8% + MAHLE Industriebeteiligungen 4,2% = 61,0%; "

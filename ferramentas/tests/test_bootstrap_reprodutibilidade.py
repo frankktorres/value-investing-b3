@@ -50,6 +50,7 @@ def test_obter_sem_zip_e_sem_snapshot_da_chave_da_a_receita(tmp_path, monkeypatc
 
 @pytest.mark.skipif(not TEM_ZIPS, reason="ZIPs da CVM ausentes (clone limpo): snapshot não é conferível aqui")
 def test_snapshot_igual_ao_recalculo_dos_zips():
+    import lote3_agro  # noqa: F401  (P/L histórico, fase 3 fatia 3)
     import lote4_saude_telecom  # noqa: F401  (o import recalcula e preenche CALCULADOS)
     import lote5_petroleo  # noqa: F401
     import lote6_quimica  # noqa: F401
