@@ -11,8 +11,10 @@ TEXTO = JS + sorted(WEB.glob("*.html")) + sorted(WEB.glob("*.css"))
 
 
 def _sem_comentarios(txt: str) -> str:
+    """Tira só comentário de bloco e linha que É comentário: `//` no meio da linha pode estar dentro de string, e cortar
+    ali esconderia o resto da linha do teste."""
     txt = re.sub(r"/\*.*?\*/", "", txt, flags=re.S)
-    return re.sub(r"(^|[^:])//.*$", r"\1", txt, flags=re.M)
+    return re.sub(r"^\s*//.*$", "", txt, flags=re.M)
 
 
 def test_tem_as_quatro_telas():
@@ -37,8 +39,19 @@ def test_nada_sai_da_maquina(arq):
 def test_sem_fator_de_valuation_fixo(arq):
     """Compra 0,70×, parcial 0,80×, saída 1,30×/1,50× e a mediana do central vêm do motor (hall.fatores)."""
     txt = _sem_comentarios(arq.read_text(encoding="utf-8"))
-    assert not re.search(r"(?<![\d.])(0?\.70?|0?\.80?|1\.30?|1\.50?)(?![\d])", txt), arq.name
-    assert not re.search(r"median\w*\s*\(", txt, flags=re.I), arq.name
+    assert not re.search(r"(?<![\d.])(0?\.[78]0*|1\.[35]0*)(?![\d])", txt), f"{arq.name}: fator fixo"
+    assert not re.search(r"(?<![\d.])(7|8|13|15)\s*/\s*10(?![\d])", txt), f"{arq.name}: fator em fração"
+    assert not re.search(r"median\w*\s*\(", txt, flags=re.I), f"{arq.name}: mediana"
+    # régua fabricada: central × fator, ou fator × central (compra/saída só chegam prontas do contrato)
+    assert not re.search(r"central\s*\*|\*\s*[\w.]*central\b", txt), f"{arq.name}: multiplica o central"
+    assert not re.search(r"\*\s*[\w.]*\b(compra|saida|fator_saida|saida_qualidade)\b", txt), f"{arq.name}: multiplica fator"
+
+
+@pytest.mark.parametrize("arq", JS, ids=lambda p: p.name)
+def test_estilo_so_por_cssom(arq):
+    """A CSP do servidor (`style-src 'self'`) bloqueia estilo inline: só `el.style` (CSSOM) funciona."""
+    txt = _sem_comentarios(arq.read_text(encoding="utf-8"))
+    assert not re.search(r"setAttribute\(\s*['\"]style|createElement\(\s*['\"]style|cssText\s*=", txt), arq.name
 
 
 def test_le_so_o_contrato():

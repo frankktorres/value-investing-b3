@@ -243,6 +243,7 @@ a{color:inherit}
 .grp{padding:12px 0 4px}
 .ind{display:grid;grid-template-columns:1fr auto;gap:4px 12px;margin-top:12px;padding-top:10px;border-top:1px solid var(--ln2);font-size:12.5px}
 .sens{display:grid;gap:3px;font-size:12.5px;max-width:560px}
+.sens .linha{display:contents}
 .sens .hd{font:500 11px var(--f-mono);color:var(--ink3);display:flex;align-items:center;justify-content:center;min-height:26px;text-align:center}
 .sens .cell{display:flex;align-items:center;justify-content:center;min-height:38px;border-radius:3px;border:1px solid var(--ln)}
 .sens .up2{background:var(--barata-bg);border-color:var(--barata-ln);color:var(--barata-fg)}

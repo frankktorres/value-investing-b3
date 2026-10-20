@@ -49,7 +49,8 @@ function cardRegua(cab) {
 function linhasVerticais(cab) {
   const f = fatores();
   const v = (fat, cls) => { const p = posicao(fat, 0); return p ? h('i', { class: `vl ${cls}`, style: { left: `${p.x}%` } }) : null; };
-  return [v(f.compra, ''), v(1, 'c'), v(cab.fator_saida, ''), ok(cab.pc) ? v(cab.pc, 'p') : null];
+  const regua = temRegua(cab);                          // sem compra/saída do motor (NÃO CONCLUSIVO): só o central
+  return [regua ? v(f.compra, '') : null, v(1, 'c'), regua ? v(cab.fator_saida, '') : null, regua && ok(cab.pc) ? v(cab.pc, 'p') : null];
 }
 
 function linhaMetodo(m, cab, comEixo) {
@@ -76,7 +77,7 @@ function cardValuation(emp) {
   const f = fatores();
   const eixo = comEixo ? h('div', { class: 'pl' },
     ...linhasVerticais(cab),
-    ...[[cab.pc, 'hoje'], [f.compra, 'compra'], [1, 'central'], [cab.fator_saida, 'saída']].map(([fat, rot]) => {
+    ...(temRegua(cab) ? [[cab.pc, 'hoje'], [f.compra, 'compra'], [1, 'central'], [cab.fator_saida, 'saída']] : [[1, 'central']]).map(([fat, rot]) => {
       const p = ok(fat) ? posicao(fat, 3) : null;
       return p ? h('span', { class: 'ax', style: { left: `${p.x}%`, bottom: rot === 'hoje' ? '26px' : '4px' }, text: rot }) : null;
     })) : h('div', { class: 'pl' }, h('span', { class: 'small', text: 'sem central firme: só os valores' }));
@@ -96,19 +97,24 @@ function cardValuation(emp) {
 
 // ------------------------------------------------------------------------------ sensibilidade
 const TOM = { bem_acima: 'up2', acima: 'up1', abaixo: 'dn1', bem_abaixo: 'dn2' };
+const TOM_TEXTO = { bem_acima: 'preço já na compra', acima: 'acima do preço', abaixo: 'abaixo do preço', bem_abaixo: 'preço na saída' };
 
 function cardSensibilidade(emp) {
   const s = emp.sensibilidade;
   if (!s) return cartao({ titulo: 'Sensibilidade do valor central', id: 'sensibilidade' }, vazio('Sem grade de sensibilidade', 'O motor não gravou a grade para este ticker (sem fonte).'));
   const grade = h('div', { class: 'sens', style: { gridTemplateColumns: `96px repeat(${s.colunas.length}, minmax(64px, 1fr))` }, role: 'table', 'aria-label': s.titulo },
-    h('div', { class: 'hd', role: 'columnheader', text: `${s.eixo_linha} ↓ · ${s.eixo_coluna} →` }),
-    s.colunas.map((col) => h('div', { class: 'hd', role: 'columnheader', text: col })),
-    s.linhas.map((rot, i) => [
+    h('div', { class: 'linha', role: 'row' },
+      h('div', { class: 'hd', role: 'columnheader', text: `${s.eixo_linha} ↓ · ${s.eixo_coluna} →` }),
+      s.colunas.map((col) => h('div', { class: 'hd', role: 'columnheader', text: col }))),
+    s.linhas.map((rot, i) => h('div', { class: 'linha', role: 'row' },
       h('div', { class: 'hd', role: 'rowheader', text: rot }),
-      s.valores[i].map((v, j) => h('div', {
-        class: `cell num ${TOM[s.classe[i][j]] || ''}${s.base && s.base[0] === i && s.base[1] === j ? ' base' : ''}`, role: 'cell', text: num(v),
-      })),
-    ]));
+      s.valores[i].map((v, j) => {
+        const base = s.base && s.base[0] === i && s.base[1] === j;
+        const tom = TOM_TEXTO[s.classe[i][j]] || 'sem preço de hoje';
+        return h('div', { class: `cell num ${TOM[s.classe[i][j]] || ''}${base ? ' base' : ''}`, role: 'cell',
+          title: `${rot} × ${s.colunas[j]}: ${num(v)} · ${tom}${base ? ' · caso-base' : ''}`,
+          'aria-label': `${num(v)}, ${tom}${base ? ', caso-base' : ''}`, text: num(v) });
+      }))));
   return cartao({ titulo: 'Sensibilidade do valor central', id: 'sensibilidade', lead: `${s.titulo}. Contorno grosso = caso-base.` },
     h('div', { class: 'xs' }, grade),
     h('div', { class: 'lg' },
@@ -172,7 +178,7 @@ function cardLeitura(emp) {
     h('div', { style: { margin: '10px 0' } }, chip(cab.palavra, 'lg')),
     kv([
       ['P/C hoje', h('span', { class: `num${firme(cab.central_nota) ? '' : ' v-w'}`, text: num(cab.pc) })],
-      ['Compra · saída', h('span', { class: 'num', text: `${mult(f.compra)} · ${mult(cab.fator_saida)}` })],
+      ['Compra · saída', h('span', { class: 'num', text: temRegua(cab) ? `${mult(f.compra)} · ${mult(cab.fator_saida)}` : TRACO })],
       ['Métodos no central', h('span', { class: 'num', text: `${l.metodos_central} de ${l['metodos_r$']}` })],
       ['Com fonte A ou B', h('span', { class: 'num', text: `${l.central_com_fonte_ab} de ${l.metodos_central}` })],
       ['Vence a renda fixa?', rendaFixa(cab)],
@@ -193,7 +199,9 @@ function cardProventos(emp) {
     h('div', { class: 'yrs' }, hist.map((x) => h('span', { text: `${x.ano.slice(2)}${x.parcial ? 'p' : ''}` }))),
     h('div', { class: 'lg' }, h('span', {}, h('i', { class: 'd' }), 'Dividendos'), h('span', {}, h('i', { class: 'j' }), 'JCP'),
       h('span', {}, h('i', { class: 'pr' }), 'ano parcial'), p.fonte_historico ? h('span', {}, `fonte ${p.fonte_historico.fonte}`, nota(p.fonte_historico.nota)) : null),
-  ] : [h('p', { class: 'small v-w', text: 'Histórico por exercício: sem fonte para este ticker.' })];
+  ] : [h('p', { class: 'small v-w', text: hist.length
+    ? 'Histórico por exercício: nenhum provento nos anos registrados.'
+    : 'Histórico por exercício: sem fonte para este ticker.' })];
   const par = (rot, x, fmtf) => [rot, x ? valor(fmtf(x.valor), x.nota) : h('span', { class: 'v-w', text: TRACO })];
   return cartao({ titulo: 'Proventos', id: 'proventos', lead: 'R$ por ação de hoje, por ano da data-com. Dividendos e JCP empilhados.' },
     grafico,

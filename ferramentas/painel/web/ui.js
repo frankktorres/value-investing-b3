@@ -62,9 +62,8 @@ export function fatores() { return FATORES; }
 export function posicao(f, borda = 2) {
   if (!ok(f) || !ESCALA) return null;
   const x = ((f - ESCALA[0]) / (ESCALA[1] - ESCALA[0])) * 100;
-  if (x > 100 - borda) return { x: 100 - borda, fora: '>' };
-  if (x < borda) return { x: borda, fora: '<' };
-  return { x, fora: null };
+  const fora = f > ESCALA[1] ? '>' : f < ESCALA[0] ? '<' : null;      // "fora" pela escala, não pela borda visual
+  return { x: Math.min(Math.max(x, borda), 100 - borda), fora };
 }
 
 const pctCss = (x) => `${x}%`;

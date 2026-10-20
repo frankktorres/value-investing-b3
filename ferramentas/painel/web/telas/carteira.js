@@ -37,9 +37,10 @@ function evolucao(ct, ocultar) {
 }
 
 function posicoes(ct, c) {
-  const lista = [...ct.posicoes].sort((a, b) => (b.peso || 0) - (a.peso || 0));
+  // com Ocultar, a ordem por peso entregaria o ranking: ordena por ticker
+  const lista = [...ct.posicoes].sort(c.ocultar ? (a, b) => a.ticker.localeCompare(b.ticker) : (a, b) => (b.peso || 0) - (a.peso || 0));
   return cartao({ titulo: 'Posição de cada papel na régua', id: 'posicoes',
-    lead: 'Ordenado por peso. Traço = preço de hoje; losango = central. Palavra e régua do Hall (veredito vigente).' },
+    lead: `${c.ocultar ? 'Ordem alfabética (valores ocultos)' : 'Ordenado por peso'}. Traço = preço de hoje; losango = central. Palavra e régua do Hall (veredito vigente).` },
   h('div', { class: 'pos h' }, ['Papel', 'Palavra', 'Régua', 'Peso', 'Renda/ano'].map((t, i) => h('span', { class: `cap${i > 2 ? ' r' : ''}`, text: t }))),
   lista.map((p) => {
     const linha = c.linhas[p.ticker] || p;
@@ -63,7 +64,8 @@ function calendario(ct, c) {
     h('div', { class: 'cal', role: 'img', 'aria-label': `Proventos líquidos por mês, ${mes(meses[0].mes)} a ${mes(meses[meses.length - 1].mes)}` },
       meses.map((m) => h('div', { class: `m${aReceber(m) ? ' rec' : ''}`, title: `${mes(m.mes)}: ${m.situacao}${m.tickers.length ? ` · ${m.tickers.join(', ')}` : ''}` },
         h('span', { class: 'vv', text: ok(m.liquido) ? (c.ocultar ? '•••' : compacto(m.liquido)) : '' }),
-        h('i', { style: { height: `${mx > 0 && ok(m.liquido) ? (m.liquido / mx) * 100 : 0}%` } })))),
+        // com Ocultar, a altura entregaria a proporção entre meses: barra só marca se houve pagamento
+        h('i', { style: { height: `${!(mx > 0 && ok(m.liquido)) ? 0 : c.ocultar ? (m.liquido > 0 ? 50 : 0) : (m.liquido / mx) * 100}%` } })))),
     h('div', { class: 'calx' }, meses.map((m) => h('span', { text: mes(m.mes).slice(0, 3) }))),
   ] : vazio('Sem calendário', 'Nenhum provento com data de pagamento na janela.'),
   h('div', { class: 'lg' },

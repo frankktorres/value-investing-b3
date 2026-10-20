@@ -55,8 +55,8 @@ function aplicarOcultar(on) {
 
 // ------------------------------------------------------------------------------ rotas
 function rota() {
-  const m = /^#\/([a-z]+)(?:\/([A-Z0-9]+))?/.exec(location.hash);
-  return { id: m ? m[1] : 'hall', tk: m && m[2] ? m[2] : null };
+  const m = /^#\/([a-z]+)(?:\/([A-Za-z0-9]{4,8}))?\/?$/.exec(location.hash);
+  return { id: m ? m[1] : 'hall', tk: m && m[2] ? m[2].toUpperCase() : null };
 }
 
 export function navegar(hash) { if (location.hash !== hash) location.hash = hash; else render(); }
@@ -76,7 +76,7 @@ function rodape(id) {
   const hl = estado.hall;
   if (hl) {
     itens.push(h('span', {}, 'Cotação ', h('b', { text: data(hl.cotacao_em) })));
-    itens.push(h('span', {}, 'Exportado ', h('b', { text: (hl.exportado_em || '').replace('T', ' ') })));
+    itens.push(h('span', {}, 'Exportado ', h('b', { text: hl.exportado_em ? hl.exportado_em.replace('T', ' ') : '—' })));
   }
   if (id === 'carteira') itens.push(h('span', { text: 'Dados pessoais ficam neste computador.' }));
   r.replaceChildren(...itens);
@@ -176,6 +176,9 @@ async function iniciar() {
     aplicarOcultar(!estado.ocultar); guardar('mesa.ocultar', estado.ocultar ? '1' : '0'); render();
   });
   teclado();
+  document.querySelector('.pular').addEventListener('click', (ev) => {   // não troca a rota: só leva o foco ao conteúdo
+    ev.preventDefault(); document.getElementById('pagina').focus();
+  });
   window.addEventListener('hashchange', () => { render(); document.getElementById('pagina').scrollTop = 0; window.scrollTo(0, 0); });
   render();
   const [hl, ct, mn] = await Promise.all([ler(ARQ.hall), ler(ARQ.carteira), ler(ARQ.monitor)]);
