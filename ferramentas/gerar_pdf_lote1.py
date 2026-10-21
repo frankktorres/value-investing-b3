@@ -23,6 +23,7 @@ from reportlab.platypus import (Image, KeepTogether, PageBreak, Paragraph, Simpl
 
 from lote1_bancos import DATA_BASE, EMPRESAS, MK, MK_FOCUS
 from lote1_textos import AGENDA, ANTES, T
+import carimbos
 from motor_financeiras import (HORIZONTE, IR_JCP, PIB_REAL_LP, PREMIO_KE, avaliar, central_ao_ke, entrada_parcial, projecao)
 
 sys.stdout.reconfigure(encoding="utf-8")
@@ -64,9 +65,10 @@ def pct(x, casas=1):
     return "—" if x is None else br(100 * x, casas) + "%"
 
 
-def texto_entrada_parcial(r, emp, armadilhas=()):
-    """§9, exceção da 1ª parcela pela regra única do motor (AUD-42): o texto diz o motivo de cada recusa."""
-    ok, motivos = entrada_parcial(r, emp.fora_circulo, armadilhas)
+def texto_entrada_parcial(r, emp, armadilhas=None):
+    """§9, exceção da 1ª parcela pela regra única do motor (AUD-42): o texto diz o motivo de cada recusa.
+    Sem `armadilhas` explícitas, valem as registradas em `carimbos.py` (21/10/2026; antes nenhuma entrava aqui)."""
+    ok, motivos = entrada_parcial(r, emp.fora_circulo, carimbos.de(emp.ticker) if armadilhas is None else armadilhas)
     return ("aplicável — 1ª parcela (≤ 1/3) só até R$ " + br(r["compra_parcial"])) if ok else "não se aplica (" + "; ".join(motivos) + ")"
 
 
