@@ -53,6 +53,47 @@ Front lê só o contrato. Tira o "Sistema em breve" do `index.html:27`.
 ~~4. **B13/B14** — Sensibilidade das premissas provisórias (AUD-57/60) e Ke dos alavancados (KLBN11). Só relatório + proposta; mudar doutrina só com decisão registrada em `DECISOES.md`.~~ (feita 14/10: `docs/SENSIBILIDADE-B13-B14.md`)
 ~~5. **B24** — AUD-41: `filtros_1a4` exige razão não vazia para desconto de controlador; registrar as 29 razões (só com fonte A/B; sem fonte → marcar "sem razão documentada", não inventar). *Pronto quando:* teste novo + suíte verde, golden explicado ou intacto, registro no `09`.~~ (feita 14/10)
 ~~6. **B25** — AUD-32/98/99: ajustar `registro_prospectivo.py` ao pré-registro decidido (critério contínuo, comparador = média do hall, uma linha por ticker×rodada). *Pronto quando:* testes verdes e registro no `09`.~~ (feita 14/10)
+*QA de 21/10/2026 (5 frentes: motores, tela/servidor, nuvem/CLIs, dados × CVM/B3, fatos × FRE): N6–N11, depois de N1–N5, na mesma regra (uma por turno; golden intacto, senão `wip/auto`).*
+
+**N6 — Ocultar valores vaza o DY da carteira (LGPD, ALTA).** `ferramentas/painel/web/telas/carteira.js:116` mostra "DY líquido 12m 9,9%" em claro com `#ocultar` ligado; passar por `pessoal(...)` como o patrimônio. Varrer as outras telas atrás de outro valor/peso da carteira fora de `pessoal(`. *Pronto quando:* teste em `painel/tests/test_web_estatico.py` que falha se `carteira.js` formatar valor da carteira fora de `pessoal(`; suíte verde.
+
+**N7 — Motor sem defesa contra dado inválido (ALTA preventiva; hoje os 47 tickers estão limpos).** NaN, ±inf, None ou ≤ 0 têm de virar recusa explícita (NÃO CONCLUSIVO ou `ValueError` com mensagem), nunca palavra ou elegibilidade em silêncio. Pontos reproduzidos pelo QA:
+- `motor_financeiras.palavra` (`:86-92`): NaN vira CARA; 0, −1 e −inf viram BARATA.
+- `precos_de_referencia` (`:97`): o guarda `central <= 0` não pega NaN.
+- `entrada_parcial` (`:111`): NaN em pc, dispersão, notas ou central dá `(True, [])`.
+- `descontar` (`:133`): aceita `desc` fora de [0,1].
+- `media_qualitativa` (`:142`): aceita nota fora de 0–5 e NaN.
+- `nota_preco` (`:192`): NaN dá 0 e −1 dá 10.
+- `motor_nao_financeiras.central_de` (`:822`): NaN entra na mediana e o resultado depende da ordem.
+- `qualifica_saida` (`:788`): aceita mais anos acima do que a série tem.
+- `carimbos.de` (`carimbos.py:25`): falta `.strip().upper()`.
+- `relatorio/montar.py:24`: falta `strip`.
+
+*Pronto quando:* teste parametrizado com NaN/inf/None/0/negativo para cada função; golden intacto (`git diff --stat ferramentas/tests/golden.json` vazio); uma linha no `09`.
+
+**N8 — Escala do nº de ações (MÉDIA, investigar primeiro).** A CVM informa a composição do capital em MIL. O `cvm_series.json` da TAEE11 tem 1.033.497 (o certo é 1,033 bi de ações = 344,5 mi units); `dossie/base.py` já corrige isso com q×1000 para a ALLD3. Rastrear se `acoes` da TAEE11 (e de quem mais vier em mil) chega a valor por ação (`lote2_energia.py:104` e o que mais ler `l["acoes"]`).
+
+*Pronto quando:* relatório em `docs/QA-2026-10-21.md` com a lista dos tickers afetados e o efeito. Se chega ao valor: corrigir `coletar_cvm.acoes_em_circulacao`, com teste de fixture, mas SEM regravar `cvm_series.json` (isso é LOCAL, com o Frank) → registrar em `PENDENTE-FRANK.md`.
+
+**N9 — Robustez do servidor e do front (MÉDIA).**
+- `painel/servir.py:57-58`: bind exclusivo; o segundo `painel` na mesma porta tem de falhar com "porta em uso" (hoje no Windows sobem dois e há `ERR_CONNECTION_REFUSED` intermitente).
+- `ui.js:58` / `app.js:185`: `hall.json` sem `fatores` dá TypeError e tela quase vazia → faixa de erro amigável.
+- `app.js:38`: "está na versão undefined" quando falta `versao`.
+- Roteador: hash desconhecido (`#/xyz`, `#/sistema` antes da N4) mostra o Hall sem avisar.
+
+*Pronto quando:* teste de subir dois servidores na mesma porta; `test_web_estatico` cobre o guarda de formato; suíte verde.
+
+**N10 — CLIs com traceback cru (MÉDIA/BAIXA).**
+- `temporada.py --trimestre 5T26 | 4T26` e `--simular 9T99`: dão traceback do `ValueError` → `parser.error`, rc 2.
+- `triagem/rodar.py:73` `--data 2026-13-40`: valida com `date.fromisoformat` via `type=`.
+- Texto do contrato da ALLD3 com ponto decimal ("18.2%", "(0.1048)") em `riscos`/`qualitativo` obs: achar a origem (`relatorio/quali.py`?) e usar o formato BR.
+
+*Pronto quando:* testes das CLIs com argumento inválido (rc 2, sem traceback, nada gravado); suíte verde.
+
+**N11 — Cadastro do relatório (MÉDIA).** `relatorio/quali.py:26` (`CADASTRO`) só tem BBSE3. Por isso EGIE3, PETR4, TAEE11, ITUB4 e SAPR11 dizem "nome de pregão/CNPJ não cadastrado" e ficam sem a série de proventos e o FRE na tela. Ler o pregão de `proventos_ex.PREGAO` (PETR4 = PETROBRAS já existe) e o CNPJ de `triagem/dados/triagem_2026-10-02.csv` (EGIE3 02.474.103/0001-19 conferido no cadastro da CVM). Para TAEE11 (TAESA, units: somar os eventos UNT) e ITUB4 (ITAUUNIBANCO), confirmar o nome de pregão na API da B3 (tradingName) antes de gravar.
+
+*Pronto quando:* teste de `_cadastro` para os 5; a série aparece no relatório quando o dado local existir (na nuvem, só o cadastro e o teste).
+
 7. **B11** (resto) — StatusInvest: termos dão 403 na nuvem — bloqueado até o Frank colar o texto (B3 feita 14/10). Não é missão de turno.
 ~~8. **B26** — Razão do desconto de controlador com fonte A (FRE) para os 28 com `SEM_RAZAO`.~~ (feita 20/10: 28 → 23, ver Feitas)
 
