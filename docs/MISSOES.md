@@ -2,7 +2,8 @@
 *Fila de trabalho da rotina autônoma. Cada missão: executável só com o GitHub, uma por turno, com "pronto quando" verificável. Ao terminar, mover para "Feitas" e registrar em `RELATORIO-DIARIO.md`. Fonte: `BACKLOG.md` (tipo executável).*
 
 ## Próximas (ordem de prioridade)
-*Check-up de 21/10/2026: N1–N5 são a fila da madrugada (uma por turno, nesta ordem). Na nuvem não há `ferramentas/dados/`: teste que precisa de
+*Fila da madrugada (Frank, 21/10 tarde), uma por turno, NESTA ORDEM: **N7 → N1 → N2 → N9 → N10 → N8 → N11 → N3 → N4 → N5**
+(a ordem do texto abaixo não manda). N6 feita. Na nuvem não há `ferramentas/dados/`: teste que precisa de
 dado bruto pula; teste novo usa fixture pequena. Nenhuma delas muda palavra, central ou golden — se mudar, parar e ir para `wip/auto`.*
 
 **N1 — Higiene de docs (check-up 21/10).** Corrigir só texto:
@@ -53,9 +54,7 @@ Front lê só o contrato. Tira o "Sistema em breve" do `index.html:27`.
 ~~4. **B13/B14** — Sensibilidade das premissas provisórias (AUD-57/60) e Ke dos alavancados (KLBN11). Só relatório + proposta; mudar doutrina só com decisão registrada em `DECISOES.md`.~~ (feita 14/10: `docs/SENSIBILIDADE-B13-B14.md`)
 ~~5. **B24** — AUD-41: `filtros_1a4` exige razão não vazia para desconto de controlador; registrar as 29 razões (só com fonte A/B; sem fonte → marcar "sem razão documentada", não inventar). *Pronto quando:* teste novo + suíte verde, golden explicado ou intacto, registro no `09`.~~ (feita 14/10)
 ~~6. **B25** — AUD-32/98/99: ajustar `registro_prospectivo.py` ao pré-registro decidido (critério contínuo, comparador = média do hall, uma linha por ticker×rodada). *Pronto quando:* testes verdes e registro no `09`.~~ (feita 14/10)
-*QA de 21/10/2026 (5 frentes: motores, tela/servidor, nuvem/CLIs, dados × CVM/B3, fatos × FRE): N6–N11, depois de N1–N5, na mesma regra (uma por turno; golden intacto, senão `wip/auto`).*
-
-**N6 — Ocultar valores vaza o DY da carteira (LGPD, ALTA).** `ferramentas/painel/web/telas/carteira.js:116` mostra "DY líquido 12m 9,9%" em claro com `#ocultar` ligado; passar por `pessoal(...)` como o patrimônio. Varrer as outras telas atrás de outro valor/peso da carteira fora de `pessoal(`. *Pronto quando:* teste em `painel/tests/test_web_estatico.py` que falha se `carteira.js` formatar valor da carteira fora de `pessoal(`; suíte verde.
+*QA de 21/10/2026 (5 frentes: motores, tela/servidor, nuvem/CLIs, dados × CVM/B3, fatos × FRE): N7–N11, na ordem do topo, na mesma regra (uma por turno; golden intacto, senão `wip/auto`).*
 
 **N7 — Motor sem defesa contra dado inválido (ALTA preventiva; hoje os 47 tickers estão limpos).** NaN, ±inf, None ou ≤ 0 têm de virar recusa explícita (NÃO CONCLUSIVO ou `ValueError` com mensagem), nunca palavra ou elegibilidade em silêncio. Pontos reproduzidos pelo QA:
 - `motor_financeiras.palavra` (`:86-92`): NaN vira CARA; 0, −1 e −inf viram BARATA.
@@ -110,6 +109,7 @@ Front lê só o contrato. Tira o "Sistema em breve" do `index.html:27`.
 (nenhuma)
 
 ## Feitas
+- **N6** (21/10, dia): "Ocultar valores" não vaza mais o DY líquido 12m nem o patrimônio (`carteira.js`, `pessoal(...)`); hall/empresa já usavam `pessoal(`; teste `test_carteira_valor_em_texto_respeita_ocultar`; conferido no navegador com Ocultar ligado (só •••).
 - **B26** (20/10): razão do desconto de controlador pelo FRE 2026 em PRIO3, KEPL3, RECV3, VBBR3, B3SA3 (28 → 23 `SEM_RAZAO`); 0 palavras; golden intacto (`09` de 20/10).
 - **B30 + B31** (20/10): `pl_historico.mediana` cobre 2016–19 pelo LPA básico da classe (DRE 3.99; travas: ações implícitas a ±25% da 1ª composição, evento ambíguo até a entrega do DFP → ano fora); golden: Bogle de 8 tickers, 0 palavras; dossiês FESA4/SHUL4/VLID3/HYPE3/LEVE3 mudam só o P/L. TIMS3 2021–23 conferidas nos PDFs do RI (19,32/4,50/18,29%); WPU0662 conferida no BLS → UNIP6 receita de meio A. Adversário: 3 achados corrigidos.
 - **B15 / fase 3, fatia 3** (20/10): preço (`precos_hall.preco`), receita de meio PETR4/PRIO3/RECV3/GGBR4/UNIP6 (CVM × EIA/BLS, `verificador-fonte`), alíquota TIMS3 (CVM + nota 8.d), g1 WEGE3 (CVM + B3, 3 parcelas do extraordinário), NAV SLCE3 (fato relevante 15/06/2026: 27,12 → 27,72), `pl_hist` das NF por `pl_historico` (CVM + COTAHIST; SMTO3 em março; janela 2020–25, B30) e `preco_minerio` no insumo do CMIN3 — tudo em `insumos_a`; 19/19 NF do lote com central A/B (eram 11), C do lote 158 → 134; golden: 11 mudanças em 10 tickers (Bogle e a âncora de reprodução da SLCE3), 0 palavras; tabela no `09`.

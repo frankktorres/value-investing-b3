@@ -70,3 +70,13 @@ def test_fontes_locais_e_tema_escuro_padrao():
     for f in re.findall(r"url\((fontes/[^)]+)\)", css):
         assert (WEB / f).exists(), f
     assert "Space Grotesk" in css
+
+
+def test_carteira_valor_em_texto_respeita_ocultar():
+    """N6 (QA 21/10): valor da carteira interpolado em texto (`${ct.x.valor}`) precisa do desvio `o ? '•••'`; o caminho
+    normal é passar por pessoal(...). O DY líquido 12m vazava com "Ocultar valores" ligado."""
+    txt = _sem_comentarios((WEB / "telas" / "carteira.js").read_text(encoding="utf-8"))
+    vazam = [e for e in re.findall(r"\$\{([^}]*)\}", txt)
+             if re.search(r"\bct\.\w+\.valor\b", e) and not re.match(r"\s*(o|c\.ocultar)\s*\?", e)]
+    assert not vazam, vazam
+    assert re.search(r"pessoal\(pct\(ct\.dy_liquido_12m\.valor\), o\)", txt)

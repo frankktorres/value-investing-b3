@@ -130,7 +130,7 @@ for _tk in N:
 
 # ---------------------------------------------------------------- EGIE3 (regulado)
 def roe_limpo(tk, anos):
-    """ROE do controlador por ano, sem 'outras receitas' acima da mediana de 10 anos (após IR de 34%) — UBP de 2024 etc."""
+    """ROE do controlador por ano, sem 'outras receitas' acima da mediana de 10 anos (após IR de 34%) — venda da TAG em 2024 etc."""
     a = CVM[tk]["anual"]
     xs = [((a[y].get("outras_receitas_op") or 0) + (a[y].get("outras_despesas_op") or 0)) / a[y]["receita"] for y in map(str, range(2016, 2026))]
     med = st.median(xs)

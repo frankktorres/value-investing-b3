@@ -609,7 +609,7 @@ def capa(res, rank, story):
                                   "e Owner Earnings; P/L histórico no Bogle."],
            ["Utility (EGIE3)", "Método de regulado do Lote 2: P/VP justificado e DDM 2 estágios, TIR real implícita. Patrimônio de jun/26 − dividendo de "
                                "ago/26 + follow-on de jul/26 (R$ 8,36 bi, Jirau 40%), com o dinheiro novo rendendo o Ke (VPL zero); ROE de longo prazo = "
-                               "mediana 2017–25 do ROE do controlador sem 'outras receitas' acima da mediana (UBP de 2024)."],
+                               "mediana 2017–25 do ROE do controlador sem 'outras receitas' acima da mediana (venda da TAG em 2024, R$ 1,34 bi; DFP 2024 conta 3.04.04.02)."],
            ["Correções no coletor (valem para todos os lotes)", "Custo de transação e AVP de debêntures saíram da D&A (SUZB3 2021–25, KLBN11); impairment "
                                "lido na conta mais alta que casa (GGBR4 2016: 3.04.03 com filho zerado) e separado do lançado em 3.04.05. Lotes 2, 3 e 5 "
                                "conferidos: nenhuma palavra muda (SUZB3 central 37,94 → 37,12; KLBN11 5,06 → 4,98). Reemitido no Lote 4 (05/10): reinvestimento do DCF = g real ÷ ROIC real (Fisher), antes ÷ ROIC nominal — LEVE3 36,82 → 36,76; UNIP6 dispersão 3,26 → 3,14."],

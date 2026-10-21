@@ -112,8 +112,9 @@ export function telaCarteira(c) {
     kpi('Meta de renda', h('span', { class: 'num', text: pct(pctMeta, 0) }), null, ct.pct_meta.nota, 'Meta definida por você.',
       [h('span', { class: 'small' }, 'de ', pessoal(rs(ct.meta.valor, 0), o), ' por mês'), medidor]),
     kpi('Falta', pessoal(rs(ct.falta.valor, 0), o), '/mês', ct.falta.nota, 'Meta menos renda estimada.'),
-    kpi('Papéis', h('span', { class: 'num', text: String(ct.n_papeis) }), null, null,
-      `Patrimônio em ações B3: ${o ? '•••' : rs(ct.patrimonio.valor, 0)} · DY líquido 12m ${pct(ct.dy_liquido_12m.valor)}.`));
+    kpi('Papéis', h('span', { class: 'num', text: String(ct.n_papeis) }), null, null, null,
+      h('p', {}, 'Patrimônio em ações B3: ', pessoal(rs(ct.patrimonio.valor, 0), o), ' · DY líquido 12m ',
+        pessoal(pct(ct.dy_liquido_12m.valor), o), '.')));
   const nos = [
     titulo, kpis,
     faixaInfo('Avisos da carteira', ct.avisos),

@@ -944,3 +944,34 @@ relatório real da UNIP6). **D1:** `temporada.py --gravar` não baixa mais; só 
 `monitor_semanal.vbs` avisa falha da temporada e do painel da carteira (antes silenciosa), aviso 50 → 30 min (limite de 1 h da tarefa). Simulação real
 2T26: 6 min 17 s, 31 publicaram, nenhuma mudança. **Backup:** `backup_dados.py` levava `dados/privado/` (carteira, desde 19/10) ao OneDrive — agora
 excluída (inviolável 2). Adversário: 1 defeito (404) corrigido; mapeamento §7 → ticker e todos os chamadores conferidos. Nenhuma ordem de compra ou venda decorre desta mudança.
+
+## 21/10/2026 (tarde) — PENDENTE #7: o "UBP R$ 1,3 bi" da EGIE3 era a venda da TAG; casos do §7 com ano e fonte (proposta, #9)
+**#7 (EGIE3), lido nos ZIPs da CVM (nota A, consolidado, CD_CVM 17329):** o repo chamava de "UBP de 2024" o não recorrente limpo do ROE de longo
+prazo. São dois eventos: **(1) DFP 2024, conta 3.04.04.02 "Alienação de participação societária em controlada em conjunto" = R$ 1.336,1 mi** (venda
+da TAG; outras receitas operacionais) — é isso que `lote6_quimica.roe_limpo` tira (outras receitas acima da mediana, após IR de 34%); **(2) ITR 2T26,
+conta 3.06.01.01 "Repactuação do UBP" = R$ 1.921,5 mi** (receita financeira, no trimestre; ≈ R$ 1,27 bi após 34% — origem provável do "R$ 1,3 bi"
+da imprensa). Corrigido só o rótulo: `03-hall:33` (e a cópia do Desktop), `atualizar_hall_lote6.py:35`, `lote6_textos.py:115`,
+`gerar_pdf_lote6.py:612`, docstring de `lote6_quimica.py:133`, e o carimbo EGIE3 em `carimbos.py` ("venda da TAG em 2024; repactuação do UBP no
+2T26, R$ 1,92 bi bruto"). **Nenhum número, palavra, central ou golden mudou** (o cálculo já tirava a conta certa; o 2T26 não entra na janela
+2017–25). Observação para a temporada 3T26: o lucro 12m da EGIE3 (R$ 3,96 bi no LTM 2T26) carrega a repactuação; o patrimônio de jun/26 também.
+O §7 da doutrina ainda diz "Engie (UBP R$ 1,3 bi)" — entra na proposta do #9 abaixo.
+
+**#9 — casos do §7 (proposta; a doutrina NÃO foi alterada, aguarda o Frank):** DFP/ITR locais (CVM, nota A); ROE = lucro do controlador ÷ PL
+final; ROIC ≈ EBIT × 0,66 ÷ (PL + dívida bruta − caixa) (aproximação desta conferência, não do motor).
+- Sanepar: **DFP 2025 (individual), 3.04.04.01 "Receita Precatórios – Ação Judicial IRPJ" = R$ 2.055,8 mi**, compensada em parte por 3.04.05.03
+  "Provisão Passivo Regulatório" −R$ 1.541,8 mi. Carimbo vale em 2026.
+- Engie: ver #7 (TAG 2024 R$ 1.336,1 mi; UBP 2T26 R$ 1.921,5 mi). Carimbo vale em 2026.
+- Mahle "R$ 121 mi": **DFP 2023, 3.06 Resultado financeiro = +R$ 121,8 mi** (+ ganho de variação monetária/IAS 29 em 3.04.05.03: R$ 70,9 mi
+  2023, 116,7 mi 2024, 61,4 mi 2025). "ROE 77% / ROIC 30%" não reproduz exato em nenhum ano: ROE 82,0% (2023), 70,3% (2024), 70,5% (2025);
+  ROIC ≈ 37% / 39% / 33%; dívida bruta R$ 1,66 bi × PL ≈ R$ 0,86 bi em 2025. Os dois carimbos valem em 2026.
+- Unipar "240% do lucro": 2025 dá **270%** (DFC 6.03.03 dividendos pagos R$ 1.319,7 mi ÷ lucro do controlador R$ 488,6 mi, DFP 2025); caixa
+  R$ 2,14 bi (2023) → R$ 1,07 bi (2025) = "metade em 3 anos" confere; dívida R$ 2,06 → 3,53 bi. "ROE 20% / ROIC 7,7%": 2024 dá ROE 19,7%,
+  ROIC ≈ 11,6%; 2025 ROE 26,9%, ROIC ≈ 12,3%. Os dois carimbos valem em 2026.
+- Vibra "+300% a/a": **ITR 2T26 × 2T25: EBIT R$ 3.861 mi × R$ 1.023 mi (+277%)**; margem bruta 8,89% no 2T26, a maior da série trimestral
+  2022–26. Carimbo de topo de ciclo vale em 2026 (é atual, não de 2023).
+- Petrobras "Brent 104": EIA RBRTE (nota A) — média 2022 US$ 100,93, set/2026 US$ 114,16 (números do QA de 21/10; nesta tarde a página da EIA
+  não abriu para reconferir). Margem bruta LTM 2T26 50,6% × pico 52,7% (2023). Carimbo vale em 2026.
+**Proposta de texto do §7** (aplicar só com o ok do Frank): trocar os casos por "Sanepar (precatório IRPJ R$ 2,06 bi, 2025), Engie (venda da TAG
+R$ 1,34 bi em 2024; UBP R$ 1,92 bi no 2T26), Mahle (resultado financeiro +R$ 122 mi em 2023; IAS 29)" / "Unipar (270% do lucro em 2025)" /
+"Mahle (ROE 70%, ROIC ~33%, 2025), Unipar (ROE 27%, ROIC ~12%, 2025)" / "Vibra (EBIT +277% a/a no 2T26), Petrobras (Brent US$ 114 em set/2026,
+EIA)", com "(DFP/ITR CVM)" na legenda. **Nenhum carimbo sai.** Nenhuma ordem de compra ou venda decorre desta entrada.
