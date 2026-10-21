@@ -55,6 +55,8 @@ def baixar_itr(ano):
     CACHE.mkdir(parents=True, exist_ok=True)
     alvo = CACHE / f"itr_{ano}.zip"
     r = requests.get(cc.URL["ITR"].format(a=ano), timeout=600)
+    if r.status_code == 404:          # o arquivo do ano só aparece com a 1ª entrega (ex.: 1T27 em abril): não é falha
+        return None
     r.raise_for_status()
     tmp = alvo.with_suffix(".zip.novo")
     tmp.write_bytes(r.content)
@@ -269,6 +271,9 @@ def main(argv=None):
     else:
         print(f"Baixando {cc.URL['ITR'].format(a=ano)} …")
         zip_path = baixar_itr(ano)
+        if zip_path is None:
+            print(f"nenhum ticker com {rotulo} ainda (a CVM ainda não publicou itr_cia_aberta_{ano}.zip)")
+            return 0
     sha = manifesto_cvm.sha256_arquivo(zip_path)[0]
     if args.gravar and not simulado:
         # o que se grava tem de ser o que o Frank leu: sem download aqui, e o ZIP do cache = o do último boletim do trimestre

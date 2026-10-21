@@ -1,6 +1,6 @@
 ' Tarefas locais fora do horario (check-up de 21/10/2026, D4). Roda OCULTO e espera terminar (MAQUINA.md).
 ' Argumento 0: caminho do python.exe; argumento 1: "temporada" (deteccao diaria do ITR, sem --gravar) ou "backup".
-' Log em ferramentas\monitor\<modo>.log. Codigo <> 0 abre um aviso na tela (some em 50 min; tarefa interativa de proposito).
+' Log em ferramentas\monitor\<modo>.log. Codigo <> 0 abre um aviso na tela (some em 30 min; tarefa interativa de proposito).
 ' Texto sem acento: o WSH le este arquivo como ANSI.
 Option Explicit
 Dim fso, sh, ferramentas, py, modo, script, rc
@@ -23,6 +23,6 @@ rc = sh.Run("cmd /c ""set PYTHONIOENCODING=utf-8&& """ & py & """ " & script & "
 If rc <> 0 Then
     sh.Popup "Value Investing - " & modo & " FALHOU (codigo " & rc & ")." & vbCrLf & vbCrLf & _
              "Log: " & ferramentas & "\monitor\" & modo & ".log" & vbCrLf & _
-             "Rodar de novo: cd ferramentas && python " & script, 3000, "Value Investing - " & modo, 48
+             "Rodar de novo: cd ferramentas && python " & script, 1800, "Value Investing - " & modo, 48
 End If
 WScript.Quit rc

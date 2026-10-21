@@ -116,6 +116,14 @@ def _gravar_zip(pasta):
     return f
 
 
+def test_arquivo_do_ano_ainda_nao_publicado_sai_com_codigo_0(monkeypatch, tmp_path, capsys):
+    """Adversário 21/10: 1T27 em abril → itr_cia_aberta_2027.zip dá 404; não pode virar aviso de falha toda sexta."""
+    monkeypatch.setattr(T, "baixar_itr", lambda ano: None)
+    assert T.main(["--trimestre", "1T27", "--saida", str(tmp_path / "b")]) == 0
+    assert "ainda não publicou itr_cia_aberta_2027.zip" in capsys.readouterr().out
+    assert not (tmp_path / "b").exists()
+
+
 def _sem_download(ano):
     raise AssertionError("--gravar não pode baixar o ZIP")
 

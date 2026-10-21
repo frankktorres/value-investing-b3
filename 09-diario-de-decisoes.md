@@ -873,3 +873,74 @@ REGISTRADO (`insumos_a` aceita texto dentro do dict, comparado igual) e a nota d
 último pregão do ano (SLCE3 30/12/2021 e 30/12/2025) entrava com ações novas e preço "com" → a regra usa o dia do fechamento usado
 (`data_com >= pregão`); mediana da SLCE3 igual (os dois anos estavam nas pontas). O dossiê passou a usar a mesma conta (`base.pl_hist` →
 `pl_historico.mediana`); os 10 vereditos recalculados não mudam (`test_dossie_fichas`). Texto da SLCE3 que ainda dizia "NAV de terceiro" corrigido.
+
+## 20/10/2026 — B30 e B31: P/L histórico 2016–19 pelo LPA; TIMS3 2021–23 e WPU0662 conferidas na fonte
+**B30 — decisão de método (reversível).** `pl_historico.mediana` (hall e dossiê, a mesma função) passa a cobrir 2016–19: o DFP antes de 2020 não
+traz a composição do capital, então P/L do ano = fechamento (COTAHIST) ÷ **LPA básico da classe do ticker** (DRE 3.99.01.xx do mesmo DFP;
+consolidado, ou individual se o consolidado faltar ou vier zerado — VLID3 2016–17). Três travas, todas por exclusão do ano (nada inventado):
+(a) as ações implícitas (lucro ÷ LPA) ficam a menos de 25% das ações do 1º DFP com composição, levadas à base de preço do ano pelos eventos entre
+os dois fechamentos; (b) evento com data-com no fechamento ou depois e aprovado até a entrega do DFP (DT_RECEB) deixa ambíguo se o LPA veio
+reexpresso (CPC 41 §64) → ano fora; (c) LPA ≤ 0 → fora. 2020+ não muda (mesma conta, conferido `==`).
+**Conferência LPA × ações 2020–25** (`test_lpa_basico_da_cvm_confere_com_lucro_sobre_acoes_2020_25`): nos 10 do hall, LPA × ações ÷ lucro fica
+em 1 ± 5% em todos os anos com LPA, exceto TIMS3 2020 (0,105: erro de escala da CVM — a trava (a) o rejeitaria) e FLRY3 2022–23 (1,14 e 1,13:
+média ponderada após a fusão com o Pardini, dentro da trava). Desdobramentos/bonificações de 2016–19 (SMTO3 dez/16, FLRY3 jun/17, WEGE3 abr/18,
+SHUL4, SLCE3 abr/19) aparecem nas ações implícitas e passam na trava. TIMS3 não ganha anos (o ticker era TIMP3 antes de 2020: sem preço).
+Declarado, não corrigido: em 2016–19 o P/L é o da classe; em 2020+ é preço × todas as ações — com PN de dividendo 10% maior, 3–7% de diferença
+(FESA4, SHUL4, VIVT3 enquanto havia PN).
+
+**Antes → depois** (golden regravado com `--motivo`; 8 mudanças em 8 tickers, só o Bogle, **0 trocas de palavra**, nenhum central muda):
+
+| Ticker | P/L hist. 2020–25 | 2016–25 | Bogle nominal antes → depois | Palavra |
+|---|---|---|---|---|
+| ABEV3 | 15,36 | 19,15 | 13,12% → 15,36% | CARA = |
+| B3SA3 | 16,67 | 18,92 (2018–25; BVMF3 antes) | 9,63% → 10,88% | CARA = |
+| FLRY3 | 17,34 | 21,02 | 8,43% → 10,33% | CARA = |
+| HYPE3 (hall) | 13,57 | 15,40 | 9,56% → 10,81% | CARA = |
+| LEVE3 (hall) | 6,98 | 7,60 | 17,80% → 18,63% | NÃO CONCLUSIVO = |
+| SLCE3 | 9,89 | 10,34 | −8,44% → −8,07% | NÃO CONCLUSIVO = |
+| SMTO3 | 9,21 | 11,08 (março) | 0,19% → 1,91% | CARA = |
+| TIMS3 | 13,56 | 13,56 (sem preço 2016–19) | = | CARA = |
+| VIVT3 | 16,04 | 16,07 | = (abaixo da precisão do golden) | CARA = |
+| WEGE3 | 36,64 | 32,99 | 14,15% → 13,12% | CARA = |
+
+**Dossiê** (mesma função; veredito vigente não regerado — só com `--data` nova): FESA4 7,49 → 6,96, SHUL4 7,97 → 8,48, VLID3 7,70 → 12,08,
+HYPE3 13,57 → 15,40, LEVE3 6,98 → 7,60; ALLD3/BLAU3 iguais (listadas depois de 2019), CMIN3 sem P/L. Recalculados com desconto zero: palavra e
+central iguais nos 5 (o P/L só entra no Bogle). Nota do `pl_hist` segue A (valor registrado). Snapshot `pl_hist.*` de `derivados_zip.json`
+regravado; `do_hall` agora exige também os DFP 2016–19 para recalcular.
+
+**B31 — conferência na fonte.** (1) **TIMS3 2021–23**: conciliação do IR nas DFPs da TIM (RI, api.mziq.com: DFP 2022 p.145, DFP 2023 p.81, DFP
+2024 nota 8.d p.73) — (despesa − SUDENE − pontuais) ÷ LAIR = **19,32% · 4,50% · 18,29%**: CONFERE as lidas em 08/10. Pontuais: 2021 venda da
+I-Systems (−335,9 mi), Selic do indébito (+534,8 mi), reversão TIM Nordeste (+87,6 mi); 2022 prejuízo fiscal não reconhecido da Cozani
+(−130,0 mi, efeito da aquisição — sem tirá-lo 2022 seria 12,1% e a mediana 2021–25 continuaria 18,3%). JCP fica. LAIR e IR batem com a CVM.
+(2) **WPU0662** (UNIP6): FRED = "PPI by Commodity: … Thermoplastic Resins and Plastics Materials", BLS, NSA; API v1 do BLS: 28 dos 33 meses
+publicados iguais ao CSV; mai–ago/2026 eram preliminares e foram revisados (até +1,2%) — vintage do CSV, troca na coleta do 3T26.
+`RECEITA_MEIO_CLORO` B → **A** (o campo); o central do UNIP6 segue B pelo Kd sintético — métricas da trava iguais (19 centrais A/B, 134 C nas
+âncoras), nada a subir.
+**Revisão adversarial (20/10, duas passadas):** 2 defeitos e 1 fragilidade reproduzidos, todos corrigidos antes do golden: **(1)** LPA consolidado
+zerado não caía no individual (VLID3 2016–17) → cai; **(2)** a referência de ações exigia lucro > 0 (VLID3 2020 em prejuízo jogava a ref para
+2021) → só ações e preço; **(3)** bonificação pequena entre o fechamento e a entrega do DFP passava pela trava com LPA reexpresso → ano fora pela
+regra (b). Também: viés de classe declarado e o teste do snapshot passou a exigir os DFP 2016–19. 2ª passada: os 5 fechados, nenhum defeito novo;
+2020+ idêntico (`==`). Aceito: dossiê com COTAHIST e sem os DFP 2016–19 falha alto (o bootstrap baixa os dois). Suíte: 760 passed. Nenhuma ordem de compra ou venda decorre desta mudança.
+
+## 20/10/2026 — B26: razão do desconto de controlador pelo FRE 2026 (28 → 23 `SEM_RAZAO`)
+Leitura do FRE 2026 (`dossie/fre.py`, LGPD-safe: PF anonimizada) para os 28 tickers. **Critério (decidido pelo Claude, reversível):** só vira razão o que o FRE
+*prova*. Ele diz **quem** é o controlador e as partes relacionadas do ano, mas não prova que ele **não interferiu** em 15 anos (§5, regra 1); então "controlador X
+com Y%" não substitui `SEM_RAZAO` (seria o marcador disfarçado). Ficam de fora também o campo "controlador" vazio contradito pela tabela de partes relacionadas
+(SANB11, CSMG3, SBSP3, CPLE3: citam acionista controlador ou o Estado) e a UGPA3 (acordo de acionistas Ultra+Parth, 32,7%). **Razão escrita (5):** PRIO3 (id 161257),
+KEPL3 (161068), RECV3 (161485), VBBR3 (159172), B3SA3 (161005): FRE 2026 sem acionista marcado controlador, sem acordo de acionistas, lista de acionistas não vazia
+e sem parte relacionada "controlador"; sem dono que o exerça, os vetores V1-V6 não se aplicam; não cobre risco de gestão. Os outros 23 seguem "sem razão
+documentada" (razão de verdade exige dossiê com D3, como LEVE3). `test_b24`: 28 → 23 e confere o id do FRE de cada uma das 5. **Palavras: nenhuma mudou**
+(33 CARA, 3 JUSTA, 5 NÃO CONCLUSIVO); golden intacto (a razão é texto). Suíte 760 passed. Nenhuma ordem de compra ou venda decorre desta mudança.
+
+## 21/10/2026 — Check-up: armadilha na exceção dos 0,80× (D2), temporada blindada (D1), backup sem `privado/`
+**D2 (regra de compra, §9 "zero armadilhas"):** o relatório (`relatorio/quanti.py`) e os PDFs dos lotes 1, 3, 4 e 5 chamavam `entrada_parcial` sem
+os carimbos; só o lote 6 os passava. Novo registro único `ferramentas/carimbos.py`: os casos da tabela do §7 (Sanepar SAPR11, Engie EGIE3, Mahle LEVE3,
+Unipar UNIP6, Klabin KLBN11, Vibra VBBR3, Petrobras PETR4) + defeitos estruturais escritos (BRSR6 controlador; RECV3 produção em declínio com ROIC < WACC),
+cada um com o lugar onde está escrito; o lote 6 mantém a lista própria de LEVE3/UNIP6. **Critério (Claude, reversível):** caso da casa do §7 entra como
+está; tirar exige registrar aqui por que a armadilha acabou. **Efeito medido:** nos 9, a exceção já saía "não" por nota/palavra — a armadilha só se
+soma ao motivo; **nenhuma elegibilidade, palavra, central ou golden mudou** (a exceção não entra no golden). `tests/test_carimbos.py` (inclui o
+relatório real da UNIP6). **D1:** `temporada.py --gravar` não baixa mais; só grava se o sha256 do ZIP do cache = o do último boletim real do trimestre
+(o boletim passa a citar o hash); 404 do arquivo do ano ainda não publicado sai 0 (adversário: 1T27 em abril daria aviso falso toda sexta);
+`monitor_semanal.vbs` avisa falha da temporada e do painel da carteira (antes silenciosa), aviso 50 → 30 min (limite de 1 h da tarefa). Simulação real
+2T26: 6 min 17 s, 31 publicaram, nenhuma mudança. **Backup:** `backup_dados.py` levava `dados/privado/` (carteira, desde 19/10) ao OneDrive — agora
+excluída (inviolável 2). Adversário: 1 defeito (404) corrigido; mapeamento §7 → ticker e todos os chamadores conferidos. Nenhuma ordem de compra ou venda decorre desta mudança.

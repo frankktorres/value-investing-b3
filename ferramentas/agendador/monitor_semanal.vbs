@@ -5,7 +5,7 @@
 ' Saída em ferramentas\monitor\ultimo.log; o código de saída vira o LastTaskResult da tarefa.
 ' AUD-37: código ≠ 0 abre um aviso NA TELA (20 = dado velho, 21 = exceção, outro = python nem rodou). A tarefa
 ' é "Interativa" de propósito: sem sessão aberta o aviso não aparece e a falha volta a ser silenciosa.
-' O aviso some sozinho em 50 min (a tarefa tem limite de 1 h). Texto sem acento: o WSH lê este arquivo como ANSI.
+' O aviso some sozinho em 30 min (a tarefa tem limite de 1 h; monitor + temporada ~7 min + painel cabem antes dele). Texto sem acento: o WSH lê este arquivo como ANSI.
 Option Explicit
 Dim fso, sh, ferramentas, py, cmd, rc, rcT, rcC, msg, extra
 Set fso = CreateObject("Scripting.FileSystemObject")
@@ -28,7 +28,7 @@ extra = ""
 If rcT <> 0 Then extra = extra & vbCrLf & "Temporada FALHOU (codigo " & rcT & ") - log: " & ferramentas & "\monitor\temporada.log"
 If rcC <> 0 Then extra = extra & vbCrLf & "Painel da carteira FALHOU (codigo " & rcC & ") - log: " & ferramentas & "\monitor\carteira.log"
 If rc = 0 And extra <> "" Then
-    sh.Popup "Monitor semanal OK, mas:" & extra, 3000, "Value Investing - monitor semanal", 48
+    sh.Popup "Monitor semanal OK, mas:" & extra, 1800, "Value Investing - monitor semanal", 48
 End If
 If rc <> 0 Then
     If rc = 20 Then
@@ -40,6 +40,6 @@ If rc <> 0 Then
     End If
     msg = msg & vbCrLf & vbCrLf & "Log: " & ferramentas & "\monitor\ultimo.log" & vbCrLf & _
           "Rodar de novo: cd ferramentas && python monitor_semanal.py" & extra
-    sh.Popup msg, 3000, "Value Investing - monitor semanal", 48
+    sh.Popup msg, 1800, "Value Investing - monitor semanal", 48
 End If
 WScript.Quit rc
