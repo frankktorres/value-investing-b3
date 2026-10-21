@@ -975,3 +975,9 @@ final; ROIC ≈ EBIT × 0,66 ÷ (PL + dívida bruta − caixa) (aproximação de
 R$ 1,34 bi em 2024; UBP R$ 1,92 bi no 2T26), Mahle (resultado financeiro +R$ 122 mi em 2023; IAS 29)" / "Unipar (270% do lucro em 2025)" /
 "Mahle (ROE 70%, ROIC ~33%, 2025), Unipar (ROE 27%, ROIC ~12%, 2025)" / "Vibra (EBIT +277% a/a no 2T26), Petrobras (Brent US$ 114 em set/2026,
 EIA)", com "(DFP/ITR CVM)" na legenda. **Nenhum carimbo sai.** Nenhuma ordem de compra ou venda decorre desta entrada.
+
+## 21/10/2026 (tarde, 2) — Frank: #8 = (a); #9 = "ok §7" → doutrina 2.6.1
+**#8:** sem controlador nem acordo no FRE = razão válida do desconto de controlador (§5); fica como o B26 fez (PRIO3, KEPL3, RECV3, VBBR3, B3SA3).
+Nada recalculado. **#9:** a proposta da entrada anterior foi aplicada ao §7 (e ao exemplo da Unipar no §6, item 5) e ao checklist `04` (Engie:
+TAG 2024, UBP 2T26), nas cópias do Desktop também; doutrina 2.6 → **2.6.1** (só exemplos; nenhuma regra, carimbo, palavra, central ou golden
+mudou); versão anterior em `_historico/2026-10-21 doutrina v2.6/`. Nenhuma ordem de compra ou venda decorre desta entrada.

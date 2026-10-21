@@ -75,7 +75,7 @@
 ## F. Qualidade do lucro e quadro clássico
 
 - [ ] Comparei lucro **contábil vs ajustado**? De onde vem a diferença?
-  *Câmbio (Mahle, Suzano), IAS 29 (Argentina), evento societário (Engie/UBP), crédito fiscal (Unipar, Fleury), venda de ativo (Klabin).*
+  *Câmbio (Mahle, Suzano), IAS 29 (Argentina), venda de ativo e repactuação de concessão (Engie: TAG 2024, UBP 2T26), crédito fiscal (Unipar, Fleury), venda de ativo (Klabin).*
 - [ ] ROE alto vem de **alavancagem**? Calculei o **ROIC** e usei ele no comparativo?
 - [ ] Comparei ROIC com o WACC — e no **meio do ciclo**, não só hoje?
 - [ ] Accruals de Sloan: o lucro está acima ou abaixo do caixa? Por quê?

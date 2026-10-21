@@ -1,5 +1,5 @@
 # DOUTRINA — Value Investing aplicado à B3
-*Versão 2.6 · 10/10/2026 · documento de referência permanente do projeto*
+*Versão 2.6.1 · 21/10/2026 · documento de referência permanente do projeto*
 
 ---
 
@@ -125,7 +125,7 @@ Um DY de agregador não é informação até passar por seis testes:
 2. **Data-com vs pagamento.** Mede-se por data-com para comparar; por pagamento para saber quando o caixa entra.
 3. **Defasagem.** Hypera paga o JCP 15–21 meses depois; Vibra, ~8,5 (medida; o texto até a v2.5 dizia 15–18 — AUD-55); Vivo, 7–14; TIM, ~4 (2026; era ~12); Fleury parcela em até 2 anos. Mahle (1–6 meses), Gerdau (7–31 dias) e Unipar (9–11 dias) são as boas práticas. **A defasagem tem custo: o provento é trazido a valor presente ao Ke nominal** (pagar R$ 1 em 18 meses vale ~R$ 0,79 a Ke 16,6%), não ao IPCA. **De onde vem o prazo:** o padrão é a **defasagem medida** (média ponderada pelo valor de data-com → pagamento nos eventos dos 3 últimos anos). Um prazo informado à mão só vale com **evento declarado e fonte escrita** (campo `defasagem_fonte`) — calendário de JCP ou dividendo já anunciado, com a data; sem fonte o motor **não roda**. Prospectivo declarado vence o histórico: HYPE3 18 meses (JCP de 2026 pago até 31/12/2027), VIVT3 10, FLRY3 9, WEGE3 9, TIMS3 4. ABEV3 usava 6 meses sem evento declarado e passou ao medido (1,5 mês) em 05/10/2026.
 4. **Ordinário vs extraordinário vs redução de capital.** Vivo distribuiu R$ 1,25/ação como redução de capital — legítimo, mas não é lucro. Ambev antecipou 2025 por razão fiscal.
-5. **Payout sobre lucro E sobre FCFE.** Klabin paga com venda de terras; Unipar pagou 240% do lucro queimando metade do caixa em 3 anos; Copel eleva a alavancagem-alvo para pagar extras.
+5. **Payout sobre lucro E sobre FCFE.** Klabin paga com venda de terras; Unipar pagou 270% do lucro em 2025, com o caixa caindo à metade em 2023–25; Copel eleva a alavancagem-alvo para pagar extras.
 6. **A pergunta final: o dividendo é coberto por caixa?** Só "sim" habilita o Preço Teto de Bazin.
 
 **Yield sustentável — o único que entra em conta.** É o menor entre (a) o DPA médio de 5 anos ajustado e (b) o DPA que o FCFE normalizado paga. A parte paga com dívida, venda de ativo ou caixa acumulado é exibida, mas não entra no Bazin, no Bogle, no comparativo com a RF nem no "vence a RF". **Vale igual para todo setor** — utility que paga extra com dívida segue a mesma regra da química que paga acima do FCFE.
@@ -136,12 +136,14 @@ Um DY de agregador não é informação até passar por seis testes:
 
 | Armadilha | Como detectar | Caso da casa |
 |---|---|---|
-| **Lucro não recorrente** | Contábil ≫ ajustado; câmbio, IAS 29, crédito fiscal, venda de ativo | Sanepar, Engie (UBP R$ 1,3 bi), Mahle (R$ 121 mi de câmbio/IAS 29) |
-| **Dividendo não coberto por caixa** | Payout > FCFE; caixa caindo; dívida subindo | **Unipar** (240% do lucro), Klabin (venda de terras) |
-| **ROE inflado por alavancagem** | ROE alto com ROIC baixo | Mahle (ROE 77%, ROIC 30%), Unipar (ROE 20%, ROIC 7,7%) |
-| **Múltiplo baixo em topo de ciclo** | P/L baixo com margem em recorde | Vibra (margem +300% a/a), Petrobras (Brent 104) |
+| **Lucro não recorrente** | Contábil ≫ ajustado; câmbio, IAS 29, crédito fiscal, venda de ativo | Sanepar (precatório de IRPJ R$ 2,06 bi, 2025), Engie (venda da TAG R$ 1,34 bi em 2024; repactuação do UBP R$ 1,92 bi no 2T26), Mahle (resultado financeiro +R$ 122 mi em 2023; IAS 29) |
+| **Dividendo não coberto por caixa** | Payout > FCFE; caixa caindo; dívida subindo | **Unipar** (270% do lucro em 2025), Klabin (venda de terras) |
+| **ROE inflado por alavancagem** | ROE alto com ROIC baixo | Mahle (ROE 70%, ROIC ~33%, 2025), Unipar (ROE 27%, ROIC ~12%, 2025) |
+| **Múltiplo baixo em topo de ciclo** | P/L baixo com margem em recorde | Vibra (EBIT +277% a/a no 2T26), Petrobras (Brent US$ 114 em set/2026, EIA) |
 
 **Mesmo defeito, mesmo tratamento:** payout acima do FCFE por 2+ anos com dívida subindo gera o mesmo carimbo em qualquer empresa (Unipar e Klabin incluídas). Se uma recebe e a outra não, a ficha explica a diferença em número.
+
+*Casos da casa: CVM (DFP/ITR, nota A) e EIA; ano, conta e cálculo no `09` de 21/10/2026. ROIC "~" = EBIT × 0,66 ÷ (PL + dívida − caixa), aproximação da conferência, não o número do motor.*
 
 **Placar limpo até hoje:** apenas **GGBR4** teve zero das quatro.
 
@@ -292,3 +294,4 @@ Cada linha traz: valor, fórmula, insumos com fonte, e a marca **ÂNCORA**, **IN
 | **2.4** | **08/10/2026** | **Onda 1.2 da auditoria de 08/10 — Ke, custo da dívida e convenções de mercado; cada achado reproduzido antes.** **§4 Ke pela alavancagem (AUD-12) e §2 pesos no ponto fixo (AUD-13) — decisões do Frank**, entre 3 opções cada, com a tabela de efeito (ver `09`): prêmio = 5 p.p. × [1 + (1 − t) D/E] nas não financeiras, E = valor da casa. **§2 Kd (AUD-07):** RI quando houver; senão rf nominal + spread sintético pela cobertura normalizada (§4.1), no lugar do spread digitado sem fonte. **§2 alíquota (AUD-09):** explícita < 34% só com fonte; mudança de lei restringe a mediana (ABEV3 → 34%). **§4 rf (AUD-06):** taxa de compra da manhã, o rótulo "fechamento" estava errado; rf e π num arquivo só (AUD-78); aviso de idade > 15 dias calculado (AUD-72). **§9 trava (AUD-08)** vira passo 3b. **§11.1 reprodução (AUD-18)** declarada: contábil decide, reposição exibida. Palavras: SMTO3 RADAR → CARA; SUZB3 JUSTA → CARA; LEVE3 e ISAE4 → NÃO CONCLUSIVO (trava); KLBN11 e SLCE3 CARA → NÃO CONCLUSIVO; UNIP6 (fora do hall) → CARA. A triagem e o backtest (motor reduzido congelado) seguem com o Ke fixo de 5 p.p., divergência declarada no `06` |
 | **2.5** | **08/10/2026** | **Onda 1.3 da auditoria de 08/10 — decisão e gatilhos; cada achado reproduzido antes.** **§11.2 regulados (AUD-20) — decisão do Frank** entre 3 opções (regra nova, exceção no 09, DCF regulatório de verdade): a condição "investimento no FCO (ICPC 01)" que justificava o P/VP justificado só valia em TAEE11 e ISAE4 (na DFP 2025, SBSP3 tem 6.02.01 −13,7 bi no FCI; CPFE3, CMIG4, SAPR11 e CSMG3 também no FCI; CPLE3 e EGIE3 mistas). Regra nova: sem base regulatória **e** WACC regulatório com fonte A/B, o DCF regulatório é o P/VP justificado como **proxy declarado**, em qualquer posição do investimento; a ficha diz FCO/FCI/misto com as linhas da DFC (`lote2_energia.REGULADOS_DFC`, testado contra o ZIP da CVM); base nota C só informativa. Nenhum central muda. **§9 aplicada fora do motor (sem regra nova):** o monitor semanal e o `03` não dão compra nem saída a NÃO CONCLUSIVO (AUD-43, AUD-77). Ver `09` |
 | **2.6** | **10/10/2026** | **Onda 3 da auditoria de 08/10 — riscos latentes; decisões do Frank em 10/10, cada achado reproduzido antes.** **§9 trava (AUD-10)** na palavra final. **§11 DCF:** declínio com ROIC < WACC sem liberação de capital (AUD-34) e cenário negativo como zero (AUD-53); **OE pelo lucro do controlador** (AUD-15). **§9 entrada parcial** numa função só do motor, com as cinco condições e o preço (AUD-42; os PDFs testavam subconjuntos). Textos alinhados ao motor: trava do crescimento é degrau por cenário (AUD-14), Solidez sem Piotroski/Beneish (AUD-39), carimbo do Tesouro pelo ponto médio (AUD-40), defasagem da Vibra 8,5 meses (AUD-55). **Nenhuma palavra mudou nos 41**; mudam âncoras OE (ABEV3 7,34 → 7,04; WEGE3 11,76 → 11,08; UGPA3 9,11 → 8,69), o central da KLBN11 (1,72 → 2,62, segue NÃO CONCLUSIVO), SUZB3 (22,04 → 22,78), RANI3 (3,11 → 3,19) e RECV3 (−3,67 → 0, segue NÃO CONCLUSIVO, sem preço de compra/saída). Ver `09` (10/10/2026) |
+| 2.6.1 | 21/10/2026 | Só os casos da casa do §7 (e o exemplo do §6): ano e fonte CVM/EIA em cada um, números refeitos (Unipar 270% em 2025; Mahle ROE 70%/ROIC ~33%; Vibra +277% é o 2T26; "UBP de 2024" era a venda da TAG). Nenhuma regra nem carimbo mudou (PENDENTE #9, ok do Frank) |
