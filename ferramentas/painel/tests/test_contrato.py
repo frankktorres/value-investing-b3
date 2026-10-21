@@ -111,8 +111,24 @@ def test_proventos_tabela_do_dossie():
     p = contrato.proventos(bruto_emp([secao("Dividendos e JCP", tabelas=[tab])]))
     assert p["historico"][0] == {"ano": "2025", "parcial": False, "total": 0.79, "jcp": 0.36,
                                  "dividendos": pytest.approx(0.43)}
-    assert p["historico"][1]["parcial"] and p["yield_proj"] is None and p["anos_seguidos"] is None
-    assert contrato.proventos(bruto_emp([]))["historico"] is None
+    assert p["historico"][1]["parcial"] and p["yield_proj"] is None
+    # D5 (21/10): só 2025 completo na série → 1, "pelo menos" (a série começa nele); o parcial não conta
+    a = p["anos_seguidos"]
+    assert (a["valor"], a["minimo"], a["nota"]) == (1, True, "A") and a["obs"].startswith("2025–2025")
+    vazio = contrato.proventos(bruto_emp([]))
+    assert vazio["historico"] is None and vazio["anos_seguidos"] is None
+
+
+def test_anos_seguidos_quebra_no_ano_sem_provento_ou_faltando():
+    import proventos_hall as ph
+    assert ph.anos_seguidos({}) == (0, False)
+    assert ph.anos_seguidos({"2016": 1.0, "2017": 0.0, "2018": 1.0, "2019": 2.0}) == (2, False)
+    assert ph.anos_seguidos({"2016": 1.0, "2018": 1.0, "2019": 2.0}) == (2, False)   # 2017 faltando quebra
+    assert ph.anos_seguidos({"2016": 1.0, "2017": 1.0}) == (2, True)                   # chega ao início: "pelo menos"
+    assert ph.anos_seguidos({"2024": 1.0, "2025": 0.0}) == (0, False)
+    linhas = [{"ano": "2024", "parcial": False, "total": 1.0}, {"ano": "2025", "parcial": False, "total": 0.0}]
+    z = contrato._anos_seguidos(linhas, {"fonte": "B3 proventos", "nota": "A"})
+    assert z["valor"] == 0 and z["obs"] == "sem provento em 2025" and not z["minimo"]
 
 
 def test_carteira_traduz_tabelas_do_relatorio():

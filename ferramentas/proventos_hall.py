@@ -338,6 +338,19 @@ def proventos(tk: str, data_preco: str | None = None, regs: list[dict] | None = 
     return out
 
 
+def anos_seguidos(por_ano: dict[str, float]) -> tuple[int, bool]:
+    """Exercícios COMPLETOS seguidos com provento > 0, contados do mais recente para trás (ano faltando = sequência quebra).
+    `por_ano` só com anos completos. Devolve (n, chegou_ao_inicio): True = a sequência vai até o 1º ano da série, então é
+    "pelo menos n" (a série da B3 começa em 2016; antes disso não se sabe)."""
+    anos = sorted(int(a) for a in por_ano)
+    if not anos:
+        return 0, False
+    n, a = 0, anos[-1]
+    while str(a) in por_ano and (por_ano[str(a)] or 0) > 0:
+        n, a = n + 1, a - 1
+    return n, n > 0 and a < anos[0]
+
+
 def dpa_jcp(tk: str, data_preco: str | None = None, **kw) -> tuple[dict[str, float], dict[str, float]]:
     """DPA e JCP por ano da data-com, R$ por ação de hoje."""
     dpa, jcp = defaultdict(float), defaultdict(float)

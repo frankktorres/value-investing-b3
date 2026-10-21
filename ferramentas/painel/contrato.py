@@ -180,6 +180,21 @@ def riscos(bruto: dict) -> dict:
     return {"itens": itens, "texto": list(s["texto"]) if s else []}
 
 
+def _anos_seguidos(historico: list[dict] | None, fonte: dict | None) -> dict | None:
+    """Exercícios completos seguidos com provento, da mesma série do histórico (B3, nota A); `minimo` = a sequência chega ao
+    1º ano da série (é "pelo menos"). Sem histórico → None (sem fonte)."""
+    completos = {x["ano"]: x["total"] for x in historico or [] if not x["parcial"] and x["total"] is not None}
+    if not completos or not fonte:
+        return None
+    import proventos_hall
+    n, minimo = proventos_hall.anos_seguidos(completos)
+    ultimo = max(completos)
+    return {"valor": n, "nota": fonte["nota"], "fonte": fonte["fonte"], "minimo": minimo,
+            "rotulo": "Anos seguidos com provento",
+            "obs": (f"{int(ultimo) - n + 1}–{ultimo}" if n else f"sem provento em {ultimo}")
+                   + (f"; a série começa em {min(completos)}, pode ser mais" if minimo else "")}
+
+
 def proventos(bruto: dict, serie_b3: tuple[dict, dict] | None = None, hoje: str | None = None) -> dict:
     """Histórico por exercício (tabela do dossiê, B3 nota A; senão a série B3 do hall) + números da seção Dividendos."""
     s = _secao(bruto, "Dividendos e JCP")
@@ -207,7 +222,8 @@ def proventos(bruto: dict, serie_b3: tuple[dict, dict] | None = None, hoje: str 
             "dpa_sustentavel": pega("DPA sustentável"), "payout": pega("Payout"),
             "yield_sust": pega("Dividend yield sustentável"),
             "exercicios_com_provento": pega("Exercícios") or pega("Exercícios completos"),
-            "defasagem_meses": pega("Defasagem"), "yield_proj": None, "anos_seguidos": None,
+            "defasagem_meses": pega("Defasagem"), "yield_proj": None,
+            "anos_seguidos": _anos_seguidos(historico, fonte_hist),
             "avisos": list(s["avisos"]) if s else []}
 
 
