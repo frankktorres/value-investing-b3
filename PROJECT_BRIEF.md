@@ -1,5 +1,5 @@
 # PROJECT BRIEF — Mesa de Value Investing B3
-*Versão de 20/10/2026 (rev. B26: razão do desconto por FRE em 5 tickers; antes B30/B31: P/L histórico 2016–19 pelo LPA; TIMS3 e WPU0662 conferidas; doutrina v2.6) · gerado por `/brief` · fonte: repositório, memória do projeto e `docs/auditoria/AUDITORIA_2026-10-08.md`*
+*Versão de 21/10/2026 (rev. check-up: armadilhas na exceção 0,80×, temporada blindada, Agendador noturno, backup sem privado; antes B26; antes B30/B31: P/L histórico 2016–19 pelo LPA; TIMS3 e WPU0662 conferidas; doutrina v2.6) · gerado por `/brief` · fonte: repositório, memória do projeto e `docs/auditoria/AUDITORIA_2026-10-08.md`*
 
 ## 1. Projeto
 Mesa de análise fundamentalista da B3 para dividendos/JCP e longo prazo: doutrina escrita (v2.6) + motores de valuation em Python que
@@ -136,3 +136,4 @@ MVP de uso pessoal, maduro no cálculo. Um usuário real, sem terceiros. Prazo e
 - 20/10/2026 (fase 3, fatia 3): preço (`precos_hall.preco`), receita de meio (CVM × EIA/BLS), alíquota TIMS3 (CVM + nota 8.d), g1 WEGE3 (CVM + B3), NAV SLCE3 (fato relevante 15/06/2026), P/L histórico das NF por `pl_historico.py` (CVM + COTAHIST, SMTO3 em março, janela 2020–25 → B30; o dossiê usa a mesma conta) e `preco_minerio` do CMIN3 registrados em `insumos_a`; 19/19 NF do lote com central A/B; snapshot `derivados_zip` com chaves do COTAHIST opcionais; 0 palavras mudam
 - 20/10/2026 (B30/B31): `pl_historico` estende o P/L histórico a 2016–19 pelo LPA básico da DRE (trava nas ações implícitas, evento ambíguo → ano fora), hall e dossiê juntos; golden só Bogle (8 tickers, 0 palavras). Alíquotas TIMS3 2021–23 conferidas nos PDFs do RI; WPU0662 no BLS → receita de meio do UNIP6 A.
 - 20/10/2026 (B26): razão do desconto de controlador com FRE 2026 nota A em PRIO3, KEPL3, RECV3, VBBR3 e B3SA3 (sem controlador nem acordo); `SEM_RAZAO` 28 → 23; nenhuma palavra mudou.
+- 21/10/2026 (check-up): `carimbos.py` (armadilhas do §7 bloqueiam a exceção dos 0,80× no relatório e nos PDFs; 0 elegibilidades mudaram); `temporada --gravar` só com o ZIP (sha256) do boletim lido, 404 do ano = 0; Agendador: TemporadaDiaria 06:30 (22/10–21/11) + BackupSemanal dom 07:30 (`agendador/noite.vbs`); backup sem `dados/privado/`; tela: anos seguidos (B3, data-com); fila N1–N5 em `MISSOES.md`; suíte 833.
