@@ -149,7 +149,7 @@ a{color:inherit}
 .reg.mr .reg-p{top:0;height:16px}
 .reg.mr .reg-o{top:3px}
 /* régua grande */
-.bigreg{position:relative;height:118px;margin:0 8px}
+.bigreg{position:relative;height:118px;margin:12px 8px 0}
 .bigreg .track{position:absolute;left:0;right:0;top:54px;height:2px;background:var(--ln2)}
 .bigreg .z{position:absolute;top:42px;height:26px;border-radius:999px;font:500 10px var(--f-mono);letter-spacing:.08em;padding:0 10px;display:flex;align-items:center;text-transform:uppercase;white-space:nowrap;overflow:hidden}
 .bigreg .zb{background:var(--barata-bg);border:1px solid var(--barata-ln);color:var(--barata-fg)}
@@ -162,7 +162,7 @@ a{color:inherit}
 .bigreg .px:before{content:"";position:absolute;left:-4px;top:-4px;width:11px;height:11px;border-radius:50%;background:var(--ink)}
 .bigreg .px.fora:after{content:"▸";position:absolute;left:6px;top:-6px;font:700 14px/1 var(--f-mono);color:var(--ink)}
 .bigreg .lb{position:absolute;top:80px;transform:translateX(-50%);white-space:nowrap;font:12px/1.25 var(--f-mono);color:var(--ink2);text-align:center}
-.bigreg .lb.cima{top:-2px}
+.bigreg .lb.cima{top:-14px}
 .bigreg .lb.dir{transform:translateX(-100%);text-align:right;margin-left:6px}
 .bigreg .lb.esq{transform:none;text-align:left;margin-left:-6px}
 .bigreg .lb b{display:block;font:600 14px var(--f-mono);color:var(--ink)}

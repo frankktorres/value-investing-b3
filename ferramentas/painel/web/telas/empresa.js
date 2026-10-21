@@ -210,7 +210,7 @@ function cardProventos(emp) {
       par('Payout', p.payout, (v) => pct(v, 0)),
       par('DY sustentável', p.yield_sust, (v) => pct(v)),
       par('Exercícios com provento', p.exercicios_com_provento, (v) => (typeof v === 'string' ? v : num(v, 0))),
-      par('Anos seguidos com provento', p.anos_seguidos, (v) => `${num(v, 0)}${p.anos_seguidos.minimo ? '+' : ''}`),
+      par('Anos seguidos com provento (data-com)', p.anos_seguidos, (v) => `${num(v, 0)}${p.anos_seguidos.minimo ? '+' : ''}`),
       par('Defasagem do pagamento (meses)', p.defasagem_meses, (v) => num(v, 1)),
     ])),
     p.avisos.map((a) => h('p', { class: 'small', text: a })));

@@ -190,7 +190,7 @@ def _anos_seguidos(historico: list[dict] | None, fonte: dict | None) -> dict | N
     n, minimo = proventos_hall.anos_seguidos(completos)
     ultimo = max(completos)
     return {"valor": n, "nota": fonte["nota"], "fonte": fonte["fonte"], "minimo": minimo,
-            "rotulo": "Anos seguidos com provento",
+            "rotulo": "Anos seguidos com provento (ano da data-com)",
             "obs": (f"{int(ultimo) - n + 1}–{ultimo}" if n else f"sem provento em {ultimo}")
                    + (f"; a série começa em {min(completos)}, pode ser mais" if minimo else "")}
 
