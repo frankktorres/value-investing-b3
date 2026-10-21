@@ -116,6 +116,59 @@ def _gravar_zip(pasta):
     return f
 
 
+def test_arquivo_do_ano_ainda_nao_publicado_sai_com_codigo_0(monkeypatch, tmp_path, capsys):
+    """Adversário 21/10: 1T27 em abril → itr_cia_aberta_2027.zip dá 404; não pode virar aviso de falha toda sexta."""
+    monkeypatch.setattr(T, "baixar_itr", lambda ano: None)
+    assert T.main(["--trimestre", "1T27", "--saida", str(tmp_path / "b")]) == 0
+    assert "ainda não publicou itr_cia_aberta_2027.zip" in capsys.readouterr().out
+    assert not (tmp_path / "b").exists()
+
+
+def _sem_download(ano):
+    raise AssertionError("--gravar não pode baixar o ZIP")
+
+
+def test_gravar_nao_baixa_e_recusa_zip_diferente_do_boletim(monkeypatch, tmp_path, capsys):
+    """D1 (21/10): o que se grava tem de ser o que foi lido. ZIP do cache ≠ o do último boletim → código 3, nada gravado."""
+    monkeypatch.setattr(T, "baixar_itr", _sem_download)
+    monkeypatch.setattr(T.cc, "CACHE", tmp_path)
+    _gravar_zip(tmp_path)
+    b = tmp_path / "b"
+    b.mkdir()
+    (b / "2026-10-23-temporada.md").write_text(T.montar_boletim("2026-10-23", "3T26", [], [], [], [], {}, set(),
+                                                                zip_lido=("itr_2026.zip", "0" * 64)), encoding="utf-8")
+    assert T.main(["--trimestre", "3T26", "--gravar", "--saida", str(b)]) == 3
+    assert "--gravar recusado" in capsys.readouterr().out
+
+
+def test_gravar_sem_boletim_recusa(monkeypatch, tmp_path, capsys):
+    monkeypatch.setattr(T, "baixar_itr", _sem_download)
+    monkeypatch.setattr(T.cc, "CACHE", tmp_path)
+    _gravar_zip(tmp_path)
+    assert T.main(["--trimestre", "3T26", "--gravar", "--saida", str(tmp_path / "b")]) == 3
+    assert "nenhum boletim com hash" in capsys.readouterr().out
+
+
+def test_gravar_aceita_o_zip_do_boletim(monkeypatch, tmp_path, capsys):
+    """Hash igual → segue sem baixar (aqui ninguém publicou: código 0)."""
+    import manifesto_cvm
+    monkeypatch.setattr(T, "baixar_itr", _sem_download)
+    monkeypatch.setattr(T.cc, "CACHE", tmp_path)
+    monkeypatch.setattr(T.cc, "EMPRESAS", {})
+    z = _gravar_zip(tmp_path)
+    b = tmp_path / "b"
+    b.mkdir()
+    sha = manifesto_cvm.sha256_arquivo(z)[0]
+    # simulação e trimestre diferente não contam; vale o boletim real mais recente do trimestre
+    (b / "2026-10-30-temporada-simulacao.md").write_text("# Temporada 3T26 — x\n- ZIP lido: `a` sha256 `" + "1" * 64 + "`.",
+                                                         encoding="utf-8")
+    (b / "2026-10-23-temporada.md").write_text(T.montar_boletim("2026-10-23", "3T26", [], [], [], [], {}, set(),
+                                                                zip_lido=(z.name, sha)), encoding="utf-8")
+    assert T.hash_do_boletim(b, "3T26") == sha and T.hash_do_boletim(b, "2T26") is None
+    assert T.main(["--trimestre", "3T26", "--gravar", "--saida", str(b)]) == 0
+    assert "nenhum ticker com 3T26 ainda" in capsys.readouterr().out
+
+
 def test_boletim_avisa_coleta_que_falhou():
     txt = T.montar_boletim("2026-11-10", "3T26", ["AAAA3", "BBBB3"], [], [], [], {}, set(), falhas=["BBBB3"])
     assert "coleta falhou" in txt and "BBBB3" in txt.split("coleta falhou")[1][:80]

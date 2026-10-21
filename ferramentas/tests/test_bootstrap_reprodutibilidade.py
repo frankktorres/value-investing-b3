@@ -120,7 +120,7 @@ def test_baixar_itr_recusa_resposta_que_nao_e_zip(tmp_path, monkeypatch):
     monkeypatch.setattr(coletar_cvm, "CACHE", tmp_path)
     monkeypatch.setattr(manifesto_cvm, "MANIFESTO", tmp_path / "M.json")
     (tmp_path / "itr_2026.zip").write_bytes(b"original")
-    monkeypatch.setattr(requests, "get", lambda *a, **k: types.SimpleNamespace(content=b"<html>fora do ar</html>", raise_for_status=lambda: None))
+    monkeypatch.setattr(requests, "get", lambda *a, **k: types.SimpleNamespace(status_code=200, content=b"<html>fora do ar</html>", raise_for_status=lambda: None))
     with pytest.raises(ValueError, match="não é um ZIP"):
         temporada.baixar_itr(2026)
     assert (tmp_path / "itr_2026.zip").read_bytes() == b"original"

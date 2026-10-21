@@ -15,7 +15,8 @@ from pathlib import Path
 RAIZ = Path(__file__).resolve().parent.parent
 DADOS = Path(__file__).resolve().parent / "dados"
 DESTINO = Path.home() / "OneDrive" / "Backups" / "value-investing"
-EXCLUIR = {"cvm"}
+# privado/ (carteira, renda; 19/10/2026) é dado pessoal: nunca vai para serviço de terceiros (OneDrive) — check-up de 21/10/2026
+EXCLUIR = {"cvm", "privado"}
 # evidência fora de dados/ que não se recria: o log append-only da trava anti-calibração e a consulta original do proxy
 EVIDENCIA = (DADOS.parent / "backtest" / "dados",)
 PADROES_EVIDENCIA = ("proxy_*",)

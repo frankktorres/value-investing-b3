@@ -25,6 +25,15 @@ def test_zip_leva_evidencia_e_deixa_de_fora_cvm_e_derivados(tmp_path):
     assert nomes == ["backtest/dados/proxy_2026-10-05.json", "backtest/dados/proxy_consultas.log", "dados/macro/ipca.json"]
 
 
+def test_privado_nunca_entra_no_backup(tmp_path):
+    """Check-up 21/10/2026: dados/privado/ (carteira) é pessoal — o OneDrive é serviço de terceiros."""
+    dados, ev = _arvore(tmp_path)
+    (dados / "privado").mkdir()
+    (dados / "privado" / "renda.jsonl").write_text("{}\n")
+    z = B.zipar(tmp_path / "bk", dados=dados, hoje="2026-01-01", evidencia=(ev,))
+    assert not [n for n in zipfile.ZipFile(z).namelist() if "privado" in n]
+
+
 def test_destino_dentro_de_dados_nao_entra_no_proprio_zip(tmp_path):
     dados, ev = _arvore(tmp_path)
     B.zipar(dados / "bk", dados=dados, hoje="2026-01-01", evidencia=(ev,))

@@ -5,9 +5,9 @@
 ' Saída em ferramentas\monitor\ultimo.log; o código de saída vira o LastTaskResult da tarefa.
 ' AUD-37: código ≠ 0 abre um aviso NA TELA (20 = dado velho, 21 = exceção, outro = python nem rodou). A tarefa
 ' é "Interativa" de propósito: sem sessão aberta o aviso não aparece e a falha volta a ser silenciosa.
-' O aviso some sozinho em 50 min (a tarefa tem limite de 1 h). Texto sem acento: o WSH lê este arquivo como ANSI.
+' O aviso some sozinho em 30 min (a tarefa tem limite de 1 h; monitor + temporada ~7 min + painel cabem antes dele). Texto sem acento: o WSH lê este arquivo como ANSI.
 Option Explicit
-Dim fso, sh, ferramentas, py, cmd, rc, msg
+Dim fso, sh, ferramentas, py, cmd, rc, rcT, rcC, msg, extra
 Set fso = CreateObject("Scripting.FileSystemObject")
 Set sh = CreateObject("WScript.Shell")
 ferramentas = fso.GetParentFolderName(fso.GetParentFolderName(WScript.ScriptFullName))
@@ -18,12 +18,18 @@ sh.CurrentDirectory = ferramentas
 cmd = "cmd /c ""set PYTHONIOENCODING=utf-8&& """ & py & """ monitor_semanal.py > monitor\ultimo.log 2>&1"""
 rc = sh.Run(cmd, 0, True)
 ' Temporada (19/10/2026): detecta ITR novo toda sexta; sem --gravar so escreve boletim; sai 0 sem ITR novo.
-' O codigo dela nao muda o rc do monitor; log em monitor\temporada.log.
-sh.Run "cmd /c ""set PYTHONIOENCODING=utf-8&& """ & py & """ temporada.py > monitor\temporada.log 2>&1""", 0, True
+' O codigo dela nao muda o rc do monitor; log em monitor\temporada.log. Desde 21/10/2026 (D1) codigo <> 0 entra no aviso.
+rcT = sh.Run("cmd /c ""set PYTHONIOENCODING=utf-8&& """ & py & """ temporada.py > monitor\temporada.log 2>&1""", 0, True)
 ' Painel da carteira e da meta (19/10/2026): gera RELATORIOS\privado\CARTEIRA-<pregao>.md/.pdf e acrescenta a linha em
 ' dados\privado\renda.jsonl (fora do git). Roda depois do monitor (COTAHIST ja atualizado). Sem carteira.local.json so
 ' falha o painel (log em monitor\carteira.log); o codigo dele nao muda o rc do monitor.
-sh.Run "cmd /c ""set PYTHONIOENCODING=utf-8&& """ & py & """ -m relatorio CARTEIRA > monitor\carteira.log 2>&1""", 0, True
+rcC = sh.Run("cmd /c ""set PYTHONIOENCODING=utf-8&& """ & py & """ -m relatorio CARTEIRA > monitor\carteira.log 2>&1""", 0, True)
+extra = ""
+If rcT <> 0 Then extra = extra & vbCrLf & "Temporada FALHOU (codigo " & rcT & ") - log: " & ferramentas & "\monitor\temporada.log"
+If rcC <> 0 Then extra = extra & vbCrLf & "Painel da carteira FALHOU (codigo " & rcC & ") - log: " & ferramentas & "\monitor\carteira.log"
+If rc = 0 And extra <> "" Then
+    sh.Popup "Monitor semanal OK, mas:" & extra, 1800, "Value Investing - monitor semanal", 48
+End If
 If rc <> 0 Then
     If rc = 20 Then
         msg = "Monitor semanal: DADO VELHO - o ultimo pregao tem mais de 7 dias (o download da B3 falhou?)."
@@ -33,7 +39,7 @@ If rc <> 0 Then
         msg = "Monitor semanal FALHOU antes de rodar (codigo " & rc & ") - nenhum boletim novo foi escrito."
     End If
     msg = msg & vbCrLf & vbCrLf & "Log: " & ferramentas & "\monitor\ultimo.log" & vbCrLf & _
-          "Rodar de novo: cd ferramentas && python monitor_semanal.py"
-    sh.Popup msg, 3000, "Value Investing - monitor semanal", 48
+          "Rodar de novo: cd ferramentas && python monitor_semanal.py" & extra
+    sh.Popup msg, 1800, "Value Investing - monitor semanal", 48
 End If
 WScript.Quit rc

@@ -132,7 +132,7 @@ def extras(emp, r):
                           "{roic}) e em 'lucro não recorrente' (lucro 12m 1,5× o normalizado); zero armadilhas não está demonstrado — "
                           "liberar exige mudar o §7 (decisão do Frank)"), "UNIP6": "não se aplica (defeito estrutural)"}
     # AUD-42: regra única do §9; o bloqueio do lote entra como armadilha (o motor não calcula carimbos)
-    arm = [bloqueio[emp.ticker].replace("{roic}", pct(r["roic"]))] if emp.ticker in bloqueio else []
+    arm = [bloqueio[emp.ticker].replace("{roic}", pct(r["roic"]))] if emp.ticker in bloqueio else None   # None → carimbos.py
     x["excecao"] = texto_entrada_parcial(r, emp, arm)
     return x
 

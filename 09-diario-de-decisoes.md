@@ -931,3 +931,16 @@ KEPL3 (161068), RECV3 (161485), VBBR3 (159172), B3SA3 (161005): FRE 2026 sem aci
 e sem parte relacionada "controlador"; sem dono que o exerça, os vetores V1-V6 não se aplicam; não cobre risco de gestão. Os outros 23 seguem "sem razão
 documentada" (razão de verdade exige dossiê com D3, como LEVE3). `test_b24`: 28 → 23 e confere o id do FRE de cada uma das 5. **Palavras: nenhuma mudou**
 (33 CARA, 3 JUSTA, 5 NÃO CONCLUSIVO); golden intacto (a razão é texto). Suíte 760 passed. Nenhuma ordem de compra ou venda decorre desta mudança.
+
+## 21/10/2026 — Check-up: armadilha na exceção dos 0,80× (D2), temporada blindada (D1), backup sem `privado/`
+**D2 (regra de compra, §9 "zero armadilhas"):** o relatório (`relatorio/quanti.py`) e os PDFs dos lotes 1, 3, 4 e 5 chamavam `entrada_parcial` sem
+os carimbos; só o lote 6 os passava. Novo registro único `ferramentas/carimbos.py`: os casos da tabela do §7 (Sanepar SAPR11, Engie EGIE3, Mahle LEVE3,
+Unipar UNIP6, Klabin KLBN11, Vibra VBBR3, Petrobras PETR4) + defeitos estruturais escritos (BRSR6 controlador; RECV3 produção em declínio com ROIC < WACC),
+cada um com o lugar onde está escrito; o lote 6 mantém a lista própria de LEVE3/UNIP6. **Critério (Claude, reversível):** caso da casa do §7 entra como
+está; tirar exige registrar aqui por que a armadilha acabou. **Efeito medido:** nos 9, a exceção já saía "não" por nota/palavra — a armadilha só se
+soma ao motivo; **nenhuma elegibilidade, palavra, central ou golden mudou** (a exceção não entra no golden). `tests/test_carimbos.py` (inclui o
+relatório real da UNIP6). **D1:** `temporada.py --gravar` não baixa mais; só grava se o sha256 do ZIP do cache = o do último boletim real do trimestre
+(o boletim passa a citar o hash); 404 do arquivo do ano ainda não publicado sai 0 (adversário: 1T27 em abril daria aviso falso toda sexta);
+`monitor_semanal.vbs` avisa falha da temporada e do painel da carteira (antes silenciosa), aviso 50 → 30 min (limite de 1 h da tarefa). Simulação real
+2T26: 6 min 17 s, 31 publicaram, nenhuma mudança. **Backup:** `backup_dados.py` levava `dados/privado/` (carteira, desde 19/10) ao OneDrive — agora
+excluída (inviolável 2). Adversário: 1 defeito (404) corrigido; mapeamento §7 → ticker e todos os chamadores conferidos. Nenhuma ordem de compra ou venda decorre desta mudança.

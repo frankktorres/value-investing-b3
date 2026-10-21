@@ -5,6 +5,7 @@ Nada é recalculado: os valores são as chaves de `avaliar()` dos motores. Fórm
 """
 from __future__ import annotations
 
+import carimbos
 from motor_financeiras import entrada_parcial
 from relatorio import procedencia as pr
 from relatorio.modelo import Numero, Secao, decide, pior
@@ -86,9 +87,9 @@ def secao_veredito(c: dict) -> Secao:
     if r.get("trava") is not None:
         s.texto.append(f"Trava de coerência (Bogle a ±2 p.p. do Ke): {'passa' if r['trava'] else 'falha'}.")
     s.texto.append(f"Vence a renda fixa (Bogle líquido real ≥ rf líquida + 3 p.p.)? {r.get('vence_rf')}.")
-    ok, motivos = entrada_parcial(r, getattr(c["empresa"], "fora_circulo", False))
-    s.texto.append("Exceção da 1ª parcela a 0,80×: " + ("elegível pelos números" if ok else "não — " + "; ".join(motivos))
-                   + " (carimbos de armadilha escritos no texto da ficha não entram nesta conta).")
+    ok, motivos = entrada_parcial(r, getattr(c["empresa"], "fora_circulo", False), carimbos.de(c["tk"]))
+    s.texto.append("Exceção da 1ª parcela a 0,80×: " + ("elegível (números e zero armadilhas registradas em `carimbos.py`)"
+                                                       if ok else "não — " + "; ".join(motivos)) + ".")
     if not decide(pior(centrais)):
         s.avisos.append(f"O valor central depende de insumo com nota {pior(centrais)} (só A/B embasa decisão): "
                         + "; ".join(sorted({o.detalhe or o.fonte for o in centrais if not decide(o.nota)})) + ".")

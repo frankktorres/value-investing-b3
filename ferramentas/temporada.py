@@ -4,7 +4,8 @@ Uso (a partir de ferramentas/):
   python temporada.py                 → trimestre mais recente ainda sem coleta (hoje 3T26 = ITR de 30/09/2026)
   python temporada.py --trimestre 3T26
   python temporada.py --simular 2T26  → ensaio com o trimestre que já existe no cache (sem download, nada é gravado fora do boletim)
-  python temporada.py --gravar        → além do boletim, grava a coleta nova em dados/cvm_series.json
+  python temporada.py --gravar        → SEM download: refaz o boletim com o ZIP do cache e grava a coleta nova em
+                                        dados/cvm_series.json — só se o ZIP for o mesmo (sha256) do último boletim do trimestre
 
 O ITR é o mesmo do coletor (dados.cvm.gov.br, `itr_cia_aberta_AAAA.zip`, cache em dados/cvm/itr_AAAA.zip).
 A coleta nova vai para um arquivo temporário e é injetada SÓ na memória (`CVM` de cada módulo); o `cvm_series.json` oficial
@@ -54,6 +55,8 @@ def baixar_itr(ano):
     CACHE.mkdir(parents=True, exist_ok=True)
     alvo = CACHE / f"itr_{ano}.zip"
     r = requests.get(cc.URL["ITR"].format(a=ano), timeout=600)
+    if r.status_code == 404:          # o arquivo do ano só aparece com a 1ª entrega (ex.: 1T27 em abril): não é falha
+        return None
     r.raise_for_status()
     tmp = alvo.with_suffix(".zip.novo")
     tmp.write_bytes(r.content)
@@ -140,9 +143,12 @@ def _f(x):
     return f"{x:.4f}" if isinstance(x, float) else str(x)
 
 
-def montar_boletim(dia, ref, publicaram, ausentes, sem_coleta, mud, causas_por_tk, lotes, simulado=False, falhas=()):
-    """Texto Markdown do boletim. `mud` = saída de golden.comparar; `causas_por_tk` = {tk: causas()}."""
+def montar_boletim(dia, ref, publicaram, ausentes, sem_coleta, mud, causas_por_tk, lotes, simulado=False, falhas=(), zip_lido=None):
+    """Texto Markdown do boletim. `mud` = saída de golden.comparar; `causas_por_tk` = {tk: causas()};
+    `zip_lido` = (nome, sha256) do ZIP que gerou o boletim (o `--gravar` só aceita o mesmo)."""
     L = [f"# Temporada {ref} — {dia}" + (" (SIMULAÇÃO: trimestre que já estava coletado)" if simulado else ""), ""]
+    if zip_lido:
+        L.append(f"- ZIP lido: `{zip_lido[0]}` sha256 `{zip_lido[1]}`.")
     L.append(f"- Publicaram o ITR de {ref}: **{len(publicaram)}** ({', '.join(publicaram) or 'nenhum'}).")
     L.append(f"- Ainda sem ITR de {ref}: {len(ausentes)} ({', '.join(ausentes) or '—'}).")
     if sem_coleta:
@@ -171,9 +177,20 @@ def montar_boletim(dia, ref, publicaram, ausentes, sem_coleta, mud, causas_por_t
             L += ["", "### PDFs a reemitir", "", "Lotes com ticker afetado: " + ", ".join(f"`python gerar_pdf_lote{n}.py`" for n in sorted(lotes)) + "."]
     L += ["", "---",
           "O golden **não** é regravado por esta ferramenta. Para aceitar a coleta nova: `python temporada.py --gravar` "
-          "e depois `python rodar_tudo.py --motivo \"3T26: …\"` (o motivo vai para `tests/golden_log.md`). "
+          "(não baixa; recusa se o ZIP do cache não for o deste boletim) e depois `python rodar_tudo.py --motivo \"3T26: …\"` (o motivo vai para `tests/golden_log.md`). "
           "Antes da palavra nova valer, `05-prompt-reavaliacao` para quem trocou.", ""]
     return "\n".join(L)
+
+
+def hash_do_boletim(pasta, ref):
+    """sha256 do ZIP citado no último boletim real (não simulação) do trimestre `ref` em `pasta`; None se não houver."""
+    for arq in sorted(pathlib.Path(pasta).glob("*-temporada.md"), reverse=True):
+        texto = arq.read_text(encoding="utf-8")
+        if not texto.startswith(f"# Temporada {ref} "):
+            continue
+        m = re.search(r"sha256 `([0-9a-f]{64})`", texto)
+        return m.group(1) if m else None
+    return None
 
 
 def ltm_utilizavel(reg):
@@ -245,12 +262,27 @@ def main(argv=None):
     rotulo = (args.simular or args.trimestre or trimestre_atual()).upper()
     ano, mes, dt_ref = interpretar_trimestre(rotulo)
     zip_path = cc.CACHE / f"itr_{ano}.zip"
-    if not simulado:
+    pasta = pathlib.Path(args.saida) if args.saida else BOLETINS
+    import manifesto_cvm
+    if simulado or args.gravar:
+        if not zip_path.exists():
+            print(f"sem cache {zip_path.name} para {'simular' if simulado else 'gravar'}")
+            return 2
+    else:
         print(f"Baixando {cc.URL['ITR'].format(a=ano)} …")
         zip_path = baixar_itr(ano)
-    elif not zip_path.exists():
-        print(f"sem cache {zip_path.name} para simular")
-        return 2
+        if zip_path is None:
+            print(f"nenhum ticker com {rotulo} ainda (a CVM ainda não publicou itr_cia_aberta_{ano}.zip)")
+            return 0
+    sha = manifesto_cvm.sha256_arquivo(zip_path)[0]
+    if args.gravar and not simulado:
+        # o que se grava tem de ser o que o Frank leu: sem download aqui, e o ZIP do cache = o do último boletim do trimestre
+        lido = hash_do_boletim(pasta, rotulo)
+        if lido != sha:
+            print(f"--gravar recusado: {zip_path.name} (sha256 {sha[:12]}…) não é o ZIP do último boletim de {rotulo} "
+                  f"({'nenhum boletim com hash' if lido is None else 'sha256 ' + lido[:12] + '…'}). "
+                  "Rode `python temporada.py`, leia o boletim novo e só então `--gravar`.")
+            return 3
 
     import golden
     ant = golden.carregar()
@@ -281,8 +313,7 @@ def main(argv=None):
     causas_por_tk = {tk: causas(antigos.get(tk), novo[tk]["ltm"]) for tk in novo}
     lotes = {atual[tk]["lote"] for tk in {m[0] for m in mud} if tk in atual}
     dia = date.today().isoformat()
-    texto = montar_boletim(dia, rotulo, pub, aus, sem, mud, causas_por_tk, lotes, simulado, ruins)
-    pasta = pathlib.Path(args.saida) if args.saida else BOLETINS
+    texto = montar_boletim(dia, rotulo, pub, aus, sem, mud, causas_por_tk, lotes, simulado, ruins, (zip_path.name, sha))
     pasta.mkdir(parents=True, exist_ok=True)
     arq = pasta / f"{dia}-temporada{'-simulacao' if simulado else ''}.md"
     arq.write_text(texto, encoding="utf-8")
