@@ -5,7 +5,7 @@ import math
 import pathlib
 
 import pytest
-from dados_opcionais import requer_suplemento_b3
+from dados_opcionais import TEM_RAW, requer_suplemento_b3
 
 from dossie import gerar
 from dossie.fichas import cmin3
@@ -33,10 +33,20 @@ METODO_ONDA_1_1 = {
 
 
 @requer_suplemento_b3
+def _recalcular(salvo):
+    """Veredito na data salva; sem dados/raw (clone limpo, nuvem) pula em vez de falhar (QA 21/10/2026)."""
+    try:
+        return gerar.veredito(gerar.calcular(salvo["ticker"], salvo["data_preco"]))
+    except FileNotFoundError:
+        if TEM_RAW:
+            raise
+        pytest.skip("dados/raw fora do disco (coletas brutas ignoradas pelo git; clone limpo/nuvem)")
+
+
 @pytest.mark.parametrize("nome", sorted(METODO_ONDA_1_1))
 def test_veredito_refeito_pela_onda_1_1(nome):
     salvo = json.loads((VEREDITOS / f"{nome}.json").read_text(encoding="utf-8"))
-    v = gerar.veredito(gerar.calcular(salvo["ticker"], salvo["data_preco"]))
+    v = _recalcular(salvo)
     novo = METODO_ONDA_1_1[nome]
     assert v["central"] == pytest.approx(novo["central"], abs=1e-3) and v["pc"] == pytest.approx(novo["pc"], abs=1e-3)
     assert v["palavra"] == novo["palavra"]
@@ -58,7 +68,7 @@ def test_veredito_salvo_reproduz(nome):
     if nome in CORRIGIDO_FATIA_2B:
         assert all(salvo[k] != v for k, v in CORRIGIDO_FATIA_2B[nome].items())     # o JSON antigo segue o de antes
         salvo |= CORRIGIDO_FATIA_2B[nome]
-    v = gerar.veredito(gerar.calcular(salvo["ticker"], salvo["data_preco"]))
+    v = _recalcular(salvo)
     for k in ("central", "pc", "desc_controlador", "media_regra11", "preco"):
         assert v[k] == pytest.approx(salvo[k], abs=1e-4), k
     for k in ("palavra", "palavra_regua", "notas_regra11", "discricionario"):

@@ -197,7 +197,9 @@ def test_painel_nao_importa_carteira_local():
 
 
 # ------------------------------------------------------------------------------ real (dados locais)
-TEM_DADOS = (FERR / "dados" / "cvm_series.json").exists()
+# cvm_series.json é versionado: sozinho não prova dado local; sem dados/raw (nuvem) também não há COTAHIST (QA 21/10/2026)
+from dados_opcionais import TEM_RAW  # noqa: E402
+TEM_DADOS = (FERR / "dados" / "cvm_series.json").exists() and TEM_RAW
 INTOCADOS = [FERR / "tests" / "golden.json", FERR / "prospectivo" / "registro.jsonl",
              *sorted((FERR / "dossie" / "vereditos").glob("*.json"))]
 
@@ -206,7 +208,7 @@ def _hash(p):
     return hashlib.sha256(p.read_bytes()).hexdigest() if p.exists() else None
 
 
-@pytest.mark.skipif(not TEM_DADOS, reason="dados/cvm_series.json fora do disco (dados brutos fora do git)")
+@pytest.mark.skipif(not TEM_DADOS, reason="dados locais fora do disco (dados/raw e COTAHIST ignorados pelo git)")
 def test_exportacao_real_e_vista():
     antes = {p: _hash(p) for p in INTOCADOS}
     destino = exportar.DADOS / f"_teste_{uuid.uuid4().hex[:8]}"                 # dentro da pasta ignorada
