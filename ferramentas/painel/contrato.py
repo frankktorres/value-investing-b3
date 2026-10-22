@@ -19,6 +19,7 @@ import json
 import re
 import sys
 from datetime import date, datetime, timedelta
+from functools import lru_cache
 from pathlib import Path
 
 from painel.exportar import DADOS, _finito, _gravar_json, _sem_caminho
@@ -89,7 +90,8 @@ def _nome_descricao(rotulo: str) -> tuple[str, str]:
 
 
 def metodos(bruto: dict) -> tuple[list[dict], list[dict]]:
-    """(métodos em R$/ação, indicadores em % ou x) de 'Preço justo por método'. Baixo/alto: o motor não exporta → None."""
+    """(métodos em R$/ação, indicadores em % ou x) de 'Preço justo por método'. Baixo/alto: só o DCF (cenários pessimista e
+    otimista do motor); os outros métodos não têm faixa no motor → None."""
     s = _secao(bruto, "Preço justo por método")
     met, ind = [], []
     for n in (s["numeros"] if s else []):
@@ -97,10 +99,32 @@ def metodos(bruto: dict) -> tuple[list[dict], list[dict]]:
             continue
         nome, desc = _nome_descricao(n["rotulo"])
         item = {"nome": nome, "descricao": desc, "entra_no_central": n["papel"] == "central",
-                "baixo": None, "base": _finito(n["valor"]), "alto": None, "unidade": n["unidade"],
+                "baixo": _finito(n.get("baixo")), "base": _finito(n["valor"]), "alto": _finito(n.get("alto")),
+                "unidade": n["unidade"],
                 "nota": n["nota"], "fonte": n["fonte"], "obs": n.get("obs") or ""}
         (met if n["unidade"] == "R$" else ind).append(item)
     return met, ind
+
+
+_HOLDING = re.compile(r"^emp\. adm\. part\. ?- ?", re.I)         # a holding segue o setor declarado (backtest/motor/perfil.py)
+
+
+@lru_cache(maxsize=1)
+def _setores() -> dict[str, str]:
+    """ticker → `Setor_Atividade` do FCA da CVM, da última triagem versionada (`triagem/dados/triagem_*.csv`, a mesma fonte que
+    `triagem/avaliar.py` usa para o perfil, via `backtest.motor.perfil.setor_chave`). Sem arquivo → vazio (setor "sem fonte")."""
+    pasta = Path(__file__).resolve().parent.parent / "triagem" / "dados"
+    arqs = sorted(pasta.glob("triagem_*.csv"))
+    if not arqs:
+        return {}
+    with open(arqs[-1], encoding="utf-8", newline="") as f:
+        return {r["ticker"]: r["setor"] for r in csv.DictReader(f) if r.get("setor")}
+
+
+def setor_de(tk: str) -> str | None:
+    """Setor do ticker no texto do FCA, sem o prefixo de holding; None se a triagem não o cobre."""
+    s = _setores().get(tk)
+    return _HOLDING.sub("", s).strip() if s else None
 
 
 def classe_cenario(valor: float | None, preco: float | None, compra: float, saida: float) -> str | None:
@@ -228,14 +252,19 @@ def proventos(bruto: dict, serie_b3: tuple[dict, dict] | None = None, hoje: str 
 
 
 def fontes(bruto: dict) -> list[dict]:
-    """Cada origem distinta citada nos números, com a nota e quantos números a usam (data por fonte: o motor não dá)."""
+    """Cada origem distinta citada nos números, com a nota e quantos números a usam. `data` = a mais recente entre as datas que
+    o registro da origem declara (`Origem.data`: pregão, balanço, fato); origem sem data declarada → None (sem fonte, não chute)."""
     vistas: dict[tuple[str, str], int] = {}
+    datas: dict[tuple[str, str], str] = {}
     for s in bruto.get("secoes", []):
         for n in s["numeros"]:
             for o in n.get("origens", []):
-                vistas[(o["fonte"], o["nota"])] = vistas.get((o["fonte"], o["nota"]), 0) + 1
+                k = (o["fonte"], o["nota"])
+                vistas[k] = vistas.get(k, 0) + 1
+                if o.get("data"):
+                    datas[k] = max(datas.get(k, ""), o["data"])
     ordem = {"A": 0, "B": 1, "C": 2, SEM_FONTE: 3}
-    return [{"nome": f, "nota": nt, "n_numeros": k, "data": None}
+    return [{"nome": f, "nota": nt, "n_numeros": k, "data": datas.get((f, nt))}
             for (f, nt), k in sorted(vistas.items(), key=lambda x: (ordem.get(x[0][1], 9), -x[1], x[0][0]))]
 
 
@@ -248,7 +277,7 @@ def linha_hall(bruta: dict, bruto_emp: dict | None, serie: list | None, ultimo: 
     rf = _num(_secao(bruto_emp or {}, "Riscos"), "Não vence a renda fixa")       # comparação sempre visível (20/10)
     dias = (date.fromisoformat(hoje) - date.fromisoformat(ultimo)).days if ultimo else None
     return {
-        "ticker": bruta["tk"], "nome": bruta["nome"] or None, "setor": None, "origem": bruta["origem"],
+        "ticker": bruta["tk"], "nome": bruta["nome"] or None, "setor": setor_de(bruta["tk"]), "origem": bruta["origem"],
         "dossie": bruta["dossie"], "data_palavra": bruta["data_palavra"],
         "palavra": palavra_codigo(bruta["palavra"]), "palavra_motor": palavra_codigo(bruta["palavra_motor"]),
         "regua_suspensa": bruta["situacao"] == "régua suspensa",
@@ -314,7 +343,8 @@ def carteira(rel, linhas_hall: dict[str, dict], historico: list[dict]) -> dict:
                     "dy_12m": br_num(r[3]) if r else None,
                     "renda_bruta_ano": br_num(r[4]) if r else None, "renda_liquida_ano": br_num(r[5]) if r else None})
     cal = _tabela(rel, "Calendário de pagamento", "Pagamento por mês")
-    calendario = [{"mes": ln[0], "liquido": br_num(ln[1]), "dividendos": None, "jcp": None,
+    calendario = [{"mes": ln[0], "liquido": br_num(ln[1]),
+                   "dividendos": br_num(ln[5]) if len(ln) > 5 else None, "jcp": br_num(ln[6]) if len(ln) > 6 else None,
                    "tickers": [x for x in ln[2].split(", ") if x], "situacao": ln[3], "data_de": ln[4] or None}
                   for ln in (cal[1] if cal else [])]
     rec = _tabela(rel, "Calendário de pagamento", "A receber")

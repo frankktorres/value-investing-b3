@@ -42,7 +42,7 @@ function linha(e, c) {
   const cart = c.carteiraPorTk[e.ticker];
   const fracoCentral = !firme(e.central_nota);
   const sub = (txt) => h('span', { class: 'sb', text: txt });
-  const nomeLinha = [e.nome || '', e.origem].filter(Boolean).join(' · ');
+  const nomeLinha = [e.nome || '', e.setor, e.origem].filter(Boolean).join(' · ');
   const tags = [
     e.velho ? h('span', { class: 'tag', title: `Último pregão há ${e.dias_defasagem} dias (mais de ${c.estado.hall.dias_velho})`, text: 'velho' }) : null,
     e.fora_do_hall ? h('span', { class: 'tag n', title: 'Falha o filtro de qualidade: a palavra é só referência', text: 'fora do hall' }) : null,

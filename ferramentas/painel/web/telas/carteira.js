@@ -53,6 +53,16 @@ function posicoes(ct, c) {
   }));
 }
 
+/** Barra do mês: empilhada dividendo × JCP quando o contrato traz os dois; com Ocultar, uma barra só (a altura não entrega o valor). */
+function barras(m, mx, ocultar) {
+  const alt = (v) => `${!(mx > 0 && ok(v)) ? 0 : (v / mx) * 100}%`;
+  if (ocultar) return [h('i', { style: { height: `${m.liquido > 0 ? 50 : 0}%` } })];
+  if (ok(m.dividendos) && ok(m.jcp)) {
+    return [h('i', { class: 'j', style: { height: alt(m.jcp) } }), h('i', { style: { height: alt(m.dividendos) } })];
+  }
+  return [h('i', { style: { height: alt(m.liquido) } })];
+}
+
 function calendario(ct, c) {
   const meses = ct.calendario.filter((m) => /^\d{4}-\d{2}$/.test(m.mes)).slice(-12);
   const semData = ct.calendario.filter((m) => !/^\d{4}-\d{2}$/.test(m.mes));
@@ -65,13 +75,13 @@ function calendario(ct, c) {
       meses.map((m) => h('div', { class: `m${aReceber(m) ? ' rec' : ''}`, title: `${mes(m.mes)}: ${m.situacao}${m.tickers.length ? ` · ${m.tickers.join(', ')}` : ''}` },
         h('span', { class: 'vv', text: ok(m.liquido) ? (c.ocultar ? '•••' : compacto(m.liquido)) : '' }),
         // com Ocultar, a altura entregaria a proporção entre meses: barra só marca se houve pagamento
-        h('i', { style: { height: `${!(mx > 0 && ok(m.liquido)) ? 0 : c.ocultar ? (m.liquido > 0 ? 50 : 0) : (m.liquido / mx) * 100}%` } })))),
+        ...barras(m, mx, c.ocultar)))),
     h('div', { class: 'calx' }, meses.map((m) => h('span', { text: mes(m.mes).slice(0, 3) }))),
   ] : vazio('Sem calendário', 'Nenhum provento com data de pagamento na janela.'),
   h('div', { class: 'lg' },
-    h('span', {}, h('i', { class: 'd' }), 'Total líquido por mês (R$)'),
+    h('span', {}, h('i', { class: 'd' }), 'Dividendos líquidos por mês (R$; sem divisão: o total)'),
     h('span', {}, h('i', { class: 'pr' }), 'a receber'),
-    h('span', { class: 'small', text: 'Divisão dividendo × JCP por mês: sem fonte (o motor dá só o total).' }),
+    h('span', {}, h('i', { class: 'j' }), 'JCP líquido do IR'),
     semData.length ? h('span', { class: 'small', text: `Sem data de pagamento: ${semData.map((m) => m.tickers.join(', ')).join('; ')}.` }) : null));
 }
 

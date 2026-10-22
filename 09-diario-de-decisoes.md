@@ -1011,3 +1011,9 @@ nova (não regerados: sobrescreveria o veredito vigente). Testes: `tests/test_n1
 `relatorio/quali.py` `CADASTRO` passou de 1 para 6 tickers: CNPJ de EGIE3, PETR4, TAEE11, ITUB4 e SAPR11 (`triagem_2026-10-02.csv`) abre o FRE (governança, remuneração) no relatório;
 pregão só da PETR4 (já usado no hall). Os pregões de EGIE3, TAEE11, ITUB4 e SAPR11 ficam `None`: a API da B3 responde 403 na nuvem e nome de pregão não se chuta (decisão: sem
 dado conferido, o bloco de proventos avisa em vez de inventar). N8: nº de ações em mil não chega ao valor (ver `docs/QA-2026-10-21.md`). Suíte 930 passed, 42 skipped.
+
+## 22/10/2026 — N3: contrato da tela liga o que o motor já calcula (nenhuma palavra, central ou golden mudou)
+`relatorio.modelo.Origem` ganha `data` (AAAA-MM-DD, "" = não sabe) e `Numero` ganha `baixo`/`alto`; `quanti.secao_preco` preenche a faixa do DCF com os cenários pessimista e otimista do motor
+(com o desconto de controlador, só em valor > 0 — igual ao valor da âncora); `calendario_secao` ganha as colunas Dividendos e JCP (líquidos); `painel/contrato.py` lê `setor` da triagem,
+`data` de cada fonte e os pares baixo/alto e dividendos/jcp. Front: setor na linha do Hall, data na lista de fontes, barra do calendário empilhada dividendo × JCP (Ocultar mantém uma barra só).
+Probabilidade/impacto de risco, tipo/efeito de premissa, yield projetado e concentração por setor da carteira seguem sem fonte. Conferência visual no navegador fica para o Frank (dia). Suíte 937 passed, 42 skipped.

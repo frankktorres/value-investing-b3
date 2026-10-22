@@ -229,7 +229,7 @@ function cardCarteira(tk, c) {
 function cardFontes(emp, c) {
   const fs = emp.fontes.slice(0, 10);
   return cartao({ titulo: 'Fontes e frescor', id: 'fontes', lead: `Relatório de ${data(emp.data_relatorio)} · cotação de ${data(c.estado.hall.cotacao_em)}. Só A e B embasam decisão.` },
-    fs.map((f) => h('div', { class: 'src' }, h('span', { text: f.nome }), h('span', { class: 'small num', text: `${f.n_numeros} nº` }), nota(f.nota))),
+    fs.map((f) => h('div', { class: 'src' }, h('span', { text: f.nome }), h('span', { class: 'small num', text: `${f.data ? data(f.data) : 'sem data'} · ${f.n_numeros} nº` }), nota(f.nota))),
     emp.fontes.length > fs.length ? h('p', { class: 'small', text: `+ ${emp.fontes.length - fs.length} fontes com menos números.` }) : null);
 }
 

@@ -200,16 +200,18 @@ def calendario_secao(caixa: list[dict], pregao: str, obs: str = "") -> Secao:
     for m in (meses(datados[0], datados[-1]) if datados else []) + ([SEM_DATA] if SEM_DATA in por_mes else []):
         cs = por_mes.get(m, [])
         if not cs:
-            linhas.append([m, "—", "", "sem pagamento", ""])
+            linhas.append([m, "—", "", "sem pagamento", "", "—", "—"])
             continue
         a_receber = [c["pagamento"] > pregao for c in cs]
         sit = ("sem data" if m == SEM_DATA else "a receber" if all(a_receber) else
                "parte a receber" if any(a_receber) else "pago")
+        jcp = sum((c["liquido"] for c in cs if c["tipo"] == JCP), 0.0)
         linhas.append([m or "sem data", fmt(sum(c["liquido"] for c in cs), "R$"), ", ".join(sorted({c["tk"] for c in cs})),
-                       sit, " + ".join(sorted({_ORIGEM_PAG[c["origem"]] for c in cs}))])
+                       sit, " + ".join(sorted({_ORIGEM_PAG[c["origem"]] for c in cs})),
+                       fmt(sum(c["liquido"] for c in cs) - jcp, "R$"), fmt(jcp, "R$")])      # dividendo (e rendimento) × JCP, líquidos
     pendentes = sorted((c for c in caixa if not c["na_conta"] or c["pagamento"] > pregao),
                        key=lambda c: (c["pagamento"] or "9999", c["tk"], c["data_com"]))
-    tabs = [("Pagamento por mês (renda líquida de 12 meses)", ["Mês", "Líquido", "Tickers", "Situação", "Data de"], linhas)]
+    tabs = [("Pagamento por mês (renda líquida de 12 meses)", ["Mês", "Líquido", "Tickers", "Situação", "Data de", "Dividendos", "JCP"], linhas)]
     if pendentes:
         tabs.append((f"A receber (pagamento depois de {pregao} ou data-com futura)",
                      ["Ticker", "Data-com", "Pagamento", "Data de", "Tipo", "R$/ação", "Líquido", "Na renda de 12m"],
