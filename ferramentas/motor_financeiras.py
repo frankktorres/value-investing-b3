@@ -128,7 +128,9 @@ def entrada_parcial(r: dict, fora_circulo: bool = False, armadilhas=()) -> tuple
     n, m = r["notas"], []
     entradas = {"pc": r.get("pc"), "dispersao": r.get("dispersao"), "central": r.get("central"),
                 "qualidade": n.get("qualidade"), "solidez": n.get("solidez")}
-    invalidas = [k for k, x in entradas.items() if not _num(x)]
+    # pc e dispersão valem +inf quando o ticker é NÃO CONCLUSIVO (central ≤ 0); NaN/None não valem em nenhum campo
+    invalidas = [k for k, x in entradas.items()
+                 if not (_num(x) or (k in ("pc", "dispersao") and x == float("inf")))]
     if invalidas:                       # N7: NaN/None/inf não passam por "não é menor que" como se estivessem ok
         return False, [f"dado inválido (NaN/inf/ausente): {', '.join(invalidas)}"]
     if r["palavra"] == "NÃO CONCLUSIVO" or r["central"] <= 0:

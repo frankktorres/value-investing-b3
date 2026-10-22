@@ -43,8 +43,13 @@ def test_entrada_parcial_caso_valido_continua_elegivel():
     assert F.entrada_parcial(_r()) == (True, [])
 
 
-@pytest.mark.parametrize("campo", ["pc", "dispersao", "central"])
-@pytest.mark.parametrize("ruim", [NAN, None, INF])
+def test_entrada_parcial_nao_conclusivo_real_mantem_o_motivo_de_antes():
+    ok, motivos = F.entrada_parcial(_r(palavra="NÃO CONCLUSIVO", central=-1.0, pc=INF, dispersao=INF))
+    assert ok is False and motivos[0] == "sem palavra (NÃO CONCLUSIVO)"
+
+
+@pytest.mark.parametrize("campo,ruim", [("pc", NAN), ("pc", None), ("dispersao", NAN), ("dispersao", None),
+                                        ("central", NAN), ("central", None), ("central", INF)])
 def test_entrada_parcial_recusa_campo_invalido(campo, ruim):
     ok, motivos = F.entrada_parcial(_r(**{campo: ruim}))
     assert ok is False and motivos and "inválido" in motivos[0]
