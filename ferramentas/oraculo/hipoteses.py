@@ -622,6 +622,7 @@ def main(argv: list[str] | None = None) -> int:
     for h in ordem:
         md.append(f"| {h} | **{res[h]['status']}** | {'sim' if res[h].get('tentativa') else 'não'} | "
                   f"{res[h]['resumo'].replace('|', '/')} |")
+    SAIDA.mkdir(parents=True, exist_ok=True)
     (SAIDA / f"hipoteses-{hoje}.md").write_text("\n".join(md) + "\n", encoding="utf-8", newline="\n")
     (SAIDA / f"hipoteses-{hoje}.json").write_text(json.dumps(_limpo(res), ensure_ascii=False, indent=1), encoding="utf-8",
                                                   newline="\n")
