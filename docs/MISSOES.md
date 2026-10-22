@@ -6,7 +6,7 @@
 (a ordem do texto abaixo não manda). N6 feita. Na nuvem não há `ferramentas/dados/`: teste que precisa de
 dado bruto pula; teste novo usa fixture pequena. Nenhuma delas muda palavra, central ou golden — se mudar, parar e ir para `wip/auto`.*
 
-**N1 — Higiene de docs (check-up 21/10).** Corrigir só texto:
+**(FEITA 22/10) N1 — Higiene de docs (check-up 21/10).** Corrigir só texto:
 - (a) `README.md`: doutrina v2.6 (linhas 2, 9, 50); 8 dossiês (+ALLD3, FESA4, SHUL4, VLID3, linhas 23 e 50); tela v0.2 com Hall/Empresa/Carteira/Monitor (linha 25).
 - (b) `PROJECT_BRIEF.md`: §3 fonte Space Grotesk (linha 18); nº de testes atual (linha 37); tela v0.2 (linha 68); fatias 2b e 3 feitas (linha 71); "23 `SEM_RAZAO`" (linha 131). Guardar antes em `_historico/2026-10-21 brief/`.
 - (c) `docs/BACKLOG.md`: B04 respondido; B08 feito; linhas B24–B31 para dentro da tabela; recontar o total; "HANDOFF existe em `docs/design/handoff-claude-code/handoff/`"; B15 com 2b e 3 feitas; incluir a tela v0.2 e os itens N1–N5 e D1–D5 deste check-up.
@@ -56,7 +56,7 @@ Front lê só o contrato. Tira o "Sistema em breve" do `index.html:27`.
 ~~6. **B25** — AUD-32/98/99: ajustar `registro_prospectivo.py` ao pré-registro decidido (critério contínuo, comparador = média do hall, uma linha por ticker×rodada). *Pronto quando:* testes verdes e registro no `09`.~~ (feita 14/10)
 *QA de 21/10/2026 (5 frentes: motores, tela/servidor, nuvem/CLIs, dados × CVM/B3, fatos × FRE): N7–N11, na ordem do topo, na mesma regra (uma por turno; golden intacto, senão `wip/auto`).*
 
-**N7 — Motor sem defesa contra dado inválido (ALTA preventiva; hoje os 47 tickers estão limpos).** NaN, ±inf, None ou ≤ 0 têm de virar recusa explícita (NÃO CONCLUSIVO ou `ValueError` com mensagem), nunca palavra ou elegibilidade em silêncio. Pontos reproduzidos pelo QA:
+**(FEITA 22/10) N7 — Motor sem defesa contra dado inválido (ALTA preventiva; hoje os 47 tickers estão limpos).** NaN, ±inf, None ou ≤ 0 têm de virar recusa explícita (NÃO CONCLUSIVO ou `ValueError` com mensagem), nunca palavra ou elegibilidade em silêncio. Pontos reproduzidos pelo QA:
 - `motor_financeiras.palavra` (`:86-92`): NaN vira CARA; 0, −1 e −inf viram BARATA.
 - `precos_de_referencia` (`:97`): o guarda `central <= 0` não pega NaN.
 - `entrada_parcial` (`:111`): NaN em pc, dispersão, notas ou central dá `(True, [])`.
@@ -109,6 +109,7 @@ Front lê só o contrato. Tira o "Sistema em breve" do `index.html:27`.
 (nenhuma)
 
 ## Feitas
+- **N1** (22/10, noite): README (v2.6.1, 8 dossiês, tela v0.2), brief (fonte Space Grotesk, tela, fatias 2b e 3; cópia em `_historico/2026-10-22 brief/`), BACKLOG (47 IDs, B24–B31 na tabela, N/D/T novos), `03-hall` (cabeçalho v2.6.1, KLBN11 já NC, contagem das 41), `RELATORIO-DIARIO` (mais nova em cima), caminhos do `PROMPT.md` do handoff. Só texto; golden intacto. Nº de testes do brief: atualizado no fim da sessão.
 - **N7** (22/10, noite): motor recusa NaN/±inf/None/0/negativo (`palavra`, `nota_preco`, `precos_de_referencia`, `entrada_parcial`, `descontar`, `media_qualitativa`, `central_de`, `qualifica_saida`; `carimbos.de` e `relatorio.caso` com strip/upper); `tests/test_n7_dado_invalido.py`; golden intacto (`09` de 22/10).
 - **N6** (21/10, dia): "Ocultar valores" não vaza mais o DY líquido 12m nem o patrimônio (`carteira.js`, `pessoal(...)`); hall/empresa já usavam `pessoal(`; teste `test_carteira_valor_em_texto_respeita_ocultar`; conferido no navegador com Ocultar ligado (só •••).
 - **B26** (20/10): razão do desconto de controlador pelo FRE 2026 em PRIO3, KEPL3, RECV3, VBBR3, B3SA3 (28 → 23 `SEM_RAZAO`); 0 palavras; golden intacto (`09` de 20/10).

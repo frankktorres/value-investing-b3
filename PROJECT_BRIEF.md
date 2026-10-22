@@ -16,7 +16,7 @@ MVP de uso pessoal, maduro no cálculo. Um usuário real, sem terceiros. Prazo e
 - **Banco:** nenhum. Dados em JSON/CSV/ZIP em `ferramentas/dados/` e `ferramentas/backtest/dados/` (~2,1 GB fora do git); registros
   append-only em `.jsonl` (`prospectivo/`).
 - **Tela:** HTML + CSS + JS (módulos ES) sem build nem npm, servida pelo `http.server` da biblioteca padrão só em 127.0.0.1;
-  fontes IBM Plex e Source Serif 4 locais (OFL); tokens do Claude Design (`docs/design/`). Nenhuma dependência nova.
+  fontes IBM Plex e Space Grotesk locais (OFL); tokens do Claude Design (`docs/design/`). Nenhuma dependência nova.
 - **Infra:** máquina local; Agendador do Windows (monitor semanal, sexta 08:00); GitHub privado + backup em pendrive. Sem nuvem.
 - **APIs/fontes externas:** CVM dados abertos (DFP/ITR/FRE, RAD) — fonte A; B3 COTAHIST e proventos; BCB SGS (IPCA, PTAX); Tesouro
   Transparente (curva IPCA+); FRED (preços de commodities); StatusInvest (scraping, nota C).
@@ -32,7 +32,7 @@ MVP de uso pessoal, maduro no cálculo. Um usuário real, sem terceiros. Prazo e
 - **`dossie/`:** anexo mecânico por ticker (FRE, notas por evidência, vereditos). **`triagem/`:** fila de toda a B3, sem veredito.
 - **Tela (`ferramentas/painel/`):** `painel.exportar` roda os motores uma vez (~100 s) e grava `web/dados/hall.json` +
   `empresas/<TK>.json` (ignorados; contrato versionado); `painel.servir` só serve arquivos. A tela não calcula: palavra
-  vigente, régua e nota da fonte vêm do relatório; o preço de hoje só move o marcador.
+  vigente, régua e nota da fonte vêm do relatório; o preço de hoje só move o marcador. Tela v0.2: Hall, Empresa, Carteira e Monitor.
 - **`backtest/`:** ledger point-in-time + COTAHIST (parado no portão do proxy). **`monitor_semanal.py`**, **`temporada.py`**, **`registro_prospectivo.py`**.
 - **Testes:** pytest com golden dos 41 tickers: 458 no hall (09/10, Onda 2 concluída; `EXIGIR_DADOS=1` transforma skip em falha) + 308 no backtest (09/10; rodar SOZINHO, ~13 min, e com a máquina folgada: a suíte inteira estoura memória se algo mais estiver aberto). Mudança no `Mercado` ou nos motores exige rodar as duas suítes.
 
@@ -65,11 +65,11 @@ MVP de uso pessoal, maduro no cálculo. Um usuário real, sem terceiros. Prazo e
    da meta, `relatorio CARTEIRA` → `RELATORIOS/privado/` (fora do git): fatias 1-3 FEITAS (MD+PDF: renda 12m pela data-com, meta, régua por
    posição, calendário de pagamento, evolução rumo à meta em `dados/privado/renda.jsonl`; a tarefa de sexta gera o painel; adversário rodado).
    Falta só o Frank usar e dizer o que muda.
-   **Tela (front end, 19/10):** `painel` → navegador em 127.0.0.1:8765; fatia 1 (Hall) FEITA; faltam 2 Empresa, 3 Carteira
-   (privado), 4 Monitor + exportação na tarefa de sexta. Plano: `~/.claude/plans/greedy-imagining-church.md`.
+   **Tela (front end, 19/10; v0.2 em 20–21/10):** `painel` → navegador em 127.0.0.1:8765; Hall, Empresa, Carteira (privado) e Monitor FEITOS;
+   faltam Sistema (missão N4), contraste dos tokens (N5) e exportação na tarefa de sexta. Plano: `~/.claude/plans/greedy-imagining-church.md`.
    Plano da fase 2: `~/.claude/plans/frolicking-sauteeing-snowglobe.md`. **Fase 3 (dados vivos sem premissa digitada) EM EXECUÇÃO:** plano
-   `~/.claude/plans/tingly-gliding-flute.md`; fatias 1 (procedência por campo) e 2 (DPA/JCP B3, 20/10) FEITAS; depois 2b (bug PN do
-   dossiê), 3 (literais NF), temporada 3T26 em commit próprio, 4 (financeiras), 5 (trava). Depois: triagem contínua (fase 4), SaaS.
+   `~/.claude/plans/tingly-gliding-flute.md`; fatias 1 (procedência por campo), 2 (DPA/JCP B3), 2b (bug PN do
+   dossiê) e 3 (literais NF) FEITAS (20/10); faltam temporada 3T26 em commit próprio, 4 (financeiras), 5 (trava). Depois: triagem contínua (fase 4), SaaS.
 
 ## 7. Restrições
 - **Orçamento:** não informado.

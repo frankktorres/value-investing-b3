@@ -1,28 +1,28 @@
 # Mesa de Value Investing — B3
-*Projeto de apoio à análise fundamentalista · doutrina v2.5 (08/10/2026) · documentos conferidos em 10/10/2026*
+*Projeto de apoio à análise fundamentalista · doutrina v2.6.1 (21/10/2026) · documentos conferidos em 22/10/2026*
 
 ## Ordem de leitura
 
 | Arquivo | Quando usar |
 |---|---|
 | `00-CONFIGURACAO-DO-PROJETO.md` | **Primeiro.** Nome, descrição e instruções para colar no Claude Desktop |
-| `01-doutrina-value-investing.md` | Referência permanente (v2.5): filtros, hierarquia, Ke e RF líquida, vetores de controlador, proventos, armadilhas, régua contínua, notas, **quadro clássico e regra do valor central** |
+| `01-doutrina-value-investing.md` | Referência permanente (v2.6.1): filtros, hierarquia, Ke e RF líquida, vetores de controlador, proventos, armadilhas, régua contínua, notas, **quadro clássico e regra do valor central** |
 | `02-prompt-analise-completa.md` | Toda análise nova de um ticker: o **dossiê** (v4, 07/10/2026) |
 | `03-hall-de-acoes.md` | Índice vivo das 41 empresas com veredito, preços, pendências e histórico de revisões |
 | `04-checklist-anti-erro.md` | **Obrigatório** antes de fechar qualquer análise (v2, 18 erros históricos) |
 | `05-prompt-reavaliacao.md` | Quando sair DRE nova ou mudar premissa (v2: quadro clássico inteiro recalculado) |
 | `06-triagem-e-fila.md` | Para avaliar candidatas novas e definir a fila |
 | `07-perfil-do-investidor.md` | Calibragem de tom, prioridades e postura |
-| `08-prompt-recalculo-lote.md` | Refazer um lote inteiro pela doutrina v2.5, com os erros da auditoria de 04/10 por lote |
+| `08-prompt-recalculo-lote.md` | Refazer um lote inteiro pela doutrina vigente (v2.6.1; os lotes foram refeitos na v2.5), com os erros da auditoria de 04/10 por lote |
 | `PROMPT-AGENTE-NOTICIAS-SEXTA.md` | Tarefa agendada do Desktop (sexta 18h): Boletim Value com fatos que mudam valor, risco ou proventos |
 
 ## Fluxos de trabalho
 
 **Relatório de uma empresa (um comando)**
-`relatorio BBSE3` na raiz (ou `cd ferramentas && python -m relatorio BBSE3`) → `RELATORIOS/<TICKER>-<data>.md` (+ `.json`): palavra, compra/saída, cada método de preço (DCF, EPV, Buffett OE, Graham, Bazin, DDM…) separado entre "entra no central" e "informativo", sensibilidade e premissas de julgamento; cada número com fonte e nota A/B/C/—. É uma vista dos motores: não grava veredito. Vale para os 41 do hall e para quem tem ficha de dossiê (BLAU3, CMIN3, HYPE3, LEVE3). Fase 1 revisada (adversário + verificador-fonte, 19/10): quali, PDF e ALLD3 prontos; cortes do bloco qualitativo são heurística do projeto, não de fonte.
+`relatorio BBSE3` na raiz (ou `cd ferramentas && python -m relatorio BBSE3`) → `RELATORIOS/<TICKER>-<data>.md` (+ `.json`): palavra, compra/saída, cada método de preço (DCF, EPV, Buffett OE, Graham, Bazin, DDM…) separado entre "entra no central" e "informativo", sensibilidade e premissas de julgamento; cada número com fonte e nota A/B/C/—. É uma vista dos motores: não grava veredito. Vale para os 41 do hall e para quem tem ficha de dossiê (BLAU3, CMIN3, HYPE3, LEVE3, ALLD3, FESA4, SHUL4, VLID3 — 8 dossiês). Fase 1 revisada (adversário + verificador-fonte, 19/10): quali, PDF e ALLD3 prontos; cortes do bloco qualitativo são heurística do projeto, não de fonte.
 
 **Tela no navegador (somente leitura)**
-`painel --exportar` na raiz (ou `cd ferramentas && python -m painel --exportar`) roda os motores uma vez (~100 s), grava `ferramentas/painel/web/dados/` (ignorado pelo git) e abre http://127.0.0.1:8765/. Sem `--exportar`, só abre a tela com os dados da última exportação. Hoje mostra o **Hall**: 41 do hall + dossiês, a palavra vigente (dossiê gravado vence o hall), a régua compra/central/saída com o preço de hoje marcado, a nota da fonte (A/B/C/—) de cada central, filtro "só central A/B", busca e tema claro/escuro. A tela não calcula nada nem fala em comprar ou vender; Empresa, Carteira e Monitor são as próximas fatias (por ora, `relatorio <TICKER>` e `relatorio CARTEIRA`). Design: `docs/design/`.
+`painel --exportar` na raiz (ou `cd ferramentas && python -m painel --exportar`) roda os motores uma vez (~100 s), grava `ferramentas/painel/web/dados/` (ignorado pelo git) e abre http://127.0.0.1:8765/. Sem `--exportar`, só abre a tela com os dados da última exportação. Tela v0.2, com **Hall, Empresa, Carteira e Monitor**. O **Hall** mostra: 41 do hall + dossiês, a palavra vigente (dossiê gravado vence o hall), a régua compra/central/saída com o preço de hoje marcado, a nota da fonte (A/B/C/—) de cada central, filtro "só central A/B", busca e tema claro/escuro. A tela não calcula nada nem fala em comprar ou vender; Sistema é a próxima fatia; o relatório completo segue em `relatorio <TICKER>` e `relatorio CARTEIRA`. Design: `docs/design/`.
 
 **Painel da carteira e da meta (um comando)**
 `python -m relatorio CARTEIRA` (em `ferramentas/`) → `RELATORIOS/privado/CARTEIRA-<pregão>.md` + `.pdf`: renda líquida de 12 meses (dividendo + JCP pela data-com × quantidade de hoje), % da meta de renda mensal, quanto falta, posição do preço na régua da doutrina, calendário de pagamento e a evolução rumo à meta (uma linha por geração em `ferramentas/dados/privado/renda.jsonl`). Quantidade, preço médio e meta ficam em `ferramentas/carteira.local.json` (modelo fictício: `carteira.exemplo.json`); painel, histórico e arquivo local são ignorados pelo git. A tarefa de sexta (`agendador/monitor_semanal.vbs`) gera o painel logo após o monitor. Nunca é ordem de compra ou venda.
@@ -47,13 +47,13 @@ Conjunto de análises completas → fichas de 2 páginas por empresa (veredito, 
 
 ## Ferramentas (cálculo reproduzível)
 
-`ferramentas/` tem os motores de valuation (`motor_financeiras.py` e `motor_nao_financeiras.py`, fórmulas da doutrina v2.5; créditos de IR com prazo em `fiscal.py`), os coletores (`coletar_cvm.py` — DFP/ITR da CVM, fonte A — e `coletar_statusinvest.py`), as premissas e textos dos 6 lotes (`loteN_*.py`), os geradores de PDF (`gerar_pdf_loteN.py`) e os atualizadores do hall (`atualizar_hall_loteN.py`). Refazer um lote: `cd ferramentas && python gerar_pdf_loteN.py`. `dossie/` (anexo mecânico do dossiê: FRE, notas-base por evidência, vereditos em `dossie/vereditos/`; dossiês aprovados: BLAU3, CMIN3, HYPE3), `triagem/` (fila de toda a B3, sem veredito) e `monitor_semanal.py` (preço semanal do hall) reusam o ledger point-in-time e o COTAHIST de `backtest/`. `registro_prospectivo.py` guarda o veredito do dia, append-only, com `origem` ("hall" ou "dossie") na chave. `temporada.py` (F8) baixa o ITR novo da CVM, recoleta o LTM de quem publicou, compara com o golden e grava `BOLETINS/AAAA-MM-DD-temporada.md` (quem mudou de palavra e por quê; `--simular 2T26` ensaia com o trimestre já coletado; o golden só é regravado com `rodar_tudo.py --motivo`); o LTM agora é a chave genérica `ltm` + `ltm_ref` (`ltm.py`). Os dados brutos ficam em `ferramentas/dados/` (não sobem para o Desktop).
+`ferramentas/` tem os motores de valuation (`motor_financeiras.py` e `motor_nao_financeiras.py`, fórmulas da doutrina v2.6.1; créditos de IR com prazo em `fiscal.py`), os coletores (`coletar_cvm.py` — DFP/ITR da CVM, fonte A — e `coletar_statusinvest.py`), as premissas e textos dos 6 lotes (`loteN_*.py`), os geradores de PDF (`gerar_pdf_loteN.py`) e os atualizadores do hall (`atualizar_hall_loteN.py`). Refazer um lote: `cd ferramentas && python gerar_pdf_loteN.py`. `dossie/` (anexo mecânico do dossiê: FRE, notas-base por evidência, vereditos em `dossie/vereditos/`; dossiês aprovados: BLAU3, CMIN3, HYPE3, LEVE3, ALLD3, FESA4, SHUL4, VLID3), `triagem/` (fila de toda a B3, sem veredito) e `monitor_semanal.py` (preço semanal do hall) reusam o ledger point-in-time e o COTAHIST de `backtest/`. `registro_prospectivo.py` guarda o veredito do dia, append-only, com `origem` ("hall" ou "dossie") na chave. `temporada.py` (F8) baixa o ITR novo da CVM, recoleta o LTM de quem publicou, compara com o golden e grava `BOLETINS/AAAA-MM-DD-temporada.md` (quem mudou de palavra e por quê; `--simular 2T26` ensaia com o trimestre já coletado; o golden só é regravado com `rodar_tudo.py --motivo`); o LTM agora é a chave genérica `ltm` + `ltm_ref` (`ltm.py`). Os dados brutos ficam em `ferramentas/dados/` (não sobem para o Desktop).
 
 **Clone do zero (Onda 2, 09/10/2026).** `pip install -r requirements.txt` e `cd ferramentas && python -m pytest --ignore=backtest` rodam sem os ZIPs da CVM: os lotes 4 e 6 leem o snapshot `dados/derivados_zip.json` e os testes que dependem de dados fora do git saem como pulados, com motivo (`-rs`). Para recalcular dos ZIPs: `python bootstrap_dados.py --baixar` (só os necessários, ~500 MB), `--verificar` (sha256 contra `dados/cvm/MANIFESTO.json`; a CVM reescreve arquivos, então diferença é aviso) e `--derivados` (regera o snapshot). O backtest precisa dos 1,4 GB completos (`backtest/baixar_cvm.py`).
 
 ## Pasta de upload
 
-`UPLOAD CLAUDE DESKTOP/` é **cópia** (regerada em 09/10/2026, doutrina v2.5) do que vai para o projeto no Claude Desktop: os .md acima, os 6 PDFs vigentes e `COLAR-NO-CAMPO-INSTRUCOES.txt`. Os originais são os desta raiz — ao alterar qualquer arquivo, recopiar a pasta inteira e re-subir.
+`UPLOAD CLAUDE DESKTOP/` é **cópia** (regerada em 09/10/2026, doutrina v2.5 — anterior à v2.6.1; recopiar antes de re-subir ao Desktop) do que vai para o projeto no Claude Desktop: os .md acima, os 6 PDFs vigentes e `COLAR-NO-CAMPO-INSTRUCOES.txt`. Os originais são os desta raiz — ao alterar qualquer arquivo, recopiar a pasta inteira e re-subir.
 
 ## Histórico
 

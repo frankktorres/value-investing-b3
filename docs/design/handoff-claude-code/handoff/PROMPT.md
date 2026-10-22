@@ -7,7 +7,7 @@ Antes de colar: copie esta pasta (`handoff/`) para dentro do repositório, por e
 
 ---
 
-Leia `docs/design/HANDOFF.md` inteiro e depois olhe as imagens em `docs/design/referencia/capturas/` (são o alvo visual) e `docs/design/tokens.css`.
+Leia `docs/design/handoff-claude-code/handoff/HANDOFF.md` inteiro e depois olhe as imagens em `docs/design/handoff-claude-code/handoff/referencia/capturas/` (são o alvo visual) e `docs/design/handoff-claude-code/handoff/tokens.css`.
 
 Objetivo: criar a primeira interface da Mesa de Value Investing, um painel web local e somente leitura, no estilo das capturas (fintech escura, menu lateral, régua de preço). O front só exibe o que os motores Python já calculam. Ele não calcula valuation.
 
