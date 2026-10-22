@@ -10,6 +10,9 @@ pipeline estiver errado, este leitor não herda o erro. Do coletor só vem o map
   dre_dmpl  lucro consolidado da DRE (3.11) = lucro do período na DMPL (5.05.01, PL consolidado)
   div       dividendos + JCP da DMPL (5.04.*) ≈ pagos na DFC (6.03.*) — competência × caixa: só bandeira
   lpa       lucro do controlador ÷ ações da série = LPA básico (3.99.01.*) — média ponderada × fim: só bandeira
+  acoes_lote ações que o LOTE usa (× ações por unit) ÷ ações implícitas no DFP do último exercício (lucro do controlador ÷ LPA
+            básico): até 2% ok, acima bandeira; fator fora de [0,5; 2] é erro de ESCALA (R$ mil × unidade, PRE-REGISTRO-v3
+            emenda 2) e vira falha em ticker com palavra de decisão — a palavra é a que o motor dá agora, não a do hall
 Status: ok | bandeira | falha. "falha" só acontece numa identidade contábil (bp, bp_partes, dfc, dfc_saldo) quebrada em
 ticker com palavra de decisão no hall (BARATA/RADAR/JUSTA). Nos outros casos a divergência vira bandeira.
 """
@@ -17,6 +20,7 @@ from __future__ import annotations
 
 import functools
 import json
+import os
 import pathlib
 import re
 import zipfile
@@ -25,13 +29,15 @@ import pandas as pd
 
 AQUI = pathlib.Path(__file__).resolve().parent
 FERRAMENTAS = AQUI.parent
-CACHE = FERRAMENTAS / "dados" / "cvm"
+# ORACULO_DADOS_CVM: pasta dos ZIPs quando o oráculo roda num worktree (armadilhas), que não tem os dados ignorados pelo git
+CACHE = pathlib.Path(os.environ.get("ORACULO_DADOS_CVM") or FERRAMENTAS / "dados" / "cvm")
 HALL = FERRAMENTAS / "painel" / "web" / "dados" / "hall.json"
 IDENTIDADES = ("bp", "bp_partes", "dfc", "dfc_saldo")
+ESCALA = (0.5, 2.0)        # PRE-REGISTRO-v3 emenda 2: razão de ações fora disso não é média × fim nem tesouraria
 DECISAO = ("BARATA", "RADAR", "JUSTA")
 TOL = {  # PRE-REGISTRO-v3 §3: (relativa, absoluta em R$ mil)
     "bp": (0.005, 1.0), "bp_partes": (0.005, 1.0), "dfc": (0.01, 1.0), "dfc_saldo": (0.01, 1.0), "dfc_bp": (0.01, 1.0),
-    "dre_dmpl": (0.005, 1.0), "div": (0.10, 1.0), "lpa": (0.02, 0.0),
+    "dre_dmpl": (0.005, 1.0), "div": (0.10, 1.0), "lpa": (0.02, 0.0), "acoes_lote": (0.02, 0.0),
 }
 RE_DIV = re.compile(r"dividend|juros sobre (?:o )?capital|jcp", re.I)
 DEMOS = ("BPA", "BPP", "DFC_MI", "DRE", "DMPL")
@@ -156,14 +162,42 @@ def classificar(linhas: list[dict], palavras: dict[str, str] | None = None) -> l
     return linhas
 
 
-def rodar(tickers: list[str] | None = None, anos: list[str] | None = None) -> list[dict]:
+def conferir_acoes_lote(empresas: dict, palavras: dict[str, str]) -> list[dict]:
+    """Ações de cada não financeira dos lotes contra o DFP do último exercício (leitor próprio; o lote não é consultado)."""
+    import motor_nao_financeiras as M
+    out = []
+    for tk, e in sorted(empresas.items()):
+        if not isinstance(e, M.Industrial):
+            continue
+        ano = str(2025 + (M.FIM_EXERCICIO.get(tk, 12) != 12))
+        dre = _contas(tk, ano, "DRE")
+        lucro_c = (_v(dre, "3.11.01") or _v(dre, "3.11")) if dre is not None else None
+        lpa = None
+        if dre is not None:
+            s = dre[dre["CD_CONTA"].str.startswith("3.99.01.") & (dre["VL"] != 0)]
+            lpa = float(s["VL"].iloc[0]) if len(s) else None
+        impl = lucro_c * 1000 / lpa if (lucro_c and lpa) else None
+        lote = e.n_acoes * (M.CVM.get(tk) or {}).get("acoes_por_unit", 1)
+        st, rel = _status("acoes_lote", lote, impl)
+        if st == "divergente" and not ESCALA[0] <= lote / impl <= ESCALA[1]:
+            st = "falha" if palavras.get(tk) in DECISAO else "bandeira"
+        elif st == "divergente":
+            st = "bandeira"
+        out.append(dict(ticker=tk, ano=ano, check="acoes_lote", calculado=lote, esperado=impl, dif_rel=rel, status=st))
+    return out
+
+
+def rodar(tickers: list[str] | None = None, anos: list[str] | None = None, palavras: dict[str, str] | None = None) -> list[dict]:
+    """`palavras` = ticker → palavra que o motor dá agora (o oráculo passa a da sanidade); sem ela, a do hall."""
     from coletar_cvm import EMPRESAS
     import motor_nao_financeiras as M
+    from oraculo.sanidade import empresas
     tickers = tickers or sorted(EMPRESAS)
     anos = anos or [str(a) for a in range(2016, 2026)]
+    palavras = _palavras() if palavras is None else palavras
     linhas = []
     for tk in tickers:
         serie = (M.CVM.get(tk) or {}).get("anual", {})
         for ano in anos:
             linhas += conferir(tk, ano, (serie.get(ano) or {}).get("acoes"))
-    return classificar(linhas)
+    return classificar(linhas, palavras) + conferir_acoes_lote(empresas(), palavras)

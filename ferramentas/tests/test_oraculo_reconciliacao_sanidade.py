@@ -82,3 +82,16 @@ def test_compounder_pela_serie_ou_pelo_roic_atual():
     assert S._compounder(dict(roic_serie={}, roic=0.16))
     assert not S._compounder(dict(roic_serie={str(a): 0.04 for a in range(2016, 2026)}, roic=0.10))
     assert math.isclose(S.KE_TETO, 0.30)
+
+
+def test_acoes_do_lote_fora_de_escala_falham_so_com_palavra_de_decisao(dfp_2025):
+    """KEPL3 2025: 173.332.000 ações no lote ≈ lucro do controlador ÷ LPA do DFP (ok). Em milhares (÷ 1000) é erro de escala:
+    falha se o motor dá palavra de decisão, bandeira se não; 5% de diferença é só bandeira (média ponderada × fim)."""
+    from dataclasses import replace
+    from oraculo.sanidade import empresas
+    kepl = empresas()["KEPL3"]
+    st = lambda e, p: R.conferir_acoes_lote({"KEPL3": e}, {"KEPL3": p})[0]["status"]
+    assert st(kepl, "CARA") == "ok"
+    assert st(replace(kepl, n_acoes=kepl.n_acoes / 1000), "BARATA") == "falha"
+    assert st(replace(kepl, n_acoes=kepl.n_acoes / 1000), "CARA") == "bandeira"
+    assert st(replace(kepl, n_acoes=kepl.n_acoes * 1.05), "BARATA") == "bandeira"

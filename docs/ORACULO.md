@@ -38,7 +38,9 @@ Management"): quem confere o modelo não é quem o fez, tem competência e tem p
 Um oráculo que não pega bug plantado não está pronto.
 - Conjunto de **mudanças-armadilha**: patches em `ferramentas/oraculo/armadilhas/`, cada um com o defeito, a camada que
   deve pegá-lo e quem deve pegá-lo (automático, agente ou os dois). Os patches são aplicados num `git worktree`
-  descartável em pasta temporária, nunca na árvore de trabalho.
+  descartável em pasta temporária, nunca na árvore de trabalho. Catálogo e alçada em
+  `ferramentas/oraculo/armadilhas/__init__.py`. "Automático" é a suíte, com o golden regravado no worktree (camada 0 não
+  conta), mais o `python -m oraculo` (emenda 2 do pré-registro).
 - Armadilhas mínimas:
   - zero silencioso novo;
   - real × nominal trocados;

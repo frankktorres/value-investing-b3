@@ -251,3 +251,28 @@ WEG; ROE recorrente do Itaú; Kerr 1998 (HARKing); Barr et al. 2015; Harvey, Liu
      `lote4_saude_telecom.py:150` contorna isso com a heurística `< 1e7`. Fica como bandeira; a correção vai para a Fase 3.
    - **Ke acima de 30% na baseline:** KLBN11 64,7%, SUZB3 34,3%, SLCE3 31,3% e SMTO3 30,3% (RANI3 29,97%, logo abaixo) são
      alarmes conhecidos ligados à H2. Entram na lista de conhecidos do `oraculo/sanidade.py`, que é uma catraca e só encolhe.
+2. **22/10/2026 — perfil das propriedades, limiar de escala de ações e alçada das armadilhas; escrita antes de rodar as
+   armadilhas e as H1–H11, sem efeito em palavra.**
+   - **Perfil das propriedades (§3, "500 exemplos").** Uma avaliação de industrial custa cerca de 0,2 s, ou 0,06 s sem os Ke e
+     g implícitos, que não entram em central nem em palavra e por isso são trocados por `None` nas propriedades. Cada exemplo
+     custa duas avaliações. Financeira: 500 exemplos sempre. Industrial: 12 exemplos na suíte do dia a dia (perfil curto) e
+     500 só com `python -m oraculo --completo` (`ORACULO_PERFIL=completo`). O critério do §3 só conta como cumprido na
+     rodada `--completo`. O perfil curto é regressão rápida.
+   - **Ações do lote × DFP (camada 4, `acoes_lote`).** Até 2%: ok (o limiar de ações × LPA do §3). Acima disso: bandeira. Se
+     a razão fica fora de [0,5; 2], é erro de escala (R$ mil × unidade) e vira falha quando o ticker tem palavra de decisão.
+     A palavra é a que o motor dá na rodada, não a do hall.
+   - **Alçada do automático nas armadilhas** (`docs/ORACULO.md` §2), decidida antes de medir. O automático é o portão
+     inteiro da `VALIDACAO` §2: a suíte, com o golden regravado no worktree como um autor faria (a camada 0 não conta), mais
+     o `python -m oraculo`. São dele as armadilhas de número (zero silencioso, real × nominal, sinal da DL, unidade das
+     ações, régua). As de processo (premissa sem fonte, motivo do golden, variante fora do pré-registro) são só do agente.
+   - **H10 em duas partes.** Os campos que já viram recusa explícita (lucro, receita) formam uma propriedade estrita: um
+     zero novo neles quebra a suíte. Os outros ficam num xfail estrito com catraca (`H10_ABERTOS`), e o campo sai da lista
+     quando a Fase 3 o fechar.
+   - **Achado A1 (camada 2; não é hipótese testada).** Nos industriais, o desconto do controlador entra no E do ponto fixo
+     do WACC (`estrutura_de_capital`) e volta como Ke maior, pelo Hamada, e como nota de qualidade diferente. Isso contraria
+     o §5 do `01` ("o risco não volta a descontar retorno, nota ou veredito"). Fica como xfail estrito até a decisão do Frank
+     na Fase 3. Nos lotes de hoje só um industrial tem desconto diferente de zero: a **PETR4**, que é JUSTA. O efeito na
+     palavra dela é medido na Fase 3, como variante pré-registrada. Aqui nada muda.
+   - **Contagem de tentativas (§0.4).** Entra no §6 toda execução das H1–H11. Conta no orçamento de 24 só a execução que
+     calcula central ou palavra sob uma regra ou um dado alternativos (H1b, H2a, H4, H9). Teste de propriedade, conferência
+     de fonte e estatística descritiva não contam.

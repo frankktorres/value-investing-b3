@@ -1,0 +1,42 @@
+diff --git a/ferramentas/lote3_agro.py b/ferramentas/lote3_agro.py
+index 59b7465..fa486f3 100644
+--- a/ferramentas/lote3_agro.py
++++ b/ferramentas/lote3_agro.py
+@@ -46,7 +46,7 @@ def acoes(tk):
+ # pela Deloitte (R$ 13,53 bi, terra nua, NBR 14653) líquidas de impostos e da parte dos FIPs + demais itens contábeis de 31/03/2026.
+ SLCE3_NAV_MI, SLCE3_NAV_ACOES = 13_824, 498_745_930
+ EMPRESAS = [
+-    Industrial("SUZB3", "Suzano", "ciclica", desconto_controlador=dict(tipo="zero", razao=SEM_RAZAO), preco=preco("SUZB3"), n_acoes=acoes("SUZB3"), g_real=0.01, jcp_share=jcp("SUZB3"),
++    Industrial("SUZB3", "Suzano", "ciclica", desconto_controlador=dict(tipo="zero", razao=SEM_RAZAO), preco=preco("SUZB3"), n_acoes=acoes("SUZB3"), g_real=0.015, jcp_share=jcp("SUZB3"),
+                qualitativo=QUAL(4, 4, 4, 2, 3)),
+     Industrial("KLBN11", "Klabin (unit)", "ciclica", desconto_controlador=dict(tipo="zero", razao=SEM_RAZAO), preco=preco("KLBN11"), n_acoes=acoes("KLBN11"), g_real=0.01, jcp_share=jcp("KLBN11"),
+                qualitativo=QUAL(3, 3, 3, 2, 3)),
+diff --git a/ferramentas/tests/golden.json b/ferramentas/tests/golden.json
+index 50c3544..2d8456d 100644
+--- a/ferramentas/tests/golden.json
++++ b/ferramentas/tests/golden.json
+@@ -1,5 +1,5 @@
+ {
+- "motivo": "B30: P/L histórico das NF estendido a 2016-19 pelo LPA básico da classe (DRE 3.99, CVM) com trava de 25% nas ações implícitas e ano fora se evento torna ambígua a base do LPA; hall e dossiê pela mesma função -> só o Bogle de 8 tickers. B31: alíquotas TIMS3 2021-23 e WPU0662 conferidas na fonte, sem mudar número. 0 trocas de palavra.",
++ "motivo": "atualizei o golden porque os números mudaram",
+  "tickers": {
+   "ABCB4": {
+    "ancoras": {
+@@ -581,7 +581,7 @@
+     "EPV de meio de ciclo": 21.918255,
+     "Valor de reprodução": 40.211619
+    },
+-   "bogle_nom": 0.112495,
++   "bogle_nom": 0.117818,
+    "central": 22.77773,
+    "cobertura_juros": 1.812817,
+    "data_preco": "02/10/2026",
+diff --git a/ferramentas/tests/golden_log.md b/ferramentas/tests/golden_log.md
+index 07a64f1..f060024 100644
+--- a/ferramentas/tests/golden_log.md
++++ b/ferramentas/tests/golden_log.md
+@@ -23,3 +23,4 @@
+ - 2026-10-20 08:08 — Fase 3, fatia 2 (20/10/2026): DPA/JCP das 21 não financeiras dos lotes da API da B3 (proventos_hall.py: classe do ticker, tipos fechados, data-com até o preço, eventos em ações B3 + FRE, parcelas somadas conferidas na DMPL) em vez da StatusInvest; saem lote4.corrigir_proventos e o ajuste aproximado de GGBR4/UNIP6. Muda só dy, Bogle nominal, vence a RF e nota geral (renda) em 7 tickers; nenhuma palavra, central ou âncora muda (teste)
+ - 2026-10-20 11:00 — Fase 3, fatia 3 (B15/9e): P/L histórico das NF pela CVM + COTAHIST (pl_historico.do_hall; SMTO3 em março; janela 2020-25 por falta de ações no DFP antes de 2020) no lugar da StatusInvest/literais -> só o Bogle de 10 tickers; NAV da SLCE3 do fato relevante de 15/06/2026 (27,12 -> 27,72; central e palavra iguais). Preço (snapshot COTAHIST), receita de meio (CVM x EIA/BLS), alíquota TIMS3 (CVM + nota 8.d) e g1 WEGE3 (CVM + B3) registrados sem mudar número no golden. 0 trocas de palavra.
+ - 2026-10-20 12:00 — B30: P/L histórico das NF estendido a 2016-19 pelo LPA básico da classe (DRE 3.99, CVM) com trava de 25% nas ações implícitas e ano fora se evento torna ambígua a base do LPA; hall e dossiê pela mesma função -> só o Bogle de 8 tickers. B31: alíquotas TIMS3 2021-23 e WPU0662 conferidas na fonte, sem mudar número. 0 trocas de palavra.
++- 2026-10-22 17:20 — atualizei o golden porque os números mudaram

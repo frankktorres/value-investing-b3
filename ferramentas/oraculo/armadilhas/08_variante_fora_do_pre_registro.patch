@@ -1,0 +1,13 @@
+diff --git a/ferramentas/motor_financeiras.py b/ferramentas/motor_financeiras.py
+index 9f80b80..015515e 100644
+--- a/ferramentas/motor_financeiras.py
++++ b/ferramentas/motor_financeiras.py
+@@ -12,7 +12,7 @@ from statistics import median
+ from defasagem import defasagem_meses
+ 
+ PIB_REAL_LP = 0.02          # crescimento real de longo prazo da economia (teto do g perpétuo), declarado
+-PREMIO_KE = 0.05            # Ke real = rf + 5 p.p.
++PREMIO_KE = 0.045           # Ke real = rf + 4,5 p.p. (recalibração v3)
+ IR_RESGATE = 0.15           # Tesouro e ganho de capital, > 720 dias
+ IR_JCP = 0.175              # LC 224/2025
+ HORIZONTE = 10              # anos, comparação com RF e Bogle
