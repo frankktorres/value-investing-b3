@@ -1,13 +1,16 @@
 # Pré-registro — validação e recalibração do motor (doutrina v3)
 
 Aberto em 22/10/2026 (Fase 0 de `docs/PROMPT-ORACULO-E-CALIBRACAO.md`). Nenhuma palavra, central, golden ou doutrina mudou.
+**Aprovado pelo Frank em 22/10/2026**, depois de 5 ajustes: H9 com duas referências, §4.3 com o limite das premissas
+digitadas, H11 nova, H8 com todas as financeiras, e a H1 com gabarito de fonte, a H7 com BH e a H10 com `:287`.
 Este arquivo é **append-only** depois do "ok" do Frank: hipótese, teste e critério não se reescrevem; correção entra como
 emenda datada no fim (§7), com o motivo, e conta como tentativa nova.
 
 ## 0. Regras do pré-registro
 1. **Antes de rodar.** Toda variante de regra testada (fórmula, premissa, régua) entra aqui com hipótese, teste e critério
    de aceitação **antes** da primeira execução. Variante sem linha no §6 não vale como evidência.
-2. **Origem exploratória declarada.** H1–H10 nasceram de olhar os números do diagnóstico de 22/10 (HARKing, Kerr 1998).
+2. **Origem exploratória declarada.** H1–H10 nasceram de olhar os números do diagnóstico de 22/10 (HARKing, Kerr 1998);
+   a H11 foi pedida pelo Frank na revisão do pré-registro.
    Por isso a observação que gerou a hipótese **não conta** como confirmação: só conta o teste novo descrito em cada uma
    (propriedade, cálculo independente, fonte externa, outra data). Onde o teste reusa o mesmo dado, o resultado vale como
    "consistente", não como "confirmado".
@@ -54,12 +57,17 @@ Formato: **enunciado** · *teste que pode refutar* · **critério** (decidido ag
 O `dcf()` (`motor_nao_financeiras.py:721-722`) libera g só se min(ROIC contábil, ROIC a reposição) > WACC nominal. O ROIC
 a reposição corrige o capital pela inflação, então é uma medida aproximadamente **real**, e o WACC é **nominal**. O efeito
 é que g = 0 para quase todo industrial, inclusive para compounders.
-- *Teste:* (a) teste especificado (camada 1). Num caso sintético com inflação π, uma empresa com ROIC real = WACC real + 3 p.p. precisa
-  ser classificada "cria valor" pelas duas versões coerentes (real × real; nominal contábil × nominal). Rodar a função
-  atual. (b) No hall, contar os tickers cuja trava muda entre a regra atual e a regra real × real e medir a variação do
+- *Teste:* (a) teste especificado (camada 1). Um caso sintético com inflação π e ROIC real = WACC real + 3 p.p. A
+  **resposta certa vem da fonte, não da hipótese**: o gabarito (cria ou não cria valor, e como ROIC contábil e capital
+  a reposição se comportam sob inflação) é tirado de Damodaran (*Investment Valuation*, cap. sobre inflação e retorno sobre
+  capital; *Return on Capital (ROC), Return on Invested Capital (ROIC) and Return on Equity (ROE): Measurement and
+  Implications*, 2007) e de Greenwald et al. (*Value Investing: From Graham to Buffett and Beyond*, crescimento e
+  franquia). Os dois são conferidos pelo `verificador-fonte` antes de virar teste e citados no teste com página e seção.
+  Fonte que não for nota A/B → o caso fica "a conferir" e (a) não conta. Depois, rodar a função atual contra esse gabarito.
+  (b) No hall, contar os tickers cuja trava muda entre a regra atual e a regra que a fonte indicar, e medir a variação do
   central.
-- **Critério.** H1 é **aceita** se (a) a regra atual classifica errado o caso sintético **e** (b) a trava muda em ≥ 3
-  tickers, com |Δcentral| ≥ 10% em pelo menos 3. É **refutada** se (a) passa, ou se (b) dá < 3 tickers.
+- **Critério.** H1 é **aceita** se (a) a regra atual contraria o gabarito da fonte **e** (b) a trava muda em ≥ 3
+  tickers, com |Δcentral| ≥ 10% em pelo menos 3. É **refutada** se (a) concordar com a fonte, ou se (b) der < 3 tickers.
 - Camadas 1 e 2 · Fases 2 e 5 (item 3).
 
 ### H2 — Hamada com dívida bruta e E do modelo cria realimentação (artefato)
@@ -117,9 +125,10 @@ margem em alta, isso põe o numerador do passado sobre o denominador de hoje. O 
 ### H7 — A normalização confunde tendência com ciclo
 A mediana de 10 anos (`01` l.228, l.276) supõe reversão à média. Numa empresa com margem em tendência estrutural, ela
 subestima o fluxo sem que haja ciclo.
-- *Teste:* Mann-Kendall nas margens de 10 anos de cada industrial (α = 0,05). Nos tickers com tendência significativa,
-  comparar m50 com a mediana dos 3 últimos anos.
-- **Critério.** **Aceita** se ≥ 3 tickers não cíclicos têm tendência positiva significativa **e** m50 ≥ 2 p.p. abaixo dos 3
+- *Teste:* Mann-Kendall nas margens de 10 anos de cada industrial. Como são cerca de 21 testes, a significância é decidida
+  com correção de Benjamini-Hochberg (FDR q = 0,05) sobre todos os p-valores da rodada, e não com α = 0,05 por ticker.
+  Nos tickers que passarem, comparar m50 com a mediana dos 3 últimos anos.
+- **Critério.** **Aceita** se ≥ 3 tickers não cíclicos têm tendência positiva significativa após BH **e** m50 ≥ 2 p.p. abaixo dos 3
   últimos anos. **Refutada** se < 3. A escolha da normalização nova **não** sai daqui: sai da camada 6 (Fase 7).
 - Camada 5 · Fase 2 (relatório) e Fase 5 (item 4).
 
@@ -127,28 +136,58 @@ subestima o fluxo sem que haja ciclo.
 O `roe_lp` é digitado (ITUB4 17,58%) e comparado com o Ke **nominal** de 19,3%, que embute π de 6,46%. Isso dá P/VP < 1 por
 construção para banco de ROE de 20% ou mais.
 - *Teste:* (a) recalcular o ROE anual a partir da CVM (lucro do controlador ÷ PL médio) e conferir o `roe_lp` digitado
-  (camada 4). (b) Comparar a mediana do ROE **real** (deflacionado pelo IPCA de cada ano) com o Ke real de 12,06%.
-- **Critério.** **Aceita** se o `roe_lp` digitado diverge ≥ 1 p.p. do (a) em ≥ 2 bancos, **ou** se o sinal de (ROE − Ke)
-  muda entre nominal e real em ≥ 2 bancos. **Refutada** se os dois testes passam.
+  (camada 4) de **todas** as empresas com `roe_lp`, não só a ITUB4. Nos lotes de 22/10 são 18 objetos `Financeira`: 10 em
+  `lote1_bancos` (bancos, seguradora, holdings de seguro) e 8 utilities em `lote2_energia`. Entram também as dos dossiês,
+  com a lista completa gerada pelo script e registrada no relatório. (b) Comparar a mediana do ROE **real**
+  (deflacionado pelo IPCA de cada ano) com o Ke real de 12,06%.
+- **Critério.** **Aceita** se o `roe_lp` digitado diverge ≥ 1 p.p. do (a) em ≥ 2 empresas, **ou** se o sinal de
+  (ROE − Ke) muda entre nominal e real em ≥ 2 empresas. **Refutada** se os dois testes passam em todas.
 - Camadas 1 e 4 · Fases 2 e 4.
 
 ### H9 — O conservadorismo está empilhado
 A taxa (Ke 12% real), o fluxo (mediana, OE com capex de manutenção, o menor ROIC), g = 0, IR 34% e o desconto do controlador
 rebaixam o central, cada um por um lado. A régua ainda exige 30% de margem sobre o resultado.
-- *Teste:* decomposição de Shapley de log(P/C) por ticker em 5 fatores. Cada fator vai do valor da casa ao valor
-  "neutro" pré-registrado: Ke implícito no preço; margem LTM; g declarado sem trava; alíquota mediana observada; desconto 0.
-- **Critério.** É descritiva, não há aceitação por número. Relata-se a fração mediana de cada fator. "Empilhamento
-  confirmado" se nenhum fator sozinho explica > 50% do log(P/C) mediano. Base para o item 6 da proposta.
+- *Teste:* decomposição de Shapley de log(P/C) por ticker em 5 fatores (taxa, margem, g, alíquota, desconto). Ela é
+  feita **duas vezes**, cada uma com uma referência "neutra" pré-registrada, e as duas são relatadas lado a lado:
+  - **R-mercado** (o que o preço implica): Ke implícito no preço (DCF reverso); margem LTM; g declarado sem trava;
+    alíquota mediana observada; desconto 0.
+  - **R-fonte** (o que uma fonte A/B sustenta): Ke de Damodaran (rf local − spread de default + ERP madura + CRP, com β
+    setorial de emergentes, da H5); margem do **ciclo completo**, de pico a pico identificado na série e não pela mediana
+    fixa de 10 anos; g = taxa de reinvestimento × ROIC; alíquota marginal legal com crédito em VP; desconto 0.
+  A R-mercado sozinha é circular, porque toma o preço como verdade. A R-fonte sozinha depende do que ainda está "a
+  conferir". Fator sem fonte A/B na R-fonte fica no valor da casa e é marcado.
+- **Critério.** É descritiva, não há aceitação por número. Relata-se a fração mediana de cada fator nas duas referências.
+  "Empilhamento confirmado" se, nas **duas**, nenhum fator sozinho explica > 50% do log(P/C) mediano. Quando as duas
+  divergirem no fator dominante, relata-se a divergência e não se conclui. É a base do item 6 da proposta.
 - Camada 5 · Fase 2.
 
 ### H10 — Dado ausente vira zero em silêncio (bug)
-Em `motor_nao_financeiras.py:176-177,214,250,273-277` e `montar_series.py:48`, um campo crítico ausente vira 0 em vez de
-NÃO CONCLUSIVO.
-- *Teste:* propriedade: remover qualquer campo crítico da série (caixa, dívida, PL, lucro, receita, D&A) → a palavra não pode
+Em `motor_nao_financeiras.py:176-177,214,250,273-277`, `:287` e `montar_series.py:48`, um campo crítico ausente vira 0 em
+vez de NÃO CONCLUSIVO. No `:287` (`idade_e_fator`), sem imobilizado no LTM o capital a reposição fica igual ao contábil sem
+aviso, e o ROIC a reposição (usado na trava da H1) deixa de ser o que diz ser. O mesmo acontece em `capital_reposicao` (`:297`).
+- *Teste:* propriedade: remover qualquer campo crítico da série (caixa, dívida, PL, lucro, receita, D&A, imobilizado) → a palavra não pode
   ser BARATA, RADAR ou JUSTA e não pode haver número publicado como se fosse medido.
 - **Critério.** **Aceita** (bug) se ao menos 1 remoção produzir palavra de decisão. **Refutada** se todas produzirem NÃO
   CONCLUSIVO ou erro explícito.
 - Camadas 1 e 2 · Fase 2 (detecção) e Fase 3 (correção).
+
+### H11 — Nas reguladas, o Ke da casa acima do WACC regulatório torna P/VP < 1 estrutural
+O regulador fixa o retorno das elétricas (ANEEL) e do saneamento (ARSESP para SBSP3; ARSESP/AGEPAR/ARSAE para os
+demais, conforme a concessão) num WACC regulatório real publicado em nota técnica. Se o Ke real da casa (12,06% ou mais,
+somando o Hamada) for maior que o custo de capital que a tarifa remunera, então ROE regulado < Ke e o P/VP justificado
+fica < 1 **por construção**. Isso vale para qualquer empresa do setor, por melhor que seja, e a palavra passa a refletir a
+régua, não a empresa.
+- *Teste:* (a) ler o WACC regulatório real vigente (antes e depois de impostos, e o custo de capital próprio implícito)
+  na nota técnica de cada regulador. É fonte A, com número, data e página, conferida pelo `verificador-fonte`. (b) Para cada
+  utility do hall (TAEE11, ISAE4, CPFE3, CMIG4, CPLE3, SAPR11, CSMG3, SBSP3 e as dos dossiês), comparar Ke real da casa ×
+  Ke regulatório real, na mesma base (real, depois de impostos). (c) Comparar o P/VP justificado do motor com o P/VP
+  implícito se o Ke fosse o regulatório.
+- **Critério.** **Aceita** se o Ke da casa excede o Ke regulatório em ≥ 1,0 p.p. em ≥ 50% das reguladas com nota técnica
+  lida. **Refutada** se a diferença for < 1,0 p.p. na maioria. Regulador sem nota técnica lida → "a conferir", fora da
+  contagem. Aceitar H11 **não** implica adotar o Ke regulatório: o regulador fixa a remuneração da base, não o retorno
+  que o acionista exige pelo preço. A H11 só mostra que, com essa régua, a palavra das reguladas já está decidida antes de
+  olhar a empresa. O que fazer com isso vai para a proposta v3 (item 2), com fonte.
+- Camadas 1 e 5 · Fases 2 e 5 (item 2).
 
 ## 3. Tolerâncias e limiares pré-registrados (Fases 2–4)
 | Check | Limiar |
@@ -168,9 +207,25 @@ NÃO CONCLUSIVO.
 ## 4. Critérios globais para uma v3 ser aceitável (antes de qualquer número da v3)
 1. As camadas 1–5 estão verdes, todas as propriedades da §2 do prompt passam e nenhum Ke fica acima de 30%.
 2. Cada mudança cita uma fonte A/B e o mestre que ela serve. Os conservadorismos ficam num lugar só, declarado (item 6).
-3. **Discriminação histórica (Fase 7):** a régua v3 roda no ledger PIT em 4 datas (fim de 2016, 23/03/2020, fim de 2022, fim
-   de 2024). Se a fração de BARATA for 0 em **todas**, inclusive em mar/2020, a régua não discrimina e é **reprovada**. Se
-   for > 50% em alguma data que não seja mar/2020, a régua é frouxa e também é reprovada.
+3. **Discriminação histórica (Fase 7). Limite declarado:** o motor de hoje depende de cerca de 445 premissas digitadas
+   (`roe_lp`, `g_real`, `g1_real`, `payout`, `kd_ri`, desconto, janela, fase de crédito…). Elas foram escritas em 2026, não
+   existem nas datas passadas, e o portão do proxy (que tenta substituí-las pelo dado) já **falhou** (70,7% contra 80%;
+   `docs/DECISOES.md` l.13). Rodar "a régua v3" no passado com premissas de 2026 é olhar para o futuro (look-ahead). Por
+   isso fica pré-registrado:
+   - **3a. Exigência de derivação.** Toda premissa que, no teste de sensibilidade de ±20% da Fase 5, **muda a palavra** de
+     ao menos 1 ticker precisa ser derivada do dado PIT por regra escrita (ex.: `roe_lp` = mediana do ROE da CVM até a data;
+     g = reinvestimento × ROIC até a data) para entrar na v3. Premissa que muda palavra e não pode ser derivada fica de fora
+     da v3 ou entra como julgamento declarado. Nesse segundo caso, o ticker é excluído do teste histórico e o motivo é
+     listado.
+   - **3b. Escopo do critério histórico.** O critério de discriminação vale **para a régua v3 com premissas derivadas
+     (3a)**, rodada no ledger PIT. Se a 3a não for cumprida para algum item, o critério histórico vale **só para o proxy**
+     e é relatado como "evidência sobre o proxy, não sobre o motor". Nesse caso a validação do motor fica só com a parte
+     prospectiva (§4.4–4.5).
+   - **3c. Critério (só onde 3b permite).** Datas: fim de 2016, 23/03/2020, fim de 2022, fim de 2024. Se a fração de BARATA
+     for 0 em **todas**, inclusive em mar/2020, a régua não discrimina e é **reprovada**. Se for > 50% em alguma data que
+     não seja mar/2020, a régua é frouxa e também é reprovada. Antes de usar o proxy de novo, o portão dele (≥ 80% de
+     concordância com o motor nos tickers atuais) precisa passar com as premissas derivadas da 3a. Sem isso, nada histórico
+     vale.
 4. **Relação com o retorno (Fase 7):** postos de P/C × retorno total em 3 anos com IC de Spearman < 0, relatado com o
    intervalo e deflacionado por 24 tentativas. Com poucas observações só se relata; não se conclui.
 5. Probabilidade explícita por palavra no prospectivo, com Brier score. Só se relata até haver ≥ 4 rodadas vencidas.
@@ -185,4 +240,14 @@ WEG; ROE recorrente do Itaú; Kerr 1998 (HARKing); Barr et al. 2015; Harvey, Liu
 | 0 | 22/10/2026 | baseline | sens.py, sens2.py (diagnóstico) | 38 tickers | reproduzido (§1) | 9caaf30 |
 
 ## 7. Emendas
-(nenhuma)
+1. **22/10/2026 — definições de relatório da camada 5, sem efeito em palavra.**
+   - **Compounder:** mediana do ROIC real anual do motor (`roic_serie`) ≥ 10% e no máximo 2 anos < 5%, **ou** ROIC contábil
+     atual ≥ 15%. A segunda via existe porque a série anual da WEGE3 sai com 1,2% em 2016 e < 10% até 2022, o que é suspeito
+     pela H6. "Compounder caro" = compounder com P/C > 2.
+   - **Ke implícito:** o `ke_implicito` do motor é **nominal** e é calculado ao preço do lote. A distância é medida como
+     Ke nominal da casa − Ke implícito.
+   - **Escala de ações:** quando lucro ÷ ações ÷ LPA ≈ 1000, o check vira `acoes_escala`. A série guarda ações em
+     unidades para uns tickers e em milhares para outros: WEGE3 em unidades, KEPL3 e TAEE11 em milhares. O
+     `lote4_saude_telecom.py:150` contorna isso com a heurística `< 1e7`. Fica como bandeira; a correção vai para a Fase 3.
+   - **Ke acima de 30% na baseline:** KLBN11 64,7%, SUZB3 34,3%, SLCE3 31,3% e SMTO3 30,3% (RANI3 29,97%, logo abaixo) são
+     alarmes conhecidos ligados à H2. Entram na lista de conhecidos do `oraculo/sanidade.py`, que é uma catraca e só encolhe.

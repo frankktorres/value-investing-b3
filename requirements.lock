@@ -1,8 +1,9 @@
-# Fechamento transitivo (pip freeze, medido na nuvem em 13/10/2026, Python 3.13). Referência de reprodução; a instalação normal usa requirements.txt.
+# Fechamento transitivo (pip freeze, medido na nuvem em 13/10/2026, Python 3.13). Referência de reprodução; a instalação normal usa requirements.txt. hypothesis + sortedcontainers acrescentados em 22/10/2026 (Windows, Python 3.14; Fase 1 do oráculo).
 certifi==2026.7.22
 contourpy==1.4.0
 cycler==0.12.1
 fonttools==4.66.1
+hypothesis==6.170.5
 idna==3.20
 iniconfig==2.3.1
 kiwisolver==1.5.1
@@ -20,5 +21,6 @@ pytz==2026.5
 reportlab==4.4.9
 requests==2.33.0
 six==1.17.0
+sortedcontainers==2.4.0
 tzdata==2026.5
 urllib3==2.8.0
