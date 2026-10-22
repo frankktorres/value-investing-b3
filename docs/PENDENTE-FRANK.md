@@ -5,6 +5,7 @@
 | # | Pergunta | Opções / recomendação | Backlog | Desde |
 |---|---|---|---|---|
 | 4 | Orçamento mensal; SaaS só seu ou de terceiros; objetivo acadêmico; agente de sexta ainda roda?; fonte paga; licença do código | Ver Brief §11 | B07 | 10/10 |
+| 10 | Contraste dos tokens (N5, medido em 22/10): todo **texto** passa de 4,5:1 nos dois temas e as séries do gráfico passam de 3:1; ficam abaixo de 3:1 só **contornos** — escuro: `--ln2` (1,6–1,8), `--justa-ln` (2,2–2,4), `--barata-ln` sobre `--sf` (2,92); claro: `--ln2` (1,5–1,7), `--barata-ln`/`--cara-ln`/`--justa-ln` (~2,0–2,1), `--nc-ln` sobre `--bg` (2,88). O texto do chip leva palavra e glifo, então o contorno é reforço (WCAG 1.4.11 só exige 3:1 se o contorno for a única pista). Cores não foram trocadas | (a) deixar como está; (b) subir só os contornos de chip para ≥ 3:1 (pedido de visual: eu escolho os tons e mostro antes/depois) | — | 22/10 |
 
 ## Só do Frank (a rotina nunca faz)
 - Executar qualquer compra ou venda (inclui a posição em ITSA4, acima da saída).

@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import math
 
+from precos_hall import PRECO_DATA
 from relatorio.modelo import Origem
 
 _REG: dict[tuple[str, str], tuple[object, Origem]] = {}
@@ -62,9 +63,9 @@ IPCA_BCB = Origem("BCB (IPCA)", "A", "BCB, SGS 433 (IPCA mensal, dados/macro/ipc
 RECEITA_CVM = Origem("CVM DFP/ITR", "A", "CVM, receita líquida do DFP/ITR (LTM) em R$ de hoje (IPCA, BCB): média dos "
                      "exercícios declarados no lote (receita_media)")
 ACOES_ITR_JUN26 = Origem("CVM (ações)", "A", "CVM, composição do capital do ITR de 30/06/2026, sem tesouraria (snapshot "
-                         "derivados_zip quando o ZIP falta)")
+                         "derivados_zip quando o ZIP falta)", data="2026-06-30")
 PRECO_COTAHIST = Origem("COTAHIST", "A", "B3, COTAHIST, fechamento (PREULT) do pregão da data-base — snapshot versionado "
-                        "dados/precos_hall_<data>.csv (precos_hall.preco)")
+                        "dados/precos_hall_<data>.csv (precos_hall.preco)", data=PRECO_DATA)
 RECEITA_MEIO_BRENT = Origem("CVM + EIA/BCB", "A", "receita e D&A do DFP/ITR (CVM) × barril de meio de ciclo ÷ barril do período-base: Brent "
                             "(EIA, série DCOILBRENTEU via FRED, sem transformação) × PTAX média mensal (BCB SGS 3698), IPCA (BCB SGS 433) — "
                             "lote5_petroleo.base_ep; nota da série conferida pelo verificador-fonte em 20/10/2026")
@@ -87,7 +88,7 @@ G1_CVM = Origem("CVM + B3", "A", "g do 1º estágio = ROE mediano 2021–25 (luc
                 "lote4_saude_telecom.g1_sustentavel")
 NAV_SLCE3 = Origem("SLC (fato relevante)", "A", "SLC Agrícola, fato relevante 'Portfólio de Terras: Atualização 2026' (15/06/2026): NAV "
                    "R$ 13.824 mi ÷ 498.745.930 ações; terras avaliadas pela Deloitte (terra nua, NBR 14653), demais itens contábeis "
-                   "de 31/03/2026 (lote3_agro.SLCE3_NAV_MI)")
+                   "de 31/03/2026 (lote3_agro.SLCE3_NAV_MI)", data="2026-06-15")
 PL_HIST_CVM = Origem("CVM + COTAHIST", "A", "P/L histórico: mediana dos anos com 0 < P/L < 40 de fechamento do fim do exercício (B3, "
                      "COTAHIST) × ações do DFP ÷ lucro do controlador (CVM) — pl_historico.do_hall")
 ALIQUOTA_FASE_DFP = Origem("DFP/release (prazo do crédito)", "A", "prazo do crédito de IR declarado em fiscal.ALIQUOTA_FASE com a fonte "

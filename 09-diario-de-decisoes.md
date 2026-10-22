@@ -981,3 +981,55 @@ EIA)", com "(DFP/ITR CVM)" na legenda. **Nenhum carimbo sai.** Nenhuma ordem de 
 Nada recalculado. **#9:** a proposta da entrada anterior foi aplicada ao §7 (e ao exemplo da Unipar no §6, item 5) e ao checklist `04` (Engie:
 TAG 2024, UBP 2T26), nas cópias do Desktop também; doutrina 2.6 → **2.6.1** (só exemplos; nenhuma regra, carimbo, palavra, central ou golden
 mudou); versão anterior em `_historico/2026-10-21 doutrina v2.6/`. Nenhuma ordem de compra ou venda decorre desta entrada.
+
+## 22/10/2026 — N7: motor recusa dado inválido (nenhuma palavra, central ou golden mudou)
+`motor_financeiras`: `palavra` e `nota_preco` recusam P/C NaN, None, 0 e negativo (+inf segue válido: central ≤ 0 → NÃO CONCLUSIVO);
+`precos_de_referencia` devolve sem preço para central NaN/±inf/None; `entrada_parcial` devolve `(False, ["dado inválido…"])` para NaN/None/inf em
+pc, dispersão, central ou notas; `descontar` exige desconto em [0, 1]; `media_qualitativa` exige notas em 0–5. `motor_nao_financeiras`:
+`central_de` recusa âncora NaN/inf/vazia; `qualifica_saida` recusa mais anos acima do que a série tem. `carimbos.de` e `relatorio.caso` aceitam
+ticker com espaço/minúscula. Teste novo `tests/test_n7_dado_invalido.py`; no `test_aud88` saiu o caso `pc = 0 → BARATA` (preço 0 não é dado).
+Golden intacto; 867 passed, 42 skipped. Nenhuma ordem de compra ou venda decorre desta entrada.
+
+## 22/10/2026 — N2: testes das regras sem cobertura (só testes; motor, palavra e golden intactos)
+`tests/test_n2_regras_sem_cobertura.py`: desconto de controlador por cenários (Σ prob × perda; só âncora > 0), cada degrau da escala da nota de
+Preço (e saturação), saída a 1,30× em financeira (nunca 1,50×, §9) e DCF reverso `g_implicito` com ida e volta preço → g → preço (SUZB3, KEPL3,
+PETR4, esta com cenários). Nenhum defeito achado. Suíte 894 passed, 42 skipped. Nenhuma ordem de compra ou venda decorre desta entrada.
+
+## 22/10/2026 — N9: servidor exclusivo e guardas do front da tela (nenhuma palavra, central ou golden mudou)
+`painel/servir.py`: bind exclusivo (`SO_EXCLUSIVEADDRUSE` no Windows, sem `SO_REUSEADDR`); o 2º `painel` na mesma porta sai com "Porta N em uso". `web/app.js`: contrato sem `versao`
+→ faixa de erro (não mais "versão undefined"); `hall.json` sem `fatores`/`escala_regua`/`empresas` → faixa "está incompleto" (não mais TypeError e tela vazia); hash desconhecido →
+"Página não encontrada" (não cai calado no Hall; a rota Sistema entra na lista quando a N4 existir). Testes: dois servidores na mesma porta (Linux) e guardas estáticos do front. Conferência no
+navegador (Windows, 2 servidores; hall.json truncado) fica para o Frank — a nuvem não tem navegador de teste.
+
+## 22/10/2026 — N10: CLIs sem traceback e vírgula decimal nas notas do dossiê (nenhuma palavra, central ou golden mudou)
+`temporada.py --trimestre/--simular` com rótulo inválido (5T26, 4T26, 9T99) e `triagem/rodar.py --data` inexistente (2026-13-40) saem com rc 2 e mensagem de uso, antes de qualquer
+download ou gravação (`type=` do argparse). O ponto decimal do texto da ALLD3 ("18.2%", "(0.1048)") vinha de `dossie/notas.py` (componentes das notas, `f"{x:.4f}"`):
+20 pontos passaram a `_br()` (vírgula). Só o texto; as notas e a palavra não mudam. Os `dossie/vereditos/*.json` já gravados mantêm o texto antigo até a próxima geração com `--data`
+nova (não regerados: sobrescreveria o veredito vigente). Testes: `tests/test_n10_clis_argumento_invalido.py`. Suíte 909 passed, 42 skipped.
+
+## 22/10/2026 — N11: cadastro do relatório (nenhuma palavra, central ou golden mudou)
+`relatorio/quali.py` `CADASTRO` passou de 1 para 6 tickers: CNPJ de EGIE3, PETR4, TAEE11, ITUB4 e SAPR11 (`triagem_2026-10-02.csv`) abre o FRE (governança, remuneração) no relatório;
+pregão só da PETR4 (já usado no hall). Os pregões de EGIE3, TAEE11, ITUB4 e SAPR11 ficam `None`: a API da B3 responde 403 na nuvem e nome de pregão não se chuta (decisão: sem
+dado conferido, o bloco de proventos avisa em vez de inventar). N8: nº de ações em mil não chega ao valor (ver `docs/QA-2026-10-21.md`). Suíte 930 passed, 42 skipped.
+
+## 22/10/2026 — N3: contrato da tela liga o que o motor já calcula (nenhuma palavra, central ou golden mudou)
+`relatorio.modelo.Origem` ganha `data` (AAAA-MM-DD, "" = não sabe) e `Numero` ganha `baixo`/`alto`; `quanti.secao_preco` preenche a faixa do DCF com os cenários pessimista e otimista do motor
+(com o desconto de controlador, só em valor > 0 — igual ao valor da âncora); `calendario_secao` ganha as colunas Dividendos e JCP (líquidos); `painel/contrato.py` lê `setor` da triagem,
+`data` de cada fonte e os pares baixo/alto e dividendos/jcp. Front: setor na linha do Hall, data na lista de fontes, barra do calendário empilhada dividendo × JCP (Ocultar mantém uma barra só).
+Probabilidade/impacto de risco, tipo/efeito de premissa, yield projetado e concentração por setor da carteira seguem sem fonte. Conferência visual no navegador fica para o Frank (dia). Suíte 937 passed, 42 skipped.
+
+## 22/10/2026 — N4: tela Sistema (nenhuma palavra, central ou golden mudou)
+`painel/sistema.py` grava `web/dados/contrato/sistema.json` (chamado por `contrato.gerar`): idade de COTAHIST (último pregão do hall), CVM (`MANIFESTO.json`), proventos da B3 (o arquivo mais antigo de
+`dados/proventos_hall/`), monitor (última rodada do `historico.csv`) e temporada (último `BOLETINS/*-temporada.md`); último boletim do monitor e da temporada; data (`golden_log.md`) e motivo (`golden.json`) do
+golden; e a última suíte — registro novo: `conftest.pytest_sessionfinish` grava `dados/suite_ultima.json` (ignorado pelo git; só suíte completa, ≥ 400 testes, sem caminho/`-k`/`-m`; leva os argumentos usados).
+Ausente = `null` + "sem registro". Front: rota `#/sistema` (`telas/sistema.js`), menu sem o "em breve". Conferência visual no navegador fica para o Frank (dia). Suíte 949 passed, 42 skipped.
+Achado: `tests/test_b23_petr4_premissas.py` e `tests/test_carimbos.py` não coletam na nuvem (fonte `C:/Windows/Fonts/arial.ttf` nos `gerar_pdf_lote*`) — vai ao BACKLOG.
+
+## 22/10/2026 — N5: contraste dos tokens da tela (nenhuma cor, palavra ou golden mudou)
+`painel/tests/test_contraste_tokens.py` calcula a razão WCAG dos pares de `web/tokens.css` nos temas claro e escuro: todo texto (`--ink`…`--nc-fg` sobre `--bg/--sf/--sf2` e sobre o fundo do próprio chip)
+passa de 4,5:1 (o menor é `--ink3` sobre `--sf2` no claro, 5,09) e as séries do gráfico de 3:1. Contornos abaixo de 3:1 (`--ln2` e os `*-ln` dos chips): lista fixada no teste e em `PENDENTE-FRANK.md` #10 —
+trocar cor é decisão visual do Frank. Nenhuma ordem de compra ou venda decorre desta entrada.
+
+## 22/10/2026 — Q01: PDFs dos lotes importáveis fora do Windows (nenhuma palavra, central ou golden mudou)
+`gerar_pdf_lote1.py` registrava `C:/Windows/Fonts/arial*.ttf` ao importar, e por isso `test_b23_petr4_premissas` e `test_carimbos` não coletavam na nuvem. Agora usa a Arial do Windows se existir e,
+senão, a Liberation Sans (métricas idênticas) — só para o módulo importar; PDF gerado fora do Windows não é o vigente. Suíte inteira sem `--ignore`: 963 passed, 42 skipped.

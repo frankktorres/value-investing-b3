@@ -39,6 +39,15 @@ def interpretar_trimestre(rotulo):
     return ano, mes, f"{ano}-{mes:02d}-{dia:02d}"
 
 
+def _trimestre_arg(valor):
+    """`type=` do argparse: rótulo inválido (5T26, 4T26, 9T99) vira erro de uso (rc 2), não traceback."""
+    try:
+        interpretar_trimestre(valor)
+    except ValueError as e:
+        raise argparse.ArgumentTypeError(str(e))
+    return valor.strip().upper()
+
+
 def trimestre_atual(hoje=None):
     """Último trimestre de ITR que já fechou (mas pode não ter sido publicado)."""
     hoje = hoje or date.today()
@@ -252,8 +261,8 @@ def injetar(novo):
 def main(argv=None):
     sys.stdout.reconfigure(encoding="utf-8")
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
-    ap.add_argument("--trimestre", help="ex.: 3T26 (padrão: o último que fechou)")
-    ap.add_argument("--simular", metavar="TRIM", help="ensaio com um trimestre já coletado (ex.: 2T26); sem download")
+    ap.add_argument("--trimestre", type=_trimestre_arg, help="ex.: 3T26 (padrão: o último que fechou)")
+    ap.add_argument("--simular", metavar="TRIM", type=_trimestre_arg, help="ensaio com um trimestre já coletado (ex.: 2T26); sem download")
     ap.add_argument("--gravar", action="store_true", help="grava a coleta nova em dados/cvm_series.json")
     ap.add_argument("--saida", help="pasta do boletim (padrão: BOLETINS/)")
     args = ap.parse_args(argv)

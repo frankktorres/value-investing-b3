@@ -83,7 +83,19 @@ def liquido_diferido(taxa_nom: float, anos: int = HORIZONTE, ir: float = IR_RESG
 
 
 # ---------------------------------------------------------------- régua e notas
+def _num(x) -> bool:
+    """Número real finito (bool, None, NaN e ±inf não são dado). N7: dado inválido vira recusa, nunca palavra em silêncio."""
+    return isinstance(x, (int, float)) and not isinstance(x, bool) and math.isfinite(x)
+
+
+def _exigir_preco_relativo(pc, quem: str) -> None:
+    """P/C > 0; +inf é válido (central ≤ 0 → `avaliar` põe pc = inf e a palavra final é NÃO CONCLUSIVO). NaN, None, 0 e negativo, não."""
+    if not isinstance(pc, (int, float)) or isinstance(pc, bool) or math.isnan(pc) or pc <= 0:
+        raise ValueError(f"{quem}: preço/central precisa ser número > 0, veio {pc!r}")
+
+
 def palavra(pc: float) -> str:
+    _exigir_preco_relativo(pc, "palavra")
     pc = round(pc, 9)    # AUD-46: preço = 0,70 × central dava 0,7000000000000001 e caía em RADAR
     if pc <= 0.70: return "BARATA"
     if pc <= 0.90: return "RADAR"
@@ -96,8 +108,8 @@ ORDEM = ["BARATA", "RADAR", "JUSTA", "CARA"]
 
 def precos_de_referencia(central: float, saida_por_qualidade: bool = False) -> dict:
     """§9: compra, 1ª parcela e saída a partir do central. Fonte única — os dois motores chamam esta função.
-    Central ≤ 0 (NÃO CONCLUSIVO) não tem preço de referência: None, não um preço negativo (AUD-52)."""
-    if central <= 0:
+    Central ≤ 0, NaN, ±inf ou None (NÃO CONCLUSIVO) não tem preço de referência: None, não um preço negativo (AUD-52)."""
+    if not _num(central) or central <= 0:
         return dict(compra=None, compra_parcial=None, saida=None, saida_por_qualidade=False)
     return dict(compra=COMPRA * central, compra_parcial=COMPRA_PARCIAL * central,
                 saida=(SAIDA_QUALIDADE if saida_por_qualidade else SAIDA_PADRAO) * central,
@@ -114,6 +126,13 @@ def entrada_parcial(r: dict, fora_circulo: bool = False, armadilhas=()) -> tuple
     antes cada PDF testava um subconjunto (só um conferia o preço; nenhum, o círculo). Devolve (elegível, motivos de recusa).
     `armadilhas`: os carimbos de defeito estrutural/ARMADILHA do ticker (o motor não os calcula; vêm do lote/ficha)."""
     n, m = r["notas"], []
+    entradas = {"pc": r.get("pc"), "dispersao": r.get("dispersao"), "central": r.get("central"),
+                "qualidade": n.get("qualidade"), "solidez": n.get("solidez")}
+    # pc e dispersão valem +inf quando o ticker é NÃO CONCLUSIVO (central ≤ 0); NaN/None não valem em nenhum campo
+    invalidas = [k for k, x in entradas.items()
+                 if not (_num(x) or (k in ("pc", "dispersao") and x == float("inf")))]
+    if invalidas:                       # N7: NaN/None/inf não passam por "não é menor que" como se estivessem ok
+        return False, [f"dado inválido (NaN/inf/ausente): {', '.join(invalidas)}"]
     if r["palavra"] == "NÃO CONCLUSIVO" or r["central"] <= 0:
         m.append("sem palavra (NÃO CONCLUSIVO)")
     if n["qualidade"] < NOTA_QUALIDADE_MINIMA:
@@ -132,7 +151,10 @@ def entrada_parcial(r: dict, fora_circulo: bool = False, armadilhas=()) -> tuple
 
 def descontar(anc: dict, desc: float) -> dict:
     """§5: desconto de controlador no valor — só em âncora POSITIVA (doutrina v2.3). `x × (1 − desc)` sobre âncora ≤ 0 a
-    aproximaria de zero, isto é, MELHORARIA o valor; ela fica como está e continua forçando NÃO CONCLUSIVO (§11.3)."""
+    aproximaria de zero, isto é, MELHORARIA o valor; ela fica como está e continua forçando NÃO CONCLUSIVO (§11.3).
+    Desconto fora de [0, 1] ou não numérico é erro (N7): negativo inflaria o valor, > 1 o inverteria."""
+    if not _num(desc) or not 0 <= desc <= 1:
+        raise ValueError(f"desconto de controlador precisa estar em [0, 1], veio {desc!r}")
     return {k: x * (1 - desc) if x > 0 else x for k, x in anc.items()}
 
 
@@ -148,6 +170,9 @@ def media_qualitativa(q: dict, discricionario: bool = False) -> float:
         return 2.5
     if set(q) != set(CHAVES_QUAL):
         raise ValueError(f"qualitativo precisa das chaves {CHAVES_QUAL}, veio {sorted(q)}")
+    for k in CHAVES_QUAL:
+        if not _num(q[k]) or not 0 <= q[k] <= 5:
+            raise ValueError(f"nota qualitativa '{k}' precisa estar em 0–5, veio {q[k]!r}")
     c = 2 if discricionario else 1
     return (q["moat"] + q["gestao"] + c * q["controlador"] + q["ciclo"] + q["fisher"]) / (4 + c)
 
@@ -189,7 +214,9 @@ def interp(x, pontos):
     return pontos[-1][1]
 
 
-def nota_preco(pc): return interp(pc, ESCALA_PRECO)
+def nota_preco(pc):
+    _exigir_preco_relativo(pc, "nota_preco")
+    return interp(pc, ESCALA_PRECO)
 
 
 # Rubricas declaradas no apêndice do PDF
