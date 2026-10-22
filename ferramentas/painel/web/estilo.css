@@ -305,6 +305,7 @@ a{color:inherit}
 .cal{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:6px;align-items:end;height:200px}
 .cal .m{display:flex;flex-direction:column;justify-content:flex-end;height:100%;align-items:stretch;text-align:center;min-width:0}
 .cal .m i{display:block;background:var(--serie-div)}
+.cal .m i.j{background:var(--serie-jcp)}
 .cal .m.rec i{background:var(--hatch),var(--serie-div);border:1.5px dashed var(--ink3)}
 .cal .vv{font:500 10.5px var(--f-mono);color:var(--ink2);margin-bottom:3px;white-space:nowrap;overflow:hidden}
 .calx{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:6px;border-top:1px solid var(--ln2);padding-top:4px;font:11px var(--f-mono);color:var(--ink3);text-align:center}

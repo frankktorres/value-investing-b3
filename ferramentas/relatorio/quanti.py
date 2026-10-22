@@ -6,7 +6,7 @@ Nada é recalculado: os valores são as chaves de `avaliar()` dos motores. Fórm
 from __future__ import annotations
 
 import carimbos
-from motor_financeiras import entrada_parcial
+from motor_financeiras import descontar, entrada_parcial
 from relatorio import procedencia as pr
 from relatorio.modelo import Numero, Secao, decide, pior
 
@@ -26,15 +26,26 @@ NAO_SE_APLICA_FIN = ("não se aplica a financeira: dívida é matéria-prima e o
                      "financeiras usa P/VP justificado e DDM")
 
 
-def _num(rot, valor, origens, unidade="R$", papel="", obs=""):
-    return Numero(rot, valor, unidade, tuple(origens), papel, obs)
+def _num(rot, valor, origens, unidade="R$", papel="", obs="", baixo=None, alto=None):
+    return Numero(rot, valor, unidade, tuple(origens), papel, obs, baixo, alto)
+
+
+def _faixa_dcf(r: dict) -> tuple[float | None, float | None]:
+    """Baixo/alto do DCF = cenários pessimista e otimista de margem (25º e 75º percentil) do motor, com o desconto de controlador
+    como no valor (só em valor > 0). A âncora do central é a ponderação 25/50/25 dos três, com cenário negativo = 0."""
+    dcf = r.get("dcf")
+    if not isinstance(dcf, dict) or "pessimista" not in dcf or "otimista" not in dcf:
+        return None, None
+    f = descontar({"b": dcf["pessimista"], "a": dcf["otimista"]}, r.get("desc_controlador") or 0.0)
+    return f["b"], f["a"]
 
 
 def secao_preco(c: dict) -> Secao:
     r, t, fin = c["r"], pr.tabela(c), c["financeira"]
     s = Secao("Preço justo por método")
     for nome, v in r["ancoras"].items():
-        s.numeros.append(_num(ROTULO.get(nome, nome), v, pr.de(t, *pr.ANCORA.get(nome, ())), papel="central"))
+        baixo, alto = _faixa_dcf(r) if nome.startswith("DCF") else (None, None)
+        s.numeros.append(_num(ROTULO.get(nome, nome), v, pr.de(t, *pr.ANCORA.get(nome, ())), papel="central", baixo=baixo, alto=alto))
     for d in r.get("ancoras_descartadas", []):
         s.avisos.append(f"Âncora descartada pelo motor: {d}.")
     if fin:

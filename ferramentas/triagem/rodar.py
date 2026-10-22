@@ -11,6 +11,7 @@ Saídas: `06-triagem-e-fila.md` (raiz e cópia em UPLOAD CLAUDE DESKTOP/), `tria
 from __future__ import annotations
 
 import argparse
+import datetime
 import shutil
 import sys
 import time
@@ -68,9 +69,17 @@ def avaliar_todas(T: str, cfg: ConfigTriagem = PADRAO, log=print) -> tuple[pd.Da
     return tab, linhas, piso
 
 
+def _data_iso(valor: str) -> str:
+    """`type=` do argparse: data inexistente (2026-13-40) vira erro de uso (rc 2), não traceback no meio da rodada."""
+    try:
+        return datetime.date.fromisoformat(valor).isoformat()
+    except ValueError:
+        raise argparse.ArgumentTypeError(f"data inválida: {valor!r} (use AAAA-MM-DD)")
+
+
 def main(argv: list[str] | None = None) -> int:
     p = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    p.add_argument("--data", default=PADRAO.data_mercado)
+    p.add_argument("--data", default=PADRAO.data_mercado, type=_data_iso, help="AAAA-MM-DD")
     p.add_argument("--sem-registro", action="store_true")
     a = p.parse_args(argv)
     from . import fila, registro

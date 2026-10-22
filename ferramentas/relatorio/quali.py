@@ -23,7 +23,15 @@ TEXTOS = pathlib.Path(__file__).resolve().parent / "textos"
 ANO_FRE = 2026
 # CNPJ (FCA/FRE) e nome de pregão (NOMRES do COTAHIST = tradingName da B3) dos tickers do hall que têm relatório; os do
 # dossiê vêm de `dossie.base`. Ticker fora das duas tabelas fica sem FRE e sem proventos da B3 (o bloco avisa).
-CADASTRO = {"BBSE3": ("17.344.597/0001-94", "BBSEGURIDADE")}
+# N11 (22/10/2026): CNPJ de `triagem/dados/triagem_2026-10-02.csv` (EGIE3 conferido no cadastro da CVM); pregão `None` = ainda não
+# confirmado na API da B3 (tradingName) — a rede da nuvem barra b3.com.br (403), então não se grava palpite: o bloco de proventos
+# avisa e o FRE já aparece. Confirmar na máquina do Frank: TAEE11 (TAESA?), ITUB4 (ITAUUNIBANCO?), EGIE3, SAPR11.
+CADASTRO = {"BBSE3": ("17.344.597/0001-94", "BBSEGURIDADE"),
+            "PETR4": ("33.000.167/0001-01", "PETROBRAS"),             # pregão de proventos_ex.PREGAO (usado no hall)
+            "EGIE3": ("02.474.103/0001-19", None),
+            "TAEE11": ("07.859.971/0001-30", None),
+            "ITUB4": ("60.872.504/0001-23", None),
+            "SAPR11": ("76.484.013/0001-45", None)}
 CORTE_BENEISH, CORTE_SLOAN, CORTE_COBERTURA, CORTE_DL_EBITDA = -1.78, 0.10, 1.5, 3.0
 CORTE_DISPERSAO, CORTE_DILUICAO, CORTE_DEFASAGEM = 1.8, 0.02, 12.0
 INFO_CORTE = "informativo — corte do relatório (heurística do projeto, sem fonte)"
@@ -326,7 +334,7 @@ def _proventos(c: dict):
             return {}, {}, f"proventos da B3 indisponíveis: {type(ex).__name__}: {ex}"
     cnpj, pregao = _cadastro(c)
     if not pregao:
-        return {}, {}, "nome de pregão não cadastrado (CADASTRO em relatorio/quali.py)"
+        return {}, {}, "nome de pregão não cadastrado ou ainda não conferido na API da B3 (CADASTRO em relatorio/quali.py)"
     tk, inserido = c["tk"], False
     if tk not in base.PREGAO:
         base.PREGAO[tk], inserido = pregao, True

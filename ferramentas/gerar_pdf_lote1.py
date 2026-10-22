@@ -31,10 +31,23 @@ AQUI = pathlib.Path(__file__).parent
 RAIZ = AQUI.parent
 SAIDA = RAIZ / "BANCOS E SEGURIDADE" / "Banco_Seguridade_rev_09-10-2026.pdf"
 
-pdfmetrics.registerFont(TTFont("Arial", "C:/Windows/Fonts/arial.ttf"))
-pdfmetrics.registerFont(TTFont("Arial-B", "C:/Windows/Fonts/arialbd.ttf"))
-pdfmetrics.registerFont(TTFont("Arial-I", "C:/Windows/Fonts/ariali.ttf"))
-pdfmetrics.registerFont(TTFont("Arial-BI", "C:/Windows/Fonts/arialbi.ttf"))
+# Arial do Windows (os PDFs vigentes); onde ela não existe (nuvem, Linux) a Liberation Sans, de métricas idênticas, só para o
+# módulo importar e os testes coletarem — PDF gerado fora do Windows não é o vigente.
+_FONTES_ARIAL = {"Arial": ("arial.ttf", "LiberationSans-Regular.ttf"), "Arial-B": ("arialbd.ttf", "LiberationSans-Bold.ttf"),
+                 "Arial-I": ("ariali.ttf", "LiberationSans-Italic.ttf"), "Arial-BI": ("arialbi.ttf", "LiberationSans-BoldItalic.ttf")}
+_PASTAS_FONTES = (pathlib.Path("C:/Windows/Fonts"), pathlib.Path("/usr/share/fonts/truetype/liberation"))
+
+
+def _fonte(nome: str) -> str:
+    for pasta in _PASTAS_FONTES:
+        for arq in _FONTES_ARIAL[nome]:
+            if (pasta / arq).exists():
+                return str(pasta / arq)
+    raise FileNotFoundError(f"fonte {nome} não encontrada (Arial do Windows ou Liberation Sans em {_PASTAS_FONTES})")
+
+
+for _nome in _FONTES_ARIAL:
+    pdfmetrics.registerFont(TTFont(_nome, _fonte(_nome)))
 pdfmetrics.registerFontFamily("Arial", normal="Arial", bold="Arial-B", italic="Arial-I", boldItalic="Arial-BI")
 
 AZUL = colors.HexColor("#1F3A5F")

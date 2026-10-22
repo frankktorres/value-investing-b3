@@ -37,8 +37,8 @@ SEM_PRECO = "sem preço de hoje"
 def numero_json(n: Numero) -> dict:
     """Número com a nota e a fonte já resolvidas (no modelo são @property e não entram no asdict)."""
     return {"rotulo": n.rotulo, "valor": n.valor, "unidade": n.unidade, "papel": n.papel, "obs": n.obs,
-            "nota": n.nota, "fonte": n.fonte,
-            "origens": [{"fonte": o.fonte, "nota": o.nota, "detalhe": o.detalhe} for o in n.origens]}
+            "nota": n.nota, "fonte": n.fonte, "baixo": n.baixo, "alto": n.alto,
+            "origens": [{"fonte": o.fonte, "nota": o.nota, "detalhe": o.detalhe, "data": o.data} for o in n.origens]}
 
 
 def relatorio_json(rel: Relatorio) -> dict:

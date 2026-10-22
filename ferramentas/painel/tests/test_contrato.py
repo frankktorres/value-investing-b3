@@ -143,7 +143,8 @@ def test_carteira_traduz_tabelas_do_relatorio():
         Secao("Renda", tabelas=[("Renda de 12 meses", [""] * 7,
               [["TESTA3", "1,00", "0,00", "7,1%", "R$ 1,00", "R$ 0,90", "—"], ["Total", "", "", "", "", "", ""]])]),
         Secao("Calendário de pagamento", tabelas=[
-            ("Pagamento por mês", [""] * 5, [["2026-11", "R$ 0,90", "TESTA3", "a receber", "estimada"]]),
+            ("Pagamento por mês", [""] * 7, [["2026-11", "R$ 0,90", "TESTA3", "a receber", "estimada", "R$ 0,50", "R$ 0,40"],
+                                            ["2026-12", "—", "", "sem pagamento", "", "—", "—"]]),
             ("A receber (pagamento depois de 2026-10-15)", [""] * 8,
              [["TESTA3", "2026-10-01", "sem data", "sem data", "JCP", "0,50", "R$ 0,41", "sim"]])])])
     linhas = {"TESTA3": linha_hall(bruta(), None, None, None, "2026-10-20", 7, FAT)}
@@ -151,7 +152,9 @@ def test_carteira_traduz_tabelas_do_relatorio():
     assert c["pct_meta"]["valor"] == 0.25 and c["falta"]["valor"] == 75.0 and c["n_papeis"] == 1
     p = c["posicoes"][0]
     assert p["peso"] == pytest.approx(1.0) and p["renda_liquida_ano"] == 0.9 and p["central"] == 10.0
-    assert c["calendario"][0]["dividendos"] is None and c["calendario"][0]["liquido"] == 0.9
+    assert c["calendario"][0]["liquido"] == 0.9
+    assert c["calendario"][0]["dividendos"] == 0.5 and c["calendario"][0]["jcp"] == 0.4        # N3: dividendo × JCP por mês
+    assert c["calendario"][1]["dividendos"] is None and c["calendario"][1]["jcp"] is None       # mês sem pagamento: "—"
     assert c["pagamentos"][0]["data"] is None and c["pagamentos"][0]["na_renda_12m"] is True
     assert c["setores"] is None and c["patrimonio"]["valor"] is None      # ausente no relatório → None
 
@@ -179,7 +182,7 @@ def test_real_contrato_sem_valor_inventado():
     pessoais = {"peso", "peso_carteira", "renda_liquida_ano", "renda_bruta_ano", "preco_medio", "quantidade", "meta"}
     for e in h["empresas"]:
         assert not pessoais & set(e), e["ticker"]                     # hall sem dado pessoal (fica em privado/)
-        assert e["setor"] is None
+        assert e["setor"] == contrato.setor_de(e["ticker"])         # FCA da triagem; None se a triagem não cobre
         assert e["palavra"] == palavra_codigo(bruto[e["ticker"]]["palavra"])
         assert e["central"] == bruto[e["ticker"]]["central"] and e["compra"] == bruto[e["ticker"]]["compra"]
 
@@ -245,3 +248,68 @@ def test_vence_renda_fixa_vem_do_motor():
     assert x["vence_rf"] == "Empate" and x["vence_rf_nota"] == "A"
     y = linha_hall(bruta(), bruto_emp([]), None, None, "2026-10-20", 7, FAT)
     assert y["vence_rf"] is None and y["vence_rf_nota"] == "—" and y["vence_rf_criterio"] is None
+
+
+# ------------------------------------------------------------------------------ N3: o contrato liga o que o motor já calcula
+def test_setor_do_fca_sem_prefixo_de_holding_e_none_sem_fonte(tmp_path, monkeypatch):
+    monkeypatch.setattr(contrato, "_setores", lambda: {
+        "ENERG3": "Energia Elétrica", "HOLD3": "Emp. Adm. Part. - Energia Elétrica"})
+    assert contrato.setor_de("ENERG3") == "Energia Elétrica"
+    assert contrato.setor_de("HOLD3") == "Energia Elétrica"                  # a holding segue o setor declarado
+    assert contrato.setor_de("XXXX3") is None
+    assert linha_hall(bruta(tk="HOLD3"), None, None, None, "2026-10-20", 7, FAT)["setor"] == "Energia Elétrica"
+    assert linha_hall(bruta(tk="XXXX3"), None, None, None, "2026-10-20", 7, FAT)["setor"] is None
+
+
+def test_setores_le_a_triagem_mais_recente(tmp_path, monkeypatch):
+    pasta = tmp_path / "triagem" / "dados"
+    pasta.mkdir(parents=True)
+    (pasta / "triagem_2026-10-02.csv").write_text("ticker,setor\nAAA3,Velho\n", encoding="utf-8")
+    (pasta / "triagem_2026-11-02.csv").write_text("ticker,setor\nAAA3,Novo\nBBB3,\n", encoding="utf-8")
+    monkeypatch.setattr(contrato, "__file__", str(tmp_path / "painel" / "contrato.py"))
+    contrato._setores.cache_clear()
+    try:
+        assert contrato._setores() == {"AAA3": "Novo"}                      # setor vazio não vira texto
+    finally:
+        contrato._setores.cache_clear()
+
+
+def test_fontes_leva_a_data_mais_recente_declarada_e_none_sem_data():
+    def n(fonte, data):
+        x = num("x", 1.0)
+        x["origens"] = [{"fonte": fonte, "nota": "A", "detalhe": "", "data": data}]
+        return x
+    b = bruto_emp([secao("Veredito", [n("COTAHIST", "2026-10-02"), n("COTAHIST", "2026-09-30"), n("CVM", "")])])
+    por_nome = {f["nome"]: f for f in contrato.fontes(b)}
+    assert por_nome["COTAHIST"]["data"] == "2026-10-02" and por_nome["COTAHIST"]["n_numeros"] == 2
+    assert por_nome["CVM"]["data"] is None                                   # origem sem data declarada: sem chute
+
+
+def test_origens_do_insumos_a_declaram_data():
+    import insumos_a
+    import precos_hall
+    assert insumos_a.PRECO_COTAHIST.data == precos_hall.PRECO_DATA
+    assert insumos_a.ACOES_ITR_JUN26.data == "2026-06-30" and insumos_a.NAV_SLCE3.data == "2026-06-15"
+
+
+def test_metodos_dcf_traz_faixa_dos_cenarios_e_os_outros_ficam_sem():
+    dcf = num("DCF — fluxo de caixa", 9.0, papel="central")
+    dcf.update(baixo=6.0, alto=12.0)
+    b = bruto_emp([secao("Preço justo por método", [dcf, num("EPV", 8.0, papel="central")])])
+    met, _ = contrato.metodos(b)
+    assert (met[0]["baixo"], met[0]["base"], met[0]["alto"]) == (6.0, 9.0, 12.0)
+    assert met[1]["baixo"] is None and met[1]["alto"] is None
+
+
+def test_quanti_faixa_do_dcf_vem_dos_cenarios_com_o_desconto_de_controlador():
+    from relatorio import quanti
+    r = {"dcf": {"pessimista": 50.0, "base": 60.0, "otimista": 80.0}, "desc_controlador": 0.10}
+    assert quanti._faixa_dcf(r) == (pytest.approx(45.0), pytest.approx(72.0))
+    assert quanti._faixa_dcf({"dcf": {"pessimista": -5.0, "base": 4.0, "otimista": 9.0}, "desc_controlador": 0.5}) == (-5.0, 4.5)
+    assert quanti._faixa_dcf({}) == (None, None)                              # financeira: sem DCF
+
+
+def test_exportar_leva_baixo_alto_e_data_da_origem():
+    from painel.exportar import numero_json
+    j = numero_json(Numero("DCF", 9.0, "R$", (Origem("COTAHIST", "A", "d", data="2026-10-02"),), "central", "", 6.0, 12.0))
+    assert (j["baixo"], j["alto"]) == (6.0, 12.0) and j["origens"][0]["data"] == "2026-10-02"

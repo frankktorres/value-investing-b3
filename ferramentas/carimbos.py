@@ -25,4 +25,4 @@ CARIMBOS: dict[str, tuple[tuple[str, str], ...]] = {
 
 def de(ticker: str) -> list[str]:
     """Carimbos do ticker no formato que `entrada_parcial(armadilhas=…)` espera (texto + onde está escrito)."""
-    return [f"{c} [{f}]" for c, f in CARIMBOS.get(ticker, ())]
+    return [f"{c} [{f}]" for c, f in CARIMBOS.get(str(ticker).strip().upper(), ())]

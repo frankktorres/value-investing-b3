@@ -6,7 +6,7 @@
 (a ordem do texto abaixo não manda). N6 feita. Na nuvem não há `ferramentas/dados/`: teste que precisa de
 dado bruto pula; teste novo usa fixture pequena. Nenhuma delas muda palavra, central ou golden — se mudar, parar e ir para `wip/auto`.*
 
-**N1 — Higiene de docs (check-up 21/10).** Corrigir só texto:
+**(FEITA 22/10) N1 — Higiene de docs (check-up 21/10).** Corrigir só texto:
 - (a) `README.md`: doutrina v2.6 (linhas 2, 9, 50); 8 dossiês (+ALLD3, FESA4, SHUL4, VLID3, linhas 23 e 50); tela v0.2 com Hall/Empresa/Carteira/Monitor (linha 25).
 - (b) `PROJECT_BRIEF.md`: §3 fonte Space Grotesk (linha 18); nº de testes atual (linha 37); tela v0.2 (linha 68); fatias 2b e 3 feitas (linha 71); "23 `SEM_RAZAO`" (linha 131). Guardar antes em `_historico/2026-10-21 brief/`.
 - (c) `docs/BACKLOG.md`: B04 respondido; B08 feito; linhas B24–B31 para dentro da tabela; recontar o total; "HANDOFF existe em `docs/design/handoff-claude-code/handoff/`"; B15 com 2b e 3 feitas; incluir a tela v0.2 e os itens N1–N5 e D1–D5 deste check-up.
@@ -16,7 +16,7 @@ dado bruto pula; teste novo usa fixture pequena. Nenhuma delas muda palavra, cen
 
 *Pronto quando:* `grep -rn "v2\.5" README.md 03-hall-de-acoes.md` só acha histórico; contagem do BACKLOG = nº de IDs; `pytest --ignore=backtest -q` verde (nada de código mudou).
 
-**N2 — Testes das regras sem cobertura (check-up 21/10).** Só testes novos, com fixture; código de motor intocado. Cobrir:
+**(FEITA 22/10) N2 — Testes das regras sem cobertura (check-up 21/10).** Só testes novos, com fixture; código de motor intocado. Cobrir:
 - desconto de controlador por cenários (`motor_nao_financeiras.py:827-831`: soma prob × perda, só âncora positiva);
 - escala da nota de Preço (`motor_financeiras.py:178-192`, cada degrau);
 - saída a 1,50× nunca em financeira (§9);
@@ -24,7 +24,7 @@ dado bruto pula; teste novo usa fixture pequena. Nenhuma delas muda palavra, cen
 
 *Pronto quando:* testes verdes; golden intacto (`git diff --stat ferramentas/tests/golden.json` vazio); uma linha no `09`. Teste que acha defeito → não corrigir motor; registrar em `PENDENTE-FRANK.md`.
 
-**N3 — Contrato liga o que o motor já calcula (fatia "sem fonte", parte 1).** Em `painel/contrato.py`:
+**(FEITA 22/10) N3 — Contrato liga o que o motor já calcula (fatia "sem fonte", parte 1).** Em `painel/contrato.py`:
 - setor a partir de `backtest/motor/perfil.py` (o mesmo de `triagem/avaliar.py:21`);
 - dividendo × JCP por mês no calendário (de `relatorio/carteira.py:139-142`);
 - data de cada fonte a partir de `insumos_a.origem`;
@@ -34,7 +34,7 @@ Os outros métodos seguem `null`. Probabilidade e impacto de risco ficam `null` 
 
 *Pronto quando:* `painel/tests/test_contrato.py` cobre os 4 campos com fixture; `test_web_estatico.py` verde (sem cálculo no front).
 
-**N4 — Tela Sistema** (`docs/design/handoff-claude-code/handoff/HANDOFF.md:52-53`, captura `06-sistema`). Contrato `web/dados/contrato/sistema.json` com:
+**(FEITA 22/10) N4 — Tela Sistema** (`docs/design/handoff-claude-code/handoff/HANDOFF.md:52-53`, captura `06-sistema`). Contrato `web/dados/contrato/sistema.json` com:
 - idade de cada dado (COTAHIST, CVM, proventos B3, monitor, temporada);
 - último boletim do monitor e da temporada;
 - data e motivo do golden;
@@ -44,7 +44,7 @@ Front lê só o contrato. Tira o "Sistema em breve" do `index.html:27`.
 
 *Pronto quando:* `test_contrato` e `test_web_estatico` verdes. Conferência visual fica para o Frank (dia).
 
-**N5 — Contraste dos tokens (etapa 4 da tela v0.2, parte automática).** Teste que lê `ferramentas/painel/web/tokens.css` e calcula a razão de contraste WCAG dos pares texto × fundo nos temas claro e escuro.
+**(FEITA 22/10) N5 — Contraste dos tokens (etapa 4 da tela v0.2, parte automática).** Teste que lê `ferramentas/painel/web/tokens.css` e calcula a razão de contraste WCAG dos pares texto × fundo nos temas claro e escuro.
 
 *Pronto quando:* teste verde, ou a lista de pares abaixo de 4,5:1 (texto) / 3:1 (texto grande e UI) em `docs/PENDENTE-FRANK.md`, sem trocar cor sozinho (o visual é decisão do Frank).
 
@@ -56,7 +56,7 @@ Front lê só o contrato. Tira o "Sistema em breve" do `index.html:27`.
 ~~6. **B25** — AUD-32/98/99: ajustar `registro_prospectivo.py` ao pré-registro decidido (critério contínuo, comparador = média do hall, uma linha por ticker×rodada). *Pronto quando:* testes verdes e registro no `09`.~~ (feita 14/10)
 *QA de 21/10/2026 (5 frentes: motores, tela/servidor, nuvem/CLIs, dados × CVM/B3, fatos × FRE): N7–N11, na ordem do topo, na mesma regra (uma por turno; golden intacto, senão `wip/auto`).*
 
-**N7 — Motor sem defesa contra dado inválido (ALTA preventiva; hoje os 47 tickers estão limpos).** NaN, ±inf, None ou ≤ 0 têm de virar recusa explícita (NÃO CONCLUSIVO ou `ValueError` com mensagem), nunca palavra ou elegibilidade em silêncio. Pontos reproduzidos pelo QA:
+**(FEITA 22/10) N7 — Motor sem defesa contra dado inválido (ALTA preventiva; hoje os 47 tickers estão limpos).** NaN, ±inf, None ou ≤ 0 têm de virar recusa explícita (NÃO CONCLUSIVO ou `ValueError` com mensagem), nunca palavra ou elegibilidade em silêncio. Pontos reproduzidos pelo QA:
 - `motor_financeiras.palavra` (`:86-92`): NaN vira CARA; 0, −1 e −inf viram BARATA.
 - `precos_de_referencia` (`:97`): o guarda `central <= 0` não pega NaN.
 - `entrada_parcial` (`:111`): NaN em pc, dispersão, notas ou central dá `(True, [])`.
@@ -70,11 +70,11 @@ Front lê só o contrato. Tira o "Sistema em breve" do `index.html:27`.
 
 *Pronto quando:* teste parametrizado com NaN/inf/None/0/negativo para cada função; golden intacto (`git diff --stat ferramentas/tests/golden.json` vazio); uma linha no `09`.
 
-**N8 — Escala do nº de ações (MÉDIA, investigar primeiro).** A CVM informa a composição do capital em MIL. O `cvm_series.json` da TAEE11 tem 1.033.497 (o certo é 1,033 bi de ações = 344,5 mi units); `dossie/base.py` já corrige isso com q×1000 para a ALLD3. Rastrear se `acoes` da TAEE11 (e de quem mais vier em mil) chega a valor por ação (`lote2_energia.py:104` e o que mais ler `l["acoes"]`).
+**(FEITA 22/10) N8 — Escala do nº de ações (MÉDIA, investigar primeiro).** A CVM informa a composição do capital em MIL. O `cvm_series.json` da TAEE11 tem 1.033.497 (o certo é 1,033 bi de ações = 344,5 mi units); `dossie/base.py` já corrige isso com q×1000 para a ALLD3. Rastrear se `acoes` da TAEE11 (e de quem mais vier em mil) chega a valor por ação (`lote2_energia.py:104` e o que mais ler `l["acoes"]`).
 
 *Pronto quando:* relatório em `docs/QA-2026-10-21.md` com a lista dos tickers afetados e o efeito. Se chega ao valor: corrigir `coletar_cvm.acoes_em_circulacao`, com teste de fixture, mas SEM regravar `cvm_series.json` (isso é LOCAL, com o Frank) → registrar em `PENDENTE-FRANK.md`.
 
-**N9 — Robustez do servidor e do front (MÉDIA).**
+**(FEITA 22/10) N9 — Robustez do servidor e do front (MÉDIA).**
 - `painel/servir.py:57-58`: bind exclusivo; o segundo `painel` na mesma porta tem de falhar com "porta em uso" (hoje no Windows sobem dois e há `ERR_CONNECTION_REFUSED` intermitente).
 - `ui.js:58` / `app.js:185`: `hall.json` sem `fatores` dá TypeError e tela quase vazia → faixa de erro amigável.
 - `app.js:38`: "está na versão undefined" quando falta `versao`.
@@ -82,14 +82,14 @@ Front lê só o contrato. Tira o "Sistema em breve" do `index.html:27`.
 
 *Pronto quando:* teste de subir dois servidores na mesma porta; `test_web_estatico` cobre o guarda de formato; suíte verde.
 
-**N10 — CLIs com traceback cru (MÉDIA/BAIXA).**
+**(FEITA 22/10) N10 — CLIs com traceback cru (MÉDIA/BAIXA).**
 - `temporada.py --trimestre 5T26 | 4T26` e `--simular 9T99`: dão traceback do `ValueError` → `parser.error`, rc 2.
 - `triagem/rodar.py:73` `--data 2026-13-40`: valida com `date.fromisoformat` via `type=`.
 - Texto do contrato da ALLD3 com ponto decimal ("18.2%", "(0.1048)") em `riscos`/`qualitativo` obs: achar a origem (`relatorio/quali.py`?) e usar o formato BR.
 
 *Pronto quando:* testes das CLIs com argumento inválido (rc 2, sem traceback, nada gravado); suíte verde.
 
-**N11 — Cadastro do relatório (MÉDIA).** `relatorio/quali.py:26` (`CADASTRO`) só tem BBSE3. Por isso EGIE3, PETR4, TAEE11, ITUB4 e SAPR11 dizem "nome de pregão/CNPJ não cadastrado" e ficam sem a série de proventos e o FRE na tela. Ler o pregão de `proventos_ex.PREGAO` (PETR4 = PETROBRAS já existe) e o CNPJ de `triagem/dados/triagem_2026-10-02.csv` (EGIE3 02.474.103/0001-19 conferido no cadastro da CVM). Para TAEE11 (TAESA, units: somar os eventos UNT) e ITUB4 (ITAUUNIBANCO), confirmar o nome de pregão na API da B3 (tradingName) antes de gravar.
+**(FEITA 22/10, parcial) N11 — Cadastro do relatório (MÉDIA).** `relatorio/quali.py:26` (`CADASTRO`) só tem BBSE3. Por isso EGIE3, PETR4, TAEE11, ITUB4 e SAPR11 dizem "nome de pregão/CNPJ não cadastrado" e ficam sem a série de proventos e o FRE na tela. Ler o pregão de `proventos_ex.PREGAO` (PETR4 = PETROBRAS já existe) e o CNPJ de `triagem/dados/triagem_2026-10-02.csv` (EGIE3 02.474.103/0001-19 conferido no cadastro da CVM). Para TAEE11 (TAESA, units: somar os eventos UNT) e ITUB4 (ITAUUNIBANCO), confirmar o nome de pregão na API da B3 (tradingName) antes de gravar.
 
 *Pronto quando:* teste de `_cadastro` para os 5; a série aparece no relatório quando o dado local existir (na nuvem, só o cadastro e o teste).
 
@@ -105,10 +105,23 @@ Front lê só o contrato. Tira o "Sistema em breve" do `index.html:27`.
 9g. **B15 / fatia 5** — trava final: StatusInvest só para datas (defasagem); zero `lote (digitado)` em campo de dado do central.
 10. **B01** — Temporada 3T26: a tarefa de sexta já detecta o ITR (`monitor/temporada.log` + boletim); quando aparecer ticker com 3T26, rodar `temporada.py --gravar` + `rodar_tudo.py --motivo`.
 
+- **Rede bloqueada na nuvem (22/10):** `b3.com.br` (API de listadas) e `gov.br`/`conteudo.cvm.gov.br` devolvem 403/ENOTFOUND → B16 (Res. CVM 19/20 com fonte A) e os pregões da N11 seguem abertos; fazer na máquina do Frank.
+
 ## Em andamento
 (nenhuma)
 
 ## Feitas
+- **Q01** (backlog, 22/10): `gerar_pdf_lote1.py` cai para a Liberation Sans (métricas da Arial) quando a Arial do Windows não existe; `test_b23` e `test_carimbos` voltam a coletar na nuvem (suíte 963 passed, 42 skipped, sem `--ignore`). PDFs do Windows inalterados.
+- **N5** (22/10, noite): `painel/tests/test_contraste_tokens.py` — texto ≥ 4,5:1 e séries ≥ 3:1 nos dois temas passam; contornos abaixo de 3:1 listados (teste fixa a lista) e em `PENDENTE-FRANK.md` #10; nenhuma cor trocada.
+- **N4** (22/10, noite): `painel/sistema.py` + `sistema.json` + `telas/sistema.js` (rota `#/sistema`); registro da suíte pelo `conftest`; `test_sistema.py`, `test_web_estatico`. Conferência visual: Frank (dia).
+- **N3** (22/10, noite): contrato com setor (triagem/FCA), dividendo × JCP por mês, data por fonte (`Origem.data`) e faixa do DCF (pessimista/otimista); front lê só o contrato; testes em `painel/tests/test_contrato.py`; `DECISOES.md` 22/10. Falta conferir visualmente no navegador (Frank, dia); o `contrato/` local precisa de `painel --exportar` para regerar.
+- **N11** (22/10, noite, parcial): `CADASTRO` com CNPJ de EGIE3, PETR4, TAEE11, ITUB4 e SAPR11 (da triagem de 02/10) e pregão da PETR4 (`proventos_ex.PREGAO`); **b3.com.br devolve 403 na nuvem** → pregão de EGIE3, TAEE11, ITUB4, SAPR11 ficou `None` (não se chuta); o FRE já aparece, a série de proventos desses 4 segue com aviso. **Local (Frank/dia):** conferir `tradingName` na API da B3 (TAEE11 = TAESA?, ITUB4 = ITAUUNIBANCO?, EGIE3, SAPR11) e preencher. `tests/test_n11_cadastro_relatorio.py`.
+- **N8** (22/10, noite): investigado — o nº de ações em mil NÃO chega ao valor por ação (cada leitor reescala; financeiras usam VPA/LPA da StatusInvest; só o follow-on da ISAE4 lê cru, em unidades). Relatório em `docs/QA-2026-10-21.md`; `tests/test_n8_escala_acoes.py`; nada a regravar.
+- **N10** (22/10, noite): `temporada.py` e `triagem/rodar.py` validam argumento (rc 2, sem traceback, nada gravado); ponto decimal do dossiê vinha de `dossie/notas.py` → `_br()`; `tests/test_n10_clis_argumento_invalido.py`. Vereditos já gravados mantêm o texto antigo até a próxima geração.
+- **N9** (22/10, noite): `servir.py` bind exclusivo + mensagem "porta em uso"; `app.js` com guardas de `versao`, `fatores` e hash desconhecido; testes em `test_servir` e `test_web_estatico`. Falta só a conferência no navegador no Windows (Frank, dia).
+- **N2** (22/10, noite): `tests/test_n2_regras_sem_cobertura.py` (27 casos: desconto por cenários, escala de Preço, saída 1,30× em financeira, ida e volta do `g_implicito`); nenhum defeito; golden intacto (`09` de 22/10).
+- **N1** (22/10, noite): README (v2.6.1, 8 dossiês, tela v0.2), brief (fonte Space Grotesk, tela, fatias 2b e 3; cópia em `_historico/2026-10-22 brief/`), BACKLOG (47 IDs, B24–B31 na tabela, N/D/T novos), `03-hall` (cabeçalho v2.6.1, KLBN11 já NC, contagem das 41), `RELATORIO-DIARIO` (mais nova em cima), caminhos do `PROMPT.md` do handoff. Só texto; golden intacto. Nº de testes do brief: atualizado no fim da sessão.
+- **N7** (22/10, noite): motor recusa NaN/±inf/None/0/negativo (`palavra`, `nota_preco`, `precos_de_referencia`, `entrada_parcial`, `descontar`, `media_qualitativa`, `central_de`, `qualifica_saida`; `carimbos.de` e `relatorio.caso` com strip/upper); `tests/test_n7_dado_invalido.py`; golden intacto (`09` de 22/10).
 - **N6** (21/10, dia): "Ocultar valores" não vaza mais o DY líquido 12m nem o patrimônio (`carteira.js`, `pessoal(...)`); hall/empresa já usavam `pessoal(`; teste `test_carteira_valor_em_texto_respeita_ocultar`; conferido no navegador com Ocultar ligado (só •••).
 - **B26** (20/10): razão do desconto de controlador pelo FRE 2026 em PRIO3, KEPL3, RECV3, VBBR3, B3SA3 (28 → 23 `SEM_RAZAO`); 0 palavras; golden intacto (`09` de 20/10).
 - **B30 + B31** (20/10): `pl_historico.mediana` cobre 2016–19 pelo LPA básico da classe (DRE 3.99; travas: ações implícitas a ±25% da 1ª composição, evento ambíguo até a entrega do DFP → ano fora); golden: Bogle de 8 tickers, 0 palavras; dossiês FESA4/SHUL4/VLID3/HYPE3/LEVE3 mudam só o P/L. TIMS3 2021–23 conferidas nos PDFs do RI (19,32/4,50/18,29%); WPU0662 conferida no BLS → UNIP6 receita de meio A. Adversário: 3 achados corrigidos.
