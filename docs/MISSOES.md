@@ -74,7 +74,7 @@ Front lê só o contrato. Tira o "Sistema em breve" do `index.html:27`.
 
 *Pronto quando:* relatório em `docs/QA-2026-10-21.md` com a lista dos tickers afetados e o efeito. Se chega ao valor: corrigir `coletar_cvm.acoes_em_circulacao`, com teste de fixture, mas SEM regravar `cvm_series.json` (isso é LOCAL, com o Frank) → registrar em `PENDENTE-FRANK.md`.
 
-**N9 — Robustez do servidor e do front (MÉDIA).**
+**(FEITA 22/10) N9 — Robustez do servidor e do front (MÉDIA).**
 - `painel/servir.py:57-58`: bind exclusivo; o segundo `painel` na mesma porta tem de falhar com "porta em uso" (hoje no Windows sobem dois e há `ERR_CONNECTION_REFUSED` intermitente).
 - `ui.js:58` / `app.js:185`: `hall.json` sem `fatores` dá TypeError e tela quase vazia → faixa de erro amigável.
 - `app.js:38`: "está na versão undefined" quando falta `versao`.
@@ -109,6 +109,7 @@ Front lê só o contrato. Tira o "Sistema em breve" do `index.html:27`.
 (nenhuma)
 
 ## Feitas
+- **N9** (22/10, noite): `servir.py` bind exclusivo + mensagem "porta em uso"; `app.js` com guardas de `versao`, `fatores` e hash desconhecido; testes em `test_servir` e `test_web_estatico`. Falta só a conferência no navegador no Windows (Frank, dia).
 - **N2** (22/10, noite): `tests/test_n2_regras_sem_cobertura.py` (27 casos: desconto por cenários, escala de Preço, saída 1,30× em financeira, ida e volta do `g_implicito`); nenhum defeito; golden intacto (`09` de 22/10).
 - **N1** (22/10, noite): README (v2.6.1, 8 dossiês, tela v0.2), brief (fonte Space Grotesk, tela, fatias 2b e 3; cópia em `_historico/2026-10-22 brief/`), BACKLOG (47 IDs, B24–B31 na tabela, N/D/T novos), `03-hall` (cabeçalho v2.6.1, KLBN11 já NC, contagem das 41), `RELATORIO-DIARIO` (mais nova em cima), caminhos do `PROMPT.md` do handoff. Só texto; golden intacto. Nº de testes do brief: atualizado no fim da sessão.
 - **N7** (22/10, noite): motor recusa NaN/±inf/None/0/negativo (`palavra`, `nota_preco`, `precos_de_referencia`, `entrada_parcial`, `descontar`, `media_qualitativa`, `central_de`, `qualifica_saida`; `carimbos.de` e `relatorio.caso` com strip/upper); `tests/test_n7_dado_invalido.py`; golden intacto (`09` de 22/10).

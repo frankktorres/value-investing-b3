@@ -994,3 +994,9 @@ Golden intacto; 867 passed, 42 skipped. Nenhuma ordem de compra ou venda decorre
 `tests/test_n2_regras_sem_cobertura.py`: desconto de controlador por cenários (Σ prob × perda; só âncora > 0), cada degrau da escala da nota de
 Preço (e saturação), saída a 1,30× em financeira (nunca 1,50×, §9) e DCF reverso `g_implicito` com ida e volta preço → g → preço (SUZB3, KEPL3,
 PETR4, esta com cenários). Nenhum defeito achado. Suíte 894 passed, 42 skipped. Nenhuma ordem de compra ou venda decorre desta entrada.
+
+## 22/10/2026 — N9: servidor exclusivo e guardas do front da tela (nenhuma palavra, central ou golden mudou)
+`painel/servir.py`: bind exclusivo (`SO_EXCLUSIVEADDRUSE` no Windows, sem `SO_REUSEADDR`); o 2º `painel` na mesma porta sai com "Porta N em uso". `web/app.js`: contrato sem `versao`
+→ faixa de erro (não mais "versão undefined"); `hall.json` sem `fatores`/`escala_regua`/`empresas` → faixa "está incompleto" (não mais TypeError e tela vazia); hash desconhecido →
+"Página não encontrada" (não cai calado no Hall; a rota Sistema entra na lista quando a N4 existir). Testes: dois servidores na mesma porta (Linux) e guardas estáticos do front. Conferência no
+navegador (Windows, 2 servidores; hall.json truncado) fica para o Frank — a nuvem não tem navegador de teste.

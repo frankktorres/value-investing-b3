@@ -80,3 +80,12 @@ def test_carteira_valor_em_texto_respeita_ocultar():
              if re.search(r"\bct\.\w+\.valor\b", e) and not re.match(r"\s*(o|c\.ocultar)\s*\?", e)]
     assert not vazam, vazam
     assert re.search(r"pessoal\(pct\(ct\.dy_liquido_12m\.valor\), o\)", txt)
+
+
+def test_guardas_de_formato_do_contrato_na_casca():
+    """N9: contrato sem `versao`, `hall.json` sem `fatores`/`escala_regua` e hash desconhecido viram faixa de erro, não TypeError
+    nem Hall calado."""
+    txt = _sem_comentarios((WEB / "app.js").read_text(encoding="utf-8"))
+    assert "j.versao === undefined" in txt and "não informa a versão" in txt
+    assert "hl.dado.fatores" in txt and "escala_regua" in txt and "está incompleto" in txt
+    assert "ROTAS.includes(r.id)" in txt and "não existe" in txt

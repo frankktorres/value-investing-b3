@@ -35,6 +35,7 @@ async function ler(caminho) {
   if (!resp.ok) return { erro: `Não foi possível ler ${caminho}: o servidor respondeu ${resp.status}.` };
   try {
     const j = await resp.json();
+    if (j.versao === undefined || j.versao === null) return { erro: `${caminho} não informa a versão do contrato; a tela espera ${VERSAO}. Rode painel --exportar de novo.` };
     if (j.versao !== VERSAO) return { erro: `${caminho} está na versão ${j.versao}; a tela espera ${VERSAO}. Rode painel --exportar de novo.` };
     return { dado: j };
   } catch (e) {
@@ -54,9 +55,10 @@ function aplicarOcultar(on) {
 }
 
 // ------------------------------------------------------------------------------ rotas
+const ROTAS = ['hall', 'empresa', 'carteira', 'monitor'];
 function rota() {
   const m = /^#\/([a-z]+)(?:\/([A-Za-z0-9]{4,8}))?\/?$/.exec(location.hash);
-  return { id: m ? m[1] : 'hall', tk: m && m[2] ? m[2].toUpperCase() : null };
+  return { id: m ? m[1] : (location.hash && location.hash !== '#' ? '?' : 'hall'), tk: m && m[2] ? m[2].toUpperCase() : null };
 }
 
 export function navegar(hash) { if (location.hash !== hash) location.hash = hash; else render(); }
@@ -108,6 +110,11 @@ export function render() {
   }
   const c = ctx();
   let out;
+  if (!ROTAS.includes(r.id)) {                       // hash desconhecido não cai calado no Hall (N9)
+    contexto.textContent = 'Página não encontrada';
+    pag.replaceChildren(faixaErro(`A página "${location.hash}" não existe. Use o menu ou volte ao Hall (#/hall).`));
+    return;
+  }
   if (r.id === 'empresa') {
     const tk = r.tk || lembrar('mesa.ultima');
     if (tk && !r.tk) { navegar(`#/empresa/${tk}`); return; }
@@ -182,7 +189,9 @@ async function iniciar() {
   window.addEventListener('hashchange', () => { render(); document.getElementById('pagina').scrollTop = 0; window.scrollTo(0, 0); });
   render();
   const [hl, ct, mn] = await Promise.all([ler(ARQ.hall), ler(ARQ.carteira), ler(ARQ.monitor)]);
-  if (hl.dado) { estado.hall = hl.dado; configurar(hl.dado.fatores); } else estado.erros.hall = hl.erro;
+  if (hl.dado && !(hl.dado.fatores && Array.isArray(hl.dado.fatores.escala_regua) && Array.isArray(hl.dado.empresas))) {
+    estado.erros.hall = `${ARQ.hall} está incompleto (faltam fatores, escala da régua ou empresas). Rode painel --exportar de novo.`;
+  } else if (hl.dado) { estado.hall = hl.dado; configurar(hl.dado.fatores); } else estado.erros.hall = hl.erro;
   if (ct.dado) estado.carteira = ct.dado; else estado.erros.carteira = ct.erro;
   if (mn.dado) estado.monitor = mn.dado; else estado.erros.monitor = mn.erro;
   render();
