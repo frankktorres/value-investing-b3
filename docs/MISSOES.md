@@ -89,7 +89,7 @@ Front lê só o contrato. Tira o "Sistema em breve" do `index.html:27`.
 
 *Pronto quando:* testes das CLIs com argumento inválido (rc 2, sem traceback, nada gravado); suíte verde.
 
-**N11 — Cadastro do relatório (MÉDIA).** `relatorio/quali.py:26` (`CADASTRO`) só tem BBSE3. Por isso EGIE3, PETR4, TAEE11, ITUB4 e SAPR11 dizem "nome de pregão/CNPJ não cadastrado" e ficam sem a série de proventos e o FRE na tela. Ler o pregão de `proventos_ex.PREGAO` (PETR4 = PETROBRAS já existe) e o CNPJ de `triagem/dados/triagem_2026-10-02.csv` (EGIE3 02.474.103/0001-19 conferido no cadastro da CVM). Para TAEE11 (TAESA, units: somar os eventos UNT) e ITUB4 (ITAUUNIBANCO), confirmar o nome de pregão na API da B3 (tradingName) antes de gravar.
+**(FEITA 22/10, parcial) N11 — Cadastro do relatório (MÉDIA).** `relatorio/quali.py:26` (`CADASTRO`) só tem BBSE3. Por isso EGIE3, PETR4, TAEE11, ITUB4 e SAPR11 dizem "nome de pregão/CNPJ não cadastrado" e ficam sem a série de proventos e o FRE na tela. Ler o pregão de `proventos_ex.PREGAO` (PETR4 = PETROBRAS já existe) e o CNPJ de `triagem/dados/triagem_2026-10-02.csv` (EGIE3 02.474.103/0001-19 conferido no cadastro da CVM). Para TAEE11 (TAESA, units: somar os eventos UNT) e ITUB4 (ITAUUNIBANCO), confirmar o nome de pregão na API da B3 (tradingName) antes de gravar.
 
 *Pronto quando:* teste de `_cadastro` para os 5; a série aparece no relatório quando o dado local existir (na nuvem, só o cadastro e o teste).
 
@@ -109,6 +109,7 @@ Front lê só o contrato. Tira o "Sistema em breve" do `index.html:27`.
 (nenhuma)
 
 ## Feitas
+- **N11** (22/10, noite, parcial): `CADASTRO` com CNPJ de EGIE3, PETR4, TAEE11, ITUB4 e SAPR11 (da triagem de 02/10) e pregão da PETR4 (`proventos_ex.PREGAO`); **b3.com.br devolve 403 na nuvem** → pregão de EGIE3, TAEE11, ITUB4, SAPR11 ficou `None` (não se chuta); o FRE já aparece, a série de proventos desses 4 segue com aviso. **Local (Frank/dia):** conferir `tradingName` na API da B3 (TAEE11 = TAESA?, ITUB4 = ITAUUNIBANCO?, EGIE3, SAPR11) e preencher. `tests/test_n11_cadastro_relatorio.py`.
 - **N8** (22/10, noite): investigado — o nº de ações em mil NÃO chega ao valor por ação (cada leitor reescala; financeiras usam VPA/LPA da StatusInvest; só o follow-on da ISAE4 lê cru, em unidades). Relatório em `docs/QA-2026-10-21.md`; `tests/test_n8_escala_acoes.py`; nada a regravar.
 - **N10** (22/10, noite): `temporada.py` e `triagem/rodar.py` validam argumento (rc 2, sem traceback, nada gravado); ponto decimal do dossiê vinha de `dossie/notas.py` → `_br()`; `tests/test_n10_clis_argumento_invalido.py`. Vereditos já gravados mantêm o texto antigo até a próxima geração.
 - **N9** (22/10, noite): `servir.py` bind exclusivo + mensagem "porta em uso"; `app.js` com guardas de `versao`, `fatores` e hash desconhecido; testes em `test_servir` e `test_web_estatico`. Falta só a conferência no navegador no Windows (Frank, dia).

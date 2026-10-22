@@ -1006,3 +1006,8 @@ navegador (Windows, 2 servidores; hall.json truncado) fica para o Frank — a nu
 download ou gravação (`type=` do argparse). O ponto decimal do texto da ALLD3 ("18.2%", "(0.1048)") vinha de `dossie/notas.py` (componentes das notas, `f"{x:.4f}"`):
 20 pontos passaram a `_br()` (vírgula). Só o texto; as notas e a palavra não mudam. Os `dossie/vereditos/*.json` já gravados mantêm o texto antigo até a próxima geração com `--data`
 nova (não regerados: sobrescreveria o veredito vigente). Testes: `tests/test_n10_clis_argumento_invalido.py`. Suíte 909 passed, 42 skipped.
+
+## 22/10/2026 — N11: cadastro do relatório (nenhuma palavra, central ou golden mudou)
+`relatorio/quali.py` `CADASTRO` passou de 1 para 6 tickers: CNPJ de EGIE3, PETR4, TAEE11, ITUB4 e SAPR11 (`triagem_2026-10-02.csv`) abre o FRE (governança, remuneração) no relatório;
+pregão só da PETR4 (já usado no hall). Os pregões de EGIE3, TAEE11, ITUB4 e SAPR11 ficam `None`: a API da B3 responde 403 na nuvem e nome de pregão não se chuta (decisão: sem
+dado conferido, o bloco de proventos avisa em vez de inventar). N8: nº de ações em mil não chega ao valor (ver `docs/QA-2026-10-21.md`). Suíte 930 passed, 42 skipped.

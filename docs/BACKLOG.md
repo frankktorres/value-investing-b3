@@ -54,7 +54,7 @@
 | N8 | Escala do nº de ações (CVM em mil; TAEE11) — investigar `acoes` | P3 | feito 22/10 (não chega ao valor) | executável | QA 21/10 |
 | N9 | Robustez do servidor (porta em uso) e do front (hall sem `fatores`, `versao`, hash desconhecido) | P3 | feito 22/10 (conferência no navegador pendente) | executável | QA 21/10 |
 | N10 | CLIs com traceback cru (`temporada.py`, `triagem/rodar.py`) e ponto decimal no texto da ALLD3 | P3 | feito 22/10 | executável | QA 21/10 |
-| N11 | Cadastro do relatório (`relatorio/quali.py` CADASTRO só com BBSE3) | P3 | aberto (missão) | executável | QA 21/10 |
+| N11 | Cadastro do relatório (`relatorio/quali.py` CADASTRO só com BBSE3) | P3 | parcial 22/10: CNPJ dos 5 feito; pregão de EGIE3/TAEE11/ITUB4/SAPR11 a conferir na API da B3 (403 na nuvem) | local | QA 21/10 |
 
 ## Contagem por tipo
 local: 8 (B01, B02, B03, B20, B21, B28, B29, D4) · decisão Frank: 7 (B04, B07, B08, B17, B18, B19, B22) · executável: 32 (B05, B06, B09, B10, B11, B12, B13, B14, B15, B16, B23, B24, B25, B26, B30, B31, B27, T01, D1, D2, D5, N1, N2, N3, N4, N5, N6, N7, N8, N9, N10, N11) · total 47 (= nº de IDs na tabela).
