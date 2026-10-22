@@ -45,7 +45,7 @@
 | D4 | Check-up 21/10: Agendador (TemporadaDiaria 06:30 de 22/10 a 21/11; BackupSemanal domingo 07:30) e backup sem `privado/` | P2 | feito 21/10 | local | Brief |
 | D5 | Tela v0.2: "anos seguidos com provento" por `proventos_hall.anos_seguidos` (B3, nota A) | P3 | feito 21/10 | executável | `DECISOES.md` 21/10 |
 | N1 | Higiene de docs (README, brief, BACKLOG, 03-hall, relatório diário, PROMPT do handoff) | P3 | feito 22/10 | executável | Check-up 21/10 |
-| N2 | Testes das regras sem cobertura (desconto por cenários, escala de Preço, saída 1,50× em financeira, DCF reverso) | P2 | aberto (missão) | executável | Check-up 21/10 |
+| N2 | Testes das regras sem cobertura (desconto por cenários, escala de Preço, saída 1,50× em financeira, DCF reverso) | P2 | feito 22/10 | executável | Check-up 21/10 |
 | N3 | Contrato liga o que o motor já calcula (setor, dividendo × JCP por mês, data das fontes, faixa do DCF) | P3 | aberto (missão) | executável | Check-up 21/10 |
 | N4 | Tela Sistema (`sistema.json`: idade dos dados, boletins, golden, testes) | P3 | aberto (missão) | executável | HANDOFF |
 | N5 | Contraste WCAG dos tokens da tela (parte automática da etapa 4) | P3 | aberto (missão) | executável | Check-up 21/10 |

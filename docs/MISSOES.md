@@ -16,7 +16,7 @@ dado bruto pula; teste novo usa fixture pequena. Nenhuma delas muda palavra, cen
 
 *Pronto quando:* `grep -rn "v2\.5" README.md 03-hall-de-acoes.md` só acha histórico; contagem do BACKLOG = nº de IDs; `pytest --ignore=backtest -q` verde (nada de código mudou).
 
-**N2 — Testes das regras sem cobertura (check-up 21/10).** Só testes novos, com fixture; código de motor intocado. Cobrir:
+**(FEITA 22/10) N2 — Testes das regras sem cobertura (check-up 21/10).** Só testes novos, com fixture; código de motor intocado. Cobrir:
 - desconto de controlador por cenários (`motor_nao_financeiras.py:827-831`: soma prob × perda, só âncora positiva);
 - escala da nota de Preço (`motor_financeiras.py:178-192`, cada degrau);
 - saída a 1,50× nunca em financeira (§9);
@@ -109,6 +109,7 @@ Front lê só o contrato. Tira o "Sistema em breve" do `index.html:27`.
 (nenhuma)
 
 ## Feitas
+- **N2** (22/10, noite): `tests/test_n2_regras_sem_cobertura.py` (27 casos: desconto por cenários, escala de Preço, saída 1,30× em financeira, ida e volta do `g_implicito`); nenhum defeito; golden intacto (`09` de 22/10).
 - **N1** (22/10, noite): README (v2.6.1, 8 dossiês, tela v0.2), brief (fonte Space Grotesk, tela, fatias 2b e 3; cópia em `_historico/2026-10-22 brief/`), BACKLOG (47 IDs, B24–B31 na tabela, N/D/T novos), `03-hall` (cabeçalho v2.6.1, KLBN11 já NC, contagem das 41), `RELATORIO-DIARIO` (mais nova em cima), caminhos do `PROMPT.md` do handoff. Só texto; golden intacto. Nº de testes do brief: atualizado no fim da sessão.
 - **N7** (22/10, noite): motor recusa NaN/±inf/None/0/negativo (`palavra`, `nota_preco`, `precos_de_referencia`, `entrada_parcial`, `descontar`, `media_qualitativa`, `central_de`, `qualifica_saida`; `carimbos.de` e `relatorio.caso` com strip/upper); `tests/test_n7_dado_invalido.py`; golden intacto (`09` de 22/10).
 - **N6** (21/10, dia): "Ocultar valores" não vaza mais o DY líquido 12m nem o patrimônio (`carteira.js`, `pessoal(...)`); hall/empresa já usavam `pessoal(`; teste `test_carteira_valor_em_texto_respeita_ocultar`; conferido no navegador com Ocultar ligado (só •••).

@@ -989,3 +989,8 @@ pc, dispersão, central ou notas; `descontar` exige desconto em [0, 1]; `media_q
 `central_de` recusa âncora NaN/inf/vazia; `qualifica_saida` recusa mais anos acima do que a série tem. `carimbos.de` e `relatorio.caso` aceitam
 ticker com espaço/minúscula. Teste novo `tests/test_n7_dado_invalido.py`; no `test_aud88` saiu o caso `pc = 0 → BARATA` (preço 0 não é dado).
 Golden intacto; 867 passed, 42 skipped. Nenhuma ordem de compra ou venda decorre desta entrada.
+
+## 22/10/2026 — N2: testes das regras sem cobertura (só testes; motor, palavra e golden intactos)
+`tests/test_n2_regras_sem_cobertura.py`: desconto de controlador por cenários (Σ prob × perda; só âncora > 0), cada degrau da escala da nota de
+Preço (e saturação), saída a 1,30× em financeira (nunca 1,50×, §9) e DCF reverso `g_implicito` com ida e volta preço → g → preço (SUZB3, KEPL3,
+PETR4, esta com cenários). Nenhum defeito achado. Suíte 894 passed, 42 skipped. Nenhuma ordem de compra ou venda decorre desta entrada.
