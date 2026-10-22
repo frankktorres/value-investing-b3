@@ -1,5 +1,6 @@
 ' Tarefas locais fora do horario (check-up de 21/10/2026, D4). Roda OCULTO e espera terminar (MAQUINA.md).
-' Argumento 0: caminho do python.exe; argumento 1: "temporada" (deteccao diaria do ITR, sem --gravar) ou "backup".
+' Argumento 0: caminho do python.exe; argumento 1: "temporada" (deteccao diaria do ITR, sem --gravar), "backup"
+' ou "conferir" (22/10/2026: testa a rodada da nuvem com os dados locais e junta no master se verde).
 ' Log em ferramentas\monitor\<modo>.log. Codigo <> 0 abre um aviso na tela (some em 30 min; tarefa interativa de proposito).
 ' Texto sem acento: o WSH le este arquivo como ANSI.
 Option Explicit
@@ -14,6 +15,8 @@ If modo = "temporada" Then
     script = "temporada.py"
 ElseIf modo = "backup" Then
     script = "backup_dados.py"
+ElseIf modo = "conferir" Then
+    script = "conferir_noite.py"
 Else
     WScript.Quit 2
 End If

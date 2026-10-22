@@ -1,8 +1,8 @@
 # PROJECT BRIEF — Mesa de Value Investing B3
-*Versão de 20/10/2026 (rev. fase 3, fatia 3: literais de dado das não financeiras → dado oficial; doutrina v2.6) · gerado por `/brief` · fonte: repositório, memória do projeto e `docs/auditoria/AUDITORIA_2026-10-08.md`*
+*Versão de 22/10/2026 (manhã: rodada da noite conferida com dados e juntada; rotina da nuvem → ramo `claude/*` + `conferir_noite.py` junta no master; noite: missões N1–N5, N7–N11 e Q01 — motor recusa dado inválido, tela Sistema, contrato com setor/faixa do DCF/JCP por mês, suíte 963; antes, 21/10 rev. tarde: doutrina 2.6.1 — casos do §7 com ano e fonte —, Ocultar sem vazar o DY, #7–#9 respondidas; antes check-up: armadilhas na exceção 0,80×, temporada blindada, Agendador noturno, backup sem privado; antes B26; antes B30/B31: P/L histórico 2016–19 pelo LPA; TIMS3 e WPU0662 conferidas; doutrina v2.6) · gerado por `/brief` · fonte: repositório, memória do projeto e `docs/auditoria/AUDITORIA_2026-10-08.md`*
 
 ## 1. Projeto
-Mesa de análise fundamentalista da B3 para dividendos/JCP e longo prazo: doutrina escrita (v2.6) + motores de valuation em Python que
+Mesa de análise fundamentalista da B3 para dividendos/JCP e longo prazo: doutrina escrita (v2.6.1) + motores de valuation em Python que
 dão preço de compra, central e saída (régua 0,70/0,90/1,10/1,30×) para 41 empresas. Público hoje: um investidor pessoa física (uso próprio).
 
 ## 2. Estágio
@@ -16,7 +16,7 @@ MVP de uso pessoal, maduro no cálculo. Um usuário real, sem terceiros. Prazo e
 - **Banco:** nenhum. Dados em JSON/CSV/ZIP em `ferramentas/dados/` e `ferramentas/backtest/dados/` (~2,1 GB fora do git); registros
   append-only em `.jsonl` (`prospectivo/`).
 - **Tela:** HTML + CSS + JS (módulos ES) sem build nem npm, servida pelo `http.server` da biblioteca padrão só em 127.0.0.1;
-  fontes IBM Plex e Source Serif 4 locais (OFL); tokens do Claude Design (`docs/design/`). Nenhuma dependência nova.
+  fontes IBM Plex e Space Grotesk locais (OFL); tokens do Claude Design (`docs/design/`). Nenhuma dependência nova.
 - **Infra:** máquina local; Agendador do Windows (monitor semanal, sexta 08:00); GitHub privado + backup em pendrive. Sem nuvem.
 - **APIs/fontes externas:** CVM dados abertos (DFP/ITR/FRE, RAD) — fonte A; B3 COTAHIST e proventos; BCB SGS (IPCA, PTAX); Tesouro
   Transparente (curva IPCA+); FRED (preços de commodities); StatusInvest (scraping, nota C).
@@ -32,9 +32,9 @@ MVP de uso pessoal, maduro no cálculo. Um usuário real, sem terceiros. Prazo e
 - **`dossie/`:** anexo mecânico por ticker (FRE, notas por evidência, vereditos). **`triagem/`:** fila de toda a B3, sem veredito.
 - **Tela (`ferramentas/painel/`):** `painel.exportar` roda os motores uma vez (~100 s) e grava `web/dados/hall.json` +
   `empresas/<TK>.json` (ignorados; contrato versionado); `painel.servir` só serve arquivos. A tela não calcula: palavra
-  vigente, régua e nota da fonte vêm do relatório; o preço de hoje só move o marcador.
+  vigente, régua e nota da fonte vêm do relatório; o preço de hoje só move o marcador. Tela v0.2: Hall, Empresa, Carteira e Monitor.
 - **`backtest/`:** ledger point-in-time + COTAHIST (parado no portão do proxy). **`monitor_semanal.py`**, **`temporada.py`**, **`registro_prospectivo.py`**.
-- **Testes:** pytest com golden dos 41 tickers: 458 no hall (09/10, Onda 2 concluída; `EXIGIR_DADOS=1` transforma skip em falha) + 308 no backtest (09/10; rodar SOZINHO, ~13 min, e com a máquina folgada: a suíte inteira estoura memória se algo mais estiver aberto). Mudança no `Mercado` ou nos motores exige rodar as duas suítes.
+- **Testes:** pytest com golden dos 41 tickers: 963 passed + 42 pulados no hall (22/10, nuvem, sem `--ignore`; era 458 em 09/10; `EXIGIR_DADOS=1` transforma skip em falha) + 308 no backtest (09/10; rodar SOZINHO, ~13 min, e com a máquina folgada: a suíte inteira estoura memória se algo mais estiver aberto). Mudança no `Mercado` ou nos motores exige rodar as duas suítes.
 
 ## 5. Top 5 gargalos
 1. **Insumos e premissas, não fórmulas.** Auditoria de 08/10: 109 achados, 5 ALTO; motores conferem a 0–0,36%, mas insumos movem o central
@@ -65,11 +65,11 @@ MVP de uso pessoal, maduro no cálculo. Um usuário real, sem terceiros. Prazo e
    da meta, `relatorio CARTEIRA` → `RELATORIOS/privado/` (fora do git): fatias 1-3 FEITAS (MD+PDF: renda 12m pela data-com, meta, régua por
    posição, calendário de pagamento, evolução rumo à meta em `dados/privado/renda.jsonl`; a tarefa de sexta gera o painel; adversário rodado).
    Falta só o Frank usar e dizer o que muda.
-   **Tela (front end, 19/10):** `painel` → navegador em 127.0.0.1:8765; fatia 1 (Hall) FEITA; faltam 2 Empresa, 3 Carteira
-   (privado), 4 Monitor + exportação na tarefa de sexta. Plano: `~/.claude/plans/greedy-imagining-church.md`.
+   **Tela (front end, 19/10; v0.2 em 20–21/10):** `painel` → navegador em 127.0.0.1:8765; Hall, Empresa, Carteira (privado) e Monitor FEITOS;
+   Sistema (N4) e contraste dos tokens (N5, contornos → PENDENTE #10) FEITOS em 22/10; falta a exportação na tarefa de sexta. Plano: `~/.claude/plans/greedy-imagining-church.md`.
    Plano da fase 2: `~/.claude/plans/frolicking-sauteeing-snowglobe.md`. **Fase 3 (dados vivos sem premissa digitada) EM EXECUÇÃO:** plano
-   `~/.claude/plans/tingly-gliding-flute.md`; fatias 1 (procedência por campo) e 2 (DPA/JCP B3, 20/10) FEITAS; depois 2b (bug PN do
-   dossiê), 3 (literais NF), temporada 3T26 em commit próprio, 4 (financeiras), 5 (trava). Depois: triagem contínua (fase 4), SaaS.
+   `~/.claude/plans/tingly-gliding-flute.md`; fatias 1 (procedência por campo), 2 (DPA/JCP B3), 2b (bug PN do
+   dossiê) e 3 (literais NF) FEITAS (20/10); faltam temporada 3T26 em commit próprio, 4 (financeiras), 5 (trava). Depois: triagem contínua (fase 4), SaaS.
 
 ## 7. Restrições
 - **Orçamento:** não informado.
@@ -108,6 +108,8 @@ MVP de uso pessoal, maduro no cálculo. Um usuário real, sem terceiros. Prazo e
 6. Licença pretendida do código (fechado/aberto)?
 
 ## 12. O que mudou
+- 22/10/2026 (manhã): rodada da noite conferida com os dados locais (1.004 passed) e juntada; ferramenta nova `conferir_noite.py` (tarefa 07:15) junta o ramo `claude/*` da rotina só com a suíte verde e sem golden/doutrina; `scripts/cloud_setup.sh`; prompt da rotina revisto (backlog sem limite, foco do dia obrigatório, revisor Opus, critério de "feita"); gargalo novo: rede da nuvem bloqueia a B3 e o `conteudo.cvm.gov.br` (decisão do Frank na UI). Correções: manifesto sem data falsa, `#/`, registro da suíte, EOL do `erro_proxy`.
+- 22/10/2026 (noite, rotina): N7 motor recusa NaN/inf/None/0/negativo; N2 testes de regras; N9 servidor exclusivo e guardas do front; N10 CLIs rc 2 e vírgula decimal nas notas; N8 ações em mil não chegam ao valor; N11 CNPJ no cadastro do relatório (pregões a conferir na B3); N3 contrato com setor, JCP por mês, data de fonte e faixa do DCF; N4 tela Sistema + `suite_ultima.json`; N5 teste de contraste; Q01 Liberation Sans no lugar da Arial fora do Windows. Nenhuma palavra mudou.
 - 08/10/2026 (Onda 1.2): doutrina v2.4; Onda 1 com 1.1 e 1.2 feitas; contagem de testes; gargalo 1 e marco 1 atualizados.
 - 08/10/2026 (Onda 1.3): doutrina v2.5 (regulados por P/VP justificado como proxy declarado); ferramentas novas `hall03.py`,
   `precos_hall.py`, `triagem/erro_proxy.py`; monitor com falha ativa; corte da triagem medido (2,07); testes e marco 1 atualizados.
@@ -134,3 +136,7 @@ MVP de uso pessoal, maduro no cálculo. Um usuário real, sem terceiros. Prazo e
 - 20/10/2026 (fase 3, fatia 2): `ferramentas/proventos_hall.py` — DPA/JCP das 21 não financeiras dos lotes da API da B3 (classe, tipos fechados, eventos B3 + FRE, parcelas conferidas na DMPL) no carregamento do motor; saem `lote4.corrigir_proventos` e o ajuste aproximado GGBR4/UNIP6; golden regravado (7 tickers, só DY/Bogle/RF/nota; 0 palavras); B28 (linhagem) e B29 (AUD-23 no backtest) no backlog.
 - 20/10/2026 (fase 3, fatia 2b): `dossie.base.proventos_b3` → `proventos_hall.dpa_jcp` (FESA4/SHUL4 PN, 7 grupos de parcelas conferidos na DMPL, restituição fora, bonificações da SHUL4 de 2018 e 2021 do FRE); diluição do dossiê com eventos do FRE e escala das ações; 0 palavras/centrais, SHUL4 gestão 0 → 1.
 - 20/10/2026 (fase 3, fatia 3): preço (`precos_hall.preco`), receita de meio (CVM × EIA/BLS), alíquota TIMS3 (CVM + nota 8.d), g1 WEGE3 (CVM + B3), NAV SLCE3 (fato relevante 15/06/2026), P/L histórico das NF por `pl_historico.py` (CVM + COTAHIST, SMTO3 em março, janela 2020–25 → B30; o dossiê usa a mesma conta) e `preco_minerio` do CMIN3 registrados em `insumos_a`; 19/19 NF do lote com central A/B; snapshot `derivados_zip` com chaves do COTAHIST opcionais; 0 palavras mudam
+- 20/10/2026 (B30/B31): `pl_historico` estende o P/L histórico a 2016–19 pelo LPA básico da DRE (trava nas ações implícitas, evento ambíguo → ano fora), hall e dossiê juntos; golden só Bogle (8 tickers, 0 palavras). Alíquotas TIMS3 2021–23 conferidas nos PDFs do RI; WPU0662 no BLS → receita de meio do UNIP6 A.
+- 20/10/2026 (B26): razão do desconto de controlador com FRE 2026 nota A em PRIO3, KEPL3, RECV3, VBBR3 e B3SA3 (sem controlador nem acordo); `SEM_RAZAO` 28 → 23; nenhuma palavra mudou.
+- 21/10/2026 (check-up): `carimbos.py` (armadilhas do §7 bloqueiam a exceção dos 0,80× no relatório e nos PDFs; 0 elegibilidades mudaram); `temporada --gravar` só com o ZIP (sha256) do boletim lido, 404 do ano = 0; Agendador: TemporadaDiaria 06:30 (22/10–21/11) + BackupSemanal dom 07:30 (`agendador/noite.vbs`); backup sem `dados/privado/`; tela: anos seguidos (B3, data-com); fila N1–N5 em `MISSOES.md`; suíte 833.
+- 21/10/2026 (tarde): N6 (Ocultar valores não vaza DY/patrimônio; teste estático); PENDENTE #7 — "UBP de 2024" era a venda da TAG (DFP 2024, R$ 1,34 bi), UBP é do 2T26 (R$ 1,92 bi), só rótulos; #9 → doutrina 2.6.1 (casos do §7 com ano e fonte CVM/EIA, nenhum carimbo sai); #8 = (a) FRE sem controlador nem acordo é razão válida. 0 palavras, golden intacto.

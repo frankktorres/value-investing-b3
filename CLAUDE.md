@@ -19,8 +19,10 @@ reportlab/pytest; sem banco; dados brutos fora do git (`ferramentas/dados/`). Br
 - Fila: `docs/MISSOES.md` (uma missão por turno) ← `docs/BACKLOG.md` (só tipo "executável"). Diário: `docs/RELATORIO-DIARIO.md`.
 - **Decisão reversível = decide, registra em `docs/DECISOES.md` e segue.** Só parar (e escrever em `docs/PENDENTE-FRANK.md`) em:
   senha/chave, dinheiro, apagar dados. **Nunca executar nem sugerir como feita ordem de compra/venda.**
-- Na nuvem os hooks de auto-commit não rodam (`CLAUDE_CODE_REMOTE`): rode os testes, `git add` de caminhos específicos,
-  commit e `git push origin master` você mesmo; testes vermelhos → ramo `wip/auto`, nunca `master`.
+- Na nuvem os hooks de auto-commit não rodam (`CLAUDE_CODE_REMOTE`): rode `bash scripts/cloud_setup.sh` e os testes,
+  `git add` de caminhos específicos, commit e push **no ramo `claude/*` da sessão, nunca no `master`** (lá ~42 testes pulam
+  sem dados). De manhã `ferramentas/conferir_noite.py` (Agendador, 07:15) roda a suíte da junção com os dados locais e
+  junta no master se verde e sem golden/doutrina (decisão de 22/10).
 - Mexer em motor/doutrina/golden muda palavra de investimento: só com teste verde e registro no `09`.
 
 ## O que não fazer

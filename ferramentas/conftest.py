@@ -29,6 +29,29 @@ def pytest_make_collect_report(collector):
         rep.longrepr = f"EXIGIR_DADOS=1: módulo pulado na coleta ({rep.longrepr})"
 
 
+def pytest_sessionfinish(session, exitstatus):
+    """Registro da última suíte COMPLETA (alimenta a tela Sistema): `dados/suite_ultima.json`, ignorado pelo git. Rodada parcial
+    (caminho, -k, -m, ou o backtest) não grava — o número só vale se for a suíte inteira do dia a dia."""
+    import json
+    import datetime
+    args = list(session.config.invocation_params.args)
+    # caminho explícito = parcial; valor de opção (`-p no:cacheprovider`) não é caminho (22/10: a tela dizia "sem registro")
+    caminho = session.config.args_source == pytest.Config.ArgsSource.ARGS
+    parcial = caminho or any(a in ("-k", "-m", "--lf", "--ff", "-x") or a.startswith(("-k", "-m")) for a in args)
+    tr = session.config.pluginmanager.get_plugin("terminalreporter")
+    if parcial or tr is None or os.environ.get("CLAUDE_NO_SUITE_LOG") == "1":
+        return
+    n = {k: len(tr.stats.get(k, [])) for k in ("passed", "failed", "error", "skipped")}
+    if n["passed"] + n["failed"] < 400:                      # nem a suíte base (≈ 900) rodou: não registra
+        return
+    try:
+        (pathlib.Path(__file__).parent / "dados" / "suite_ultima.json").write_text(json.dumps({
+            "data": datetime.date.today().isoformat(), "passed": n["passed"], "failed": n["failed"] + n["error"],
+            "skipped": n["skipped"], "args": args}, ensure_ascii=False), encoding="utf-8")
+    except OSError:
+        pass
+
+
 def pytest_terminal_summary(terminalreporter):
     pulados = terminalreporter.stats.get("skipped", [])
     if pulados:
