@@ -82,7 +82,7 @@ Front lê só o contrato. Tira o "Sistema em breve" do `index.html:27`.
 
 *Pronto quando:* teste de subir dois servidores na mesma porta; `test_web_estatico` cobre o guarda de formato; suíte verde.
 
-**N10 — CLIs com traceback cru (MÉDIA/BAIXA).**
+**(FEITA 22/10) N10 — CLIs com traceback cru (MÉDIA/BAIXA).**
 - `temporada.py --trimestre 5T26 | 4T26` e `--simular 9T99`: dão traceback do `ValueError` → `parser.error`, rc 2.
 - `triagem/rodar.py:73` `--data 2026-13-40`: valida com `date.fromisoformat` via `type=`.
 - Texto do contrato da ALLD3 com ponto decimal ("18.2%", "(0.1048)") em `riscos`/`qualitativo` obs: achar a origem (`relatorio/quali.py`?) e usar o formato BR.
@@ -109,6 +109,7 @@ Front lê só o contrato. Tira o "Sistema em breve" do `index.html:27`.
 (nenhuma)
 
 ## Feitas
+- **N10** (22/10, noite): `temporada.py` e `triagem/rodar.py` validam argumento (rc 2, sem traceback, nada gravado); ponto decimal do dossiê vinha de `dossie/notas.py` → `_br()`; `tests/test_n10_clis_argumento_invalido.py`. Vereditos já gravados mantêm o texto antigo até a próxima geração.
 - **N9** (22/10, noite): `servir.py` bind exclusivo + mensagem "porta em uso"; `app.js` com guardas de `versao`, `fatores` e hash desconhecido; testes em `test_servir` e `test_web_estatico`. Falta só a conferência no navegador no Windows (Frank, dia).
 - **N2** (22/10, noite): `tests/test_n2_regras_sem_cobertura.py` (27 casos: desconto por cenários, escala de Preço, saída 1,30× em financeira, ida e volta do `g_implicito`); nenhum defeito; golden intacto (`09` de 22/10).
 - **N1** (22/10, noite): README (v2.6.1, 8 dossiês, tela v0.2), brief (fonte Space Grotesk, tela, fatias 2b e 3; cópia em `_historico/2026-10-22 brief/`), BACKLOG (47 IDs, B24–B31 na tabela, N/D/T novos), `03-hall` (cabeçalho v2.6.1, KLBN11 já NC, contagem das 41), `RELATORIO-DIARIO` (mais nova em cima), caminhos do `PROMPT.md` do handoff. Só texto; golden intacto. Nº de testes do brief: atualizado no fim da sessão.

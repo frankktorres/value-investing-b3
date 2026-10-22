@@ -1000,3 +1000,9 @@ PETR4, esta com cenários). Nenhum defeito achado. Suíte 894 passed, 42 skipped
 → faixa de erro (não mais "versão undefined"); `hall.json` sem `fatores`/`escala_regua`/`empresas` → faixa "está incompleto" (não mais TypeError e tela vazia); hash desconhecido →
 "Página não encontrada" (não cai calado no Hall; a rota Sistema entra na lista quando a N4 existir). Testes: dois servidores na mesma porta (Linux) e guardas estáticos do front. Conferência no
 navegador (Windows, 2 servidores; hall.json truncado) fica para o Frank — a nuvem não tem navegador de teste.
+
+## 22/10/2026 — N10: CLIs sem traceback e vírgula decimal nas notas do dossiê (nenhuma palavra, central ou golden mudou)
+`temporada.py --trimestre/--simular` com rótulo inválido (5T26, 4T26, 9T99) e `triagem/rodar.py --data` inexistente (2026-13-40) saem com rc 2 e mensagem de uso, antes de qualquer
+download ou gravação (`type=` do argparse). O ponto decimal do texto da ALLD3 ("18.2%", "(0.1048)") vinha de `dossie/notas.py` (componentes das notas, `f"{x:.4f}"`):
+20 pontos passaram a `_br()` (vírgula). Só o texto; as notas e a palavra não mudam. Os `dossie/vereditos/*.json` já gravados mantêm o texto antigo até a próxima geração com `--data`
+nova (não regerados: sobrescreveria o veredito vigente). Testes: `tests/test_n10_clis_argumento_invalido.py`. Suíte 909 passed, 42 skipped.
