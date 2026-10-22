@@ -981,3 +981,11 @@ EIA)", com "(DFP/ITR CVM)" na legenda. **Nenhum carimbo sai.** Nenhuma ordem de 
 Nada recalculado. **#9:** a proposta da entrada anterior foi aplicada ao §7 (e ao exemplo da Unipar no §6, item 5) e ao checklist `04` (Engie:
 TAG 2024, UBP 2T26), nas cópias do Desktop também; doutrina 2.6 → **2.6.1** (só exemplos; nenhuma regra, carimbo, palavra, central ou golden
 mudou); versão anterior em `_historico/2026-10-21 doutrina v2.6/`. Nenhuma ordem de compra ou venda decorre desta entrada.
+
+## 22/10/2026 — N7: motor recusa dado inválido (nenhuma palavra, central ou golden mudou)
+`motor_financeiras`: `palavra` e `nota_preco` recusam P/C NaN, None, 0 e negativo (+inf segue válido: central ≤ 0 → NÃO CONCLUSIVO);
+`precos_de_referencia` devolve sem preço para central NaN/±inf/None; `entrada_parcial` devolve `(False, ["dado inválido…"])` para NaN/None/inf em
+pc, dispersão, central ou notas; `descontar` exige desconto em [0, 1]; `media_qualitativa` exige notas em 0–5. `motor_nao_financeiras`:
+`central_de` recusa âncora NaN/inf/vazia; `qualifica_saida` recusa mais anos acima do que a série tem. `carimbos.de` e `relatorio.caso` aceitam
+ticker com espaço/minúscula. Teste novo `tests/test_n7_dado_invalido.py`; no `test_aud88` saiu o caso `pc = 0 → BARATA` (preço 0 não é dado).
+Golden intacto; 867 passed, 42 skipped. Nenhuma ordem de compra ou venda decorre desta entrada.

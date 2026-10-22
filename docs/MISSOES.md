@@ -109,6 +109,7 @@ Front lê só o contrato. Tira o "Sistema em breve" do `index.html:27`.
 (nenhuma)
 
 ## Feitas
+- **N7** (22/10, noite): motor recusa NaN/±inf/None/0/negativo (`palavra`, `nota_preco`, `precos_de_referencia`, `entrada_parcial`, `descontar`, `media_qualitativa`, `central_de`, `qualifica_saida`; `carimbos.de` e `relatorio.caso` com strip/upper); `tests/test_n7_dado_invalido.py`; golden intacto (`09` de 22/10).
 - **N6** (21/10, dia): "Ocultar valores" não vaza mais o DY líquido 12m nem o patrimônio (`carteira.js`, `pessoal(...)`); hall/empresa já usavam `pessoal(`; teste `test_carteira_valor_em_texto_respeita_ocultar`; conferido no navegador com Ocultar ligado (só •••).
 - **B26** (20/10): razão do desconto de controlador pelo FRE 2026 em PRIO3, KEPL3, RECV3, VBBR3, B3SA3 (28 → 23 `SEM_RAZAO`); 0 palavras; golden intacto (`09` de 20/10).
 - **B30 + B31** (20/10): `pl_historico.mediana` cobre 2016–19 pelo LPA básico da classe (DRE 3.99; travas: ações implícitas a ±25% da 1ª composição, evento ambíguo até a entrega do DFP → ano fora); golden: Bogle de 8 tickers, 0 palavras; dossiês FESA4/SHUL4/VLID3/HYPE3/LEVE3 mudam só o P/L. TIMS3 2021–23 conferidas nos PDFs do RI (19,32/4,50/18,29%); WPU0662 conferida no BLS → UNIP6 receita de meio A. Adversário: 3 achados corrigidos.

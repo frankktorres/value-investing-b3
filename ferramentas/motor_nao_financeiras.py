@@ -787,6 +787,8 @@ def valores(emp: Industrial, mk: Mercado, ke_nom=None, margem=None, g_real=None,
 
 def qualifica_saida(anos_serie: int, anos_acima: int, nota_qualidade: float) -> bool:
     """§9, exceção de saída a 1,50×: série com ao menos 10 exercícios, ROIC real > WACC real em 8 deles e nota de qualidade ≥ 8."""
+    if anos_serie < 0 or anos_acima < 0 or anos_acima > anos_serie:      # N7: mais anos acima do que a série tem é dado impossível
+        raise ValueError(f"qualifica_saida: anos acima ({anos_acima}) fora de 0..{anos_serie} (anos da série)")
     return (anos_serie >= JANELA_MINIMA_SAIDA and anos_acima >= ANOS_ROIC_MINIMO
             and nota_qualidade >= NOTA_QUALIDADE_MINIMA)
 
@@ -821,6 +823,9 @@ def roic_por_ano(emp: Industrial, w_real, t_ef, med_outras):
 
 def central_de(anc):
     vals = list(anc.values())
+    ruins = [k for k, x in anc.items() if not isinstance(x, (int, float)) or isinstance(x, bool) or not math.isfinite(x)]
+    if not vals or ruins:    # N7: NaN na mediana depende da ordem das âncoras
+        raise ValueError(f"central_de: âncora(s) inválida(s) (NaN/inf/ausente): {ruins or 'nenhuma âncora'}")
     return median(vals), vals
 
 
