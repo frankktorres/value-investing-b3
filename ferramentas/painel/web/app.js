@@ -6,17 +6,19 @@ import { telaHall } from './telas/hall.js';
 import { telaEmpresa } from './telas/empresa.js';
 import { telaCarteira } from './telas/carteira.js';
 import { telaMonitor } from './telas/monitor.js';
+import { telaSistema } from './telas/sistema.js';
 
 const VERSAO = 2;
 const ARQ = {
   hall: 'dados/contrato/hall.json',
   carteira: 'dados/privado/carteira.json',
   monitor: 'dados/contrato/monitor.json',
+  sistema: 'dados/contrato/sistema.json',
   empresa: (tk) => `dados/contrato/empresa/${tk}.json`,
 };
 
 const estado = {
-  hall: null, carteira: null, monitor: null, empresas: {},
+  hall: null, carteira: null, monitor: null, sistema: null, empresas: {},
   erros: {}, ocultar: false, busca: '',
   hallVista: { filtro: 'todas', ordem: 'pc', soAB: false },
 };
@@ -55,7 +57,7 @@ function aplicarOcultar(on) {
 }
 
 // ------------------------------------------------------------------------------ rotas
-const ROTAS = ['hall', 'empresa', 'carteira', 'monitor'];
+const ROTAS = ['hall', 'empresa', 'carteira', 'monitor', 'sistema'];
 function rota() {
   const m = /^#\/([a-z]+)(?:\/([A-Za-z0-9]{4,8}))?\/?$/.exec(location.hash);
   return { id: m ? m[1] : (location.hash && location.hash !== '#' ? '?' : 'hall'), tk: m && m[2] ? m[2].toUpperCase() : null };
@@ -130,6 +132,7 @@ export function render() {
     out = telaEmpresa(c, tk);
   } else if (r.id === 'carteira') out = telaCarteira(c);
   else if (r.id === 'monitor') out = telaMonitor(c);
+  else if (r.id === 'sistema') out = telaSistema(c);
   else out = telaHall(c);
   contexto.textContent = out.contexto;
   pag.replaceChildren(...out.nos.filter((n) => n !== null && n !== undefined && n !== false));
@@ -188,12 +191,13 @@ async function iniciar() {
   });
   window.addEventListener('hashchange', () => { render(); document.getElementById('pagina').scrollTop = 0; window.scrollTo(0, 0); });
   render();
-  const [hl, ct, mn] = await Promise.all([ler(ARQ.hall), ler(ARQ.carteira), ler(ARQ.monitor)]);
+  const [hl, ct, mn, sy] = await Promise.all([ler(ARQ.hall), ler(ARQ.carteira), ler(ARQ.monitor), ler(ARQ.sistema)]);
   if (hl.dado && !(hl.dado.fatores && Array.isArray(hl.dado.fatores.escala_regua) && Array.isArray(hl.dado.empresas))) {
     estado.erros.hall = `${ARQ.hall} está incompleto (faltam fatores, escala da régua ou empresas). Rode painel --exportar de novo.`;
   } else if (hl.dado) { estado.hall = hl.dado; configurar(hl.dado.fatores); } else estado.erros.hall = hl.erro;
   if (ct.dado) estado.carteira = ct.dado; else estado.erros.carteira = ct.erro;
   if (mn.dado) estado.monitor = mn.dado; else estado.erros.monitor = mn.erro;
+  if (sy.dado) estado.sistema = sy.dado; else estado.erros.sistema = sy.erro;
   render();
 }
 

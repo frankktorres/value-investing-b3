@@ -510,6 +510,9 @@ def gerar(origem: Path = DADOS, destino: Path = DESTINO, privado: Path = PRIVADO
     except (OSError, KeyError, csv.Error) as ex:
         mon = {**monitor([]), "aviso": _sem_caminho(f"Não foi possível ler monitor/historico.csv ({type(ex).__name__}: {ex}).")}
     _gravar_json(destino / "monitor.json", mon)
+    from painel import sistema                             # folha do sistema (N4): só arquivos que já existem
+    ultimo_pregao = max((u for u in ultimo.values() if u), default=None)
+    _gravar_json(destino / "sistema.json", sistema.montar(hoje, ultimo_pregao))
     log(f"contrato: {len(linhas)} empresas · carteira {'vazia' if cart['vazia'] else 'ok'} · monitor {mon['rodada']}")
     return {"hall": hall, "carteira": cart, "monitor": mon}
 

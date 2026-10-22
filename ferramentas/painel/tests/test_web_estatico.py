@@ -18,7 +18,7 @@ def _sem_comentarios(txt: str) -> str:
 
 
 def test_tem_as_quatro_telas():
-    assert {p.name for p in (WEB / "telas").glob("*.js")} >= {"hall.js", "empresa.js", "carteira.js", "monitor.js"}
+    assert {p.name for p in (WEB / "telas").glob("*.js")} >= {"hall.js", "empresa.js", "carteira.js", "monitor.js", "sistema.js"}
 
 
 @pytest.mark.parametrize("arq", JS, ids=lambda p: p.name)
@@ -89,3 +89,11 @@ def test_guardas_de_formato_do_contrato_na_casca():
     assert "j.versao === undefined" in txt and "não informa a versão" in txt
     assert "hl.dado.fatores" in txt and "escala_regua" in txt and "está incompleto" in txt
     assert "ROTAS.includes(r.id)" in txt and "não existe" in txt
+
+
+def test_sistema_na_rota_no_menu_e_so_le_o_contrato():
+    """N4: a folha do sistema é rota real (sem o "em breve") e lê só `dados/contrato/sistema.json`."""
+    html = (WEB / "index.html").read_text(encoding="utf-8")
+    app = _sem_comentarios((WEB / "app.js").read_text(encoding="utf-8"))
+    assert "em breve" not in html and 'data-rota="sistema"' in html
+    assert "'sistema'" in app and "dados/contrato/sistema.json" in app and "telaSistema" in app

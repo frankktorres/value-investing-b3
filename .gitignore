@@ -24,6 +24,8 @@ carteira-real*
 RELATORIOS/privado/
 # Histórico da renda rumo à meta (R$ por pregão) — pessoal, escrito por relatorio CARTEIRA
 ferramentas/dados/privado/
+# Registro da última suíte completa (conftest.py → tela Sistema)
+ferramentas/dados/suite_ultima.json
 # Dados da tela (painel web): JSON regerável por `python -m painel.exportar`; a parte pessoal vai em dados/privado/
 ferramentas/painel/web/dados/
 # Capturas e logs do Playwright MCP (conferência da tela no navegador)

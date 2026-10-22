@@ -47,7 +47,7 @@
 | N1 | Higiene de docs (README, brief, BACKLOG, 03-hall, relatório diário, PROMPT do handoff) | P3 | feito 22/10 | executável | Check-up 21/10 |
 | N2 | Testes das regras sem cobertura (desconto por cenários, escala de Preço, saída 1,50× em financeira, DCF reverso) | P2 | feito 22/10 | executável | Check-up 21/10 |
 | N3 | Contrato liga o que o motor já calcula (setor, dividendo × JCP por mês, data das fontes, faixa do DCF) | P3 | feito 22/10 (conferência visual pendente) | executável | Check-up 21/10 |
-| N4 | Tela Sistema (`sistema.json`: idade dos dados, boletins, golden, testes) | P3 | aberto (missão) | executável | HANDOFF |
+| N4 | Tela Sistema (`sistema.json`: idade dos dados, boletins, golden, testes) | P3 | feito 22/10 (conferência visual pendente) | executável | HANDOFF |
 | N5 | Contraste WCAG dos tokens da tela (parte automática da etapa 4) | P3 | aberto (missão) | executável | Check-up 21/10 |
 | N6 | "Ocultar valores" sem vazar DY líquido nem patrimônio | P2 | feito 21/10 | executável | QA 21/10 |
 | N7 | Motor recusa dado inválido (NaN/inf/None/0/negativo) | P2 | feito 22/10 | executável | QA 21/10 |
@@ -55,6 +55,7 @@
 | N9 | Robustez do servidor (porta em uso) e do front (hall sem `fatores`, `versao`, hash desconhecido) | P3 | feito 22/10 (conferência no navegador pendente) | executável | QA 21/10 |
 | N10 | CLIs com traceback cru (`temporada.py`, `triagem/rodar.py`) e ponto decimal no texto da ALLD3 | P3 | feito 22/10 | executável | QA 21/10 |
 | N11 | Cadastro do relatório (`relatorio/quali.py` CADASTRO só com BBSE3) | P3 | parcial 22/10: CNPJ dos 5 feito; pregão de EGIE3/TAEE11/ITUB4/SAPR11 a conferir na API da B3 (403 na nuvem) | local | QA 21/10 |
+| Q01 | `gerar_pdf_lote*.py` registram a fonte `C:/Windows/Fonts/arial.ttf` ao importar: `test_b23_petr4_premissas` e `test_carimbos` não coletam fora do Windows — fallback (Liberation/DejaVu) ou mover para função | P3 | aberto | executável | N4 (22/10) |
 
 ## Contagem por tipo
-local: 8 (B01, B02, B03, B20, B21, B28, B29, D4) · decisão Frank: 7 (B04, B07, B08, B17, B18, B19, B22) · executável: 32 (B05, B06, B09, B10, B11, B12, B13, B14, B15, B16, B23, B24, B25, B26, B30, B31, B27, T01, D1, D2, D5, N1, N2, N3, N4, N5, N6, N7, N8, N9, N10, N11) · total 47 (= nº de IDs na tabela).
+local: 9 (B01, B02, B03, B20, B21, B28, B29, D4, N11) · decisão Frank: 7 (B04, B07, B08, B17, B18, B19, B22) · executável: 32 (B05, B06, B09, B10, B11, B12, B13, B14, B15, B16, B23, B24, B25, B26, B30, B31, B27, T01, D1, D2, D5, N1, N2, N3, N4, N5, N6, N7, N8, N9, N10, Q01) · total 48 (= nº de IDs na tabela).

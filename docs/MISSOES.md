@@ -34,7 +34,7 @@ Os outros métodos seguem `null`. Probabilidade e impacto de risco ficam `null` 
 
 *Pronto quando:* `painel/tests/test_contrato.py` cobre os 4 campos com fixture; `test_web_estatico.py` verde (sem cálculo no front).
 
-**N4 — Tela Sistema** (`docs/design/handoff-claude-code/handoff/HANDOFF.md:52-53`, captura `06-sistema`). Contrato `web/dados/contrato/sistema.json` com:
+**(FEITA 22/10) N4 — Tela Sistema** (`docs/design/handoff-claude-code/handoff/HANDOFF.md:52-53`, captura `06-sistema`). Contrato `web/dados/contrato/sistema.json` com:
 - idade de cada dado (COTAHIST, CVM, proventos B3, monitor, temporada);
 - último boletim do monitor e da temporada;
 - data e motivo do golden;
@@ -109,6 +109,7 @@ Front lê só o contrato. Tira o "Sistema em breve" do `index.html:27`.
 (nenhuma)
 
 ## Feitas
+- **N4** (22/10, noite): `painel/sistema.py` + `sistema.json` + `telas/sistema.js` (rota `#/sistema`); registro da suíte pelo `conftest`; `test_sistema.py`, `test_web_estatico`. Conferência visual: Frank (dia).
 - **N3** (22/10, noite): contrato com setor (triagem/FCA), dividendo × JCP por mês, data por fonte (`Origem.data`) e faixa do DCF (pessimista/otimista); front lê só o contrato; testes em `painel/tests/test_contrato.py`; `DECISOES.md` 22/10. Falta conferir visualmente no navegador (Frank, dia); o `contrato/` local precisa de `painel --exportar` para regerar.
 - **N11** (22/10, noite, parcial): `CADASTRO` com CNPJ de EGIE3, PETR4, TAEE11, ITUB4 e SAPR11 (da triagem de 02/10) e pregão da PETR4 (`proventos_ex.PREGAO`); **b3.com.br devolve 403 na nuvem** → pregão de EGIE3, TAEE11, ITUB4, SAPR11 ficou `None` (não se chuta); o FRE já aparece, a série de proventos desses 4 segue com aviso. **Local (Frank/dia):** conferir `tradingName` na API da B3 (TAEE11 = TAESA?, ITUB4 = ITAUUNIBANCO?, EGIE3, SAPR11) e preencher. `tests/test_n11_cadastro_relatorio.py`.
 - **N8** (22/10, noite): investigado — o nº de ações em mil NÃO chega ao valor por ação (cada leitor reescala; financeiras usam VPA/LPA da StatusInvest; só o follow-on da ISAE4 lê cru, em unidades). Relatório em `docs/QA-2026-10-21.md`; `tests/test_n8_escala_acoes.py`; nada a regravar.

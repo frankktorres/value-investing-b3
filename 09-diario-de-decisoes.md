@@ -1017,3 +1017,10 @@ dado conferido, o bloco de proventos avisa em vez de inventar). N8: nº de açõ
 (com o desconto de controlador, só em valor > 0 — igual ao valor da âncora); `calendario_secao` ganha as colunas Dividendos e JCP (líquidos); `painel/contrato.py` lê `setor` da triagem,
 `data` de cada fonte e os pares baixo/alto e dividendos/jcp. Front: setor na linha do Hall, data na lista de fontes, barra do calendário empilhada dividendo × JCP (Ocultar mantém uma barra só).
 Probabilidade/impacto de risco, tipo/efeito de premissa, yield projetado e concentração por setor da carteira seguem sem fonte. Conferência visual no navegador fica para o Frank (dia). Suíte 937 passed, 42 skipped.
+
+## 22/10/2026 — N4: tela Sistema (nenhuma palavra, central ou golden mudou)
+`painel/sistema.py` grava `web/dados/contrato/sistema.json` (chamado por `contrato.gerar`): idade de COTAHIST (último pregão do hall), CVM (`MANIFESTO.json`), proventos da B3 (o arquivo mais antigo de
+`dados/proventos_hall/`), monitor (última rodada do `historico.csv`) e temporada (último `BOLETINS/*-temporada.md`); último boletim do monitor e da temporada; data (`golden_log.md`) e motivo (`golden.json`) do
+golden; e a última suíte — registro novo: `conftest.pytest_sessionfinish` grava `dados/suite_ultima.json` (ignorado pelo git; só suíte completa, ≥ 400 testes, sem caminho/`-k`/`-m`; leva os argumentos usados).
+Ausente = `null` + "sem registro". Front: rota `#/sistema` (`telas/sistema.js`), menu sem o "em breve". Conferência visual no navegador fica para o Frank (dia). Suíte 949 passed, 42 skipped.
+Achado: `tests/test_b23_petr4_premissas.py` e `tests/test_carimbos.py` não coletam na nuvem (fonte `C:/Windows/Fonts/arial.ttf` nos `gerar_pdf_lote*`) — vai ao BACKLOG.
