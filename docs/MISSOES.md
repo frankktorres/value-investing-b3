@@ -1,10 +1,19 @@
 # MISSOES
-*Fila de trabalho da rotina autônoma. Cada missão: executável só com o GitHub, uma por turno, com "pronto quando" verificável. Ao terminar, mover para "Feitas" e registrar em `RELATORIO-DIARIO.md`. Fonte: `BACKLOG.md` (tipo executável).*
+*Fila de trabalho da rotina autônoma. Cada missão: executável só com o GitHub, com "pronto quando" verificável. Ao terminar, mover para "Feitas" e registrar em `RELATORIO-DIARIO.md`. Fonte: `BACKLOG.md` (tipo executável). Desde 22/10 a rotina grava no ramo `claude/*` dela; o `ferramentas/conferir_noite.py` junta no master de manhã, com os dados locais (`DECISOES.md`, 22/10).*
 
 ## Próximas (ordem de prioridade)
-*Fila da madrugada (Frank, 21/10 tarde), uma por turno, NESTA ORDEM: **N7 → N1 → N2 → N9 → N10 → N8 → N11 → N3 → N4 → N5**
-(a ordem do texto abaixo não manda). N6 feita. Na nuvem não há `ferramentas/dados/`: teste que precisa de
-dado bruto pula; teste novo usa fixture pequena. Nenhuma delas muda palavra, central ou golden — se mudar, parar e ir para `wip/auto`.*
+**N12 — Data de cada fonte de verdade no produto (ressalva do revisor da noite de 22/10; N3 ficou parcial).** O contrato da tela
+já tem `fontes[].data` (de `Origem.data`, `relatorio/modelo.py`), mas só os registros de `insumos_a` passam `data=`: no contrato
+exportado em 22/10 manhã, **27 de 466 fontes** têm data (19 COTAHIST e poucas mais); `relatorio/procedencia.py` e quem mais
+construir `Origem(` não passam nada (Tesouro, StatusInvest, B3 proventos, CVM DFP/ITR, Damodaran sem data). Preencher a
+data só onde ela está declarada num arquivo do repo, sem chute: COTAHIST = `precos_hall.PRECO_DATA`; proventos da B3 =
+`baixado_em` de `dados/proventos_hall/<TK>.json`; CVM DFP/ITR = a referência do LTM (`ltm_ref` do `cvm_series.json`);
+FRE = o ano do formulário. Origem sem data declarada continua `None`.
+*Pronto quando:* teste com fixture mostra `data` preenchida para COTAHIST, proventos e CVM, e `None` para origem sem data;
+`grep -rn "Origem(" ferramentas --include=*.py | grep -v tests` lista onde a data entrou; nenhuma palavra, central ou golden
+mudou (`git diff --stat ferramentas/tests/golden.json` vazio); linha no `09`.
+
+*Fila da madrugada de 22/10 (N7 → N1 → N2 → N9 → N10 → N8 → N11 → N3 → N4 → N5): toda feita; N11 e N3 parciais.*
 
 **(FEITA 22/10) N1 — Higiene de docs (check-up 21/10).** Corrigir só texto:
 - (a) `README.md`: doutrina v2.6 (linhas 2, 9, 50); 8 dossiês (+ALLD3, FESA4, SHUL4, VLID3, linhas 23 e 50); tela v0.2 com Hall/Empresa/Carteira/Monitor (linha 25).

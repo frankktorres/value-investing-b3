@@ -5,3 +5,6 @@ ferramentas/dados/derivados_zip.json text eol=lf
 ferramentas/dados/cvm/MANIFESTO.json text eol=lf
 ferramentas/prospectivo/*.chain text eol=lf
 ferramentas/dados/macro/MANIFESTO_MACRO.json text eol=lf
+ferramentas/triagem/dados/erro_proxy_*.csv text eol=lf
+# scripts da nuvem (Linux): LF sempre, mesmo com core.autocrlf=true
+*.sh text eol=lf

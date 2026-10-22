@@ -1,0 +1,172 @@
+{
+ "api_token_hint": "",
+ "created_at": "2026-10-13T20:35:22.178919Z",
+ "created_kind": "ROUTINE_CREATED_KIND_UNSPECIFIED",
+ "created_surface": "ROUTINE_CREATED_SURFACE_UNSPECIFIED",
+ "created_via": "http_api",
+ "creator": {
+  "account_uuid": "73bce6f1-b781-458c-8e5c-040e22d24453"
+ },
+ "cron_expression": "40 7 * * *",
+ "derived_state": {
+  "files": [],
+  "folders": [],
+  "folders_state": "FOLDERS_STATE_NONE",
+  "model": "claude-sonnet-5-5",
+  "prompt": "Você é o engenheiro autônomo deste projeto de value investing (B3). Branch: master.\nTrabalhe sem pedir OK. Esta instrução substitui a regra \"uma missão por turno\" do\nCLAUDE.md: aproveite a sessão inteira.\n\nAMBIENTE: use /usr/bin/python3 para rodar o pytest\n(cd ferramentas && /usr/bin/python3 -m pytest --ignore=backtest -q).\n\nPRIORIDADE 1 – MISSÕES: execute TODAS as missões abertas de docs/MISSOES.md, da\nmais antiga para a mais nova, e marque cada uma como feita.\n\nPRIORIDADE 2 – BACKLOG: SEMPRE, depois das missões, pegue até 2 itens \"executável\"\nde maior prioridade de docs/BACKLOG.md ainda não feitos nem em PR aberto.\nSó pule se o tempo acabar.\n\nPRIORIDADE 3 – FOCO DO DIA (se ainda sobrar capacidade):\nseg: fontes e coleta de dados (CVM, B3, BCB, Tesouro) | ter: qualidade e testes\nqua: modelos de valuation (Graham, Bazin, DCF, múltiplos) | qui: bugs e performance\nsex: backlog executável | sáb: check-up geral | dom: melhorias de maior valor.\n\nCOMO TRABALHAR:\n- Leia CLAUDE.md, BACKLOG, PENDENTE-FRANK e os PRs abertos; não repita trabalho.\n  Respostas novas do Frank no PENDENTE-FRANK viram decisões e itens executáveis.\n- Registre no BACKLOG o que descobrir e não der tempo de fazer.\n- Decisão reversível: decida e registre em DECISOES.md. Só pare em: senha/segredo,\n  dinheiro, apagar dados. NUNCA execute ordem de compra/venda nem apresente\n  recomendação de investimento como fato; análises são hipóteses.\n- Motor, doutrina ou golden: só com teste verde e registro no 09-diario.\n- Backtest longo e dados da CVM em ZIP são \"local\": pule.\n- Se um domínio for bloqueado pela rede, registre em MISSOES.md qual é e siga.\n- Um commit por item, testes, subagente revisor sobre o diff. Testes verdes e\n  revisor aprovou: push na master. Senão: branch wip/auto e PR em rascunho explicando.\n- Se o código depende de arquivo externo (ex.: carteira_tickers.json), trate a\n  ausência com mensagem clara em vez de quebrar.\n\nRELATÓRIO: no topo de docs/RELATORIO-DIARIO.md, máx. 5 linhas: o que fez, o que\ndescobriu, o que precisa de mim."
+ },
+ "enabled": true,
+ "enabled_plugins": [],
+ "ended_reason": "",
+ "extra_marketplaces": [],
+ "id": "trig_016wrGPsNHp4dUaVAExNhZyU",
+ "job_config": {
+  "ccr": {
+   "environment_id": "env_014gwoENsQxHwMi1CTpyaWzz",
+   "events": [
+    {
+     "data": {
+      "message": {
+       "content": "Você é o engenheiro autônomo deste projeto de value investing (B3). Branch: master.\nTrabalhe sem pedir OK. Esta instrução substitui a regra \"uma missão por turno\" do\nCLAUDE.md: aproveite a sessão inteira.\n\nAMBIENTE: use /usr/bin/python3 para rodar o pytest\n(cd ferramentas && /usr/bin/python3 -m pytest --ignore=backtest -q).\n\nPRIORIDADE 1 – MISSÕES: execute TODAS as missões abertas de docs/MISSOES.md, da\nmais antiga para a mais nova, e marque cada uma como feita.\n\nPRIORIDADE 2 – BACKLOG: SEMPRE, depois das missões, pegue até 2 itens \"executável\"\nde maior prioridade de docs/BACKLOG.md ainda não feitos nem em PR aberto.\nSó pule se o tempo acabar.\n\nPRIORIDADE 3 – FOCO DO DIA (se ainda sobrar capacidade):\nseg: fontes e coleta de dados (CVM, B3, BCB, Tesouro) | ter: qualidade e testes\nqua: modelos de valuation (Graham, Bazin, DCF, múltiplos) | qui: bugs e performance\nsex: backlog executável | sáb: check-up geral | dom: melhorias de maior valor.\n\nCOMO TRABALHAR:\n- Leia CLAUDE.md, BACKLOG, PENDENTE-FRANK e os PRs abertos; não repita trabalho.\n  Respostas novas do Frank no PENDENTE-FRANK viram decisões e itens executáveis.\n- Registre no BACKLOG o que descobrir e não der tempo de fazer.\n- Decisão reversível: decida e registre em DECISOES.md. Só pare em: senha/segredo,\n  dinheiro, apagar dados. NUNCA execute ordem de compra/venda nem apresente\n  recomendação de investimento como fato; análises são hipóteses.\n- Motor, doutrina ou golden: só com teste verde e registro no 09-diario.\n- Backtest longo e dados da CVM em ZIP são \"local\": pule.\n- Se um domínio for bloqueado pela rede, registre em MISSOES.md qual é e siga.\n- Um commit por item, testes, subagente revisor sobre o diff. Testes verdes e\n  revisor aprovou: push na master. Senão: branch wip/auto e PR em rascunho explicando.\n- Se o código depende de arquivo externo (ex.: carteira_tickers.json), trate a\n  ausência com mensagem clara em vez de quebrar.\n\nRELATÓRIO: no topo de docs/RELATORIO-DIARIO.md, máx. 5 linhas: o que fez, o que\ndescobriu, o que precisa de mim.",
+       "role": "user"
+      },
+      "parent_tool_use_id": null,
+      "session_id": "",
+      "type": "user",
+      "uuid": "e52d16ef-d902-410f-8648-78057310cbcb"
+     }
+    }
+   ],
+   "session_context": {
+    "allowed_tools": [
+     "Bash",
+     "Read",
+     "Write",
+     "Edit",
+     "Glob",
+     "Grep",
+     "WebFetch",
+     "WebSearch"
+    ],
+    "autofix_on_pr_create": false,
+    "model": "claude-sonnet-5-5",
+    "outcomes": [
+     {
+      "git_repository": {
+       "git_info": {
+        "branches": [
+         "claude/keen-babbage"
+        ],
+        "repo": "frankktorres/value-investing-b3"
+       }
+      }
+     }
+    ],
+    "sources": [
+     {
+      "git_repository": {
+       "url": "https://github.com/frankktorres/value-investing-b3"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "last_fired_at": "2026-10-22T07:40:45.411705Z",
+ "last_run": {
+  "failure_reason": "ROUTINE_RUN_FAILURE_REASON_UNSPECIFIED",
+  "finished_at": "2026-10-22T08:07:55.426288Z",
+  "fired_at": "2026-10-22T07:40:45.387049Z",
+  "session_id": "cse_01L1VVCevSpoz3NFzP5QLrNh",
+  "status": "ROUTINE_RUN_STATUS_SUCCEEDED"
+ },
+ "mcp_connections": [],
+ "name": "VALUE B3 – noturno",
+ "next_run_at": "2026-10-23T07:40:00Z",
+ "notifications": {
+  "channel": {
+   "email": false,
+   "push": true,
+   "slack": false
+  }
+ },
+ "persist_session": false,
+ "session_request": {
+  "config": {
+   "account_plugins": [],
+   "account_skills": [],
+   "active_mount_paths": [],
+   "allowed_tools": [
+    "Bash",
+    "Read",
+    "Write",
+    "Edit",
+    "Glob",
+    "Grep",
+    "WebFetch",
+    "WebSearch"
+   ],
+   "auto_mode_allow": [],
+   "auto_mode_environment": [],
+   "auto_mode_soft_deny": [],
+   "autofix_on_pr_create": false,
+   "builtin_tools": [],
+   "disallowed_tools": [],
+   "file_mounts": [],
+   "mcp_servers": [],
+   "metadata": {},
+   "model": "claude-sonnet-5-5",
+   "otel_content_capture": [],
+   "outcomes": [
+    {
+     "git_info": {
+      "branches": [
+       "claude/keen-babbage"
+      ],
+      "host": "",
+      "ref": null,
+      "repo": "frankktorres/value-investing-b3",
+      "type": "github"
+     },
+     "type": "git_repository"
+    }
+   ],
+   "owner_tagged_mcp_servers": [],
+   "prompt_cache_relay_enabled": false,
+   "sources": [
+    {
+     "sparse_checkout_exclude_patterns": [],
+     "sparse_checkout_paths": [],
+     "type": "git_repository",
+     "url": "https://github.com/frankktorres/value-investing-b3"
+    }
+   ],
+   "subagents": [],
+   "worktree": false
+  },
+  "environment_id": "env_014gwoENsQxHwMi1CTpyaWzz",
+  "environment_variables": {},
+  "events": [
+   {
+    "ephemeral": false,
+    "historical": false,
+    "mentioned_account_ids": [],
+    "payload": {
+     "message": {
+      "content": "Você é o engenheiro autônomo deste projeto de value investing (B3). Branch: master.\nTrabalhe sem pedir OK. Esta instrução substitui a regra \"uma missão por turno\" do\nCLAUDE.md: aproveite a sessão inteira.\n\nAMBIENTE: use /usr/bin/python3 para rodar o pytest\n(cd ferramentas && /usr/bin/python3 -m pytest --ignore=backtest -q).\n\nPRIORIDADE 1 – MISSÕES: execute TODAS as missões abertas de docs/MISSOES.md, da\nmais antiga para a mais nova, e marque cada uma como feita.\n\nPRIORIDADE 2 – BACKLOG: SEMPRE, depois das missões, pegue até 2 itens \"executável\"\nde maior prioridade de docs/BACKLOG.md ainda não feitos nem em PR aberto.\nSó pule se o tempo acabar.\n\nPRIORIDADE 3 – FOCO DO DIA (se ainda sobrar capacidade):\nseg: fontes e coleta de dados (CVM, B3, BCB, Tesouro) | ter: qualidade e testes\nqua: modelos de valuation (Graham, Bazin, DCF, múltiplos) | qui: bugs e performance\nsex: backlog executável | sáb: check-up geral | dom: melhorias de maior valor.\n\nCOMO TRABALHAR:\n- Leia CLAUDE.md, BACKLOG, PENDENTE-FRANK e os PRs abertos; não repita trabalho.\n  Respostas novas do Frank no PENDENTE-FRANK viram decisões e itens executáveis.\n- Registre no BACKLOG o que descobrir e não der tempo de fazer.\n- Decisão reversível: decida e registre em DECISOES.md. Só pare em: senha/segredo,\n  dinheiro, apagar dados. NUNCA execute ordem de compra/venda nem apresente\n  recomendação de investimento como fato; análises são hipóteses.\n- Motor, doutrina ou golden: só com teste verde e registro no 09-diario.\n- Backtest longo e dados da CVM em ZIP são \"local\": pule.\n- Se um domínio for bloqueado pela rede, registre em MISSOES.md qual é e siga.\n- Um commit por item, testes, subagente revisor sobre o diff. Testes verdes e\n  revisor aprovou: push na master. Senão: branch wip/auto e PR em rascunho explicando.\n- Se o código depende de arquivo externo (ex.: carteira_tickers.json), trate a\n  ausência com mensagem clara em vez de quebrar.\n\nRELATÓRIO: no topo de docs/RELATORIO-DIARIO.md, máx. 5 linhas: o que fez, o que\ndescobriu, o que precisa de mim.",
+      "role": "user"
+     },
+     "parent_tool_use_id": null,
+     "session_id": "",
+     "type": "user",
+     "uuid": "e52d16ef-d902-410f-8648-78057310cbcb"
+    },
+    "user_declared_urls": []
+   }
+  ],
+  "metadata": {},
+  "tags": []
+ },
+ "suspension_reason": "",
+ "updated_at": "2026-10-21T22:29:14.415621Z"
+}

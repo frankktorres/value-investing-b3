@@ -35,8 +35,9 @@ def pytest_sessionfinish(session, exitstatus):
     import json
     import datetime
     args = list(session.config.invocation_params.args)
-    parcial = [a for a in args if not a.startswith("-")] or any(a in ("-k", "-m", "--lf", "--ff", "-x") or a.startswith(("-k", "-m"))
-                                                                for a in args)
+    # caminho explícito = parcial; valor de opção (`-p no:cacheprovider`) não é caminho (22/10: a tela dizia "sem registro")
+    caminho = session.config.args_source == pytest.Config.ArgsSource.ARGS
+    parcial = caminho or any(a in ("-k", "-m", "--lf", "--ff", "-x") or a.startswith(("-k", "-m")) for a in args)
     tr = session.config.pluginmanager.get_plugin("terminalreporter")
     if parcial or tr is None or os.environ.get("CLAUDE_NO_SUITE_LOG") == "1":
         return

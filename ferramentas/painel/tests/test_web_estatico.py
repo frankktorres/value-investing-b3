@@ -89,6 +89,7 @@ def test_guardas_de_formato_do_contrato_na_casca():
     assert "j.versao === undefined" in txt and "não informa a versão" in txt
     assert "hl.dado.fatores" in txt and "escala_regua" in txt and "está incompleto" in txt
     assert "ROTAS.includes(r.id)" in txt and "não existe" in txt
+    assert "['', '#', '#/'].includes(location.hash) ? 'hall'" in txt  # `#/` é o Hall, não "página não existe" (revisor 22/10)
 
 
 def test_sistema_na_rota_no_menu_e_so_le_o_contrato():

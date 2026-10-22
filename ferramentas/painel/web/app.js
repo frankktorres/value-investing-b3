@@ -60,7 +60,7 @@ function aplicarOcultar(on) {
 const ROTAS = ['hall', 'empresa', 'carteira', 'monitor', 'sistema'];
 function rota() {
   const m = /^#\/([a-z]+)(?:\/([A-Za-z0-9]{4,8}))?\/?$/.exec(location.hash);
-  return { id: m ? m[1] : (location.hash && location.hash !== '#' ? '?' : 'hall'), tk: m && m[2] ? m[2].toUpperCase() : null };
+  return { id: m ? m[1] : (['', '#', '#/'].includes(location.hash) ? 'hall' : '?'), tk: m && m[2] ? m[2].toUpperCase() : null };
 }
 
 export function navegar(hash) { if (location.hash !== hash) location.hash = hash; else render(); }

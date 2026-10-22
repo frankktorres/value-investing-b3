@@ -1,6 +1,6 @@
 {
  "nota": "sha256 dos ZIPs da CVM em dados/cvm (fora do git). A CVM reescreve arquivos; ver manifesto_cvm.py.",
- "atualizado_em": "2026-10-22",
+ "atualizado_em": "2026-10-19",
  "arquivos": {
   "dfp_2010.zip": {
    "sha256": "c6a9c95c2510e8a71bb583084492e9c52c3f423a3be56f1c5d2dd4f6960677ff",

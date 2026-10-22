@@ -1,5 +1,5 @@
 # PROJECT BRIEF — Mesa de Value Investing B3
-*Versão de 22/10/2026 (noite: missões N1–N5, N7–N11 e Q01 — motor recusa dado inválido, tela Sistema, contrato com setor/faixa do DCF/JCP por mês, suíte 963; antes, 21/10 rev. tarde: doutrina 2.6.1 — casos do §7 com ano e fonte —, Ocultar sem vazar o DY, #7–#9 respondidas; antes check-up: armadilhas na exceção 0,80×, temporada blindada, Agendador noturno, backup sem privado; antes B26; antes B30/B31: P/L histórico 2016–19 pelo LPA; TIMS3 e WPU0662 conferidas; doutrina v2.6) · gerado por `/brief` · fonte: repositório, memória do projeto e `docs/auditoria/AUDITORIA_2026-10-08.md`*
+*Versão de 22/10/2026 (manhã: rodada da noite conferida com dados e juntada; rotina da nuvem → ramo `claude/*` + `conferir_noite.py` junta no master; noite: missões N1–N5, N7–N11 e Q01 — motor recusa dado inválido, tela Sistema, contrato com setor/faixa do DCF/JCP por mês, suíte 963; antes, 21/10 rev. tarde: doutrina 2.6.1 — casos do §7 com ano e fonte —, Ocultar sem vazar o DY, #7–#9 respondidas; antes check-up: armadilhas na exceção 0,80×, temporada blindada, Agendador noturno, backup sem privado; antes B26; antes B30/B31: P/L histórico 2016–19 pelo LPA; TIMS3 e WPU0662 conferidas; doutrina v2.6) · gerado por `/brief` · fonte: repositório, memória do projeto e `docs/auditoria/AUDITORIA_2026-10-08.md`*
 
 ## 1. Projeto
 Mesa de análise fundamentalista da B3 para dividendos/JCP e longo prazo: doutrina escrita (v2.6.1) + motores de valuation em Python que
@@ -108,6 +108,7 @@ MVP de uso pessoal, maduro no cálculo. Um usuário real, sem terceiros. Prazo e
 6. Licença pretendida do código (fechado/aberto)?
 
 ## 12. O que mudou
+- 22/10/2026 (manhã): rodada da noite conferida com os dados locais (1.004 passed) e juntada; ferramenta nova `conferir_noite.py` (tarefa 07:15) junta o ramo `claude/*` da rotina só com a suíte verde e sem golden/doutrina; `scripts/cloud_setup.sh`; prompt da rotina revisto (backlog sem limite, foco do dia obrigatório, revisor Opus, critério de "feita"); gargalo novo: rede da nuvem bloqueia a B3 e o `conteudo.cvm.gov.br` (decisão do Frank na UI). Correções: manifesto sem data falsa, `#/`, registro da suíte, EOL do `erro_proxy`.
 - 22/10/2026 (noite, rotina): N7 motor recusa NaN/inf/None/0/negativo; N2 testes de regras; N9 servidor exclusivo e guardas do front; N10 CLIs rc 2 e vírgula decimal nas notas; N8 ações em mil não chegam ao valor; N11 CNPJ no cadastro do relatório (pregões a conferir na B3); N3 contrato com setor, JCP por mês, data de fonte e faixa do DCF; N4 tela Sistema + `suite_ultima.json`; N5 teste de contraste; Q01 Liberation Sans no lugar da Arial fora do Windows. Nenhuma palavra mudou.
 - 08/10/2026 (Onda 1.2): doutrina v2.4; Onda 1 com 1.1 e 1.2 feitas; contagem de testes; gargalo 1 e marco 1 atualizados.
 - 08/10/2026 (Onda 1.3): doutrina v2.5 (regulados por P/VP justificado como proxy declarado); ferramentas novas `hall03.py`,

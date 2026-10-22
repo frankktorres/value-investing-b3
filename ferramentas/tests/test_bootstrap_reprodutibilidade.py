@@ -81,6 +81,20 @@ def test_verificar_aponta_diferem_faltam_e_sem_registro(tmp_path):
     assert (r["ok"], r["diferem"], r["faltam"], r["sem_registro"]) == (["a.zip"], ["b.zip"], ["c.zip"], ["d.zip"])
 
 
+def test_manifesto_sem_zip_novo_nao_regrava_a_data(tmp_path):
+    """22/10/2026: a temporada diária regravava só `atualizado_em` e o hook fazia um commit de ruído por dia."""
+    (tmp_path / "a.zip").write_bytes(b"1")
+    man = tmp_path / "M.json"
+    manifesto_cvm.gerar(tmp_path, man)
+    corpo = json.loads(man.read_text(encoding="utf-8"))
+    man.write_text(json.dumps({**corpo, "atualizado_em": "2000-01-01"}), encoding="utf-8")
+    manifesto_cvm.gerar(tmp_path, man)                                  # mesmos ZIPs: arquivo intacto
+    assert json.loads(man.read_text(encoding="utf-8"))["atualizado_em"] == "2000-01-01"
+    (tmp_path / "a.zip").write_bytes(b"11")
+    manifesto_cvm.gerar(tmp_path, man)                                  # ZIP mudou: regrava com a data de hoje
+    assert json.loads(man.read_text(encoding="utf-8"))["atualizado_em"] == dt.date.today().isoformat()
+
+
 def test_guardar_anterior_copia_datada_so_se_mudou(tmp_path):
     alvo, novo = tmp_path / "itr_2026.zip", tmp_path / "itr_2026.zip.novo"
     novo.write_bytes(b"v1")

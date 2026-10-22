@@ -44,6 +44,8 @@ def carregar(manifesto: pathlib.Path = MANIFESTO) -> dict:
 
 
 def _salvar(arquivos: dict, manifesto: pathlib.Path) -> None:
+    if manifesto.exists() and carregar(manifesto) == arquivos:
+        return  # nenhum ZIP mudou: regravar só a data virava um commit de ruído por dia (22/10/2026)
     manifesto.parent.mkdir(parents=True, exist_ok=True)
     corpo = {"nota": "sha256 dos ZIPs da CVM em dados/cvm (fora do git). A CVM reescreve arquivos; ver manifesto_cvm.py.",
              "atualizado_em": dt.date.today().isoformat(), "arquivos": dict(sorted(arquivos.items()))}
