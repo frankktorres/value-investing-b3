@@ -238,6 +238,22 @@ WEG; ROE recorrente do Itaú; Kerr 1998 (HARKing); Barr et al. 2015; Harvey, Liu
 | # | Data | Hipótese/item | Variante | Executada sobre | Resultado (resumo) | Commit |
 |---|---|---|---|---|---|---|
 | 0 | 22/10/2026 | baseline | sens.py, sens2.py (diagnóstico) | 38 tickers | reproduzido (§1) | 9caaf30 |
+| 1 | 22/10/2026 | H1 (b) | **variante, conta 1/24:** trava "mesma base" (contábil × WACC nominal **e** reposição × WACC real) | 21 industriais | trava muda em 2 (ABEV3, WEGE3), \|Δcentral\| ≥ 10% em 0 → (b) não cumprido; (a) sem gabarito lido → **a conferir** | 9e9e8ac + `oraculo/hipoteses.py` |
+| 2 | 22/10/2026 | H2 (a) | **variante, conta 2/24:** ponto fixo partindo de PL, valor de mercado e 3×PL | 21 industriais | RECV3 > 1% entre partidas; (b) caixa ↑ nunca baixa o central; (c) Ke > 30% em 4 → **aceita** | idem |
+| 3 | 22/10/2026 | H3 | teste (não conta): elasticidades ±10% a Ke, fluxo e g; cosseno entre âncoras | 20 industriais, 17 financeiras | financeiras: 100% dos pares ≥ 0,95 (aceita); industriais: 0% ≥ 0,95 e nenhuma âncora < 0,80 na maioria (inconclusiva) → **mista** | idem |
+| 4 | 22/10/2026 | H4 | **variante, conta 3/24:** rf e π de 15/10 (fonte A mais perto do preço; 22/10 não coletado), data do preço do lote | 39 dos lotes | Δπ −0,71 p.p., ΔKe −1,13 p.p.; LEVE3 e ISAE4 NÃO CONCLUSIVO → JUSTA → **aceita**; vértice da π no prazo da rf: a conferir (dado) | idem |
+| 5 | 22/10/2026 | H5 | teste (não conta): ctryprem de 05/01/2026 (nota A) | — | Ke_D 12,40% × casa 12,06% (−0,34 p.p.) → **refutada (provisória**: método sem página do paper) | idem |
+| 6 | 22/10/2026 | H6 | teste (não conta): ROIC pelo DFP, leitor próprio | WEGE3, LEVE3, B3SA3 | motor 14,6 / 11,7 / 0,0 p.p. abaixo da mediana 2023–25; RI da WEG não lido em fonte A → **a conferir** | idem |
+| 7 | 22/10/2026 | H7 | teste (não conta): Mann-Kendall + BH q = 0,05 | 21 industriais | só WEGE3 significativa → **refutada**. A 1ª execução usou a margem ORDENADA (erro de código, não variante) e foi descartada | idem |
+| 8 | 22/10/2026 | H8 | teste (não conta): ROE pelo DFP 2017–25 | 18 Financeira | roe_lp a ≥ 1 p.p. em 5 (BBSE3, BRSR6, CMIG4, CPFE3, CXSE3); sinal muda em 3 (CMIG4, ITUB4, PSSA3) → **aceita** | idem |
+| 9 | 22/10/2026 | H9 R-mercado | **variante, conta 4/24:** Shapley com Ke implícito, margem LTM, g sem trava, alíquota mediana, desconto 0 | 18 industriais | taxa 76%, margem 23% → dominante taxa | idem |
+| 10 | 22/10/2026 | H9 R-fonte | **variante, conta 5/24:** Ke de Damodaran (β = 1, marcado), alíquota 34%, desconto 0; margem e g da casa (marcados) | 20 industriais | taxa 98% → **empilhamento não confirmado** nas duas | idem |
+| 11 | 22/10/2026 | H10 | teste (não conta): tira o campo de todos os períodos | 21 industriais | caixa 14, dívida 14, PL 9, D&A 18, imobilizado 16 com palavra de decisão; lucro e receita 0 → **aceita (bug)** | idem |
+| 12 | 22/10/2026 | H11 | conferência de fonte (não conta) | 8 reguladas | nenhuma nota técnica lida no primário → **a conferir** | idem |
+
+Nota das linhas 1–12: as variantes rodaram três vezes no mesmo código. As duas primeiras execuções quebraram antes de gravar (a
+H7 com tipo do numpy; depois a pasta de saída inexistente). Como as variantes são determinísticas, cada uma conta uma vez.
+Relatório: `docs/oraculo/hipoteses-2026-10-22.md` (e `.json`).
 
 ## 7. Emendas
 1. **22/10/2026 — definições de relatório da camada 5, sem efeito em palavra.**

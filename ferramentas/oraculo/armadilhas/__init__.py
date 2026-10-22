@@ -7,7 +7,7 @@ pré-registro) não têm número errado para o automático ver: são só do agen
     python -m oraculo.armadilhas          # aplica cada patch num git worktree temporário e registra em docs/oraculo/
 """
 ARMADILHAS = [
-    dict(id="01", patch="01_zero_silencioso.patch", defeito="zero silencioso novo: lucro ausente vira 0 (Piotroski, Sloan, OE)",
+    dict(id="01", patch="01_zero_silencioso.patch", defeito="zero silencioso novo: lucro ausente vira 0 (Piotroski, Beneish, Sloan, OE)",
          camada=2, alcada=("automatico", "agente")),
     dict(id="02", patch="02_real_nominal.patch", defeito="real × nominal: OE em R$ de hoje capitalizado ao Ke nominal",
          camada=1, alcada=("automatico", "agente")),
@@ -17,7 +17,7 @@ ARMADILHAS = [
          camada=4, alcada=("automatico", "agente")),
     dict(id="05", patch="05_regua_afrouxada.patch", defeito="régua afrouxada sem registro: BARATA ≤ 0,75",
          camada=1, alcada=("automatico", "agente")),
-    dict(id="06", patch="06_premissa_sem_fonte.patch", defeito="premissa digitada sem fonte que muda palavra (g real da KEPL3 1% → 3%)",
+    dict(id="06", patch="06_premissa_sem_fonte.patch", defeito="premissa digitada sem fonte que muda palavra (receita de meio de ciclo da KEPL3 +15%)",
          camada=7, alcada=("agente",)),
     dict(id="07", patch="07_golden_sem_camada.patch", defeito="golden regravado sem a camada que provou o valor no motivo",
          camada=7, alcada=("agente",)),

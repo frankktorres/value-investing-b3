@@ -1,5 +1,5 @@
 diff --git a/ferramentas/motor_nao_financeiras.py b/ferramentas/motor_nao_financeiras.py
-index c52f736..33efe34 100644
+index c52f736..0d49fd7 100644
 --- a/ferramentas/motor_nao_financeiras.py
 +++ b/ferramentas/motor_nao_financeiras.py
 @@ -305,11 +305,11 @@ def owner_earnings_ano(emp: Industrial, ano, anterior, kd_real, ciclica=False, t
@@ -33,6 +33,15 @@ index c52f736..33efe34 100644
              mb > mb0, giro > giro0]
      return sum(crit), crit
  
+@@ -357,7 +357,7 @@ def beneish(d, p):
+         depi = dep(p) / dep(d)
+         sga = lambda x: -(v(x, "desp_vendas", 0) + v(x, "desp_ga", 0)) / x["receita"]
+         sgai = sga(d) / sga(p)
+-        tata = (d["lucro"] - v(d, "fco", 0)) / d["ativo"]
++        tata = (v(d, "lucro", 0) - v(d, "fco", 0)) / d["ativo"]
+         lev = lambda x: (v(x, "pc", 0) + v(x, "pnc", 0)) / x["ativo"]
+         lvgi = lev(d) / lev(p)
+         m = (-4.84 + 0.92 * dsri + 0.528 * gmi + 0.404 * aqi + 0.892 * sgi + 0.115 * depi - 0.172 * sgai
 @@ -368,7 +368,7 @@ def beneish(d, p):
  
  

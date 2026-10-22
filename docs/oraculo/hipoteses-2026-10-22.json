@@ -1,0 +1,3074 @@
+{
+ "H1": {
+  "status": "a conferir",
+  "criterio_b": "não cumprido",
+  "linhas": [
+   {
+    "ticker": "ABEV3",
+    "roic": 0.203682,
+    "roic_rep": 0.191172,
+    "wacc": 0.19171,
+    "wacc_real": 0.119397,
+    "trava_casa": false,
+    "trava_real": true,
+    "muda": true,
+    "central": 9.19281,
+    "central_v": 9.19281,
+    "dcentral": 0.0
+   },
+   {
+    "ticker": "B3SA3",
+    "roic": 0.246716,
+    "roic_rep": 0.245635,
+    "wacc": 0.180848,
+    "wacc_real": 0.109194,
+    "trava_casa": true,
+    "trava_real": true,
+    "muda": false,
+    "central": 8.177214,
+    "central_v": 8.177214,
+    "dcentral": 0.0
+   },
+   {
+    "ticker": "FLRY3",
+    "roic": 0.115096,
+    "roic_rep": 0.110797,
+    "wacc": 0.178309,
+    "wacc_real": 0.106809,
+    "trava_casa": false,
+    "trava_real": false,
+    "muda": false,
+    "central": 10.873637,
+    "central_v": 10.873637,
+    "dcentral": 0.0
+   },
+   {
+    "ticker": "GGBR4",
+    "roic": 0.075606,
+    "roic_rep": 0.058857,
+    "wacc": 0.181778,
+    "wacc_real": 0.110068,
+    "trava_casa": false,
+    "trava_real": false,
+    "muda": false,
+    "central": 18.491146,
+    "central_v": 18.491146,
+    "dcentral": 0.0
+   },
+   {
+    "ticker": "HYPE3",
+    "roic": 0.084661,
+    "roic_rep": 0.069496,
+    "wacc": 0.17186,
+    "wacc_real": 0.100751,
+    "trava_casa": false,
+    "trava_real": false,
+    "muda": false,
+    "central": 16.22481,
+    "central_v": 16.22481,
+    "dcentral": 0.0
+   },
+   {
+    "ticker": "KEPL3",
+    "roic": 0.164765,
+    "roic_rep": 0.141053,
+    "wacc": 0.1834,
+    "wacc_real": 0.111591,
+    "trava_casa": false,
+    "trava_real": false,
+    "muda": false,
+    "central": 6.685064,
+    "central_v": 6.685064,
+    "dcentral": 0.0
+   },
+   {
+    "ticker": "KLBN11",
+    "roic": 0.071302,
+    "roic_rep": 0.05469,
+    "wacc": 0.160648,
+    "wacc_real": 0.090219,
+    "trava_casa": false,
+    "trava_real": false,
+    "muda": false,
+    "central": 2.620361,
+    "central_v": 2.620361,
+    "dcentral": 0.0
+   },
+   {
+    "ticker": "LEVE3",
+    "roic": 0.30729,
+    "roic_rep": 0.267271,
+    "wacc": 0.183826,
+    "wacc_real": 0.111991,
+    "trava_casa": true,
+    "trava_real": true,
+    "muda": false,
+    "central": 36.30688,
+    "central_v": 36.30688,
+    "dcentral": 0.0
+   },
+   {
+    "ticker": "PETR4",
+    "roic": 0.139616,
+    "roic_rep": 0.073276,
+    "wacc": 0.174223,
+    "wacc_real": 0.102971,
+    "trava_casa": false,
+    "trava_real": false,
+    "muda": false,
+    "central": 53.483901,
+    "central_v": 53.483901,
+    "dcentral": 0.0
+   },
+   {
+    "ticker": "PRIO3",
+    "roic": 0.107521,
+    "roic_rep": 0.091882,
+    "wacc": 0.168532,
+    "wacc_real": 0.097625,
+    "trava_casa": false,
+    "trava_real": false,
+    "muda": false,
+    "central": 46.285549,
+    "central_v": 46.285549,
+    "dcentral": 0.0
+   },
+   {
+    "ticker": "RANI3",
+    "roic": 0.077347,
+    "roic_rep": 0.057718,
+    "wacc": 0.184685,
+    "wacc_real": 0.112799,
+    "trava_casa": false,
+    "trava_real": false,
+    "muda": false,
+    "central": 3.186829,
+    "central_v": 3.186829,
+    "dcentral": 0.0
+   },
+   {
+    "ticker": "RECV3",
+    "roic": 0.023285,
+    "roic_rep": 0.014867,
+    "wacc": 0.237374,
+    "wacc_real": 0.16229,
+    "trava_casa": false,
+    "trava_real": false,
+    "muda": false,
+    "central": 0.0,
+    "central_v": 0.0,
+    "dcentral": null
+   },
+   {
+    "ticker": "SLCE3",
+    "roic": 0.085084,
+    "roic_rep": 0.04829,
+    "wacc": 0.169873,
+    "wacc_real": 0.098885,
+    "trava_casa": false,
+    "trava_real": false,
+    "muda": false,
+    "central": 7.590601,
+    "central_v": 7.590601,
+    "dcentral": 0.0
+   },
+   {
+    "ticker": "SMTO3",
+    "roic": 0.085871,
+    "roic_rep": 0.071789,
+    "wacc": 0.179901,
+    "wacc_real": 0.108305,
+    "trava_casa": false,
+    "trava_real": false,
+    "muda": false,
+    "central": 14.678938,
+    "central_v": 14.678938,
+    "dcentral": 0.0
+   },
+   {
+    "ticker": "SUZB3",
+    "roic": 0.081981,
+    "roic_rep": 0.067242,
+    "wacc": 0.171532,
+    "wacc_real": 0.100444,
+    "trava_casa": false,
+    "trava_real": false,
+    "muda": false,
+    "central": 22.77773,
+    "central_v": 22.77773,
+    "dcentral": 0.0
+   },
+   {
+    "ticker": "TIMS3",
+    "roic": 0.106702,
+    "roic_rep": 0.096943,
+    "wacc": 0.182098,
+    "wacc_real": 0.110368,
+    "trava_casa": false,
+    "trava_real": false,
+    "muda": false,
+    "central": 9.736408,
+    "central_v": 9.736408,
+    "dcentral": 0.0
+   },
+   {
+    "ticker": "UGPA3",
+    "roic": 0.10804,
+    "roic_rep": 0.087781,
+    "wacc": 0.174865,
+    "wacc_real": 0.103574,
+    "trava_casa": false,
+    "trava_real": false,
+    "muda": false,
+    "central": 15.78387,
+    "central_v": 15.78387,
+    "dcentral": 0.0
+   },
+   {
+    "ticker": "UNIP6",
+    "roic": 0.175159,
+    "roic_rep": 0.093523,
+    "wacc": 0.170562,
+    "wacc_real": 0.099532,
+    "trava_casa": false,
+    "trava_real": false,
+    "muda": false,
+    "central": 47.321429,
+    "central_v": 47.697853,
+    "dcentral": 0.007955
+   },
+   {
+    "ticker": "VBBR3",
+    "roic": 0.087344,
+    "roic_rep": 0.063741,
+    "wacc": 0.182832,
+    "wacc_real": 0.111058,
+    "trava_casa": false,
+    "trava_real": false,
+    "muda": false,
+    "central": 10.415051,
+    "central_v": 10.415051,
+    "dcentral": 0.0
+   },
+   {
+    "ticker": "VIVT3",
+    "roic": 0.09913,
+    "roic_rep": 0.091523,
+    "wacc": 0.186987,
+    "wacc_real": 0.114961,
+    "trava_casa": false,
+    "trava_real": false,
+    "muda": false,
+    "central": 16.922537,
+    "central_v": 16.922537,
+    "dcentral": 0.0
+   },
+   {
+    "ticker": "WEGE3",
+    "roic": 0.238315,
+    "roic_rep": 0.162835,
+    "wacc": 0.189818,
+    "wacc_real": 0.11762,
+    "trava_casa": false,
+    "trava_real": true,
+    "muda": true,
+    "central": 11.081542,
+    "central_v": 11.081542,
+    "dcentral": 0.0
+   }
+  ],
+  "resumo": "(a) gabarito da fonte NÃO lido (Damodaran 2007 / Investment Valuation / Greenwald: PDF sem texto; verificador-fonte 22/10) → (a) não conta e a H1 fica 'a conferir'. (b) com a regra 'mesma base' (contábil × WACC nominal e reposição × WACC real): a trava muda em 2 industriais (ABEV3, WEGE3), |Δcentral| ≥ 10% em 0.",
+  "tentativa": true
+ },
+ "H2": {
+  "status": "aceita",
+  "linhas": [
+   {
+    "ticker": "ABEV3",
+    "ke_nom": 0.19372,
+    "de": 0.020759,
+    "centrais": {
+     "pl": 9.19281,
+     "mercado": 9.192811,
+     "3pl": 9.192811
+    },
+    "spread": 0.0,
+    "central_caixa": 9.21172,
+    "central": 9.19281
+   },
+   {
+    "ticker": "B3SA3",
+    "ke_nom": 0.207085,
+    "de": 0.362735,
+    "centrais": {
+     "pl": 8.177214,
+     "mercado": 8.177215,
+     "3pl": 8.177215
+    },
+    "spread": 0.0,
+    "central_caixa": 8.452688,
+    "central": 8.177214
+   },
+   {
+    "ticker": "FLRY3",
+    "ke_nom": 0.230379,
+    "de": 0.91504,
+    "centrais": {
+     "pl": 10.873637,
+     "mercado": 10.873638,
+     "3pl": 10.873638
+    },
+    "spread": 0.0,
+    "central_caixa": 11.772062,
+    "central": 10.873637
+   },
+   {
+    "ticker": "GGBR4",
+    "ke_nom": 0.210063,
+    "de": 0.417902,
+    "centrais": {
+     "pl": 18.491146,
+     "mercado": 18.491146,
+     "3pl": 18.491146
+    },
+    "spread": 0.0,
+    "central_caixa": 19.203845,
+    "central": 18.491146
+   },
+   {
+    "ticker": "HYPE3",
+    "ke_nom": 0.215945,
+    "de": 0.653363,
+    "centrais": {
+     "pl": 16.22481,
+     "mercado": 16.22481,
+     "3pl": 16.22481
+    },
+    "spread": 0.0,
+    "central_caixa": 17.283172,
+    "central": 16.22481
+   },
+   {
+    "ticker": "KEPL3",
+    "ke_nom": 0.204708,
+    "de": 0.294623,
+    "centrais": {
+     "pl": 6.685064,
+     "mercado": 6.685065,
+     "3pl": 6.685064
+    },
+    "spread": 0.0,
+    "central_caixa": 6.878538,
+    "central": 6.685064
+   },
+   {
+    "ticker": "KLBN11",
+    "ke_nom": 0.646564,
+    "de": 11.413821,
+    "centrais": {
+     "pl": 2.620361,
+     "mercado": 2.620361,
+     "3pl": 2.620361
+    },
+    "spread": 0.0,
+    "central_caixa": 4.454291,
+    "central": 2.620361
+   },
+   {
+    "ticker": "LEVE3",
+    "ke_nom": 0.206652,
+    "de": 0.324887,
+    "centrais": {
+     "pl": 36.30688,
+     "mercado": 36.30688,
+     "3pl": 36.30688
+    },
+    "spread": 0.0,
+    "central_caixa": 36.707409,
+    "central": 36.30688
+   },
+   {
+    "ticker": "PETR4",
+    "ke_nom": 0.212951,
+    "de": 0.531715,
+    "centrais": {
+     "pl": 53.483901,
+     "mercado": 53.483902,
+     "3pl": 53.483922
+    },
+    "spread": 0.0,
+    "central_caixa": 55.74462,
+    "central": 53.483901
+   },
+   {
+    "ticker": "PRIO3",
+    "ke_nom": 0.216853,
+    "de": 0.679227,
+    "centrais": {
+     "pl": 46.285549,
+     "mercado": 46.285567,
+     "3pl": 46.285563
+    },
+    "spread": 0.0,
+    "central_caixa": 49.012221,
+    "central": 46.285549
+   },
+   {
+    "ticker": "RANI3",
+    "ke_nom": 0.299672,
+    "de": 2.691614,
+    "centrais": {
+     "pl": 3.186829,
+     "mercado": 3.186829,
+     "3pl": 3.186829
+    },
+    "spread": 0.0,
+    "central_caixa": 3.925802,
+    "central": 3.186829
+   },
+   {
+    "ticker": "RECV3",
+    "ke_nom": 0.225533,
+    "de": 0.722134,
+    "centrais": {
+     "pl": 0.0,
+     "mercado": 0.0,
+     "3pl": 0.0
+    },
+    "spread": null,
+    "central_caixa": 0.0,
+    "central": 0.0
+   },
+   {
+    "ticker": "SLCE3",
+    "ke_nom": 0.312874,
+    "de": 2.938717,
+    "centrais": {
+     "pl": 7.590601,
+     "mercado": 7.590602,
+     "3pl": 7.5906
+    },
+    "spread": 0.0,
+    "central_caixa": 9.448456,
+    "central": 7.590601
+   },
+   {
+    "ticker": "SMTO3",
+    "ke_nom": 0.303071,
+    "de": 2.50274,
+    "centrais": {
+     "pl": 14.678938,
+     "mercado": 14.678938,
+     "3pl": 14.678938
+    },
+    "spread": 0.0,
+    "central_caixa": 18.095618,
+    "central": 14.678938
+   },
+   {
+    "ticker": "SUZB3",
+    "ke_nom": 0.343394,
+    "de": 3.531418,
+    "centrais": {
+     "pl": 22.77773,
+     "mercado": 22.77773,
+     "3pl": 22.77773
+    },
+    "spread": 0.0,
+    "central_caixa": 29.040146,
+    "central": 22.77773
+   },
+   {
+    "ticker": "TIMS3",
+    "ke_nom": 0.22384,
+    "de": 0.709355,
+    "centrais": {
+     "pl": 9.736408,
+     "mercado": 9.736408,
+     "3pl": 9.736408
+    },
+    "spread": 0.0,
+    "central_caixa": 10.375426,
+    "central": 9.736408
+   },
+   {
+    "ticker": "UGPA3",
+    "ke_nom": 0.236737,
+    "de": 1.139929,
+    "centrais": {
+     "pl": 15.78387,
+     "mercado": 15.78387,
+     "3pl": 15.783871
+    },
+    "spread": 0.0,
+    "central_caixa": 17.375948,
+    "central": 15.78387
+   },
+   {
+    "ticker": "UNIP6",
+    "ke_nom": 0.218323,
+    "de": 0.700958,
+    "centrais": {
+     "pl": 47.321429,
+     "mercado": 47.321443,
+     "3pl": 47.321447
+    },
+    "spread": 0.0,
+    "central_caixa": 50.148491,
+    "central": 47.321429
+   },
+   {
+    "ticker": "VBBR3",
+    "ke_nom": 0.266951,
+    "de": 1.766166,
+    "centrais": {
+     "pl": 10.415051,
+     "mercado": 10.415051,
+     "3pl": 10.415051
+    },
+    "spread": 0.0,
+    "central_caixa": 12.13355,
+    "central": 10.415051
+   },
+   {
+    "ticker": "VIVT3",
+    "ke_nom": 0.209409,
+    "de": 0.365135,
+    "centrais": {
+     "pl": 16.922537,
+     "mercado": 16.922537,
+     "3pl": 16.922537
+    },
+    "spread": 0.0,
+    "central_caixa": 17.514266,
+    "central": 16.922537
+   },
+   {
+    "ticker": "WEGE3",
+    "ke_nom": 0.19857,
+    "de": 0.125488,
+    "centrais": {
+     "pl": 11.081542,
+     "mercado": 11.081543,
+     "3pl": 11.081543
+    },
+    "spread": 0.0,
+    "central_caixa": 11.081542,
+    "central": 11.081542
+   }
+  ],
+  "tentativa": true,
+  "resumo": "(a) ponto fixo com 3 partidas (PL, mercado, 3×PL): 1 ticker(s) com |Δcentral| > 1% (RECV3). (b) caixa a mais com a mesma bruta baixa o central em 0 (—). (c) Ke nominal > 30% em 4 (KLBN11, SLCE3, SMTO3, SUZB3). Critério: aceita se (a) falhar em algum OU ≥ 2 violarem (c)."
+ },
+ "H3": {
+  "status": "mista",
+  "por_motor": {
+   "industrial": "inconclusiva",
+   "financeira": "aceita"
+  },
+  "detalhe": {
+   "industrial": {
+    "n": 20,
+    "frac_todos_pares_altos": 0.0,
+    "ancoras_independentes": [],
+    "tabela": [
+     {
+      "ticker": "ABEV3",
+      "vetores": {
+       "DCF (3 cenários)": [
+        -1.543,
+        0.502,
+        0.014
+       ],
+       "EPV": [
+        -1.4,
+        0.933,
+        0.0
+       ],
+       "Owner Earnings ÷ (Ke − g)": [
+        -1.724,
+        0.0,
+        0.094
+       ]
+      },
+      "cos": {
+       "DCF (3 cenários) × EPV": 0.963,
+       "DCF (3 cenários) × Owner Earnings ÷ (Ke − g)": 0.95,
+       "EPV × Owner Earnings ÷ (Ke − g)": 0.831
+      }
+     },
+     {
+      "ticker": "B3SA3",
+      "vetores": {
+       "DCF (3 cenários)": [
+        -1.65,
+        0.602,
+        0.114
+       ],
+       "EPV": [
+        -1.348,
+        1.029,
+        0.0
+       ],
+       "Owner Earnings ÷ (Ke − g)": [
+        -1.835,
+        0.0,
+        0.187
+       ]
+      },
+      "cos": {
+       "DCF (3 cenários) × EPV": 0.953,
+       "DCF (3 cenários) × Owner Earnings ÷ (Ke − g)": 0.939,
+       "EPV × Owner Earnings ÷ (Ke − g)": 0.791
+      }
+     },
+     {
+      "ticker": "FLRY3",
+      "vetores": {
+       "DCF (3 cenários)": [
+        -1.766,
+        0.833,
+        0.0
+       ],
+       "EPV": [
+        -1.768,
+        1.682,
+        0.0
+       ],
+       "Owner Earnings ÷ (Ke − g)": [
+        -1.675,
+        0.0,
+        0.077
+       ]
+      },
+      "cos": {
+       "DCF (3 cenários) × EPV": 0.949,
+       "DCF (3 cenários) × Owner Earnings ÷ (Ke − g)": 0.903,
+       "EPV × Owner Earnings ÷ (Ke − g)": 0.724
+      }
+     },
+     {
+      "ticker": "GGBR4",
+      "vetores": {
+       "EPV de meio de ciclo": [
+        -1.66,
+        1.315,
+        0.0
+       ],
+       "DCF normalizado (3 cenários)": [
+        -1.627,
+        0.599,
+        0.0
+       ],
+       "Valor de reprodução": [
+        0.0,
+        0.0,
+        0.0
+       ]
+      },
+      "cos": {
+       "DCF normalizado (3 cenários) × EPV de meio de ciclo": 0.95,
+       "DCF normalizado (3 cenários) × Valor de reprodução": 0.0,
+       "EPV de meio de ciclo × Valor de reprodução": 0.0
+      }
+     },
+     {
+      "ticker": "HYPE3",
+      "vetores": {
+       "DCF (3 cenários)": [
+        -1.839,
+        0.912,
+        0.0
+       ],
+       "EPV": [
+        -1.769,
+        1.666,
+        0.0
+       ],
+       "Owner Earnings ÷ (Ke − g)": [
+        -1.543,
+        0.35,
+        0.071
+       ]
+      },
+      "cos": {
+       "DCF (3 cenários) × EPV": 0.957,
+       "DCF (3 cenários) × Owner Earnings ÷ (Ke − g)": 0.971,
+       "EPV × Owner Earnings ÷ (Ke − g)": 0.861
+      }
+     },
+     {
+      "ticker": "KEPL3",
+      "vetores": {
+       "EPV de meio de ciclo": [
+        -1.32,
+        0.989,
+        0.0
+       ],
+       "DCF normalizado (3 cenários)": [
+        -1.379,
+        0.499,
+        0.025
+       ],
+       "Valor de reprodução": [
+        0.0,
+        0.0,
+        0.0
+       ]
+      },
+      "cos": {
+       "DCF normalizado (3 cenários) × EPV de meio de ciclo": 0.956,
+       "DCF normalizado (3 cenários) × Valor de reprodução": 0.0,
+       "EPV de meio de ciclo × Valor de reprodução": 0.0
+      }
+     },
+     {
+      "ticker": "KLBN11",
+      "vetores": {
+       "DCF normalizado (3 cenários)": [
+        -3.488,
+        2.809,
+        0.0
+       ],
+       "Valor de reprodução": [
+        0.0,
+        0.0,
+        0.0
+       ]
+      },
+      "cos": {
+       "DCF normalizado (3 cenários) × Valor de reprodução": 0.0
+      }
+     },
+     {
+      "ticker": "LEVE3",
+      "vetores": {
+       "DCF (3 cenários)": [
+        -1.763,
+        0.646,
+        0.076
+       ],
+       "EPV": [
+        -1.626,
+        1.244,
+        0.0
+       ],
+       "Owner Earnings ÷ (Ke − g)": [
+        -1.581,
+        0.0,
+        0.081
+       ]
+      },
+      "cos": {
+       "DCF (3 cenários) × EPV": 0.954,
+       "DCF (3 cenários) × Owner Earnings ÷ (Ke − g)": 0.939,
+       "EPV × Owner Earnings ÷ (Ke − g)": 0.793
+      }
+     },
+     {
+      "ticker": "PETR4",
+      "vetores": {
+       "EPV de meio de ciclo": [
+        -1.844,
+        1.458,
+        0.0
+       ],
+       "DCF normalizado (3 cenários)": [
+        -1.829,
+        0.706,
+        0.0
+       ],
+       "Valor de reprodução": [
+        0.0,
+        0.0,
+        0.0
+       ]
+      },
+      "cos": {
+       "DCF normalizado (3 cenários) × EPV de meio de ciclo": 0.955,
+       "DCF normalizado (3 cenários) × Valor de reprodução": 0.0,
+       "EPV de meio de ciclo × Valor de reprodução": 0.0
+      }
+     },
+     {
+      "ticker": "PRIO3",
+      "vetores": {
+       "EPV de meio de ciclo": [
+        -1.833,
+        1.517,
+        0.0
+       ],
+       "DCF normalizado (3 cenários)": [
+        -1.851,
+        0.769,
+        0.0
+       ],
+       "Valor de reprodução": [
+        0.0,
+        0.0,
+        0.0
+       ]
+      },
+      "cos": {
+       "DCF normalizado (3 cenários) × EPV de meio de ciclo": 0.956,
+       "DCF normalizado (3 cenários) × Valor de reprodução": 0.0,
+       "EPV de meio de ciclo × Valor de reprodução": 0.0
+      }
+     },
+     {
+      "ticker": "RANI3",
+      "vetores": {
+       "EPV de meio de ciclo": [
+        -1.947,
+        3.528,
+        0.0
+       ],
+       "DCF normalizado (3 cenários)": [
+        -1.47,
+        1.427,
+        0.0
+       ],
+       "Valor de reprodução": [
+        0.0,
+        0.0,
+        0.0
+       ]
+      },
+      "cos": {
+       "DCF normalizado (3 cenários) × EPV de meio de ciclo": 0.956,
+       "DCF normalizado (3 cenários) × Valor de reprodução": 0.0,
+       "EPV de meio de ciclo × Valor de reprodução": 0.0
+      }
+     },
+     {
+      "ticker": "SLCE3",
+      "vetores": {
+       "EPV de meio de ciclo": [
+        -3.395,
+        5.484,
+        0.0
+       ],
+       "DCF normalizado (3 cenários)": [
+        -2.948,
+        2.119,
+        0.0
+       ],
+       "Valor de reprodução": [
+        0.0,
+        0.0,
+        0.0
+       ]
+      },
+      "cos": {
+       "DCF normalizado (3 cenários) × EPV de meio de ciclo": 0.924,
+       "DCF normalizado (3 cenários) × Valor de reprodução": 0.0,
+       "EPV de meio de ciclo × Valor de reprodução": 0.0
+      }
+     },
+     {
+      "ticker": "SMTO3",
+      "vetores": {
+       "EPV de meio de ciclo": [
+        -1.963,
+        3.362,
+        0.0
+       ],
+       "DCF normalizado (3 cenários)": [
+        -1.871,
+        1.51,
+        0.0
+       ],
+       "Valor de reprodução": [
+        0.0,
+        0.0,
+        0.0
+       ]
+      },
+      "cos": {
+       "DCF normalizado (3 cenários) × EPV de meio de ciclo": 0.935,
+       "DCF normalizado (3 cenários) × Valor de reprodução": 0.0,
+       "EPV de meio de ciclo × Valor de reprodução": 0.0
+      }
+     },
+     {
+      "ticker": "SUZB3",
+      "vetores": {
+       "EPV de meio de ciclo": [
+        -2.643,
+        4.573,
+        0.0
+       ],
+       "DCF normalizado (3 cenários)": [
+        -2.096,
+        2.088,
+        0.0
+       ],
+       "Valor de reprodução": [
+        0.0,
+        0.0,
+        0.0
+       ]
+      },
+      "cos": {
+       "DCF normalizado (3 cenários) × EPV de meio de ciclo": 0.966,
+       "DCF normalizado (3 cenários) × Valor de reprodução": 0.0,
+       "EPV de meio de ciclo × Valor de reprodução": 0.0
+      }
+     },
+     {
+      "ticker": "TIMS3",
+      "vetores": {
+       "DCF (3 cenários)": [
+        -1.721,
+        0.764,
+        0.0
+       ],
+       "EPV": [
+        -1.73,
+        1.56,
+        0.0
+       ],
+       "Owner Earnings ÷ (Ke − g)": [
+        -1.583,
+        0.0,
+        0.075
+       ]
+      },
+      "cos": {
+       "DCF (3 cenários) × EPV": 0.95,
+       "DCF (3 cenários) × Owner Earnings ÷ (Ke − g)": 0.913,
+       "EPV × Owner Earnings ÷ (Ke − g)": 0.742
+      }
+     },
+     {
+      "ticker": "UGPA3",
+      "vetores": {
+       "DCF (3 cenários)": [
+        -1.792,
+        0.998,
+        0.0
+       ],
+       "EPV": [
+        -1.747,
+        1.901,
+        0.0
+       ],
+       "Owner Earnings ÷ (Ke − g)": [
+        -1.646,
+        0.0,
+        0.074
+       ]
+      },
+      "cos": {
+       "DCF (3 cenários) × EPV": 0.949,
+       "DCF (3 cenários) × Owner Earnings ÷ (Ke − g)": 0.873,
+       "EPV × Owner Earnings ÷ (Ke − g)": 0.676
+      }
+     },
+     {
+      "ticker": "UNIP6",
+      "vetores": {
+       "EPV de meio de ciclo": [
+        -1.754,
+        1.464,
+        0.0
+       ],
+       "DCF normalizado (3 cenários)": [
+        -1.759,
+        0.735,
+        0.0
+       ],
+       "Valor de reprodução": [
+        0.0,
+        0.0,
+        0.0
+       ]
+      },
+      "cos": {
+       "DCF normalizado (3 cenários) × EPV de meio de ciclo": 0.955,
+       "DCF normalizado (3 cenários) × Valor de reprodução": 0.0,
+       "EPV de meio de ciclo × Valor de reprodução": 0.0
+      }
+     },
+     {
+      "ticker": "VBBR3",
+      "vetores": {
+       "DCF (3 cenários)": [
+        -1.97,
+        1.377,
+        0.0
+       ],
+       "EPV": [
+        -1.812,
+        2.411,
+        0.0
+       ],
+       "Owner Earnings ÷ (Ke − g)": [
+        -1.637,
+        0.0,
+        0.065
+       ]
+      },
+      "cos": {
+       "DCF (3 cenários) × EPV": 0.95,
+       "DCF (3 cenários) × Owner Earnings ÷ (Ke − g)": 0.819,
+       "EPV × Owner Earnings ÷ (Ke − g)": 0.6
+      }
+     },
+     {
+      "ticker": "VIVT3",
+      "vetores": {
+       "DCF (3 cenários)": [
+        -1.586,
+        0.625,
+        0.0
+       ],
+       "EPV": [
+        -1.589,
+        1.27,
+        0.0
+       ],
+       "Owner Earnings ÷ (Ke − g)": [
+        -1.643,
+        0.0,
+        0.083
+       ]
+      },
+      "cos": {
+       "DCF (3 cenários) × EPV": 0.956,
+       "DCF (3 cenários) × Owner Earnings ÷ (Ke − g)": 0.929,
+       "EPV × Owner Earnings ÷ (Ke − g)": 0.78
+      }
+     },
+     {
+      "ticker": "WEGE3",
+      "vetores": {
+       "DCF (3 cenários)": [
+        -2.234,
+        0.503,
+        0.025
+       ],
+       "EPV": [
+        -1.572,
+        1.113,
+        0.0
+       ],
+       "Owner Earnings ÷ (Ke − g)": [
+        -2.016,
+        0.0,
+        0.214
+       ]
+      },
+      "cos": {
+       "DCF (3 cenários) × EPV": 0.923,
+       "DCF (3 cenários) × Owner Earnings ÷ (Ke − g)": 0.971,
+       "EPV × Owner Earnings ÷ (Ke − g)": 0.811
+      }
+     }
+    ]
+   },
+   "financeira": {
+    "n": 17,
+    "frac_todos_pares_altos": 1.0,
+    "ancoras_independentes": [],
+    "tabela": [
+     {
+      "ticker": "ABCB4",
+      "vetores": {
+       "P/VP justificado": [
+        -1.584,
+        1.575,
+        -0.649
+       ],
+       "DDM 2 estágios": [
+        -1.566,
+        1.577,
+        -0.371
+       ]
+      },
+      "cos": {
+       "DDM 2 estágios × P/VP justificado": 0.993
+      }
+     },
+     {
+      "ticker": "BBAS3",
+      "vetores": {
+       "P/VP justificado": [
+        -1.816,
+        2.739,
+        -0.89
+       ],
+       "DDM 2 estágios": [
+        -1.99,
+        2.526,
+        -0.624
+       ]
+      },
+      "cos": {
+       "DDM 2 estágios × P/VP justificado": 0.994
+      }
+     },
+     {
+      "ticker": "BBDC4",
+      "vetores": {
+       "P/VP justificado": [
+        -1.461,
+        1.455,
+        -0.363
+       ],
+       "DDM 2 estágios": [
+        -1.453,
+        1.455,
+        -0.2
+       ]
+      },
+      "cos": {
+       "DDM 2 estágios × P/VP justificado": 0.997
+      }
+     },
+     {
+      "ticker": "BRBI11",
+      "vetores": {
+       "P/VP justificado": [
+        -1.193,
+        1.19,
+        0.014
+       ],
+       "DDM 2 estágios": [
+        -1.201,
+        1.19,
+        0.007
+       ]
+      },
+      "cos": {
+       "DDM 2 estágios × P/VP justificado": 1.0
+      }
+     },
+     {
+      "ticker": "BRSR6",
+      "vetores": {
+       "P/VP justificado": [
+        -1.555,
+        1.546,
+        -0.96
+       ],
+       "DDM 2 estágios": [
+        -1.562,
+        1.546,
+        -0.553
+       ]
+      },
+      "cos": {
+       "DDM 2 estágios × P/VP justificado": 0.986
+      }
+     },
+     {
+      "ticker": "CMIG4",
+      "vetores": {
+       "P/VP justificado": [
+        -1.816,
+        1.842,
+        -0.115
+       ],
+       "DDM 2 estágios": [
+        -1.869,
+        1.848,
+        -0.074
+       ]
+      },
+      "cos": {
+       "DDM 2 estágios × P/VP justificado": 1.0
+      }
+     },
+     {
+      "ticker": "CPFE3",
+      "vetores": {
+       "P/VP justificado": [
+        -1.816,
+        1.522,
+        0.287
+       ],
+       "DDM 2 estágios": [
+        -1.878,
+        1.703,
+        0.188
+       ]
+      },
+      "cos": {
+       "DDM 2 estágios × P/VP justificado": 0.998
+      }
+     },
+     {
+      "ticker": "CPLE3",
+      "vetores": {
+       "P/VP justificado": [
+        -1.313,
+        1.309,
+        -0.509
+       ],
+       "DDM 2 estágios": [
+        -1.261,
+        1.312,
+        -0.249
+       ]
+      },
+      "cos": {
+       "DDM 2 estágios × P/VP justificado": 0.991
+      }
+     },
+     {
+      "ticker": "CSMG3",
+      "vetores": {
+       "P/VP justificado": [
+        -1.313,
+        1.309,
+        -0.357
+       ],
+       "DDM 2 estágios": [
+        -1.261,
+        1.312,
+        -0.175
+       ]
+      },
+      "cos": {
+       "DDM 2 estágios × P/VP justificado": 0.995
+      }
+     },
+     {
+      "ticker": "CXSE3",
+      "vetores": {
+       "P/VP justificado": [
+        -1.297,
+        1.293,
+        0.117
+       ],
+       "DDM 2 estágios": [
+        -1.273,
+        1.294,
+        0.058
+       ]
+      },
+      "cos": {
+       "DDM 2 estágios × P/VP justificado": 0.999
+      }
+     },
+     {
+      "ticker": "ISAE4",
+      "vetores": {
+       "P/VP justificado": [
+        -1.542,
+        1.533,
+        -0.132
+       ],
+       "DDM 2 estágios": [
+        -1.59,
+        1.53,
+        -0.079
+       ]
+      },
+      "cos": {
+       "DDM 2 estágios × P/VP justificado": 1.0
+      }
+     },
+     {
+      "ticker": "ITUB4",
+      "vetores": {
+       "P/VP justificado": [
+        -1.581,
+        1.572,
+        -0.093
+       ],
+       "DDM 2 estágios": [
+        -1.539,
+        1.576,
+        -0.052
+       ]
+      },
+      "cos": {
+       "DDM 2 estágios × P/VP justificado": 1.0
+      }
+     },
+     {
+      "ticker": "PSSA3",
+      "vetores": {
+       "P/VP justificado": [
+        -1.792,
+        1.803,
+        -0.222
+       ],
+       "DDM 2 estágios": [
+        -1.745,
+        1.799,
+        -0.133
+       ]
+      },
+      "cos": {
+       "DDM 2 estágios × P/VP justificado": 0.999
+      }
+     },
+     {
+      "ticker": "SANB11",
+      "vetores": {
+       "P/VP justificado": [
+        -1.461,
+        1.454,
+        -0.363
+       ],
+       "DDM 2 estágios": [
+        -1.475,
+        1.453,
+        -0.204
+       ]
+      },
+      "cos": {
+       "DDM 2 estágios × P/VP justificado": 0.997
+      }
+     },
+     {
+      "ticker": "SAPR11",
+      "vetores": {
+       "P/VP justificado": [
+        -1.816,
+        2.445,
+        -0.609
+       ],
+       "DDM 2 estágios": [
+        -1.979,
+        2.308,
+        -0.424
+       ]
+      },
+      "cos": {
+       "DDM 2 estágios × P/VP justificado": 0.996
+      }
+     },
+     {
+      "ticker": "SBSP3",
+      "vetores": {
+       "P/VP justificado": [
+        -1.816,
+        2.496,
+        -0.658
+       ],
+       "DDM 2 estágios": [
+        -2.04,
+        2.519,
+        -0.479
+       ]
+      },
+      "cos": {
+       "DDM 2 estágios × P/VP justificado": 0.997
+      }
+     },
+     {
+      "ticker": "TAEE11",
+      "vetores": {
+       "P/VP justificado": [
+        -1.388,
+        1.383,
+        0.05
+       ],
+       "DDM 2 estágios": [
+        -1.4,
+        1.382,
+        0.027
+       ]
+      },
+      "cos": {
+       "DDM 2 estágios × P/VP justificado": 1.0
+      }
+     }
+    ]
+   }
+  },
+  "tentativa": false,
+  "resumo": "industrial: 20 tickers, todos os pares com cos ≥ 0,95 em 0%; âncora com cos < 0,80 na maioria: nenhuma → inconclusiva; financeira: 17 tickers, todos os pares com cos ≥ 0,95 em 100%; âncora com cos < 0,80 na maioria: nenhuma → aceita"
+ },
+ "H4": {
+  "status": "aceita",
+  "tentativa": true,
+  "linhas": [
+   {
+    "ticker": "ABEV3",
+    "palavra": "CARA",
+    "palavra_15_10": "CARA",
+    "central": 9.19281,
+    "central_15_10": 9.421946
+   },
+   {
+    "ticker": "B3SA3",
+    "palavra": "CARA",
+    "palavra_15_10": "CARA",
+    "central": 8.177214,
+    "central_15_10": 8.360784
+   },
+   {
+    "ticker": "FLRY3",
+    "palavra": "CARA",
+    "palavra_15_10": "CARA",
+    "central": 10.873637,
+    "central_15_10": 11.203534
+   },
+   {
+    "ticker": "GGBR4",
+    "palavra": "CARA",
+    "palavra_15_10": "CARA",
+    "central": 18.491146,
+    "central_15_10": 19.008644
+   },
+   {
+    "ticker": "HYPE3",
+    "palavra": "CARA",
+    "palavra_15_10": "CARA",
+    "central": 16.22481,
+    "central_15_10": 16.726723
+   },
+   {
+    "ticker": "KEPL3",
+    "palavra": "JUSTA",
+    "palavra_15_10": "JUSTA",
+    "central": 6.685064,
+    "central_15_10": 6.84875
+   },
+   {
+    "ticker": "KLBN11",
+    "palavra": "NÃO CONCLUSIVO",
+    "palavra_15_10": "NÃO CONCLUSIVO",
+    "central": 2.620361,
+    "central_15_10": 2.812146
+   },
+   {
+    "ticker": "LEVE3",
+    "palavra": "NÃO CONCLUSIVO",
+    "palavra_15_10": "JUSTA",
+    "central": 36.30688,
+    "central_15_10": 37.501313
+   },
+   {
+    "ticker": "PETR4",
+    "palavra": "JUSTA",
+    "palavra_15_10": "JUSTA",
+    "central": 53.483901,
+    "central_15_10": 54.96452
+   },
+   {
+    "ticker": "PRIO3",
+    "palavra": "CARA",
+    "palavra_15_10": "CARA",
+    "central": 46.285549,
+    "central_15_10": 47.480222
+   },
+   {
+    "ticker": "RANI3",
+    "palavra": "CARA",
+    "palavra_15_10": "CARA",
+    "central": 3.186829,
+    "central_15_10": 3.262611
+   },
+   {
+    "ticker": "RECV3",
+    "palavra": "NÃO CONCLUSIVO",
+    "palavra_15_10": "NÃO CONCLUSIVO",
+    "central": 0.0,
+    "central_15_10": 0.0
+   },
+   {
+    "ticker": "SLCE3",
+    "palavra": "NÃO CONCLUSIVO",
+    "palavra_15_10": "NÃO CONCLUSIVO",
+    "central": 7.590601,
+    "central_15_10": 7.961316
+   },
+   {
+    "ticker": "SMTO3",
+    "palavra": "CARA",
+    "palavra_15_10": "CARA",
+    "central": 14.678938,
+    "central_15_10": 15.304105
+   },
+   {
+    "ticker": "SUZB3",
+    "palavra": "CARA",
+    "palavra_15_10": "CARA",
+    "central": 22.77773,
+    "central_15_10": 23.786783
+   },
+   {
+    "ticker": "TIMS3",
+    "palavra": "CARA",
+    "palavra_15_10": "CARA",
+    "central": 9.736408,
+    "central_15_10": 10.054731
+   },
+   {
+    "ticker": "UGPA3",
+    "palavra": "CARA",
+    "palavra_15_10": "CARA",
+    "central": 15.78387,
+    "central_15_10": 16.206268
+   },
+   {
+    "ticker": "UNIP6",
+    "palavra": "CARA",
+    "palavra_15_10": "CARA",
+    "central": 47.321429,
+    "central_15_10": 48.47474
+   },
+   {
+    "ticker": "VBBR3",
+    "palavra": "CARA",
+    "palavra_15_10": "CARA",
+    "central": 10.415051,
+    "central_15_10": 10.804556
+   },
+   {
+    "ticker": "VIVT3",
+    "palavra": "CARA",
+    "palavra_15_10": "CARA",
+    "central": 16.922537,
+    "central_15_10": 17.432979
+   },
+   {
+    "ticker": "WEGE3",
+    "palavra": "CARA",
+    "palavra_15_10": "CARA",
+    "central": 11.081542,
+    "central_15_10": 11.498566
+   },
+   {
+    "ticker": "ABCB4",
+    "palavra": "CARA",
+    "palavra_15_10": "CARA",
+    "central": 13.309371,
+    "central_15_10": 14.660043
+   },
+   {
+    "ticker": "BBAS3",
+    "palavra": "CARA",
+    "palavra_15_10": "CARA",
+    "central": 12.510586,
+    "central_15_10": 14.621916
+   },
+   {
+    "ticker": "BBDC4",
+    "palavra": "CARA",
+    "palavra_15_10": "CARA",
+    "central": 9.593001,
+    "central_15_10": 10.487801
+   },
+   {
+    "ticker": "BBSE3",
+    "palavra": "CARA",
+    "palavra_15_10": "CARA",
+    "central": 23.35804,
+    "central_15_10": 25.077114
+   },
+   {
+    "ticker": "BRBI11",
+    "palavra": "CARA",
+    "palavra_15_10": "CARA",
+    "central": 8.28592,
+    "central_15_10": 8.911719
+   },
+   {
+    "ticker": "BRSR6",
+    "palavra": "CARA",
+    "palavra_15_10": "CARA",
+    "central": 6.837458,
+    "central_15_10": 7.522923
+   },
+   {
+    "ticker": "CMIG4",
+    "palavra": "CARA",
+    "palavra_15_10": "CARA",
+    "central": 7.206459,
+    "central_15_10": 8.082683
+   },
+   {
+    "ticker": "CPFE3",
+    "palavra": "CARA",
+    "palavra_15_10": "CARA",
+    "central": 31.217107,
+    "central_15_10": 34.102669
+   },
+   {
+    "ticker": "CPLE3",
+    "palavra": "CARA",
+    "palavra_15_10": "CARA",
+    "central": 3.185366,
+    "central_15_10": 3.44534
+   },
+   {
+    "ticker": "CSMG3",
+    "palavra": "CARA",
+    "palavra_15_10": "CARA",
+    "central": 11.253146,
+    "central_15_10": 12.171744
+   },
+   {
+    "ticker": "CXSE3",
+    "palavra": "CARA",
+    "palavra_15_10": "CARA",
+    "central": 7.787889,
+    "central_15_10": 8.422459
+   },
+   {
+    "ticker": "ISAE4",
+    "palavra": "NÃO CONCLUSIVO",
+    "palavra_15_10": "JUSTA",
+    "central": 25.778056,
+    "central_15_10": 28.372492
+   },
+   {
+    "ticker": "ITUB4",
+    "palavra": "CARA",
+    "palavra_15_10": "CARA",
+    "central": 17.540191,
+    "central_15_10": 19.301378
+   },
+   {
+    "ticker": "PSSA3",
+    "palavra": "CARA",
+    "palavra_15_10": "CARA",
+    "central": 20.129563,
+    "central_15_10": 22.601339
+   },
+   {
+    "ticker": "SANB11",
+    "palavra": "CARA",
+    "palavra_15_10": "CARA",
+    "central": 18.710611,
+    "central_15_10": 20.46894
+   },
+   {
+    "ticker": "SAPR11",
+    "palavra": "CARA",
+    "palavra_15_10": "CARA",
+    "central": 18.303823,
+    "central_15_10": 21.279769
+   },
+   {
+    "ticker": "SBSP3",
+    "palavra": "CARA",
+    "palavra_15_10": "CARA",
+    "central": 7.05132,
+    "central_15_10": 8.243407
+   },
+   {
+    "ticker": "TAEE11",
+    "palavra": "CARA",
+    "palavra_15_10": "CARA",
+    "central": 26.744136,
+    "central_15_10": 29.121661
+   }
+  ],
+  "trocas": [
+   "LEVE3 NÃO CONCLUSIVO → JUSTA",
+   "ISAE4 NÃO CONCLUSIVO → JUSTA"
+  ],
+  "resumo": "Datas: rf e π de 02/10 (7.06%, 6.46%) × 15/10, a coleta com fonte A mais perto do preço de 22/10 (6.74%, 5.75%): Δπ = -0.71 p.p., ΔKe nominal da casa = -1.13 p.p.; palavras que mudam (preço do lote): LEVE3 NÃO CONCLUSIVO → JUSTA; ISAE4 NÃO CONCLUSIVO → JUSTA. Horizonte: a π no vértice da rf (~24 anos, NTN-B 2050) não está nos arquivos locais (só 756, 1260 e 2520 du) → parte do prazo 'a conferir (dado)'. A doutrina (01 l.53) pede o mesmo prazo e o código usa 2520 du: divergência registrada."
+ },
+ "H5": {
+  "status": "refutada (provisória)",
+  "ke_casa": 0.1206,
+  "ke_damodaran": 0.124,
+  "tentativa": false,
+  "resumo": "(a) planilha ctryprem (05/01/2026, nota A): Brasil Ba1, spread 2.13%, CRP 3.24%, ERP maduro 4.23%. (b) Ke_D real = rf 7.06% − 2.13% + 1 × (4.23% + 3.24%) = 12.40% × Ke da casa 12.06%: diferença -0.34 p.p. (|Δ| < 1 p.p. → refutada: o nível de ~12% é defensável). Provisória: o método 'tirar o spread do título local' tem apoio nos slides de Damodaran, mas o trecho com página do paper Country Risk não foi lido."
+ },
+ "H7": {
+  "status": "refutada",
+  "linhas": [
+   {
+    "ticker": "ABEV3",
+    "perfil": "servicos",
+    "n": 10,
+    "s": -27,
+    "p": 0.020045,
+    "m50": 0.257678,
+    "m3": 0.242477,
+    "significativa_bh": false
+   },
+   {
+    "ticker": "B3SA3",
+    "perfil": "servicos",
+    "n": 10,
+    "s": 23,
+    "p": 0.049098,
+    "m50": 0.540405,
+    "m3": 0.571839,
+    "significativa_bh": false
+   },
+   {
+    "ticker": "FLRY3",
+    "perfil": "servicos",
+    "n": 7,
+    "s": -15,
+    "p": 0.035498,
+    "m50": 0.158029,
+    "m3": 0.147047,
+    "significativa_bh": false
+   },
+   {
+    "ticker": "GGBR4",
+    "perfil": "ciclica",
+    "n": 10,
+    "s": 19,
+    "p": 0.107405,
+    "m50": 0.096813,
+    "m3": 0.113194,
+    "significativa_bh": false
+   },
+   {
+    "ticker": "HYPE3",
+    "perfil": "servicos",
+    "n": 10,
+    "s": -11,
+    "p": 0.371093,
+    "m50": 0.318468,
+    "m3": 0.240876,
+    "significativa_bh": false
+   },
+   {
+    "ticker": "KEPL3",
+    "perfil": "ciclica",
+    "n": 10,
+    "s": 31,
+    "p": 0.00729,
+    "m50": 0.10604,
+    "m3": 0.179919,
+    "significativa_bh": false
+   },
+   {
+    "ticker": "KLBN11",
+    "perfil": "ciclica",
+    "n": 10,
+    "s": 7,
+    "p": 0.591505,
+    "m50": 0.232344,
+    "m3": 0.228932,
+    "significativa_bh": false
+   },
+   {
+    "ticker": "LEVE3",
+    "perfil": "servicos",
+    "n": 10,
+    "s": 25,
+    "p": 0.031823,
+    "m50": 0.152341,
+    "m3": 0.169846,
+    "significativa_bh": false
+   },
+   {
+    "ticker": "PETR4",
+    "perfil": "ciclica",
+    "n": 7,
+    "s": 5,
+    "p": 0.548006,
+    "m50": 0.296566,
+    "m3": 0.296566,
+    "significativa_bh": false
+   },
+   {
+    "ticker": "PRIO3",
+    "perfil": "ciclica",
+    "n": 7,
+    "s": 3,
+    "p": 0.763891,
+    "m50": 0.346346,
+    "m3": 0.346346,
+    "significativa_bh": false
+   },
+   {
+    "ticker": "RANI3",
+    "perfil": "ciclica",
+    "n": 10,
+    "s": 29,
+    "p": 0.012266,
+    "m50": 0.178055,
+    "m3": 0.265554,
+    "significativa_bh": false
+   },
+   {
+    "ticker": "RECV3",
+    "perfil": "ciclica",
+    "n": 6,
+    "s": -9,
+    "p": 0.132855,
+    "m50": 0.270212,
+    "m3": 0.218477,
+    "significativa_bh": false
+   },
+   {
+    "ticker": "SLCE3",
+    "perfil": "ciclica",
+    "n": 10,
+    "s": -5,
+    "p": 0.720515,
+    "m50": 0.206145,
+    "m3": 0.184587,
+    "significativa_bh": false
+   },
+   {
+    "ticker": "SMTO3",
+    "perfil": "ciclica",
+    "n": 10,
+    "s": -9,
+    "p": 0.474274,
+    "m50": 0.24454,
+    "m3": 0.211868,
+    "significativa_bh": false
+   },
+   {
+    "ticker": "SUZB3",
+    "perfil": "ciclica",
+    "n": 10,
+    "s": 5,
+    "p": 0.720515,
+    "m50": 0.293429,
+    "m3": 0.268535,
+    "significativa_bh": false
+   },
+   {
+    "ticker": "TIMS3",
+    "perfil": "servicos",
+    "n": 7,
+    "s": 11,
+    "p": 0.133128,
+    "m50": 0.17556,
+    "m3": 0.215707,
+    "significativa_bh": false
+   },
+   {
+    "ticker": "UGPA3",
+    "perfil": "servicos",
+    "n": 5,
+    "s": 6,
+    "p": 0.220671,
+    "m50": 0.032568,
+    "m3": 0.034706,
+    "significativa_bh": false
+   },
+   {
+    "ticker": "UNIP6",
+    "perfil": "ciclica",
+    "n": 9,
+    "s": -2,
+    "p": 0.916965,
+    "m50": 0.193505,
+    "m3": 0.145549,
+    "significativa_bh": false
+   },
+   {
+    "ticker": "VBBR3",
+    "perfil": "servicos",
+    "n": 6,
+    "s": 9,
+    "p": 0.132855,
+    "m50": 0.026816,
+    "m3": 0.028464,
+    "significativa_bh": false
+   },
+   {
+    "ticker": "VIVT3",
+    "perfil": "servicos",
+    "n": 7,
+    "s": 5,
+    "p": 0.548006,
+    "m50": 0.14956,
+    "m3": 0.155314,
+    "significativa_bh": false
+   },
+   {
+    "ticker": "WEGE3",
+    "perfil": "servicos",
+    "n": 10,
+    "s": 41,
+    "p": 0.000347,
+    "m50": 0.162458,
+    "m3": 0.198813,
+    "significativa_bh": true
+   }
+  ],
+  "tentativa": false,
+  "tendencia": [
+   "WEGE3",
+   "LEVE3",
+   "B3SA3",
+   "VBBR3",
+   "TIMS3",
+   "UGPA3",
+   "VIVT3"
+  ],
+  "resumo": "Mann-Kendall nas margens da janela de cada industrial (21 testes), BH q = 0,05: 1 significativas (WEGE3); não cíclicas com tendência positiva e m50 ≥ 2 p.p. abaixo da mediana dos 3 últimos: 1 (WEGE3). Critério: aceita se ≥ 3."
+ },
+ "H6": {
+  "status": "a conferir",
+  "linhas": [
+   {
+    "ticker": "WEGE3",
+    "roic_motor": 0.238315,
+    "roic_filtro": 0.162835,
+    "roic_dfp": {
+     "2016": 0.149041,
+     "2017": 0.18076,
+     "2018": 0.18759,
+     "2019": 0.209999,
+     "2020": 0.289767,
+     "2021": 0.323511,
+     "2022": 0.320769,
+     "2023": 0.420948,
+     "2024": 0.380082,
+     "2025": 0.38464
+    },
+    "mediana_3": 0.38464,
+    "gap": 0.146325
+   },
+   {
+    "ticker": "LEVE3",
+    "roic_motor": 0.30729,
+    "roic_filtro": 0.267271,
+    "roic_dfp": {
+     "2016": 0.006952,
+     "2017": 0.181489,
+     "2018": 0.214062,
+     "2019": 0.187875,
+     "2020": 0.135892,
+     "2021": 0.392408,
+     "2022": 0.351844,
+     "2023": 0.424003,
+     "2024": 0.459131,
+     "2025": 0.421372
+    },
+    "mediana_3": 0.424003,
+    "gap": 0.116713
+   },
+   {
+    "ticker": "B3SA3",
+    "roic_motor": 0.246716,
+    "roic_filtro": 0.245635,
+    "roic_dfp": {
+     "2016": 0.084792,
+     "2017": 0.064972,
+     "2018": 0.090889,
+     "2019": 0.122138,
+     "2020": 0.23184,
+     "2021": 0.272731,
+     "2022": 0.232862,
+     "2023": 0.218068,
+     "2024": 0.246774,
+     "2025": 0.249211
+    },
+    "mediana_3": 0.246774,
+    "gap": 5.7e-05
+   }
+  ],
+  "tentativa": false,
+  "resumo": "WEGE3: ROIC do motor 23.8% (menor dos dois 16.3%) × mediana 2023–25 pelo DFP 38.5% → motor 14.6 p.p. abaixo; LEVE3: ROIC do motor 30.7% (menor dos dois 26.7%) × mediana 2023–25 pelo DFP 42.4% → motor 11.7 p.p. abaixo; B3SA3: ROIC do motor 24.7% (menor dos dois 24.6%) × mediana 2023–25 pelo DFP 24.7% → motor 0.0 p.p. abaixo. (b) ROIC divulgado pela WEG (RI): NÃO lido em fonte A (só nota C: 32,5% 4T25, 34,2% 4T24) → a parte 'o (a) bate com o RI' fica a conferir. (c) '4 de 10 anos' da triagem: não reproduzido nesta rodada. Os 2 outros tickers saem da ordem de tendência da H7 (menor p, não cíclicos): LEVE3, B3SA3."
+ },
+ "H8": {
+  "status": "aceita",
+  "linhas": [
+   {
+    "ticker": "ABCB4",
+    "roe_lp": 0.1283,
+    "n": 4,
+    "nota": "série curta no DFP"
+   },
+   {
+    "ticker": "BBAS3",
+    "roe_lp": 0.137,
+    "n": 3,
+    "nota": "série curta no DFP"
+   },
+   {
+    "ticker": "BBDC4",
+    "roe_lp": 0.1343,
+    "n": 3,
+    "nota": "série curta no DFP"
+   },
+   {
+    "ticker": "BBSE3",
+    "perfil": "holding_seguro",
+    "roe_lp": 0.687,
+    "n": 9,
+    "mediana": 0.812578,
+    "mediana_real": 0.658656,
+    "dif": -0.125578,
+    "roe_menos_ke_nom": 0.619587,
+    "roe_menos_ke_real": 0.538056,
+    "serie": {
+     "2017": 0.471184,
+     "2018": 0.450071,
+     "2019": 1.102526,
+     "2020": 0.661738,
+     "2021": 0.575409,
+     "2022": 0.812578,
+     "2023": 0.912811,
+     "2024": 0.892107,
+     "2025": 0.898149
+    }
+   },
+   {
+    "ticker": "BRBI11",
+    "roe_lp": 0.2062,
+    "n": 4,
+    "nota": "série curta no DFP"
+   },
+   {
+    "ticker": "BRSR6",
+    "perfil": "banco",
+    "roe_lp": 0.1138,
+    "n": 8,
+    "mediana": 0.061682,
+    "mediana_real": 0.003866,
+    "dif": 0.052118,
+    "roe_menos_ke_nom": -0.131309,
+    "roe_menos_ke_real": -0.116734,
+    "serie": {
+     "2017": 0.155539,
+     "2018": 0.123364,
+     "2019": 0.167396,
+     "2020": 0.0,
+     "2021": 0.12509,
+     "2022": 0.0,
+     "2023": 0.0,
+     "2024": 0.0
+    }
+   },
+   {
+    "ticker": "CMIG4",
+    "perfil": "utility",
+    "roe_lp": 0.17965,
+    "n": 9,
+    "mediana": 0.198493,
+    "mediana_real": 0.118917,
+    "dif": -0.018843,
+    "roe_menos_ke_nom": 0.005503,
+    "roe_menos_ke_real": -0.001683,
+    "serie": {
+     "2017": 0.073448,
+     "2018": 0.117635,
+     "2019": 0.205309,
+     "2020": 0.171713,
+     "2021": 0.203164,
+     "2022": 0.198493,
+     "2023": 0.248318,
+     "2024": 0.273594,
+     "2025": 0.175051
+    }
+   },
+   {
+    "ticker": "CPFE3",
+    "perfil": "utility",
+    "roe_lp": 0.25265,
+    "n": 9,
+    "mediana": 0.270563,
+    "mediana_real": 0.212286,
+    "dif": -0.017913,
+    "roe_menos_ke_nom": 0.077572,
+    "roe_menos_ke_real": 0.091686,
+    "serie": {
+     "2017": 0.139355,
+     "2018": 0.214108,
+     "2019": 0.232417,
+     "2020": 0.270563,
+     "2021": 0.326529,
+     "2022": 0.324785,
+     "2023": 0.314611,
+     "2024": 0.275561,
+     "2025": 0.253777
+    }
+   },
+   {
+    "ticker": "CPLE3",
+    "perfil": "utility",
+    "roe_lp": 0.1014,
+    "n": 9,
+    "mediana": 0.110178,
+    "mediana_real": 0.057144,
+    "dif": -0.008778,
+    "roe_menos_ke_nom": -0.082812,
+    "roe_menos_ke_real": -0.063456,
+    "serie": {
+     "2017": 0.068743,
+     "2018": 0.090079,
+     "2019": 0.119569,
+     "2020": 0.209838,
+     "2021": 0.236987,
+     "2022": 0.05214,
+     "2023": 0.101057,
+     "2024": 0.113381,
+     "2025": 0.110178
+    }
+   },
+   {
+    "ticker": "CSMG3",
+    "perfil": "utility",
+    "roe_lp": 0.1141,
+    "n": 9,
+    "mediana": 0.120356,
+    "mediana_real": 0.07615,
+    "dif": -0.006256,
+    "roe_menos_ke_nom": -0.072635,
+    "roe_menos_ke_real": -0.04445,
+    "serie": {
+     "2017": 0.091996,
+     "2018": 0.092807,
+     "2019": 0.116323,
+     "2020": 0.123706,
+     "2021": 0.08135,
+     "2022": 0.120356,
+     "2023": 0.186042,
+     "2024": 0.168598,
+     "2025": 0.170299
+    }
+   },
+   {
+    "ticker": "CXSE3",
+    "perfil": "holding_seguro",
+    "roe_lp": 0.292,
+    "n": 9,
+    "mediana": 0.27535,
+    "mediana_real": 0.213714,
+    "dif": 0.01665,
+    "roe_menos_ke_nom": 0.08236,
+    "roe_menos_ke_real": 0.093114,
+    "serie": {
+     "2017": 0.331439,
+     "2018": 0.342599,
+     "2019": 0.325525,
+     "2020": 0.252694,
+     "2021": 0.19305,
+     "2022": 0.27535,
+     "2023": 0.0,
+     "2024": 0.0,
+     "2025": 0.324629
+    }
+   },
+   {
+    "ticker": "ISAE4",
+    "perfil": "utility",
+    "roe_lp": 0.168098,
+    "n": 9,
+    "mediana": 0.169328,
+    "mediana_real": 0.117973,
+    "dif": -0.00123,
+    "roe_menos_ke_nom": -0.023663,
+    "roe_menos_ke_real": -0.002627,
+    "serie": {
+     "2017": 0.129413,
+     "2018": 0.170647,
+     "2019": 0.154191,
+     "2020": 0.263146,
+     "2021": 0.214439,
+     "2022": 0.147972,
+     "2023": 0.169328,
+     "2024": 0.188621,
+     "2025": 0.119801
+    }
+   },
+   {
+    "ticker": "ITUB4",
+    "perfil": "banco",
+    "roe_lp": 0.1758,
+    "n": 9,
+    "mediana": 0.185165,
+    "mediana_real": 0.14156,
+    "dif": -0.009365,
+    "roe_menos_ke_nom": -0.007826,
+    "roe_menos_ke_real": 0.02096,
+    "serie": {
+     "2017": 0.185711,
+     "2018": 0.183395,
+     "2019": 0.198117,
+     "2020": 0.135011,
+     "2021": 0.180898,
+     "2022": 0.185165,
+     "2023": 0.184877,
+     "2024": 0.204776,
+     "2025": 0.215871
+    }
+   },
+   {
+    "ticker": "PSSA3",
+    "perfil": "seguradora",
+    "roe_lp": 0.169,
+    "n": 9,
+    "mediana": 0.173329,
+    "mediana_real": 0.131104,
+    "dif": -0.004329,
+    "roe_menos_ke_nom": -0.019662,
+    "roe_menos_ke_real": 0.010504,
+    "serie": {
+     "2017": 0.149641,
+     "2018": 0.17068,
+     "2019": 0.173329,
+     "2020": 0.195884,
+     "2021": 0.16848,
+     "2022": 0.113782,
+     "2023": 0.19707,
+     "2024": 0.199867,
+     "2025": 0.226966
+    }
+   },
+   {
+    "ticker": "SANB11",
+    "roe_lp": 0.1342,
+    "n": 4,
+    "nota": "série curta no DFP"
+   },
+   {
+    "ticker": "SAPR11",
+    "roe_lp": 0.147,
+    "n": 0,
+    "nota": "série curta no DFP"
+   },
+   {
+    "ticker": "SBSP3",
+    "roe_lp": 0.145,
+    "n": 2,
+    "nota": "série curta no DFP"
+   },
+   {
+    "ticker": "TAEE11",
+    "perfil": "utility",
+    "roe_lp": 0.2141,
+    "n": 9,
+    "mediana": 0.218663,
+    "mediana_real": 0.167365,
+    "dif": -0.004563,
+    "roe_menos_ke_nom": 0.025672,
+    "roe_menos_ke_real": 0.046765,
+    "serie": {
+     "2017": 0.149803,
+     "2018": 0.240214,
+     "2019": 0.210943,
+     "2020": 0.413218,
+     "2021": 0.348324,
+     "2022": 0.218663,
+     "2023": 0.206469,
+     "2024": 0.248761,
+     "2025": 0.217186
+    }
+   }
+  ],
+  "tentativa": false,
+  "resumo": "18 objetos Financeira; ROE pelo DFP 2017–25 (lucro do controlador ÷ PL médio): roe_lp digitado a ≥ 1 p.p. da mediana em 5 (BBSE3, BRSR6, CMIG4, CPFE3, CXSE3); sinal de (ROE − Ke) muda entre nominal (19.30%) e real (12.06%) em 3 (CMIG4, ITUB4, PSSA3). Critério: aceita se ≥ 2 em qualquer um. O ROE recorrente do Itaú (RI) não foi lido em fonte A."
+ },
+ "H9": {
+  "status": "empilhamento não confirmado",
+  "tentativa": true,
+  "detalhe": {
+   "R-mercado": [
+    {
+     "ticker": "ABEV3",
+     "log_pc": 0.596388,
+     "phi": {
+      "taxa": -0.544274,
+      "margem": -0.01129,
+      "g": 0.0,
+      "aliquota": 0.0,
+      "desconto": 0.0
+     },
+     "fracao": {
+      "taxa": 0.979679,
+      "margem": 0.020321,
+      "g": -0.0,
+      "aliquota": -0.0,
+      "desconto": -0.0
+     }
+    },
+    {
+     "ticker": "B3SA3",
+     "log_pc": 0.999641,
+     "phi": {
+      "taxa": -0.816347,
+      "margem": -0.059778,
+      "g": 0.0,
+      "aliquota": -0.067808,
+      "desconto": 0.0
+     },
+     "fracao": {
+      "taxa": 0.864836,
+      "margem": 0.063329,
+      "g": -0.0,
+      "aliquota": 0.071835,
+      "desconto": -0.0
+     }
+    },
+    {
+     "ticker": "FLRY3",
+     "log_pc": 0.918712,
+     "phi": {
+      "taxa": -0.856586,
+      "margem": 0.063471,
+      "g": 0.135767,
+      "aliquota": 0.0,
+      "desconto": 0.0
+     },
+     "fracao": {
+      "taxa": 1.303094,
+      "margem": -0.096556,
+      "g": -0.206538,
+      "aliquota": -0.0,
+      "desconto": -0.0
+     }
+    },
+    {
+     "ticker": "GGBR4",
+     "log_pc": 0.328031,
+     "phi": {
+      "taxa": -0.267475,
+      "margem": 0.060053,
+      "g": -0.172766,
+      "aliquota": 0.0,
+      "desconto": 0.0
+     },
+     "fracao": {
+      "taxa": 0.703535,
+      "margem": -0.157957,
+      "g": 0.454422,
+      "aliquota": -0.0,
+      "desconto": -0.0
+     }
+    },
+    {
+     "ticker": "HYPE3",
+     "log_pc": 0.450174,
+     "phi": {
+      "taxa": -0.477605,
+      "margem": 0.383992,
+      "g": 0.117833,
+      "aliquota": 0.0,
+      "desconto": 0.0
+     },
+     "fracao": {
+      "taxa": -19.719573,
+      "margem": 15.854439,
+      "g": 4.865134,
+      "aliquota": 0.0,
+      "desconto": 0.0
+     }
+    },
+    {
+     "ticker": "KEPL3",
+     "log_pc": 0.101604,
+     "phi": {
+      "taxa": -0.019371,
+      "margem": 0.122194,
+      "g": 0.000228,
+      "aliquota": 0.0,
+      "desconto": 0.0
+     },
+     "fracao": {
+      "taxa": -0.187979,
+      "margem": 1.18577,
+      "g": 0.002209,
+      "aliquota": 0.0,
+      "desconto": 0.0
+     }
+    },
+    {
+     "ticker": "LEVE3",
+     "log_pc": 0.002287,
+     "phi": {
+      "taxa": 0.052874,
+      "margem": -0.042698,
+      "g": 0.0,
+      "aliquota": 0.0,
+      "desconto": 0.0
+     },
+     "fracao": {
+      "taxa": 5.195757,
+      "margem": -4.195757,
+      "g": 0.0,
+      "aliquota": 0.0,
+      "desconto": 0.0
+     }
+    },
+    {
+     "ticker": "PETR4",
+     "log_pc": 0.069967,
+     "phi": {
+      "taxa": 0.062594,
+      "margem": -0.164013,
+      "g": 0.011446,
+      "aliquota": 0.0,
+      "desconto": -0.06623
+     },
+     "fracao": {
+      "taxa": -0.400724,
+      "margem": 1.050001,
+      "g": -0.07328,
+      "aliquota": -0.0,
+      "desconto": 0.424002
+     }
+    },
+    {
+     "ticker": "PRIO3",
+     "log_pc": 0.389812,
+     "phi": {
+      "taxa": -0.292982,
+      "margem": 0.332988,
+      "g": 0.152347,
+      "aliquota": -0.131306,
+      "desconto": 0.0
+     },
+     "fracao": {
+      "taxa": -4.799299,
+      "margem": 5.454633,
+      "g": 2.495574,
+      "aliquota": -2.150908,
+      "desconto": 0.0
+     }
+    },
+    {
+     "ticker": "RANI3",
+     "log_pc": 0.914146,
+     "phi": {
+      "taxa": -0.913877,
+      "margem": -0.258215,
+      "g": 0.10836,
+      "aliquota": 0.0,
+      "desconto": 0.0
+     },
+     "fracao": {
+      "taxa": 0.859124,
+      "margem": 0.242744,
+      "g": -0.101868,
+      "aliquota": -0.0,
+      "desconto": -0.0
+     }
+    },
+    {
+     "ticker": "SLCE3",
+     "log_pc": 0.825528,
+     "phi": {
+      "taxa": -1.022404,
+      "margem": 0.803975,
+      "g": -0.058761,
+      "aliquota": 0.0,
+      "desconto": 0.0
+     },
+     "fracao": {
+      "taxa": 3.688461,
+      "margem": -2.900447,
+      "g": 0.211987,
+      "aliquota": -0.0,
+      "desconto": -0.0
+     }
+    },
+    {
+     "ticker": "SMTO3",
+     "log_pc": 0.366171,
+     "phi": {
+      "taxa": -0.432269,
+      "margem": 0.771362,
+      "g": -0.699425,
+      "aliquota": 0.0,
+      "desconto": 0.0
+     },
+     "fracao": {
+      "taxa": 1.199641,
+      "margem": -2.140698,
+      "g": 1.941057,
+      "aliquota": -0.0,
+      "desconto": -0.0
+     }
+    },
+    {
+     "ticker": "TIMS3",
+     "log_pc": 0.649438,
+     "phi": {
+      "taxa": -0.617416,
+      "margem": -0.459314,
+      "g": 0.088948,
+      "aliquota": -0.101198,
+      "desconto": 0.0
+     },
+     "fracao": {
+      "taxa": 0.566968,
+      "margem": 0.421784,
+      "g": -0.08168,
+      "aliquota": 0.092929,
+      "desconto": -0.0
+     }
+    },
+    {
+     "ticker": "UGPA3",
+     "log_pc": 0.895299,
+     "phi": {
+      "taxa": -0.914616,
+      "margem": -0.738758,
+      "g": 0.15199,
+      "aliquota": 0.0,
+      "desconto": 0.0
+     },
+     "fracao": {
+      "taxa": 0.609182,
+      "margem": 0.492051,
+      "g": -0.101233,
+      "aliquota": -0.0,
+      "desconto": -0.0
+     }
+    },
+    {
+     "ticker": "UNIP6",
+     "log_pc": 0.23888,
+     "phi": {
+      "taxa": -0.30016,
+      "margem": 0.709892,
+      "g": -0.010416,
+      "aliquota": 0.0,
+      "desconto": 0.0
+     },
+     "fracao": {
+      "taxa": -0.751686,
+      "margem": 1.777771,
+      "g": -0.026085,
+      "aliquota": 0.0,
+      "desconto": 0.0
+     }
+    },
+    {
+     "ticker": "VBBR3",
+     "log_pc": 1.247187,
+     "phi": {
+      "taxa": -1.28848,
+      "margem": -0.809066,
+      "g": -0.067594,
+      "aliquota": 0.002886,
+      "desconto": 0.0
+     },
+     "fracao": {
+      "taxa": 0.595896,
+      "margem": 0.374177,
+      "g": 0.031261,
+      "aliquota": -0.001335,
+      "desconto": -0.0
+     }
+    },
+    {
+     "ticker": "VIVT3",
+     "log_pc": 0.612413,
+     "phi": {
+      "taxa": -0.579759,
+      "margem": -0.149338,
+      "g": 0.011282,
+      "aliquota": 0.003021,
+      "desconto": 0.0
+     },
+     "fracao": {
+      "taxa": 0.811084,
+      "margem": 0.208925,
+      "g": -0.015783,
+      "aliquota": -0.004226,
+      "desconto": -0.0
+     }
+    },
+    {
+     "ticker": "WEGE3",
+     "log_pc": 1.488374,
+     "phi": {
+      "taxa": -1.524597,
+      "margem": -0.026302,
+      "g": -0.00493,
+      "aliquota": -0.030641,
+      "desconto": 0.0
+     },
+     "fracao": {
+      "taxa": 0.961,
+      "margem": 0.016579,
+      "g": 0.003108,
+      "aliquota": 0.019314,
+      "desconto": -0.0
+     }
+    }
+   ],
+   "R-fonte": [
+    {
+     "ticker": "ABEV3",
+     "log_pc": 0.596388,
+     "phi": {
+      "taxa": 0.02054,
+      "margem": 0.0,
+      "g": 0.0,
+      "aliquota": 0.0,
+      "desconto": 0.0
+     },
+     "fracao": {
+      "taxa": 1.0,
+      "margem": 0.0,
+      "g": 0.0,
+      "aliquota": 0.0,
+      "desconto": 0.0
+     }
+    },
+    {
+     "ticker": "B3SA3",
+     "log_pc": 0.999641,
+     "phi": {
+      "taxa": -0.080305,
+      "margem": 0.0,
+      "g": 0.0,
+      "aliquota": 0.005793,
+      "desconto": 0.0
+     },
+     "fracao": {
+      "taxa": 1.077742,
+      "margem": -0.0,
+      "g": -0.0,
+      "aliquota": -0.077742,
+      "desconto": -0.0
+     }
+    },
+    {
+     "ticker": "FLRY3",
+     "log_pc": 0.918712,
+     "phi": {
+      "taxa": -0.268985,
+      "margem": 0.0,
+      "g": 0.0,
+      "aliquota": 0.068831,
+      "desconto": 0.0
+     },
+     "fracao": {
+      "taxa": 1.343889,
+      "margem": -0.0,
+      "g": -0.0,
+      "aliquota": -0.343889,
+      "desconto": -0.0
+     }
+    },
+    {
+     "ticker": "GGBR4",
+     "log_pc": 0.328031,
+     "phi": {
+      "taxa": -0.107463,
+      "margem": 0.0,
+      "g": 0.0,
+      "aliquota": 0.107087,
+      "desconto": 0.0
+     },
+     "fracao": {
+      "taxa": 285.819539,
+      "margem": -0.0,
+      "g": -0.0,
+      "aliquota": -284.819539,
+      "desconto": -0.0
+     }
+    },
+    {
+     "ticker": "HYPE3",
+     "log_pc": 0.450174,
+     "phi": {
+      "taxa": -0.169227,
+      "margem": 0.0,
+      "g": 0.0,
+      "aliquota": 0.0,
+      "desconto": 0.0
+     },
+     "fracao": {
+      "taxa": 1.0,
+      "margem": -0.0,
+      "g": -0.0,
+      "aliquota": -0.0,
+      "desconto": -0.0
+     }
+    },
+    {
+     "ticker": "KEPL3",
+     "log_pc": 0.101604,
+     "phi": {
+      "taxa": -0.054948,
+      "margem": 0.0,
+      "g": 0.0,
+      "aliquota": 0.084296,
+      "desconto": 0.0
+     },
+     "fracao": {
+      "taxa": -1.872264,
+      "margem": 0.0,
+      "g": 0.0,
+      "aliquota": 2.872264,
+      "desconto": 0.0
+     }
+    },
+    {
+     "ticker": "KLBN11",
+     "log_pc": 1.933152,
+     "phi": {
+      "taxa": -1.766366,
+      "margem": 0.0,
+      "g": 0.0,
+      "aliquota": -0.248562,
+      "desconto": 0.0
+     },
+     "fracao": {
+      "taxa": 0.87664,
+      "margem": -0.0,
+      "g": -0.0,
+      "aliquota": 0.12336,
+      "desconto": -0.0
+     }
+    },
+    {
+     "ticker": "LEVE3",
+     "log_pc": 0.002287,
+     "phi": {
+      "taxa": -0.08428,
+      "margem": 0.0,
+      "g": 0.0,
+      "aliquota": 0.194312,
+      "desconto": 0.0
+     },
+     "fracao": {
+      "taxa": -0.76596,
+      "margem": 0.0,
+      "g": 0.0,
+      "aliquota": 1.76596,
+      "desconto": 0.0
+     }
+    },
+    {
+     "ticker": "PETR4",
+     "log_pc": 0.069967,
+     "phi": {
+      "taxa": -0.141115,
+      "margem": 0.0,
+      "g": 0.0,
+      "aliquota": 0.046584,
+      "desconto": -0.065796
+     },
+     "fracao": {
+      "taxa": 0.880168,
+      "margem": -0.0,
+      "g": -0.0,
+      "aliquota": -0.290553,
+      "desconto": 0.410385
+     }
+    },
+    {
+     "ticker": "PRIO3",
+     "log_pc": 0.389812,
+     "phi": {
+      "taxa": -0.178045,
+      "margem": 0.0,
+      "g": 0.0,
+      "aliquota": 0.0,
+      "desconto": 0.0
+     },
+     "fracao": {
+      "taxa": 1.0,
+      "margem": -0.0,
+      "g": -0.0,
+      "aliquota": -0.0,
+      "desconto": -0.0
+     }
+    },
+    {
+     "ticker": "RANI3",
+     "log_pc": 0.914146,
+     "phi": {
+      "taxa": -0.554272,
+      "margem": 0.0,
+      "g": 0.0,
+      "aliquota": -0.02352,
+      "desconto": 0.0
+     },
+     "fracao": {
+      "taxa": 0.959293,
+      "margem": -0.0,
+      "g": -0.0,
+      "aliquota": 0.040707,
+      "desconto": -0.0
+     }
+    },
+    {
+     "ticker": "SLCE3",
+     "log_pc": 0.825528,
+     "phi": {
+      "taxa": -0.902916,
+      "margem": 0.0,
+      "g": 0.0,
+      "aliquota": -0.046738,
+      "desconto": 0.0
+     },
+     "fracao": {
+      "taxa": 0.950784,
+      "margem": -0.0,
+      "g": -0.0,
+      "aliquota": 0.049216,
+      "desconto": -0.0
+     }
+    },
+    {
+     "ticker": "SMTO3",
+     "log_pc": 0.366171,
+     "phi": {
+      "taxa": -0.575505,
+      "margem": 0.0,
+      "g": 0.0,
+      "aliquota": -0.032749,
+      "desconto": 0.0
+     },
+     "fracao": {
+      "taxa": 0.946159,
+      "margem": -0.0,
+      "g": -0.0,
+      "aliquota": 0.053841,
+      "desconto": -0.0
+     }
+    },
+    {
+     "ticker": "SUZB3",
+     "log_pc": 0.621365,
+     "phi": {
+      "taxa": -0.893725,
+      "margem": 0.0,
+      "g": 0.0,
+      "aliquota": -0.082946,
+      "desconto": 0.0
+     },
+     "fracao": {
+      "taxa": 0.915072,
+      "margem": -0.0,
+      "g": -0.0,
+      "aliquota": 0.084928,
+      "desconto": -0.0
+     }
+    },
+    {
+     "ticker": "TIMS3",
+     "log_pc": 0.649438,
+     "phi": {
+      "taxa": -0.220061,
+      "margem": 0.0,
+      "g": 0.0,
+      "aliquota": 0.119306,
+      "desconto": 0.0
+     },
+     "fracao": {
+      "taxa": 2.184113,
+      "margem": -0.0,
+      "g": -0.0,
+      "aliquota": -1.184113,
+      "desconto": -0.0
+     }
+    },
+    {
+     "ticker": "UGPA3",
+     "log_pc": 0.895299,
+     "phi": {
+      "taxa": -0.312553,
+      "margem": 0.0,
+      "g": 0.0,
+      "aliquota": 0.031067,
+      "desconto": 0.0
+     },
+     "fracao": {
+      "taxa": 1.110368,
+      "margem": -0.0,
+      "g": -0.0,
+      "aliquota": -0.110368,
+      "desconto": -0.0
+     }
+    },
+    {
+     "ticker": "UNIP6",
+     "log_pc": 0.23888,
+     "phi": {
+      "taxa": -0.181456,
+      "margem": 0.0,
+      "g": 0.0,
+      "aliquota": 0.015909,
+      "desconto": 0.0
+     },
+     "fracao": {
+      "taxa": 1.096099,
+      "margem": -0.0,
+      "g": -0.0,
+      "aliquota": -0.096099,
+      "desconto": -0.0
+     }
+    },
+    {
+     "ticker": "VBBR3",
+     "log_pc": 1.247187,
+     "phi": {
+      "taxa": -0.506951,
+      "margem": 0.0,
+      "g": 0.0,
+      "aliquota": 0.016812,
+      "desconto": 0.0
+     },
+     "fracao": {
+      "taxa": 1.0343,
+      "margem": -0.0,
+      "g": -0.0,
+      "aliquota": -0.0343,
+      "desconto": -0.0
+     }
+    },
+    {
+     "ticker": "VIVT3",
+     "log_pc": 0.612413,
+     "phi": {
+      "taxa": -0.100124,
+      "margem": 0.0,
+      "g": 0.0,
+      "aliquota": 0.182375,
+      "desconto": 0.0
+     },
+     "fracao": {
+      "taxa": -1.217303,
+      "margem": 0.0,
+      "g": 0.0,
+      "aliquota": 2.217303,
+      "desconto": 0.0
+     }
+    },
+    {
+     "ticker": "WEGE3",
+     "log_pc": 1.488374,
+     "phi": {
+      "taxa": -0.018977,
+      "margem": 0.0,
+      "g": 0.0,
+      "aliquota": 0.306666,
+      "desconto": 0.0
+     },
+     "fracao": {
+      "taxa": -0.065963,
+      "margem": 0.0,
+      "g": 0.0,
+      "aliquota": 1.065963,
+      "desconto": 0.0
+     }
+    }
+   ]
+  },
+  "resumo_ref": {
+   "R-mercado": {
+    "n": 18,
+    "fracao_mediana": {
+     "taxa": 0.757309,
+     "margem": 0.225835,
+     "g": 0.0,
+     "aliquota": 0.0,
+     "desconto": -0.0
+    },
+    "dominante": "taxa",
+    "empilhado": false
+   },
+   "R-fonte": {
+    "n": 20,
+    "fracao_mediana": {
+     "taxa": 0.979646,
+     "margem": -0.0,
+     "g": -0.0,
+     "aliquota": -0.0,
+     "desconto": -0.0
+    },
+    "dominante": "taxa",
+    "empilhado": false
+   }
+  },
+  "resumo": "R-mercado (18 industriais): fração mediana taxa 76%, margem 23%, g 0%, aliquota 0%, desconto 0% → dominante taxa; R-fonte (20 industriais): fração mediana taxa 98%, margem 0%, g 0%, aliquota 0%, desconto 0% → dominante taxa. R-fonte: taxa = Ke de Damodaran com β = 1 (β setorial não lido — marcado); margem do ciclo completo e g = reinvestimento × ROIC sem regra com fonte → ficam no valor da casa (marcados); alíquota 34% legal (crédito em VP não modelado — marcado). Financeiras fora (sem margem, alíquota nem trava de g)."
+ },
+ "H10": {
+  "status": "aceita (bug)",
+  "contagem": {
+   "caixa": [
+    "ABEV3",
+    "B3SA3",
+    "GGBR4",
+    "HYPE3",
+    "KEPL3",
+    "LEVE3",
+    "PETR4",
+    "PRIO3",
+    "SMTO3",
+    "TIMS3",
+    "UGPA3",
+    "UNIP6",
+    "VIVT3",
+    "WEGE3"
+   ],
+   "divida": [
+    "ABEV3",
+    "B3SA3",
+    "GGBR4",
+    "HYPE3",
+    "LEVE3",
+    "PETR4",
+    "PRIO3",
+    "RANI3",
+    "RECV3",
+    "SLCE3",
+    "TIMS3",
+    "UGPA3",
+    "VIVT3",
+    "WEGE3"
+   ],
+   "pl": [
+    "ABEV3",
+    "B3SA3",
+    "HYPE3",
+    "LEVE3",
+    "TIMS3",
+    "UGPA3",
+    "VBBR3",
+    "VIVT3",
+    "WEGE3"
+   ],
+   "lucro": [],
+   "receita": [],
+   "da": [
+    "ABEV3",
+    "B3SA3",
+    "FLRY3",
+    "GGBR4",
+    "HYPE3",
+    "KEPL3",
+    "KLBN11",
+    "LEVE3",
+    "PETR4",
+    "RANI3",
+    "SMTO3",
+    "SUZB3",
+    "TIMS3",
+    "UGPA3",
+    "UNIP6",
+    "VBBR3",
+    "VIVT3",
+    "WEGE3"
+   ],
+   "imobilizado": [
+    "ABEV3",
+    "B3SA3",
+    "FLRY3",
+    "GGBR4",
+    "HYPE3",
+    "KEPL3",
+    "LEVE3",
+    "PETR4",
+    "PRIO3",
+    "SMTO3",
+    "TIMS3",
+    "UGPA3",
+    "UNIP6",
+    "VBBR3",
+    "VIVT3",
+    "WEGE3"
+   ]
+  },
+  "tentativa": false,
+  "resumo": "Campo tirado de todos os períodos, preço a 0,8 × o central que sobra: caixa → 14 de 21 com palavra de decisão; divida → 14 de 21 com palavra de decisão; pl → 9 de 21 com palavra de decisão; lucro → 0 de 21 com palavra de decisão; receita → 0 de 21 com palavra de decisão; da → 18 de 21 com palavra de decisão; imobilizado → 16 de 21 com palavra de decisão. Ligada ao xfail estrito test_h10_* (campos abertos) e à propriedade estrita (lucro, receita)."
+ },
+ "H11": {
+  "status": "a conferir",
+  "tentativa": false,
+  "resumo": "Reguladas nos lotes: CMIG4, CPFE3, CPLE3, CSMG3, ISAE4, SAPR11, SBSP3, TAEE11. Ke real da casa 12.06%. Nenhuma nota técnica lida no documento primário (ANEEL 401/403, ARSESP 404, AGEPAR e ARSAE só por resumo; verificador-fonte 22/10) → todos os reguladores 'a conferir', fora da contagem. Pista nota C, sem efeito: WACC real depois de impostos noticiado de 7,9% a 9,8% (ANEEL 2026: distribuição 8,10%, transmissão 8,00%; Sabesp 7,86%; Copasa 9,7–9,8%)."
+ }
+}

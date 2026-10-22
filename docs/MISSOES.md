@@ -2,6 +2,44 @@
 *Fila de trabalho da rotina autônoma. Cada missão: executável só com o GitHub, com "pronto quando" verificável. Ao terminar, mover para "Feitas" e registrar em `RELATORIO-DIARIO.md`. Fonte: `BACKLOG.md` (tipo executável). Desde 22/10 a rotina grava no ramo `claude/*` dela; o `ferramentas/conferir_noite.py` junta no master de manhã, com os dados locais (`DECISOES.md`, 22/10).*
 
 ## Próximas (ordem de prioridade)
+*Fila da madrugada de 23/10 (montada em 22/10 fim do dia): **O3 → N12 → O4 → O5**. O3 em ramo próprio (muda palavra); as
+outras no ramo da sessão. Fio condutor: `docs/PROMPT-ORACULO-E-CALIBRACAO.md` (ler "Princípios invioláveis" e as Fases 3–4
+antes de começar). Fases 0–2 feitas (9fd7159, 9e9e8ac); relatórios de 22/10 em `docs/oraculo/`.*
+
+**O3 — Oráculo Fase 3: corrigir os bugs H10 e A1 (muda palavra → ramo próprio; o ok final é do Frank de manhã).**
+*Ler antes:* `docs/PROMPT-ORACULO-E-CALIBRACAO.md` §Fase 3; `docs/PRE-REGISTRO-v3.md` (emenda 2 e linhas 1–12 do §6);
+`docs/oraculo/hipoteses-2026-10-22.md` (linha H10); os dois xfail estritos em `ferramentas/tests/test_oraculo_propriedades.py`
+(`test_h10_dado_critico_ausente_nunca_da_palavra_de_decisao` e `test_desconto_do_controlador_so_no_valor_industrial`).
+*Ramo:* `git fetch origin && git switch -c claude/fase3-bugs origin/master`. Ramo separado porque o `conferir_noite.py` confere
+cada `claude/*` sozinho: este vai ficar vermelho no golden de manhã (esperado) e não pode segurar N12/O4. Se o push desse
+ramo for recusado, faça O3 **por último**, no ramo da sessão, e diga isso no `PENDENTE-FRANK.md`.
+- (a) **H10 — zero silencioso.** Sem caixa, dívida, PL, D&A ou imobilizado (campo ausente em todos os períodos) o motor
+  publica palavra de decisão. Pontos citados no xfail: `motor_nao_financeiras.py:176-177, 214, 250, 273-277, 287, 297` e
+  `montar_series.py:48`. Correção: campo crítico ausente → **NÃO CONCLUSIVO** com razão `"dado crítico ausente: <campo>"`;
+  nunca 0 no lugar de ausente. Dado presente e igual a 0 continua valendo (não confundir ausente com zero).
+- (b) **A1 — desconto do controlador volta no Ke.** Doutrina §5 (`01`, l.105; matriz D5.09): o desconto entra **uma vez, no
+  valor**. Hoje, nos industriais, ele entra no E do ponto fixo do WACC (`estrutura_de_capital`) e volta como Ke maior (Hamada)
+  e nota de qualidade diferente; atinge a PETR4. Correção: o ponto fixo usa o valor **antes** do desconto; Ke, g e notas
+  ficam iguais com e sem desconto (é o que o teste exige).
+- (c) Conferir se seguem abertos (lista da Fase 3 no prompt): LEVE3 com palavra velha no `hall.json`; trava de coerência só
+  em JUSTA; payout × g terminal no DDM. Aberto e inequívoco contra o `01` → mesmo tratamento. Exige escolha de doutrina →
+  não mexer; vira pergunta no `PENDENTE-FRANK.md` com opções e recomendação.
+- Para cada bug: teste que falha antes e passa depois; tirar a marca xfail **no mesmo commit** (é strict: XPASS reprova);
+  fechar a lacuna correspondente em `ferramentas/oraculo/matriz.py` (D5.09 e as da H10).
+- **Proibido nesta missão:** regravar o golden (`rodar_tudo.py` precisa dos ZIPs locais, a nuvem não tem), mexer no `01`,
+  mexer em premissa digitada.
+- **Palavras que mudam:** a nuvem não mede. No `09`, escrever "a medir de manhã" + os tickers prováveis: (b) os industriais
+  com `desconto_controlador` ≠ zero nas fichas (listar); (a) os tickers reais com algum desses campos ausente (listar pelo que
+  estiver em git; se nenhum, dizer "nenhum esperado").
+- **Parecer:** agente `oraculo` (`.claude/agents/oraculo.md`) recebendo **só caminhos**: o diff, `docs/PRE-REGISTRO-v3.md`, o
+  `01` e a saída do `cd ferramentas && python -m oraculo` (se rodar na nuvem; se pular por falta de dado, dizer). Veredito
+  (APROVA/RESSALVA/BLOQUEIA) vai para o `09`. BLOQUEIA → corrigir e repedir; não dar push de BLOQUEIA sem explicação.
+*Pronto quando:* os dois testes (sem xfail) passam; suíte da nuvem verde; `git diff --stat origin/master -- ferramentas/tests/golden.json 01-doutrina-value-investing.md` vazio;
+entrada no `09` com parecer; linha nova no `PENDENTE-FRANK.md`: *"#11 — Fase 3 (H10, A1) pronta no ramo `claude/fase3-bugs`. De
+manhã: `cd ferramentas && python -m pytest --ignore=backtest -q` (golden vai acusar as palavras), `python rodar_tudo.py
+--motivo "Fase 3: H10 e A1"`, ler o que mudou e dar ok para juntar."* Commit + push do ramo; depois `git switch` de volta
+ao ramo da sessão antes da próxima missão.
+
 **N12 — Data de cada fonte de verdade no produto (ressalva do revisor da noite de 22/10; N3 ficou parcial).** O contrato da tela
 já tem `fontes[].data` (de `Origem.data`, `relatorio/modelo.py`), mas só os registros de `insumos_a` passam `data=`: no contrato
 exportado em 22/10 manhã, **27 de 466 fontes** têm data (19 COTAHIST e poucas mais); `relatorio/procedencia.py` e quem mais
@@ -12,6 +50,25 @@ FRE = o ano do formulário. Origem sem data declarada continua `None`.
 *Pronto quando:* teste com fixture mostra `data` preenchida para COTAHIST, proventos e CVM, e `None` para origem sem data;
 `grep -rn "Origem(" ferramentas --include=*.py | grep -v tests` lista onde a data entrou; nenhuma palavra, central ou golden
 mudou (`git diff --stat ferramentas/tests/golden.json` vazio); linha no `09`.
+
+**O4 — Oráculo Fase 4 (parte 1): nota de mutação dos dois motores (só relatório; nenhuma palavra muda).** A nuvem é Linux,
+onde o mutmut 3 roda (no Windows não roda: prompt §Fase 4). Conferir a API/config atual do mutmut no Context7 antes de
+configurar. Alvo: `ferramentas/motor_nao_financeiras.py` e `ferramentas/motor_financeiras.py`; testes = suíte sem `backtest/`.
+Fixar a versão exata em `requirements-dev.txt` (criar se não existir; não pôr no `requirements.txt` da tela) e a pasta
+`mutants/` no `.gitignore`. Orçamento: se passar de ~90 min, parar e relatar o parcial (quantos mutantes rodaram).
+*Pronto quando:* `docs/oraculo/mutacao-2026-10-23.md` com nota de mutação por motor, sobreviventes agrupados por função e os
+20 mais importantes (os que mexem em Ke, g, central ou palavra) com arquivo:linha; nada de código de motor alterado;
+linha em `DECISOES.md` ("mutmut na nuvem Linux; cosmic-ray descartado" ou o contrário, com motivo) e uma linha na §12 do
+`PROJECT_BRIEF.md` (ferramenta adotada; guardar a versão anterior em `_historico/AAAA-MM-DD brief/`).
+
+**O5 — Oráculo Fase 4 (parte 2): motor-sombra FCFF/FCFE e DDM (só relatório).** Antes de começar, conferir se os insumos dos
+tickers carregam na nuvem (`cd ferramentas && python -c "from oraculo import sanidade as S; print(len(S.empresas()))"` ou o equivalente
+usado em `tests/test_oraculo_propriedades.py`). Se não carregarem sem os ZIPs, **não fazer**: registrar "O5 precisa da
+máquina local" no relatório e parar. Se carregarem: implementação mínima e independente em `ferramentas/oraculo/sombra.py`
+(sem importar os motores; estilo Damodaran), mesma entrada, e comparar o central. Tolerância pré-registrada **antes** de
+rodar, como linha nova no §6 do `PRE-REGISTRO-v3.md` (teste, não conta no orçamento de 24).
+*Pronto quando:* `docs/oraculo/sombra-2026-10-23.md` com a divergência por ticker e a explicação de cada uma acima da
+tolerância; teste mínimo da sombra num caso de livro (fixture); nenhuma palavra, central ou golden mudou.
 
 *Fila da madrugada de 22/10 (N7 → N1 → N2 → N9 → N10 → N8 → N11 → N3 → N4 → N5): toda feita; N11 e N3 parciais.*
 
@@ -157,3 +214,6 @@ Front lê só o contrato. Tira o "Sistema em breve" do `index.html:27`.
 - 13/10/2026: infraestrutura da rotina criada (hooks, backlog, skill). Nada em andamento.
 - 14/10/2026 (fim do dia): B24, B25, B23, B15 e B11 (parte B3) feitas e publicadas (f03636e, 9bde979, 8d780f8); nada em andamento. Próximas executáveis: B11 (StatusInvest, 403), B26 (FRE nota A para os 28 `SEM_RAZAO`). Marco seguinte é local: ITR 3T26 (`temporada.py`, B01), que também reemite o PDF do lote 5 com a tabela da B23.
 - 21/10/2026 (dia, check-up): D1 temporada blindada (hash do ZIP, 404 = 0, aviso no .vbs), D2 `carimbos.py` na exceção dos 0,80×, backup sem `privado/`, D4 Agendador (TemporadaDiaria 06:30 de 22/10 a 21/11; BackupSemanal domingo 07:30). Fila da madrugada: **N1 → N5** (no topo de "Próximas"). Suíte 833 passed.
+- 22/10/2026 (fim do dia): oráculo Fase 2 feita (9e9e8ac) + H1–H11 como relatório (`oraculo/hipoteses.py`, `docs/oraculo/`).
+  Achados que mudam palavra: H10 (zero silencioso) e A1 (desconto do controlador no Ke). Fila da madrugada de 23/10:
+  **O3 (ramo `claude/fase3-bugs`) → N12 → O4 → O5**. De manhã o Frank confere o ramo da Fase 3 (golden) e dá o ok.
