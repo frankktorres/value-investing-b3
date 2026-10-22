@@ -5,3 +5,4 @@ requests==2.33.0
 reportlab==4.4.9
 matplotlib==3.10.7
 pytest==9.0.2
+hypothesis==6.170.5
