@@ -1,0 +1,53 @@
+diff --git a/ferramentas/motor_nao_financeiras.py b/ferramentas/motor_nao_financeiras.py
+index c52f736..0d49fd7 100644
+--- a/ferramentas/motor_nao_financeiras.py
++++ b/ferramentas/motor_nao_financeiras.py
+@@ -305,11 +305,11 @@ def owner_earnings_ano(emp: Industrial, ano, anterior, kd_real, ciclica=False, t
+     a, _ = serie(emp.ticker)
+     d, p = a[ano], a.get(anterior, {})
+     cm, _ = capex_manutencao(emp.ticker, ano, anterior, ciclica, expansao_do_ano(emp, ano))
+-    if cm is None or d.get("lucro") is None or d.get("da") is None or not p:
++    if cm is None or d.get("da") is None or not p:
+         return None
+     # AUD-15 (v2.6): o OE é fluxo do ACIONISTA da controladora — lucro do controlador, como EPV e DCF descontam os minoritários;
+     # sem a linha (zerada na CVM, AUD-68) fica o consolidado
+-    lucro = d["lucro_controlador"] if d.get("lucro_controlador") is not None else d["lucro"]
++    lucro = d["lucro_controlador"] if d.get("lucro_controlador") is not None else v(d, "lucro", 0)
+     if t_retributar is not None:
+         if d.get("lair") is None or d.get("ir") is None:
+             return None             # sem a linha do imposto não dá para retributar: o ano sai (nada silencioso)
+@@ -332,14 +332,14 @@ def altman_z2(d):
+ 
+ 
+ def piotroski(d, p):
+-    roa, roa0 = d["lucro"] / d["ativo"], p["lucro"] / p["ativo"]
++    roa, roa0 = v(d, "lucro", 0) / d["ativo"], v(p, "lucro", 0) / p["ativo"]
+     alav = v(d, "emprest_lp", 0) / d["ativo"]
+     alav0 = v(p, "emprest_lp", 0) / p["ativo"]
+     liq, liq0 = d["ac"] / d["pc"], p["ac"] / p["pc"]
+     mb, mb0 = v(d, "lucro_bruto", 0) / d["receita"], v(p, "lucro_bruto", 0) / p["receita"]
+     giro, giro0 = d["receita"] / d["ativo"], p["receita"] / p["ativo"]
+     acoes_ok = not (d.get("acoes") and p.get("acoes") and d["acoes"] > p["acoes"] * 1.005)
+-    crit = [roa > 0, v(d, "fco", 0) > 0, roa > roa0, v(d, "fco", 0) > d["lucro"], alav < alav0, liq > liq0, acoes_ok,
++    crit = [roa > 0, v(d, "fco", 0) > 0, roa > roa0, v(d, "fco", 0) > v(d, "lucro", 0), alav < alav0, liq > liq0, acoes_ok,
+             mb > mb0, giro > giro0]
+     return sum(crit), crit
+ 
+@@ -357,7 +357,7 @@ def beneish(d, p):
+         depi = dep(p) / dep(d)
+         sga = lambda x: -(v(x, "desp_vendas", 0) + v(x, "desp_ga", 0)) / x["receita"]
+         sgai = sga(d) / sga(p)
+-        tata = (d["lucro"] - v(d, "fco", 0)) / d["ativo"]
++        tata = (v(d, "lucro", 0) - v(d, "fco", 0)) / d["ativo"]
+         lev = lambda x: (v(x, "pc", 0) + v(x, "pnc", 0)) / x["ativo"]
+         lvgi = lev(d) / lev(p)
+         m = (-4.84 + 0.92 * dsri + 0.528 * gmi + 0.404 * aqi + 0.892 * sgi + 0.115 * depi - 0.172 * sgai
+@@ -368,7 +368,7 @@ def beneish(d, p):
+ 
+ 
+ def sloan(d, p):
+-    return (d["lucro"] - v(d, "fco", 0)) / ((d["ativo"] + p["ativo"]) / 2)
++    return (v(d, "lucro", 0) - v(d, "fco", 0)) / ((d["ativo"] + p["ativo"]) / 2)
+ 
+ 
+ # ---------------------------------------------------------------- valuation

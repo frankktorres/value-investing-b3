@@ -1,0 +1,13 @@
+diff --git a/ferramentas/lote3_agro.py b/ferramentas/lote3_agro.py
+index 59b7465..33ccd7e 100644
+--- a/ferramentas/lote3_agro.py
++++ b/ferramentas/lote3_agro.py
+@@ -58,7 +58,7 @@ EMPRESAS = [
+                anos_ciclo=[str(a) for a in range(2017, 2027)], pl_hist=do_hall("SMTO3", acoes("SMTO3"), mes_fim=3), qualitativo=QUAL(3, 4, 4, 2, 3),
+                janela_razao="exercício social abr–mar: são os 10 exercícios fechados até mar/2026 (o '2026' da série é abr/2025–mar/2026), "
+                             "não uma janela curta"),
+-    Industrial("KEPL3", "Kepler Weber", "ciclica", desconto_controlador=dict(tipo="zero", razao="zero pelo §5: o FRE 2026 não marca nenhum acionista como controlador e não registra acordo de acionistas [FRE 2026, CVM id 161068, nota A]; maior acionista listado Trígono Capital, 14,9%; sem dono que o exerça, os vetores V1–V6 não se aplicam; não cobre risco de gestão (já na nota qualitativa)"), preco=preco("KEPL3"), n_acoes=acoes("KEPL3"), g_real=0.01, jcp_share=jcp("KEPL3"),
++    Industrial("KEPL3", "Kepler Weber", "ciclica", desconto_controlador=dict(tipo="zero", razao="zero pelo §5: o FRE 2026 não marca nenhum acionista como controlador e não registra acordo de acionistas [FRE 2026, CVM id 161068, nota A]; maior acionista listado Trígono Capital, 14,9%; sem dono que o exerça, os vetores V1–V6 não se aplicam; não cobre risco de gestão (já na nota qualitativa)"), preco=preco("KEPL3"), n_acoes=acoes("KEPL3"), receita_meio=1877000, g_real=0.01, jcp_share=jcp("KEPL3"),
+                qualitativo=QUAL(3, 3, 3, 2, 3)),
+     Industrial("SLCE3", "SLC Agrícola", "ciclica", desconto_controlador=dict(tipo="zero", razao=SEM_RAZAO), preco=preco("SLCE3"), n_acoes=acoes("SLCE3"), g_real=0.01, jcp_share=jcp("SLCE3"),
+                pl_hist=do_hall("SLCE3", acoes("SLCE3")), reproducao_por_acao=registrar("SLCE3", "reproducao_por_acao", SLCE3_NAV_MI * 1e6 / SLCE3_NAV_ACOES, NAV_SLCE3),

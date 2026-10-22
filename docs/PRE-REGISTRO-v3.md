@@ -238,6 +238,22 @@ WEG; ROE recorrente do Itaú; Kerr 1998 (HARKing); Barr et al. 2015; Harvey, Liu
 | # | Data | Hipótese/item | Variante | Executada sobre | Resultado (resumo) | Commit |
 |---|---|---|---|---|---|---|
 | 0 | 22/10/2026 | baseline | sens.py, sens2.py (diagnóstico) | 38 tickers | reproduzido (§1) | 9caaf30 |
+| 1 | 22/10/2026 | H1 (b) | **variante, conta 1/24:** trava "mesma base" (contábil × WACC nominal **e** reposição × WACC real) | 21 industriais | trava muda em 2 (ABEV3, WEGE3), \|Δcentral\| ≥ 10% em 0 → (b) não cumprido; (a) sem gabarito lido → **a conferir** | 9e9e8ac + `oraculo/hipoteses.py` |
+| 2 | 22/10/2026 | H2 (a) | **variante, conta 2/24:** ponto fixo partindo de PL, valor de mercado e 3×PL | 21 industriais | RECV3 > 1% entre partidas; (b) caixa ↑ nunca baixa o central; (c) Ke > 30% em 4 → **aceita** | idem |
+| 3 | 22/10/2026 | H3 | teste (não conta): elasticidades ±10% a Ke, fluxo e g; cosseno entre âncoras | 20 industriais, 17 financeiras | financeiras: 100% dos pares ≥ 0,95 (aceita); industriais: 0% ≥ 0,95 e nenhuma âncora < 0,80 na maioria (inconclusiva) → **mista** | idem |
+| 4 | 22/10/2026 | H4 | **variante, conta 3/24:** rf e π de 15/10 (fonte A mais perto do preço; 22/10 não coletado), data do preço do lote | 39 dos lotes | Δπ −0,71 p.p., ΔKe −1,13 p.p.; LEVE3 e ISAE4 NÃO CONCLUSIVO → JUSTA → **aceita**; vértice da π no prazo da rf: a conferir (dado) | idem |
+| 5 | 22/10/2026 | H5 | teste (não conta): ctryprem de 05/01/2026 (nota A) | — | Ke_D 12,40% × casa 12,06% (−0,34 p.p.) → **refutada (provisória**: método sem página do paper) | idem |
+| 6 | 22/10/2026 | H6 | teste (não conta): ROIC pelo DFP, leitor próprio | WEGE3, LEVE3, B3SA3 | motor 14,6 / 11,7 / 0,0 p.p. abaixo da mediana 2023–25; RI da WEG não lido em fonte A → **a conferir** | idem |
+| 7 | 22/10/2026 | H7 | teste (não conta): Mann-Kendall + BH q = 0,05 | 21 industriais | só WEGE3 significativa → **refutada**. A 1ª execução usou a margem ORDENADA (erro de código, não variante) e foi descartada | idem |
+| 8 | 22/10/2026 | H8 | teste (não conta): ROE pelo DFP 2017–25 | 18 Financeira | roe_lp a ≥ 1 p.p. em 5 (BBSE3, BRSR6, CMIG4, CPFE3, CXSE3); sinal muda em 3 (CMIG4, ITUB4, PSSA3) → **aceita** | idem |
+| 9 | 22/10/2026 | H9 R-mercado | **variante, conta 4/24:** Shapley com Ke implícito, margem LTM, g sem trava, alíquota mediana, desconto 0 | 18 industriais | taxa 76%, margem 23% → dominante taxa | idem |
+| 10 | 22/10/2026 | H9 R-fonte | **variante, conta 5/24:** Ke de Damodaran (β = 1, marcado), alíquota 34%, desconto 0; margem e g da casa (marcados) | 20 industriais | taxa 98% → **empilhamento não confirmado** nas duas | idem |
+| 11 | 22/10/2026 | H10 | teste (não conta): tira o campo de todos os períodos | 21 industriais | caixa 14, dívida 14, PL 9, D&A 18, imobilizado 16 com palavra de decisão; lucro e receita 0 → **aceita (bug)** | idem |
+| 12 | 22/10/2026 | H11 | conferência de fonte (não conta) | 8 reguladas | nenhuma nota técnica lida no primário → **a conferir** | idem |
+
+Nota das linhas 1–12: as variantes rodaram três vezes no mesmo código. As duas primeiras execuções quebraram antes de gravar (a
+H7 com tipo do numpy; depois a pasta de saída inexistente). Como as variantes são determinísticas, cada uma conta uma vez.
+Relatório: `docs/oraculo/hipoteses-2026-10-22.md` (e `.json`).
 
 ## 7. Emendas
 1. **22/10/2026 — definições de relatório da camada 5, sem efeito em palavra.**
@@ -251,3 +267,28 @@ WEG; ROE recorrente do Itaú; Kerr 1998 (HARKing); Barr et al. 2015; Harvey, Liu
      `lote4_saude_telecom.py:150` contorna isso com a heurística `< 1e7`. Fica como bandeira; a correção vai para a Fase 3.
    - **Ke acima de 30% na baseline:** KLBN11 64,7%, SUZB3 34,3%, SLCE3 31,3% e SMTO3 30,3% (RANI3 29,97%, logo abaixo) são
      alarmes conhecidos ligados à H2. Entram na lista de conhecidos do `oraculo/sanidade.py`, que é uma catraca e só encolhe.
+2. **22/10/2026 — perfil das propriedades, limiar de escala de ações e alçada das armadilhas; escrita antes de rodar as
+   armadilhas e as H1–H11, sem efeito em palavra.**
+   - **Perfil das propriedades (§3, "500 exemplos").** Uma avaliação de industrial custa cerca de 0,2 s, ou 0,06 s sem os Ke e
+     g implícitos, que não entram em central nem em palavra e por isso são trocados por `None` nas propriedades. Cada exemplo
+     custa duas avaliações. Financeira: 500 exemplos sempre. Industrial: 12 exemplos na suíte do dia a dia (perfil curto) e
+     500 só com `python -m oraculo --completo` (`ORACULO_PERFIL=completo`). O critério do §3 só conta como cumprido na
+     rodada `--completo`. O perfil curto é regressão rápida.
+   - **Ações do lote × DFP (camada 4, `acoes_lote`).** Até 2%: ok (o limiar de ações × LPA do §3). Acima disso: bandeira. Se
+     a razão fica fora de [0,5; 2], é erro de escala (R$ mil × unidade) e vira falha quando o ticker tem palavra de decisão.
+     A palavra é a que o motor dá na rodada, não a do hall.
+   - **Alçada do automático nas armadilhas** (`docs/ORACULO.md` §2), decidida antes de medir. O automático é o portão
+     inteiro da `VALIDACAO` §2: a suíte, com o golden regravado no worktree como um autor faria (a camada 0 não conta), mais
+     o `python -m oraculo`. São dele as armadilhas de número (zero silencioso, real × nominal, sinal da DL, unidade das
+     ações, régua). As de processo (premissa sem fonte, motivo do golden, variante fora do pré-registro) são só do agente.
+   - **H10 em duas partes.** Os campos que já viram recusa explícita (lucro, receita) formam uma propriedade estrita: um
+     zero novo neles quebra a suíte. Os outros ficam num xfail estrito com catraca (`H10_ABERTOS`), e o campo sai da lista
+     quando a Fase 3 o fechar.
+   - **Achado A1 (camada 2; não é hipótese testada).** Nos industriais, o desconto do controlador entra no E do ponto fixo
+     do WACC (`estrutura_de_capital`) e volta como Ke maior, pelo Hamada, e como nota de qualidade diferente. Isso contraria
+     o §5 do `01` ("o risco não volta a descontar retorno, nota ou veredito"). Fica como xfail estrito até a decisão do Frank
+     na Fase 3. Nos lotes de hoje só um industrial tem desconto diferente de zero: a **PETR4**, que é JUSTA. O efeito na
+     palavra dela é medido na Fase 3, como variante pré-registrada. Aqui nada muda.
+   - **Contagem de tentativas (§0.4).** Entra no §6 toda execução das H1–H11. Conta no orçamento de 24 só a execução que
+     calcula central ou palavra sob uma regra ou um dado alternativos (H1b, H2a, H4, H9). Teste de propriedade, conferência
+     de fonte e estatística descritiva não contam.

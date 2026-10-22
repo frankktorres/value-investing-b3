@@ -277,15 +277,16 @@ def collections_counter():
 # ---------------------------------------------------------------- H4
 def h4():
     m15 = json.loads(MERCADO_15_10.read_text(encoding="utf-8"))
-    mk15 = F.Mercado(rf_real=m15["rf_real"], pi=m15["pi"], data="15/10/2026")
+    # só rf e π de 15/10; a data do preço (que decide os proventos já ex) fica a do lote — isola o efeito da taxa
+    mk15 = F.Mercado(rf_real=m15["rf_real"], pi=m15["pi"], data=MK.data)
     dpi = mk15.pi - MK.pi
     trocas, linhas = [], []
     for tk in ind() + fin():
         try:
             r1 = avaliar(tk, mk=mk15)
         except Exception as ex:
-            r1 = None
-        p0, p1 = base(tk)["palavra"], (r1 or {}).get("palavra")
+            r1 = dict(palavra=f"erro: {type(ex).__name__}")
+        p0, p1 = base(tk)["palavra"], r1.get("palavra")
         if p1 != p0:
             trocas.append(f"{tk} {p0} → {p1}")
         linhas.append(dict(ticker=tk, palavra=p0, palavra_15_10=p1, central=base(tk)["central"],
@@ -334,11 +335,17 @@ def _bh(ps, q=0.05):
     return {ordem[r] for r in range(k)}
 
 
+POR_ANO = {}
+PREMISSAS_V = _variante(M.premissas_operacionais, {"    margens = sorted(por_ano.values())\n":
+                                                   "    margens = sorted(por_ano.values())\n    _POR_ANO[emp.ticker] = dict(por_ano)\n"})
+
+
 def h7():
     linhas = []
     for tk in ind():
-        op = M.premissas_operacionais(empresas()[tk])
-        mg = op["margens"]
+        with mock.patch.object(M, "_POR_ANO", POR_ANO, create=True):
+            op = PREMISSAS_V(empresas()[tk])
+        mg = [POR_ANO[tk][a] for a in sorted(POR_ANO[tk])]      # na ordem dos exercícios (op["margens"] vem ordenada)
         s, p = _mann_kendall(mg)
         linhas.append(dict(ticker=tk, perfil=empresas()[tk].perfil, n=len(mg), s=s, p=p, m50=op["m50"],
                            m3=statistics.median(mg[-3:])))
@@ -599,6 +606,8 @@ def _limpo(x):
         return {str(k): _limpo(v) for k, v in x.items()}
     if isinstance(x, (list, tuple, set)):
         return [_limpo(v) for v in x]
+    if hasattr(x, "item") and not isinstance(x, (str, bytes)):     # numpy → Python
+        x = x.item()
     if isinstance(x, float):
         return None if not math.isfinite(x) else round(x, 6)
     return x
