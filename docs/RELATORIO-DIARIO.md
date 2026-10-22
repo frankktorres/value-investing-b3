@@ -1,6 +1,11 @@
 # RELATORIO-DIARIO
 *Uma entrada por dia/turno, a mais nova em cima: o que foi feito (com commit), decisões tomadas, o que ficou, erros. Máx. 10 linhas por entrada.*
 
+## 22/10/2026 — noite (N1–N5, N7–N11, Q01)
+- Fiz: todas as missões abertas (N7, N1, N2, N9, N10, N8, N11 parcial, N3, N4, N5) + Q01 do backlog; suíte 963 passed, 42 skipped; nenhuma palavra, central ou golden mudou. Tudo na branch `claude/keen-babbage-k1rlj3` (não na `master`).
+- Descobri: ações "em mil" (N8) não chegam ao valor; o ponto decimal da ALLD3 vinha de `dossie/notas.py`; b3.com.br e gov.br dão 403 na nuvem (B16 e pregões da N11 ficam sem fonte A).
+- Precisa de você: PENDENTE #10 (contornos de chip abaixo de 3:1); conferir no navegador Sistema, calendário JCP e servidor; pregão de EGIE3/TAEE11/ITUB4/SAPR11 na API da B3; revisar/mesclar a branch.
+
 ## 14/10/2026 — B24, B25, B23, B15, B11 (sessão do Frank)
 - B24: o motor exige razão no desconto de controlador. 28 tickers ficaram com "sem razão documentada" e a LEVE3 com FRE nota A. **Nenhuma palavra mudou.**
 - B25: pré-registro contínuo no `registro_prospectivo.py`: IC de postos P/C × retorno excedente, média do hall, uma linha por ticker×rodada.

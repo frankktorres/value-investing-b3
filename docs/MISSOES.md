@@ -105,6 +105,8 @@ Front lê só o contrato. Tira o "Sistema em breve" do `index.html:27`.
 9g. **B15 / fatia 5** — trava final: StatusInvest só para datas (defasagem); zero `lote (digitado)` em campo de dado do central.
 10. **B01** — Temporada 3T26: a tarefa de sexta já detecta o ITR (`monitor/temporada.log` + boletim); quando aparecer ticker com 3T26, rodar `temporada.py --gravar` + `rodar_tudo.py --motivo`.
 
+- **Rede bloqueada na nuvem (22/10):** `b3.com.br` (API de listadas) e `gov.br`/`conteudo.cvm.gov.br` devolvem 403/ENOTFOUND → B16 (Res. CVM 19/20 com fonte A) e os pregões da N11 seguem abertos; fazer na máquina do Frank.
+
 ## Em andamento
 (nenhuma)
 
