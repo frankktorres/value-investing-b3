@@ -109,6 +109,7 @@ Front lê só o contrato. Tira o "Sistema em breve" do `index.html:27`.
 (nenhuma)
 
 ## Feitas
+- **Q01** (backlog, 22/10): `gerar_pdf_lote1.py` cai para a Liberation Sans (métricas da Arial) quando a Arial do Windows não existe; `test_b23` e `test_carimbos` voltam a coletar na nuvem (suíte 963 passed, 42 skipped, sem `--ignore`). PDFs do Windows inalterados.
 - **N5** (22/10, noite): `painel/tests/test_contraste_tokens.py` — texto ≥ 4,5:1 e séries ≥ 3:1 nos dois temas passam; contornos abaixo de 3:1 listados (teste fixa a lista) e em `PENDENTE-FRANK.md` #10; nenhuma cor trocada.
 - **N4** (22/10, noite): `painel/sistema.py` + `sistema.json` + `telas/sistema.js` (rota `#/sistema`); registro da suíte pelo `conftest`; `test_sistema.py`, `test_web_estatico`. Conferência visual: Frank (dia).
 - **N3** (22/10, noite): contrato com setor (triagem/FCA), dividendo × JCP por mês, data por fonte (`Origem.data`) e faixa do DCF (pessimista/otimista); front lê só o contrato; testes em `painel/tests/test_contrato.py`; `DECISOES.md` 22/10. Falta conferir visualmente no navegador (Frank, dia); o `contrato/` local precisa de `painel --exportar` para regerar.

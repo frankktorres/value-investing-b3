@@ -1029,3 +1029,7 @@ Achado: `tests/test_b23_petr4_premissas.py` e `tests/test_carimbos.py` não cole
 `painel/tests/test_contraste_tokens.py` calcula a razão WCAG dos pares de `web/tokens.css` nos temas claro e escuro: todo texto (`--ink`…`--nc-fg` sobre `--bg/--sf/--sf2` e sobre o fundo do próprio chip)
 passa de 4,5:1 (o menor é `--ink3` sobre `--sf2` no claro, 5,09) e as séries do gráfico de 3:1. Contornos abaixo de 3:1 (`--ln2` e os `*-ln` dos chips): lista fixada no teste e em `PENDENTE-FRANK.md` #10 —
 trocar cor é decisão visual do Frank. Nenhuma ordem de compra ou venda decorre desta entrada.
+
+## 22/10/2026 — Q01: PDFs dos lotes importáveis fora do Windows (nenhuma palavra, central ou golden mudou)
+`gerar_pdf_lote1.py` registrava `C:/Windows/Fonts/arial*.ttf` ao importar, e por isso `test_b23_petr4_premissas` e `test_carimbos` não coletavam na nuvem. Agora usa a Arial do Windows se existir e,
+senão, a Liberation Sans (métricas idênticas) — só para o módulo importar; PDF gerado fora do Windows não é o vigente. Suíte inteira sem `--ignore`: 963 passed, 42 skipped.
