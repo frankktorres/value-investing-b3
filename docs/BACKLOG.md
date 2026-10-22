@@ -51,7 +51,7 @@
 | N5 | Contraste WCAG dos tokens da tela (parte automática da etapa 4) | P3 | aberto (missão) | executável | Check-up 21/10 |
 | N6 | "Ocultar valores" sem vazar DY líquido nem patrimônio | P2 | feito 21/10 | executável | QA 21/10 |
 | N7 | Motor recusa dado inválido (NaN/inf/None/0/negativo) | P2 | feito 22/10 | executável | QA 21/10 |
-| N8 | Escala do nº de ações (CVM em mil; TAEE11) — investigar `acoes` | P3 | aberto (missão) | executável | QA 21/10 |
+| N8 | Escala do nº de ações (CVM em mil; TAEE11) — investigar `acoes` | P3 | feito 22/10 (não chega ao valor) | executável | QA 21/10 |
 | N9 | Robustez do servidor (porta em uso) e do front (hall sem `fatores`, `versao`, hash desconhecido) | P3 | feito 22/10 (conferência no navegador pendente) | executável | QA 21/10 |
 | N10 | CLIs com traceback cru (`temporada.py`, `triagem/rodar.py`) e ponto decimal no texto da ALLD3 | P3 | feito 22/10 | executável | QA 21/10 |
 | N11 | Cadastro do relatório (`relatorio/quali.py` CADASTRO só com BBSE3) | P3 | aberto (missão) | executável | QA 21/10 |

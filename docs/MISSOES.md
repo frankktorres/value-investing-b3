@@ -70,7 +70,7 @@ Front lê só o contrato. Tira o "Sistema em breve" do `index.html:27`.
 
 *Pronto quando:* teste parametrizado com NaN/inf/None/0/negativo para cada função; golden intacto (`git diff --stat ferramentas/tests/golden.json` vazio); uma linha no `09`.
 
-**N8 — Escala do nº de ações (MÉDIA, investigar primeiro).** A CVM informa a composição do capital em MIL. O `cvm_series.json` da TAEE11 tem 1.033.497 (o certo é 1,033 bi de ações = 344,5 mi units); `dossie/base.py` já corrige isso com q×1000 para a ALLD3. Rastrear se `acoes` da TAEE11 (e de quem mais vier em mil) chega a valor por ação (`lote2_energia.py:104` e o que mais ler `l["acoes"]`).
+**(FEITA 22/10) N8 — Escala do nº de ações (MÉDIA, investigar primeiro).** A CVM informa a composição do capital em MIL. O `cvm_series.json` da TAEE11 tem 1.033.497 (o certo é 1,033 bi de ações = 344,5 mi units); `dossie/base.py` já corrige isso com q×1000 para a ALLD3. Rastrear se `acoes` da TAEE11 (e de quem mais vier em mil) chega a valor por ação (`lote2_energia.py:104` e o que mais ler `l["acoes"]`).
 
 *Pronto quando:* relatório em `docs/QA-2026-10-21.md` com a lista dos tickers afetados e o efeito. Se chega ao valor: corrigir `coletar_cvm.acoes_em_circulacao`, com teste de fixture, mas SEM regravar `cvm_series.json` (isso é LOCAL, com o Frank) → registrar em `PENDENTE-FRANK.md`.
 
@@ -109,6 +109,7 @@ Front lê só o contrato. Tira o "Sistema em breve" do `index.html:27`.
 (nenhuma)
 
 ## Feitas
+- **N8** (22/10, noite): investigado — o nº de ações em mil NÃO chega ao valor por ação (cada leitor reescala; financeiras usam VPA/LPA da StatusInvest; só o follow-on da ISAE4 lê cru, em unidades). Relatório em `docs/QA-2026-10-21.md`; `tests/test_n8_escala_acoes.py`; nada a regravar.
 - **N10** (22/10, noite): `temporada.py` e `triagem/rodar.py` validam argumento (rc 2, sem traceback, nada gravado); ponto decimal do dossiê vinha de `dossie/notas.py` → `_br()`; `tests/test_n10_clis_argumento_invalido.py`. Vereditos já gravados mantêm o texto antigo até a próxima geração.
 - **N9** (22/10, noite): `servir.py` bind exclusivo + mensagem "porta em uso"; `app.js` com guardas de `versao`, `fatores` e hash desconhecido; testes em `test_servir` e `test_web_estatico`. Falta só a conferência no navegador no Windows (Frank, dia).
 - **N2** (22/10, noite): `tests/test_n2_regras_sem_cobertura.py` (27 casos: desconto por cenários, escala de Preço, saída 1,30× em financeira, ida e volta do `g_implicito`); nenhum defeito; golden intacto (`09` de 22/10).
