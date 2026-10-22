@@ -48,7 +48,7 @@
 | N2 | Testes das regras sem cobertura (desconto por cenários, escala de Preço, saída 1,50× em financeira, DCF reverso) | P2 | feito 22/10 | executável | Check-up 21/10 |
 | N3 | Contrato liga o que o motor já calcula (setor, dividendo × JCP por mês, data das fontes, faixa do DCF) | P3 | feito 22/10 (conferência visual pendente) | executável | Check-up 21/10 |
 | N4 | Tela Sistema (`sistema.json`: idade dos dados, boletins, golden, testes) | P3 | feito 22/10 (conferência visual pendente) | executável | HANDOFF |
-| N5 | Contraste WCAG dos tokens da tela (parte automática da etapa 4) | P3 | aberto (missão) | executável | Check-up 21/10 |
+| N5 | Contraste WCAG dos tokens da tela (parte automática da etapa 4) | P3 | feito 22/10 (contornos → PENDENTE #10) | executável | Check-up 21/10 |
 | N6 | "Ocultar valores" sem vazar DY líquido nem patrimônio | P2 | feito 21/10 | executável | QA 21/10 |
 | N7 | Motor recusa dado inválido (NaN/inf/None/0/negativo) | P2 | feito 22/10 | executável | QA 21/10 |
 | N8 | Escala do nº de ações (CVM em mil; TAEE11) — investigar `acoes` | P3 | feito 22/10 (não chega ao valor) | executável | QA 21/10 |

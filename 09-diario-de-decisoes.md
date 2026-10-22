@@ -1024,3 +1024,8 @@ Probabilidade/impacto de risco, tipo/efeito de premissa, yield projetado e conce
 golden; e a última suíte — registro novo: `conftest.pytest_sessionfinish` grava `dados/suite_ultima.json` (ignorado pelo git; só suíte completa, ≥ 400 testes, sem caminho/`-k`/`-m`; leva os argumentos usados).
 Ausente = `null` + "sem registro". Front: rota `#/sistema` (`telas/sistema.js`), menu sem o "em breve". Conferência visual no navegador fica para o Frank (dia). Suíte 949 passed, 42 skipped.
 Achado: `tests/test_b23_petr4_premissas.py` e `tests/test_carimbos.py` não coletam na nuvem (fonte `C:/Windows/Fonts/arial.ttf` nos `gerar_pdf_lote*`) — vai ao BACKLOG.
+
+## 22/10/2026 — N5: contraste dos tokens da tela (nenhuma cor, palavra ou golden mudou)
+`painel/tests/test_contraste_tokens.py` calcula a razão WCAG dos pares de `web/tokens.css` nos temas claro e escuro: todo texto (`--ink`…`--nc-fg` sobre `--bg/--sf/--sf2` e sobre o fundo do próprio chip)
+passa de 4,5:1 (o menor é `--ink3` sobre `--sf2` no claro, 5,09) e as séries do gráfico de 3:1. Contornos abaixo de 3:1 (`--ln2` e os `*-ln` dos chips): lista fixada no teste e em `PENDENTE-FRANK.md` #10 —
+trocar cor é decisão visual do Frank. Nenhuma ordem de compra ou venda decorre desta entrada.

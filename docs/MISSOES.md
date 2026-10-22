@@ -44,7 +44,7 @@ Front lê só o contrato. Tira o "Sistema em breve" do `index.html:27`.
 
 *Pronto quando:* `test_contrato` e `test_web_estatico` verdes. Conferência visual fica para o Frank (dia).
 
-**N5 — Contraste dos tokens (etapa 4 da tela v0.2, parte automática).** Teste que lê `ferramentas/painel/web/tokens.css` e calcula a razão de contraste WCAG dos pares texto × fundo nos temas claro e escuro.
+**(FEITA 22/10) N5 — Contraste dos tokens (etapa 4 da tela v0.2, parte automática).** Teste que lê `ferramentas/painel/web/tokens.css` e calcula a razão de contraste WCAG dos pares texto × fundo nos temas claro e escuro.
 
 *Pronto quando:* teste verde, ou a lista de pares abaixo de 4,5:1 (texto) / 3:1 (texto grande e UI) em `docs/PENDENTE-FRANK.md`, sem trocar cor sozinho (o visual é decisão do Frank).
 
@@ -109,6 +109,7 @@ Front lê só o contrato. Tira o "Sistema em breve" do `index.html:27`.
 (nenhuma)
 
 ## Feitas
+- **N5** (22/10, noite): `painel/tests/test_contraste_tokens.py` — texto ≥ 4,5:1 e séries ≥ 3:1 nos dois temas passam; contornos abaixo de 3:1 listados (teste fixa a lista) e em `PENDENTE-FRANK.md` #10; nenhuma cor trocada.
 - **N4** (22/10, noite): `painel/sistema.py` + `sistema.json` + `telas/sistema.js` (rota `#/sistema`); registro da suíte pelo `conftest`; `test_sistema.py`, `test_web_estatico`. Conferência visual: Frank (dia).
 - **N3** (22/10, noite): contrato com setor (triagem/FCA), dividendo × JCP por mês, data por fonte (`Origem.data`) e faixa do DCF (pessimista/otimista); front lê só o contrato; testes em `painel/tests/test_contrato.py`; `DECISOES.md` 22/10. Falta conferir visualmente no navegador (Frank, dia); o `contrato/` local precisa de `painel --exportar` para regerar.
 - **N11** (22/10, noite, parcial): `CADASTRO` com CNPJ de EGIE3, PETR4, TAEE11, ITUB4 e SAPR11 (da triagem de 02/10) e pregão da PETR4 (`proventos_ex.PREGAO`); **b3.com.br devolve 403 na nuvem** → pregão de EGIE3, TAEE11, ITUB4, SAPR11 ficou `None` (não se chuta); o FRE já aparece, a série de proventos desses 4 segue com aviso. **Local (Frank/dia):** conferir `tradingName` na API da B3 (TAEE11 = TAESA?, ITUB4 = ITAUUNIBANCO?, EGIE3, SAPR11) e preencher. `tests/test_n11_cadastro_relatorio.py`.
