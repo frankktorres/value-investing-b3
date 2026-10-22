@@ -19,19 +19,19 @@ function boletim(rot, b) {
 }
 
 export function telaSistema(c) {
-  const contexto = 'Sistema · dados e testes';
-  const titulo = h('h1', { class: 'h1', text: 'Sistema' });
+  const contexto = 'Status dos dados';
+  const titulo = h('h1', { class: 'h1', text: 'Status dos dados' });
   if (c.estado.erros.sistema) return { contexto, nos: [titulo, faixaErro(c.estado.erros.sistema)] };
   const s = c.estado.sistema;
   if (!s) return { contexto, nos: [titulo, vazio('Sem leitura do sistema.', 'Rode painel --exportar na raiz do projeto.')] };
   const g = s.golden, t = s.suite;
   const nos = [
-    h('div', {}, titulo, h('p', { class: 'sub', text: `Idade dos dados em ${data(s.hoje)}. Dado velho muda o preço de referência, não a palavra: a palavra só muda com veredito novo.` })),
+    h('div', {}, titulo, h('p', { class: 'sub', text: `Idade dos dados em ${data(s.hoje)}. Dado antigo muda a cotação de referência, não o veredito: o veredito só muda com análise nova.` })),
     ...(s.avisos || []).map((a) => faixaErro(a)),
     h('div', { class: 'grid2' },
       cartao({ titulo: 'Idade de cada dado', id: 'dados', lead: 'Data do último registro de cada fonte.' }, s.dados.map(linhaDado)),
       cartao({ titulo: 'Boletins', id: 'boletins', lead: 'Último arquivo em BOLETINS/.' },
-        boletim('Monitor semanal', s.boletins.monitor), boletim('Temporada', s.boletins.temporada))),
+        boletim('Alertas da semana', s.boletins.monitor), boletim('Temporada de balanços', s.boletins.temporada))),
     h('div', { class: 'grid2' },
       cartao({ titulo: 'Golden', id: 'golden', lead: 'O estado dos tickers que os testes guardam; só muda com motivo registrado.' },
         g ? [h('div', { class: 'src' }, h('span', { text: 'Última regravação' }), h('span', { class: 'small num', text: g.data ? data(g.data) : '—' }),

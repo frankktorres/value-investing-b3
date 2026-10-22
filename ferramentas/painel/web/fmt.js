@@ -16,6 +16,8 @@ export function num(v, casas = 2) { return ok(v) ? nf(casas).format(v) : TRACO; 
 export function pct(v, casas = 1) { return ok(v) ? `${nf(casas).format(v * 100)}%` : TRACO; }
 export function mult(v, casas = 2) { return ok(v) ? `${nf(casas).format(v)}×` : TRACO; }
 export function rs(v, casas = 2) { return ok(v) ? `R$ ${nf(casas).format(v)}` : TRACO; }
+/** Percentual com sinal: 0.35 → "+35%"; -1.76 → "-176%". */
+export function sinal(v, casas = 0) { return ok(v) ? `${v > 0 ? '+' : ''}${pct(v, casas)}` : TRACO; }
 
 export function compacto(v) {
   // 5100 → "5,1k"; 950 → "950"

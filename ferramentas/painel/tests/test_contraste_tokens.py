@@ -1,7 +1,6 @@
 """N5 (etapa 4 da tela v0.2, parte automática): razão de contraste WCAG 2.x dos pares texto × fundo de `web/tokens.css` nos temas
-claro e escuro. Texto ≥ 4,5:1; gráfico/UI ≥ 3:1. Cor não é trocada aqui (visual é decisão do Frank): os contornos que ficam
-abaixo de 3:1 estão listados em CONTORNOS_ABAIXO_DE_3 e em `docs/PENDENTE-FRANK.md`; o teste falha se a lista mudar (cor nova
-ou corrigida) para obrigar a atualizar a pendência."""
+claro e escuro. Texto ≥ 4,5:1; gráfico/UI ≥ 3:1. Cor não é trocada aqui (visual é decisão do Frank): contorno abaixo de 3:1
+precisa estar listado em CONTORNOS_ABAIXO_DE_3; o teste falha se a lista mudar (cor nova ou corrigida)."""
 import pathlib
 import re
 
@@ -13,17 +12,9 @@ FUNDOS = ("--bg", "--sf", "--sf2")
 PAR_PROPRIO = {"--barata-fg": "--barata-bg", "--cara-fg": "--cara-bg"}        # texto de chip sobre o fundo do chip
 GRAFICO = ("--serie-div", "--serie-jcp")
 CONTORNOS = ("--ln2", "--barata-ln", "--cara-ln", "--justa-ln", "--nc-ln")
-# (tema, contorno, fundo) abaixo de 3:1 em 22/10/2026 — o texto do chip leva a palavra e o glifo, então o contorno é reforço;
-# decisão de subir a cor é do Frank (PENDENTE #10)
-CONTORNOS_ABAIXO_DE_3 = {
-    ("escuro", "--ln2", "--bg"), ("escuro", "--ln2", "--sf"), ("escuro", "--barata-ln", "--sf"),
-    ("escuro", "--justa-ln", "--bg"), ("escuro", "--justa-ln", "--sf"),
-    ("claro", "--ln2", "--bg"), ("claro", "--ln2", "--sf"),
-    ("claro", "--barata-ln", "--bg"), ("claro", "--barata-ln", "--sf"),
-    ("claro", "--cara-ln", "--bg"), ("claro", "--cara-ln", "--sf"),
-    ("claro", "--justa-ln", "--bg"), ("claro", "--justa-ln", "--sf"),
-    ("claro", "--nc-ln", "--bg"),
-}
+# (tema, contorno, fundo) abaixo de 3:1 — vazio desde a paleta v0.3 (22/10/2026, pedido do Frank de refazer as cores);
+# a lista de 14 pares da paleta anterior (PENDENTE #10) foi resolvida subindo os contornos
+CONTORNOS_ABAIXO_DE_3: set[tuple[str, str, str]] = set()
 
 
 def _temas() -> dict[str, dict[str, str]]:

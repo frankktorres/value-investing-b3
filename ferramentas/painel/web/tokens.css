@@ -1,37 +1,42 @@
+/* Paleta v0.3 (22/10/2026): azul-noite de terminal de dados, acento violeta-elétrico e ciano. Palavra: turquesa (barata),
+   âmbar (cara), ardósia (justa) — sem verde/vermelho de trading. Todos os pares passam no WCAG (texto 4,5:1, contorno 3:1). */
 :root,[data-tema="escuro"]{
   --f-ui:'IBM Plex Sans',system-ui,sans-serif; --f-mono:'IBM Plex Mono',ui-monospace,monospace; --f-display:'Space Grotesk','IBM Plex Sans',sans-serif;
-  --bg:#070B12; --sf:#0E1520; --sf2:#141D2B; --ln:#1E2A3B; --ln2:#2B3C54;
-  --ink:#EAF0F8; --ink2:#A9B8CC; --ink3:#8496AE; --ac:#8A97FF;
-  --barata-fg:#5EE0CF; --barata-bg:#0B2E31; --barata-ln:#1C6B68;
-  --justa-fg:#B4C3D9; --justa-ln:#3B4F6B;
-  --cara-fg:#FFC06E; --cara-bg:#33220B; --cara-ln:#8C5C1F;
-  --nc-fg:#A9B8CC; --nc-ln:#5A6C86;
-  --serie-div:#6CA8FF; --serie-jcp:#3E6FC0;
-  --hatch:repeating-linear-gradient(135deg,transparent 0 4px,rgba(169,184,204,.16) 4px 5px);
+  --bg:#050A14; --sf:#0A1222; --sf2:#101B30; --ln:#1B2944; --ln2:#50688F;
+  --ink:#EEF4FF; --ink2:#AFC0DA; --ink3:#8599B9; --ac:#8C9BFF;
+  --barata-fg:#4FE8C6; --barata-bg:#062C2B; --barata-ln:#1F9C8A;
+  --justa-fg:#B9C8E2; --justa-ln:#5B7096;
+  --cara-fg:#FFBA55; --cara-bg:#2E1D06; --cara-ln:#B0782A;
+  --nc-fg:#AFC0DA; --nc-ln:#64789C;
+  --serie-div:#38C7F5; --serie-jcp:#8C7CFF;
+  --hatch:repeating-linear-gradient(135deg,transparent 0 4px,rgba(175,192,218,.14) 4px 5px);
   --s1:4px; --s2:8px; --s3:12px; --s4:16px; --s5:24px; --s6:32px; --r1:4px; --r2:8px; --r3:12px;
 }
 [data-tema="claro"]{
-  --bg:#F3F6FB; --sf:#FFFFFF; --sf2:#ECF0F7; --ln:#DCE3EE; --ln2:#BFCADA;
-  --ink:#0A1220; --ink2:#42516A; --ink3:#566680; --ac:#3646D6;
-  --barata-fg:#0A6660; --barata-bg:#DAF4F0; --barata-ln:#62C2B8;
-  --justa-fg:#384866; --justa-ln:#A5B3C9;
-  --cara-fg:#874900; --cara-bg:#FFEDD2; --cara-ln:#E0A85F;
-  --nc-fg:#42516A; --nc-ln:#8493AA;
-  --serie-div:#2C55B5; --serie-jcp:#5A85D8;
-  --hatch:repeating-linear-gradient(135deg,transparent 0 4px,rgba(10,18,32,.10) 4px 5px);
+  --bg:#F2F6FC; --sf:#FFFFFF; --sf2:#E8EEF8; --ln:#D5DEEC; --ln2:#7A8AA6;
+  --ink:#07101F; --ink2:#3B4A66; --ink3:#4F6080; --ac:#4B3FE0;
+  --barata-fg:#036B5E; --barata-bg:#D4F7EF; --barata-ln:#2E9C8B;
+  --justa-fg:#33456A; --justa-ln:#7286A8;
+  --cara-fg:#8A4A00; --cara-bg:#FFEBCC; --cara-ln:#C07A1C;
+  --nc-fg:#3B4A66; --nc-ln:#7F8FAA;
+  --serie-div:#0E8FC2; --serie-jcp:#5B4FE0;
+  --hatch:repeating-linear-gradient(135deg,transparent 0 4px,rgba(7,16,31,.10) 4px 5px);
 }
-/* Régua: escala fixa 50%..160% do central; compra 0,70x; saída 1,30x (1,50x com exceção de qualidade). */
+/* Régua: escala fixa do central declarada em hall.fatores.escala_regua; compra e saída chegam prontas do motor. */
 /* Nota de fonte: A sólido, B contorno, C tracejado, — pontilhado. Números: tabular-nums lining-nums. */
 
-/* ---- Complemento da tela v0.2 (não altera os tokens acima). Valores tirados dos mockups (referencia/telas/Main.dc.html:14-24).
-   RADAR: palavra do motor que o HANDOFF não previa (P/C entre 0,70 e 0,90) — contorno turquesa, sem preenchimento, glifo ▽. */
+/* ---- Complemento: brilho, grade de fundo e gradiente da marca. RADAR = contorno turquesa sem preenchimento, glifo ▽. */
 :root,[data-tema="escuro"]{
-  --dot:rgba(138,151,255,.11); --hi:rgba(255,255,255,.035);
-  --glow-b:0 0 14px rgba(94,224,207,.22); --glow-p:0 0 12px rgba(234,240,248,.55);
+  --dot:rgba(140,155,255,.10); --hi:rgba(255,255,255,.04);
+  --glow-b:0 0 16px rgba(79,232,198,.28); --glow-p:0 0 12px rgba(238,244,255,.6); --glow-ac:0 0 0 1px rgba(140,155,255,.35),0 0 22px rgba(140,155,255,.18);
+  --grad:linear-gradient(90deg,#8C7CFF,#38C7F5 55%,#4FE8C6);
+  --aura:radial-gradient(1200px 420px at 15% -10%,rgba(140,124,255,.16),transparent 60%),radial-gradient(900px 360px at 95% 0%,rgba(56,199,245,.10),transparent 60%);
   --radar-fg:var(--barata-fg); --radar-ln:var(--barata-ln);
 }
 [data-tema="claro"]{
-  --dot:rgba(54,70,214,.09); --hi:rgba(255,255,255,.9);
-  --glow-b:none; --glow-p:none;
+  --dot:rgba(75,63,224,.08); --hi:rgba(255,255,255,.9);
+  --glow-b:none; --glow-p:none; --glow-ac:0 0 0 1px rgba(75,63,224,.35),0 6px 18px rgba(75,63,224,.10);
+  --grad:linear-gradient(90deg,#5B4FE0,#0E8FC2 55%,#2E9C8B);
+  --aura:radial-gradient(1200px 420px at 15% -10%,rgba(91,79,224,.08),transparent 60%),radial-gradient(900px 360px at 95% 0%,rgba(14,143,194,.06),transparent 60%);
   --radar-fg:var(--barata-fg); --radar-ln:var(--barata-ln);
 }
