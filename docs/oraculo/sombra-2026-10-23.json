@@ -1,0 +1,657 @@
+[
+ {
+  "ticker": "ABCB4",
+  "tipo": "financeira",
+  "motor": 13.309371015957996,
+  "sombra": 13.309371015957996,
+  "div": 0.0,
+  "ancoras_motor": {
+   "P/VP justificado": 13.133835150380111,
+   "DDM 2 estágios": 13.484906881535883
+  },
+  "ancoras_sombra": {
+   "P/VP justificado": 13.133835150380111,
+   "DDM 2 estágios": 13.48490688153588
+  },
+  "explicacao": ""
+ },
+ {
+  "ticker": "ABEV3",
+  "tipo": "industrial",
+  "motor": 9.192810493960561,
+  "sombra": 9.192810493960561,
+  "div": 0.0,
+  "ancoras_motor": {
+   "DCF (3 cenários)": 9.789959266316954,
+   "EPV": 9.192810493960561,
+   "Owner Earnings ÷ (Ke − g)": 7.042854034733883
+  },
+  "ancoras_sombra": {
+   "DCF": 9.789959266316954,
+   "EPV": 9.192810493960561,
+   "FCFE (OE)": 7.042854034733883
+  },
+  "explicacao": ""
+ },
+ {
+  "ticker": "B3SA3",
+  "tipo": "industrial",
+  "motor": 8.17721407695256,
+  "sombra": 8.17721407695256,
+  "div": 0.0,
+  "ancoras_motor": {
+   "DCF (3 cenários)": 9.07650396406122,
+   "EPV": 8.17721407695256,
+   "Owner Earnings ÷ (Ke − g)": 8.006306237922864
+  },
+  "ancoras_sombra": {
+   "DCF": 9.07650396406122,
+   "EPV": 8.17721407695256,
+   "FCFE (OE)": 8.006306237922864
+  },
+  "explicacao": ""
+ },
+ {
+  "ticker": "BBAS3",
+  "tipo": "financeira",
+  "motor": 12.510586471847727,
+  "sombra": 12.510586471847727,
+  "div": 0.0,
+  "ancoras_motor": {
+   "P/VP justificado": 13.112438371871141,
+   "DDM 2 estágios": 11.908734571824315
+  },
+  "ancoras_sombra": {
+   "P/VP justificado": 13.112438371871141,
+   "DDM 2 estágios": 11.908734571824315
+  },
+  "explicacao": ""
+ },
+ {
+  "ticker": "BBDC4",
+  "tipo": "financeira",
+  "motor": 9.593000677135574,
+  "sombra": 9.593000677135574,
+  "div": 0.0,
+  "ancoras_motor": {
+   "P/VP justificado": 9.534328421488434,
+   "DDM 2 estágios": 9.651672932782713
+  },
+  "ancoras_sombra": {
+   "P/VP justificado": 9.534328421488434,
+   "DDM 2 estágios": 9.651672932782713
+  },
+  "explicacao": ""
+ },
+ {
+  "ticker": "BBSE3",
+  "tipo": "financeira",
+  "fora": "SOTP ou contrato finito: fora da sombra"
+ },
+ {
+  "ticker": "BRBI11",
+  "tipo": "financeira",
+  "motor": 8.285920398563501,
+  "sombra": 8.285920398563501,
+  "div": 0.0,
+  "ancoras_motor": {
+   "P/VP justificado": 8.338426279131356,
+   "DDM 2 estágios": 8.233414517995648
+  },
+  "ancoras_sombra": {
+   "P/VP justificado": 8.338426279131356,
+   "DDM 2 estágios": 8.233414517995648
+  },
+  "explicacao": ""
+ },
+ {
+  "ticker": "BRSR6",
+  "tipo": "financeira",
+  "motor": 6.83745764024753,
+  "sombra": 6.83745764024753,
+  "div": 0.0,
+  "ancoras_motor": {
+   "P/VP justificado": 6.870846428968918,
+   "DDM 2 estágios": 6.804068851526141
+  },
+  "ancoras_sombra": {
+   "P/VP justificado": 6.870846428968918,
+   "DDM 2 estágios": 6.804068851526142
+  },
+  "explicacao": ""
+ },
+ {
+  "ticker": "CMIG4",
+  "tipo": "financeira",
+  "motor": 7.206458963148744,
+  "sombra": 7.206458963148744,
+  "div": 0.0,
+  "ancoras_motor": {
+   "P/VP justificado": 7.346764969995913,
+   "DDM 2 estágios": 7.066152956301576
+  },
+  "ancoras_sombra": {
+   "P/VP justificado": 7.346764969995913,
+   "DDM 2 estágios": 7.066152956301576
+  },
+  "explicacao": ""
+ },
+ {
+  "ticker": "CPFE3",
+  "tipo": "financeira",
+  "motor": 31.21710722123347,
+  "sombra": 31.217107221233473,
+  "div": 2.220446049250313e-16,
+  "ancoras_motor": {
+   "P/VP justificado": 30.69784069582131,
+   "DDM 2 estágios": 31.736373746645626
+  },
+  "ancoras_sombra": {
+   "P/VP justificado": 30.69784069582131,
+   "DDM 2 estágios": 31.736373746645636
+  },
+  "explicacao": ""
+ },
+ {
+  "ticker": "CPLE3",
+  "tipo": "financeira",
+  "motor": 3.1853661620024796,
+  "sombra": 3.18536616200248,
+  "div": 2.220446049250313e-16,
+  "ancoras_motor": {
+   "P/VP justificado": 3.061392374740738,
+   "DDM 2 estágios": 3.309339949264221
+  },
+  "ancoras_sombra": {
+   "P/VP justificado": 3.061392374740738,
+   "DDM 2 estágios": 3.3093399492642215
+  },
+  "explicacao": ""
+ },
+ {
+  "ticker": "CSMG3",
+  "tipo": "financeira",
+  "motor": 11.25314599314358,
+  "sombra": 11.25314599314358,
+  "div": 0.0,
+  "ancoras_motor": {
+   "P/VP justificado": 10.817414039805426,
+   "DDM 2 estágios": 11.688877946481735
+  },
+  "ancoras_sombra": {
+   "P/VP justificado": 10.817414039805426,
+   "DDM 2 estágios": 11.688877946481734
+  },
+  "explicacao": ""
+ },
+ {
+  "ticker": "CXSE3",
+  "tipo": "financeira",
+  "motor": 7.787888957025617,
+  "sombra": 7.787888957025617,
+  "div": 0.0,
+  "ancoras_motor": {
+   "P/VP justificado": 7.652752757610455,
+   "DDM 2 estágios": 7.923025156440779
+  },
+  "ancoras_sombra": {
+   "P/VP justificado": 7.652752757610455,
+   "DDM 2 estágios": 7.923025156440778
+  },
+  "explicacao": ""
+ },
+ {
+  "ticker": "FLRY3",
+  "tipo": "industrial",
+  "motor": 10.873636592767413,
+  "sombra": 10.873636592767413,
+  "div": 0.0,
+  "ancoras_motor": {
+   "DCF (3 cenários)": 10.89894740075626,
+   "EPV": 10.873636592767413,
+   "Owner Earnings ÷ (Ke − g)": 5.3222532074775595
+  },
+  "ancoras_sombra": {
+   "DCF": 10.89894740075626,
+   "EPV": 10.873636592767413,
+   "FCFE (OE)": 5.3222532074775595
+  },
+  "explicacao": ""
+ },
+ {
+  "ticker": "GGBR4",
+  "tipo": "industrial",
+  "motor": 18.491146046345115,
+  "sombra": 18.491146046345115,
+  "div": 0.0,
+  "ancoras_motor": {
+   "EPV de meio de ciclo": 16.92266587580338,
+   "DCF normalizado (3 cenários)": 18.491146046345115,
+   "Valor de reprodução": 27.044389802088915
+  },
+  "ancoras_sombra": {
+   "EPV": 16.92266587580338,
+   "DCF": 18.491146046345115,
+   "reprodução": 27.044389802088915
+  },
+  "explicacao": ""
+ },
+ {
+  "ticker": "HYPE3",
+  "tipo": "industrial",
+  "motor": 16.22481023826525,
+  "sombra": 13.986775491571965,
+  "div": -0.13793903989182021,
+  "ancoras_motor": {
+   "DCF (3 cenários)": 16.22481023826525,
+   "EPV": 17.874928743894014,
+   "Owner Earnings ÷ (Ke − g)": 10.895523938002341
+  },
+  "ancoras_sombra": {
+   "DCF": 13.986775491571965,
+   "EPV": 15.404091771377434,
+   "FCFE (OE)": 8.63069878561689
+  },
+  "explicacao": "EPV motor − sombra = 2,47 × crédito 2,47: confere; crédito fiscal com prazo no motor (R$ 2,47/ação na âncora de firma) — a sombra não o tem (limite declarado)"
+ },
+ {
+  "ticker": "ISAE4",
+  "tipo": "financeira",
+  "motor": 25.77805609853499,
+  "sombra": 25.77805609853499,
+  "div": 0.0,
+  "ancoras_motor": {
+   "P/VP justificado": 26.638205963557116,
+   "DDM 2 estágios": 24.91790623351286
+  },
+  "ancoras_sombra": {
+   "P/VP justificado": 26.638205963557116,
+   "DDM 2 estágios": 24.917906233512866
+  },
+  "explicacao": ""
+ },
+ {
+  "ticker": "ITUB4",
+  "tipo": "financeira",
+  "motor": 17.540190639321363,
+  "sombra": 17.540190639321366,
+  "div": 2.220446049250313e-16,
+  "ancoras_motor": {
+   "P/VP justificado": 16.982286569350343,
+   "DDM 2 estágios": 18.098094709292383
+  },
+  "ancoras_sombra": {
+   "P/VP justificado": 16.982286569350343,
+   "DDM 2 estágios": 18.09809470929239
+  },
+  "explicacao": ""
+ },
+ {
+  "ticker": "KEPL3",
+  "tipo": "industrial",
+  "motor": 6.685064117933743,
+  "sombra": 6.685064117933743,
+  "div": 0.0,
+  "ancoras_motor": {
+   "EPV de meio de ciclo": 6.75957160999644,
+   "DCF normalizado (3 cenários)": 6.685064117933743,
+   "Valor de reprodução": 4.601971938245679
+  },
+  "ancoras_sombra": {
+   "EPV": 6.75957160999644,
+   "DCF": 6.685064117933743,
+   "reprodução": 4.601971938245679
+  },
+  "explicacao": ""
+ },
+ {
+  "ticker": "KLBN11",
+  "tipo": "industrial",
+  "motor": 2.620360862036964,
+  "sombra": 2.620360862036964,
+  "div": 0.0,
+  "ancoras_motor": {
+   "EPV de meio de ciclo": 0.36254279641575393,
+   "DCF normalizado (3 cenários)": 2.620360862036964,
+   "Valor de reprodução": 7.731179893227541
+  },
+  "ancoras_sombra": {
+   "EPV": 0.36254279641575393,
+   "DCF": 2.620360862036964,
+   "reprodução": 7.731179893227541
+  },
+  "explicacao": ""
+ },
+ {
+  "ticker": "LEVE3",
+  "tipo": "industrial",
+  "motor": 36.30687980419925,
+  "sombra": 36.30687980419925,
+  "div": 0.0,
+  "ancoras_motor": {
+   "DCF (3 cenários)": 36.30687980419925,
+   "EPV": 33.71115233670788,
+   "Owner Earnings ÷ (Ke − g)": 36.66575871455441
+  },
+  "ancoras_sombra": {
+   "DCF": 36.30687980419925,
+   "EPV": 33.71115233670788,
+   "FCFE (OE)": 36.66575871455441
+  },
+  "explicacao": ""
+ },
+ {
+  "ticker": "PETR4",
+  "tipo": "industrial",
+  "motor": 53.483900943965565,
+  "sombra": 53.483900943965565,
+  "div": 0.0,
+  "ancoras_motor": {
+   "EPV de meio de ciclo": 53.483900943965565,
+   "DCF normalizado (3 cenários)": 54.90105236306411,
+   "Valor de reprodução": 33.09000395553606
+  },
+  "ancoras_sombra": {
+   "EPV": 53.483900943965565,
+   "DCF": 54.90105236306411,
+   "reprodução": 33.09000395553606
+  },
+  "explicacao": ""
+ },
+ {
+  "ticker": "PRIO3",
+  "tipo": "industrial",
+  "motor": 46.28554879702839,
+  "sombra": 40.31090543902454,
+  "div": -0.12908226246174348,
+  "ancoras_motor": {
+   "EPV de meio de ciclo": 47.32880267177474,
+   "DCF normalizado (3 cenários)": 46.28554879702839,
+   "Valor de reprodução": 34.8355416141543
+  },
+  "ancoras_sombra": {
+   "EPV": 41.09095708037031,
+   "DCF": 40.31090543902454,
+   "reprodução": 34.8355416141543
+  },
+  "explicacao": "EPV motor − sombra = 6,24 × crédito 6,24: confere; crédito fiscal com prazo no motor (R$ 6,24/ação na âncora de firma) — a sombra não o tem (limite declarado)"
+ },
+ {
+  "ticker": "PSSA3",
+  "tipo": "financeira",
+  "motor": 20.12956325401706,
+  "sombra": 20.12956325401706,
+  "div": 0.0,
+  "ancoras_motor": {
+   "P/VP justificado": 19.424972228049647,
+   "DDM 2 estágios": 20.834154279984475
+  },
+  "ancoras_sombra": {
+   "P/VP justificado": 19.424972228049647,
+   "DDM 2 estágios": 20.834154279984475
+  },
+  "explicacao": ""
+ },
+ {
+  "ticker": "RANI3",
+  "tipo": "industrial",
+  "motor": 3.186828875462552,
+  "sombra": 3.186828875462552,
+  "div": 0.0,
+  "ancoras_motor": {
+   "EPV de meio de ciclo": 2.665739724379019,
+   "DCF normalizado (3 cenários)": 3.186828875462552,
+   "Valor de reprodução": 6.1828832475745745
+  },
+  "ancoras_sombra": {
+   "EPV": 2.665739724379019,
+   "DCF": 3.186828875462552,
+   "reprodução": 6.1828832475745745
+  },
+  "explicacao": ""
+ },
+ {
+  "ticker": "RECV3",
+  "tipo": "industrial",
+  "motor": 0.0,
+  "sombra": 0.0,
+  "div": 0.0,
+  "ancoras_motor": {
+   "EPV de meio de ciclo": -3.66997282541563,
+   "DCF normalizado (3 cenários)": 0.0,
+   "Valor de reprodução": 14.791823746958139
+  },
+  "ancoras_sombra": {
+   "EPV": -3.66997282541563,
+   "DCF": 0.0,
+   "reprodução": 14.791823746958139
+  },
+  "explicacao": ""
+ },
+ {
+  "ticker": "SANB11",
+  "tipo": "financeira",
+  "motor": 18.710610998717463,
+  "sombra": 18.710610998717463,
+  "div": 0.0,
+  "ancoras_motor": {
+   "P/VP justificado": 18.897700887988876,
+   "DDM 2 estágios": 18.523521109446047
+  },
+  "ancoras_sombra": {
+   "P/VP justificado": 18.897700887988876,
+   "DDM 2 estágios": 18.523521109446047
+  },
+  "explicacao": ""
+ },
+ {
+  "ticker": "SAPR11",
+  "tipo": "financeira",
+  "motor": 18.303823252046207,
+  "sombra": 18.303823252046207,
+  "div": 0.0,
+  "ancoras_motor": {
+   "P/VP justificado": 19.422432703982732,
+   "DDM 2 estágios": 17.185213800109683
+  },
+  "ancoras_sombra": {
+   "P/VP justificado": 19.422432703982732,
+   "DDM 2 estágios": 17.185213800109683
+  },
+  "explicacao": ""
+ },
+ {
+  "ticker": "SBSP3",
+  "tipo": "financeira",
+  "motor": 7.051320493427552,
+  "sombra": 7.051320493427551,
+  "div": -1.1102230246251565e-16,
+  "ancoras_motor": {
+   "P/VP justificado": 7.073725559474258,
+   "DDM 2 estágios": 7.028915427380846
+  },
+  "ancoras_sombra": {
+   "P/VP justificado": 7.073725559474258,
+   "DDM 2 estágios": 7.028915427380844
+  },
+  "explicacao": ""
+ },
+ {
+  "ticker": "SLCE3",
+  "tipo": "industrial",
+  "motor": 7.5906013587762855,
+  "sombra": 7.5906013587762855,
+  "div": 0.0,
+  "ancoras_motor": {
+   "EPV de meio de ciclo": 6.352089971861512,
+   "DCF normalizado (3 cenários)": 7.5906013587762855,
+   "Valor de reprodução": 27.717519419155963
+  },
+  "ancoras_sombra": {
+   "EPV": 6.352089971861512,
+   "DCF": 7.5906013587762855,
+   "reprodução": 27.717519419155963
+  },
+  "explicacao": ""
+ },
+ {
+  "ticker": "SMTO3",
+  "tipo": "industrial",
+  "motor": 14.678938061801002,
+  "sombra": 14.678938061801002,
+  "div": 0.0,
+  "ancoras_motor": {
+   "EPV de meio de ciclo": 13.577015593644115,
+   "DCF normalizado (3 cenários)": 14.678938061801002,
+   "Valor de reprodução": 22.850685622559766
+  },
+  "ancoras_sombra": {
+   "EPV": 13.577015593644115,
+   "DCF": 14.678938061801002,
+   "reprodução": 22.850685622559766
+  },
+  "explicacao": ""
+ },
+ {
+  "ticker": "SUZB3",
+  "tipo": "industrial",
+  "motor": 22.777729621626197,
+  "sombra": 22.777729621626197,
+  "div": 0.0,
+  "ancoras_motor": {
+   "EPV de meio de ciclo": 21.918255418735225,
+   "DCF normalizado (3 cenários)": 22.777729621626197,
+   "Valor de reprodução": 40.211618755800934
+  },
+  "ancoras_sombra": {
+   "EPV": 21.918255418735225,
+   "DCF": 22.777729621626197,
+   "reprodução": 40.211618755800934
+  },
+  "explicacao": ""
+ },
+ {
+  "ticker": "TAEE11",
+  "tipo": "financeira",
+  "motor": 26.744135925236247,
+  "sombra": 26.744135925236243,
+  "div": -1.1102230246251565e-16,
+  "ancoras_motor": {
+   "P/VP justificado": 26.974012115948742,
+   "DDM 2 estágios": 26.51425973452375
+  },
+  "ancoras_sombra": {
+   "P/VP justificado": 26.974012115948742,
+   "DDM 2 estágios": 26.514259734523748
+  },
+  "explicacao": ""
+ },
+ {
+  "ticker": "TIMS3",
+  "tipo": "industrial",
+  "motor": 9.736407768648458,
+  "sombra": 9.736407768648458,
+  "div": 0.0,
+  "ancoras_motor": {
+   "DCF (3 cenários)": 9.88149895985181,
+   "EPV": 9.736407768648458,
+   "Owner Earnings ÷ (Ke − g)": 7.953352075841866
+  },
+  "ancoras_sombra": {
+   "DCF": 9.88149895985181,
+   "EPV": 9.736407768648458,
+   "FCFE (OE)": 7.953352075841866
+  },
+  "explicacao": ""
+ },
+ {
+  "ticker": "UGPA3",
+  "tipo": "industrial",
+  "motor": 15.783869998327194,
+  "sombra": 15.783869998327194,
+  "div": 0.0,
+  "ancoras_motor": {
+   "DCF (3 cenários)": 15.783869998327194,
+   "EPV": 16.720890181939527,
+   "Owner Earnings ÷ (Ke − g)": 8.689584037427995
+  },
+  "ancoras_sombra": {
+   "DCF": 15.783869998327194,
+   "EPV": 16.720890181939527,
+   "FCFE (OE)": 8.689584037427995
+  },
+  "explicacao": ""
+ },
+ {
+  "ticker": "UNIP6",
+  "tipo": "industrial",
+  "motor": 47.32142875023028,
+  "sombra": 47.32142875023028,
+  "div": 0.0,
+  "ancoras_motor": {
+   "EPV de meio de ciclo": 47.765923448357675,
+   "DCF normalizado (3 cenários)": 47.32142875023028,
+   "Valor de reprodução": 17.907036786864342
+  },
+  "ancoras_sombra": {
+   "EPV": 47.765923448357675,
+   "DCF": 47.32142875023028,
+   "reprodução": 17.907036786864342
+  },
+  "explicacao": ""
+ },
+ {
+  "ticker": "VBBR3",
+  "tipo": "industrial",
+  "motor": 10.415050882836212,
+  "sombra": 10.415050882836212,
+  "div": 0.0,
+  "ancoras_motor": {
+   "DCF (3 cenários)": 10.415050882836212,
+   "EPV": 12.056161997063459,
+   "Owner Earnings ÷ (Ke − g)": 6.246745257552439
+  },
+  "ancoras_sombra": {
+   "DCF": 10.415050882836212,
+   "EPV": 12.056161997063459,
+   "FCFE (OE)": 6.246745257552439
+  },
+  "explicacao": ""
+ },
+ {
+  "ticker": "VIVT3",
+  "tipo": "industrial",
+  "motor": 16.922537238329383,
+  "sombra": 16.922537238329383,
+  "div": 0.0,
+  "ancoras_motor": {
+   "DCF (3 cenários)": 16.922537238329383,
+   "EPV": 16.729782016184725,
+   "Owner Earnings ÷ (Ke − g)": 19.69149317090133
+  },
+  "ancoras_sombra": {
+   "DCF": 16.922537238329383,
+   "EPV": 16.729782016184725,
+   "FCFE (OE)": 19.69149317090133
+  },
+  "explicacao": ""
+ },
+ {
+  "ticker": "WEGE3",
+  "tipo": "industrial",
+  "motor": 11.081542116705606,
+  "sombra": 11.081542116705606,
+  "div": 0.0,
+  "ancoras_motor": {
+   "DCF (3 cenários)": 11.086329280573644,
+   "EPV": 10.051652453122134,
+   "Owner Earnings ÷ (Ke − g)": 11.081542116705606
+  },
+  "ancoras_sombra": {
+   "DCF": 11.086329280573644,
+   "EPV": 10.051652453122134,
+   "FCFE (OE)": 11.081542116705606
+  },
+  "explicacao": "2 estágios (g1)"
+ }
+]

@@ -1041,3 +1041,8 @@ também no registro de `insumos_a`); FRE = DT_REFER do formulário (`dossie/fre.
 Medido no contrato exportado na nuvem (39 empresas; os 8 dossiês não exportam sem os dados locais): **27 → 136 de 341 fontes com data**. Sem data por não ter
 data declarada: julgamento/notas, StatusInvest, digitado no lote, Kd sintético, Damodaran (só "jan/2026"), B3 já ex, P/L histórico, IPCA, EIA/BLS → BACKLOG N12b.
 Testes: `tests/test_n12_data_das_fontes.py` (12). Só procedência: nenhum número do motor lê `Origem`.
+
+## 23/10/2026 — O5: motor-sombra FCFF/FCFE e DDM (só relatório; nenhuma palavra, central ou golden mudou)
+`oraculo/sombra.py` (sem importar os motores; teste AST garante) + `oraculo/sombra_rodar.py`. Tolerância |Δcentral| ≤ 2% (PRE-REGISTRO §3, linha 15 do §6).
+Resultado (`docs/oraculo/sombra-2026-10-23.md`): 38 comparadas, 36 iguais (< 0,01%), HYPE3 −13,8% e PRIO3 −12,9% explicadas pelo crédito fiscal com prazo
+(a diferença do EPV é exatamente o crédito por ação). Limite: WACC/Ke, OE e margens entram prontos do motor — a sombra confere a composição, não o ponto fixo nem a normalização.
