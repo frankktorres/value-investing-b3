@@ -51,7 +51,7 @@ FRE = o ano do formulário. Origem sem data declarada continua `None`.
 `grep -rn "Origem(" ferramentas --include=*.py | grep -v tests` lista onde a data entrou; nenhuma palavra, central ou golden
 mudou (`git diff --stat ferramentas/tests/golden.json` vazio); linha no `09`.
 
-**O4 — Oráculo Fase 4 (parte 1): nota de mutação dos dois motores (só relatório; nenhuma palavra muda).** A nuvem é Linux,
+**(FEITA parcial 23/10) O4 — Oráculo Fase 4 (parte 1): nota de mutação dos dois motores (só relatório; nenhuma palavra muda).** A nuvem é Linux,
 onde o mutmut 3 roda (no Windows não roda: prompt §Fase 4). Conferir a API/config atual do mutmut no Context7 antes de
 configurar. Alvo: `ferramentas/motor_nao_financeiras.py` e `ferramentas/motor_financeiras.py`; testes = suíte sem `backtest/`.
 Fixar a versão exata em `requirements-dev.txt` (criar se não existir; não pôr no `requirements.txt` da tela) e a pasta
@@ -179,6 +179,7 @@ Front lê só o contrato. Tira o "Sistema em breve" do `index.html:27`.
 ## Feitas
 - **O3** (23/10, **parcial**, ramo `claude/fase3-bugs`, e62e0a5 0dec510 b87784e 296da7a): H10 no LTM e nos exercícios da janela (PL, D&A, imobilizado) → NÃO CONCLUSIVO; A1 (E do ponto fixo antes do desconto); xfail estritos fora; D5.09 fechada. Parcial porque: a suíte da nuvem fica com 4 falhas da PETR4 (golden não regravado, por regra) e o parecer do oráculo foi RESSALVA → PENDENTE #11/#12 e BACKLOG O3b. Na nuvem: só a PETR4 muda (central 53,48 → 52,87), palavra igual.
 - **N12** (23/10, e188aaa d52a453 3aaf137): `Origem.data` em COTAHIST, CVM DFP/ITR (LTM), ações do DFP, proventos B3 (e já ex), FRE e mercado; contrato exportado na nuvem: 27 → 136 de 341 fontes com data (39 empresas; os 8 dossiês não exportam sem dados locais). Resto → N12b.
+- **O4** (23/10, **parcial**, a437420 e43aaec): mutmut 3.8.0 (`requirements-dev.txt`, `mutants/` ignorado); 90 min = 936 de 5.504 mutantes rodados (908 com teste); nota só nos testados: financeiras 0,80, não financeiras 0,74 (as funções pesadas não rodaram). Relatório `docs/oraculo/mutacao-2026-10-23.md`; DECISOES e brief. Resto → BACKLOG O4b (testes dos itens 1–3 e 5–8 já feitos).
 - **O5** (23/10, 1de5574 b1dadb7): `oraculo/sombra.py` + `sombra_rodar.py`; 36 de 38 iguais, HYPE3/PRIO3 = crédito fiscal (conferido rodando o motor sem crédito); independência parcial declarada.
 - **Q01** (backlog, 22/10): `gerar_pdf_lote1.py` cai para a Liberation Sans (métricas da Arial) quando a Arial do Windows não existe; `test_b23` e `test_carimbos` voltam a coletar na nuvem (suíte 963 passed, 42 skipped, sem `--ignore`). PDFs do Windows inalterados.
 - **N5** (22/10, noite): `painel/tests/test_contraste_tokens.py` — texto ≥ 4,5:1 e séries ≥ 3:1 nos dois temas passam; contornos abaixo de 3:1 listados (teste fixa a lista) e em `PENDENTE-FRANK.md` #10; nenhuma cor trocada.
