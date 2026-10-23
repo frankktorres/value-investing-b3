@@ -1047,3 +1047,8 @@ Testes: `tests/test_n12_data_das_fontes.py` (12). Só procedência: nenhum núme
 Resultado (`docs/oraculo/sombra-2026-10-23.md`): 38 comparadas, 36 iguais (< 0,01%), HYPE3 −13,8% e PRIO3 −12,9% explicadas pelo crédito fiscal com prazo
 (com o crédito zerado no motor, motor e sombra batem: 14,35 e 41,39; efeito do crédito no central 1,88 e 4,89). Limite: WACC/Ke, OE e margens entram prontos do motor — a sombra confere a composição, não o ponto fixo nem a normalização.
 Revisor (opus): independência só parcial (mesma especificação; pega encanamento, não doutrina) — declarada no `sombra.py`; testes ampliados (2 estágios, piso, trava, freio, cenários).
+
+## 23/10/2026 — O4: teste de mutação dos motores (só relatório; nenhum código de motor mudou)
+mutmut 3.8.0 na nuvem Linux, 90 min: 936 de 5.504 mutantes testados (parcial). Nota só nos testados: financeiras 0,80 (598 × 150), não financeiras 0,74
+(118 × 42; as funções pesadas não chegaram a rodar). Os 20 sobreviventes que tocam Ke, g, central ou palavra em `docs/oraculo/mutacao-2026-10-23.md`; lacunas reais
+(ex.: financeira com dispersão > 3× ou âncora ≤ 0 → NÃO CONCLUSIVO sem teste) → BACKLOG O4b. Decisão (mutmut × cosmic-ray) em `DECISOES.md`.
