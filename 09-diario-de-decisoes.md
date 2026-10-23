@@ -1045,4 +1045,5 @@ Testes: `tests/test_n12_data_das_fontes.py` (12). Só procedência: nenhum núme
 ## 23/10/2026 — O5: motor-sombra FCFF/FCFE e DDM (só relatório; nenhuma palavra, central ou golden mudou)
 `oraculo/sombra.py` (sem importar os motores; teste AST garante) + `oraculo/sombra_rodar.py`. Tolerância |Δcentral| ≤ 2% (PRE-REGISTRO §3, linha 15 do §6).
 Resultado (`docs/oraculo/sombra-2026-10-23.md`): 38 comparadas, 36 iguais (< 0,01%), HYPE3 −13,8% e PRIO3 −12,9% explicadas pelo crédito fiscal com prazo
-(a diferença do EPV é exatamente o crédito por ação). Limite: WACC/Ke, OE e margens entram prontos do motor — a sombra confere a composição, não o ponto fixo nem a normalização.
+(com o crédito zerado no motor, motor e sombra batem: 14,35 e 41,39; efeito do crédito no central 1,88 e 4,89). Limite: WACC/Ke, OE e margens entram prontos do motor — a sombra confere a composição, não o ponto fixo nem a normalização.
+Revisor (opus): independência só parcial (mesma especificação; pega encanamento, não doutrina) — declarada no `sombra.py`; testes ampliados (2 estágios, piso, trava, freio, cenários).

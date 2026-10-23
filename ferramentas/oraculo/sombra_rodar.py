@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import json
 import sys
+from unittest import mock
 from datetime import date
 from pathlib import Path
 
@@ -37,20 +38,21 @@ def insumos_financeira(emp, mk) -> dict:
                 g_teto=mk.g_teto, dc=emp.desconto_controlador)
 
 
-def explicar(x: dict, r: dict, s: dict | None = None) -> str:
-    """Causas conhecidas de divergência (limites declarados da sombra), lidas do próprio resultado. Com o crédito fiscal, confere
-    que a diferença do EPV (motor − sombra) é exatamente o crédito por ação."""
+def explicar(emp, mk, x: dict, r: dict) -> str:
+    """Causas conhecidas de divergência (limites declarados da sombra). Crédito fiscal com prazo: o motor roda de novo com o
+    crédito zerado (`beneficio_fiscal` → 0; o ponto fixo refaz WACC/Ke) e a sombra recebe os insumos DESSA rodada — se as duas
+    batem, a divergência do central é o crédito (revisor de 23/10: conferir só o EPV era quase tautológico e a âncora errada)."""
     motivos = []
-    if r.get("beneficio_fiscal_acao") and s is not None:
-        epv_m = next((v for k, v in r["ancoras"].items() if k.startswith("EPV")), None)
-        if epv_m is not None and "EPV" in s["ancoras"]:
-            gap = epv_m - s["ancoras"]["EPV"]                     # as duas âncoras já com o desconto do controlador
-            ok = abs(gap - r["beneficio_fiscal_acao"] * (1 - x["desc"])) < 0.01
-            motivos.append(f"EPV motor − sombra = {_br(gap)} × crédito {_br(r['beneficio_fiscal_acao'] * (1 - x['desc']))}: "
-                           + ("confere" if ok else "NÃO confere — investigar"))
     if r.get("beneficio_fiscal_acao"):
-        motivos.append(f"crédito fiscal com prazo no motor (R$ {r['beneficio_fiscal_acao']:.2f}/ação na âncora de firma) — a sombra "
-                       "não o tem (limite declarado)".replace(".", ",", 1))
+        with mock.patch.object(M, "beneficio_fiscal", lambda *a, **k: 0.0):
+            r0 = M.avaliar(emp, mk)
+        r0["_pi"] = mk.pi
+        s0 = sombra.industrial(insumos_industrial(emp, r0))
+        d0 = sombra.divergencia(s0["central"], r0["central"])
+        ok = d0 is not None and abs(d0) <= sombra.TOLERANCIA
+        motivos.append(f"crédito fiscal com prazo (a sombra não o tem): sem o crédito, motor {_br(r0['central'])} × sombra "
+                       f"{_br(s0['central'])} ({_pct(d0)}) → " + ("confere: a divergência é o crédito" if ok else "NÃO confere — investigar")
+                       + f"; efeito do crédito no central do motor {_br(r['central'] - r0['central'])}")
     if x.get("g1") is not None:
         motivos.append("2 estágios (g1)")
     return "; ".join(motivos)
@@ -76,7 +78,7 @@ def rodar(empresas=None) -> list[dict]:
         s = sombra.industrial(x)
         linhas.append(dict(ticker=tk, tipo="industrial", motor=r["central"], sombra=s["central"],
                            div=sombra.divergencia(s["central"], r["central"]), ancoras_motor=r["ancoras"],
-                           ancoras_sombra=s["ancoras"], explicacao=explicar(x, r, s)))
+                           ancoras_sombra=s["ancoras"], explicacao=explicar(emp, mk, x, r)))
     return linhas
 
 

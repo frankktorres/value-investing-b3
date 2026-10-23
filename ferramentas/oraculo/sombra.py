@@ -1,4 +1,9 @@
-"""Motor-sombra (oráculo, Fase 4, camada 3): FCFF/FCFE e DDM mínimos, no estilo Damodaran, escritos do zero.
+"""Motor-sombra (oráculo, Fase 4, camada 3): FCFF/FCFE e DDM mínimos, no estilo Damodaran, reescritos a partir da especificação.
+
+Independência PARCIAL (revisor de 23/10): o código é outro, mas segue a mesma especificação do motor (trava de g pelo menor ROIC,
+freio da AUD-34, pesos 25/50/25 com piso 0, DDM com ROE convergindo em 5 anos e terminal pelo P/VP justificado). Pega erro de
+encanamento (ponte, mediana, desconto, ordem dos cenários), não erro de doutrina; o terminal do 2 estágios reinveste pelo ROIC do
+1º estágio, sem convergir ao WACC como em Damodaran — escolha do motor repetida aqui, portanto não conferida.
 
 Não importa `motor_nao_financeiras` nem `motor_financeiras` (nem nada que os importe): recebe números puros e devolve números.
 Quem junta os insumos é `oraculo/sombra_rodar.py`; aqui só há conta, para que um erro de composição no motor (ponte firma →

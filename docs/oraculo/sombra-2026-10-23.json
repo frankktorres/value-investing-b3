@@ -252,7 +252,7 @@
    "EPV": 15.404091771377434,
    "FCFE (OE)": 8.63069878561689
   },
-  "explicacao": "EPV motor − sombra = 2,47 × crédito 2,47: confere; crédito fiscal com prazo no motor (R$ 2,47/ação na âncora de firma) — a sombra não o tem (limite declarado)"
+  "explicacao": "crédito fiscal com prazo (a sombra não o tem): sem o crédito, motor 14,35 × sombra 14,35 (+0,00%) → confere: a divergência é o crédito; efeito do crédito no central do motor 1,88"
  },
  {
   "ticker": "ISAE4",
@@ -374,7 +374,7 @@
    "DCF": 40.31090543902454,
    "reprodução": 34.8355416141543
   },
-  "explicacao": "EPV motor − sombra = 6,24 × crédito 6,24: confere; crédito fiscal com prazo no motor (R$ 6,24/ação na âncora de firma) — a sombra não o tem (limite declarado)"
+  "explicacao": "crédito fiscal com prazo (a sombra não o tem): sem o crédito, motor 41,39 × sombra 41,39 (+0,00%) → confere: a divergência é o crédito; efeito do crédito no central do motor 4,89"
  },
  {
   "ticker": "PSSA3",
