@@ -1049,6 +1049,6 @@ Resultado (`docs/oraculo/sombra-2026-10-23.md`): 38 comparadas, 36 iguais (< 0,0
 Revisor (opus): independência só parcial (mesma especificação; pega encanamento, não doutrina) — declarada no `sombra.py`; testes ampliados (2 estágios, piso, trava, freio, cenários).
 
 ## 23/10/2026 — O4: teste de mutação dos motores (só relatório; nenhum código de motor mudou)
-mutmut 3.8.0 na nuvem Linux, 90 min: 936 de 5.504 mutantes testados (parcial). Nota só nos testados: financeiras 0,80 (598 × 150), não financeiras 0,74
+mutmut 3.8.0 na nuvem Linux, 90 min: 936 de 5.504 mutantes rodados, 908 com teste (parcial). Nota só nos testados: financeiras 0,80 (598 × 150), não financeiras 0,74
 (118 × 42; as funções pesadas não chegaram a rodar). Os 20 sobreviventes que tocam Ke, g, central ou palavra em `docs/oraculo/mutacao-2026-10-23.md`; lacunas reais
 (ex.: financeira com dispersão > 3× ou âncora ≤ 0 → NÃO CONCLUSIVO sem teste) → BACKLOG O4b. Decisão (mutmut × cosmic-ray) em `DECISOES.md`.
