@@ -6,6 +6,7 @@ nota A — fase 3, fatia 2). P/L histórico: CVM + COTAHIST (`pl_historico.do_ha
 P/L histórico só entra no Bogle quando o lucro não é dominado por câmbio/ciclo (B3SA3, SMTO3, SLCE3); nas demais o Bogle
 vai sem re-rating — declarado.
 """
+import calendar
 import sys
 
 from lote1_bancos import MK
@@ -38,7 +39,7 @@ def acoes(tk):
         n *= 1000
     unit = CVM[tk]["acoes_por_unit"]
     fim = FIM_EXERCICIO.get(tk, 12)                          # N12: a data do DFP é o fim do exercício (SMTO3: março)
-    data = f"{ano}-{fim:02d}-{31 if fim in (1, 3, 5, 7, 8, 10, 12) else 30}"
+    data = f"{ano}-{fim:02d}-{calendar.monthrange(int(ano), fim)[1]}"
     return registrar(tk, "acoes", n / unit, ACOES_DFP(ano, unit, data))   # fase 3: procedência por campo; o número não muda
 
 

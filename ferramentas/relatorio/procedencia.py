@@ -138,31 +138,32 @@ def _mercado(c: dict) -> Origem:
 
 
 def _iso(data: str | None) -> str:
-    """AAAA-MM-DD a partir de AAAA-MM-DD ou DD/MM/AAAA; outro formato → "" (sem data, não se chuta)."""
+    """AAAA-MM-DD a partir de AAAA-MM-DD ou DD/MM/AAAA, só se for uma data de calendário; outro formato → "" (não se chuta)."""
+    from datetime import date
     data = (data or "").strip()
-    if len(data) == 10 and data[4] == "-" and data[7] == "-":
-        return data
     if len(data) == 10 and data[2] == "/" and data[5] == "/":
-        return f"{data[6:]}-{data[3:5]}-{data[:2]}"
-    return ""
+        data = f"{data[6:]}-{data[3:5]}-{data[:2]}"
+    try:
+        return date.fromisoformat(data).isoformat() if len(data) == 10 else ""
+    except ValueError:
+        return ""
 
 
 def _data_ltm(tk: str) -> str:
     """Fim do trimestre do LTM que o motor lê (`ltm_ref` da série CVM: "2T26" → 2026-06-30; trimestre civil, a mesma leitura
-    de `proventos_ja_ex`). Ticker sem série carregada → "" (N12)."""
+    de `proventos_ja_ex`). Só com o trimestre declarado na série (`ltm_ref` ou a chave `ltm_<ref>`), nunca pelo padrão "2T26"
+    de `ltm_ref_de`; ticker sem série carregada → "" (N12)."""
+    import calendar
     from motor_nao_financeiras import CVM
-    from ltm import ltm_ref_de
-    reg = CVM.get(tk)
-    if not reg:
-        return ""
-    ref = ltm_ref_de(reg)
+    reg = CVM.get(tk) or {}
+    ref = reg.get("ltm_ref") or next((k[4:] for k in reg if k.startswith("ltm_") and k != "ltm_ref"), "")
     try:
         tri, ano = int(ref[0]), 2000 + int(ref[2:])
     except (ValueError, IndexError):
         return ""
-    if not 1 <= tri <= 4:
+    if not 1 <= tri <= 4 or ref[1] != "T":
         return ""
-    return f"{ano}-{3 * tri:02d}-{(31 if tri in (1, 4) else 30)}"
+    return f"{ano}-{3 * tri:02d}-{calendar.monthrange(ano, 3 * tri)[1]}"
 
 
 def tabela(c: dict) -> dict[str, Origem]:

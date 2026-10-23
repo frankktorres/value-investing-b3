@@ -56,7 +56,7 @@ def _cadastro(c: dict) -> tuple[str | None, str | None]:
 def _o_fre(pacote: dict | None, tabela: str) -> Origem:
     f = (pacote or {}).get("fonte") or {}
     return Origem(f"CVM FRE {ANO_FRE}", "A", f"CVM, FRE {ANO_FRE} (id_doc {f.get('id_doc', '?')}, versão {f.get('versao', '?')}), "
-                  f"tabela {tabela}, dados abertos", data=f.get("dt_refer") or "")      # N12: DT_REFER do formulário
+                  f"tabela {tabela}, dados abertos", data=pr._iso(f.get("dt_refer")))   # N12: DT_REFER do formulário
 
 
 def _o_ins(c: dict, *chaves: str) -> Origem:
