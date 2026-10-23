@@ -11,6 +11,7 @@ os tickers (`carteira_tickers.json`, DECISOES 13/10 e 19/10).
 """
 from __future__ import annotations
 
+import dataclasses
 import json
 import math
 import os
@@ -18,7 +19,7 @@ import subprocess
 from datetime import date
 from pathlib import Path
 
-from relatorio import render_md, render_pdf
+from relatorio import procedencia as pr, render_md, render_pdf
 from relatorio.calendario import ESTIMADO, SEM_DATA, STATUSINVEST, anotar, meses
 from relatorio.modelo import Numero, Origem, Relatorio, Secao
 from relatorio.render_md import fmt
@@ -96,6 +97,7 @@ def montar(local: dict, precos: dict, pregao: str, refs: dict, rendas: dict, dat
            fora_do_hall=frozenset(), ir_jcp: float = 0.175) -> Relatorio:
     """`rendas[tk]` = Renda12m ou o texto do erro (a renda total sai marcada INCOMPLETA, nunca soma zero calado)."""
     pos = local["posicoes"]
+    o_preco = dataclasses.replace(O_PRECO, data=pr._iso(pregao))     # N12b: o pregão do fechamento usado
     sem_preco = sorted(tk for tk in pos if not (precos.get(tk, 0) > 0))
     if sem_preco:
         raise ValueError(f"sem fechamento no COTAHIST até {pregao}: {sem_preco}")
@@ -164,10 +166,10 @@ def montar(local: dict, precos: dict, pregao: str, refs: dict, rendas: dict, dat
         Numero("Renda bruta por mês (antes do IR do JCP)", mensal_bruta, "R$", (O_LOCAL, O_PROV), obs=obs),
         Numero("Meta atingida", mensal_liq / meta, "%", (*fonte_renda, O_META), obs=obs),
         Numero("Falta por mês", max(0.0, meta - mensal_liq), "R$", (*fonte_renda, O_META), obs=obs),
-        Numero("Patrimônio em ações B3 hoje", total, "R$", (O_LOCAL, O_PRECO)),
-        Numero("DY líquido de 12 meses da carteira", dy_liq, "%", (*fonte_renda, O_PRECO), obs=obs),
+        Numero("Patrimônio em ações B3 hoje", total, "R$", (O_LOCAL, o_preco)),
+        Numero("DY líquido de 12 meses da carteira", dy_liq, "%", (*fonte_renda, o_preco), obs=obs),
         Numero("Patrimônio que a meta exige a esse DY", meta * 12 / dy_liq if dy_liq > 0 else None, "R$",
-               (*fonte_renda, O_PRECO, O_META), obs=obs or "conta da meta, não indica onde investir"),
+               (*fonte_renda, o_preco, O_META), obs=obs or "conta da meta, não indica onde investir"),
     ], texto=[f"Renda = provento por ação com data-com de {inicio_da_janela(pregao)} (exclusive) a {pregao} × quantidade "
               "de hoje. É o que a carteira de hoje teria recebido em 12 meses, não previsão. Líquida = JCP menos "
               f"{fmt(ir_jcp, '%')} de IR. Fora da B3 (exterior, cripto) não entra."])

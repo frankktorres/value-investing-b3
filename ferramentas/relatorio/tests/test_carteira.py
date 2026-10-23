@@ -393,3 +393,10 @@ def test_logs_do_agendador_sao_ignorados_pelo_git():
     import subprocess
     for nome in ("carteira.log", "temporada.log", "ultimo.log"):
         assert subprocess.run(["git", "check-ignore", "-q", "--", f"ferramentas/monitor/{nome}"], cwd=RAIZ).returncode == 0
+
+
+def test_n12b_preco_da_carteira_leva_a_data_do_pregao():
+    local = {"meta_mensal": 100.0, "posicoes": {"TESTA3": {"quantidade": 1, "preco_medio": None}}}
+    rel = montar(local, {"TESTA3": 10.0}, DATA, REFS, {"TESTA3": Renda12m(1.0, 0.0)}, "2026-10-02")
+    datas = {o.data for s in rel.secoes for n in s.numeros for o in n.origens if o.fonte == "COTAHIST"}
+    assert datas == {DATA}
