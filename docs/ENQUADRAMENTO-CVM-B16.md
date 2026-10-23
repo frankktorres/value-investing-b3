@@ -35,7 +35,7 @@ jurídico**. O rumo SaaS está parado (B17, decisão do Frank); nada aqui muda o
 3. **SaaS com carteira do usuário e sugestão individual (renda × meta, onde investir):** aproxima-se da consultoria da Res. 19
    (orientação "individualizada"). Só o painel de rentabilidade/composição, sem recomendar, cai na exceção do § 2º, II — e a
    exceção some se houver recomendação (§ 3º).
-4. A tela de hoje já evita "onde investir" na meta (`DECISOES.md` 19/10: "conta da meta, não indica onde investir"), o que é
+4. A tela de hoje já evita "onde investir" na meta (texto da tela em `ferramentas/relatorio/carteira.py`: "conta da meta, não indica onde investir"), o que é
    coerente com o item 3, mas a palavra por ticker continua sendo o caso do item 2.
 
 ## O que não foi lido (fica "a conferir")
