@@ -1033,3 +1033,18 @@ trocar cor é decisão visual do Frank. Nenhuma ordem de compra ou venda decorre
 ## 22/10/2026 — Q01: PDFs dos lotes importáveis fora do Windows (nenhuma palavra, central ou golden mudou)
 `gerar_pdf_lote1.py` registrava `C:/Windows/Fonts/arial*.ttf` ao importar, e por isso `test_b23_petr4_premissas` e `test_carimbos` não coletavam na nuvem. Agora usa a Arial do Windows se existir e,
 senão, a Liberation Sans (métricas idênticas) — só para o módulo importar; PDF gerado fora do Windows não é o vigente. Suíte inteira sem `--ignore`: 963 passed, 42 skipped.
+
+## 23/10/2026 — O3, Fase 3 do oráculo: H10 e A1 (ramo `claude/fase3-bugs`; golden NÃO regravado — a medir de manhã)
+**H10 (zero silencioso):** `motor_nao_financeiras.criticos_ausentes` — caixa, dívida (CP e LP), PL, D&A ou imobilizado sem chave no LTM →
+NÃO CONCLUSIVO com razão "dado crítico ausente: <campo>" (`confianca`, `dado_critico_ausente`); zero informado pela fonte continua valendo.
+Tickers prováveis: **nenhum esperado** — dos 21 industriais dos lotes, 0 têm campo crítico ausente no LTM (medido na nuvem); as séries dos dossiês
+(`cvm_series_dossie.json`, fora do git) não foram medidas. **A1 (desconto do controlador no Ke):** `estrutura_de_capital` itera o E do WACC com o valor
+ANTES do desconto; o desconto entra só nas âncoras (§5, l.103–105). Industriais com desconto ≠ 0 nos lotes: só a **PETR4** (8%). Medido na nuvem
+(snapshots): central 53,48 → 52,87, P/C 0,957 → 0,968, Ke nominal 21,30% → 21,16%, nota de qualidade 2,5 → 2,5, **palavra JUSTA → JUSTA**. Os dossiês com desconto
+não foram medidos (dado local). Falham de propósito 4 testes da PETR4 (golden, `03` × motor, prompt de sexta, tabela B23) até o Frank rodar `rodar_tudo.py --motivo`.
+PRE-REGISTRO §6 linhas 13 (variante 6/24) e 14. Matriz: lacuna D5.09 fechada (35). Testes: xfail estritos retirados + 2 testes novos (zero × ausente; razão).
+**Parecer do oráculo (agente): RESSALVA.** (1) o §2 do `01` (l.26) define E = "valor central × ações" e o central da casa é o descontado → o `01` precisa
+dizer "antes do desconto" (decisão do Frank, PENDENTE #12); (2) H10 parcial: a guarda só olha o LTM — a série anual (`roic_serie`, D&A anual), EBIT, juros e
+proventos, os `v(...,0)` antigos e `montar_series.py:48` seguem; o NÃO CONCLUSIVO ainda publica central/P/C no dict → BACKLOG O3b; (5) a execução sobre a PETR4
+conta como tentativa 6/24 → registrada no §6. Itens (c) da missão (LEVE3 no `hall.json`, trava só em JUSTA, payout × g no DDM): nenhum inequívoco contra o `01` → PENDENTE #12.
+Nenhuma ordem de compra ou venda decorre desta entrada.

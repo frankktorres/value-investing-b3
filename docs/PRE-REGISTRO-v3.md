@@ -250,6 +250,8 @@ WEG; ROE recorrente do Itaú; Kerr 1998 (HARKing); Barr et al. 2015; Harvey, Liu
 | 10 | 22/10/2026 | H9 R-fonte | **variante, conta 5/24:** Ke de Damodaran (β = 1, marcado), alíquota 34%, desconto 0; margem e g da casa (marcados) | 20 industriais | taxa 98% → **empilhamento não confirmado** nas duas | idem |
 | 11 | 22/10/2026 | H10 | teste (não conta): tira o campo de todos os períodos | 21 industriais | caixa 14, dívida 14, PL 9, D&A 18, imobilizado 16 com palavra de decisão; lucro e receita 0 → **aceita (bug)** | idem |
 | 12 | 22/10/2026 | H11 | conferência de fonte (não conta) | 8 reguladas | nenhuma nota técnica lida no primário → **a conferir** | idem |
+| 13 | 23/10/2026 | A1 (emenda 2) | **variante, conta 6/24:** E do ponto fixo = valor antes do desconto de controlador (Fase 3) | 21 industriais (efeito só na PETR4) | PETR4 central 53,48 → 52,87, Ke nom. 21,30% → 21,16% (= sem desconto), JUSTA → JUSTA; medido na nuvem com os snapshots, o conferidor da manhã mede com os dados locais | e62e0a5 |
+| 14 | 23/10/2026 | H10 | correção (não conta): campo crítico ausente no LTM → NÃO CONCLUSIVO | 21 industriais | nenhum ticker real com campo ausente; propriedade H10 sem contraexemplo | e62e0a5 |
 
 Nota das linhas 1–12: as variantes rodaram três vezes no mesmo código. As duas primeiras execuções quebraram antes de gravar (a
 H7 com tipo do numpy; depois a pasta de saída inexistente). Como as variantes são determinísticas, cada uma conta uma vez.
