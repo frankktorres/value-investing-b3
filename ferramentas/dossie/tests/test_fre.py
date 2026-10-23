@@ -124,7 +124,7 @@ def test_so_a_versao_mais_recente_e_lida(pasta):
     r = fre.remuneracao(CNPJ, 2026, pasta)
     assert 999.0 not in [v for ex in r["dados"].values() for v in ex.values()]
     assert r["fonte"] == {"arquivo": "fre_2026.zip", "tabela": "remuneracao_total_orgao", "versao": 10,
-                          "id_doc": "300", "link": "http://x/300"}
+                          "id_doc": "300", "link": "http://x/300", "dt_refer": "2026-12-31"}   # N12: DT_REFER do formulário
     assert all(p["parte"] != "Fornecedora Antiga Ltda." for p in fre.partes_relacionadas(CNPJ, 2026, pasta)["dados"])
     assert all(a["acionista"] != "Antigo S.A." for a in fre.acionistas(CNPJ, 2026, pasta)["dados"])
     assert fre.free_float(CNPJ, 2026, pasta)["dados"]["n_pf"] == 17570

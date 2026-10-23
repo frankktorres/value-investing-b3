@@ -1033,3 +1033,11 @@ trocar cor é decisão visual do Frank. Nenhuma ordem de compra ou venda decorre
 ## 22/10/2026 — Q01: PDFs dos lotes importáveis fora do Windows (nenhuma palavra, central ou golden mudou)
 `gerar_pdf_lote1.py` registrava `C:/Windows/Fonts/arial*.ttf` ao importar, e por isso `test_b23_petr4_premissas` e `test_carimbos` não coletavam na nuvem. Agora usa a Arial do Windows se existir e,
 senão, a Liberation Sans (métricas idênticas) — só para o módulo importar; PDF gerado fora do Windows não é o vigente. Suíte inteira sem `--ignore`: 963 passed, 42 skipped.
+
+## 23/10/2026 — N12: data de cada fonte de verdade no produto (nenhuma palavra, central ou golden mudou — na nuvem; o conferidor da manhã confirma)
+`Origem.data` passa a ser preenchida onde um arquivo do repo a declara: COTAHIST = pregão do caso (`procedencia._iso`); CVM DFP/ITR = fim do trimestre do LTM
+(`ltm_ref` → `_data_ltm`); ações do DFP (lote3) = fim do exercício (SMTO3 em março); proventos da B3 = `baixado_em` do cache (`proventos_hall.origem_b3`,
+também no registro de `insumos_a`); FRE = DT_REFER do formulário (`dossie/fre._fonte`); mercado = data do arquivo de rf/π. Sem data declarada continua "".
+Medido no contrato exportado na nuvem (39 empresas; os 8 dossiês não exportam sem os dados locais): **27 → 136 de 341 fontes com data**. Sem data por não ter
+data declarada: julgamento/notas, StatusInvest, digitado no lote, Kd sintético, Damodaran (só "jan/2026"), B3 já ex, P/L histórico, IPCA, EIA/BLS → BACKLOG N12b.
+Testes: `tests/test_n12_data_das_fontes.py` (12). Só procedência: nenhum número do motor lê `Origem`.
