@@ -6,7 +6,7 @@
 outras no ramo da sessão. Fio condutor: `docs/PROMPT-ORACULO-E-CALIBRACAO.md` (ler "Princípios invioláveis" e as Fases 3–4
 antes de começar). Fases 0–2 feitas (9fd7159, 9e9e8ac); relatórios de 22/10 em `docs/oraculo/`.*
 
-**O3 — Oráculo Fase 3: corrigir os bugs H10 e A1 (muda palavra → ramo próprio; o ok final é do Frank de manhã).**
+**(FEITA parcial 23/10) O3 — Oráculo Fase 3: corrigir os bugs H10 e A1 (muda palavra → ramo próprio; o ok final é do Frank de manhã).**
 *Ler antes:* `docs/PROMPT-ORACULO-E-CALIBRACAO.md` §Fase 3; `docs/PRE-REGISTRO-v3.md` (emenda 2 e linhas 1–12 do §6);
 `docs/oraculo/hipoteses-2026-10-22.md` (linha H10); os dois xfail estritos em `ferramentas/tests/test_oraculo_propriedades.py`
 (`test_h10_dado_critico_ausente_nunca_da_palavra_de_decisao` e `test_desconto_do_controlador_so_no_valor_industrial`).
@@ -40,7 +40,7 @@ manhã: `cd ferramentas && python -m pytest --ignore=backtest -q` (golden vai ac
 --motivo "Fase 3: H10 e A1"`, ler o que mudou e dar ok para juntar."* Commit + push do ramo; depois `git switch` de volta
 ao ramo da sessão antes da próxima missão.
 
-**N12 — Data de cada fonte de verdade no produto (ressalva do revisor da noite de 22/10; N3 ficou parcial).** O contrato da tela
+**(FEITA 23/10) N12 — Data de cada fonte de verdade no produto (ressalva do revisor da noite de 22/10; N3 ficou parcial).** O contrato da tela
 já tem `fontes[].data` (de `Origem.data`, `relatorio/modelo.py`), mas só os registros de `insumos_a` passam `data=`: no contrato
 exportado em 22/10 manhã, **27 de 466 fontes** têm data (19 COTAHIST e poucas mais); `relatorio/procedencia.py` e quem mais
 construir `Origem(` não passam nada (Tesouro, StatusInvest, B3 proventos, CVM DFP/ITR, Damodaran sem data). Preencher a
@@ -61,7 +61,7 @@ Fixar a versão exata em `requirements-dev.txt` (criar se não existir; não pô
 linha em `DECISOES.md` ("mutmut na nuvem Linux; cosmic-ray descartado" ou o contrário, com motivo) e uma linha na §12 do
 `PROJECT_BRIEF.md` (ferramenta adotada; guardar a versão anterior em `_historico/AAAA-MM-DD brief/`).
 
-**O5 — Oráculo Fase 4 (parte 2): motor-sombra FCFF/FCFE e DDM (só relatório).** Antes de começar, conferir se os insumos dos
+**(FEITA 23/10) O5 — Oráculo Fase 4 (parte 2): motor-sombra FCFF/FCFE e DDM (só relatório).** Antes de começar, conferir se os insumos dos
 tickers carregam na nuvem (`cd ferramentas && python -c "from oraculo import sanidade as S; print(len(S.empresas()))"` ou o equivalente
 usado em `tests/test_oraculo_propriedades.py`). Se não carregarem sem os ZIPs, **não fazer**: registrar "O5 precisa da
 máquina local" no relatório e parar. Se carregarem: implementação mínima e independente em `ferramentas/oraculo/sombra.py`
@@ -177,6 +177,9 @@ Front lê só o contrato. Tira o "Sistema em breve" do `index.html:27`.
 (nenhuma)
 
 ## Feitas
+- **O3** (23/10, **parcial**, ramo `claude/fase3-bugs`, e62e0a5 0dec510 b87784e 296da7a): H10 no LTM e nos exercícios da janela (PL, D&A, imobilizado) → NÃO CONCLUSIVO; A1 (E do ponto fixo antes do desconto); xfail estritos fora; D5.09 fechada. Parcial porque: a suíte da nuvem fica com 4 falhas da PETR4 (golden não regravado, por regra) e o parecer do oráculo foi RESSALVA → PENDENTE #11/#12 e BACKLOG O3b. Na nuvem: só a PETR4 muda (central 53,48 → 52,87), palavra igual.
+- **N12** (23/10, e188aaa d52a453 3aaf137): `Origem.data` em COTAHIST, CVM DFP/ITR (LTM), ações do DFP, proventos B3 (e já ex), FRE e mercado; contrato exportado na nuvem: 27 → 136 de 341 fontes com data (39 empresas; os 8 dossiês não exportam sem dados locais). Resto → N12b.
+- **O5** (23/10, 1de5574 b1dadb7): `oraculo/sombra.py` + `sombra_rodar.py`; 36 de 38 iguais, HYPE3/PRIO3 = crédito fiscal (conferido rodando o motor sem crédito); independência parcial declarada.
 - **Q01** (backlog, 22/10): `gerar_pdf_lote1.py` cai para a Liberation Sans (métricas da Arial) quando a Arial do Windows não existe; `test_b23` e `test_carimbos` voltam a coletar na nuvem (suíte 963 passed, 42 skipped, sem `--ignore`). PDFs do Windows inalterados.
 - **N5** (22/10, noite): `painel/tests/test_contraste_tokens.py` — texto ≥ 4,5:1 e séries ≥ 3:1 nos dois temas passam; contornos abaixo de 3:1 listados (teste fixa a lista) e em `PENDENTE-FRANK.md` #10; nenhuma cor trocada.
 - **N4** (22/10, noite): `painel/sistema.py` + `sistema.json` + `telas/sistema.js` (rota `#/sistema`); registro da suíte pelo `conftest`; `test_sistema.py`, `test_web_estatico`. Conferência visual: Frank (dia).
