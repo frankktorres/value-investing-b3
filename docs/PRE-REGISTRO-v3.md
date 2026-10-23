@@ -250,6 +250,7 @@ WEG; ROE recorrente do Itaú; Kerr 1998 (HARKing); Barr et al. 2015; Harvey, Liu
 | 10 | 22/10/2026 | H9 R-fonte | **variante, conta 5/24:** Ke de Damodaran (β = 1, marcado), alíquota 34%, desconto 0; margem e g da casa (marcados) | 20 industriais | taxa 98% → **empilhamento não confirmado** nas duas | idem |
 | 11 | 22/10/2026 | H10 | teste (não conta): tira o campo de todos os períodos | 21 industriais | caixa 14, dívida 14, PL 9, D&A 18, imobilizado 16 com palavra de decisão; lucro e receita 0 → **aceita (bug)** | idem |
 | 12 | 22/10/2026 | H11 | conferência de fonte (não conta) | 8 reguladas | nenhuma nota técnica lida no primário → **a conferir** | idem |
+| 15 | 23/10/2026 | Fase 4 (camada 3) | teste (não conta), **pré-registrado antes de rodar:** motor-sombra (`oraculo/sombra.py`, FCFF/FCFE e DDM sem importar os motores) × motor, mesmos insumos; tolerância = §3, \|Δcentral\| ≤ 2%; acima disso, explicar ticker a ticker; SOTP e contrato finito fora | 39 dos lotes | (resultado na linha seguinte, depois de rodar) | — |
 
 Nota das linhas 1–12: as variantes rodaram três vezes no mesmo código. As duas primeiras execuções quebraram antes de gravar (a
 H7 com tipo do numpy; depois a pasta de saída inexistente). Como as variantes são determinísticas, cada uma conta uma vez.
