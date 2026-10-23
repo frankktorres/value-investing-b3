@@ -1053,3 +1053,6 @@ Nenhuma ordem de compra ou venda decorre desta entrada.
 `criticos_ausentes(tk, anos)` passa a olhar também PL, D&A e imobilizado em cada exercício da janela das âncoras (`op["anos"]`): ausente num ano → NÃO CONCLUSIVO
 ("da (2019)"). Medido: 0 dos 21 industriais tem buraco na janela; as 39 empresas dos lotes saem iguais à rodada do O3. EBIT sem chave no LTM não é zero calado
 (o motor falha alto em `ebit_aj`; teste fixa). Fica no BACKLOG O3b: juros e proventos, os `v(..., 0)` antigos, `montar_series.py:48` e o NÃO CONCLUSIVO que ainda publica central/P/C.
+Revisor (opus) do O3b: aprovado; a janela `op["anos"]` é a que as âncoras leem. Ressalva registrada: para D&A a regra é mais rígida que o motor (o OE já descarta o ano sem D&A;
+o zero calado de D&A anual só existe no ramo E&P) — ano sem D&A vira NÃO CONCLUSIVO mesmo sem ter sido lido como zero; hoje não atinge ninguém e erra para o lado conservador.
+Testes: motivo conferido antes do retorno e negativos (ano fora da janela; 0 informado vale).

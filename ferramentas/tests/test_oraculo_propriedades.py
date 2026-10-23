@@ -554,11 +554,24 @@ def test_o3b_campo_ausente_num_exercicio_da_janela_nunca_da_palavra_de_decisao(t
     emp = _empresas()[tk]
     with _serie(tk, nova):
         r = _avaliar(emp)
+        assert r is None or f"{campo} ({ano})" in r["dado_critico_ausente"]      # o motivo, mesmo sem central positivo
         if r is None or not (r["central"] > 0):
             return
         r = _avaliar(replace(emp, preco=f * r["central"]))
     assert r is None or r["palavra"] not in DECISAO, (tk, campo, ano, f, r["palavra"])
-    assert r is None or f"{campo} ({ano})" in r["dado_critico_ausente"]
+
+
+def test_o3b_ano_fora_da_janela_e_zero_presente_nao_sao_ausencia():
+    """Negativos: tirar o campo de um ano FORA da janela não marca nada; 0 informado no ano continua valendo."""
+    tk = next(t for t in _ind() if int(M.premissas_operacionais(_empresas()[t])["anos"][0]) > 2016)
+    anos = M.premissas_operacionais(_empresas()[tk])["anos"]
+    fora = str(int(anos[0]) - 1)
+    nova = copy.deepcopy(M.CVM[tk])
+    if fora in nova["anual"]:
+        nova["anual"][fora].pop("imobilizado", None)
+    nova["anual"][anos[-1]]["da"] = 0.0
+    with _serie(tk, nova):
+        assert M.criticos_ausentes(tk, anos) == []
 
 
 
