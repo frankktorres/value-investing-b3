@@ -59,8 +59,10 @@ class Leitura(SimpleHTTPRequestHandler):
 
 class Exclusivo(ThreadingHTTPServer):
     """Bind exclusivo: no Windows `SO_REUSEADDR` deixa um 2º servidor subir na mesma porta e as conexões se dividem entre
-    os dois (ERR_CONNECTION_REFUSED intermitente). Aqui o 2º falha com OSError (N9)."""
-    allow_reuse_address = False
+    os dois (ERR_CONNECTION_REFUSED intermitente). Aqui o 2º falha com OSError (N9).
+    Linux/macOS (N13): `SO_REUSEADDR` só deixa religar sobre conexões em TIME_WAIT (reabrir logo depois de fechar); dois
+    servidores escutando juntos continuam impossíveis sem `SO_REUSEPORT`. No Windows fica desligado (lá ele divide a porta)."""
+    allow_reuse_address = os.name != "nt"
 
     def server_bind(self):
         if os.name == "nt":
