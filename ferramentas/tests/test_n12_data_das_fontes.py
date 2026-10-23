@@ -68,6 +68,7 @@ def test_tabela_do_lote_tem_data_em_cotahist_cvm_e_proventos_e_vazio_no_digitado
     assert t["serie"].data == "2026-06-30"                       # WEGE3: ltm_ref "2T26" na série do repo
     assert t["proventos"].data == proventos_hall.origem_b3(tk).data != ""
     assert t["mercado"].data != ""
+    assert t["proventos_ja_ex"].data == t["proventos"].data          # N12b: o mesmo cache da B3
     assert t["defasagem"].data == ""                             # StatusInvest (datas) / declarada: sem data no registro
 
 

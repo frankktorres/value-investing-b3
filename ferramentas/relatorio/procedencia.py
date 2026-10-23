@@ -137,6 +137,12 @@ def _mercado(c: dict) -> Origem:
                   data=_iso(c["mk"].data))
 
 
+def _ja_ex(tk: str) -> Origem:
+    """B3_JA_EX com a data do mesmo cache da B3 que `proventos_ex.ajuste_b3` lê (dados/proventos_hall/<TK>.json, N12b)."""
+    import proventos_hall
+    return dataclasses.replace(B3_JA_EX, data=proventos_hall.origem_b3(tk).data)
+
+
 def _iso(data: str | None) -> str:
     """AAAA-MM-DD a partir de AAAA-MM-DD ou DD/MM/AAAA, só se for uma data de calendário; outro formato → "" (não se chuta)."""
     from datetime import date
@@ -180,7 +186,7 @@ def tabela(c: dict) -> dict[str, Origem]:
               "acoes": Origem("CVM ITR (ações)", "A", "CVM, composição do capital do ITR (sem tesouraria)", data=ltm),
               "proventos": proventos_hall.origem_b3(emp.ticker),
               "pl_hist": Origem("CVM + COTAHIST", "A", "P/L histórico: lucro e ações do DFP (CVM) × fechamento do ano (B3)"),
-              "proventos_ja_ex": B3_JA_EX, "dados_lote": _insumos_dossie(emp.ticker, serie), "kd": kd(emp)}
+              "proventos_ja_ex": _ja_ex(emp.ticker), "dados_lote": _insumos_dossie(emp.ticker, serie), "kd": kd(emp)}
     elif c["financeira"]:
         t |= {k: C_LOTE for k in ("vpa", "roe_lp", "roe_inicio", "payout", "dpa_medio_5a", "pl_hist")}
         t["proventos"] = t["dpa_medio_5a"]
@@ -197,7 +203,7 @@ def tabela(c: dict) -> dict[str, Origem]:
               "preco": insumos_a.origem(emp.ticker, "preco", emp.preco) or Origem(
                   "lote (digitado): preco", "C", "preço digitado no lote, não lido do snapshot do COTAHIST (precos_hall.preco)"),
               "proventos": proventos_nf(emp), "pl_hist": insumos_a.origem(emp.ticker, "pl_hist", emp.pl_hist) or C_LOTE,
-              "proventos_ja_ex": B3_JA_EX, "dados_lote": dados_ancora(emp, serie), "kd": kd(emp)}
+              "proventos_ja_ex": _ja_ex(emp.ticker), "dados_lote": dados_ancora(emp, serie), "kd": kd(emp)}
     if emp.defasagem_meses is not None and emp.defasagem_fonte.strip():
         t["defasagem"] = Origem("defasagem declarada", "C", f"declarada na ficha: {emp.defasagem_fonte}")
     else:
