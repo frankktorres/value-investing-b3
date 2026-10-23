@@ -1048,3 +1048,8 @@ dizer "antes do desconto" (decisão do Frank, PENDENTE #12); (2) H10 parcial: a 
 proventos, os `v(...,0)` antigos e `montar_series.py:48` seguem; o NÃO CONCLUSIVO ainda publica central/P/C no dict → BACKLOG O3b; (5) a execução sobre a PETR4
 conta como tentativa 6/24 → registrada no §6. Itens (c) da missão (LEVE3 no `hall.json`, trava só em JUSTA, payout × g no DDM): nenhum inequívoco contra o `01` → PENDENTE #12.
 Nenhuma ordem de compra ou venda decorre desta entrada.
+
+## 23/10/2026 — O3b (parte): dado crítico ausente num exercício da janela (ramo `claude/fase3-bugs`; nenhuma palavra real muda na nuvem)
+`criticos_ausentes(tk, anos)` passa a olhar também PL, D&A e imobilizado em cada exercício da janela das âncoras (`op["anos"]`): ausente num ano → NÃO CONCLUSIVO
+("da (2019)"). Medido: 0 dos 21 industriais tem buraco na janela; as 39 empresas dos lotes saem iguais à rodada do O3. EBIT sem chave no LTM não é zero calado
+(o motor falha alto em `ebit_aj`; teste fixa). Fica no BACKLOG O3b: juros e proventos, os `v(..., 0)` antigos, `montar_series.py:48` e o NÃO CONCLUSIVO que ainda publica central/P/C.

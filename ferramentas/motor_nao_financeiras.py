@@ -178,10 +178,19 @@ CAMPOS_CRITICOS = {"caixa": ("caixa",), "divida": ("emprest_cp", "emprest_lp"), 
                    "imobilizado": ("imobilizado",)}
 
 
-def criticos_ausentes(tk) -> list[str]:
-    """Campos críticos sem nenhuma das suas chaves no LTM (dívida: nem CP nem LP). Lista vazia = tudo presente."""
-    _, ltm = serie(tk)
-    return [c for c, chaves in CAMPOS_CRITICOS.items() if all(ltm.get(k) is None for k in chaves)]
+# O3b (23/10): nos exercícios da janela das âncoras o motor lê PL, D&A e imobilizado do ano (OE, capex de manutenção, ROIC anual);
+# ausente num deles = o mesmo zero silencioso. (EBIT ausente não é zero calado: `ebit_aj` lê d["ebit"] e falha alto.)
+CRITICOS_ANO = ("pl", "da", "imobilizado")
+
+
+def criticos_ausentes(tk, anos=()) -> list[str]:
+    """Campos críticos sem nenhuma das suas chaves no LTM (dívida: nem CP nem LP) e, para cada exercício de `anos` (a janela das
+    âncoras), os de CRITICOS_ANO ausentes no ano ("da (2019)"). Lista vazia = tudo presente."""
+    a, ltm = serie(tk)
+    falta = [c for c, chaves in CAMPOS_CRITICOS.items() if all(ltm.get(k) is None for k in chaves)]
+    for ano in anos:
+        falta += [f"{c} ({ano})" for c in CRITICOS_ANO if a.get(ano, {}).get(c) is None]
+    return falta
 
 
 def divida_liquida(b):
@@ -1004,7 +1013,7 @@ def avaliar(emp: Industrial, mk: Mercado) -> dict:
     if p_trava != p:
         p, conf = p_trava, "não conclusivo (trava de coerência, §9)"
     # H10: dado crítico ausente nunca vira palavra de decisão — o central acima saiu com 0 no lugar do campo e não vale
-    ausentes = criticos_ausentes(emp.ticker)
+    ausentes = criticos_ausentes(emp.ticker, r["op"]["anos"])
     if ausentes:
         p, conf = "NÃO CONCLUSIVO", "não conclusivo (dado crítico ausente: " + ", ".join(ausentes) + ")"
 

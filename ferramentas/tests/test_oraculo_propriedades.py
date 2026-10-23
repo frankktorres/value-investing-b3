@@ -537,5 +537,36 @@ def test_h10_razao_do_nao_conclusivo_nomeia_o_campo():
     tk = next(t for t in _ind() if _base(t)["palavra"] != "NÃO CONCLUSIVO")
     with _serie(tk, _sem_campo(M.CVM[tk], ("imobilizado",))):
         r = _avaliar(_empresas()[tk])
-    assert r["palavra"] == "NÃO CONCLUSIVO" and r["dado_critico_ausente"] == ["imobilizado"]
+    assert r["palavra"] == "NÃO CONCLUSIVO" and r["dado_critico_ausente"][0] == "imobilizado"   # LTM; depois os anos (O3b)
     assert "dado crítico ausente: imobilizado" in r["confianca"]
+
+
+
+@seed(SEMENTE)
+@_cfg(max(N_IND, 20))
+@given(tk=st.sampled_from(_ind()), campo=st.sampled_from(M.CRITICOS_ANO), i=st.integers(0, 9), f=st.floats(0.5, 1.05))
+def test_o3b_campo_ausente_num_exercicio_da_janela_nunca_da_palavra_de_decisao(tk, campo, i, f):
+    """O3b: o campo some de UM exercício da janela das âncoras (o LTM fica) → nunca BARATA/RADAR/JUSTA."""
+    anos = M.premissas_operacionais(_empresas()[tk])["anos"]
+    ano = anos[i % len(anos)]
+    nova = copy.deepcopy(M.CVM[tk])
+    nova["anual"][ano].pop(campo, None)
+    emp = _empresas()[tk]
+    with _serie(tk, nova):
+        r = _avaliar(emp)
+        if r is None or not (r["central"] > 0):
+            return
+        r = _avaliar(replace(emp, preco=f * r["central"]))
+    assert r is None or r["palavra"] not in DECISAO, (tk, campo, ano, f, r["palavra"])
+    assert r is None or f"{campo} ({ano})" in r["dado_critico_ausente"]
+
+
+
+def test_o3b_ebit_ausente_no_ltm_falha_alto():
+    """EBIT sem chave no LTM não vira zero: o motor recusa com erro (nenhuma palavra sai)."""
+    tk = _ind()[0]
+    nova = copy.deepcopy(M.CVM[tk])
+    nova["ltm"].pop("ebit", None)
+    with _serie(tk, nova), pytest.raises(KeyError):
+        with _rapido():
+            M.avaliar(_empresas()[tk], MK)
