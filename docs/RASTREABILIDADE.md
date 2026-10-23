@@ -4,7 +4,7 @@ Gerado por `cd ferramentas && python -m oraculo.rastreabilidade` a partir de `fe
 Contrato: `docs/VALIDACAO.md` §3. Camadas: 0 = só regressão/golden · 1 = especificado · 2 = propriedade · 3 = diferencial ·
 4 = reconciliação · 5 = sanidade · 6 = resultado · 7 = desafio.
 
-**213 regras** (190 calculáveis, 23 de texto) · **155 com teste** · **36 lacunas declaradas** · por camada do teste mais forte: 0: 24, 1: 108, 2: 23
+**213 regras** (190 calculáveis, 23 de texto) · **155 com teste** · **35 lacunas declaradas** · por camada do teste mais forte: 0: 24, 1: 108, 2: 23
 
 | id | § | linha | regra | tipo | funções | testes | camada | lacuna | nota |
 |---|---|---|---|---|---|---|---|---|---|
@@ -76,7 +76,7 @@ Contrato: `docs/VALIDACAO.md` §3. Camadas: 0 = só regressão/golden · 1 = esp
 | D5.06 | §5 | 103 | desconto só sobre âncora positiva; âncora ≤ 0 fica e força NÃO CONCLUSIVO | calculo | `motor_financeiras.descontar` | `tests/test_n2_regras_sem_cobertura.py::test_desconto_so_incide_em_ancora_positiva`<br>`tests/test_doutrina_v23.py::test_2_descontar_poupa_ancora_negativa_e_nula`<br>`tests/test_doutrina_v23.py::test_2_nao_financeira_com_ancora_negativa_continua_nao_conclusiva_e_sem_melhora` | 1 | — | — |
 | D5.07 | §5 | 103 | Ke implícito e DCF reverso comparam o preço com o valor já descontado | calculo | `motor_nao_financeiras.ke_implicito`<br>`motor_nao_financeiras.g_implicito` | `tests/test_doutrina_v23.py::test_2_ke_implicito_usa_o_central_descontado`<br>`tests/test_n2_regras_sem_cobertura.py::test_g_implicito_ida_e_volta` | 1 | — | — |
 | D5.08 | §5 | 104 | avaliar a qualidade intrínseca separada do dono | texto | — | — | — | — | — |
-| D5.09 | §5 | 105 | aplicado no valor, o risco não volta a descontar retorno, nota ou veredito | veto | — | `tests/test_oraculo_propriedades.py::test_desconto_do_controlador_so_no_valor_financeira`<br>`tests/test_oraculo_propriedades.py::test_desconto_do_controlador_so_no_valor_industrial` | 2 | Fase 3: não financeira — o desconto entra no E do ponto fixo e volta no Ke e na nota (achado A1, xfail estrito) | — |
+| D5.09 | §5 | 105 | aplicado no valor, o risco não volta a descontar retorno, nota ou veredito | veto | — | `tests/test_oraculo_propriedades.py::test_desconto_do_controlador_so_no_valor_financeira`<br>`tests/test_oraculo_propriedades.py::test_desconto_do_controlador_so_no_valor_industrial` | 2 | — | A1 corrigido na Fase 3 (23/10): o E do ponto fixo é o valor antes do desconto |
 | D6.01 | §6 | 124 | DPA ajustado por bonificação/desdobramento (divide até a data-com do evento, inclusive) | calculo | `proventos_hall.proventos`<br>`proventos_hall.eventos_em_acoes`<br>`proventos_hall.dpa_jcp` | `tests/test_fase3_proventos_b3.py::test_evento_divide_o_provento_ate_a_data_com_inclusive`<br>`tests/test_fase3_proventos_b3.py::test_bonificacao_klabin_2024_no_capital_integralizado` | 1 | — | — |
 | D6.02 | §6 | 125 | comparar por data-com; pagamento só para saber quando o caixa entra | calculo | `proventos_hall.dpa_jcp`<br>`defasagem.meses_entre` | `tests/test_fase3_proventos_b3.py::test_restituicao_classe_e_data_do_preco` | 1 | — | — |
 | D6.03 | §6 | 126 | defasagem: provento a valor presente ao Ke nominal (1+Ke)^(−meses/12) | calculo | `motor_nao_financeiras.avaliar`<br>`motor_financeiras.avaliar` | `tests/test_aud27_31_formulas.py::test_aud31_renda_defasagem_e_bogle_de_todos_os_tickers_recalculados_fora_do_motor` | 1 | — | — |

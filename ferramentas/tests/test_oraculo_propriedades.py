@@ -4,8 +4,8 @@ Leis que valem para QUALQUER entrada, conferidas pelo Hypothesis com semente fix
   Ke ↑ ⇒ central não sobe · fluxo ↑ ⇒ central não cai · central não depende do preço · desdobramento · permutação ·
   preço ↑ nunca melhora a palavra · sem NaN/inf · g < Ke · a nota não decide a palavra · Piotroski/Beneish fora da nota ·
   Graham-BR e teto de renda nunca são âncora · âncora única ⇒ confiança baixa · Focus só como sensibilidade.
-O caso "dado crítico ausente ⇒ nunca BARATA, RADAR ou JUSTA" é xfail(strict) ligado à H10: hoje falha (zero silencioso);
-quando a Fase 3 corrigir, o xfail estrito vira falha e obriga a tirar a marca no mesmo commit.
+O caso "dado crítico ausente ⇒ nunca BARATA, RADAR ou JUSTA" era xfail(strict) ligado à H10 (zero silencioso) e o desconto do
+controlador nos industriais era o achado A1; a Fase 3 (23/10/2026) corrigiu os dois e tirou as marcas.
 
 Perfil (emenda 2): financeira (~2 ms) roda sempre os 500 exemplos do §3; industrial (~0,06 s sem os Ke/g implícitos) roda o
 perfil curto na suíte do dia a dia e os 500 só com `python -m oraculo --completo` (ORACULO_PERFIL=completo).
@@ -39,7 +39,8 @@ TOL_PF = 1e-4      # o ponto fixo do WACC para em |ΔE/E| < 1e-5 (TOL_PONTO_FIXO
 CRITICOS = {"caixa": ("caixa",), "divida": ("emprest_cp", "emprest_lp"), "pl": ("pl",), "lucro": ("lucro", "lucro_controlador"),
             "receita": ("receita",), "da": ("da",), "imobilizado": ("imobilizado",)}
 # H10 medida em 22/10 (preço a 0,8 × central, 21 industriais): caixa 14, dívida 14, PL 9, D&A 18 e imobilizado 16 tickers saem
-# com palavra de decisão; lucro e receita já viram recusa. Quando a Fase 3 fechar um campo, ele sai daqui (catraca)
+# com palavra de decisão; lucro e receita já viram recusa. Fase 3 (23/10): os cinco viram NÃO CONCLUSIVO (`M.criticos_ausentes`);
+# a lista fica para o teste nomeado da H10 cobrir exatamente os campos que eram abertos
 H10_ABERTOS = ["caixa", "da", "divida", "imobilizado", "pl"]
 
 MK = mercado.vigente()
@@ -470,13 +471,11 @@ def test_dado_critico_ausente_nunca_da_palavra_de_decisao(tk, campo, f):
     _confere_ausente(tk, campo, f)
 
 
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason="H10 aceita (22/10): sem caixa, dívida, PL, D&A ou imobilizado o motor publica palavra de decisão "
-                          "(motor_nao_financeiras.py:176-177, 214, 250, 273-277, 287, 297); corrige na Fase 3")
 @seed(SEMENTE)
 @_cfg(max(N_IND, 20), phases=[Phase.explicit, Phase.reuse, Phase.generate])
 @given(tk=st.sampled_from(_ind()), campo=st.sampled_from(H10_ABERTOS), f=st.floats(0.5, 1.05))
 def test_h10_dado_critico_ausente_nunca_da_palavra_de_decisao(tk, campo, f):
+    """H10 (Fase 3, 23/10): os campos que davam zero silencioso agora viram NÃO CONCLUSIVO (`M.criticos_ausentes`)."""
     _confere_ausente(tk, campo, f)
 
 
@@ -496,9 +495,6 @@ def test_desconto_do_controlador_so_no_valor_financeira(tk, pct):
     assert {k: r["notas"][k] for k in ("qualidade", "solidez")} == {k: r0["notas"][k] for k in ("qualidade", "solidez")}
 
 
-@pytest.mark.xfail(strict=True, reason="achado A1 (Fase 2, 22/10): nos industriais o desconto entra no E do ponto fixo do WACC "
-                                       "(estrutura_de_capital) e volta como Ke maior pelo Hamada e nota de qualidade diferente; "
-                                       "a decidir na Fase 3")
 @seed(SEMENTE)
 @_cfg(max(N_IND // 2, 6))
 @given(tk=st.sampled_from(_ind()), pct=st.floats(0.05, 0.5))
@@ -510,3 +506,36 @@ def test_desconto_do_controlador_so_no_valor_industrial(tk, pct):
     r = _avaliar(replace(emp, desconto_controlador={"tipo": "fixo", "pct": pct, "razao": "propriedade"}))
     assert r["ke_nom_emp"] == pytest.approx(r0["ke_nom_emp"], rel=1e-9), (tk, pct)
     assert r["notas"]["qualidade"] == pytest.approx(r0["notas"]["qualidade"], rel=1e-9), (tk, pct)
+    if all(x > 0 for x in r0["ancoras"].values()):      # com o E do ponto fixo igual, o central cai exatamente (1 − pct)
+        assert r["central"] == pytest.approx(r0["central"] * (1 - pct), rel=1e-9), (tk, pct)
+
+
+def test_h10_zero_declarado_continua_valendo_e_ausente_vira_nao_conclusivo():
+    """Ausente ≠ zero (VALIDACAO §5): caixa = 0 informado pela fonte não é recusa; caixa sem a chave no LTM é."""
+    tk = _ind()[0]
+    serie = copy.deepcopy(M.CVM[tk])
+    ltm = M.ltm_de(serie)
+    assert M.criticos_ausentes(tk) == []
+    for chave, esperado in ((0.0, []), (None, ["caixa"])):
+        ltm2 = dict(ltm)
+        if chave is None:
+            ltm2.pop("caixa", None)
+        else:
+            ltm2["caixa"] = chave
+        with mock.patch.object(M, "serie", lambda t, _l=ltm2: (serie["anual"], _l)):
+            assert M.criticos_ausentes(tk) == esperado
+    # dívida: só é ausente sem CP E sem LP (empresa sem LP informa só a CP)
+    ltm3 = {k: x for k, x in ltm.items() if k != "emprest_lp"}
+    with mock.patch.object(M, "serie", lambda t: (serie["anual"], ltm3)):
+        assert M.criticos_ausentes(tk) == []
+    ltm4 = {k: x for k, x in ltm3.items() if k != "emprest_cp"}
+    with mock.patch.object(M, "serie", lambda t: (serie["anual"], ltm4)):
+        assert M.criticos_ausentes(tk) == ["divida"]
+
+
+def test_h10_razao_do_nao_conclusivo_nomeia_o_campo():
+    tk = next(t for t in _ind() if _base(t)["palavra"] != "NÃO CONCLUSIVO")
+    with _serie(tk, _sem_campo(M.CVM[tk], ("imobilizado",))):
+        r = _avaliar(_empresas()[tk])
+    assert r["palavra"] == "NÃO CONCLUSIVO" and r["dado_critico_ausente"] == ["imobilizado"]
+    assert "dado crítico ausente: imobilizado" in r["confianca"]

@@ -172,6 +172,18 @@ def anos_validos(tk, anos):
     return [x for x in anos if a.get(x, {}).get("receita")]
 
 
+# H10 (oráculo, Fase 3, 23/10/2026; docs/VALIDACAO.md §5): campo do balanço/DFC que o motor lê do LTM com `v(..., 0)`. Ausente
+# no LTM = o zero entrava calado no central (caixa, dívida, PL, D&A, imobilizado). Presente e igual a 0 continua valendo.
+CAMPOS_CRITICOS = {"caixa": ("caixa",), "divida": ("emprest_cp", "emprest_lp"), "pl": ("pl",), "da": ("da",),
+                   "imobilizado": ("imobilizado",)}
+
+
+def criticos_ausentes(tk) -> list[str]:
+    """Campos críticos sem nenhuma das suas chaves no LTM (dívida: nem CP nem LP). Lista vazia = tudo presente."""
+    _, ltm = serie(tk)
+    return [c for c, chaves in CAMPOS_CRITICOS.items() if all(ltm.get(k) is None for k in chaves)]
+
+
 def divida_liquida(b):
     bruta = v(b, "emprest_cp", 0) + v(b, "emprest_lp", 0) + v(b, "arrendamento", 0)   # IFRS 16 é dívida
     caixa = v(b, "caixa", 0) + v(b, "aplic_cp", 0)
@@ -641,17 +653,19 @@ def estrutura_de_capital(emp: Industrial, mk: Mercado) -> dict:
     casa) não há ponto fixo: os pesos e o Ke ficam no patrimônio contábil, só para exibir — a palavra já é NÃO CONCLUSIVO.
 
     A iteração PARTE do patrimônio contábil, não do preço (adversário, 08/10): partindo do preço, a KLBN11 desistia ou achava raiz
-    conforme o preço — o central voltava a depender dele. Sem PL positivo, parte de E = D (D/E = 1)."""
+    conforme o preço — o central voltava a depender dele. Sem PL positivo, parte de E = D (D/E = 1).
+    Achado A1 (oráculo, Fase 3, 23/10/2026): o E do ponto fixo é o valor ANTES do desconto de controlador. Com o desconto dentro do
+    E, o D/E subia, o Hamada devolvia um Ke maior e a nota de qualidade mudava — o risco do controlador contado no valor E no Ke,
+    contra o §5 ("uma única vez", 01 l.103–105). O desconto entra só em `avaliar`, sobre as âncoras."""
     _, ltm = serie(emp.ticker)
     d = divida_liquida(ltm)[0]
     t = aliquota(emp)
-    desc = desconto_pct(emp)
     pl = v(ltm, "pl", 0) - v(ltm, "nao_controladores", 0)
     e0 = pl if pl > 0 else max(d, 1.0)
     e = e0
     for i in range(1, MAX_ITER_PONTO_FIXO + 1):
         mk_e = replace(mk, premio=premio_alavancado(d, e, t))
-        central = central_de(descontar(valores(emp, mk_e, e_peso=e)["anc"], desc))[0]
+        central = central_de(valores(emp, mk_e, e_peso=e)["anc"])[0]      # A1: sem o desconto de controlador
         if central <= 0:
             return dict(mk=replace(mk, premio=premio_alavancado(d, e0, t)), e_peso=e0, iteracoes=i,
                         ponto_fixo=False, nota="sem central positivo: pesos e Ke no patrimônio contábil, só para exibir")
@@ -989,6 +1003,10 @@ def avaliar(emp: Industrial, mk: Mercado) -> dict:
     p_trava = aplicar_trava(p0, p, trava, emp.trava_razao)
     if p_trava != p:
         p, conf = p_trava, "não conclusivo (trava de coerência, §9)"
+    # H10: dado crítico ausente nunca vira palavra de decisão — o central acima saiu com 0 no lugar do campo e não vale
+    ausentes = criticos_ausentes(emp.ticker)
+    if ausentes:
+        p, conf = "NÃO CONCLUSIVO", "não conclusivo (dado crítico ausente: " + ", ".join(ausentes) + ")"
 
     peg = (pl_atual / (100 * g_nom)) if pl_atual else None
     pegy = (pl_atual / (100 * (g_nom + dy))) if pl_atual else None
@@ -1032,7 +1050,7 @@ def avaliar(emp: Industrial, mk: Mercado) -> dict:
                 so_com_rerating=rf != rf_inv, carimbo_rf=bogle_liq_real < mk.rf_liq_real, trava=trava, peg=peg, pegy=pegy,
                 ke_implicito=ke_implicito(emp, mk, ep), g_implicito=g_implicito(emp, mk, ep), sens=sens,
                 ke_real_emp=mk.ke_real, ke_nom_emp=mk.ke_nom, premio_ke=mk.premio, de_peso=r["d"] / ep,
-                ponto_fixo=ec["ponto_fixo"], ponto_fixo_nota=ec["nota"],
+                ponto_fixo=ec["ponto_fixo"], ponto_fixo_nota=ec["nota"], dado_critico_ausente=ausentes,
                 # AUD-51: mediana efetiva a menos de 1 p.p. do limiar de 15% (degrau deliberado da v2.3 para 34%) — só aviso
                 aliquota_perto_do_limiar=(r["aliquota_regra"] in ("mediana", "permanente", "sem_origem")
                                           and r["aliquota_mediana"] is not None
