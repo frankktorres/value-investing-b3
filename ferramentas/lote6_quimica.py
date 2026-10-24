@@ -30,7 +30,7 @@ import pandas as pd
 from derivados_zip import obter
 from pl_historico import do_hall
 from precos_hall import preco
-from insumos_a import ACOES_ITR_JUN26, RECEITA_MEIO_ACO, RECEITA_MEIO_CLORO, registrar
+from insumos_a import ACOES_ITR_JUN26, RECEITA_MEIO_ACO, RECEITA_MEIO_CLORO, com_data, registrar
 from lote1_bancos import MK
 from lote2_energia import pl_hist, solidez
 from lote3_agro import jcp
@@ -81,7 +81,13 @@ def indice(pesos, a0=2016, a1=2025):
     ltm_real = df.loc["2025-07":"2026-06", "real"].mean()
     k = 100 / meio                      # reescala: meio de ciclo = 100
     return dict(anual=anual * k, meio=100.0, ltm=ltm * k, ltm_real=ltm_real * k, fator=meio / ltm, janela=f"{a0}–{a1 - 2000:02d}", ultimo=(df.index[-1].strftime("%m/%Y"), df["rs"].iloc[-1] * k),
-                base=df.index[-1].strftime("%m/%Y"), idx_usd=anual["idx"])
+                base=df.index[-1].strftime("%m/%Y"), base_data=df.index[-1].date().isoformat(), idx_usd=anual["idx"])
+
+
+def _o_indice(o, tk, ind):
+    """N12b: a menor entre o fim do trimestre do LTM da CVM e o mês-base do índice (PPI × PTAX × IPCA)."""
+    from relatorio.procedencia import _data_ltm
+    return com_data(o, _data_ltm(tk), ind["base_data"])
 
 
 ACO = indice({"WPU1017": 1.0})
@@ -175,11 +181,11 @@ LEVE3_RAZAO = ("zero pelo §5 (consumado × prospectivo), conclusão do D3 do do
 
 EMPRESAS = [
     Industrial("GGBR4", "Gerdau (PN)", "ciclica", desconto_controlador=dict(tipo="zero", razao=SEM_RAZAO), preco=preco("GGBR4"), n_acoes=N["GGBR4"], g_real=0.01, jcp_share=jcp("GGBR4"),
-               receita_meio=registrar("GGBR4", "receita_meio", ltm_de(CVM["GGBR4"])["receita"] * ACO["fator"], RECEITA_MEIO_ACO), outras_liquidas=True, impairment_normalizado=True,
+               receita_meio=registrar("GGBR4", "receita_meio", ltm_de(CVM["GGBR4"])["receita"] * ACO["fator"], _o_indice(RECEITA_MEIO_ACO, "GGBR4", ACO)), outras_liquidas=True, impairment_normalizado=True,
                receita_meio_fonte="receita 12m × aço de meio de ciclo ÷ aço dos 12m (BLS WPU1017 × PTAX, R$ de hoje)",
                qualitativo=QUAL(3, 4, 4, 2, 3)),
     Industrial("UNIP6", "Unipar Carbocloro (PNB)", "ciclica", desconto_controlador=dict(tipo="zero", razao=SEM_RAZAO), preco=preco("UNIP6"), n_acoes=N["UNIP6"], g_real=0.01, jcp_share=jcp("UNIP6"),
-               anos_ciclo=[str(a) for a in range(2017, 2026)], receita_meio=registrar("UNIP6", "receita_meio", ltm_de(CVM["UNIP6"])["receita"] * CLORO["fator"], RECEITA_MEIO_CLORO), outras_liquidas=True,
+               anos_ciclo=[str(a) for a in range(2017, 2026)], receita_meio=registrar("UNIP6", "receita_meio", ltm_de(CVM["UNIP6"])["receita"] * CLORO["fator"], _o_indice(RECEITA_MEIO_CLORO, "UNIP6", CLORO)), outras_liquidas=True,
                janela_razao="Indupa consolidada em dez/2016: 2016 traz ganho de compra vantajosa e 1 mês de receita da Argentina "
                             "(e a série de soda não cobre jan–set/2016)",
                receita_meio_fonte="receita 12m × cesta soda/PVC de meio de ciclo ÷ cesta dos 12m (BLS × PTAX, R$ de hoje)",

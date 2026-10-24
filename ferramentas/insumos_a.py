@@ -7,6 +7,7 @@ lote. A nota nunca sobe por omissão: sem registro não há fonte.
 """
 from __future__ import annotations
 
+import dataclasses
 import math
 
 from precos_hall import PRECO_DATA
@@ -42,6 +43,18 @@ def registrar(tk: str, campo: str, valor, origem: Origem):
     """Guarda (valor, origem) do campo do ticker e devolve o valor sem mexer nele. Valor: número ou {chave: número ou texto}."""
     _REG[(tk, campo)] = (_congela(valor), origem)
     return valor
+
+
+def com_data(o: Origem, *datas: str) -> Origem:
+    """A origem com a data da fonte (N12b). Fonte composta (CVM × série macro, DFP × COTAHIST): a MENOR das datas do último
+    dado de cada componente — a fonte só é tão recente quanto a parte mais velha. Componente sem data declarada → "" (não se
+    chuta); data fora de AAAA-MM-DD também."""
+    from datetime import date
+    try:
+        ds = [date.fromisoformat(d).isoformat() for d in datas if len(d or "") == 10]
+    except ValueError:
+        ds = []
+    return dataclasses.replace(o, data=min(ds) if datas and len(ds) == len(datas) else "")
 
 
 def origem(tk: str, campo: str, usado) -> Origem | None:

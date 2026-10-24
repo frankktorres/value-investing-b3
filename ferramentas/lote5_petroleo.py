@@ -24,7 +24,7 @@ import pandas as pd
 
 from derivados_zip import obter
 from precos_hall import preco
-from insumos_a import ALIQUOTA_FASE_DFP, IPCA_BCB, RECEITA_MEIO_BRENT, registrar
+from insumos_a import ALIQUOTA_FASE_DFP, IPCA_BCB, RECEITA_MEIO_BRENT, com_data, registrar
 from fiscal import ALIQUOTA_FASE
 from lote1_bancos import MK
 from lote3_agro import acoes, jcp
@@ -71,7 +71,7 @@ def macro():
 
 M = macro()
 for _tk in ("UGPA3", "VBBR3"):           # fase 3: procedência por campo (insumos_a); o número não muda
-    registrar(_tk, "deflator", M["deflator"], IPCA_BCB)
+    registrar(_tk, "deflator", M["deflator"], com_data(IPCA_BCB, M["mensal"].index[-1].date().isoformat()))   # N12b: mês-base
 FX_SPOT = 5.216                       # R$/US$ comercial 02/10/2026 (BCB, citado no PDF rev. 03/10 do Lote 3)
 FATOR_BARRIL = M["barril_meio"] / M["barril_ltm"]
 
@@ -101,12 +101,18 @@ def base_ep(tk):
 BASE = {tk: base_ep(tk) for tk in ("PETR4", "PRIO3", "RECV3")}
 
 
+def _o_brent(tk):
+    """N12b: a menor entre o fim do trimestre do LTM da CVM e o mês-base da série macro (Brent × PTAX × IPCA)."""
+    from relatorio.procedencia import _data_ltm
+    return com_data(RECEITA_MEIO_BRENT, _data_ltm(tk), M["mensal"].index[-1].date().isoformat())
+
+
 def receita_ep(tk):        # fase 3, fatia 3: procedência por campo (insumos_a); o número não muda
-    return registrar(tk, "receita_meio", BASE[tk][0], RECEITA_MEIO_BRENT)
+    return registrar(tk, "receita_meio", BASE[tk][0], _o_brent(tk))
 
 
 def da_ep(tk):
-    return registrar(tk, "da_receita", BASE[tk][1] / BASE[tk][0], RECEITA_MEIO_BRENT)
+    return registrar(tk, "da_receita", BASE[tk][1] / BASE[tk][0], _o_brent(tk))
 
 
 # Passivo atuarial (pensão e saúde, R$ 92,5 bi: 2.01.06.02.04 + 2.02.04.02.04 do ITR de jun/2026) NÃO entra na ponte: o custo atuarial

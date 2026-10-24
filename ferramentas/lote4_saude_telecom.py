@@ -46,8 +46,8 @@ from derivados_zip import obter
 import proventos_hall
 from pl_historico import do_hall
 from precos_hall import preco
-from insumos_a import ALIQUOTA_FASE_DFP, ACOES_ITR_JUN26, ALIQUOTA_TIMS3, G1_CVM, RECEITA_CVM, registrar
-from fiscal import ALIQUOTA_FASE, tims3_aliquota
+from insumos_a import ALIQUOTA_FASE_DFP, ACOES_ITR_JUN26, ALIQUOTA_TIMS3, G1_CVM, RECEITA_CVM, com_data, registrar
+from fiscal import ALIQUOTA_FASE, TIMS3_SUDENE, tims3_aliquota
 from lote1_bancos import EMPRESAS as LOTE1
 from lote1_bancos import MK
 from lote2_energia import pl_hist
@@ -130,7 +130,9 @@ def receita_media(tk, anos, ltm=True):
     """Média em R$ de hoje (AUD-01, 08/10/2026: era nominal, como a receita de meio padrão do motor)."""
     a, l = CVM[tk]["anual"], ltm_de(CVM[tk])
     xs = [a[y]["receita"] * DEFLATOR[y] for y in anos] + ([l["receita"] * deflator_ltm(ltm_ref_de(CVM[tk]))] if ltm else [])
-    return registrar(tk, "receita_meio", sum(xs) / len(xs), RECEITA_CVM)   # fase 3: procedência; o número não muda
+    from relatorio.procedencia import _data_ltm     # N12b: o último dado da média é o LTM (ou o último exercício)
+    data = _data_ltm(tk) if ltm else f"{max(anos)}-12-31"
+    return registrar(tk, "receita_meio", sum(xs) / len(xs), com_data(RECEITA_CVM, data))   # fase 3: procedência; o número não muda
 
 
 # ---------------------------------------------------------------- WEGE3: g do 1º estágio
@@ -152,7 +154,10 @@ def g1_sustentavel(tk, extra_data_com="2025-12-19"):
     g_nom = roe * (1 - pay)
     g1 = (1 + g_nom) / (1 + MK.pi) - 1
     if proventos_hall.origem(tk, SI) is not None:
-        g1 = registrar(tk, "g1_real", g1, G1_CVM)
+        # N12b: DFP até 2025, cache da B3 e π do mercado — vale a menor das três datas
+        from relatorio.procedencia import _iso
+        g1 = registrar(tk, "g1_real", g1, com_data(G1_CVM, f"{anos[-1]}-12-31", proventos_hall.origem_b3(tk).data,
+                                                    _iso(MK.data)))
     return g1, roe, pay
 
 
@@ -166,7 +171,7 @@ EMPRESAS = [
                # vigência não encontrada nos DFPs → prazo zero) e sem os itens pontuais (2021: Selic sobre indébito, venda da
                # I-Systems, reversão TIM Nordeste; 2022: prejuízo fiscal não reconhecido); fica o JCP (permanente). Conciliação da
                # alíquota efetiva, DFP TIM 2023–25 nota 8.d e DFP 2022 nota 35 [A]: 19,3% · 4,5% · 18,3% · 22,1% · 15,1% → 18,3%
-               aliquota=registrar("TIMS3", "aliquota", tims3_aliquota(CVM["TIMS3"]["anual"]), ALIQUOTA_TIMS3),   # fase 3, fatia 3
+               aliquota=registrar("TIMS3", "aliquota", tims3_aliquota(CVM["TIMS3"]["anual"]), com_data(ALIQUOTA_TIMS3, f"{max(TIMS3_SUDENE)}-12-31")),   # fase 3, fatia 3
                aliquota_fonte="conciliação da alíquota efetiva, DFP TIM 2023–25 nota 8.d e DFP 2022 nota 35 [A]: mediana 2021–25 sem SUDENE/SUDAM e itens pontuais",
                defasagem_fonte="JCP de set/2026 pago até 22/01/2027 (calendário declarado, PDF rev. 03/10)",
                desconto_controlador=ZERO("nenhuma interferência consumada; Poste Italiane (estatal italiana) controla a TI desde 18/09/2026 — risco "

@@ -157,4 +157,6 @@ def do_hall(tk: str, ref_acoes: float, mes_fim: int = 12) -> float | None:
     # caminho absoluto dos DFP: `pasta / caminho absoluto` é o próprio caminho → exige os dois conjuntos
     entradas = [f"precos_{a}.parquet" for a in ANOS] + [str(DFP / f"dfp_{a}.zip") for a in ANOS_LPA]
     v = derivados_zip.obter(f"pl_hist.{tk}", entradas, calcular, pasta=COTAHIST)
-    return insumos_a.registrar(tk, "pl_hist", v, insumos_a.PL_HIST_CVM) if v is not None else None
+    # N12b: a data é o fim do último exercício da série lida (DFP e fechamento do COTAHIST no mesmo dia)
+    o = insumos_a.com_data(insumos_a.PL_HIST_CVM, fim_do_exercicio(max(CVM[tk]["anual"]), mes_fim) if CVM[tk]["anual"] else "")
+    return insumos_a.registrar(tk, "pl_hist", v, o) if v is not None else None
