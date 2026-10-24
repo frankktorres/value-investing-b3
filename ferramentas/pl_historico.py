@@ -152,11 +152,21 @@ def do_hall(tk: str, ref_acoes: float, mes_fim: int = 12) -> float | None:
     if (CVM[tk].get("acoes_por_unit") or 1) != 1:
         raise ValueError(f"{tk}: P/L histórico em units não suportado")
 
+    lidos = []                          # N12b: fins de exercício com fechamento lido; só existem se a conta rodou agora
+
+    def fechamento(t, fim):
+        f = fechamento_ate(t, fim)
+        if f:
+            lidos.append(fim)
+        return f
+
     def calcular():
-        return mediana(tk, CVM[tk]["anual"], proventos_hall.eventos(tk), escala_por_referencia(ref_acoes), mes_fim)
+        return mediana(tk, CVM[tk]["anual"], proventos_hall.eventos(tk), escala_por_referencia(ref_acoes), mes_fim,
+                       fechamento=fechamento)
     # caminho absoluto dos DFP: `pasta / caminho absoluto` é o próprio caminho → exige os dois conjuntos
     entradas = [f"precos_{a}.parquet" for a in ANOS] + [str(DFP / f"dfp_{a}.zip") for a in ANOS_LPA]
     v = derivados_zip.obter(f"pl_hist.{tk}", entradas, calcular, pasta=COTAHIST)
-    # N12b: a data é o fim do último exercício da série lida (DFP e fechamento do COTAHIST no mesmo dia)
-    o = insumos_a.com_data(insumos_a.PL_HIST_CVM, fim_do_exercicio(max(CVM[tk]["anual"]), mes_fim) if CVM[tk]["anual"] else "")
+    # N12b: a data é o fim do último exercício lido (DFP e fechamento do COTAHIST no mesmo dia). Valor vindo do snapshot
+    # (`derivados_zip`, sem o COTAHIST) não diz o ano que contém → sem data (o revisor de 24/10: a série pode ter ano novo)
+    o = insumos_a.com_data(insumos_a.PL_HIST_CVM, max(lidos) if lidos else "")
     return insumos_a.registrar(tk, "pl_hist", v, o) if v is not None else None

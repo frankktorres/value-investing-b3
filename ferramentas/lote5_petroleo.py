@@ -36,6 +36,9 @@ MACRO = AQUI / "dados" / "macro"
 QUAL = lambda moat, gestao, controlador, ciclo, fisher: dict(moat=moat, gestao=gestao, controlador=controlador, ciclo=ciclo, fisher=fisher)
 
 
+JANELA_12M = ("2025-07", "2026-06")      # meses do preço "dos 12m" (fator de meio de ciclo); o fim entra na data da fonte (N12b)
+
+
 def macro():
     b = pd.read_csv(MACRO / "brent_fred.csv")
     b.columns = ["d", "v"]
@@ -59,7 +62,7 @@ def macro():
     df["fx_real"] = df["rs_real"] / df["us_real"]
     anual = df.groupby(df.index.year).mean()
     d10 = anual.loc[2016:2025]
-    ltm = df.loc["2025-07":"2026-06"]
+    ltm = df.loc[JANELA_12M[0]:JANELA_12M[1]]
     return dict(
         anual=anual, mensal=df, base=df.index[-1].strftime("%m/%Y"),
         barril_meio=d10["rs_real"].mean(), brent_meio_real=d10["us_real"].mean(), fx_meio_real=d10["fx_real"].mean(),
@@ -102,9 +105,11 @@ BASE = {tk: base_ep(tk) for tk in ("PETR4", "PRIO3", "RECV3")}
 
 
 def _o_brent(tk):
-    """N12b: a menor entre o fim do trimestre do LTM da CVM e o mês-base da série macro (Brent × PTAX × IPCA)."""
+    """N12b: a menor entre o fim do trimestre do LTM da CVM, o fim da janela de 12 meses do Brent e o mês-base da série macro."""
     from relatorio.procedencia import _data_ltm
-    return com_data(RECEITA_MEIO_BRENT, _data_ltm(tk), M["mensal"].index[-1].date().isoformat())
+    from pl_historico import fim_do_exercicio
+    fim_janela = fim_do_exercicio(JANELA_12M[1][:4], int(JANELA_12M[1][5:]))
+    return com_data(RECEITA_MEIO_BRENT, _data_ltm(tk), fim_janela, M["mensal"].index[-1].date().isoformat())
 
 
 def receita_ep(tk):        # fase 3, fatia 3: procedência por campo (insumos_a); o número não muda

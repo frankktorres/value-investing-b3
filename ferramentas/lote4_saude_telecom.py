@@ -130,9 +130,12 @@ def receita_media(tk, anos, ltm=True):
     """Média em R$ de hoje (AUD-01, 08/10/2026: era nominal, como a receita de meio padrão do motor)."""
     a, l = CVM[tk]["anual"], ltm_de(CVM[tk])
     xs = [a[y]["receita"] * DEFLATOR[y] for y in anos] + ([l["receita"] * deflator_ltm(ltm_ref_de(CVM[tk]))] if ltm else [])
-    from relatorio.procedencia import _data_ltm     # N12b: o último dado da média é o LTM (ou o último exercício)
+    import inflacao
+    from relatorio.procedencia import _data_ltm     # N12b: o último dado da média é o LTM (ou o último exercício) e o IPCA da base
     data = _data_ltm(tk) if ltm else f"{max(anos)}-12-31"
-    return registrar(tk, "receita_meio", sum(xs) / len(xs), com_data(RECEITA_CVM, data))   # fase 3: procedência; o número não muda
+    base = inflacao.DATA_BASE                         # "MM/AAAA" → 1º dia do mês, como a série do BCB
+    o = com_data(RECEITA_CVM, data, f"{base[3:]}-{base[:2]}-01")
+    return registrar(tk, "receita_meio", sum(xs) / len(xs), o)   # fase 3: procedência; o número não muda
 
 
 # ---------------------------------------------------------------- WEGE3: g do 1º estágio

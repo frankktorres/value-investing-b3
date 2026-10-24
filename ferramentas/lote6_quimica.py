@@ -62,6 +62,9 @@ def _base():
     return ptax, ipca
 
 
+JANELA_12M = ("2025-07", "2026-06")      # meses do preço "dos 12m"; o fim entra na data da fonte (N12b)
+
+
 def indice(pesos, a0=2016, a1=2025):
     """Índice de preço em R$ (índice US$ × PTAX), média a0–a1 = 100 em R$ de hoje. Retorna meio, 12m e fator de meio de ciclo.
     A janela do preço é a mesma da margem (UNIP6: 2017–25; a série de soda também não tem jan–set/2016)."""
@@ -77,17 +80,19 @@ def indice(pesos, a0=2016, a1=2025):
     df["real"] = df["rs"] * base_i / df["ipca"]
     anual = df.groupby(df.index.year).mean()
     meio = anual.loc[a0:a1, "real"].mean()
-    ltm = df.loc["2025-07":"2026-06", "rs"].mean()
-    ltm_real = df.loc["2025-07":"2026-06", "real"].mean()
+    ltm = df.loc[JANELA_12M[0]:JANELA_12M[1], "rs"].mean()
+    ltm_real = df.loc[JANELA_12M[0]:JANELA_12M[1], "real"].mean()
     k = 100 / meio                      # reescala: meio de ciclo = 100
     return dict(anual=anual * k, meio=100.0, ltm=ltm * k, ltm_real=ltm_real * k, fator=meio / ltm, janela=f"{a0}–{a1 - 2000:02d}", ultimo=(df.index[-1].strftime("%m/%Y"), df["rs"].iloc[-1] * k),
                 base=df.index[-1].strftime("%m/%Y"), base_data=df.index[-1].date().isoformat(), idx_usd=anual["idx"])
 
 
 def _o_indice(o, tk, ind):
-    """N12b: a menor entre o fim do trimestre do LTM da CVM e o mês-base do índice (PPI × PTAX × IPCA)."""
+    """N12b: a menor entre o fim do trimestre do LTM da CVM, o fim da janela de 12 meses do índice e o mês-base (PPI × PTAX × IPCA)."""
     from relatorio.procedencia import _data_ltm
-    return com_data(o, _data_ltm(tk), ind["base_data"])
+    from pl_historico import fim_do_exercicio
+    fim_janela = fim_do_exercicio(JANELA_12M[1][:4], int(JANELA_12M[1][5:]))
+    return com_data(o, _data_ltm(tk), fim_janela, ind["base_data"])
 
 
 ACO = indice({"WPU1017": 1.0})

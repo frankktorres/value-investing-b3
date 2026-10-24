@@ -94,24 +94,45 @@ def test_com_data_vale_a_menor_e_nao_chuta():
 
 
 def test_datas_registradas_nos_lotes():
-    """O valor que a empresa carrega é o registrado, e a origem registrada leva a data (contrato exportado: 155 → 173 de 342)."""
+    """O valor que a empresa carrega é o registrado, e a origem registrada leva a data (literais medidos em 24/10)."""
     import insumos_a
     import lote3_agro as l3
     import lote4_saude_telecom as l4
     import lote5_petroleo as l5
     import lote6_quimica as l6
-    from motor_nao_financeiras import CVM
     emp = {e.ticker: e for e in l3.EMPRESAS + l4.EMPRESAS + l5.EMPRESAS + l6.EMPRESAS if hasattr(e, "g1_real")}
-    base = l5.M["mensal"].index[-1].date().isoformat()
-    assert insumos_a.origem("UGPA3", "deflator", emp["UGPA3"].deflator).data == base
+    o = lambda tk, campo: insumos_a.origem(tk, campo, getattr(emp[tk], campo))
+    for tk in ("UGPA3", "VBBR3"):
+        assert o(tk, "deflator").data == l5.M["mensal"].index[-1].date().isoformat() == "2026-08-01", tk
     for tk in ("PETR4", "PRIO3", "RECV3"):
-        assert insumos_a.origem(tk, "receita_meio", emp[tk].receita_meio).data == min(pr._data_ltm(tk), base), tk
-    assert insumos_a.origem("GGBR4", "receita_meio", emp["GGBR4"].receita_meio).data == min(pr._data_ltm("GGBR4"),
-                                                                                              l6.ACO["base_data"])
-    assert insumos_a.origem("TIMS3", "aliquota", emp["TIMS3"].aliquota).data == "2025-12-31"
-    assert insumos_a.origem("FLRY3", "receita_meio", emp["FLRY3"].receita_meio).data == pr._data_ltm("FLRY3")
-    o = insumos_a.origem("WEGE3", "g1_real", emp["WEGE3"].g1_real)
-    if o is not None:                                   # só registrado quando o DPA é o da B3
-        assert o.data and o.data <= "2025-12-31"
-    assert insumos_a.origem("SMTO3", "pl_hist", emp["SMTO3"].pl_hist).data == f"{max(CVM['SMTO3']['anual'])}-03-31"   # exercício em março
-    assert insumos_a.origem("ABEV3", "pl_hist", emp["ABEV3"].pl_hist).data == f"{max(CVM['ABEV3']['anual'])}-12-31"
+        assert o(tk, "receita_meio").data == o(tk, "da_receita").data == "2026-06-30", tk
+    for tk in ("GGBR4", "UNIP6"):
+        assert o(tk, "receita_meio").data == "2026-06-30", tk
+    assert o("TIMS3", "aliquota").data == "2025-12-31"
+    assert o("FLRY3", "receita_meio").data == "2026-06-30"
+    assert o("WEGE3", "g1_real").data == "2025-12-31"
+
+
+def test_brent_e_indices_nao_dizem_mais_recente_que_a_janela_de_12m(monkeypatch):
+    """Revisor 24/10: com a CVM no 3T26 e a janela de preço ainda em jun/2026, a data fica em jun/2026."""
+    import lote5_petroleo as l5
+    import lote6_quimica as l6
+    monkeypatch.setattr(pr, "_data_ltm", lambda tk: "2026-09-30")
+    assert l5._o_brent("PETR4").data == "2026-06-30"
+    assert l6._o_indice(l6.RECEITA_MEIO_ACO, "GGBR4", l6.ACO).data == "2026-06-30"
+
+
+def test_pl_historico_so_tem_data_se_a_conta_rodou(monkeypatch):
+    """Do snapshot (sem COTAHIST) não se sabe o ano contido → sem data; com a conta rodando, o último fim de exercício lido."""
+    import derivados_zip
+    import insumos_a
+    import pl_historico as ph
+    from motor_nao_financeiras import CVM
+    monkeypatch.setattr(insumos_a, "_REG", dict(insumos_a._REG))       # o registro falso não vaza para os outros testes
+    monkeypatch.setattr(derivados_zip, "obter", lambda chave, zips, calcular, pasta=None: 20.0)
+    ph.do_hall("ABEV3", 1.0)
+    assert insumos_a.origem("ABEV3", "pl_hist", 20.0).data == ""
+    monkeypatch.setattr(derivados_zip, "obter", lambda chave, zips, calcular, pasta=None: calcular())
+    monkeypatch.setattr(ph, "fechamento_ate", lambda tk, fim: (fim, 10.0) if "2020" <= fim <= "2024-12-31" else None)
+    v = ph.do_hall("ABEV3", CVM["ABEV3"]["anual"]["2024"]["acoes"])
+    assert v is not None and insumos_a.origem("ABEV3", "pl_hist", v).data == "2024-12-31"
