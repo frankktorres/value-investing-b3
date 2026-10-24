@@ -22,9 +22,12 @@ MK = mercado.vigente()
 
 @pytest.fixture(scope="module")
 def banco():
-    return next(e for e in S.empresas().values()
-                if isinstance(e, F.Financeira) and not e.horizonte_finito and e.sotp is None and e.roe_lp > 0
-                and e.desconto_controlador["tipo"] == "zero" and not e.fora_circulo)
+    e = next((e for e in S.empresas().values()
+              if isinstance(e, F.Financeira) and not e.horizonte_finito and e.sotp is None and e.roe_lp > 0
+              and e.desconto_controlador["tipo"] == "zero" and not e.fora_circulo), None)
+    if e is None:
+        pytest.skip("nenhum banco do hall serve de base (sem desconto, dentro do círculo, ROE > 0)")
+    return e
 
 
 CENARIOS = {"tipo": "cenarios", "delta_roe": 0.03, "peso": 0.3, "razao": "teste"}
@@ -121,9 +124,9 @@ def test_entrada_parcial_arredonda_o_pc_em_9_casas():
 
 
 # ------------------------------------------------------------------ itens 18 a 20: não financeiras
-# No Ke da própria empresa quase nenhuma industrial tem ROIC > WACC (trava de Greenwald: g positivo vale zero e o DCF fica
-# plano; g implícito "n.a." em 19 de 21 em 24/10). A B3SA3 cria valor (ROIC 24,6% × WACC 18,1%): o preço é montado a partir
-# do próprio DCF para a busca ter resposta conhecida.
+# No Ke da própria empresa o DCF fica plano para g ≥ 0 em 19 de 21 industriais (ROIC < WACC: a trava de Greenwald zera o g
+# positivo; em 24/10). A B3SA3 cria valor (ROIC 24,6% × WACC 18,1%): o preço é montado a partir do próprio DCF para a busca ter
+# resposta conhecida.
 def _emp(tk):
     import universo
     return next(e for _, emps, _ in universo.GRUPOS for e in emps if e.ticker == tk), universo.MK
