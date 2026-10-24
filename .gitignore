@@ -39,3 +39,4 @@ ferramentas/monitor/*.log
 analisador/
 # Cópia datada do ZIP da CVM anterior à reescrita (temporada.baixar_itr); ver ferramentas/manifesto_cvm.py
 ferramentas/dados/cvm/_antes/
+mutants/

@@ -1,0 +1,2 @@
+# Ferramentas de desenvolvimento (não entram na tela). Oráculo, Fase 4: teste de mutação dos motores — só Linux/WSL.
+mutmut==3.8.0

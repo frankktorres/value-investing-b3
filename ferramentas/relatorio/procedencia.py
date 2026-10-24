@@ -132,24 +132,61 @@ def _mercado(c: dict) -> Origem:
     d = mercado_hall.dados()
     if c["mk"].data in (d["data"], "/".join(reversed(d["data"].split("-")))):
         return Origem("Tesouro + ANBIMA", "A", f"rf: {d['rf_titulo']}, {d['rf_tipo']}; π: {d['pi_tipo']} — {d['data']} "
-                      "(mercado_vigente.json)")
-    return Origem("Tesouro + ANBIMA", "A", f"rf: Tesouro Transparente; π: ETTJ ANBIMA — dados/mercado_{c['mk'].data}.json")
+                      "(mercado_vigente.json)", data=_iso(d["data"]))
+    return Origem("Tesouro + ANBIMA", "A", f"rf: Tesouro Transparente; π: ETTJ ANBIMA — dados/mercado_{c['mk'].data}.json",
+                  data=_iso(c["mk"].data))
+
+
+def _ja_ex(tk: str) -> Origem:
+    """B3_JA_EX com a data do mesmo cache da B3 que `proventos_ex.ajuste_b3` lê (dados/proventos_hall/<TK>.json, N12b)."""
+    import proventos_hall
+    return dataclasses.replace(B3_JA_EX, data=proventos_hall.origem_b3(tk).data)
+
+
+def _iso(data: str | None) -> str:
+    """AAAA-MM-DD a partir de AAAA-MM-DD ou DD/MM/AAAA, só se for uma data de calendário; outro formato → "" (não se chuta)."""
+    from datetime import date
+    data = (data or "").strip()
+    if len(data) == 10 and data[2] == "/" and data[5] == "/":
+        data = f"{data[6:]}-{data[3:5]}-{data[:2]}"
+    try:
+        return date.fromisoformat(data).isoformat() if len(data) == 10 else ""
+    except ValueError:
+        return ""
+
+
+def _data_ltm(tk: str) -> str:
+    """Fim do trimestre do LTM que o motor lê (`ltm_ref` da série CVM: "2T26" → 2026-06-30; trimestre civil, a mesma leitura
+    de `proventos_ja_ex`). Só com o trimestre declarado na série (`ltm_ref` ou a chave `ltm_<ref>`), nunca pelo padrão "2T26"
+    de `ltm_ref_de`; ticker sem série carregada → "" (N12)."""
+    import calendar
+    from motor_nao_financeiras import CVM
+    reg = CVM.get(tk) or {}
+    ref = reg.get("ltm_ref") or next((k[4:] for k in reg if k.startswith("ltm_") and k != "ltm_ref"), "")
+    try:
+        tri, ano = int(ref[0]), 2000 + int(ref[2:])
+    except (ValueError, IndexError):
+        return ""
+    if not 1 <= tri <= 4 or ref[1] != "T":
+        return ""
+    return f"{ano}-{3 * tri:02d}-{calendar.monthrange(ano, 3 * tri)[1]}"
 
 
 def tabela(c: dict) -> dict[str, Origem]:
     """{campo: Origem} do caso. Campos: serie, acoes, preco, proventos, defasagem, pl_hist, mercado e os escalares das
     financeiras (vpa, roe_lp, roe_inicio, payout, dpa_medio_5a, horizonte_finito, sotp)."""
     emp, data = c["empresa"], c["data"]
-    t = {"preco": Origem("COTAHIST", "A", f"B3, COTAHIST, fechamento (PREULT) de {data}"), "mercado": _mercado(c)}
+    t = {"preco": Origem("COTAHIST", "A", f"B3, COTAHIST, fechamento (PREULT) de {data}", data=_iso(data)), "mercado": _mercado(c)}
+    ltm = _data_ltm(emp.ticker)
     if c["dossie"] is not None:
         import proventos_hall          # o dossiê lê o DPA com as regras do coletor do hall (fatia 2b)
         anos = c["dossie"]["anos"]
-        serie = Origem("CVM DFP/ITR", "A", f"CVM, DFP {anos[0]}–{anos[-1]} + ITR de 2026 (LTM), dados abertos")
+        serie = Origem("CVM DFP/ITR", "A", f"CVM, DFP {anos[0]}–{anos[-1]} + ITR de 2026 (LTM), dados abertos", data=ltm)
         t |= {"serie": serie,
-              "acoes": Origem("CVM ITR (ações)", "A", "CVM, composição do capital do ITR (sem tesouraria)"),
-              "proventos": proventos_hall.ORIGEM_B3,
+              "acoes": Origem("CVM ITR (ações)", "A", "CVM, composição do capital do ITR (sem tesouraria)", data=ltm),
+              "proventos": proventos_hall.origem_b3(emp.ticker),
               "pl_hist": Origem("CVM + COTAHIST", "A", "P/L histórico: lucro e ações do DFP (CVM) × fechamento do ano (B3)"),
-              "proventos_ja_ex": B3_JA_EX, "dados_lote": _insumos_dossie(emp.ticker, serie), "kd": kd(emp)}
+              "proventos_ja_ex": _ja_ex(emp.ticker), "dados_lote": _insumos_dossie(emp.ticker, serie), "kd": kd(emp)}
     elif c["financeira"]:
         t |= {k: C_LOTE for k in ("vpa", "roe_lp", "roe_inicio", "payout", "dpa_medio_5a", "pl_hist")}
         t["proventos"] = t["dpa_medio_5a"]
@@ -161,12 +198,12 @@ def tabela(c: dict) -> dict[str, Origem]:
                                "por campo")
     else:
         import insumos_a
-        serie = Origem("CVM DFP/ITR", "A", "CVM, DFP 2016–25 + ITR de 2026 (LTM), dados abertos")
+        serie = Origem("CVM DFP/ITR", "A", "CVM, DFP 2016–25 + ITR de 2026 (LTM), dados abertos", data=ltm)
         t |= {"serie": serie, "acoes": insumos_a.origem(emp.ticker, "acoes", emp.n_acoes) or C_LOTE,
               "preco": insumos_a.origem(emp.ticker, "preco", emp.preco) or Origem(
                   "lote (digitado): preco", "C", "preço digitado no lote, não lido do snapshot do COTAHIST (precos_hall.preco)"),
               "proventos": proventos_nf(emp), "pl_hist": insumos_a.origem(emp.ticker, "pl_hist", emp.pl_hist) or C_LOTE,
-              "proventos_ja_ex": B3_JA_EX, "dados_lote": dados_ancora(emp, serie), "kd": kd(emp)}
+              "proventos_ja_ex": _ja_ex(emp.ticker), "dados_lote": dados_ancora(emp, serie), "kd": kd(emp)}
     if emp.defasagem_meses is not None and emp.defasagem_fonte.strip():
         t["defasagem"] = Origem("defasagem declarada", "C", f"declarada na ficha: {emp.defasagem_fonte}")
     else:

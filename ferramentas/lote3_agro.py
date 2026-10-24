@@ -6,6 +6,7 @@ nota A — fase 3, fatia 2). P/L histórico: CVM + COTAHIST (`pl_historico.do_ha
 P/L histórico só entra no Bogle quando o lucro não é dominado por câmbio/ciclo (B3SA3, SMTO3, SLCE3); nas demais o Bogle
 vai sem re-rating — declarado.
 """
+import calendar
 import sys
 
 from lote1_bancos import MK
@@ -14,7 +15,7 @@ from pl_historico import do_hall
 from precos_hall import preco
 from insumos_a import ACOES_DFP, NAV_SLCE3, registrar
 from motor_financeiras import SEM_RAZAO
-from motor_nao_financeiras import CVM, SI, Industrial, avaliar
+from motor_nao_financeiras import CVM, FIM_EXERCICIO, SI, Industrial, avaliar
 
 QUAL = lambda moat, gestao, controlador, ciclo, fisher: dict(moat=moat, gestao=gestao, controlador=controlador, ciclo=ciclo, fisher=fisher)
 
@@ -37,7 +38,9 @@ def acoes(tk):
     if n < 1e7:          # alguns formulários da CVM informam a quantidade em milhares
         n *= 1000
     unit = CVM[tk]["acoes_por_unit"]
-    return registrar(tk, "acoes", n / unit, ACOES_DFP(ano, unit))   # fase 3: procedência por campo; o número não muda
+    fim = FIM_EXERCICIO.get(tk, 12)                          # N12: a data do DFP é o fim do exercício (SMTO3: março)
+    data = f"{ano}-{fim:02d}-{calendar.monthrange(int(ano), fim)[1]}"
+    return registrar(tk, "acoes", n / unit, ACOES_DFP(ano, unit, data))   # fase 3: procedência por campo; o número não muda
 
 
 # Preços = fechamento oficial (PREULT do COTAHIST) de 02/10/2026, lido do snapshot por precos_hall.preco (fase 3, fatia 3; AUD-67).

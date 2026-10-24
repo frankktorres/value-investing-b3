@@ -1056,3 +1056,22 @@ Nenhuma ordem de compra ou venda decorre desta entrada.
 Revisor (opus) do O3b: aprovado; a janela `op["anos"]` é a que as âncoras leem. Ressalva registrada: para D&A a regra é mais rígida que o motor (o OE já descarta o ano sem D&A;
 o zero calado de D&A anual só existe no ramo E&P) — ano sem D&A vira NÃO CONCLUSIVO mesmo sem ter sido lido como zero; hoje não atinge ninguém e erra para o lado conservador.
 Testes: motivo conferido antes do retorno e negativos (ano fora da janela; 0 informado vale).
+
+## 23/10/2026 — N12: data de cada fonte de verdade no produto (nenhuma palavra, central ou golden mudou — na nuvem; o conferidor da manhã confirma)
+`Origem.data` passa a ser preenchida onde um arquivo do repo a declara: COTAHIST = pregão do caso (`procedencia._iso`); CVM DFP/ITR = fim do trimestre do LTM
+(`ltm_ref` → `_data_ltm`); ações do DFP (lote3) = fim do exercício (SMTO3 em março); proventos da B3 = `baixado_em` do cache (`proventos_hall.origem_b3`,
+também no registro de `insumos_a`); FRE = DT_REFER do formulário (`dossie/fre._fonte`); mercado = data do arquivo de rf/π. Sem data declarada continua "".
+Medido no contrato exportado na nuvem (39 empresas; os 8 dossiês não exportam sem os dados locais): **27 → 136 de 341 fontes com data**. Sem data por não ter
+data declarada: julgamento/notas, StatusInvest, digitado no lote, Kd sintético, Damodaran (só "jan/2026"), B3 já ex, P/L histórico, IPCA, EIA/BLS → BACKLOG N12b.
+Testes: `tests/test_n12_data_das_fontes.py` (12). Só procedência: nenhum número do motor lê `Origem`.
+
+## 23/10/2026 — O5: motor-sombra FCFF/FCFE e DDM (só relatório; nenhuma palavra, central ou golden mudou)
+`oraculo/sombra.py` (sem importar os motores; teste AST garante) + `oraculo/sombra_rodar.py`. Tolerância |Δcentral| ≤ 2% (PRE-REGISTRO §3, linha 15 do §6).
+Resultado (`docs/oraculo/sombra-2026-10-23.md`): 38 comparadas, 36 iguais (< 0,01%), HYPE3 −13,8% e PRIO3 −12,9% explicadas pelo crédito fiscal com prazo
+(com o crédito zerado no motor, motor e sombra batem: 14,35 e 41,39; efeito do crédito no central 1,88 e 4,89). Limite: WACC/Ke, OE e margens entram prontos do motor — a sombra confere a composição, não o ponto fixo nem a normalização.
+Revisor (opus): independência só parcial (mesma especificação; pega encanamento, não doutrina) — declarada no `sombra.py`; testes ampliados (2 estágios, piso, trava, freio, cenários).
+
+## 23/10/2026 — O4: teste de mutação dos motores (só relatório; nenhum código de motor mudou)
+mutmut 3.8.0 na nuvem Linux, 90 min: 936 de 5.504 mutantes rodados, 908 com teste (parcial). Nota só nos testados: financeiras 0,80 (598 × 150), não financeiras 0,74
+(118 × 42; as funções pesadas não chegaram a rodar). Os 20 sobreviventes que tocam Ke, g, central ou palavra em `docs/oraculo/mutacao-2026-10-23.md`; lacunas reais
+(ex.: financeira com dispersão > 3× ou âncora ≤ 0 → NÃO CONCLUSIVO sem teste) → BACKLOG O4b. Decisão (mutmut × cosmic-ray) em `DECISOES.md`.

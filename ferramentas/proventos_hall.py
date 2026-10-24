@@ -31,6 +31,7 @@ import pathlib
 import sys
 import time
 from collections import defaultdict
+from dataclasses import replace
 from datetime import date
 
 import insumos_a
@@ -174,6 +175,17 @@ JANELA_DUPLICADO = 45        # dias: o mesmo evento nas duas fontes com data-com
 ORIGEM_B3 = Origem("B3 proventos", "A", "B3, proventos em dinheiro por data-com (API pública GetListedCashDividends, "
                    "cache dados/proventos_hall/) na classe do ticker, ajustados pelos eventos em ações (suplemento da B3 + "
                    "FRE da CVM) — proventos_hall.py")
+
+
+
+def origem_b3(tk: str) -> Origem:
+    """ORIGEM_B3 com a data em que o cache da B3 do ticker foi baixado (`baixado_em` de dados/proventos_hall/<TK>.json, N12);
+    sem o arquivo ou sem o campo, sem data (não se chuta)."""
+    try:
+        data = json.loads((PASTA / f"{tk}.json").read_text(encoding="utf-8")).get("baixado_em") or ""
+    except (OSError, ValueError):
+        data = ""
+    return replace(ORIGEM_B3, data=data if isinstance(data, str) else "")
 
 
 # ---------------------------------------------------------------- eventos em ações
@@ -370,8 +382,8 @@ def aplicar(si: dict, tks=NF_HALL, data_preco: str | None = None) -> None:
         s.setdefault("dpa_statusinvest", dict(s["dpa_por_ano_datacom"]))
         s.setdefault("jcp_statusinvest", dict(s.get("jcp_por_ano_datacom") or {}))
         dpa, jcp = dpa_jcp(tk, data_preco)
-        s["dpa_por_ano_datacom"] = insumos_a.registrar(tk, "dpa_por_ano_datacom", dpa, ORIGEM_B3)
-        s["jcp_por_ano_datacom"] = insumos_a.registrar(tk, "jcp_por_ano_datacom", jcp, ORIGEM_B3)
+        s["dpa_por_ano_datacom"] = insumos_a.registrar(tk, "dpa_por_ano_datacom", dpa, origem_b3(tk))
+        s["jcp_por_ano_datacom"] = insumos_a.registrar(tk, "jcp_por_ano_datacom", jcp, origem_b3(tk))
 
 
 def origem(tk: str, si: dict) -> Origem | None:

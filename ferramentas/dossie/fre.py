@@ -179,7 +179,7 @@ def _linhas(cnpj, ano, tabela, pasta):
 
 def _fonte(doc, ano, tabela):
     return {"arquivo": f"fre_{ano}.zip", "tabela": tabela, "versao": doc["versao"],
-            "id_doc": doc["id_doc"], "link": doc["link"]}
+            "id_doc": doc["id_doc"], "link": doc["link"], "dt_refer": doc.get("dt_refer", "")}
 
 
 def _pacote(cnpj, ano, tabela, pasta, f):

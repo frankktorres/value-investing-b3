@@ -95,7 +95,7 @@ def test_aplicar_registra_e_e_idempotente():
     ph.aplicar(MN.SI)
     assert {tk: MN.SI[tk] for tk in ph.NF_HALL} == antes
     for tk in ph.NF_HALL:
-        assert ph.origem(tk, MN.SI) is ph.ORIGEM_B3
+        assert ph.origem(tk, MN.SI) == ph.origem_b3(tk)          # N12: ORIGEM_B3 + a data do cache
 
 
 def test_procedencia_proventos_B3_so_com_o_valor_registrado():

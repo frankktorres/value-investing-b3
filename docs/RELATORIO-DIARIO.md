@@ -1,6 +1,15 @@
 # RELATORIO-DIARIO
 *Uma entrada por dia/turno, a mais nova em cima: o que foi feito (com commit), decisões tomadas, o que ficou, erros. Máx. 10 linhas por entrada.*
 
+## 23/10/2026 — noite (O3, N12, O4, O5 + backlog N13, B16, O3b, N12b, O4b)
+- **Fiz:** O3 H10+A1 (+parte do O3b) no ramo `claude/fase3-bugs` (parcial: 4 testes da PETR4 vermelhos de propósito, golden não regravado; parecer do oráculo RESSALVA); N12 data das fontes 27 → 155 de 341 no contrato; O5 motor-sombra 36/38 iguais (HYPE3/PRIO3 = crédito fiscal); O4 mutmut parcial (936 de 5.504; nota 0,80 fin / 0,74 não fin); N13; B16 (Res. CVM 19/20 lidas); O4b/N12b/O3b em parte. Suíte da sessão 1047 passed, 44 skipped (na nuvem, sem os testes de dados; o conferidor da manhã confirma).
+- **Auditoria:** 7 confirmados, 0 rebaixados (O3 e O4 confirmados como parciais).
+- **Descobri:** só a PETR4 muda com o A1 (central 53,48 → 52,87, JUSTA igual); EBIT ausente já falha alto; financeira com dispersão > 3× não tinha teste (O4b).
+- **Ressalvas do revisor:** oráculo O3 → PENDENTE #12 e BACKLOG O3b; N12 (LTM declarado, `_iso`) e O5 (crédito conferido no central) corrigidas na hora; O4 números corrigidos; resto em N12b/O4b.
+- **Rede bloqueada:** `www.gov.br` (curl 56); `sistemaswebb3-listados.b3.com.br` 403; Tesouro 429. CVM e BCB abertos.
+- **Precisa de você:** PENDENTE #11 (rodar `rodar_tudo.py --motivo "Fase 3: H10 e A1"` e dar ok ao `claude/fase3-bugs`) e #12 (4 perguntas de doutrina); ao juntar os dois ramos, o fim do `09` e o §6 do PRE-REGISTRO conflitam (os dois acrescentam linhas: manter as duas); olhar na tela a coluna "data" das fontes.
+- **Ramo:** `claude/keen-babbage-vf5kor` (N12, O4, O5, backlog) e `claude/fase3-bugs` (O3, espera o Frank).
+
 ## 22/10/2026 — manhã (conferência da rodada da noite, sessão do Frank)
 - Conferi a rodada com os dados locais: 1.004 passed. A única falha era a tela exportada antes da N3 (regerada: verde). Nenhuma palavra mudou; agora está provado. Junção no master: f28a76d.
 - Falhas da rodada: (1) gravou em `claude/*` e não no master, porque a nuvem só faz push nesse ramo; (2) a "data da fonte" da N3 só existe em 27 de 466 fontes → N12; (3) parou com 27 min de sessão e pulou o foco do dia (o prompt limitava a 2 itens do backlog); (4) a rede bloqueia a B3 (proxy 403) e o `conteudo.cvm.gov.br` (DNS).

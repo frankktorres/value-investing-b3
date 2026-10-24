@@ -55,9 +55,9 @@ def origem(tk: str, campo: str, usado) -> Origem | None:
         return None
 
 
-ACOES_DFP = lambda ano, unit: Origem(
+ACOES_DFP = lambda ano, unit, data="": Origem(
     "CVM (ações)", "A", f"CVM, composição do capital do DFP {ano}, sem tesouraria"
-    + (f"; em units ({unit:g} ações por unit)" if unit and unit != 1 else "") + " (lote3_agro.acoes)")
+    + (f"; em units ({unit:g} ações por unit)" if unit and unit != 1 else "") + " (lote3_agro.acoes)", data=data)
 IPCA_BCB = Origem("BCB (IPCA)", "A", "BCB, SGS 433 (IPCA mensal, dados/macro/ipca_mensal.json, coletar_macro.py): deflator "
                   "anual até a data-base")
 RECEITA_CVM = Origem("CVM DFP/ITR", "A", "CVM, receita líquida do DFP/ITR (LTM) em R$ de hoje (IPCA, BCB): média dos "

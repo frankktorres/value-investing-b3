@@ -56,7 +56,7 @@ def _cadastro(c: dict) -> tuple[str | None, str | None]:
 def _o_fre(pacote: dict | None, tabela: str) -> Origem:
     f = (pacote or {}).get("fonte") or {}
     return Origem(f"CVM FRE {ANO_FRE}", "A", f"CVM, FRE {ANO_FRE} (id_doc {f.get('id_doc', '?')}, versão {f.get('versao', '?')}), "
-                  f"tabela {tabela}, dados abertos")
+                  f"tabela {tabela}, dados abertos", data=pr._iso(f.get("dt_refer")))   # N12: DT_REFER do formulário
 
 
 def _o_ins(c: dict, *chaves: str) -> Origem:
@@ -359,7 +359,7 @@ def secao_dividendos(c: dict) -> Secao:
     dpa, jcp, motivo = _proventos(c)
     ano_corrente = c["data"][:4]
     import proventos_hall
-    o_b3 = (proventos_hall.ORIGEM_B3 if _regra_do_hall(c) else
+    o_b3 = (proventos_hall.origem_b3(c["tk"]) if _regra_do_hall(c) else
             Origem("B3 proventos", "A", "B3, proventos em dinheiro por data-com (API pública), R$ por ação de hoje na classe "
                    "do ticker (regra anterior à fase 3: linha igual conta uma vez)"))
     if dpa:

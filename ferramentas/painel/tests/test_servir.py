@@ -3,6 +3,8 @@ sem sair da pasta web/."""
 import http.client
 import threading
 
+import os
+
 import pytest
 
 from painel import servir
@@ -92,3 +94,24 @@ def test_servir_porta_em_uso_sai_com_mensagem(srv, capsys):
         servir.servir(srv.server_address[1], abrir=False)
     assert e.value.code == 1
     assert "em uso" in capsys.readouterr().err
+
+
+@pytest.mark.skipif(os.name == "nt", reason="TIME_WAIT/SO_REUSEADDR: semântica POSIX (N13)")
+def test_reabrir_logo_depois_de_fechar_com_conexao_atendida(tmp_path):
+    """N13: depois de atender uma conexão o servidor fica em TIME_WAIT; reabrir na mesma porta não pode dar "Address in use"."""
+    import threading
+    import urllib.error
+    import urllib.request
+    (tmp_path / "index.html").write_text("ok", encoding="utf-8")
+    s1 = servir.servidor(0, tmp_path)
+    porta = s1.server_address[1]
+    t = threading.Thread(target=s1.serve_forever, daemon=True)
+    t.start()
+    try:
+        urllib.request.urlopen(f"http://127.0.0.1:{porta}/index.html", timeout=5).read()
+    except urllib.error.HTTPError:
+        pass
+    s1.shutdown()
+    s1.server_close()
+    s2 = servir.servidor(porta, tmp_path)          # antes da N13: OSError [Errno 98] Address already in use
+    s2.server_close()
