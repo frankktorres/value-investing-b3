@@ -1,6 +1,15 @@
 # RELATORIO-DIARIO
 *Uma entrada por dia/turno, a mais nova em cima: o que foi feito (com commit), decisões tomadas, o que ficou, erros. Máx. 10 linhas por entrada.*
 
+## 24/10/2026 — madrugada, sábado (junção de 23/10 + O4b, N12b, O3b inventário + check-up)
+- **Fiz:** juntei `claude/fase3-bugs` e `claude/keen-babbage-vf5kor` no ramo (be2e5c5; conflito no `09` e §6 do PRE-REGISTRO, mantidos os dois lados). O4b (FEITA parcial): 16 testes nos itens 9–20, 26 de 29 mutações mortas, 3 equivalentes (d227e49, 0d21ec3). N12b (FEITA parcial): datas de fonte composta, 155 → 165 de 342 na nuvem (4f065e5, bc5652e). O3b: só inventário, 0 de 21 expostas (77779dd). Check-up: `node --check` ok, oráculo (só as bandeiras H2 conhecidas), skips todos por dado local. Suíte: 4 failed (PETR4, herdados do A1), 1069 passed, 45 skipped. Isso é na nuvem, sem os testes de dados; o conferidor da manhã confirma.
+- **Auditoria:** 4 confirmados, 0 rebaixados (O4b, N12b, O3b inventário, suíte; nenhum número do motor mudou entre be2e5c5 e HEAD, `instantaneo_todos` idêntico).
+- **Descobri:** no Ke da própria empresa o DCF reverso dá "n.a." em 19 de 21 industriais (ROIC < WACC, trava de Greenwald); o golden mata os mutantes de `vence_rf`, e o mutmut provavelmente não o ligou por causa do fixture de sessão.
+- **Ressalvas do revisor:** O4b (5) e N12b (4) corrigidas na hora (0d21ec3, bc5652e); a da auditoria (texto da linha O4b) também foi corrigida. O resto continua no BACKLOG O4b/N12b/O3b.
+- **Rede bloqueada:** `www.gov.br` (curl 56); `sistemaswebb3-listados.b3.com.br` 403; Tesouro 429.
+- **Precisa de você:** PENDENTE #11 e #12. Com o fase3-bugs dentro, este ramo só fica verde depois de `rodar_tudo.py --motivo "Fase 3: H10 e A1"`. Na tela, olhar a coluna "data" (P/L histórico deve ganhar data com o COTAHIST local).
+- **Ramo:** `claude/keen-babbage-bvjh9h` (contém os dois ramos de 23/10).
+
 ## 23/10/2026 — noite (O3, N12, O4, O5 + backlog N13, B16, O3b, N12b, O4b)
 - **Fiz:** O3 H10+A1 (+parte do O3b) no ramo `claude/fase3-bugs` (parcial: 4 testes da PETR4 vermelhos de propósito, golden não regravado; parecer do oráculo RESSALVA); N12 data das fontes 27 → 155 de 341 no contrato; O5 motor-sombra 36/38 iguais (HYPE3/PRIO3 = crédito fiscal); O4 mutmut parcial (936 de 5.504; nota 0,80 fin / 0,74 não fin); N13; B16 (Res. CVM 19/20 lidas); O4b/N12b/O3b em parte. Suíte da sessão 1047 passed, 44 skipped (na nuvem, sem os testes de dados; o conferidor da manhã confirma).
 - **Auditoria:** 7 confirmados, 0 rebaixados (O3 e O4 confirmados como parciais).
