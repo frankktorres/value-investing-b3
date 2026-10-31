@@ -61,10 +61,11 @@ def test_ke_acima_do_teto_bloqueia_salvo_conhecido():
     assert not any(tk in b for b in c["bloqueantes"] for tk in S.CONHECIDOS)
 
 
-def test_catraca_dos_conhecidos_exige_tirar_quem_saiu_do_alarme():
-    tk = next(iter(S.CONHECIDOS))
-    c = S.checks([_l(tk, ke_nom=0.20)])
-    assert any("catraca" in b and tk in b for b in c["bloqueantes"])
+def test_catraca_dos_conhecidos_exige_tirar_quem_saiu_do_alarme(monkeypatch):
+    assert S.CONHECIDOS == {}   # PR4-04 (H2): catraca chegou a zero após correção de dívida líquida + teto D/E
+    monkeypatch.setitem(S.CONHECIDOS, "KLBN11", "H2")
+    c = S.checks([_l("KLBN11", ke_nom=0.20)])
+    assert any("catraca" in b and "KLBN11" in b for b in c["bloqueantes"])
 
 
 def test_nao_finito_bloqueia():

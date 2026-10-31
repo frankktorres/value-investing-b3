@@ -49,6 +49,7 @@ FIM_EXERCICIO = {"SMTO3": 3}  # mês de fechamento do exercício fora do ano-cal
 ANO_IFRS16 = 2019         # AUD-03: primeiro exercício com o aluguel fora do EBITDA (margem de E&P só a partir dele)
 TOL_PONTO_FIXO = 1e-5     # AUD-13: |ΔE/E| que encerra a iteração dos pesos do WACC
 MAX_ITER_PONTO_FIXO = 200
+DE_MAX = 2.5              # PR4-04 / F3-03b / H2: teto de D/E em Hamada (Damodaran 2012, Ch. 8; Holthausen & Zmijewski 2012)
 
 
 @dataclass
@@ -650,11 +651,12 @@ def custo_divida(emp: Industrial, mk: Mercado, op: dict | None = None) -> dict:
 
 
 def wacc(emp: Industrial, mk: Mercado, ke_nom=None, kd=None, e_peso=None):
-    """WACC nominal. O peso do acionista é `e_peso` (R$ mil; o valor da casa no ponto fixo, AUD-13); sem ele, o preço."""
+    """WACC nominal. O peso do acionista é `e_peso` (R$ mil; o valor da casa no ponto fixo, AUD-13); sem ele, o preço.
+    PR4-04 (F3-03b / H2): D = max(dívida líquida, 0) (Holthausen & Zmijewski 2012, JACF 24(3):26-38)."""
     _, ltm = serie(emp.ticker)
     bruta, caixa, dl = divida_liquida(ltm)
     e = emp.preco * emp.n_acoes / 1000 if e_peso is None else e_peso     # R$ mil
-    d = bruta
+    d = max(dl, 0.0)
     ke = ke_nom if ke_nom is not None else mk.ke_nom
     kd = custo_divida(emp, mk)["kd"] if kd is None else kd
     w = ke * e / (e + d) + kd * (1 - aliquota(emp)) * d / (e + d)
@@ -662,10 +664,13 @@ def wacc(emp: Industrial, mk: Mercado, ke_nom=None, kd=None, e_peso=None):
 
 
 def premio_alavancado(d: float, e: float, t: float) -> float:
-    """Prêmio do Ke real pela alavancagem (doutrina §4, v2.4 — AUD-12, decisão do Frank em 08/10/2026): os 5 p.p. são o risco do
-    negócio SEM dívida e a dívida soma risco ao acionista — Hamada (1972), Journal of Finance 27(2):435-452, sobre Modigliani-Miller:
-    prêmio = 5 p.p. × [1 + (1 − t) × D/E]. D = dívida bruta do WACC, E = valor da casa (ponto fixo), t = alíquota perpétua."""
-    return PREMIO_KE * (1 + (1 - t) * d / e)
+    """Prêmio do Ke real pela alavancagem (doutrina §4, v2.4 — AUD-12; PR4-04 / F3-03b / H2): os 5 p.p. são o risco do
+    negócio SEM dívida e a dívida líquida soma risco ao acionista — Hamada (1972), Journal of Finance 27(2):435-452, sobre
+    Modigliani-Miller, com dívida líquida max(DL, 0) (Holthausen & Zmijewski 2012) e teto de D/E em DE_MAX = 2,5×
+    (Damodaran 2012, Ch. 8) para evitar espiral do ponto fixo quando E encolhe:
+    prêmio = 5 p.p. × [1 + (1 − t) × min(max(D, 0)/E, DE_MAX)]."""
+    de = min(max(d, 0.0) / e, DE_MAX) if e > 0 else DE_MAX
+    return PREMIO_KE * (1 + (1 - t) * de)
 
 
 def estrutura_de_capital(emp: Industrial, mk: Mercado) -> dict:
@@ -680,9 +685,10 @@ def estrutura_de_capital(emp: Industrial, mk: Mercado) -> dict:
     conforme o preço — o central voltava a depender dele. Sem PL positivo, parte de E = D (D/E = 1).
     Achado A1 (oráculo, Fase 3): o E do ponto fixo é o valor ANTES do desconto de controlador. Com o desconto dentro do
     E, o D/E subia, o Hamada devolvia um Ke maior e a nota de qualidade mudava — o risco do controlador contado no valor E no Ke,
-    contra o §5 ("uma única vez", 01 l.103–105). O desconto entra só em `avaliar`, sobre as âncoras."""
+    contra o §5 ("uma única vez", 01 l.103–105). O desconto entra só em `avaliar`, sobre as âncoras.
+    Achado H2 / F3-03b (PR4-04): D = max(dívida líquida, 0) e D/E limitado a DE_MAX = 2,5×."""
     _, ltm = serie(emp.ticker)
-    d = divida_liquida(ltm)[0]
+    d = max(divida_liquida(ltm)[2], 0.0)
     t = aliquota(emp)
     pl = v(ltm, "pl", 0) - v(ltm, "nao_controladores", 0)
     e0 = pl if pl > 0 else max(d, 1.0)

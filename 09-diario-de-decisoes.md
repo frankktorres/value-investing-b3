@@ -1058,3 +1058,31 @@ Em `motor_nao_financeiras.py::estrutura_de_capital`, o valor `central` iterado p
 |---|---:|---|---:|---|---|
 | PETR4 | R$ 53,48 | CARA | R$ 52,87 | CARA | Sem o desconto de 10% dentro do ponto fixo, $E/(D+E)$ sobe de 60,2% para 62,5% e o WACC sobe levemente; Ke cai de 23,66% para 23,31%. |
 *(Demais 40 empresas: central e palavra inalterados).* Nenhuma ordem de compra ou venda decorre desta entrada.
+
+## 30/10/2026 — PR4-04 (F3-03b / H2): dívida líquida $\max(DL, 0)$ no WACC/Hamada e teto $D/E \le 2{,}5\times$ (21 centrais e 2 palavras mudaram: KLBN11 NÃO CONCLUSIVO → CARA, LEVE3 NÃO CONCLUSIVO → JUSTA)
+Em `motor_nao_financeiras.py`, o peso da dívida $D$ em `wacc()` e na alavancagem de Hamada em `estrutura_de_capital()` passa a ser a dívida líquida positiva $\max(DL, 0)$ em vez da dívida bruta (Holthausen & Zmijewski, 2012, *JACF* 24(3):26–38), e `premio_alavancado()` aplica o teto $D/E \le \text{DE\_MAX} = 2{,}5\times$ (Damodaran, 2012, *Investment Valuation*, Ch. 8) para evitar a espiral patológica do ponto fixo quando $E$ cai. Os 4 casos de $K_{e,\text{nom}} > 30\%$ da hipótese H2 (`KLBN11` 52,8%, `SUZB3` 31,4%, `SLCE3` 36,9%, `SMTO3` 33,5%) caem todos abaixo de 28,2%, zerando a catraca `CONHECIDOS = {}` em `oraculo/sanidade.py`.
+**Efeito medido no Hall (21 industriais; as 20 financeiras/utilities não mudam):**
+| Ticker | Central antes | Palavra antes | Central depois | Palavra depois | Causa |
+|---|---:|---|---:|---|---|
+| ABEV3 | R$ 9,19 | CARA | R$ 9,11 | CARA | Caixa líquido ($D = 0$): sai o peso de $K_d(1-t)$ sobre dívida bruta coberta por caixa. |
+| B3SA3 | R$ 8,18 | CARA | R$ 8,02 | CARA | Caixa líquido ($D = 0$): WACC converge para $K_e$ desalavancado (19,30%). |
+| FLRY3 | R$ 10,87 | CARA | R$ 10,42 | CARA | Redução de $D$ pelo caixa reduz o escudo fiscal artificial no WACC mais que o alívio em $K_e$. |
+| GGBR4 | R$ 18,49 | CARA | R$ 17,90 | CARA | Mesma mecânica: dívida líquida muito menor que a bruta reduz o peso de $K_d(1-t)$ no WACC. |
+| HYPE3 | R$ 16,22 | CARA | R$ 15,66 | CARA | Dívida líquida no WACC/Hamada ($K_e$ cai, mas peso de $D$ no WACC cai na proporção do caixa). |
+| KEPL3 | R$ 6,69 | JUSTA | R$ 6,17 | JUSTA | Caixa líquido ($D = 0$): WACC igual ao $K_e$ desalavancado; P/C 1,01 → 1,10 (segue JUSTA). |
+| KLBN11 | R$ 2,62 | NÃO CONCLUSIVO | R$ 5,11 | **CARA** | Fim da espiral H2 ($K_e$ 52,8% → 28,1% pelo teto $D/E = 2{,}5\times$ e $DL$): EPV 0,36 → 3,35, dispersão cai abaixo de 3× e destrava a palavra CARA (P/C 3,64). |
+| LEVE3 | R$ 36,31 | NÃO CONCLUSIVO | R$ 35,42 | **JUSTA** | Com $DL$ no lugar da bruta, $K_e$ cai para perto do retorno Bogle (19,6%), passando na trava de coerência (±2 p.p.) que antes forçava NÃO CONCLUSIVO; P/C 0,97 (JUSTA). |
+| PETR4 | R$ 52,87 | CARA | R$ 51,77 | CARA | Redução de $D$ pelo caixa no WACC/Hamada. |
+| PRIO3 | R$ 46,29 | CARA | R$ 45,07 | CARA | Redução de $D$ pelo caixa no WACC/Hamada. |
+| RANI3 | R$ 3,19 | CARA | R$ 3,11 | CARA | Redução de $D$ pelo caixa no WACC/Hamada. |
+| RECV3 | R$ 0,00 | NÃO CONCLUSIVO | R$ 0,00 | NÃO CONCLUSIVO | EPV −3,67 → −3,34; segue com âncora negativa (NÃO CONCLUSIVO). |
+| SLCE3 | R$ 7,59 | CARA | R$ 7,79 | CARA | Fim do excesso de $K_e$ (36,9% → ≤ 28,1%): central sobe +2,6%, segue CARA (P/C 2,21). |
+| SMTO3 | R$ 14,68 | CARA | R$ 14,06 | CARA | $K_e$ cai abaixo de 30% (sai de `CONHECIDOS`), mas menor peso de $K_d(1-t)$ reduz central em 4,2%. |
+| SUZB3 | R$ 22,78 | CARA | R$ 22,65 | CARA | $K_e$ cai de 31,4% para ≤ 28,1% (sai de `CONHECIDOS`); central −0,6%, segue CARA. |
+| TIMS3 | R$ 9,74 | CARA | R$ 9,50 | CARA | Redução de $D$ pelo caixa no WACC/Hamada. |
+| UGPA3 | R$ 15,78 | CARA | R$ 14,62 | CARA | Forte posição de caixa bruto antes inflava o peso de $K_d(1-t)$ no WACC e penalizava o OE ($K_e$). |
+| UNIP6 | R$ 47,32 | CARA | R$ 44,24 | CARA | Caixa líquido ($D = 0$): elimina o subsídio de dívida bruta no WACC. |
+| VBBR3 | R$ 10,42 | CARA | R$ 10,19 | CARA | Redução de $D$ pelo caixa no WACC/Hamada. |
+| VIVT3 | R$ 16,92 | CARA | R$ 16,56 | CARA | Redução de $D$ pelo caixa no WACC/Hamada. |
+| WEGE3 | R$ 11,08 | CARA | R$ 10,74 | CARA | Caixa líquido ($D = 0$): WACC igual ao $K_e$ desalavancado. |
+Nenhuma ordem de compra ou venda decorre desta entrada.

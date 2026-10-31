@@ -58,3 +58,19 @@ def test_aud13_klbn11_mesmo_central_a_qualquer_preco():
     k = next(e for e in lote3_agro.EMPRESAS if e.ticker == "KLBN11")
     centrais = {p: M.avaliar(dataclasses.replace(k, preco=p), MK)["central"] for p in (5.0, 18.62, 40.0)}
     assert max(centrais.values()) - min(centrais.values()) < 1e-6, centrais
+
+
+def test_pr4_04_hamada_usa_divida_liquida_e_teto_de_alavancagem():
+    """PR4-04 / F3-03b / H2: (1) D = max(DL, 0) no WACC e no Hamada (empresa com dívida bruta = caixa tem D = 0 e prêmio 5 p.p.);
+    (2) D/E no Hamada tem teto DE_MAX = 2,5×, impedindo espiral do Ke acima de 30% nos 4 casos históricos de H2."""
+    assert M.DE_MAX == pytest.approx(2.5)
+    assert M.premio_alavancado(10_000.0, 1_000.0, 0.34) == pytest.approx(0.05 * (1 + 0.66 * 2.5))
+    _serie("TESTE12DL0", emprest_lp=4_000.0, caixa=4_000.0)
+    r = M.avaliar(_emp("TESTE12DL0"), MK)
+    assert r["d"] == 0.0
+    assert r["premio_ke"] == pytest.approx(0.05)
+    import universo
+    todos = universo.avaliar_todos()
+    for tk in ("KLBN11", "SUZB3", "SLCE3", "SMTO3"):
+        assert todos[tk]["r"]["ke_nom_emp"] <= 0.30, tk
+
