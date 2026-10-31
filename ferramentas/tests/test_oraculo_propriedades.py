@@ -555,9 +555,6 @@ def test_desconto_do_controlador_so_no_valor_financeira(tk, pct):
     assert {k: r["notas"][k] for k in ("qualidade", "solidez")} == {k: r0["notas"][k] for k in ("qualidade", "solidez")}
 
 
-@pytest.mark.xfail(strict=True, reason="achado A1 (Fase 2, 22/10): nos industriais o desconto entra no E do ponto fixo do WACC "
-                                       "(estrutura_de_capital) e volta como Ke maior pelo Hamada e nota de qualidade diferente; "
-                                       "a decidir na Fase 3")
 @seed(SEMENTE)
 @_cfg(max(N_IND // 2, 6))
 @example(tk="KLBN11", pct=0.25)
@@ -570,3 +567,5 @@ def test_desconto_do_controlador_so_no_valor_industrial(tk, pct):
     r = _avaliar(replace(emp, desconto_controlador={"tipo": "fixo", "pct": pct, "razao": "propriedade"}))
     assert r["ke_nom_emp"] == pytest.approx(r0["ke_nom_emp"], rel=1e-9), (tk, pct)
     assert r["notas"]["qualidade"] == pytest.approx(r0["notas"]["qualidade"], rel=1e-9), (tk, pct)
+    if all(x > 0 for x in r0["ancoras"].values()):      # com o E do ponto fixo igual, o central cai exatamente (1 − pct)
+        assert r["central"] == pytest.approx(r0["central"] * (1 - pct), rel=1e-9), (tk, pct)

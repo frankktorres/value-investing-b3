@@ -1050,3 +1050,11 @@ Expandido `CADASTRO` em `relatorio/quali.py` de 6 para todos os 41 tickers do Ha
 
 ## 30/10/2026 — PR4-02 (F5-01): fim do auto-mascaramento no Oráculo (`reconciliacao.py` e `sanidade.py`) (0 palavras, 0 centrais mudaram)
 Em `oraculo/reconciliacao.py`, erros de identidade contábil (`bp`, `bp_partes`, `dfc`, `dfc_saldo`) e erros de escala do número de ações (`acoes_lote` fora de `[0,5; 2,0]`) passam a ser classificados como `"falha"` bloqueante em **qualquer** ticker avaliado com palavra ativa (`BARATA`, `RADAR`, `JUSTA` ou `CARA`), deixando como `"bandeira"` apenas quando o próprio motor já recusou o papel (`NÃO CONCLUSIVO`). Antes, multiplicar `n_acoes` por 1.000 dividia o central por 1.000, transformava o papel em `CARA` e rebaixava o erro de `"falha"` para `"bandeira"` (`exit 0`). Em `oraculo/sanidade.py`, `central <= 0` fora de `NÃO CONCLUSIVO` também entra em `bloqueantes`. Testes em `tests/test_oraculo_reconciliacao_sanidade.py`. 0 palavras e 0 centrais mudam. Nenhuma ordem de compra ou venda decorre desta entrada.
+
+## 30/10/2026 — PR4-03 (F3-03a / A1): desconto do controlador fora do ponto fixo do WACC (0 palavras mudaram; 1 central mudou: PETR4 53,48 → 52,87)
+Em `motor_nao_financeiras.py::estrutura_de_capital`, o valor `central` iterado para os pesos $E/(D+E)$ e $D/E$ de Hamada passa a ser calculado **antes** do desconto do controlador (`central_de(valores(emp, mk_e, e_peso=e)["anc"])[0]`), conforme a Doutrina §5 (`01:103, 105`: o desconto incide uma única vez sobre o valor das âncoras e não altera o Ke nem a nota de qualidade). Removido `@pytest.mark.xfail` de `test_desconto_do_controlador_so_no_valor_industrial` e fechada a lacuna `D5.09` em `oraculo/matriz.py` (`LACUNAS_MAX` 36 → 35).
+**Efeito medido no Hall (41 tickers):**
+| Ticker | Central antes | Palavra antes | Central depois | Palavra depois | Causa |
+|---|---:|---|---:|---|---|
+| PETR4 | R$ 53,48 | CARA | R$ 52,87 | CARA | Sem o desconto de 10% dentro do ponto fixo, $E/(D+E)$ sobe de 60,2% para 62,5% e o WACC sobe levemente; Ke cai de 23,66% para 23,31%. |
+*(Demais 40 empresas: central e palavra inalterados).* Nenhuma ordem de compra ou venda decorre desta entrada.

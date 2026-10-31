@@ -1,5 +1,5 @@
 {
- "motivo": "B30: P/L histórico das NF estendido a 2016-19 pelo LPA básico da classe (DRE 3.99, CVM) com trava de 25% nas ações implícitas e ano fora se evento torna ambígua a base do LPA; hall e dossiê pela mesma função -> só o Bogle de 8 tickers. B31: alíquotas TIMS3 2021-23 e WPU0662 conferidas na fonte, sem mudar número. 0 trocas de palavra.",
+ "motivo": "PR4-03 (F3-03a / A1, camada 2): desconto do controlador fora do ponto fixo do WACC",
  "tickers": {
   "ABCB4": {
    "ancoras": {
@@ -401,20 +401,20 @@
   },
   "PETR4": {
    "ancoras": {
-    "DCF normalizado (3 cenários)": 54.901052,
-    "EPV de meio de ciclo": 53.483901,
+    "DCF normalizado (3 cenários)": 54.277637,
+    "EPV de meio de ciclo": 52.871652,
     "Valor de reprodução": 33.090004
    },
-   "bogle_nom": 0.219043,
-   "central": 53.483901,
+   "bogle_nom": 0.219077,
+   "central": 52.871652,
    "cobertura_juros": 17.019058,
    "data_preco": "02/10/2026",
-   "dy": 0.143797,
-   "fator_defasagem": 0.960578,
+   "dy": 0.143831,
+   "fator_defasagem": 0.960807,
    "lote": 5,
-   "nota_geral": 5.444071,
+   "nota_geral": 5.416693,
    "palavra": "JUSTA",
-   "pc": 0.956736,
+   "pc": 0.967815,
    "vence_rf": "Sim"
   },
   "PRIO3": {

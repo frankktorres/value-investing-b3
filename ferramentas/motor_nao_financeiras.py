@@ -677,17 +677,19 @@ def estrutura_de_capital(emp: Industrial, mk: Mercado) -> dict:
     casa) não há ponto fixo: os pesos e o Ke ficam no patrimônio contábil, só para exibir — a palavra já é NÃO CONCLUSIVO.
 
     A iteração PARTE do patrimônio contábil, não do preço (adversário, 08/10): partindo do preço, a KLBN11 desistia ou achava raiz
-    conforme o preço — o central voltava a depender dele. Sem PL positivo, parte de E = D (D/E = 1)."""
+    conforme o preço — o central voltava a depender dele. Sem PL positivo, parte de E = D (D/E = 1).
+    Achado A1 (oráculo, Fase 3): o E do ponto fixo é o valor ANTES do desconto de controlador. Com o desconto dentro do
+    E, o D/E subia, o Hamada devolvia um Ke maior e a nota de qualidade mudava — o risco do controlador contado no valor E no Ke,
+    contra o §5 ("uma única vez", 01 l.103–105). O desconto entra só em `avaliar`, sobre as âncoras."""
     _, ltm = serie(emp.ticker)
     d = divida_liquida(ltm)[0]
     t = aliquota(emp)
-    desc = desconto_pct(emp)
     pl = v(ltm, "pl", 0) - v(ltm, "nao_controladores", 0)
     e0 = pl if pl > 0 else max(d, 1.0)
     e = e0
     for i in range(1, MAX_ITER_PONTO_FIXO + 1):
         mk_e = replace(mk, premio=premio_alavancado(d, e, t))
-        central = central_de(descontar(valores(emp, mk_e, e_peso=e)["anc"], desc))[0]
+        central = central_de(valores(emp, mk_e, e_peso=e)["anc"])[0]      # A1: sem o desconto de controlador
         if central <= 0:
             return dict(mk=replace(mk, premio=premio_alavancado(d, e0, t)), e_peso=e0, iteracoes=i,
                         ponto_fixo=False, nota="sem central positivo: pesos e Ke no patrimônio contábil, só para exibir")
