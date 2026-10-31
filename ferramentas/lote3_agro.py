@@ -14,7 +14,7 @@ from pl_historico import do_hall
 from precos_hall import preco
 from insumos_a import ACOES_DFP, NAV_SLCE3, registrar
 from motor_financeiras import SEM_RAZAO
-from motor_nao_financeiras import CVM, SI, Industrial, avaliar
+from motor_nao_financeiras import CVM, SI, Industrial, avaliar, reescalar_acoes
 
 QUAL = lambda moat, gestao, controlador, ciclo, fisher: dict(moat=moat, gestao=gestao, controlador=controlador, ciclo=ciclo, fisher=fisher)
 
@@ -33,9 +33,7 @@ def jcp(tk):
 def acoes(tk):
     """Ações em circulação (sem tesouraria) do último DFP na CVM; KLBN11 em units (5 ações)."""
     ano = "2026" if tk == "SMTO3" else "2025"
-    n = CVM[tk]["anual"][ano]["acoes"]
-    if n < 1e7:          # alguns formulários da CVM informam a quantidade em milhares
-        n *= 1000
+    n = reescalar_acoes(CVM[tk]["anual"][ano]["acoes"])
     unit = CVM[tk]["acoes_por_unit"]
     return registrar(tk, "acoes", n / unit, ACOES_DFP(ano, unit))   # fase 3: procedência por campo; o número não muda
 

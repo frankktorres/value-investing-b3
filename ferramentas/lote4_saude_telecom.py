@@ -54,7 +54,7 @@ from lote2_energia import pl_hist
 from lote3_agro import jcp
 from motor_financeiras import Financeira, central_ao_ke
 from motor_financeiras import avaliar as avaliar_fin
-from motor_nao_financeiras import ANOS, CVM, SI, Industrial, avaliar
+from motor_nao_financeiras import ANOS, CVM, SI, Industrial, avaliar, reescalar_acoes
 
 AQUI = pathlib.Path(__file__).parent
 ZIP = AQUI / "dados" / "cvm"
@@ -81,7 +81,7 @@ def _acoes_zip(tk):
     df = _csv("itr_2026.zip", "composicao")
     d = df[df["DENOM_CIA"].str.upper().str.startswith(NOME_CVM[tk]) & (df["DT_REFER"] == "2026-06-30")].iloc[-1]
     n = float(d["QT_ACAO_TOTAL_CAP_INTEGR"]) - float(d["QT_ACAO_TOTAL_TESOURO"])
-    return n * 1000 if n < 1e8 else n          # Ambev, Itaúsa e Itaú informam a quantidade em milhares
+    return reescalar_acoes(n)                  # Ambev (15,45M mil), Itaúsa (11,21M mil) e Itaú (11,02M mil) vêm em milhares (< 2e7)
 
 
 N = obter("lote4.acoes_jun26", ["itr_2026.zip"], lambda: {tk: _acoes_zip(tk) for tk in (*PRECO, "ITUB")})   # AUD-38: snapshot sem os ZIPs
@@ -147,7 +147,7 @@ def g1_sustentavel(tk, extra_data_com="2025-12-19"):
     extra = [r for r in proventos_hall.proventos(tk) if r["data_com"] == extra_data_com]
     assert len(extra) == 3, f"{tk}: extraordinário de {extra_data_com} deveria ter 3 parcelas na B3: {extra}"
     dpa[extra_data_com[:4]] -= sum(r["valor_hoje"] for r in extra)
-    lpa = {y: a[y]["lucro_controlador"] * 1000 / (a[y]["acoes"] * (1000 if a[y]["acoes"] < 1e7 else 1)) for y in anos}
+    lpa = {y: a[y]["lucro_controlador"] * 1000 / reescalar_acoes(a[y]["acoes"]) for y in anos}
     pay = st.median(dpa[y] / lpa[y] for y in anos)
     g_nom = roe * (1 - pay)
     g1 = (1 + g_nom) / (1 + MK.pi) - 1

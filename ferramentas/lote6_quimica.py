@@ -36,7 +36,7 @@ from lote2_energia import pl_hist, solidez
 from lote3_agro import jcp
 from motor_financeiras import SEM_RAZAO, Financeira
 from motor_financeiras import avaliar as avaliar_fin
-from motor_nao_financeiras import CVM, SI, Industrial, avaliar
+from motor_nao_financeiras import CVM, SI, Industrial, avaliar, reescalar_acoes
 
 AQUI = pathlib.Path(__file__).parent
 MACRO = AQUI / "dados" / "macro"
@@ -99,7 +99,7 @@ def _acoes_zip(tk):
     df = pd.read_csv(io.BytesIO(z.read(n)), sep=";", encoding="latin-1", dtype=str)
     cod = {"LEVE3": "MAHLE METAL LEVE", "EGIE3": "ENGIE BRASIL ENERGIA", "UNIP6": "UNIPAR CARBOCLORO", "GGBR4": "GERDAU S.A."}[tk]
     d = df[df["DENOM_CIA"].str.startswith(cod) & (df["DT_REFER"] == "2026-06-30")].iloc[-1]
-    return float(d["QT_ACAO_TOTAL_CAP_INTEGR"]) - float(d["QT_ACAO_TOTAL_TESOURO"])
+    return reescalar_acoes(float(d["QT_ACAO_TOTAL_CAP_INTEGR"]) - float(d["QT_ACAO_TOTAL_TESOURO"]))
 
 
 # ---------------------------------------------------------------- proventos ajustados (StatusInvest não ajusta bonificação)

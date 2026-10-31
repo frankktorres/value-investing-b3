@@ -174,6 +174,16 @@ def serie(tk):
     return CVM[tk]["anual"], ltm_de(CVM[tk])
 
 
+def reescalar_acoes(n: float, ref: float | None = None, limiar: float = 2e7) -> float:
+    """Converte quantidade de ações de milhares para unidades quando necessário (F1-03).
+    Se `ref` (ações em unidades de referência, ex.: FRE) for informada, escolhe entre `n` e `n * 1000`
+    o mais próximo em escala logarítmica; caso contrário, aplica o limiar de 2e7 (cobre até 20 bi de ações em milhares
+    sem multiplicar por 1000 empresas com 20M–100M de ações já em unidades)."""
+    if ref is not None and ref > 0 and n > 0:
+        return min((n, n * 1000.0), key=lambda x: abs(math.log(x / ref)))
+    return n * 1000.0 if n < limiar else float(n)
+
+
 def anos_validos(tk, anos):
     a, _ = serie(tk)
     return [x for x in anos if a.get(x, {}).get("receita")]
