@@ -33,7 +33,8 @@ from pathlib import Path
 RAIZ = Path(__file__).resolve().parent.parent
 PROTEGIDOS = ("ferramentas/tests/golden.json", "01-doutrina-value-investing.md")   # muda palavra: só com decisão do Frank
 FORA = ("ferramentas/painel/web/dados", "ferramentas/dados/cvm/_antes", "ferramentas/monitor",
-        "ferramentas/dados/suite_ultima.json")             # regerável, velho ou log: não vai para a worktree
+        "ferramentas/dados/suite_ultima.json", "ferramentas/carteira.local.json",
+        "ferramentas/dados/privado", "ferramentas/.hypothesis")             # regerável, velho, privado ou cache: não vai para a worktree
 PREFIXO = "refs/remotes/origin/"
 PARADO_MIN = 30                                            # commit mais novo que isto = a rotina ainda está rodando
 VERMELHO, PRECISA = 30, 31
@@ -97,7 +98,7 @@ def suite(wt: Path) -> tuple[int, str]:
     if (ferr / "painel" / "exportar.py").exists():
         subprocess.run([sys.executable, "-c", "from painel import exportar, contrato; exportar.main([]); contrato.main([])"],
                        cwd=ferr, capture_output=True, timeout=1800, env=env)   # falhou? o teste do contrato acusa
-    r = subprocess.run([sys.executable, "-m", "pytest", "--ignore=backtest", "-q", "-p", "no:cacheprovider", "-rs"],
+    r = subprocess.run([sys.executable, "-m", "pytest", "--ignore=backtest", "-q", "-p", "no:cacheprovider", "-ra"],
                        cwd=ferr, capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=1800, env=env)
     linhas = r.stdout.splitlines()
     resumo = next((l.strip("= ") for l in reversed(linhas)

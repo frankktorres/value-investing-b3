@@ -20,6 +20,7 @@ FERR = RAIZ / "ferramentas"
 DRY = "--dry" in sys.argv
 RAMO = "master"
 WIP = "wip/auto"
+PROTEGIDOS = ("ferramentas/tests/golden.json", "01-doutrina-value-investing.md", "03-hall-de-acoes.md")
 
 SEGREDO_ARQ = re.compile(r"(^|/)\.env|\.pem$|\.key$|\.p12$|id_rsa|credentials", re.I)
 SEGREDO_TXT = re.compile(
@@ -137,14 +138,30 @@ def commit_wip(itens, msg):
     return git("push", "origin", f"{WIP}:{WIP}")
 
 
+def decidir_destino(itens):
+    """Decide ('master'|'wip', info) para a lista de (status, caminho)."""
+    tem_delecao = any("D" in st for st, _ in itens)
+    tem_protegido = any(c.replace("\\", "/") in PROTEGIDOS for _, c in itens)
+    cmd, motivo = testes_dos_modulos(itens)
+    if tem_delecao or tem_protegido:
+        return "wip", "deleção ou arquivo protegido alterado (requer revisão antes do master)"
+    if cmd is None:
+        return "wip", f"sem teste verificável ({motivo})"
+    if cmd:
+        ok, saida = rodar_testes(cmd)
+        return ("master", "testes verdes") if ok else ("wip", "testes VERMELHOS:\n" + saida)
+    return "master", "sem código alterado"
+
+
 def main():
     if os.environ.get("CLAUDE_CODE_REMOTE"):
         return "nuvem: hook desligado"
-    try:
-        if json.load(sys.stdin).get("stop_hook_active"):
-            return "stop_hook_active"
-    except Exception:
-        pass
+    if not DRY and not sys.stdin.isatty():
+        try:
+            if json.load(sys.stdin).get("stop_hook_active"):
+                return "stop_hook_active"
+        except Exception:
+            pass
     if git("rev-parse", "--abbrev-ref", "HEAD").stdout.strip() != RAMO:
         return f"fora de {RAMO}: nada feito"
     itens = alterados()
@@ -153,14 +170,7 @@ def main():
     achados = varrer_segredo(itens)
     if achados:
         return "BLOQUEADO por varredura de segredo/dado pessoal:\n  " + "\n  " .join(achados)
-    cmd, motivo = testes_dos_modulos(itens)
-    if cmd is None:
-        destino, info = "wip", f"sem teste verificável ({motivo})"
-    elif cmd:
-        ok, saida = rodar_testes(cmd)
-        destino, info = ("master", "testes verdes") if ok else ("wip", "testes VERMELHOS:\n" + saida)
-    else:
-        destino, info = "master", "sem código alterado"
+    destino, info = decidir_destino(itens)
     if DRY:
         return f"[dry] destino={destino}; {info}; {len(itens)} arquivo(s)"
     if destino == "master":

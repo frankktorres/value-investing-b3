@@ -12,6 +12,7 @@ analisador/dados/
 __pycache__/
 *.pyc
 .pytest_cache/
+.hypothesis/
 # Segredos
 .env*
 *.key

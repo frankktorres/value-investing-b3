@@ -1,24 +1,41 @@
 """Põe ferramentas/ no sys.path para os testes importarem os lotes e os motores."""
+import inspect
+import os
 import pathlib
 import sys
+
+import pytest
 
 sys.path.insert(0, str(pathlib.Path(__file__).parent))
 
 
+def _skip_de_plataforma(item) -> bool:
+    """Identifica estruturalmente se o skip decorre de incompatibilidade de SO/plataforma
+    (marcador `@pytest.mark.plataforma` ou condição `skipif` referenciando `os.name`,
+    `sys.platform` ou `platform.system` no código-fonte da função de teste)."""
+    if item.get_closest_marker("plataforma") is not None:
+        return True
+    obj = getattr(item, "obj", None)
+    if obj is not None:
+        try:
+            src = inspect.getsource(obj).split("def ", 1)[0]
+            if "skipif" in src and any(t in src for t in ("os.name", "sys.platform", "platform.system")):
+                return True
+        except (OSError, TypeError):
+            pass
+    return False
+
+
 # AUD-89: teste pulado por falta de dado não é teste verde. Com EXIGIR_DADOS=1 (checkout com os dados baixados) todo skip vira
 # falha; sem a variável, o resumo diz quantos testes NÃO rodaram.
-import os
-
-import pytest
-
-
 @pytest.hookimpl(hookwrapper=True)
 def pytest_runtest_makereport(item, call):
     rep = (yield).get_result()
     if os.environ.get("EXIGIR_DADOS") == "1" and rep.skipped and not hasattr(rep, "wasxfail"):
-        motivo = rep.longrepr[2] if isinstance(rep.longrepr, tuple) else str(rep.longrepr)
-        rep.outcome = "failed"
-        rep.longrepr = f"EXIGIR_DADOS=1: teste pulado ({motivo}); baixe os dados (bootstrap_dados.py / backtest/*) ou rode sem a variável"
+        if not _skip_de_plataforma(item):
+            motivo = rep.longrepr[2] if isinstance(rep.longrepr, tuple) else str(rep.longrepr)
+            rep.outcome = "failed"
+            rep.longrepr = f"EXIGIR_DADOS=1: teste pulado ({motivo}); baixe os dados (bootstrap_dados.py / backtest/*) ou rode sem a variável"
 
 
 @pytest.hookimpl(hookwrapper=True)
@@ -32,8 +49,8 @@ def pytest_make_collect_report(collector):
 def pytest_sessionfinish(session, exitstatus):
     """Registro da última suíte COMPLETA (alimenta a tela Sistema): `dados/suite_ultima.json`, ignorado pelo git. Rodada parcial
     (caminho, -k, -m, ou o backtest) não grava — o número só vale se for a suíte inteira do dia a dia."""
-    import json
     import datetime
+    import json
     args = list(session.config.invocation_params.args)
     # caminho explícito = parcial; valor de opção (`-p no:cacheprovider`) não é caminho (22/10: a tela dizia "sem registro")
     caminho = session.config.args_source == pytest.Config.ArgsSource.ARGS

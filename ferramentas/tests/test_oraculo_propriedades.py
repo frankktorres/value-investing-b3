@@ -21,7 +21,7 @@ from functools import cache
 from unittest import mock
 
 import pytest
-from hypothesis import HealthCheck, Phase, given, seed, settings, strategies as st
+from hypothesis import HealthCheck, Phase, example, given, seed, settings, strategies as st
 
 import mercado
 import motor_financeiras as F
@@ -475,6 +475,7 @@ def test_dado_critico_ausente_nunca_da_palavra_de_decisao(tk, campo, f):
                           "(motor_nao_financeiras.py:176-177, 214, 250, 273-277, 287, 297); corrige na Fase 3")
 @seed(SEMENTE)
 @_cfg(max(N_IND, 20), phases=[Phase.explicit, Phase.reuse, Phase.generate])
+@example(tk="WEGE3", campo="da", f=0.6)
 @given(tk=st.sampled_from(_ind()), campo=st.sampled_from(H10_ABERTOS), f=st.floats(0.5, 1.05))
 def test_h10_dado_critico_ausente_nunca_da_palavra_de_decisao(tk, campo, f):
     _confere_ausente(tk, campo, f)
@@ -501,6 +502,7 @@ def test_desconto_do_controlador_so_no_valor_financeira(tk, pct):
                                        "a decidir na Fase 3")
 @seed(SEMENTE)
 @_cfg(max(N_IND // 2, 6))
+@example(tk="KLBN11", pct=0.25)
 @given(tk=st.sampled_from(_ind()), pct=st.floats(0.05, 0.5))
 def test_desconto_do_controlador_so_no_valor_industrial(tk, pct):
     emp = _empresas()[tk]

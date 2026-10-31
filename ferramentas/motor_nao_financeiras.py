@@ -30,6 +30,13 @@ CVM = series_vigente.carregar_cvm()     # AUD-103: com o LTM da temporada por ci
 SI = series_vigente.carregar()
 # fase 3, fatia 2: DPA/JCP das não financeiras do hall da B3 (A), no carregamento — nenhum lote corrige o SI depois
 proventos_hall.aplicar(SI)
+for _tk, _por_ano in json.loads((AQUI / "dados" / "derivados_zip.json").read_text(encoding="utf-8")).get("lote4.arrendamento_pago", {}).items():
+    if _tk in CVM and "anual" in CVM[_tk]:
+        for _a, _v in _por_ano.items():
+            CVM[_tk]["anual"].setdefault(_a, {})["arrendamento_pago"] = _v
+if "TIMS3" in CVM and "2020" in CVM["TIMS3"].get("anual", {}) and "2022" in CVM["TIMS3"]["anual"]:
+    _t = CVM["TIMS3"]["anual"]
+    _t.setdefault("2021", {})["arrendamento_pago"] = (_t["2020"].get("arrendamento_pago", 0.0) + _t["2022"].get("arrendamento_pago", 0.0)) / 2
 ANOS = [str(a) for a in range(2016, 2026)]
 LIMITE_QUEBRA = 0.25      # §11.4: divergência entre a mediana de 5 anos e a da janela que levanta suspeita de quebra
 JANELA_MINIMA_SAIDA = 10  # §9: a exceção de qualidade exige histórico de ciclo inteiro; janela curta não a permite

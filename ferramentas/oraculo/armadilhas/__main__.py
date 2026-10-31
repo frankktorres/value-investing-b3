@@ -63,6 +63,7 @@ def rodar_uma(a: dict, base: pathlib.Path, manter: bool) -> dict:
                             "mudança em avaliação: golden regravado para a suíte comparar o resto"], fer, env)
             if rc:
                 return dict(a, erro=f"golden: {out[-300:]}")
+            _run([sys.executable, "hall03.py", "--corrigir"], fer, env)
         depois = _palavras(json.loads((fer / "tests" / "golden.json").read_text(encoding="utf-8")))
         trocas = {tk: f"{antes.get(tk)} → {p}" for tk, p in depois.items() if antes.get(tk) != p}
         rc_s, out_s = _run([sys.executable, "-m", "pytest", "--ignore=backtest", "-x", "-q", "-p", "no:cacheprovider",

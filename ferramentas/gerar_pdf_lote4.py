@@ -33,7 +33,7 @@ from lote1_bancos import DATA_BASE, MK
 from lote4_saude_telecom import EMPRESAS, ITSA, ITSA4, ITSA_PAYOUT, ITSA_ROE_LP, ITUB4, N, WEG_G1, WEG_PAYOUT, WEG_ROE5, sotp_partes
 from lote4_textos import AGENDA, ANTES, T
 from motor_financeiras import Mercado, avaliar as avaliar_fin, projecao
-from motor_nao_financeiras import ANOS, CVM, SI, avaliar, ebit_aj, estrutura_de_capital, valores
+from motor_nao_financeiras import ANOS, CVM, SI, avaliar, desconto_pct, ebit_aj, estrutura_de_capital, valores
 
 sys.stdout.reconfigure(encoding="utf-8")
 REV = "09-10-2026"
@@ -47,7 +47,7 @@ def central_rapido(emp, **kw):
     # v2.4 (AUD-12/13): a sensibilidade usa a MESMA base do central publicado — Ke da empresa e pesos no ponto fixo, refeitos
     # para a variante (antes: Ke de 5 p.p. e pesos a preço, não comparável ao central)
     ec = estrutura_de_capital(emp, MK)
-    return median(valores(emp, ec["mk"], e_peso=ec["e_peso"], **kw)["anc"].values())
+    return median(valores(emp, ec["mk"], e_peso=ec["e_peso"], **kw)["anc"].values()) * (1 - desconto_pct(emp))
 
 
 def com(emp, **campos):
