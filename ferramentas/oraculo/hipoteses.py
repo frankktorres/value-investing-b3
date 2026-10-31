@@ -88,7 +88,7 @@ def _variante(func, trocas: dict[str, str]):
     return loc[func.__name__]
 
 
-TRAVA_CASA = "cria = roic_c is not None and min(roic_c, roic_rep_c if roic_rep_c is not None else roic_c) > w_nom"
+TRAVA_CASA = "cria = roic_c is not None and roic_c > w_nom and (roic_rep_c if roic_rep_c is not None else roic_c) > w_real"
 VALORES_V = _variante(M.valores, {TRAVA_CASA: "cria = _CRIA(roic_c, roic_rep_c, w_nom, w_real)"})
 ESTRUTURA_V = _variante(M.estrutura_de_capital, {"e0 = pl if pl > 0 else max(d, 1.0)": "e0 = _E0(emp, pl, d)"})
 CRIA = {

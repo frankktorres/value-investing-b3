@@ -26,3 +26,4 @@
 - 2026-10-30 23:36 — PR4-03 (F3-03a / A1, camada 2): desconto do controlador fora do ponto fixo do WACC
 - 2026-10-30 23:51 — PR4-04 (F3-03b / H2): divida liquida max(DL, 0) no WACC/Hamada e teto D/E = 2.5x
 - 2026-10-31 00:02 — PR4-05 (F3-01 + F3-07): consistencia real/nominal em lpa_norm, beneficio_fiscal e ebitda_norm
+- 2026-10-31 00:15 — PR4-06 (F3-02 / H1 + H6): trava de crescimento e spread do ROIC em mesma base (real contra real)

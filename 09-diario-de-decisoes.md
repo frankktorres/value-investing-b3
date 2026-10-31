@@ -1098,3 +1098,12 @@ Três correções de consistência de moeda em `motor_nao_financeiras.py` (Damod
 | HYPE3 | R$ 15,66 | CARA | R$ 15,96 | CARA | `lair_norm` com $K_{d,\text{real}}$ deixa de cortar o benefício fiscal de ágio abaixo do crédito observado; efeito supera o desconto nominal de 4 anos. |
 | PRIO3 | R$ 45,07 | CARA | R$ 44,78 | CARA | Desconto do benefício fiscal de prejuízo acumulado (até 2032) ao WACC nominal (`w_nom`) em vez do real (`w_real`). |
 *(Demais 39 empresas: central e palavra inalterados; 9 industriais com atualização de `bogle_nom` por `lpa_norm` em base real).* Nenhuma ordem de compra ou venda decorre desta entrada.
+
+## 30/10/2026 — PR4-06 (F3-02 / H1 + H6): trava de crescimento do DCF e spread de Qualidade em mesma base (0 palavras mudaram; 2 centrais mudaram: UNIP6 44,24 → 44,61; WEGE3 10,74 → 11,74)
+Em `motor_nao_financeiras.py`, a trava de criação de valor no DCF (`cria`) e o spread de retorno na nota de Qualidade passam a comparar cada ROIC com o WACC da **mesma base** (`roic_c > w_nom and roic_rep_c > w_real`, regra `H1` de `docs/oraculo/hipoteses-2026-10-22.md:7`, conforme Doutrina §4 l.55 "nunca misture"). Antes, o ROIC a custo de reposição (`roic_rep`, já em R$ reais de hoje) era comparado contra o WACC nominal (`w_nom`), bloqueando indevidamente o crescimento no cenário base da `WEGE3` (`roic_rep = 16,3%` real vs `w_nom = 19,3%` nominal, embora superasse com folga `w_real = 12,1%`). Exposto também `roic_contabil_3a` (mediana anual dos 3 últimos exercícios, `H6`).
+**Efeito medido no Hall (41 tickers):**
+| Ticker | Central antes | Palavra antes | Central depois | Palavra depois | Causa |
+|---|---:|---|---:|---|---|
+| UNIP6 | R$ 44,24 | CARA | R$ 44,61 | CARA | Cenário otimista (p75) destrava o crescimento quando `roic_rep_c` é comparado ao `w_real`. |
+| WEGE3 | R$ 10,74 | CARA | R$ 11,74 | CARA | Cenário base destrava o DCF de 2 estágios (`g1_real = 6,9%`): `DCF (3 cenários)` sobe de R$ 10,74 para R$ 11,89 e o central passa a ser a âncora `Owner Earnings ÷ (Ke − g)` (R$ 11,74). |
+*(Demais 39 empresas: central e palavra inalterados; `ABEV3`, `KEPL3` e `PETR4` atualizam apenas a nota geral pelo spread em mesma base).* Nenhuma ordem de compra ou venda decorre desta entrada.

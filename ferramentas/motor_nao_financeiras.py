@@ -763,7 +763,8 @@ def valores(emp: Industrial, mk: Mercado, ke_nom=None, margem=None, g_real=None,
         # capital que ela de fato emprega). A trava é avaliada POR CENÁRIO: é um degrau em cada cenário (AUD-14), e só a
         # ponderação dos três suaviza.
         roic_rep_c = nop / cap_rep if cap_rep > 0 else None
-        cria = roic_c is not None and min(roic_c, roic_rep_c if roic_rep_c is not None else roic_c) > w_nom
+        # PR4-06 (F3-02 / H1): mesma base — ROIC contábil (nominal) > WACC nominal E ROIC a reposição (R$ de hoje) > WACC real (§4, l.55)
+        cria = roic_c is not None and roic_c > w_nom and (roic_rep_c if roic_rep_c is not None else roic_c) > w_real
         g_ef = gr if (gr <= 0 or cria) else 0.0   # só zera crescimento positivo
         # reinvestimento = g REAL ÷ ROIC REAL (Fisher) — real com real (doutrina §4); até 05/10 dividia pelo ROIC nominal (adversário do Lote 4)
         roic_r = (1 + roic_c) / (1 + mk.pi) - 1 if roic_c is not None else None
@@ -1052,10 +1053,19 @@ def avaliar(emp: Industrial, mk: Mercado) -> dict:
             vv = valores(emp, mk, ke_nom=mk.ke_nom + dk, margem=r["m"] + dm, e_peso=ep)["anc"]
             sens[(dk, dm)] = central_de(descontar(vv, desc))[0]
 
-    # notas — o spread usa o MENOR dos dois ROIC (doutrina §2: capital a custo histórico infla o retorno);
-    # o qualitativo é a média da regra 11 (v2.3): controlador com peso 2 quando discricionário
+    # notas — PR4-06 (F3-02 / H1): cada ROIC é comparado ao WACC de mesma base (contábil − w_nom e reposição − w_real),
+    # ficando com o menor spread (conservador, §2 + §4 l.55); o qualitativo é a média da regra 11 (v2.3)
     qual = media_qualitativa(emp.qualitativo, emp.controlador_discricionario) * 2
-    n_qual = 0.5 * nota_spread(r["roic_filtro"] or 0, r["wacc"]) + 0.5 * qual
+    spread_roic = min((r["roic"] or 0) - r["wacc"],
+                      (r["roic_reposicao"] if r["roic_reposicao"] is not None else (r["roic"] or 0)) - r["wacc_real"])
+    n_qual = 0.5 * nota_spread(spread_roic, 0.0) + 0.5 * qual
+    roics_3a = []
+    for x in r["op"]["anos"][-3:]:
+        dx = a[x]
+        cix = v(dx, "pl", 0) + divida_liquida(dx)[2]
+        if cix > 0 and dx.get("ebit") is not None:
+            roics_3a.append(ebit_aj(dx, r["op"]["med_outras"], emp.outras_liquidas) * (1 - r["aliquota"]) / cix)
+    roic_contabil_3a = median(roics_3a) if roics_3a else r["roic"]
     alav_n = nota_alavancagem(dl_ebitda_norm)
     z_n = {"segura": 10, "cinzenta": 6, "perigo": 2}[zona]
     cob_n = interp(cobertura or 0, [(1, 1), (2, 3), (3, 5), (5, 8), (8, 10)])
@@ -1073,7 +1083,7 @@ def avaliar(emp: Industrial, mk: Mercado) -> dict:
     por_qualidade = qualifica_saida(len(serie_roic), anos_roic, n_qual)
     return dict(r, ancoras=anc, central=central, dispersao=disp, confianca=conf, pc=pc, palavra_regua=p0, palavra=p,
                 **precos_de_referencia(central, por_qualidade), desc_controlador=desc,
-                roic_serie=serie_roic, roic_anos_acima=anos_roic, roic_anos_total=len(serie_roic),
+                roic_serie=serie_roic, roic_anos_acima=anos_roic, roic_anos_total=len(serie_roic), roic_contabil_3a=roic_contabil_3a,
                 ebitda_ltm=ebitda_ltm, ebitda_norm=ebitda_norm, dl_ebitda=dl_ebitda, dl_ebitda_norm=dl_ebitda_norm,
                 cobertura_juros=cobertura, cobertura_fonte=juros_fonte, ey=ey, roc=roc, altman=z, altman_zona=zona, piotroski=pf, piotroski_crit=pf_crit,
                 beneish=mb, sloan=sl, ano_qualidade=ult, lpa_norm=lpa_norm, vpa=vpa, graham_orig=graham_orig,

@@ -1,5 +1,5 @@
 {
- "motivo": "PR4-05 (F3-01 + F3-07): consistencia real/nominal em lpa_norm, beneficio_fiscal e ebitda_norm",
+ "motivo": "PR4-06 (F3-02 / H1 + H6): trava de crescimento e spread do ROIC em mesma base (real contra real)",
  "tickers": {
   "ABCB4": {
    "ancoras": {
@@ -20,7 +20,7 @@
   },
   "ABEV3": {
    "ancoras": {
-    "DCF (3 cenários)": 9.695794,
+    "DCF (3 cenários)": 9.768052,
     "EPV": 9.107253,
     "Owner Earnings ÷ (Ke − g)": 7.0886
    },
@@ -31,7 +31,7 @@
    "dy": 0.050756,
    "fator_defasagem": 0.978184,
    "lote": 4,
-   "nota_geral": 4.787574,
+   "nota_geral": 4.885944,
    "palavra": "CARA",
    "pc": 1.739273,
    "vence_rf": "Não"
@@ -49,7 +49,7 @@
    "dy": 0.034552,
    "fator_defasagem": 0.978184,
    "lote": 3,
-   "nota_geral": 5.586284,
+   "nota_geral": 5.597096,
    "palavra": "CARA",
    "pc": 2.368815,
    "vence_rf": "Não"
@@ -358,7 +358,7 @@
    "dy": 0.127299,
    "fator_defasagem": 0.992674,
    "lote": 3,
-   "nota_geral": 5.894949,
+   "nota_geral": 6.132065,
    "palavra": "JUSTA",
    "pc": 1.098685,
    "vence_rf": "Sim"
@@ -412,7 +412,7 @@
    "dy": 0.14389,
    "fator_defasagem": 0.961201,
    "lote": 5,
-   "nota_geral": 5.365611,
+   "nota_geral": 5.594776,
    "palavra": "JUSTA",
    "pc": 0.988469,
    "vence_rf": "Sim"
@@ -648,20 +648,20 @@
   },
   "UNIP6": {
    "ancoras": {
-    "DCF normalizado (3 cenários)": 44.240169,
-    "EPV de meio de ciclo": 44.664731,
+    "DCF normalizado (3 cenários)": 44.981818,
+    "EPV de meio de ciclo": 44.60663,
     "Valor de reprodução": 17.907037
    },
-   "bogle_nom": 0.156453,
-   "central": 44.240169,
+   "bogle_nom": 0.156454,
+   "central": 44.60663,
    "cobertura_juros": 1.52938,
    "data_preco": "02/10/2026",
-   "dy": 0.081207,
-   "fator_defasagem": 0.992087,
+   "dy": 0.081208,
+   "fator_defasagem": 0.992092,
    "lote": 6,
-   "nota_geral": 3.694691,
+   "nota_geral": 4.213429,
    "palavra": "CARA",
-   "pc": 1.288874,
+   "pc": 1.278285,
    "vence_rf": "Empate"
   },
   "VBBR3": {
@@ -702,20 +702,20 @@
   },
   "WEGE3": {
    "ancoras": {
-    "DCF (3 cenários)": 10.735265,
+    "DCF (3 cenários)": 11.885296,
     "EPV": 9.775333,
     "Owner Earnings ÷ (Ke − g)": 11.738083
    },
    "bogle_nom": 0.13501,
-   "central": 10.735265,
+   "central": 11.738083,
    "cobertura_juros": 37.346503,
    "data_preco": "02/10/2026",
    "dy": 0.017942,
    "fator_defasagem": 0.876036,
    "lote": 4,
-   "nota_geral": 5.173067,
+   "nota_geral": 5.846975,
    "palavra": "CARA",
-   "pc": 4.792616,
+   "pc": 4.383169,
    "vence_rf": "Não"
   }
  }

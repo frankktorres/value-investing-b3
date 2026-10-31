@@ -317,3 +317,18 @@ def test_aluguel_usa_kd_real_e_desconta_mais_que_o_nominal():
     _serie_sintetica("TESTEAL6", {a: 1_000.0 for a in anos}, capex=100.0, extra_por_ano=extra)
     e = _emp("TESTEAL6")
     assert M.aluguel_principal(e, "2025", "2024", 0.08) > M.aluguel_principal(e, "2025", "2024", 0.15)
+
+
+def test_pr4_06_trava_de_crescimento_e_spread_usam_mesma_base_real_contra_real():
+    """PR4-06 (F3-02 / H1 + H6): o ROIC contábil (nominal) compara-se ao WACC nominal e o ROIC a reposição (R$ de hoje)
+    compara-se ao WACC real. Na WEGE3 (roic 23,8% > w_nom 19,3% e roic_rep 16,3% > w_real 12,1%), a trava de crescimento
+    do DCF destrava no cenário base (antes era bloqueada porque comparava 16,3% real com 19,3% nominal)."""
+    import lote4_saude_telecom as L4
+    weg = next(e for e in L4.EMPRESAS if getattr(e, "ticker", "") == "WEGE3")
+    r = M.avaliar(weg, L4.MK)
+    assert r["roic"] > r["wacc"]
+    assert r["roic_reposicao"] < r["wacc"]          # antes bloqueava o g1 no cenário base por comparar real com nominal!
+    assert r["roic_reposicao"] > r["wacc_real"]     # em mesma base (real contra real), supera o WACC real com folga
+    assert r["dcf"]["base"] > r["epv"]              # com cria=True no cenário base, DCF base > EPV
+    assert r["roic_contabil_3a"] > r["roic"]        # H6: mediana 3a anual exposta sem distorção da aquisição no fim do período
+
