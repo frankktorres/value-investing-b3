@@ -601,25 +601,25 @@ def fase_fiscal(emp: Industrial) -> tuple[float, int] | None:
 
 
 def credito_observado(emp: Industrial) -> float:
-    """Crédito de IR observado por ano (R$ mil, a preços do último exercício): mediana de 34% × LAIR + IR (IR negativo =
-    despesa) nos 5 últimos anos com LAIR > 0. É o teto do benefício anual da fase: o modelo nunca supõe crédito maior que o
-    que a empresa de fato teve (adversário, 07/10)."""
+    """Crédito de IR observado por ano (R$ mil, a preços de hoje — PR4-05 / F3-01b): mediana de 34% × LAIR + IR (IR negativo =
+    despesa) nos 5 últimos anos com LAIR > 0, deflacionada para a data-base como `receita_meio`. É o teto do benefício anual
+    da fase: o modelo nunca supõe crédito maior que o que a empresa de fato teve (adversário, 07/10)."""
     a, _ = serie(emp.ticker)
     anos = _anos_com_imposto(emp)
     if not anos:
         return 0.0
-    ult = anos[-1]
-    return max(median((ALIQUOTA_MARGINAL * a[x]["lair"] + a[x]["ir"]) * fator_entre(x, ult) for x in anos), 0.0)
+    return max(median((ALIQUOTA_MARGINAL * a[x]["lair"] + a[x]["ir"]) * deflator_exercicio(emp.ticker, x) for x in anos), 0.0)
 
 
 def beneficio_fiscal(emp: Industrial, lair_norm: float, taxa: float) -> float:
     """Valor presente (R$ mil) do crédito com prazo: Σ_{t=1..N} min(LAIR normalizado × (perpétua − efetiva), crédito
     observado) ÷ (1 + taxa)^t.
 
-    A base é o lucro DEPOIS dos juros normalizados (lucro operacional pré-IR − Kd × dívida líquida): o WACC já dá a dedução
-    dos juros a 34%, e o benefício sobre o lucro antes dos juros a contaria de novo (adversário, 07/10: R$ 1,34/ação na
-    HYPE3). O teto é o crédito que a empresa de fato teve (`credito_observado`). Sem crescimento do benefício e sem o
-    trimestre corrente (conservador); zero sem fase ou com base ≤ 0."""
+    A base é o lucro DEPOIS dos juros reais normalizados (lucro operacional pré-IR − Kd_real × dívida líquida, PR4-05 / F3-01a):
+    o WACC já dá a dedução dos juros a 34%, e o benefício sobre o lucro antes dos juros a contaria de novo (adversário, 07/10:
+    R$ 1,34/ação na HYPE3). O teto é o crédito que a empresa de fato teve (`credito_observado`, em R$ de hoje). Como o estoque
+    fiscal nominal (ágio/prejuízo fiscal) não é indexado ao IPCA (PR4-05 / F3-01b; Damodaran 2006), desconta-se à taxa NOMINAL
+    (`w_nom` na firma, `ke_nom` no acionista). Zero sem fase ou com base ≤ 0."""
     fase = fase_fiscal(emp)
     if not fase or lair_norm <= 0:
         return 0.0
@@ -716,6 +716,7 @@ def valores(emp: Industrial, mk: Mercado, ke_nom=None, margem=None, g_real=None,
     w_nom, kd, e_w, d = wacc(emp, mk, ke_nom, kd=cdiv["kd"], e_peso=e_peso)
     e = emp.preco * emp.n_acoes / 1000      # valor de mercado (EV do Greenblatt, porte); o peso do WACC é e_w
     w_real = (1 + w_nom) / (1 + mk.pi) - 1
+    kd_real = (1 + kd) / (1 + mk.pi) - 1
     ke = ke_nom if ke_nom is not None else mk.ke_nom
     ke_real = (1 + ke) / (1 + mk.pi) - 1
     bruta, caixa, dl = divida_liquida(ltm)
@@ -741,10 +742,10 @@ def valores(emp: Industrial, mk: Mercado, ke_nom=None, margem=None, g_real=None,
     roic_filtro = min(x for x in (roic, roic_rep) if x is not None) if roic is not None else None
     roic_real = (1 + roic) / (1 + mk.pi) - 1 if roic else None
 
-    # base do crédito com prazo: lucro depois dos juros normalizados (v2.3); caixa líquido não aumenta a base (o caixa rende
-    # rf, não Kd — adversário, 07/10)
-    lair_norm = lucro_pre_ir - kd * max(dl, 0.0)
-    benef_firma = beneficio_fiscal(emp, lair_norm, w_real)
+    # base do crédito com prazo: lucro depois dos juros reais normalizados (v2.3; PR4-05 / F3-01a); caixa líquido não aumenta a
+    # base (o caixa rende rf, não Kd — adversário, 07/10). Descontado ao WACC nominal (PR4-05 / F3-01b: benefício sem indexação ao IPCA).
+    lair_norm = lucro_pre_ir - kd_real * max(dl, 0.0)
+    benef_firma = beneficio_fiscal(emp, lair_norm, w_nom)
     epv_firma = nopat / w_real + benef_firma
     epv = (epv_firma - dl - minor) / n
 
@@ -753,7 +754,7 @@ def valores(emp: Industrial, mk: Mercado, ke_nom=None, margem=None, g_real=None,
     def dcf(mg):
         pre = op["receita_meio"] * (mg + op["ajuste_manut"])
         nop = pre * (1 - t_ef)
-        bf = beneficio_fiscal(emp, pre - kd * max(dl, 0.0), w_real)   # crédito com prazo (v2.3): VP à parte, zero sem fase
+        bf = beneficio_fiscal(emp, pre - kd_real * max(dl, 0.0), w_nom)   # crédito com prazo (v2.3 / PR4-05): VP nominal à parte, zero sem fase
         roic_c = nop / cap_inv if cap_inv > 0 else None
         # Greenwald: crescimento só tem valor se o ROIC supera o custo de capital (os dois nominais, doutrina §2).
         # Abaixo disso g = 0 e o DCF converge para o EPV; acima, reinvestimento = g real ÷ ROIC.
@@ -789,13 +790,13 @@ def valores(emp: Industrial, mk: Mercado, ke_nom=None, margem=None, g_real=None,
     anos = op["anos"]
     t_oe = t_ef if t_regra in ("explicita", "fase", "sem_origem", "sem_dado") else None   # v2.3: OE à alíquota perpétua
     for i in range(1, len(anos)):
-        x = owner_earnings_ano(emp, anos[i], anos[i - 1], (1 + kd) / (1 + mk.pi) - 1, ciclico(emp), t_oe)
+        x = owner_earnings_ano(emp, anos[i], anos[i - 1], kd_real, ciclico(emp), t_oe)
         if x is not None:
             oes.append((anos[i], x * deflator_exercicio(emp.ticker, anos[i])))   # AUD-16: em R$ de hoje antes da mediana (capitalizado ao Ke REAL)
     oe_recentes = [x for _, x in oes[-5:]]
     oe_norm = median(oe_recentes) if oe_recentes else None
-    # fluxo do acionista: o crédito com prazo incide sobre o lucro depois dos juros normalizados, ao Ke real
-    benef_acao = beneficio_fiscal(emp, lair_norm, ke_real)
+    # fluxo do acionista: o crédito com prazo incide sobre o lucro depois dos juros reais normalizados, descontado ao Ke nominal (PR4-05 / F3-01b)
+    benef_acao = beneficio_fiscal(emp, lair_norm, ke)
     # o OE é fluxo do acionista (depois dos juros da DL do balanço): os dois outros passivos saem por inteiro
     oe_val = ((oe_norm / (ke_real - gr) + benef_acao - emp.outros_passivos - emp.outros_passivos_financeiros - prov["total"]) / n
               if oe_norm and ke_real > gr else None)
@@ -821,7 +822,7 @@ def valores(emp: Industrial, mk: Mercado, ke_nom=None, margem=None, g_real=None,
     # AUD-47: a âncora OE que some (OE normalizado ausente/zero ou Ke real ≤ g) fica registrada — a confiança segue a §11.3
     descartadas = ([] if emp.perfil == "ciclica" or oe_val else
                    ["Owner Earnings ÷ (Ke − g): " + ("OE normalizado ausente ou zero" if not oe_norm else "Ke real ≤ g")])
-    return dict(anc=anc, ancoras_descartadas=descartadas, op=op, wacc=w_nom, wacc_real=w_real, kd=kd, kd_info=cdiv, e=e, e_peso=e_w, d=d, dl=dl, bruta=bruta, caixa=caixa,
+    return dict(anc=anc, ancoras_descartadas=descartadas, op=op, wacc=w_nom, wacc_real=w_real, kd=kd, kd_real=kd_real, kd_info=cdiv, e=e, e_peso=e_w, d=d, dl=dl, bruta=bruta, caixa=caixa,
                 minor=minor, nopat=nopat, roic=roic, epv=epv, dcf=dcf_c, dcf_pond=dcf_pond, oe=oes, oe_norm=oe_norm,
                 oe_val=oe_val, reprod=reprod, reprod_reposicao=reprod_reposicao, cap_inv=cap_inv, n=n, m=m, gr=gr, aliquota=t_ef, aliquota_regra=t_regra,
                 aliquota_mediana=mediana_efetiva(emp), aliquota_fase=fase_fiscal(emp), beneficio_fiscal_acao=benef_firma / n,
@@ -966,8 +967,11 @@ def avaliar(emp: Industrial, mk: Mercado) -> dict:
 
     n = r["n"]
     ebitda_ltm = ebit_aj(ltm, r["op"]["med_outras"], emp.outras_liquidas) + v(ltm, "da", 0)
-    ebitda_norm = r["op"]["receita_meio"] * r["m"] + (r["op"]["receita_meio"] * emp.da_receita if emp.da_receita is not None else
-                                                      median([a[x]["da"] for x in r["op"]["anos"][-3:] if a[x].get("da")] or [0]))
+    # PR4-05 (F3-07): D&A histórica deflacionada para R$ de hoje antes da mediana de 3 anos (consistente com receita_meio)
+    ebitda_norm = r["op"]["receita_meio"] * r["m"] + (
+        r["op"]["receita_meio"] * emp.da_receita if emp.da_receita is not None else
+        median([a[x]["da"] * deflator_exercicio(emp.ticker, x) for x in r["op"]["anos"][-3:] if a[x].get("da")] or [0])
+    )
     dl_ebitda = r["dl"] / ebitda_ltm if ebitda_ltm > 0 else None
     dl_ebitda_norm = r["dl"] / ebitda_norm if ebitda_norm > 0 else None
     juros, juros_fonte = juros_do_periodo(ltm)
@@ -987,8 +991,8 @@ def avaliar(emp: Industrial, mk: Mercado) -> dict:
     mb = beneish(d1, d0)
     sl = sloan(d1, d0)
 
-    # lucro normalizado por ação (para Graham, Lynch, Bogle): NOPAT normalizado − juros líquidos normalizados após IR
-    lucro_norm = r["nopat"] - r["kd"] * r["dl"] * (1 - r["aliquota"])   # dívida líquida negativa (caixa) soma receita financeira
+    # lucro normalizado por ação (para Graham, Lynch, Bogle): NOPAT normalizado (R$ de hoje) − juros reais líquidos após IR (PR4-05 / F3-01a)
+    lucro_norm = r["nopat"] - r["kd_real"] * r["dl"] * (1 - r["aliquota"])   # dívida líquida negativa (caixa) soma receita financeira real
     lpa_norm = lucro_norm / n
     vpa = (v(ltm, "pl", 0) - r["proventos_ja_ex"]["no_pl"] - v(ltm, "nao_controladores", 0)) / n
     graham_orig = math.sqrt(22.5 * lpa_norm * vpa) if lpa_norm > 0 and vpa > 0 else None

@@ -162,10 +162,11 @@ def test_6_fase_34_na_perpetuidade_e_beneficio_em_valor_presente():
     r = M.valores(fase, MK)
     pre = r["op"]["receita_meio"] * (r["m"] + r["op"]["ajuste_manut"])
     w = r["wacc_real"]
-    # base = lucro DEPOIS dos juros normalizados (o WACC já dá a dedução dos juros a 34%); teto = crédito observado
-    anual = min((pre - r["kd"] * max(r["dl"], 0.0)) * (0.34 - 0.05), M.credito_observado(fase))
+    w_nom = r["wacc"]
+    # base = lucro DEPOIS dos juros reais normalizados (PR4-05 / F3-01a); teto = crédito observado em R$ de hoje; desconto nominal (F3-01b)
+    anual = min((pre - r["kd_real"] * max(r["dl"], 0.0)) * (0.34 - 0.05), M.credito_observado(fase))
     assert anual > 0
-    pv = sum(anual / (1 + w) ** t for t in range(1, 5))
+    pv = sum(anual / (1 + w_nom) ** t for t in range(1, 5))
     assert r["nopat"] == pytest.approx(pre * 0.66)
     assert r["anc"]["EPV"] == pytest.approx((pre * 0.66 / w + pv - r["dl"] - r["minor"]) / r["n"])
     assert r["beneficio_fiscal_acao"] == pytest.approx(pv / r["n"])
@@ -317,5 +318,26 @@ def test_6_caixa_liquido_nao_aumenta_a_base_do_beneficio():
     r = M.valores(fase, MK)
     assert r["dl"] < 0
     pre = r["op"]["receita_meio"] * (r["m"] + r["op"]["ajuste_manut"])
-    esperado = sum(min(pre * (0.34 - 0.05), M.credito_observado(fase)) / (1 + r["wacc_real"]) ** t for t in range(1, 5))
+    esperado = sum(min(pre * (0.34 - 0.05), M.credito_observado(fase)) / (1 + r["wacc"]) ** t for t in range(1, 5))
     assert r["beneficio_fiscal_acao"] * r["n"] == pytest.approx(esperado)
+
+
+def test_pr4_05_consistencia_real_nominal_lpa_norm_beneficio_fiscal_e_ebitda_norm():
+    """PR4-05 (F3-01a, F3-01b, F3-07):
+    (1) lpa_norm subtrai juros REAIS (kd_real * dl) do NOPAT real, e não juros nominais;
+    (2) credito_observado vai a R$ de hoje por deflator_exercicio;
+    (3) ebitda_norm deflaciona a D&A dos 3 últimos exercícios para R$ de hoje."""
+    from statistics import median
+    _serie("TESTEPR405", emprest_lp=5_000.0, caixa=1_000.0, ir=-75.0)
+    emp = _emp("TESTEPR405", aliquota_fase={"ate": 2030, "fonte": "teste"})
+    r = M.avaliar(emp, MK)
+    assert r["kd_real"] == pytest.approx((1 + r["kd"]) / (1 + MK.pi) - 1)
+    assert r["lpa_norm"] == pytest.approx((r["nopat"] - r["kd_real"] * r["dl"] * (1 - r["aliquota"])) / r["n"])
+    # se usasse kd nominal como antes, o LPA normalizado seria artificialmente menor:
+    lpa_antigo = (r["nopat"] - r["kd"] * r["dl"] * (1 - r["aliquota"])) / r["n"]
+    assert r["lpa_norm"] > lpa_antigo
+    # D&A normalizada no EBITDA usa deflator_exercicio dos 3 últimos anos:
+    da_real = median(500.0 * DEFLATOR[str(a)] for a in (2023, 2024, 2025))
+    assert r["ebitda_norm"] == pytest.approx(r["op"]["receita_meio"] * r["m"] + da_real)
+    assert r["ebitda_norm"] > r["op"]["receita_meio"] * r["m"] + 500.0
+

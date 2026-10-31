@@ -25,3 +25,4 @@
 - 2026-10-20 12:00 — B30: P/L histórico das NF estendido a 2016-19 pelo LPA básico da classe (DRE 3.99, CVM) com trava de 25% nas ações implícitas e ano fora se evento torna ambígua a base do LPA; hall e dossiê pela mesma função -> só o Bogle de 8 tickers. B31: alíquotas TIMS3 2021-23 e WPU0662 conferidas na fonte, sem mudar número. 0 trocas de palavra.
 - 2026-10-30 23:36 — PR4-03 (F3-03a / A1, camada 2): desconto do controlador fora do ponto fixo do WACC
 - 2026-10-30 23:51 — PR4-04 (F3-03b / H2): divida liquida max(DL, 0) no WACC/Hamada e teto D/E = 2.5x
+- 2026-10-31 00:02 — PR4-05 (F3-01 + F3-07): consistencia real/nominal em lpa_norm, beneficio_fiscal e ebitda_norm

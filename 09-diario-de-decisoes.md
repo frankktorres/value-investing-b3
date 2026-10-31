@@ -1086,3 +1086,15 @@ Em `motor_nao_financeiras.py`, o peso da dívida $D$ em `wacc()` e na alavancage
 | VIVT3 | R$ 16,92 | CARA | R$ 16,56 | CARA | Redução de $D$ pelo caixa no WACC/Hamada. |
 | WEGE3 | R$ 11,08 | CARA | R$ 10,74 | CARA | Caixa líquido ($D = 0$): WACC igual ao $K_e$ desalavancado. |
 Nenhuma ordem de compra ou venda decorre desta entrada.
+
+## 30/10/2026 — PR4-05 (F3-01 + F3-07): consistência real vs. nominal em `lpa_norm`, `beneficio_fiscal` e `ebitda_norm` (0 palavras mudaram; 2 centrais mudaram: HYPE3 15,66 → 15,96; PRIO3 45,07 → 44,78)
+Três correções de consistência de moeda em `motor_nao_financeiras.py` (Damodaran, 2006, *Damodaran on Valuation*, 2ª ed., Cap. 2; Brealey, Myers & Allen, 2020, Cap. 6):
+1. **`F3-01a` (`lpa_norm` e `lair_norm`):** como `nopat` e `lucro_pre_ir` já estão em R$ reais de hoje (`receita_meio` deflacionada), os juros subtraídos sobre a dívida líquida passam a usar a taxa de juros **real** $K_{d,\text{real}} = (1 + K_d)/(1 + \pi) - 1$ em vez da nominal $K_d$. Antes, a inflação sobre o principal da dívida era subtraída duas vezes, deprimindo artificialmente o `lpa_norm` e o retorno Bogle de empresas alavancadas (`SLCE3` −8,1% → +5,9%, `SMTO3` +1,9% → +10,1%).
+2. **`F3-01b` (`credito_observado` e `beneficio_fiscal`):** `credito_observado` é deflacionado para a data-base por `deflator_exercicio`, e a fase de benefício fiscal com prazo (`HYPE3` ágio até 2030, `PRIO3` prejuízo fiscal até 2032 — estoques fiscais fixados em R$ nominais, sem correção por IPCA) passa a ser descontada à taxa **nominal** (`w_nom` na firma, `ke_nom` no acionista).
+3. **`F3-07` (`ebitda_norm`):** a mediana de 3 anos da D&A somada ao EBIT normalizado (em R$ de hoje) passa a deflacionar cada ano por `deflator_exercicio`.
+**Efeito medido no Hall (41 tickers):**
+| Ticker | Central antes | Palavra antes | Central depois | Palavra depois | Causa |
+|---|---:|---|---:|---|---|
+| HYPE3 | R$ 15,66 | CARA | R$ 15,96 | CARA | `lair_norm` com $K_{d,\text{real}}$ deixa de cortar o benefício fiscal de ágio abaixo do crédito observado; efeito supera o desconto nominal de 4 anos. |
+| PRIO3 | R$ 45,07 | CARA | R$ 44,78 | CARA | Desconto do benefício fiscal de prejuízo acumulado (até 2032) ao WACC nominal (`w_nom`) em vez do real (`w_real`). |
+*(Demais 39 empresas: central e palavra inalterados; 9 industriais com atualização de `bogle_nom` por `lpa_norm` em base real).* Nenhuma ordem de compra ou venda decorre desta entrada.
