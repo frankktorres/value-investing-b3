@@ -470,15 +470,73 @@ def test_dado_critico_ausente_nunca_da_palavra_de_decisao(tk, campo, f):
     _confere_ausente(tk, campo, f)
 
 
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason="H10 aceita (22/10): sem caixa, dívida, PL, D&A ou imobilizado o motor publica palavra de decisão "
-                          "(motor_nao_financeiras.py:176-177, 214, 250, 273-277, 287, 297); corrige na Fase 3")
 @seed(SEMENTE)
 @_cfg(max(N_IND, 20), phases=[Phase.explicit, Phase.reuse, Phase.generate])
 @example(tk="WEGE3", campo="da", f=0.6)
 @given(tk=st.sampled_from(_ind()), campo=st.sampled_from(H10_ABERTOS), f=st.floats(0.5, 1.05))
 def test_h10_dado_critico_ausente_nunca_da_palavra_de_decisao(tk, campo, f):
+    """H10 (Fase 3): os campos que davam zero silencioso agora viram NÃO CONCLUSIVO (`M.criticos_ausentes`)."""
     _confere_ausente(tk, campo, f)
+
+
+def test_h10_zero_declarado_continua_valendo_e_ausente_vira_nao_conclusivo():
+    """Ausente ≠ zero (VALIDACAO §5): caixa = 0 informado pela fonte não é recusa; caixa sem a chave no LTM é."""
+    tk = _ind()[0]
+    serie = copy.deepcopy(M.CVM[tk])
+    ltm = M.ltm_de(serie)
+    assert M.criticos_ausentes(tk) == []
+    for chave, esperado in ((0.0, []), (None, ["caixa"])):
+        ltm2 = dict(ltm)
+        if chave is None:
+            ltm2.pop("caixa", None)
+        else:
+            ltm2["caixa"] = chave
+        with mock.patch.object(M, "serie", lambda t, _l=ltm2: (serie["anual"], _l)):
+            assert M.criticos_ausentes(tk) == esperado
+    # dívida: só é ausente sem CP E sem LP (empresa sem LP informa só a CP)
+    ltm3 = {k: x for k, x in ltm.items() if k != "emprest_lp"}
+    with mock.patch.object(M, "serie", lambda t: (serie["anual"], ltm3)):
+        assert M.criticos_ausentes(tk) == []
+    ltm4 = {k: x for k, x in ltm3.items() if k != "emprest_cp"}
+    with mock.patch.object(M, "serie", lambda t: (serie["anual"], ltm4)):
+        assert M.criticos_ausentes(tk) == ["divida"]
+
+
+def test_h10_razao_do_nao_conclusivo_nomeia_o_campo():
+    tk = next(t for t in _ind() if _base(t)["palavra"] != "NÃO CONCLUSIVO")
+    with _serie(tk, _sem_campo(M.CVM[tk], ("imobilizado",))):
+        r = _avaliar(_empresas()[tk])
+    assert r["palavra"] == "NÃO CONCLUSIVO" and r["dado_critico_ausente"][0] == "imobilizado"
+    assert "dado crítico ausente: imobilizado" in r["confianca"]
+
+
+@seed(SEMENTE)
+@_cfg(max(N_IND, 20))
+@given(tk=st.sampled_from(_ind()), campo=st.sampled_from(M.CRITICOS_ANO), i=st.integers(0, 9), f=st.floats(0.5, 1.05))
+def test_o3b_campo_ausente_num_exercicio_da_janela_nunca_da_palavra_de_decisao(tk, campo, i, f):
+    """O3b: o campo some de UM exercício da janela das âncoras (o LTM fica) → nunca BARATA/RADAR/JUSTA."""
+    anos = M.premissas_operacionais(_empresas()[tk])["anos"]
+    ano = anos[i % len(anos)]
+    nova = copy.deepcopy(M.CVM[tk])
+    nova["anual"][ano].pop(campo, None)
+    emp = _empresas()[tk]
+    with _serie(tk, nova):
+        r = _avaliar(emp)
+        if r is None or not (r["central"] > 0):
+            return
+        r = _avaliar(replace(emp, preco=f * r["central"]))
+    assert r is None or r["palavra"] not in DECISAO, (tk, campo, ano, f, r["palavra"])
+    assert r is None or f"{campo} ({ano})" in r["dado_critico_ausente"]
+
+
+def test_o3b_ebit_ausente_no_ltm_falha_alto():
+    """EBIT sem chave no LTM não vira zero: o motor recusa com erro (nenhuma palavra sai)."""
+    tk = _ind()[0]
+    nova = copy.deepcopy(M.CVM[tk])
+    nova["ltm"].pop("ebit", None)
+    with _serie(tk, nova), pytest.raises(KeyError):
+        with _rapido():
+            M.avaliar(_empresas()[tk], MK)
 
 
 # ================================================================ §5 (D5.09): o desconto do controlador entra uma vez, no valor

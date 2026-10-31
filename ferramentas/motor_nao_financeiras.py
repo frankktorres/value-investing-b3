@@ -179,6 +179,25 @@ def anos_validos(tk, anos):
     return [x for x in anos if a.get(x, {}).get("receita")]
 
 
+# H10 (oráculo, Fase 3; docs/VALIDACAO.md §5): campo do balanço/DFC que o motor lê do LTM com `v(..., 0)`. Ausente
+# no LTM = o zero entrava calado no central (caixa, dívida, PL, D&A, imobilizado). Presente e igual a 0 continua valendo.
+CAMPOS_CRITICOS = {"caixa": ("caixa",), "divida": ("emprest_cp", "emprest_lp"), "pl": ("pl",), "da": ("da",),
+                   "imobilizado": ("imobilizado",)}
+# O3b: nos exercícios da janela das âncoras o motor lê PL, D&A e imobilizado do ano (OE, capex de manutenção, ROIC anual);
+# ausente num deles = o mesmo zero silencioso. (EBIT ausente não é zero calado: `ebit_aj` lê d["ebit"] e falha alto.)
+CRITICOS_ANO = ("pl", "da", "imobilizado")
+
+
+def criticos_ausentes(tk, anos=()) -> list[str]:
+    """Campos críticos sem nenhuma das suas chaves no LTM (dívida: nem CP nem LP) e, para cada exercício de `anos` (a janela das
+    âncoras), os de CRITICOS_ANO ausentes no ano ("da (2019)"). Lista vazia = tudo presente."""
+    a, ltm = serie(tk)
+    falta = [c for c, chaves in CAMPOS_CRITICOS.items() if all(ltm.get(k) is None for k in chaves)]
+    for ano in anos:
+        falta += [f"{c} ({ano})" for c in CRITICOS_ANO if a.get(ano, {}).get(c) is None]
+    return falta
+
+
 def divida_liquida(b):
     bruta = v(b, "emprest_cp", 0) + v(b, "emprest_lp", 0) + v(b, "arrendamento", 0)   # IFRS 16 é dívida
     caixa = v(b, "caixa", 0) + v(b, "aplic_cp", 0)
@@ -996,6 +1015,10 @@ def avaliar(emp: Industrial, mk: Mercado) -> dict:
     p_trava = aplicar_trava(p0, p, trava, emp.trava_razao)
     if p_trava != p:
         p, conf = p_trava, "não conclusivo (trava de coerência, §9)"
+    # H10: dado crítico ausente nunca vira palavra de decisão — o central acima saiu com 0 no lugar do campo e não vale
+    ausentes = criticos_ausentes(emp.ticker, r["op"]["anos"])
+    if ausentes:
+        p, conf = "NÃO CONCLUSIVO", "não conclusivo (dado crítico ausente: " + ", ".join(ausentes) + ")"
 
     peg = (pl_atual / (100 * g_nom)) if pl_atual else None
     pegy = (pl_atual / (100 * (g_nom + dy))) if pl_atual else None
@@ -1039,7 +1062,7 @@ def avaliar(emp: Industrial, mk: Mercado) -> dict:
                 so_com_rerating=rf != rf_inv, carimbo_rf=bogle_liq_real < mk.rf_liq_real, trava=trava, peg=peg, pegy=pegy,
                 ke_implicito=ke_implicito(emp, mk, ep), g_implicito=g_implicito(emp, mk, ep), sens=sens,
                 ke_real_emp=mk.ke_real, ke_nom_emp=mk.ke_nom, premio_ke=mk.premio, de_peso=r["d"] / ep,
-                ponto_fixo=ec["ponto_fixo"], ponto_fixo_nota=ec["nota"],
+                ponto_fixo=ec["ponto_fixo"], ponto_fixo_nota=ec["nota"], dado_critico_ausente=ausentes,
                 # AUD-51: mediana efetiva a menos de 1 p.p. do limiar de 15% (degrau deliberado da v2.3 para 34%) — só aviso
                 aliquota_perto_do_limiar=(r["aliquota_regra"] in ("mediana", "permanente", "sem_origem")
                                           and r["aliquota_mediana"] is not None

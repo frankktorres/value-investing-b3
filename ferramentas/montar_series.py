@@ -40,12 +40,16 @@ def series(tk: str, dia: str):
         })
     dpa_ano = defaultdict(float)
     jcp_ano = defaultdict(float)
+    sem_valor = []
     for e in eventos:
         try:
             ano = datetime.strptime(e["data_com"], "%d/%m/%Y").year
         except (TypeError, ValueError):
             continue
-        v = e["valor"] or 0
+        v = e["valor"]
+        if v is None:            # O3b (H10): provento sem valor não soma 0 calado — fica listado à parte
+            sem_valor.append(e)
+            continue
         dpa_ano[ano] += v
         if e["tipo"] and "JCP" in e["tipo"].upper():
             jcp_ano[ano] += v
@@ -61,6 +65,7 @@ def series(tk: str, dia: str):
         "dpa_por_ano_datacom": dict(sorted(dpa_ano.items())),
         "jcp_por_ano_datacom": dict(sorted(jcp_ano.items())),
         "eventos": eventos,
+        "eventos_sem_valor": sem_valor,
     }
 
 
