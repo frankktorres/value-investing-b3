@@ -36,10 +36,14 @@ def coletar(tk: str):
         r = requests.post("https://statusinvest.com.br/acao/indicatorhistoricallist",
                           data={"codes[]": t, "time": "5", "byQuarter": "false", "futureData": "false"},
                           headers={**H, "Referer": f"https://statusinvest.com.br/acoes/{t}"}, timeout=40)
+        if r.status_code != 200:
+            raise RuntimeError(f"falhou ({r.status_code}): indicatorhistoricallist {tk}")
+        json.loads(r.text)
         alvo.write_text(r.text, encoding="utf-8")
     alvo = BASE / f"{tk}_proventos.json"
     if not alvo.exists():
         r = _get(f"https://statusinvest.com.br/acao/companytickerprovents?ticker={tk}&chartProventsType=2")
+        json.loads(r.text)
         alvo.write_text(r.text, encoding="utf-8")
     alvo = BASE / f"{tk}_pagina.json"
     if not alvo.exists():

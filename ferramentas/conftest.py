@@ -17,8 +17,9 @@ def pytest_runtest_makereport(item, call):
     rep = (yield).get_result()
     if os.environ.get("EXIGIR_DADOS") == "1" and rep.skipped and not hasattr(rep, "wasxfail"):
         motivo = rep.longrepr[2] if isinstance(rep.longrepr, tuple) else str(rep.longrepr)
-        rep.outcome = "failed"
-        rep.longrepr = f"EXIGIR_DADOS=1: teste pulado ({motivo}); baixe os dados (bootstrap_dados.py / backtest/*) ou rode sem a variável"
+        if not any(k in motivo for k in ("POSIX", "os.name", "sys.platform")):
+            rep.outcome = "failed"
+            rep.longrepr = f"EXIGIR_DADOS=1: teste pulado ({motivo}); baixe os dados (bootstrap_dados.py / backtest/*) ou rode sem a variável"
 
 
 @pytest.hookimpl(hookwrapper=True)

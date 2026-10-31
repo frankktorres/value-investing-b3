@@ -140,11 +140,12 @@ def commit_wip(itens, msg):
 def main():
     if os.environ.get("CLAUDE_CODE_REMOTE"):
         return "nuvem: hook desligado"
-    try:
-        if json.load(sys.stdin).get("stop_hook_active"):
-            return "stop_hook_active"
-    except Exception:
-        pass
+    if not DRY and not sys.stdin.isatty():
+        try:
+            if json.load(sys.stdin).get("stop_hook_active"):
+                return "stop_hook_active"
+        except Exception:
+            pass
     if git("rev-parse", "--abbrev-ref", "HEAD").stdout.strip() != RAMO:
         return f"fora de {RAMO}: nada feito"
     itens = alterados()
@@ -153,8 +154,13 @@ def main():
     achados = varrer_segredo(itens)
     if achados:
         return "BLOQUEADO por varredura de segredo/dado pessoal:\n  " + "\n  " .join(achados)
+    protegidos = ("ferramentas/tests/golden.json", "01-doutrina-value-investing.md", "03-hall-de-acoes.md")
+    tem_delecao = any("D" in st for st, _ in itens)
+    tem_protegido = any(c.replace("\\", "/") in protegidos for _, c in itens)
     cmd, motivo = testes_dos_modulos(itens)
-    if cmd is None:
+    if tem_delecao or tem_protegido:
+        destino, info = "wip", "deleção ou arquivo protegido alterado (requer revisão antes do master)"
+    elif cmd is None:
         destino, info = "wip", f"sem teste verificável ({motivo})"
     elif cmd:
         ok, saida = rodar_testes(cmd)

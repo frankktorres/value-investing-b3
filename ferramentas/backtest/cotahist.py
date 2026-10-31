@@ -125,7 +125,16 @@ def ler_ano(ano: int) -> pd.DataFrame:
     n = 0
     for n, bruta in enumerate(_linhas(ano), start=1):
         if len(bruta) != TAMANHO:
-            raise ValueError(f"COTAHIST {ano} linha {n}: {len(bruta)} bytes, esperado {TAMANHO}")
+            try:
+                reenc = bruta.decode("utf-8").encode("latin-1") if len(bruta) > TAMANHO else b""
+            except UnicodeError:
+                reenc = b""
+            if len(reenc) == TAMANHO:
+                bruta = reenc
+            elif len(bruta) > TAMANHO and bruta[0:2] == b"01" and (bruta[10:12].decode("ascii", "ignore") not in BDI_UNIVERSO or bruta[24:27] != b"010"):
+                continue
+            else:
+                raise ValueError(f"COTAHIST {ano} linha {n}: {len(bruta)} bytes, esperado {TAMANHO}")
         tip = bruta[0:2]
         if tip == b"00":
             if bruta[2:15].decode("latin-1") != f"COTAHIST.{ano}":

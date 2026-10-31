@@ -26,6 +26,7 @@ def guardar(arquivo: Path, rotulo: str, novo: bytes | None = None, raiz: Path = 
 
     Devolve o caminho da cópia, ou None se não havia o que guardar."""
     arquivo = Path(arquivo)
+    arquivo.parent.mkdir(parents=True, exist_ok=True)
     if not arquivo.exists():
         return None
     atual = arquivo.read_bytes()

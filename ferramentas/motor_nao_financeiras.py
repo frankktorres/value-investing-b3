@@ -19,6 +19,7 @@ from defasagem import defasagem_meses
 from inflacao import DEFLATOR, deflator_ltm, deflator_periodo, fator_entre, fator_idade, inflacao_do_ano, reposicao
 from juros import juros_do_periodo
 from proventos_ex import ajuste_b3
+import proventos_hall
 from motor_financeiras import (ANOS_ROIC_MINIMO, HORIZONTE, IR_JCP, NOTA_QUALIDADE_MINIMA, ORDEM, PREMIO_KE, TRAVA_PP, Mercado,
                                aplicar_trava, descontar, falta_razao_desconto,
                                interp, liquido_diferido, media_qualitativa, nota_preco, nota_spread, nota_yield, palavra,
@@ -27,6 +28,15 @@ from motor_financeiras import (ANOS_ROIC_MINIMO, HORIZONTE, IR_JCP, NOTA_QUALIDA
 AQUI = pathlib.Path(__file__).parent
 CVM = series_vigente.carregar_cvm()     # AUD-103: com o LTM da temporada por cima, quando houver
 SI = series_vigente.carregar()
+# fase 3, fatia 2: DPA/JCP das não financeiras do hall da B3 (A), no carregamento — nenhum lote corrige o SI depois
+proventos_hall.aplicar(SI)
+for _tk, _por_ano in json.loads((AQUI / "dados" / "derivados_zip.json").read_text(encoding="utf-8")).get("lote4.arrendamento_pago", {}).items():
+    if _tk in CVM and "anual" in CVM[_tk]:
+        for _a, _v in _por_ano.items():
+            CVM[_tk]["anual"].setdefault(_a, {})["arrendamento_pago"] = _v
+if "TIMS3" in CVM and "2020" in CVM["TIMS3"].get("anual", {}) and "2022" in CVM["TIMS3"]["anual"]:
+    _t = CVM["TIMS3"]["anual"]
+    _t.setdefault("2021", {})["arrendamento_pago"] = (_t["2020"].get("arrendamento_pago", 0.0) + _t["2022"].get("arrendamento_pago", 0.0)) / 2
 ANOS = [str(a) for a in range(2016, 2026)]
 LIMITE_QUEBRA = 0.25      # §11.4: divergência entre a mediana de 5 anos e a da janela que levanta suspeita de quebra
 JANELA_MINIMA_SAIDA = 10  # §9: a exceção de qualidade exige histórico de ciclo inteiro; janela curta não a permite
@@ -784,6 +794,8 @@ def valores(emp: Industrial, mk: Mercado, ke_nom=None, margem=None, g_real=None,
 
 def qualifica_saida(anos_serie: int, anos_acima: int, nota_qualidade: float) -> bool:
     """§9, exceção de saída a 1,50×: série com ao menos 10 exercícios, ROIC real > WACC real em 8 deles e nota de qualidade ≥ 8."""
+    if anos_serie < 0 or anos_acima < 0 or anos_acima > anos_serie:      # N7: mais anos acima do que a série tem é dado impossível
+        raise ValueError(f"qualifica_saida: anos acima ({anos_acima}) fora de 0..{anos_serie} (anos da série)")
     return (anos_serie >= JANELA_MINIMA_SAIDA and anos_acima >= ANOS_ROIC_MINIMO
             and nota_qualidade >= NOTA_QUALIDADE_MINIMA)
 
@@ -818,6 +830,9 @@ def roic_por_ano(emp: Industrial, w_real, t_ef, med_outras):
 
 def central_de(anc):
     vals = list(anc.values())
+    ruins = [k for k, x in anc.items() if not isinstance(x, (int, float)) or isinstance(x, bool) or not math.isfinite(x)]
+    if not vals or ruins:    # N7: NaN na mediana depende da ordem das âncoras
+        raise ValueError(f"central_de: âncora(s) inválida(s) (NaN/inf/ausente): {ruins or 'nenhuma âncora'}")
     return median(vals), vals
 
 
