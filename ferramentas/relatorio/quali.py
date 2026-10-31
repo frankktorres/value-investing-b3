@@ -26,12 +26,51 @@ ANO_FRE = 2026
 # N11 (22/10/2026): CNPJ de `triagem/dados/triagem_2026-10-02.csv` (EGIE3 conferido no cadastro da CVM); pregão `None` = ainda não
 # confirmado na API da B3 (tradingName) — a rede da nuvem barra b3.com.br (403), então não se grava palpite: o bloco de proventos
 # avisa e o FRE já aparece. Confirmar na máquina do Frank: TAEE11 (TAESA?), ITUB4 (ITAUUNIBANCO?), EGIE3, SAPR11.
-CADASTRO = {"BBSE3": ("17.344.597/0001-94", "BBSEGURIDADE"),
-            "PETR4": ("33.000.167/0001-01", "PETROBRAS"),             # pregão de proventos_ex.PREGAO (usado no hall)
-            "EGIE3": ("02.474.103/0001-19", None),
-            "TAEE11": ("07.859.971/0001-30", None),
-            "ITUB4": ("60.872.504/0001-23", None),
-            "SAPR11": ("76.484.013/0001-45", None)}
+# F1-05 (30/10/2026): CADASTRO expandido para cobrir todos os 41 tickers do Hall com CNPJ oficial da CVM (`triagem_2026-10-02.csv` /
+# `cvm_series.json`, nota A) e nome de pregão conferido em `proventos_ex.PREGAO` (tickers sem pregão conferido na API da B3 ficam com `None`).
+CADASTRO = {
+    "ABCB4": ("28.195.667/0001-06", "ABC BRASIL"),
+    "ABEV3": ("07.526.557/0001-00", "AMBEV SA"),
+    "B3SA3": ("09.346.601/0001-25", "B3"),
+    "BBAS3": ("00.000.000/0001-91", "BRASIL"),
+    "BBDC4": ("60.746.948/0001-12", None),
+    "BBSE3": ("17.344.597/0001-94", "BBSEGURIDADE"),
+    "BRBI11": ("10.739.356/0001-03", None),
+    "BRSR6": ("92.702.067/0001-96", None),
+    "CMIG4": ("17.155.730/0001-64", None),
+    "CPFE3": ("02.429.144/0001-93", None),
+    "CPLE3": ("76.483.817/0001-20", None),
+    "CSMG3": ("17.281.106/0001-03", None),
+    "CXSE3": ("22.543.331/0001-00", None),
+    "EGIE3": ("02.474.103/0001-19", None),
+    "FLRY3": ("60.840.055/0001-31", "FLEURY"),
+    "GGBR4": ("33.611.500/0001-19", "GERDAU"),
+    "HYPE3": ("02.932.074/0001-91", "HYPERA"),
+    "ISAE4": ("02.998.611/0001-04", "ISA ENERGIA"),
+    "ITSA4": ("61.532.644/0001-15", "ITAUSA"),
+    "ITUB4": ("60.872.504/0001-23", None),
+    "KEPL3": ("91.983.056/0001-69", "KEPLER WEBER"),
+    "KLBN11": ("89.637.490/0001-45", "KLABIN SA"),
+    "LEVE3": ("60.476.884/0001-87", "METAL LEVE"),
+    "PETR4": ("33.000.167/0001-01", "PETROBRAS"),
+    "PRIO3": ("10.629.105/0001-68", "PETRORIO"),
+    "PSSA3": ("02.149.205/0001-69", None),
+    "RANI3": ("92.791.243/0001-03", "IRANI"),
+    "RECV3": ("03.342.704/0001-30", "PETRORECSA"),
+    "SANB11": ("90.400.888/0001-42", None),
+    "SAPR11": ("76.484.013/0001-45", None),
+    "SBSP3": ("43.776.517/0001-80", None),
+    "SLCE3": ("89.096.457/0001-55", "SLC AGRICOLA"),
+    "SMTO3": ("51.466.860/0001-56", "SAO MARTINHO"),
+    "SUZB3": ("16.404.287/0001-55", "SUZANO S.A."),
+    "TAEE11": ("07.859.971/0001-30", None),
+    "TIMS3": ("02.421.421/0001-11", "TIM"),
+    "UGPA3": ("33.256.439/0001-39", "ULTRAPAR"),
+    "UNIP6": ("33.958.695/0001-78", "UNIPAR"),
+    "VBBR3": ("34.274.233/0001-02", "VIBRA"),
+    "VIVT3": ("02.558.157/0001-62", "TELEF BRASIL"),
+    "WEGE3": ("84.429.695/0001-11", "WEG"),
+}
 CORTE_BENEISH, CORTE_SLOAN, CORTE_COBERTURA, CORTE_DL_EBITDA = -1.78, 0.10, 1.5, 3.0
 CORTE_DISPERSAO, CORTE_DILUICAO, CORTE_DEFASAGEM = 1.8, 0.02, 12.0
 INFO_CORTE = "informativo — corte do relatório (heurística do projeto, sem fonte)"

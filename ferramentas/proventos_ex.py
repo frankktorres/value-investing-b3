@@ -37,7 +37,8 @@ PREGAO = {"SUZB3": "SUZANO S.A.", "KLBN11": "KLABIN SA", "RANI3": "IRANI", "B3SA
           # carteira (painel `relatorio CARTEIRA`, renda de 12 meses); NOMRES conferido no COTAHIST de 15/10/2026
           "BBAS3": "BRASIL", "BBSE3": "BBSEGURIDADE", "ABCB4": "ABC BRASIL", "ITSA4": "ITAUSA", "ISAE4": "ISA ENERGIA"}
 CLASSE = {"PETR4": "PN", "GGBR4": "PN", "FESA4": "PN", "SHUL4": "PN", "UNIP6": "PNB", "KLBN11": "UNT",
-          "ABCB4": "PN", "ITSA4": "PN", "ISAE4": "PN"}   # classe do ticker avaliado; o resto é ON
+          "ABCB4": "PN", "ITSA4": "PN", "ISAE4": "PN", "ITUB4": "PN", "BBDC4": "PN", "CMIG4": "PN",
+          "BRSR6": "PNB", "BRBI11": "UNT", "SANB11": "UNT", "SAPR11": "UNT", "TAEE11": "UNT"}   # classe do ticker avaliado; o resto é ON
 
 
 def data_do_preco() -> str:

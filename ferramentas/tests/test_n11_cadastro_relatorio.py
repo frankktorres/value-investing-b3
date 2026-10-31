@@ -35,3 +35,14 @@ def test_pregao_nao_conferido_nao_e_chutado(tk):
 
 def test_ticker_desconhecido_continua_sem_cadastro():
     assert quali._cadastro({"tk": "XXXX3"}) == (None, None)
+
+
+def test_f1_05_cadastro_cobre_todos_os_41_tickers_do_hall():
+    """F1-05: todos os 41 tickers do Hall possuem CNPJ oficial em relatorio.quali.CADASTRO."""
+    import json
+    golden = pathlib.Path(__file__).resolve().parent / "golden.json"
+    tks = list(json.loads(golden.read_text(encoding="utf-8"))["tickers"].keys())
+    assert len(tks) == 41
+    for tk in tks:
+        cnpj, _ = quali._cadastro({"tk": tk})
+        assert cnpj and len(cnpj) == 18, f"{tk} sem CNPJ em CADASTRO"
