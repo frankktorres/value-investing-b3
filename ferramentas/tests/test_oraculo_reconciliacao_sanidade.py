@@ -16,11 +16,12 @@ def test_status_respeita_a_tolerancia_relativa_e_a_absoluta():
     assert R._status("bp", None, 1.0)[0] == "sem_dado"                   # ausente nunca vira ok nem zero
 
 
-def test_identidade_quebrada_so_falha_em_ticker_com_palavra_de_decisao():
+def test_identidade_quebrada_falha_inclusive_em_cara_e_so_vira_bandeira_em_nao_conclusivo():
+    """F5-01: erro de identidade contábil (bp, dfc) não pode ser mascarado quando a ação é CARA; só NÃO CONCLUSIVO vira bandeira."""
     linhas = [dict(ticker="AAA", check="bp", status="divergente"), dict(ticker="BBB", check="bp", status="divergente"),
-              dict(ticker="AAA", check="div", status="divergente")]
-    out = R.classificar(linhas, {"AAA": "BARATA", "BBB": "CARA"})
-    assert [r["status"] for r in out] == ["falha", "bandeira", "bandeira"]
+              dict(ticker="CCC", check="bp", status="divergente"), dict(ticker="AAA", check="div", status="divergente")]
+    out = R.classificar(linhas, {"AAA": "BARATA", "BBB": "CARA", "CCC": "NÃO CONCLUSIVO"})
+    assert [r["status"] for r in out] == ["falha", "falha", "bandeira", "bandeira"]
 
 
 @pytest.fixture
@@ -84,14 +85,22 @@ def test_compounder_pela_serie_ou_pelo_roic_atual():
     assert math.isclose(S.KE_TETO, 0.30)
 
 
-def test_acoes_do_lote_fora_de_escala_falham_so_com_palavra_de_decisao(dfp_2025):
-    """KEPL3 2025: 173.332.000 ações no lote ≈ lucro do controlador ÷ LPA do DFP (ok). Em milhares (÷ 1000) é erro de escala:
-    falha se o motor dá palavra de decisão, bandeira se não; 5% de diferença é só bandeira (média ponderada × fim)."""
+def test_acoes_do_lote_fora_de_escala_falham_inclusive_em_cara(dfp_2025):
+    """F5-01: KEPL3 2025: 173.332.000 ações no lote ≈ lucro do controlador ÷ LPA do DFP (ok). Em milhares (÷ 1000 ou × 1000) é erro de escala:
+    falha tanto em BARATA quanto em CARA (pois multiplicar ações por 1000 joga a palavra para CARA e antes se auto-mascarava!);
+    só NÃO CONCLUSIVO fica como bandeira; 5% de diferença é só bandeira (média ponderada × fim)."""
     from dataclasses import replace
     from oraculo.sanidade import empresas
     kepl = empresas()["KEPL3"]
     st = lambda e, p: R.conferir_acoes_lote({"KEPL3": e}, {"KEPL3": p})[0]["status"]
     assert st(kepl, "CARA") == "ok"
     assert st(replace(kepl, n_acoes=kepl.n_acoes / 1000), "BARATA") == "falha"
-    assert st(replace(kepl, n_acoes=kepl.n_acoes / 1000), "CARA") == "bandeira"
+    assert st(replace(kepl, n_acoes=kepl.n_acoes * 1000), "CARA") == "falha"
+    assert st(replace(kepl, n_acoes=kepl.n_acoes / 1000), "NÃO CONCLUSIVO") == "bandeira"
     assert st(replace(kepl, n_acoes=kepl.n_acoes * 1.05), "BARATA") == "bandeira"
+
+
+def test_sanidade_central_nao_positivo_com_palavra_ativa_bloqueia():
+    """F5-01: central <= 0 em qualquer ticker fora de NÃO CONCLUSIVO é bloqueante na sanidade."""
+    c = S.checks([_l("Z", palavra="CARA", central=0.0)] + [_l(tk, ke_nom=0.5) for tk in S.CONHECIDOS])
+    assert any("Z:" in b and "central=0.0" in b for b in c["bloqueantes"])

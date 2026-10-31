@@ -154,11 +154,13 @@ def _palavras() -> dict[str, str]:
 
 
 def classificar(linhas: list[dict], palavras: dict[str, str] | None = None) -> list[dict]:
-    """divergente → falha (identidade contábil em ticker com palavra de decisão) ou bandeira (o resto)."""
+    """divergente → falha (identidade contábil quebrada em qualquer ticker avaliado, salvo NÃO CONCLUSIVO) ou bandeira.
+    F5-01 (30/10/2026): antes, tickers CARA rebaixavam falha para bandeira, auto-mascarando erros que jogam o papel para CARA."""
     palavras = _palavras() if palavras is None else palavras
     for r in linhas:
         if r["status"] == "divergente":
-            r["status"] = ("falha" if r["check"] in IDENTIDADES and palavras.get(r["ticker"]) in DECISAO else "bandeira")
+            p = palavras.get(r["ticker"])
+            r["status"] = ("falha" if r["check"] in IDENTIDADES and p is not None and p != "NÃO CONCLUSIVO" else "bandeira")
     return linhas
 
 
@@ -180,7 +182,8 @@ def conferir_acoes_lote(empresas: dict, palavras: dict[str, str]) -> list[dict]:
         lote = e.n_acoes * (M.CVM.get(tk) or {}).get("acoes_por_unit", 1)
         st, rel = _status("acoes_lote", lote, impl)
         if st == "divergente" and not ESCALA[0] <= lote / impl <= ESCALA[1]:
-            st = "falha" if palavras.get(tk) in DECISAO else "bandeira"
+            p = palavras.get(tk)
+            st = "falha" if p is not None and p != "NÃO CONCLUSIVO" else "bandeira"
         elif st == "divergente":
             st = "bandeira"
         out.append(dict(ticker=tk, ano=ano, check="acoes_lote", calculado=lote, esperado=impl, dif_rel=rel, status=st))

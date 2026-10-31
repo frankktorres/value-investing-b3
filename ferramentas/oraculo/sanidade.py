@@ -105,6 +105,8 @@ def checks(linhas: list[dict]) -> dict:
     for l in ok:
         if l["nao_finitos"]:
             bloq.append(f"{l['ticker']}: não finito em {', '.join(l['nao_finitos'])}")
+        if l.get("palavra") not in (None, "NÃO CONCLUSIVO") and (l["central"] is None or l["central"] <= 0):
+            bloq.append(f"{l['ticker']}: palavra {l.get('palavra')} com central={l['central']} (≤ 0)")
         if l["ke_nom"] is not None and l["ke_nom"] > KE_TETO:
             msg = f"{l['ticker']}: Ke nominal {l['ke_nom']:.1%} > teto {KE_TETO:.0%}"
             (band if l["ticker"] in CONHECIDOS else bloq).append(
