@@ -1,0 +1,33 @@
+arquivo                                                       +   - casam  veredito
+.claude/hooks/auto_commit.py                                 13   0     7  OK: pré-imagem + 6 de versão anterior do git
+03-hall-de-acoes.md                                           2   0     0  TRABALHO NOVO: 2 linha(s) nunca commitadas
+      + nunca commitada: | LEVE3 | Autopeças | 34,43 | **35,42 (onda 1.2)** | 0,97 | 24,80 | 46,05 | **Onda 1.2 (08/10): RADAR → NÃO CONCLUSIVO, central 40,27 → 36,3
+      + nunca commitada: | KLBN11 | Papel | 18,62 | **5,11 (onda 1.2)** | 3,64 | 3,58 | 6,64 | **Onda 1.2 (08/10): CARA → NÃO CONCLUSIVO, central 6,94 → 1,72** — Ke 
+_auditoria_antigravity/ACHADOS.csv                            3   0     0  OK: pré-imagem + 3 de versão anterior do git
+_auditoria_antigravity/RELATORIO.md                          15   0     0  OK: pré-imagem + 15 de versão anterior do git
+docs/PRE-REGISTRO-v4.md                                       1   0     0  OK: só pré-imagem
+ferramentas/conftest.py                                       8   0     3  OK: pré-imagem + 2 de versão anterior do git
+ferramentas/dados/cvm/MANIFESTO.json                          3   3     0  TRABALHO NOVO: 3 linha(s) nunca commitadas
+      + nunca commitada:  "atualizado_em": "2026-11-16",
+      + nunca commitada:    "sha256": "a578a832671afa859de4e6355d76f4e372814976d6fe61f8d12f14062dfd425f",
+      + nunca commitada:    "bytes": 28783604
+      - removida:  "atualizado_em": "2026-10-25",
+      - removida:    "sha256": "eaac6b78aaf0dc38f337158480e401f2606057760694dd37c8d16da784f71881",
+      - removida:    "bytes": 19947514
+ferramentas/lote3_agro.py                                     4   0     4  OK: só pré-imagem
+ferramentas/lote4_saude_telecom.py                            3   0     3  OK: só pré-imagem
+ferramentas/lote6_quimica.py                                  2   0     2  OK: só pré-imagem
+ferramentas/montar_series.py                                  1   0     1  OK: só pré-imagem
+ferramentas/motor_nao_financeiras.py                         38   0    38  OK: só pré-imagem
+ferramentas/oraculo/hipoteses.py                              1   0     1  OK: só pré-imagem
+ferramentas/oraculo/matriz.py                                 4   0     4  OK: só pré-imagem
+ferramentas/oraculo/reconciliacao.py                          3   0     3  OK: só pré-imagem
+ferramentas/oraculo/sanidade.py                               2   0     2  OK: só pré-imagem
+ferramentas/proventos_ex.py                                   1   0     1  OK: só pré-imagem
+ferramentas/pytest.ini                                        1   0     0  OK: só pré-imagem
+ferramentas/relatorio/quali.py                                6   0     6  OK: só pré-imagem
+ferramentas/tests/test_doutrina_v23.py                        4   0     4  OK: só pré-imagem
+ferramentas/tests/test_o3b_montar_series.py                   1   0     0  OK: só pré-imagem
+ferramentas/tests/test_oraculo_propriedades.py                6   0     6  OK: só pré-imagem
+ferramentas/tests/test_oraculo_reconciliacao_sanidade.py     12   0    12  OK: só pré-imagem
+ferramentas/tests/test_parte_a_auditoria.py                   0   0     0  SÓ EOL/espaço

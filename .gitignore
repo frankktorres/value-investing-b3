@@ -40,3 +40,9 @@ ferramentas/monitor/*.log
 analisador/
 # Cópia datada do ZIP da CVM anterior à reescrita (temporada.baixar_itr); ver ferramentas/manifesto_cvm.py
 ferramentas/dados/cvm/_antes/
+# Material pessoal do Frank fora do projeto (Fase 0, 23/11/2026): livros em PDF (302 MB, um > 100 MB do GitHub),
+# notas de outro projeto (UNION, com dado de saúde) e anotações soltas. Ficam no disco, nunca no git.
+livros/
+claude tools/
+AÇÕES VALUE INVESTING.txt
+INVESTIDORES.txt
