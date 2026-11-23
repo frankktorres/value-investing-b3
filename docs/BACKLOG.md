@@ -38,6 +38,7 @@
 | B29 | Backtest: `sem_repeticao` (AUD-23) junta linhas iguais da B3 que são PARCELAS (DMPL: KLBN11, PETR4, B3SA3, TIMS3, WEGE3…) — o retorno total do ledger subconta provento; revisar antes de religar o backtest | P4 | aberto | local | 09 de 20/10 (fatia 2) |
 | B30 | P/L histórico das NF (`pl_historico`) começa em 2020: o DFP antes de 2020 não traz a composição do capital; estender 2016–19 pelo LPA básico da DRE (conta 3.99, dados abertos da CVM) e conferir que o hall e o dossiê mudam juntos (Bogle; palavra só via trava da JUSTA) | P3 | feito 20/10 (09) | executável | B15 |
 | B31 | Conferir na fonte as alíquotas ajustadas da TIMS3 de 2021–23 (DFP 2022–24, nota 8.d/35; lidas em 08/10, a mediana 18,3% é a de 2023) e a série WPU0662 (BLS) do UNIP6 — hoje B; achada → A | P3 | feito 20/10 (09) | executável | B15 |
+| B32 | Zerar a catraca de anos fixos nos lotes (`ferramentas/tests/datas_fixas_catraca.json`, 85 em 23/11): janelas de exercício (`range(2016, 2026)`), chaves `"2024"/"2025"` e nomes de ZIP (`dfp_2025.zip`, `fre_2026.zip`) saem do último DFP/LTM da CVM (`ltm.py`); a cada queda, baixar o número na catraca. **Prazo: 31/01/2027** (antes do DFP 2026) | P2 | aberto, prazo 31/01/2027 | executável | correção das datas do LTM, 23/11/2026 |
 | B27 | Relatório por empresa, fatia 2 (quali + PDF) | P2 | feito 19/10 | executável | Roteiro de 19/10 |
 | T01 | Tela v0.2: Hall, Empresa, Carteira e Monitor (HANDOFF em `docs/design/handoff-claude-code/handoff/`); falta Sistema (N4) | P2 | feita 20–21/10 | executável | Brief §5 |
 | D1 | Check-up 21/10: temporada blindada (sem download no `--gravar`, hash do ZIP, 404 = 0, aviso no .vbs) | P2 | feito 21/10 | executável | `DECISOES.md` 21/10 |
@@ -61,4 +62,4 @@
 | N14 | Rota `#/` caía em "página não existe" depois da N9 | P3 | feito 22/10 manhã (`#/` = Hall; conferido no navegador) | executável | revisor da noite 22/10 |
 
 ## Contagem por tipo
-local: 9 (B01, B02, B03, B20, B21, B28, B29, D4, N11) · decisão Frank: 7 (B04, B07, B08, B17, B18, B19, B22) · executável: 35 (B05, B06, B09, B10, B11, B12, B13, B14, B15, B16, B23, B24, B25, B26, B30, B31, B27, T01, D1, D2, D5, N1, N2, N3, N4, N5, N6, N7, N8, N9, N10, Q01, N12, N13, N14) · total 51 (= nº de IDs na tabela).
+local: 9 (B01, B02, B03, B20, B21, B28, B29, D4, N11) · decisão Frank: 7 (B04, B07, B08, B17, B18, B19, B22) · executável: 35 (B05, B06, B09, B10, B11, B12, B13, B14, B15, B16, B23, B24, B25, B26, B30, B31, B27, T01, D1, D2, D5, N1, N2, N3, N4, N5, N6, N7, N8, N9, N10, Q01, N12, N13, N14, B32) · total 52 (= nº de IDs na tabela).

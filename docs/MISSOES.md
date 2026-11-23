@@ -2,6 +2,15 @@
 *Fila de trabalho da rotina autônoma. Cada missão: executável só com o GitHub, com "pronto quando" verificável. Ao terminar, mover para "Feitas" e registrar em `RELATORIO-DIARIO.md`. Fonte: `BACKLOG.md` (tipo executável). Desde 22/10 a rotina grava no ramo `claude/*` dela; o `ferramentas/conferir_noite.py` junta no master de manhã, com os dados locais (`DECISOES.md`, 22/10).*
 
 ## Próximas (ordem de prioridade)
+
+**B32 — Zerar a catraca de anos fixos nos lotes (prazo 31/01/2027, antes do DFP 2026).** *(23/11/2026)*
+Datas de mês/dia/trimestre nos lotes já estão zeradas (tolerância zero em `tests/test_lotes_sem_data_fixa.py`). Restam os anos:
+`range(2016, 2026)`/`range(2021, 2026)` → janela a partir do último exercício do DFP na série (`CVM[tk]["anual"]`); chaves
+`"2024"/"2025"` → os 2 últimos exercícios; `dfp_2025.zip`, `itr_2025.zip`, `fre_2026.zip` → do ano do LTM (`ltm.ano_de`); início
+de janela com quebra estrutural (ex. PETR4 2019, RECV3 2020) é fato: vai para dado com `janela_razao`, não para o código.
+Junto, antes do DFP 2026: ler o balanço pelo DFP quando o LTM for 4T (`ltm.zip_itr("4T26")` falha alto hoje — ações e
+holding dos lotes 4 e 6 e ITSA4). Uma fatia por lote; golden idêntico em cada uma (refatoração pura). *Pronto quando:* `tests/datas_fixas_catraca.json` com 0 em
+todos os lotes, suíte verde com `EXIGIR_DADOS=1` e `python rodar_tudo.py` "sem mudanças".
 *Fila da madrugada de 23/10 (montada em 22/10 fim do dia): **O3 → N12 → O4 → O5**. O3 em ramo próprio (muda palavra); as
 outras no ramo da sessão. Fio condutor: `docs/PROMPT-ORACULO-E-CALIBRACAO.md` (ler "Princípios invioláveis" e as Fases 3–4
 antes de começar). Fases 0–2 feitas (9fd7159, 9e9e8ac); relatórios de 22/10 em `docs/oraculo/`.*
