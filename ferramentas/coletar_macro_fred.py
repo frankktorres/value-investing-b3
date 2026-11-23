@@ -34,7 +34,9 @@ MACRO = AQUI / "dados" / "macro"
 MANIFESTO = MACRO / "MANIFESTO_MACRO.json"
 FRED = "https://fred.stlouisfed.org/graph/fredgraph.csv?id={id}"
 SGS = "https://api.bcb.gov.br/dados/serie/bcdata.sgs.{serie}/dados?formato=json&dataInicial={ini}&dataFinal={fim}"
-H = {"User-Agent": "Mozilla/5.0"}
+# 23/11/2026: com "Mozilla/5.0" o FRED aceita a conexão e não responde (read timeout em todas as séries; o coletor morria
+# sem gravar nada). Um nome de cliente genérico responde em ~1 s. O BCB (SGS) aceita os dois.
+H = {"User-Agent": "coletor-macro/1.0 (python-requests)"}
 
 # arquivo -> (id da série no FRED, o que é e nota da fonte)
 SERIES_FRED = {
