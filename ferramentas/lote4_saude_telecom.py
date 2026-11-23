@@ -1,7 +1,7 @@
 """Lote 4 — Saúde, telecom e blue chips · data-base 02/10/2026 (preços do PDF rev. 03/10) · doutrina v2.2.
 
-Demonstrações: CVM (DFP 2016–25 + ITR, 12m até jun/2026). Preço: PDF rev. 03/10 (fechamento de 02/10). Ações: composição do capital do ITR de
-jun/2026 (CVM), sem tesouraria. Proventos: B3 por data-com (proventos_hall.py, fase 3). Controladores: FRE 2026 da CVM (posição acionária).
+Demonstrações: CVM (DFP 2016–25 + ITR, 12m do LTM vigente). Preço: PDF rev. 03/10 (fechamento de 02/10). Ações: composição do capital do ITR
+na data do balanço do LTM (CVM), sem tesouraria. Proventos: B3 por data-com (proventos_hall.py, fase 3). Controladores: FRE 2026 da CVM (posição acionária).
 Premissas declaradas ANTES do veredito:
   · IFRS 16 desde 2019: TIMS3, VIVT3 e FLRY3 têm arrendamento relevante dentro da dívida (2.01.04.03/2.02.01.03 ou linha própria). A margem de
     antes de 2019 traz o aluguel dentro do EBIT — usar essa margem E a dívida de arrendamento de hoje contaria o aluguel duas vezes. Janela da
@@ -31,7 +31,7 @@ Premissas declaradas ANTES do veredito:
     FRE 2026: 2.202,6 mi de ações diretas + 66,53% das 2.905,1 mi da IUPAR = 4.135,4 mi (37,50%). Demais participações (Alpargatas, Dexco,
     Motiva, Aegea, Copa, NTS) a valor contábil — a casa não tem valor justo delas (conservador: o PDF cita R$ 16,6 bi a mercado, marcado [H]).
 """
-from ltm import ltm_de, ltm_ref_de
+from ltm import ano_de, data_do_balanco, ltm_de, ltm_ref_de, mes_do_balanco, zip_itr
 from inflacao import DEFLATOR, deflator_ltm
 import io
 import json
@@ -42,11 +42,12 @@ import zipfile
 
 import pandas as pd
 
-from derivados_zip import obter
+import eventos
+from derivados_zip import obter, obter_na_ref
 import proventos_hall
 from pl_historico import do_hall
 from precos_hall import preco
-from insumos_a import ALIQUOTA_FASE_DFP, ACOES_ITR_JUN26, ALIQUOTA_TIMS3, G1_CVM, RECEITA_CVM, registrar
+from insumos_a import ALIQUOTA_FASE_DFP, ACOES_ITR, ALIQUOTA_TIMS3, G1_CVM, RECEITA_CVM, registrar
 from fiscal import ALIQUOTA_FASE, tims3_aliquota
 from lote1_bancos import EMPRESAS as LOTE1
 from lote1_bancos import MK
@@ -76,17 +77,21 @@ def _csv(arq, nome):
     return pd.read_csv(io.BytesIO(z.read(n)), sep=";", encoding="latin-1", dtype=str)
 
 
-def _acoes_zip(tk):
-    """Ações em circulação em 30/06/2026 (ITR, composição do capital), sem tesouraria."""
-    df = _csv("itr_2026.zip", "composicao")
-    d = df[df["DENOM_CIA"].str.upper().str.startswith(NOME_CVM[tk]) & (df["DT_REFER"] == "2026-06-30")].iloc[-1]
+def _acoes_zip(tk, ref):
+    """Ações em circulação na data do balanço do LTM (ITR, composição do capital), sem tesouraria."""
+    df = _csv(zip_itr(ref), "composicao")
+    d = df[df["DENOM_CIA"].str.upper().str.startswith(NOME_CVM[tk]) & (df["DT_REFER"] == data_do_balanco(ref))].iloc[-1]
     n = float(d["QT_ACAO_TOTAL_CAP_INTEGR"]) - float(d["QT_ACAO_TOTAL_TESOURO"])
     return reescalar_acoes(n)                  # Ambev (15,45M mil), Itaúsa (11,21M mil) e Itaú (11,02M mil) vêm em milhares (< 2e7)
 
 
-N = obter("lote4.acoes_jun26", ["itr_2026.zip"], lambda: {tk: _acoes_zip(tk) for tk in (*PRECO, "ITUB")})   # AUD-38: snapshot sem os ZIPs
+# 23/11/2026: cada ticker na data do balanço do PRÓPRIO LTM (antes fixa em 30/06/2026; na temporada a publicação é parcial e
+# o lote pode ter tickers em trimestres diferentes); o Itaú (sem série própria) vai na data do balanço da Itaúsa
+REFS4 = {tk: ltm_ref_de(CVM[tk]) for tk in PRECO} | {"ITUB": ltm_ref_de(CVM["ITSA4"])}
+N = obter_na_ref("lote4.acoes", REFS4, sorted({zip_itr(r) for r in REFS4.values()}),
+                 lambda: {tk: _acoes_zip(tk, r) for tk, r in REFS4.items()})   # AUD-38: snapshot sem os ZIPs
 for _tk in PRECO:                         # fase 3: procedência por campo (insumos_a); o número não muda
-    registrar(_tk, "acoes", N[_tk], ACOES_ITR_JUN26)
+    registrar(_tk, "acoes", N[_tk], ACOES_ITR(REFS4[_tk]))
 
 
 def _arrendamento_zip():
@@ -134,7 +139,7 @@ def receita_media(tk, anos, ltm=True):
 
 
 # ---------------------------------------------------------------- WEGE3: g do 1º estágio
-def g1_sustentavel(tk, extra_data_com="2025-12-19"):
+def g1_sustentavel(tk, extra_data_com=None):
     """g sustentável nominal = ROE mediano 2021–25 × (1 − payout recorrente mediano 2021–25), deflacionado pela π implícita.
     Fase 3, fatia 3 (20/10/2026): tudo de fonte oficial — ROE = lucro do controlador ÷ PL do controlador (PL − não
     controladores) do DFP (CVM); LPA = lucro do controlador ÷ ações do DFP; DPA por data-com da B3 (`proventos_hall`, já no SI)
@@ -144,8 +149,10 @@ def g1_sustentavel(tk, extra_data_com="2025-12-19"):
     anos = [str(x) for x in range(2021, 2026)]
     roe = st.median(a[y]["lucro_controlador"] / (a[y]["pl"] - (a[y]["nao_controladores"] or 0)) for y in anos)
     dpa = dict(SI[tk]["dpa_por_ano_datacom"])
+    fato = eventos.extraordinario(tk)            # 23/11/2026: data-com e nº de parcelas do fato, com fonte, fora do código
+    extra_data_com = extra_data_com or fato["data_com"]
     extra = [r for r in proventos_hall.proventos(tk) if r["data_com"] == extra_data_com]
-    assert len(extra) == 3, f"{tk}: extraordinário de {extra_data_com} deveria ter 3 parcelas na B3: {extra}"
+    assert len(extra) == fato["parcelas"], f"{tk}: extraordinário de {extra_data_com} deveria ter {fato['parcelas']} parcelas na B3: {extra}"
     dpa[extra_data_com[:4]] -= sum(r["valor_hoje"] for r in extra)
     lpa = {y: a[y]["lucro_controlador"] * 1000 / reescalar_acoes(a[y]["acoes"]) for y in anos}
     pay = st.median(dpa[y] / lpa[y] for y in anos)
@@ -206,29 +213,36 @@ EMPRESAS = [
 
 
 # ---------------------------------------------------------------- ITSA4 (holding)
-def itausa_individual():
-    """Controladora (individual) de 30/06/2026 e G&A de 12 meses, do ITR/DFP da CVM."""
+REF_ITSA = ltm_ref_de(CVM["ITSA4"])      # 23/11/2026: o balanço da holding e do Itaú é o da data do LTM da ITSA4 (antes 30/06/2026)
+
+
+def itausa_individual(ref=REF_ITSA):
+    """Controladora (individual) na data do balanço do LTM e G&A de 12 meses (DFP do ano anterior + acumulado do ano − acumulado
+    do ano anterior), do ITR/DFP da CVM."""
+    ano, mes, bal = ano_de(ref), f"{mes_do_balanco(ref):02d}", data_do_balanco(ref)
+
     def bp(nome):
-        d = _csv("itr_2026.zip", f"{nome}_ind_2026")
-        d = d[(d["CD_CVM"].str.zfill(6) == "007617") & (d["DT_REFER"] == "2026-06-30") & d["ORDEM_EXERC"].str.startswith("Ú")]
+        d = _csv(zip_itr(ref), f"{nome}_ind_{ano}")
+        d = d[(d["CD_CVM"].str.zfill(6) == "007617") & (d["DT_REFER"] == bal) & d["ORDEM_EXERC"].str.startswith("Ú")]
         return {r.CD_CONTA: float(r.VL_CONTA) for r in d.itertuples()}
 
-    def dre(arq, ano, mes=None):
-        d = _csv(arq, f"DRE_ind_{ano}")
+    def dre(arq, a, mes=None):
+        d = _csv(arq, f"DRE_ind_{a}")
         d = d[(d["CD_CVM"].str.zfill(6) == "007617") & d["ORDEM_EXERC"].str.startswith("Ú")]
         if mes:
-            d = d[(d["DT_REFER"].str[5:7] == mes) & (d["DT_INI_EXERC"].str[5:7] == "01")]
+            d = d[d["DT_REFER"].str[5:7] == mes]
+            d = d[d["DT_INI_EXERC"] == d["DT_INI_EXERC"].min()]      # acumulado do ano (o início de exercício mais antigo), não o trimestre
         return {r.CD_CONTA: float(r.VL_CONTA) for r in d.itertuples()}
     a, p = bp("BPA"), bp("BPP")
-    f25, y26, y25 = dre("dfp_2025.zip", 2025), dre("itr_2026.zip", 2026, "06"), dre("itr_2025.zip", 2025, "06")
-    ltm = lambda k: f25[k] + y26[k] - y25[k]
+    dfp_ant, ytd, ytd_ant = dre(f"dfp_{ano - 1}.zip", ano - 1), dre(zip_itr(ref), ano, mes), dre(f"itr_{ano - 1}.zip", ano - 1, mes)
+    ltm = lambda k: dfp_ant[k] + ytd[k] - ytd_ant[k]
     return dict(pl=p["2.03"], investimentos=a["1.02.02"], caixa=a["1.01.01"] + a["1.01.02"], divida=p["2.01.04"] + p["2.02.01"],
                 ga_12m=-ltm("3.04.02"), lucro_12m=ltm("3.11"), equivalencia_12m=ltm("3.04.06"), res_fin_12m=ltm("3.06"))
 
 
-def itau_pl_controlador():
-    d = _csv("itr_2026.zip", "BPP_con_2026")
-    d = d[(d["CD_CVM"].str.zfill(6) == "019348") & (d["DT_REFER"] == "2026-06-30") & d["ORDEM_EXERC"].str.startswith("Ú")]
+def itau_pl_controlador(ref=REF_ITSA):
+    d = _csv(zip_itr(ref), f"BPP_con_{ano_de(ref)}")
+    d = d[(d["CD_CVM"].str.zfill(6) == "019348") & (d["DT_REFER"] == data_do_balanco(ref)) & d["ORDEM_EXERC"].str.startswith("Ú")]
     v = {r.CD_CONTA: float(r.VL_CONTA) for r in d.itertuples()}
     return v["2.08"] - v["2.08.09"]
 
@@ -253,7 +267,8 @@ def _itsa_zip():
     return d
 
 
-ITSA = obter("lote4.itsa", ["itr_2026.zip", "itr_2025.zip", "dfp_2025.zip", "fre_2026.zip"], _itsa_zip)
+_A = ano_de(REF_ITSA)
+ITSA = obter_na_ref("lote4.itsa", REF_ITSA, [zip_itr(REF_ITSA), f"itr_{_A - 1}.zip", f"dfp_{_A - 1}.zip", "fre_2026.zip"], _itsa_zip)
 ITSA["pct_itau"] = ITSA["acoes_itau"] / N["ITUB"]
 ITSA["itau_contabil"] = ITSA["pct_itau"] * ITSA["pl_itau"]                 # R$ mil (equivalência ≈ % × PL do Itaú)
 ITSA["outras_contabil"] = ITSA["investimentos"] - ITSA["itau_contabil"]

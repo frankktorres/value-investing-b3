@@ -27,7 +27,7 @@ def P(t, st="cel"):
 
 gerar_pdf_lote1.P = P
 from lote1_bancos import DATA_BASE, MK
-from lote5_petroleo import (EMPRESAS, FATOR_BARRIL, FORA_DO_HALL, FX_SPOT, M, PETR_ABANDONO, PETR_ATUARIAL, PETR_CENARIOS)
+from lote5_petroleo import (EMPRESAS, FORA_DO_HALL, FX_SPOT, M, PETR_ABANDONO, PETR_ATUARIAL, PETR_CENARIOS, fator_barril)
 from lote5_textos import AGENDA, ANTES, T
 from motor_financeiras import palavra as faixa_regua
 from motor_nao_financeiras import CVM, SI, avaliar, estrutura_de_capital, valores
@@ -117,7 +117,7 @@ def extras(emp, r):
         x["vol187"] = central_nopat(emp, r, r["nopat"] * 187 / 172)
         e3 = copy.deepcopy(emp)
         e3.da_receita, e3.anos_ciclo, e3.outras_liquidas = None, [str(y) for y in range(2016, 2026)], False
-        e3.receita_meio = ltm["receita"] * FATOR_BARRIL
+        e3.receita_meio = ltm["receita"] * fator_barril(tk)
         x["regra_ebit"] = central_rapido(e3)
     if tk == "RECV3":
         e2 = copy.deepcopy(emp)
@@ -398,7 +398,8 @@ def tabela_barril():
         lin.append([str(y), br(an.loc[y, "brent"], 1), br(an.loc[y, "ptax"], 3), br(an.loc[y, "rs"], 0), br(an.loc[y, "rs_real"], 0), br(an.loc[y, "us_real"], 1)])
     lin.append(["<b>Média 2016–25 = meio de ciclo</b>", br(M["brent_meio_nominal"], 1), "", "", f"<b>{br(M['barril_meio'], 0)}</b>",
                 f"{br(M['brent_meio_real'], 1)} (câmbio real {br(M['fx_meio_real'], 2)})"])
-    lin.append(["12m até jun/2026 (base E&P)", br(M["brent_ltm"], 1), br(M["ptax_ltm"], 3), br(M["barril_ltm"], 0), "", ""])
+    lin.append([f"12m {M['janela_ltm'][0]} a {M['janela_ltm'][1]} (LTM, base E&P)", br(M["brent_ltm"], 1), br(M["ptax_ltm"], 3),
+                br(M["barril_ltm"], 0), "", ""])
     lin.append([f"Spot (Brent {M['brent_ultimo'][0]}; câmbio 02/10)", br(M["brent_ultimo"][1], 1), br(FX_SPOT, 3), br(M["brent_ultimo"][1] * FX_SPOT, 0), "", ""])
     return tabela(lin, [52 * mm, 24 * mm, 22 * mm, 26 * mm, 28 * mm, 30 * mm])
 

@@ -6,7 +6,7 @@ líquida e tiradas do Owner Earnings:
   (a) o passivo de proventos do próprio balanço (`proventos_a_pagar`, `coletar_cvm.extras_bp`): declarado até a data do
       balanço. No ITR o provento declarado já tem data-com; o que ainda não for ex na data do preço sai pela B3 (`nao_ex`);
   (b) os proventos APROVADOS depois da data do balanço com data-com antes da data do preço (`depois`): não estão no passivo, mas
-      o caixa ainda os guarda. A casa já fazia isso à mão no EGIE3 (lote6 `EGIE_DIV_AGO26`).
+      o caixa ainda os guarda. A EGIE3 (financeira) usa a mesma regra no PL (`lote6.egie`, desde 23/11/2026; antes à mão).
 Fonte de (b): API pública da B3 (GetListedCashDividends, nota A), cache próprio do hall em dados/proventos_hall/ — baixado
 DEPOIS da data do preço (`python proventos_ex.py`), senão um provento aprovado entre o download e o preço sumiria em silêncio.
 
@@ -15,7 +15,6 @@ total sai um pouco alto — conservador); evento sem data de aprovação falha a
 """
 from __future__ import annotations
 
-import calendar
 import json
 import pathlib
 import sys
@@ -35,7 +34,9 @@ PREGAO = {"SUZB3": "SUZANO S.A.", "KLBN11": "KLABIN SA", "RANI3": "IRANI", "B3SA
           "LEVE3": "METAL LEVE", "CMIN3": "CSNMINERACAO", "BLAU3": "BLAU", "ALLD3": "ALLIED",
           "FESA4": "FERBASA", "SHUL4": "SCHULZ", "VLID3": "VALID",
           # carteira (painel `relatorio CARTEIRA`, renda de 12 meses); NOMRES conferido no COTAHIST de 15/10/2026
-          "BBAS3": "BRASIL", "BBSE3": "BBSEGURIDADE", "ABCB4": "ABC BRASIL", "ITSA4": "ITAUSA", "ISAE4": "ISA ENERGIA"}
+          "BBAS3": "BRASIL", "BBSE3": "BBSEGURIDADE", "ABCB4": "ABC BRASIL", "ITSA4": "ITAUSA", "ISAE4": "ISA ENERGIA",
+          # EGIE3: dividendo aprovado depois do balanço tirado do PL (lote6.egie); nome conferido na API da B3 em 23/11/2026
+          "EGIE3": "ENGIE BRASIL"}
 CLASSE = {"PETR4": "PN", "GGBR4": "PN", "FESA4": "PN", "SHUL4": "PN", "UNIP6": "PNB", "KLBN11": "UNT",
           "ABCB4": "PN", "ITSA4": "PN", "ISAE4": "PN", "ITUB4": "PN", "BBDC4": "PN", "CMIG4": "PN",
           "BRSR6": "PNB", "BRBI11": "UNT", "SANB11": "UNT", "SAPR11": "UNT", "TAEE11": "UNT"}   # classe do ticker avaliado; o resto é ON
@@ -51,11 +52,7 @@ def _data_iso(s: str) -> str:
     return f"{s[6:10]}-{s[3:5]}-{s[0:2]}" if len(s) == 10 and s[2] == "/" else s
 
 
-def data_do_balanco(ref: str) -> str:
-    """'2T26' → '2026-06-30': último dia do trimestre que fecha o LTM."""
-    tri, aa = int(ref[0]), 2000 + int(ref[2:])
-    mes = 3 * tri
-    return date(aa, mes, calendar.monthrange(aa, mes)[1]).isoformat()
+from ltm import data_do_balanco  # noqa: E402,F401 — uma definição só (ltm.py, 23/11/2026); o nome segue exportado daqui
 
 
 def _arquivo(tk: str) -> pathlib.Path:

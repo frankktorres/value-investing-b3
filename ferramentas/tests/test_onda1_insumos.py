@@ -174,8 +174,9 @@ def test_adv_data_com_no_dia_do_preco_ainda_nao_e_ex():
 
 def test_adv_ticker_real_sem_nome_de_pregao_falha_alto():
     import proventos_ex as P
+    assert "ITUB4" not in P.PREGAO           # a EGIE3 entrou no PREGAO em 23/11/2026 (lote6.egie); o exemplo passou à ITUB4
     with pytest.raises(KeyError, match="PREGAO"):
-        P.ajuste_b3("EGIE3", 1.0, "2T26", data_preco="2026-10-02")
+        P.ajuste_b3("ITUB4", 1.0, "2T26", data_preco="2026-10-02")
 
 
 def test_adv_primeiro_trimestre_depois_do_exercicio_conta_o_provisionado_uma_vez(monkeypatch):

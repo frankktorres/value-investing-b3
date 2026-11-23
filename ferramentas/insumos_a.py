@@ -62,8 +62,12 @@ IPCA_BCB = Origem("BCB (IPCA)", "A", "BCB, SGS 433 (IPCA mensal, dados/macro/ipc
                   "anual até a data-base")
 RECEITA_CVM = Origem("CVM DFP/ITR", "A", "CVM, receita líquida do DFP/ITR (LTM) em R$ de hoje (IPCA, BCB): média dos "
                      "exercícios declarados no lote (receita_media)")
-ACOES_ITR_JUN26 = Origem("CVM (ações)", "A", "CVM, composição do capital do ITR de 30/06/2026, sem tesouraria (snapshot "
-                         "derivados_zip quando o ZIP falta)", data="2026-06-30")
+def ACOES_ITR(ref: str) -> Origem:
+    """Ações da composição do capital do ITR na data do balanço do LTM (23/11/2026: antes fixo em 30/06/2026)."""
+    from ltm import data_do_balanco
+    d = data_do_balanco(ref)
+    return Origem("CVM (ações)", "A", f"CVM, composição do capital do ITR de {d[8:10]}/{d[5:7]}/{d[:4]}, sem tesouraria "
+                  "(snapshot derivados_zip quando o ZIP falta)", data=d)
 PRECO_COTAHIST = Origem("COTAHIST", "A", "B3, COTAHIST, fechamento (PREULT) do pregão da data-base — snapshot versionado "
                         "dados/precos_hall_<data>.csv (precos_hall.preco)", data=PRECO_DATA)
 RECEITA_MEIO_BRENT = Origem("CVM + EIA/BCB", "A", "receita e D&A do DFP/ITR (CVM) × barril de meio de ciclo ÷ barril do período-base: Brent "

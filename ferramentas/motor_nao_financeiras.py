@@ -241,7 +241,7 @@ def proventos_ja_ex(emp: Industrial, data_preco: str | None = None) -> dict:
     nao_ex = min(b3["nao_ex"], balanco)
     pos_exercicio = mes_bal == fim % 12 + 3
     total = max(balanco - nao_ex, b3["depois"]) if pos_exercicio else balanco - nao_ex + b3["depois"]
-    # o que não é passivo no balanço ainda está DENTRO do PL de 30/06 (o EGIE3 faz o mesmo: lote6, pl − EGIE_DIV_AGO26)
+    # o que não é passivo no balanço ainda está DENTRO do PL do balanço (o EGIE3 faz o mesmo: lote6.egie, pl − ajuste_b3 "depois")
     return dict(balanco=balanco, nao_ex=nao_ex, aprovados_depois=b3["depois"], total=total, pos_exercicio=pos_exercicio,
                 no_pl=total - (balanco - nao_ex), ref=ref, eventos=b3["eventos"])
 

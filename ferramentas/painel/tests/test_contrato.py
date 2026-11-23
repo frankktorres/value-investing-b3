@@ -289,7 +289,8 @@ def test_origens_do_insumos_a_declaram_data():
     import insumos_a
     import precos_hall
     assert insumos_a.PRECO_COTAHIST.data == precos_hall.PRECO_DATA
-    assert insumos_a.ACOES_ITR_JUN26.data == "2026-06-30" and insumos_a.NAV_SLCE3.data == "2026-06-15"
+    assert insumos_a.ACOES_ITR("2T26").data == "2026-06-30" and insumos_a.ACOES_ITR("3T26").data == "2026-09-30"
+    assert insumos_a.NAV_SLCE3.data == "2026-06-15"
 
 
 def test_metodos_dcf_traz_faixa_dos_cenarios_e_os_outros_ficam_sem():

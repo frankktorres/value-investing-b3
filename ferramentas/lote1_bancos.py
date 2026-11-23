@@ -4,9 +4,10 @@ Cada premissa tem a justificativa ao lado. Séries: StatusInvest (dados/raw/2026
 (fontes primárias citadas lá); mercado: Tesouro Transparente, ANBIMA (ETTJ) e BCB (Focus).
 """
 import mercado
+import precos_hall
 from motor_financeiras import SEM_RAZAO, Financeira, avaliar
 
-DATA_BASE = "02/10/2026"
+DATA_BASE = precos_hall.PRECO_DATA_BR      # 23/11/2026: a data-base do hall vem do preço oficial, não digitada no lote
 
 # rf e π vêm de `mercado_vigente.json` (AUD-78: um arquivo só, conferido contra dados/mercado.json por teste).
 # rf: Tesouro IPCA+ 2050 SEM cupom (o mais longo sem cupom), 7,06% — Tesouro Transparente, taxa de COMPRA DA MANHÃ de
