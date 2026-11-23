@@ -185,3 +185,13 @@ def test_injetar_troca_so_o_ltm_e_preserva_anual(monkeypatch):
     assert antigos == {"AAAA3": {"receita": 1.0}}
     assert mod.CVM["AAAA3"]["anual"]["2025"]["arrendamento_pago"] == 7.0      # correção do lote preservada
     assert ltm_de(mod.CVM["AAAA3"]) == {"receita": 2.0} and ltm_ref_de(mod.CVM["AAAA3"]) == "3T26"
+
+
+def test_coleta_em_subprocesso_forca_utf8_com_saida_redirecionada(tmp_path, monkeypatch):
+    """23/11/2026: `python temporada.py > log` no Windows dava cp1252 ao coletor, que morria no print do "→"; todos os
+    tickers saíam "coleta falhou" e a temporada media só preço e taxa. O subprocesso tem de herdar PYTHONIOENCODING=utf-8."""
+    import subprocess
+    vistos = []
+    monkeypatch.setattr(subprocess, "run", lambda *a, **k: vistos.append(k))
+    T.coletar(["ABEV3"], tmp_path / "x.json", 2026, 9, tentativas=1)
+    assert vistos and all(k["env"]["PYTHONIOENCODING"] == "utf-8" for k in vistos)

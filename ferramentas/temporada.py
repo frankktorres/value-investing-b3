@@ -14,6 +14,7 @@ Sem ticker com ITR novo: avisa e sai com código 0.
 """
 import argparse
 import json
+import os
 import pathlib
 import re
 import sys
@@ -222,7 +223,10 @@ def coletar(tickers, arq, ano, mes, tentativas=3):
         for k in range(0, len(faltam), LOTE_COLETA):
             lote = faltam[k:k + LOTE_COLETA]
             arg = json.dumps({"tks": lote, "anos": [ano - 1], "arq": str(arq), "ano": ano, "mes": mes})
-            subprocess.run([sys.executable, "-c", _CHAMADA, arg], cwd=AQUI, check=False)
+            # 23/11/2026: com a saída redirecionada para arquivo (rotina, `> log`), o Windows usa cp1252 e o coletor morria no
+            # print do "→" — todos os tickers ficavam "coleta falhou" e a temporada media só preço e taxa.
+            subprocess.run([sys.executable, "-c", _CHAMADA, arg], cwd=AQUI, check=False,
+                           env={**os.environ, "PYTHONIOENCODING": "utf-8"})
         if arq.exists():
             tudo = json.loads(arq.read_text(encoding="utf-8"))
             bons.update({tk: tudo[tk] for tk in faltam if ltm_utilizavel(tudo.get(tk))})

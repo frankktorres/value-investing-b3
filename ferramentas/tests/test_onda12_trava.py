@@ -36,3 +36,13 @@ def test_aud08_leve3_e_isae4_nao_conclusivas_pela_trava_e_razao_libera():
         assert "trava" in r["confianca"]
     leve = dataclasses.replace(t["LEVE3"]["empresa"], trava_razao="teste")
     assert M.avaliar(leve, universo.MK)["palavra"] == "JUSTA"
+
+
+def test_trava_falha_do_numpy_tambem_derruba_a_justa():
+    """23/11/2026: a trava vinha como np.False_ e `trava is False` não a via — a PRIO3 saiu JUSTA com a trava falha."""
+    import numpy as np
+    from motor_financeiras import aplicar_trava
+    assert aplicar_trava("JUSTA", "JUSTA", np.False_) == "NÃO CONCLUSIVO"
+    assert aplicar_trava("JUSTA", "JUSTA", np.True_) == "JUSTA"
+    assert aplicar_trava("JUSTA", "JUSTA", np.False_, "premissa X diverge") == "JUSTA"
+    assert aplicar_trava("RADAR", "RADAR", None) == "RADAR"

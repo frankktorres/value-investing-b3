@@ -1021,7 +1021,7 @@ def avaliar(emp: Industrial, mk: Mercado) -> dict:
     def cls(x):
         return "Sim" if x >= mk.rf_liq_real + 0.03 else ("Empate" if x >= mk.rf_liq_real + 0.015 else "Não")
     rf, rf_inv = cls(bogle_liq_real), cls(so_inv_liq_real)
-    trava = abs(bogle_nom - mk.ke_nom) <= TRAVA_PP if p == "JUSTA" else None    # AUD-10 (v2.6): palavra final
+    trava = bool(abs(bogle_nom - mk.ke_nom) <= TRAVA_PP) if p == "JUSTA" else None    # AUD-10 (v2.6): palavra final
     p_trava = aplicar_trava(p0, p, trava, emp.trava_razao)
     if p_trava != p:
         p, conf = p_trava, "não conclusivo (trava de coerência, §9)"

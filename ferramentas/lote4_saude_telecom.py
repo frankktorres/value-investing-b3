@@ -61,7 +61,7 @@ AQUI = pathlib.Path(__file__).parent
 ZIP = AQUI / "dados" / "cvm"
 QUAL = lambda moat, gestao, controlador, ciclo, fisher: dict(moat=moat, gestao=gestao, controlador=controlador, ciclo=ciclo, fisher=fisher)
 # fechamento oficial de 02/10 (precos_hall.py, AUD-67); fase 3, fatia 3: as NF leem o snapshot (preco, registrado); ITSA4 na fatia 4
-PRECO = {tk: preco(tk) for tk in ("TIMS3", "VIVT3", "FLRY3", "HYPE3", "ABEV3", "WEGE3")} | {"ITSA4": 14.67}
+PRECO = {tk: preco(tk) for tk in ("TIMS3", "VIVT3", "FLRY3", "HYPE3", "ABEV3", "WEGE3")} | {"ITSA4": preco("ITSA4")}
 NOME_CVM = {"TIMS3": "TIM S.A.", "VIVT3": "TELEF", "FLRY3": "FLEURY", "HYPE3": "HYPERA", "ABEV3": "AMBEV", "WEGE3": "WEG S.A.",
             "ITSA4": "ITAÚSA", "ITUB": "ITAU UNIBANCO HOLDING"}
 IFRS16 = [str(a) for a in range(2019, 2026)]

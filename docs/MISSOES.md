@@ -3,6 +3,9 @@
 
 ## Próximas (ordem de prioridade)
 
+**B33 — EGIE3: explicar os ~R$ 2 bi que faltam no PL do 3T26, antes de reavaliar a palavra.** *(23/11/2026)*
+O PL do controlador subiu R$ 6,30 bi de 30/06 a 30/09/2026; oferta de jul/26 (R$ 8,36 bi) − dividendo de ago/26 (R$ 770,8 mi, B3) daria R$ 7,59 bi. Conferir no RI do 3T26 (release e ITR) e na DMPL do ITR 3T26 (CVM, nota A) o custo da oferta (gastos com emissão de ações, líquidos de IR) e o dividendo efetivamente pago/declarado no trimestre, e o resultado do 3T26 que entra no PL. Fato com fonte → `ferramentas/dados/eventos_societarios.json` (nunca número no código). Não mudar a palavra: a EGIE3 fica NÃO CONCLUSIVO (trava do §9, decisão do Frank de 23/11) até o Frank ver a conta. *Pronto quando:* a diferença está explicada linha a linha com fonte A/B em `docs/` (ou o resíduo declarado), e a reavaliação proposta está em `PENDENTE-FRANK.md`.
+
 **B32 — Zerar a catraca de anos fixos nos lotes (prazo 31/01/2027, antes do DFP 2026).** *(23/11/2026)*
 Datas de mês/dia/trimestre nos lotes já estão zeradas (tolerância zero em `tests/test_lotes_sem_data_fixa.py`). Restam os anos:
 `range(2016, 2026)`/`range(2021, 2026)` → janela a partir do último exercício do DFP na série (`CVM[tk]["anual"]`); chaves

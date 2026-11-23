@@ -52,6 +52,8 @@ SERIES_FRED = {
 }
 PTAX = "ptax_media_mensal.json"          # BCB SGS 3698, média mensal da taxa livre dólar (venda)
 PTAX_INFO = ("3698", "PTAX — taxa de câmbio livre, dólar americano (venda), média mensal — BCB SGS 3698 (nota A)")
+IPCA = "ipca_mensal.json"          # BCB SGS 433, coletado por coletar_macro.py (manifesto desde 23/11/2026)
+IPCA_INFO = ("433", "IPCA — variação mensal em %, desde 01/1980 — BCB SGS 433 (nota A)")
 TOL = 1e-9
 
 
@@ -97,10 +99,15 @@ def divergencias(novo: list[tuple[str, str]], antigo: list[tuple[str, str]]) -> 
     return out
 
 
-def _resumo(sid: str, desc: str, url: str, bruto: bytes, datas: list[str], coletado_em: str) -> dict:
-    return {"serie": sid, "descricao": desc, "url": url, "coletado_em": coletado_em, "linhas": len(datas),
-            "primeira": datas[0] if datas else None, "ultima": datas[-1] if datas else None,
-            "sha256": sha_normalizado(bruto)}
+def _resumo(sid: str, desc: str, url: str, bruto: bytes, datas: list[str], coletado_em: str,
+            revisoes: list[str] = ()) -> dict:
+    """`revisoes_aceitas` (23/11/2026, pedido do Frank): datas da parte comum que a fonte revisou e que esta coleta aceitou."""
+    r = {"serie": sid, "descricao": desc, "url": url, "coletado_em": coletado_em, "linhas": len(datas),
+         "primeira": datas[0] if datas else None, "ultima": datas[-1] if datas else None,
+         "sha256": sha_normalizado(bruto)}
+    if revisoes:
+        r["revisoes_aceitas"] = {"n": len(revisoes), "datas": [d.split(":")[0] for d in revisoes]}
+    return r
 
 
 def _manifesto() -> dict:
@@ -157,7 +164,7 @@ def atualizar_fred(arq: str, baixar=lambda url: _get(url).text, pasta: pathlib.P
         destino.write_bytes(bruto)
         estado = "gravado"
     m = _manifesto() if pasta == MACRO else {}
-    m[arq] = _resumo(sid, desc, url, bruto, [d for d, _ in novo], hoje or dt.date.today().isoformat())
+    m[arq] = _resumo(sid, desc, url, bruto, [d for d, _ in novo], hoje or dt.date.today().isoformat(), div)
     if pasta == MACRO:
         _gravar_manifesto(m)
     return estado, div
@@ -185,7 +192,7 @@ def atualizar_ptax(baixar=lambda url: _get(url).json(), pasta: pathlib.Path = MA
         destino.write_bytes(bruto)
         estado = "gravado"
     m = _manifesto() if pasta == MACRO else {}
-    m[PTAX] = _resumo(PTAX_INFO[0], PTAX_INFO[1], url, bruto, [r["data"] for r in novo], hoje)
+    m[PTAX] = _resumo(PTAX_INFO[0], PTAX_INFO[1], url, bruto, [r["data"] for r in novo], hoje, div)
     if pasta == MACRO:
         _gravar_manifesto(m)
     return estado, div

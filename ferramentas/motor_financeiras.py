@@ -36,7 +36,8 @@ def aplicar_trava(p0: str, p: str, trava: bool | None, razao: str = "") -> str:
     palavra é NÃO CONCLUSIVO — antes a trava era só um campo, e a LEVE3 saía JUSTA com ela falha.
     v2.6 (AUD-10, decisão do Frank em 10/10/2026): vale para a JUSTA FINAL — a RADAR que sobe a JUSTA pela dispersão também
     passa pela trava (antes só a JUSTA da régua; `p0` fica na assinatura por compatibilidade)."""
-    if p == "JUSTA" and trava is False and not razao.strip():
+    # 23/11/2026: `trava is False` não pegava o `np.False_` do motor das não financeiras — a PRIO3 saiu JUSTA com a trava falha.
+    if p == "JUSTA" and trava is not None and not bool(trava) and not razao.strip():
         return "NÃO CONCLUSIVO"
     return p
 

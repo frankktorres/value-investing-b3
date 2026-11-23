@@ -21,6 +21,7 @@ import sys
 from lote1_bancos import MK
 from juros import juros_do_periodo
 from motor_financeiras import SEM_RAZAO, Financeira, avaliar, interp
+from precos_hall import preco
 
 AQUI = pathlib.Path(__file__).parent
 CVM = series_vigente.carregar_cvm()     # AUD-103: com o LTM da temporada por cima, quando houver
@@ -165,21 +166,22 @@ def metodo_regulado(tk: str) -> str:
             "sem base regulatória e WACC regulatório com fonte A/B")
 
 
-# Preços = fechamento oficial (PREULT do COTAHIST) de 02/10/2026 — data e fonte em precos_hall.py (AUD-67).
+# Preços = fechamento oficial (PREULT do COTAHIST) do pregão `precos_hall.PRECO_DATA`, lido do snapshot (23/11/2026:
+# antes digitados; AUD-67).
 EMPRESAS = [
-    F("TAEE11", "Taesa (unit)", 42.85, payout=0.75, qual=QUAL(4, 3, 3, 4, 3)),
-    F("ISAE4", "ISA Energia (ex-CTEEP)", 28.19, payout=0.60, qual=QUAL(4, 4, 4, 4, 3)),
-    F("CPFE3", "CPFL Energia", 48.09, payout=0.60, qual=QUAL(4, 4, 4, 4, 4)),
-    F("CMIG4", "Cemig", 11.41, payout=0.50, qual=QUAL(3, 3, 1, 3, 3),
+    F("TAEE11", "Taesa (unit)", preco("TAEE11"), payout=0.75, qual=QUAL(4, 3, 3, 4, 3)),
+    F("ISAE4", "ISA Energia (ex-CTEEP)", preco("ISAE4"), payout=0.60, qual=QUAL(4, 4, 4, 4, 3)),
+    F("CPFE3", "CPFL Energia", preco("CPFE3"), payout=0.60, qual=QUAL(4, 4, 4, 4, 4)),
+    F("CMIG4", "Cemig", preco("CMIG4"), payout=0.50, qual=QUAL(3, 3, 1, 3, 3),
       desconto={"tipo": "fixo", "pct": 0.177,
                 "razao": "MG: MP 579 (2012), corte de dividendo e venda de ativos (2016) consumados; Propag/federalização — precedente da casa: "
                          "40% de probabilidade de um cenário com valor 44% menor (0,4 × 44% = 17,7%)"}),
-    F("CPLE3", "Copel", 16.61, payout=0.55, qual=QUAL(3, 3, 4, 3, 3)),
-    F("SAPR11", "Sanepar (unit)", 35.21, payout=0.35, roe_inicio=0.10, qual=QUAL(4, 3, 1, 4, 3),
+    F("CPLE3", "Copel", preco("CPLE3"), payout=0.55, qual=QUAL(3, 3, 4, 3, 3)),
+    F("SAPR11", "Sanepar (unit)", preco("SAPR11"), payout=0.35, roe_inicio=0.10, qual=QUAL(4, 3, 1, 4, 3),
       desconto={"tipo": "fixo", "pct": 0.15,
                 "razao": "PR: Agepar destinou R$ 4,4 bi à tarifa em 2026 (V2 consumado) — precedente da casa: 15%"}),
-    F("CSMG3", "Copasa", 56.25, payout=0.60, qual=QUAL(4, 3, 3, 4, 3)),
-    F("SBSP3", "Sabesp", 28.23, payout=0.25, qual=QUAL(5, 4, 4, 4, 4)),
+    F("CSMG3", "Copasa", preco("CSMG3"), payout=0.60, qual=QUAL(4, 3, 3, 4, 3)),
+    F("SBSP3", "Sabesp", preco("SBSP3"), payout=0.25, qual=QUAL(5, 4, 4, 4, 4)),
 ]
 
 if __name__ == "__main__":

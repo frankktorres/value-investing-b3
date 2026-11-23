@@ -173,7 +173,7 @@ def egie():
     blend = lambda r: (1 - w) * r + w * MK.ke_nom
     dados = dict(pl_old=pl_old, pl_new=pl_new, roes=roes, roe_old_lp=roe_old_lp, roe_old_ini=roe_old_ini, peso_novo=w,
                  div_depois=div_depois, follow_on=EGIE_FO, follow_on_no_balanco=EGIE_FO_NO_BALANCO, ref=REFS6["EGIE3"])
-    return Financeira("EGIE3", "Engie Brasil Energia", "utility", desconto_controlador=dict(tipo="zero", razao=SEM_RAZAO), preco=30.70, vpa=pl_new * 1000 / N["EGIE3"], lpa_12m=l["lucro_controlador"] * 1000 / N["EGIE3"],
+    return Financeira("EGIE3", "Engie Brasil Energia", "utility", desconto_controlador=dict(tipo="zero", razao=SEM_RAZAO), preco=preco("EGIE3"), vpa=pl_new * 1000 / N["EGIE3"], lpa_12m=l["lucro_controlador"] * 1000 / N["EGIE3"],
                       roe_lp=blend(roe_old_lp), roe_inicio=blend(roe_old_ini), payout=0.55,
                       dpa_medio_5a=sum(SI["EGIE3"]["dpa_por_ano_datacom"].get(str(a), 0) for a in range(2021, 2026)) / 5,
                       jcp_share=jcp("EGIE3"), pl_hist=pl_hist("EGIE3"), solidez_manual=solidez("EGIE3"),

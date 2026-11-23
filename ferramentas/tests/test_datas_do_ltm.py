@@ -154,15 +154,19 @@ TEM_ITR = (pathlib.Path(__file__).resolve().parents[1] / "dados" / "cvm" / "itr_
 
 @pytest.mark.skipif(not TEM_ITR, reason="sem o ITR da CVM no disco: as ações de 30/09 só saem do ZIP")
 def test_publicacao_parcial_na_temporada_nao_quebra_o_import():
-    """Adversário, 23/11: com só a TIMS3 no 3T26 e o resto do lote 4 no 2T26 (temporada com publicação parcial), o import
-    levantava "trimestres diferentes" e derrubava a própria temporada. Agora cada ticker lê as ações da data do próprio LTM."""
-    cod = ("import copy, sys, series_vigente; c = series_vigente.carregar_cvm(); r = copy.deepcopy(c['TIMS3']); r['ltm_ref'] = '3T26';"
+    """Adversário, 23/11: com só a TIMS3 num trimestre e o resto do lote 4 em outro (temporada com publicação parcial), o import
+    levantava "trimestres diferentes" e derrubava a própria temporada. Agora cada ticker lê as ações da data do próprio LTM.
+    Relativo ao LTM vigente (a gravação do 3T26 quebrou a versão com "3T26"/"2T26" escritos): a TIMS3 vai ao trimestre anterior."""
+    cod = ("import copy, sys, series_vigente, ltm; c = series_vigente.carregar_cvm(); vig = ltm.ltm_ref_de(c['VIVT3']);"
+           "a, t = ltm.trimestres_ate(vig, 2)[0]; ant = f'{t}T{a % 100:02d}';"
+           "r = copy.deepcopy(c['TIMS3']); r['ltm_ref'] = ant;"
            "series_vigente.CVM_SOBREPOSTO['TIMS3'] = r; import lote4_saude_telecom as L;"
-           "print(L.REFS4['TIMS3'], L.REFS4['VIVT3'], L.N['TIMS3'] > 1e9)")
+           "print(ant, vig, L.REFS4['TIMS3'] == ant, L.REFS4['VIVT3'] == vig, L.N['TIMS3'] > 1e9)")
     p = subprocess.run([sys.executable, "-c", cod], cwd=pathlib.Path(__file__).resolve().parents[1], capture_output=True, text=True,
                        timeout=600)
     assert p.returncode == 0, p.stderr[-1500:]
-    assert p.stdout.split() == ["3T26", "2T26", "True"]
+    ant, vig, *ok = p.stdout.split()
+    assert ant != vig and ok == ["True", "True", "True"], p.stdout
 
 
 def test_cmin3_janela_do_minerio_anda_com_o_ltm():
@@ -190,12 +194,12 @@ def test_cmin3_janela_do_minerio_anda_com_o_ltm():
 def test_indice_de_preco_do_lote6_usa_os_12m_do_ltm():
     """Os 12m do índice são os do LTM; mês que o BLS ainda não publicou (ou não foi coletado) → falha alto, nunca média de 11."""
     import lote6_quimica as L6
-    a2 = L6.indice({"WPU1017": 1.0}, "2T26")
-    assert a2["janela_ltm"] == ("2025-07", "2026-06")
-    assert a2["fator"] == pytest.approx(L6.ACO["fator"])      # o vigente (2T26) não mudou com a refatoração
-    try:
-        a3 = L6.indice({"WPU1017": 1.0}, "3T26")
-    except ValueError as e:
-        assert "de 12 meses em 2025-10" in str(e)            # dados/macro até ago/2026: recoletar antes de gravar o 3T26
-    else:
-        assert a3["janela_ltm"] == ("2025-10", "2026-09") and a3["fator"] != a2["fator"]
+    assert L6.indice({"WPU1017": 1.0}, "2T26")["janela_ltm"] == ("2025-07", "2026-06")
+    vig = ltm.ltm_ref_de(L6.CVM["GGBR4"])                     # relativo ao vigente (a gravação do 3T26 mudou o LTM)
+    a_vig = L6.indice({"WPU1017": 1.0}, vig)
+    assert a_vig["janela_ltm"] == ltm.janela_ltm(vig) and a_vig["fator"] == pytest.approx(L6.ACO["fator"])
+    a, t = ltm.trimestres_ate(vig, 2)[0]
+    a_ant = L6.indice({"WPU1017": 1.0}, f"{t}T{a % 100:02d}")
+    assert a_ant["janela_ltm"] != a_vig["janela_ltm"] and a_ant["fator"] != a_vig["fator"]
+    with pytest.raises(ValueError, match="de 12 meses"):      # mês que o BLS ainda não publicou: falha alto, nunca média de 11
+        L6.indice({"WPU1017": 1.0}, "4T35")

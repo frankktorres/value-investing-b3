@@ -1,0 +1,13 @@
+{
+ "data": "2026-10-02",
+ "rf_real": 0.0706,
+ "rf_titulo": "Tesouro IPCA+ sem juros 15/08/2050 (o mais longo sem cupom à venda no Tesouro Direto)",
+ "rf_tipo": "taxa de compra da manhã (Tesouro Transparente, PrecoTaxaTesouroDireto.csv)",
+ "rf_chave_mercado_json": "IPCA+ sem juros 15/08/2050 (mais longo sem cupom)",
+ "pi": 0.0646,
+ "pi_tipo": "inflação implícita da ETTJ ANBIMA de fechamento, vértice 2520 du (~10 anos), arredondada a 4 casas (6,4593%)",
+ "pi_chave_mercado_json": "inflacao_implicita_vertice_mais_longo_2520du_~10a",
+ "pi_focus": 0.040,
+ "pi_focus_tipo": "hipótese dos PDFs de 03/10 (só sensibilidade, §4)",
+ "fonte_bruta": "ferramentas/dados/mercado.json (coleta de 04/10/2026; fora do git)"
+}
