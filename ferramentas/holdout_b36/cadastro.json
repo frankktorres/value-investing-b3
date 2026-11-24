@@ -1,0 +1,422 @@
+[
+ {
+  "ticker": "BPAC11",
+  "ordem": 1,
+  "cnpj": "30.306.294/0001-45",
+  "cd_cvm": 22616,
+  "setor": "Bancos",
+  "tipo": "banco",
+  "perfil": "servicos",
+  "pregao": "BTGP BANCO",
+  "classe": "UNT",
+  "acoes_por_unit": null,
+  "mes_itr": 9,
+  "coleta": {
+   "em": "2026-11-24",
+   "segundos": {
+    "cvm": 0.0,
+    "b3": 2.3,
+    "statusinvest": 2.4
+   }
+  }
+ },
+ {
+  "ticker": "EMBJ3",
+  "ordem": 2,
+  "cnpj": "07.689.002/0001-89",
+  "cd_cvm": 20087,
+  "setor": "Máquinas, Equipamentos, Veículos e Peças",
+  "tipo": "industrial",
+  "perfil": "servicos",
+  "pregao": "EMBRAER",
+  "classe": "ON",
+  "acoes_por_unit": 1,
+  "mes_itr": 9,
+  "coleta": {
+   "em": "2026-11-24",
+   "segundos": {
+    "cvm": 39.7,
+    "b3": 4.8,
+    "statusinvest": 5.7
+   }
+  }
+ },
+ {
+  "ticker": "EQTL3",
+  "ordem": 3,
+  "cnpj": "03.220.438/0001-73",
+  "cd_cvm": 20010,
+  "setor": "Energia Elétrica",
+  "tipo": "utility",
+  "perfil": "servicos",
+  "pregao": "EQUATORIAL",
+  "classe": "ON",
+  "acoes_por_unit": 1,
+  "mes_itr": 9,
+  "coleta": {
+   "em": "2026-11-24",
+   "segundos": {
+    "cvm": 41.6,
+    "b3": 2.7,
+    "statusinvest": 5.6
+   }
+  }
+ },
+ {
+  "ticker": "ENEV3",
+  "ordem": 4,
+  "cnpj": "04.423.567/0001-21",
+  "cd_cvm": 21237,
+  "setor": "Energia Elétrica",
+  "tipo": "utility",
+  "perfil": "servicos",
+  "pregao": "ENEVA",
+  "classe": "ON",
+  "acoes_por_unit": 1,
+  "mes_itr": 9,
+  "coleta": {
+   "em": "2026-11-24",
+   "segundos": {
+    "cvm": 40.8,
+    "b3": 2.8,
+    "statusinvest": 3.8
+   }
+  }
+ },
+ {
+  "ticker": "RADL3",
+  "ordem": 5,
+  "cnpj": "61.585.865/0001-51",
+  "cd_cvm": 5258,
+  "setor": "Comércio (Atacado e Varejo)",
+  "tipo": "industrial",
+  "perfil": "servicos",
+  "pregao": "RAIADROGASIL",
+  "classe": "ON",
+  "acoes_por_unit": 1,
+  "mes_itr": 9,
+  "coleta": {
+   "em": "2026-11-24",
+   "segundos": {
+    "cvm": 37.6,
+    "b3": 6.1,
+    "statusinvest": 4.0
+   }
+  }
+ },
+ {
+  "ticker": "RAIL3",
+  "ordem": 6,
+  "cnpj": "02.387.241/0001-60",
+  "cd_cvm": 17450,
+  "setor": "Emp. Adm. Part. - Serviços Transporte e Logística",
+  "tipo": "industrial",
+  "perfil": "servicos",
+  "pregao": "RUMO S.A.",
+  "classe": "ON",
+  "acoes_por_unit": 1,
+  "mes_itr": 9,
+  "coleta": {
+   "em": "2026-11-24",
+   "segundos": {
+    "cvm": 37.8,
+    "b3": 2.5,
+    "statusinvest": 4.0
+   }
+  }
+ },
+ {
+  "ticker": "ENGI11",
+  "ordem": 7,
+  "cnpj": "00.864.214/0001-06",
+  "cd_cvm": 15253,
+  "setor": "Emp. Adm. Part. - Energia Elétrica",
+  "tipo": "utility",
+  "perfil": "servicos",
+  "pregao": "ENERGISA",
+  "classe": "UNT",
+  "acoes_por_unit": 5,
+  "mes_itr": 9,
+  "coleta": {
+   "em": "2026-11-24",
+   "segundos": {
+    "cvm": 38.7,
+    "b3": 2.7,
+    "statusinvest": 3.8
+   }
+  }
+ },
+ {
+  "ticker": "CSAN3",
+  "ordem": 8,
+  "cnpj": "50.746.577/0001-15",
+  "cd_cvm": 19836,
+  "setor": "Agricultura (Açúcar, Álcool e Cana)",
+  "tipo": "industrial",
+  "perfil": "ciclica",
+  "pregao": "COSAN",
+  "classe": "ON",
+  "acoes_por_unit": 1,
+  "mes_itr": 9,
+  "coleta": {
+   "em": "2026-11-24",
+   "segundos": {
+    "cvm": 38.9,
+    "b3": 3.1,
+    "statusinvest": 3.6
+   }
+  }
+ },
+ {
+  "ticker": "SMFT3",
+  "ordem": 9,
+  "cnpj": "07.594.978/0001-78",
+  "cd_cvm": 24260,
+  "setor": "Brinquedos e Lazer",
+  "tipo": "industrial",
+  "perfil": "servicos",
+  "pregao": "SMART FIT",
+  "classe": "ON",
+  "acoes_por_unit": 1,
+  "mes_itr": 9,
+  "coleta": {
+   "em": "2026-11-24",
+   "segundos": {
+    "cvm": 36.6,
+    "b3": 2.6,
+    "statusinvest": 3.9
+   }
+  }
+ },
+ {
+  "ticker": "MBRF3",
+  "ordem": 10,
+  "cnpj": "03.853.896/0001-40",
+  "cd_cvm": 20788,
+  "setor": "Alimentos",
+  "tipo": "industrial",
+  "perfil": "ciclica",
+  "pregao": "MARFRIG",
+  "classe": "ON",
+  "acoes_por_unit": 1,
+  "mes_itr": 9,
+  "coleta": {
+   "em": "2026-11-24",
+   "segundos": {
+    "cvm": 37.5,
+    "b3": 2.7,
+    "statusinvest": 4.3
+   }
+  }
+ },
+ {
+  "ticker": "CSNA3",
+  "ordem": 11,
+  "cnpj": "33.042.730/0001-04",
+  "cd_cvm": 4030,
+  "setor": "Metalurgia e Siderurgia",
+  "tipo": "industrial",
+  "perfil": "ciclica",
+  "pregao": "SID NACIONAL",
+  "classe": "ON",
+  "acoes_por_unit": 1,
+  "mes_itr": 9,
+  "coleta": {
+   "em": "2026-11-24",
+   "segundos": {
+    "cvm": 36.3,
+    "b3": 2.7,
+    "statusinvest": 3.7
+   }
+  }
+ },
+ {
+  "ticker": "GOAU4",
+  "ordem": 12,
+  "cnpj": "92.690.783/0001-09",
+  "cd_cvm": 8656,
+  "setor": "Emp. Adm. Part. - Metalurgia e Siderurgia",
+  "tipo": "industrial",
+  "perfil": "ciclica",
+  "pregao": "GERDAU MET",
+  "classe": "PN",
+  "acoes_por_unit": 1,
+  "mes_itr": 9,
+  "coleta": {
+   "em": "2026-11-24",
+   "segundos": {
+    "cvm": 36.0,
+    "b3": 4.0,
+    "statusinvest": 3.5
+   }
+  }
+ },
+ {
+  "ticker": "USIM5",
+  "ordem": 13,
+  "cnpj": "60.894.730/0001-05",
+  "cd_cvm": 14320,
+  "setor": "Metalurgia e Siderurgia",
+  "tipo": "industrial",
+  "perfil": "ciclica",
+  "pregao": "USIMINAS",
+  "classe": "PNA",
+  "acoes_por_unit": 1,
+  "mes_itr": 9,
+  "coleta": {
+   "em": "2026-11-24",
+   "segundos": {
+    "cvm": 37.6,
+    "b3": 3.3,
+    "statusinvest": 3.3
+   }
+  }
+ },
+ {
+  "ticker": "TEND3",
+  "ordem": 14,
+  "cnpj": "71.476.527/0001-35",
+  "cd_cvm": 21148,
+  "setor": "Construção Civil, Mat. Constr. e Decoração",
+  "tipo": "industrial",
+  "perfil": "servicos",
+  "pregao": "TENDA",
+  "classe": "ON",
+  "acoes_por_unit": 1,
+  "mes_itr": 9,
+  "coleta": {
+   "em": "2026-11-24",
+   "segundos": {
+    "cvm": 33.1,
+    "b3": 21.9,
+    "statusinvest": 5.9
+   }
+  }
+ },
+ {
+  "ticker": "NATU3",
+  "ordem": 15,
+  "cnpj": "71.673.990/0001-77",
+  "cd_cvm": 19550,
+  "setor": "Farmacêutico e Higiene",
+  "tipo": "industrial",
+  "perfil": "servicos",
+  "pregao": "NATURA",
+  "classe": "ON",
+  "acoes_por_unit": 1,
+  "mes_itr": 9,
+  "coleta": {
+   "em": "2026-11-24",
+   "segundos": {
+    "cvm": 27.0,
+    "b3": 1.6,
+    "statusinvest": 2.5
+   }
+  }
+ },
+ {
+  "ticker": "MOVI3",
+  "ordem": 16,
+  "cnpj": "21.314.559/0001-66",
+  "cd_cvm": 23825,
+  "setor": "Serviços Transporte e Logística",
+  "tipo": "industrial",
+  "perfil": "servicos",
+  "pregao": "MOVIDA",
+  "classe": "ON",
+  "acoes_por_unit": 1,
+  "mes_itr": 9,
+  "coleta": {
+   "em": "2026-11-24",
+   "segundos": {
+    "cvm": 32.4,
+    "b3": 3.4,
+    "statusinvest": 3.4
+   }
+  }
+ },
+ {
+  "ticker": "MRVE3",
+  "ordem": 17,
+  "cnpj": "08.343.492/0001-20",
+  "cd_cvm": 20915,
+  "setor": "Construção Civil, Mat. Constr. e Decoração",
+  "tipo": "industrial",
+  "perfil": "servicos",
+  "pregao": "MRV",
+  "classe": "ON",
+  "acoes_por_unit": 1,
+  "mes_itr": 9,
+  "coleta": {
+   "em": "2026-11-24",
+   "segundos": {
+    "cvm": 35.9,
+    "b3": 3.0,
+    "statusinvest": 3.5
+   }
+  }
+ },
+ {
+  "ticker": "AZZA3",
+  "ordem": 18,
+  "cnpj": "16.590.234/0001-76",
+  "cd_cvm": 22349,
+  "setor": "Têxtil e Vestuário",
+  "tipo": "industrial",
+  "perfil": "servicos",
+  "pregao": "AZZAS 2154",
+  "classe": "ON",
+  "acoes_por_unit": 1,
+  "mes_itr": 9,
+  "coleta": {
+   "em": "2026-11-24",
+   "segundos": {
+    "cvm": 34.5,
+    "b3": 2.3,
+    "statusinvest": 3.0
+   }
+  }
+ },
+ {
+  "ticker": "IGTI11",
+  "ordem": 19,
+  "cnpj": "60.543.816/0001-93",
+  "cd_cvm": 8672,
+  "setor": "Emp. Adm. Part. - Comércio (Atacado e Varejo)",
+  "tipo": "industrial",
+  "perfil": "servicos",
+  "pregao": "IGUATEMI S.A",
+  "classe": "UNT",
+  "acoes_por_unit": 3,
+  "mes_itr": 9,
+  "coleta": {
+   "em": "2026-11-24",
+   "segundos": {
+    "cvm": 33.0,
+    "b3": 1.7,
+    "statusinvest": 2.2
+   }
+  }
+ },
+ {
+  "ticker": "BEEF3",
+  "ordem": 20,
+  "cnpj": "67.620.377/0001-14",
+  "cd_cvm": 20931,
+  "setor": "Alimentos",
+  "tipo": "industrial",
+  "perfil": "ciclica",
+  "pregao": "MINERVA",
+  "classe": "ON",
+  "acoes_por_unit": 1,
+  "mes_itr": 9,
+  "coleta": {
+   "em": "2026-11-24",
+   "segundos": {
+    "cvm": 26.0,
+    "b3": 2.0,
+    "statusinvest": 3.6
+   }
+  }
+ }
+]

@@ -1,0 +1,207 @@
+{
+ "T": "2026-11-19",
+ "janela": 250,
+ "min_dfp": 10,
+ "escolhidas": [
+  {
+   "ordem": 1,
+   "ticker": "BPAC11",
+   "cnpj": "30.306.294/0001-45",
+   "cd_cvm": 22616,
+   "liquidez": 661939622.38,
+   "n_dfp": 16,
+   "setor": "Bancos",
+   "outras_classes": "BPAC3 BPAC5"
+  },
+  {
+   "ordem": 2,
+   "ticker": "EMBJ3",
+   "cnpj": "07.689.002/0001-89",
+   "cd_cvm": 20087,
+   "liquidez": 466290762.85,
+   "n_dfp": 16,
+   "setor": "Máquinas, Equipamentos, Veículos e Peças",
+   "outras_classes": ""
+  },
+  {
+   "ordem": 3,
+   "ticker": "EQTL3",
+   "cnpj": "03.220.438/0001-73",
+   "cd_cvm": 20010,
+   "liquidez": 381364462.53,
+   "n_dfp": 16,
+   "setor": "Energia Elétrica",
+   "outras_classes": ""
+  },
+  {
+   "ordem": 4,
+   "ticker": "ENEV3",
+   "cnpj": "04.423.567/0001-21",
+   "cd_cvm": 21237,
+   "liquidez": 314895482.76,
+   "n_dfp": 16,
+   "setor": "Energia Elétrica",
+   "outras_classes": ""
+  },
+  {
+   "ordem": 5,
+   "ticker": "RADL3",
+   "cnpj": "61.585.865/0001-51",
+   "cd_cvm": 5258,
+   "liquidez": 223195556.38,
+   "n_dfp": 16,
+   "setor": "Comércio (Atacado e Varejo)",
+   "outras_classes": ""
+  },
+  {
+   "ordem": 6,
+   "ticker": "RAIL3",
+   "cnpj": "02.387.241/0001-60",
+   "cd_cvm": 17450,
+   "liquidez": 211041887.43,
+   "n_dfp": 16,
+   "setor": "Emp. Adm. Part. - Serviços Transporte e Logística",
+   "outras_classes": ""
+  },
+  {
+   "ordem": 7,
+   "ticker": "ENGI11",
+   "cnpj": "00.864.214/0001-06",
+   "cd_cvm": 15253,
+   "liquidez": 173721946.23,
+   "n_dfp": 16,
+   "setor": "Emp. Adm. Part. - Energia Elétrica",
+   "outras_classes": "ENGI4 ENGI3"
+  },
+  {
+   "ordem": 8,
+   "ticker": "CSAN3",
+   "cnpj": "50.746.577/0001-15",
+   "cd_cvm": 19836,
+   "liquidez": 169463176.04,
+   "n_dfp": 16,
+   "setor": "Agricultura (Açúcar, Álcool e Cana)",
+   "outras_classes": ""
+  },
+  {
+   "ordem": 9,
+   "ticker": "SMFT3",
+   "cnpj": "07.594.978/0001-78",
+   "cd_cvm": 24260,
+   "liquidez": 163739241.89,
+   "n_dfp": 10,
+   "setor": "Brinquedos e Lazer",
+   "outras_classes": ""
+  },
+  {
+   "ordem": 10,
+   "ticker": "MBRF3",
+   "cnpj": "03.853.896/0001-40",
+   "cd_cvm": 20788,
+   "liquidez": 162318411.41,
+   "n_dfp": 16,
+   "setor": "Alimentos",
+   "outras_classes": ""
+  },
+  {
+   "ordem": 11,
+   "ticker": "CSNA3",
+   "cnpj": "33.042.730/0001-04",
+   "cd_cvm": 4030,
+   "liquidez": 102800575.88,
+   "n_dfp": 16,
+   "setor": "Metalurgia e Siderurgia",
+   "outras_classes": ""
+  },
+  {
+   "ordem": 12,
+   "ticker": "GOAU4",
+   "cnpj": "92.690.783/0001-09",
+   "cd_cvm": 8656,
+   "liquidez": 99588185.98,
+   "n_dfp": 16,
+   "setor": "Emp. Adm. Part. - Metalurgia e Siderurgia",
+   "outras_classes": "GOAU3"
+  },
+  {
+   "ordem": 13,
+   "ticker": "USIM5",
+   "cnpj": "60.894.730/0001-05",
+   "cd_cvm": 14320,
+   "liquidez": 96797763.93,
+   "n_dfp": 16,
+   "setor": "Metalurgia e Siderurgia",
+   "outras_classes": "USIM3 USIM6"
+  },
+  {
+   "ordem": 14,
+   "ticker": "TEND3",
+   "cnpj": "71.476.527/0001-35",
+   "cd_cvm": 21148,
+   "liquidez": 88636899.92,
+   "n_dfp": 17,
+   "setor": "Construção Civil, Mat. Constr. e Decoração",
+   "outras_classes": ""
+  },
+  {
+   "ordem": 15,
+   "ticker": "NATU3",
+   "cnpj": "71.673.990/0001-77",
+   "cd_cvm": 19550,
+   "liquidez": 84903737.76,
+   "n_dfp": 16,
+   "setor": "Farmacêutico e Higiene",
+   "outras_classes": ""
+  },
+  {
+   "ordem": 16,
+   "ticker": "MOVI3",
+   "cnpj": "21.314.559/0001-66",
+   "cd_cvm": 23825,
+   "liquidez": 78017580.41,
+   "n_dfp": 12,
+   "setor": "Serviços Transporte e Logística",
+   "outras_classes": ""
+  },
+  {
+   "ordem": 17,
+   "ticker": "MRVE3",
+   "cnpj": "08.343.492/0001-20",
+   "cd_cvm": 20915,
+   "liquidez": 74586314.08,
+   "n_dfp": 16,
+   "setor": "Construção Civil, Mat. Constr. e Decoração",
+   "outras_classes": ""
+  },
+  {
+   "ordem": 18,
+   "ticker": "AZZA3",
+   "cnpj": "16.590.234/0001-76",
+   "cd_cvm": 22349,
+   "liquidez": 74302614.54,
+   "n_dfp": 16,
+   "setor": "Têxtil e Vestuário",
+   "outras_classes": ""
+  },
+  {
+   "ordem": 19,
+   "ticker": "IGTI11",
+   "cnpj": "60.543.816/0001-93",
+   "cd_cvm": 8672,
+   "liquidez": 74000089.6,
+   "n_dfp": 16,
+   "setor": "Emp. Adm. Part. - Comércio (Atacado e Varejo)",
+   "outras_classes": "IGTI3 IGTI4"
+  },
+  {
+   "ordem": 20,
+   "ticker": "BEEF3",
+   "cnpj": "67.620.377/0001-14",
+   "cd_cvm": 20931,
+   "liquidez": 73496519.82,
+   "n_dfp": 16,
+   "setor": "Alimentos",
+   "outras_classes": ""
+  }
+ ]
+}
