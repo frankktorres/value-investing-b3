@@ -1,0 +1,24 @@
+{
+  "payout_politica": {
+    "valor": 0.25,
+    "fonte": "Estatuto Social Equatorial S.A. (IPE, entrega 30/04/2026), art. 27 §2 (iii): 'no mínimo 25% do saldo do lucro líquido do exercício, obtido após a dedução [da reserva legal], será distribuído a título de dividendo'; Comunicado ao Mercado 30/04/2026: proposta de reduzir para 1% NÃO aprovada (quórum), 'dividendo obrigatório permanece fixado em 25%'. Atenção: é piso estatutário, não alvo; a empresa diz distribuir 'acima do mínimo' (Fato Relevante 25/03/2026) sem número.",
+    "nota_fonte": "A"
+  },
+  "discricionario": {
+    "valor": false,
+    "fonte": "FRE 2026 (fre_cia_aberta_posicao_acionaria_2026.csv, CNPJ 03.220.438/0001-73): nenhum acionista com Acionista_Controlador='S' nem Participante_Acordo_Acionistas='S' (maiores: Opportunity 10,04%, BlackRock 9,98%, Squadra 4,58%, CPP 4,57%; 'Outros' 70,6%); estatuto sem golden share nem voto especial (1 voto por ação ordinária, art. 6 §1; art. 29-A é oferta pública em aquisição relevante, não poder de controlador).",
+    "nota_fonte": "A"
+  },
+  "desconto_controlador": {
+    "tipo": "zero",
+    "razao": "SEM_RAZAO"
+  },
+  "_meta": {
+    "protocolo": "B36 v1",
+    "chamadas": 19,
+    "fim": "2026-11-24T18:50",
+    "nao_achado": [
+      "qualitativo (notas moat/gestao/controlador/ciclo/fisher exigem séries calculadas e documento A/B por nota; não levantadas no teto de chamadas)"
+    ]
+  }
+}

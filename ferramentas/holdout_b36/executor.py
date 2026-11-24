@@ -255,7 +255,7 @@ def avaliar_financeira(c: dict, data: str, ins: dict) -> dict:
     from motor_financeiras import SEM_RAZAO, Financeira, avaliar
     tk = c["ticker"]
     si = _si_holdout(tk)
-    cvm = json.loads(SERIES.read_text(encoding="utf-8"))[tk]
+    cvm = json.loads(SERIES.read_text(encoding="utf-8")).get(tk, {})     # banco não coleta CVM (StatusInvest, como o hall)
     antes = {n: (d.get(tk, _AUSENTE)) for n, d in (("SI", L2.SI), ("CVM", L2.CVM))}
     try:
         L2.SI[tk], L2.CVM[tk] = si, cvm
@@ -274,6 +274,11 @@ def avaliar_financeira(c: dict, data: str, ins: dict) -> dict:
                   pl_hist=L2.pl_hist(tk), desconto_controlador=dc, anos_pagos_10=L2.anos_pagos(tk), qualitativo=q,
                   controlador_discricionario=disc,
                   controlador_discricionario_fonte=ins["discricionario"]["fonte"] if disc else "")
+        # defasagem medida como no hall (datas da StatusInvest), sobre a série do próprio ticker: o `defasagem.py` só conhece o
+        # dicionário do hall (conserto do executor no piloto, 24/11 — `09`)
+        from defasagem import defasagem_meses
+        kw.update(defasagem_meses=defasagem_meses(tk, si={tk: si}),
+                  defasagem_fonte="datas de pagamento da StatusInvest (C, só datas), média ponderada pelo valor")
         if c["tipo"] == "utility":
             kw["solidez_manual"] = L2.solidez(tk)
         else:

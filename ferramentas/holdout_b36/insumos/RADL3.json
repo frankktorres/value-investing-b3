@@ -1,0 +1,77 @@
+{
+ "_doc": "Insumos não mecânicos de RADL3 / Raia Drogasil (hold-out B36, protocolo v1). Fontes: FRE 2026 v4 (CVM, id 161295), DFP 2025 e 2024 (CVM), IPE 2017-2026 (títulos de fatos relevantes; textos baixados em ferramentas/dados/cvm/docs/RAIADROGASIL/). Sem preço, valuation ou notícia.",
+ "ma_ruim": {
+  "valor": false,
+  "fonte": "IPE 2017-2026, fatos relevantes: aquisição da Drogaria Onofre (FR 27/02/2019 e fechamento 01/07/2019; incorporada, custo da operação ~R$ 2,2 mi, sem baixa citada) e alienação da 4Bio em 03/03/2026 por valor-base R$ 600 mi, comprada em 2015, com ganho (FR 03/03/2026). DFP 2024 e 2025 (consolidado): fluxo 6.02.01 'Aquisição de Controlada' = 0; ativo total R$ 25.170 mi (2025) e R$ 22.164 mi (2024), nenhuma aquisição próxima de 20% do ativo. Limite: preço pago pela Onofre e pela 4Bio não lido",
+  "nota_fonte": "A"
+ },
+ "interferencias": {
+  "valor": 0,
+  "fonte": "IPE 2017-2026: triados os títulos dos fatos relevantes (debêntures, recompra de ações, bonificações, acordos de acionistas Bloco Raia 2021/2022/2023, aquisição Onofre, sucessão do CEO e do presidente do Conselho 06/08/2024, alienação da 4Bio 03/03/2026, projeções/guidance); nenhuma operação do controlador contra o minoritário. FR 19/05/2022 e 13/09/2023: acordo entre membros do Bloco Raia sem mudar o acordo vigente. Limite: comunicados ao mercado e atas não triados",
+  "nota_fonte": "A"
+ },
+ "partes_rel_sobre_receita": {
+  "valor": 0.005292,
+  "fonte": "FRE 2026 v4 (CVM, id 161295), tabela transacao_parte_relacionada: 19 linhas, soma de 'Montante_Envolvido' = R$ 234,17 mi (Stix R$ 186,5 mi, Cfly aeronave R$ 17,4 mi, Mol Impacto R$ 24,8 mi, locações e advocacia o resto; soma bruta dos dois sentidos, sem netar) ÷ receita líquida consolidada 2025 R$ 44.250,4 mi (DFP 2025, DRE conta 3.01) = 0,53%",
+  "nota_fonte": "A"
+ },
+ "tag_along": {
+  "valor": 1.0,
+  "fonte": "Estatuto social de 22/12/2025 (IPE), art. 23: alienação de controle exige OPA das ações dos demais acionistas 'de forma a lhes assegurar tratamento igualitário àquele dado ao alienante' (Regulamento do Novo Mercado); capital só de ações ordinárias (RADL3)",
+  "nota_fonte": "A"
+ },
+ "discricionario": {
+  "valor": true,
+  "fonte": "IPE: Acordo de Acionistas Raia Drogasil (FR 30/03/2021, em vigor desde 10/11/2021), Acordo de Acionistas Bloco Raia (FR 19/05/2022) e 1º aditivo (FR 13/09/2023): bloco de controle com direitos de governança e transferência de ações; FRE 2026 v4 marca vários signatários como controladores e participantes do acordo. Limite: texto do acordo de 2021 não lido, só o aditivo de 2023",
+  "nota_fonte": "A"
+ },
+ "fisher": {
+  "respostas": [
+   "sim",
+   "sem",
+   "sem",
+   "sem",
+   "sem",
+   "sem",
+   "sem",
+   "sem",
+   "sem",
+   "sem",
+   "sem",
+   "sem",
+   "sem",
+   "sem",
+   "sem"
+  ],
+  "itens": [
+   "1 potencial de mercado: sim — receita líquida consolidada R$ 44.250,4 mi em 2025 contra R$ 38.871,5 mi em 2024 (+13,8%) (DFP 2025, DRE consolidada, conta 3.01, CVM, A)",
+   "2 decisão de seguir lançando: sem — sem documento A/B levantado dentro do teto de chamadas",
+   "3 eficácia do P&D: sem — sem documento A/B levantado dentro do teto de chamadas",
+   "4 força de vendas: sem — sem documento A/B levantado dentro do teto de chamadas",
+   "5 margem que vale a pena: sem — sem documento A/B levantado dentro do teto de chamadas",
+   "6 o que faz pela margem: sem — sem documento A/B levantado dentro do teto de chamadas",
+   "7 relações de trabalho: sem — sem documento A/B levantado dentro do teto de chamadas",
+   "8 relações entre executivos: sem — sem documento A/B levantado dentro do teto de chamadas",
+   "9 profundidade da gestão: sem — sem documento A/B levantado dentro do teto de chamadas",
+   "10 controles de custo e contábeis: sem — sem documento A/B levantado dentro do teto de chamadas",
+   "11 aspectos do setor: sem — sem documento A/B levantado dentro do teto de chamadas",
+   "12 visão de longo prazo: sem — sem documento A/B levantado dentro do teto de chamadas",
+   "13 crescimento sem diluição: sem — sem documento A/B levantado dentro do teto de chamadas",
+   "14 fala dos problemas: sem — sem documento A/B levantado dentro do teto de chamadas",
+   "15 integridade inquestionável: sem — sem documento A/B levantado dentro do teto de chamadas"
+  ],
+  "fonte": "Apenas o item 1 tem documento A/B lido; os demais ficam 'sem'."
+ },
+ "desconto_controlador": {
+  "tipo": "zero",
+  "razao": "SEM_RAZAO"
+ },
+ "_meta": {
+  "protocolo": "B36 v1",
+  "chamadas": 11,
+  "fim": "2026-11-24T18:37",
+  "nao_achado": [
+   "fisher itens 2-15"
+  ]
+ }
+}

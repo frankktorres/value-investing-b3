@@ -9,7 +9,16 @@
   "perfil": "servicos",
   "pregao": "BTGP BANCO",
   "classe": "UNT",
-  "acoes_por_unit": null
+  "acoes_por_unit": null,
+  "mes_itr": 9,
+  "coleta": {
+   "em": "2026-11-24",
+   "segundos": {
+    "cvm": 0.0,
+    "b3": 2.3,
+    "statusinvest": 2.4
+   }
+  }
  },
  {
   "ticker": "EMBJ3",
@@ -21,7 +30,16 @@
   "perfil": "servicos",
   "pregao": "EMBRAER",
   "classe": "ON",
-  "acoes_por_unit": 1
+  "acoes_por_unit": 1,
+  "mes_itr": 9,
+  "coleta": {
+   "em": "2026-11-24",
+   "segundos": {
+    "cvm": 39.7,
+    "b3": 4.8,
+    "statusinvest": 5.7
+   }
+  }
  },
  {
   "ticker": "EQTL3",
@@ -33,7 +51,16 @@
   "perfil": "servicos",
   "pregao": "EQUATORIAL",
   "classe": "ON",
-  "acoes_por_unit": 1
+  "acoes_por_unit": 1,
+  "mes_itr": 9,
+  "coleta": {
+   "em": "2026-11-24",
+   "segundos": {
+    "cvm": 41.6,
+    "b3": 2.7,
+    "statusinvest": 5.6
+   }
+  }
  },
  {
   "ticker": "ENEV3",
@@ -45,7 +72,16 @@
   "perfil": "servicos",
   "pregao": "ENEVA",
   "classe": "ON",
-  "acoes_por_unit": 1
+  "acoes_por_unit": 1,
+  "mes_itr": 9,
+  "coleta": {
+   "em": "2026-11-24",
+   "segundos": {
+    "cvm": 40.8,
+    "b3": 2.8,
+    "statusinvest": 3.8
+   }
+  }
  },
  {
   "ticker": "RADL3",
@@ -57,7 +93,16 @@
   "perfil": "servicos",
   "pregao": "RAIADROGASIL",
   "classe": "ON",
-  "acoes_por_unit": 1
+  "acoes_por_unit": 1,
+  "mes_itr": 9,
+  "coleta": {
+   "em": "2026-11-24",
+   "segundos": {
+    "cvm": 37.6,
+    "b3": 6.1,
+    "statusinvest": 4.0
+   }
+  }
  },
  {
   "ticker": "RAIL3",
@@ -69,7 +114,16 @@
   "perfil": "servicos",
   "pregao": "RUMO S.A.",
   "classe": "ON",
-  "acoes_por_unit": 1
+  "acoes_por_unit": 1,
+  "mes_itr": 9,
+  "coleta": {
+   "em": "2026-11-24",
+   "segundos": {
+    "cvm": 37.8,
+    "b3": 2.5,
+    "statusinvest": 4.0
+   }
+  }
  },
  {
   "ticker": "ENGI11",
@@ -81,7 +135,16 @@
   "perfil": "servicos",
   "pregao": "ENERGISA",
   "classe": "UNT",
-  "acoes_por_unit": 5
+  "acoes_por_unit": 5,
+  "mes_itr": 9,
+  "coleta": {
+   "em": "2026-11-24",
+   "segundos": {
+    "cvm": 38.7,
+    "b3": 2.7,
+    "statusinvest": 3.8
+   }
+  }
  },
  {
   "ticker": "CSAN3",
@@ -93,7 +156,16 @@
   "perfil": "ciclica",
   "pregao": "COSAN",
   "classe": "ON",
-  "acoes_por_unit": 1
+  "acoes_por_unit": 1,
+  "mes_itr": 9,
+  "coleta": {
+   "em": "2026-11-24",
+   "segundos": {
+    "cvm": 38.9,
+    "b3": 3.1,
+    "statusinvest": 3.6
+   }
+  }
  },
  {
   "ticker": "SMFT3",
@@ -105,7 +177,16 @@
   "perfil": "servicos",
   "pregao": "SMART FIT",
   "classe": "ON",
-  "acoes_por_unit": 1
+  "acoes_por_unit": 1,
+  "mes_itr": 9,
+  "coleta": {
+   "em": "2026-11-24",
+   "segundos": {
+    "cvm": 36.6,
+    "b3": 2.6,
+    "statusinvest": 3.9
+   }
+  }
  },
  {
   "ticker": "MBRF3",
@@ -117,7 +198,16 @@
   "perfil": "ciclica",
   "pregao": "MARFRIG",
   "classe": "ON",
-  "acoes_por_unit": 1
+  "acoes_por_unit": 1,
+  "mes_itr": 9,
+  "coleta": {
+   "em": "2026-11-24",
+   "segundos": {
+    "cvm": 37.5,
+    "b3": 2.7,
+    "statusinvest": 4.3
+   }
+  }
  },
  {
   "ticker": "CSNA3",
@@ -129,7 +219,16 @@
   "perfil": "ciclica",
   "pregao": "SID NACIONAL",
   "classe": "ON",
-  "acoes_por_unit": 1
+  "acoes_por_unit": 1,
+  "mes_itr": 9,
+  "coleta": {
+   "em": "2026-11-24",
+   "segundos": {
+    "cvm": 36.3,
+    "b3": 2.7,
+    "statusinvest": 3.7
+   }
+  }
  },
  {
   "ticker": "GOAU4",
@@ -141,7 +240,16 @@
   "perfil": "ciclica",
   "pregao": "GERDAU MET",
   "classe": "PN",
-  "acoes_por_unit": 1
+  "acoes_por_unit": 1,
+  "mes_itr": 9,
+  "coleta": {
+   "em": "2026-11-24",
+   "segundos": {
+    "cvm": 36.0,
+    "b3": 4.0,
+    "statusinvest": 3.5
+   }
+  }
  },
  {
   "ticker": "USIM5",
@@ -153,7 +261,16 @@
   "perfil": "ciclica",
   "pregao": "USIMINAS",
   "classe": "PNA",
-  "acoes_por_unit": 1
+  "acoes_por_unit": 1,
+  "mes_itr": 9,
+  "coleta": {
+   "em": "2026-11-24",
+   "segundos": {
+    "cvm": 37.6,
+    "b3": 3.3,
+    "statusinvest": 3.3
+   }
+  }
  },
  {
   "ticker": "TEND3",
@@ -165,7 +282,16 @@
   "perfil": "servicos",
   "pregao": "TENDA",
   "classe": "ON",
-  "acoes_por_unit": 1
+  "acoes_por_unit": 1,
+  "mes_itr": 9,
+  "coleta": {
+   "em": "2026-11-24",
+   "segundos": {
+    "cvm": 33.1,
+    "b3": 21.9,
+    "statusinvest": 5.9
+   }
+  }
  },
  {
   "ticker": "NATU3",
@@ -177,7 +303,16 @@
   "perfil": "servicos",
   "pregao": "NATURA",
   "classe": "ON",
-  "acoes_por_unit": 1
+  "acoes_por_unit": 1,
+  "mes_itr": 9,
+  "coleta": {
+   "em": "2026-11-24",
+   "segundos": {
+    "cvm": 27.0,
+    "b3": 1.6,
+    "statusinvest": 2.5
+   }
+  }
  },
  {
   "ticker": "MOVI3",
@@ -189,7 +324,16 @@
   "perfil": "servicos",
   "pregao": "MOVIDA",
   "classe": "ON",
-  "acoes_por_unit": 1
+  "acoes_por_unit": 1,
+  "mes_itr": 9,
+  "coleta": {
+   "em": "2026-11-24",
+   "segundos": {
+    "cvm": 32.4,
+    "b3": 3.4,
+    "statusinvest": 3.4
+   }
+  }
  },
  {
   "ticker": "MRVE3",
@@ -201,7 +345,16 @@
   "perfil": "servicos",
   "pregao": "MRV",
   "classe": "ON",
-  "acoes_por_unit": 1
+  "acoes_por_unit": 1,
+  "mes_itr": 9,
+  "coleta": {
+   "em": "2026-11-24",
+   "segundos": {
+    "cvm": 35.9,
+    "b3": 3.0,
+    "statusinvest": 3.5
+   }
+  }
  },
  {
   "ticker": "AZZA3",
@@ -213,7 +366,16 @@
   "perfil": "servicos",
   "pregao": "AZZAS 2154",
   "classe": "ON",
-  "acoes_por_unit": 1
+  "acoes_por_unit": 1,
+  "mes_itr": 9,
+  "coleta": {
+   "em": "2026-11-24",
+   "segundos": {
+    "cvm": 34.5,
+    "b3": 2.3,
+    "statusinvest": 3.0
+   }
+  }
  },
  {
   "ticker": "IGTI11",
@@ -225,7 +387,16 @@
   "perfil": "servicos",
   "pregao": "IGUATEMI S.A",
   "classe": "UNT",
-  "acoes_por_unit": 3
+  "acoes_por_unit": 3,
+  "mes_itr": 9,
+  "coleta": {
+   "em": "2026-11-24",
+   "segundos": {
+    "cvm": 33.0,
+    "b3": 1.7,
+    "statusinvest": 2.2
+   }
+  }
  },
  {
   "ticker": "BEEF3",
@@ -237,6 +408,15 @@
   "perfil": "ciclica",
   "pregao": "MINERVA",
   "classe": "ON",
-  "acoes_por_unit": 1
+  "acoes_por_unit": 1,
+  "mes_itr": 9,
+  "coleta": {
+   "em": "2026-11-24",
+   "segundos": {
+    "cvm": 26.0,
+    "b3": 2.0,
+    "statusinvest": 3.6
+   }
+  }
  }
 ]
