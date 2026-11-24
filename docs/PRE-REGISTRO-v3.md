@@ -413,11 +413,34 @@ Relatório: `docs/oraculo/hipoteses-2026-10-22.md` (e `.json`).
      valor veio), não de rótulo.
    - **Critério de "passou" (todos):** (1) rodam sem erro (sai palavra, NÃO CONCLUSIVO incluso) ≥ 16 de 20; (2) NÃO
      CONCLUSIVO, entre as que rodam, ≤ 6; (3) Ke nominal > 30% ≤ 2; (4) valor absurdo (central ≤ 0, P/C < 0,2 ou > 5) ≤ 2;
-     (5) premissas digitadas à mão (pesquisa) por ação: mediana ≤ 25 e nenhuma > 35; (6) vazios por ação: mediana ≤ 50% dos
-     insumos não automáticos do seu tipo; (7) tempo por ação (relógio, do cadastro ao veredito): mediana ≤ 20 min. Só
-     relatados, fora do critério (§0.3): dispersão > 1,8×, P/C mediano contra o do hall, nº de BARATA, erros explícitos do
-     motor, e a tabela por ação automático × pesquisa × vazio (a medida de quanto falta para a Mesa analisar qualquer ação
-     sozinha).
+     (6) vazios por ação: mediana ≤ 50% dos insumos não automáticos do seu tipo; (7) tempo por ação (relógio, do cadastro
+     ao veredito): mediana ≤ 20 min. **A linha (5) foi retirada antes de rodar (Frank, 24/11):** com ~22 insumos não
+     automáticos por industrial e ~15 por financeira, "≤ 25 digitadas" passaria sempre. No lugar entra o **% de insumos
+     automáticos por ação, relatado fora do critério**: mede a distância até "qualquer ação", não a qualidade do método.
+     Também só relatados (§0.3): dispersão > 1,8×, P/C mediano contra o do hall, nº de BARATA, erros explícitos do motor e a
+     tabela por ação automático × pesquisa × vazio.
+   - **Eventos societários e previsões, escritos antes de rodar.** Fonte: títulos dos fatos relevantes do IPE 2017–2026 e
+     tickers por CNPJ na FCA `valor_mobiliario` (CVM, nota A). O FRE estruturado (`fre_2026.zip`) não traz a seção de
+     reorganizações; o texto do FRE não foi lido, e 2016 fica sem IPE no disco. Previsão = o que deve sair e por quê; o
+     relatório compara previsto × observado.
+
+     | Ação | Evento nos 10 anos (IPE/FCA) | Previsão | Por quê |
+     |---|---|---|---|
+     | AZZA3 | Incorporou Reserva (2020), Vicenza (2023) e o Grupo Soma (2024; nome Azzas 2154); código ARZZ3 → AZZA3; reorganização em 09/2026 | **NÃO CONCLUSIVO** | A janela de 10 anos mistura a Arezzo sozinha com a Arezzo + Soma: ações e receita real saltam em 2024, a diluição pesa na gestão e a margem mediana é de outra empresa |
+     | NATU3 | Natura &Co (2019, Avon) e incorporação da Natura &Co pela Natura Cosméticos (06/2025); linha nova de NATU3 na FCA em 07/2025 | **valor absurdo** | DFP de 2016–24 é a operadora sem a holding; ações e preço de antes de 2025 são de outra entidade (NTCO3/NATU3): número por ação incoerente na janela |
+     | MBRF3 | Marfrig consolida a BRF desde 2022 e a incorporou em 2025 (MBRF); código MRFG3 → MBRF3 | **NÃO CONCLUSIVO** (Ke > 30%) | Dívida alta com o D/E a mercado no Hamada (v2.7) e minoritários grandes até 2025 |
+     | EMBJ3 | Código EMBR3 → EMBJ3; Eve (2022) segue consolidada com minoritários; cisão interna da Yaborã (2021) | **erro** | A série de preço do COTAHIST pelo código novo é curta: fechamento de fim de ano, "listado desde" e P/L histórico dependem do ticker |
+     | CSAN3 (holding) | Reorganização com a Cosan Limited (2021), desdobramento (2021), Raízen por equivalência | **NÃO CONCLUSIVO** | Holding alavancada sem SOTP: dívida da holding + perdas da Raízen na equivalência derrubam o lucro normalizado e sobem o Ke |
+     | GOAU4 (holding) | Nenhuma reorganização; consolida a Gerdau com minoritários grandes | **roda, sem absurdo** | O motor desconta os minoritários (AUD-15); sem SOTP não há desconto de holding, e a palavra deve ficar perto da GGBR4 do hall |
+     | IGTI11 (holding) | 2021: a Jereissati (JPSA3, mesmo CNPJ) incorporou a Iguatemi e virou Iguatemi S.A. (IGTI11, unit) | **valor absurdo** | DFP de antes de 2021 é a holding com minoritários; preço e ações são de JPSA3 e depois da unit |
+     | MOVI3 | Reorganização do grupo JSL (2020), incorporação da CS Frotas (2021), cisão de controlada (2024) | **NÃO CONCLUSIVO** (Ke > 30%) | Locadora com dívida alta e emissão de ações na janela |
+     | ENEV3 | Incorporou a Parnaíba (2018), Focus (2022) e ativos do BTG (2024, com follow-on) | **valor absurdo** (P/C > 5) | O método de regulado vive de payout e DDM, e a Eneva quase não distribui |
+     | BEEF3 | Mato Grosso Bovinos (2017), Athena Foods (2020), units BEEF11 (2025) | **NÃO CONCLUSIVO** (Ke > 30%) | PL pequeno diante da dívida: D/E a mercado alto |
+     | RAIL3 | Incorporação de ações da Malha Norte (2023–25) | roda | Evento pequeno diante da base |
+     | BPAC11 | Reorganização (2017), desdobramento (2021), incorporação de ações (2025); units sem ligação na FCA (`IDENTIDADE_MANUAL`) | roda (motor de banco) | Banco com dados da StatusInvest pelo mesmo código do hall |
+     | ENGI11 | Incorporações entre controladas (2017–26) | roda (regulado) | Eventos internos ao grupo |
+     | MRVE3 | Cisão da LOG (2018) | roda | A cisão encolhe a base no início da janela, sem quebra depois |
+     | RADL3, TEND3, CSNA3, USIM5, SMFT3, EQTL3 | Só eventos pequenos ou desdobramentos nos títulos do IPE (SMFT3: mudança de controle em 2026) | roda | Sem quebra de base visível no IPE |
    - **Congelamento e consertos.** Ninguém ajusta motor, doutrina, golden, ficha-padrão nem protocolo durante a B36; falha
      de método vira item novo no BACKLOG, sem conserto. No piloto (as primeiras ações), consertar o **executor**
      (`holdout_b36/rodar.py`, cadastro, coleta) é permitido só se não tocar motor, ficha-padrão nem protocolo e se o teste de
