@@ -42,5 +42,13 @@
  "USIM5": {
   "segundos": 217.0,
   "chamadas": 21
+ },
+ "MOVI3": {
+  "segundos": 176.7,
+  "chamadas": 20
+ },
+ "BEEF3": {
+  "segundos": 151.2,
+  "chamadas": 19
  }
 }
