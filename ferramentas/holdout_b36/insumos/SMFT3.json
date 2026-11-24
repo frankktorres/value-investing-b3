@@ -1,0 +1,77 @@
+{
+  "ma_ruim": {
+    "valor": false,
+    "fonte": "DFP 2025 consolidada (CVM): ativo total R$ 21.497.648 mil; intangivel total (incl. agio) R$ 2.551.064 mil = 11,9% do ativo, logo nenhuma aquisicao pode ter passado de 20% do ativo (R$ 4,30 bi). Aquisicoes no IPE 2021-2026: Just Fit (FR 16/06/2021), Sporty Panama (FR 02/01/2023), Grupo Velocity (comunicados 16/07 e 02/11/2024), Evolve (comunicados 02/12/2025 e 04/08/2026): todas de porte inferior ao teto e sem baixa/venda com perda localizada nos titulos do IPE. Limite: precos pagos e testes de impairment nao lidos nas notas",
+    "nota_fonte": "A"
+  },
+  "interferencias": {
+    "valor": 0,
+    "fonte": "IPE 2021-2026 (titulos de todos os Fatos Relevantes e Acordos de Acionistas triados): nenhum fato relevante de operacao do controlador contra minoritario (sem OPA de fechamento, sem aumento dirigido, sem compra/venda de ativo com controlador). Aumentos de capital 'Distribuicao JCP + Aumento de Capital' (12/2024, 12/2025) sao capitalizacao pro rata. Desde 23/02/2026 a companhia nao tem controlador definido (FR 23/02/2026). Limite: so titulos e FRs de 02/2026 e 04/2024 lidos; corpo dos demais nao lido",
+    "nota_fonte": "A"
+  },
+  "partes_rel_sobre_receita": {
+    "valor": 0.0098,
+    "fonte": "FRE 2026 v8 (ID 161427, CVM), tabela transacao_parte_relacionada: transacoes de 2025 = locacao C5 Empreendimentos (socio e presidente do conselho; 06/10/2025; R$ 6.380.427,60) + repasse TotalPass Mexico (JV de controle compartilhado; 31/12/2025; R$ 64.503.460,20) = R$ 70.883.887,80; receita liquida consolidada 2025 R$ 7.241.694 mil (DFP 2025, DRE 3.01) = 0,98%. Conservador: inclui a JV (nao e controlador) e o valor total do contrato de locacao de 10 anos. Emprestimo TotalPass de 2019 (saldo R$ 8,0 mi) fora por ser de 2019",
+    "nota_fonte": "A"
+  },
+  "tag_along": {
+    "valor": 1.0,
+    "fonte": "Estatuto Social (IPE, entrega 14/05/2026), art. 28: alienacao de controle exige OPA das acoes dos demais acionistas 'de forma a lhes assegurar o tratamento igualitario aquele dado ao alienante' (Novo Mercado); so ha acoes ordinarias (art. 5 par. 1: um voto por acao). Art. 29: OPA obrigatoria a quem atingir 20% do capital (poison pill, dispensavel por AG)",
+    "nota_fonte": "A"
+  },
+  "discricionario": {
+    "valor": false,
+    "fonte": "FR 23/02/2026 (IPE): acordo de acionistas Patria/Corona (17/10/2019) deixou de produzir efeitos; 'a Companhia deixa de ter controlador definido', familia Corona acionista de referencia com 14,88%. FRE 2026 v8 (ID 161427, CVM): nenhum acionista com Acionista_Controlador='S' nem Participante_Acordo_Acionistas='S'; free float 90,146%; estatuto com 1 voto por acao, sem golden share. Ressalva: familia Corona (Edgard presidente do conselho, Diogo diretor presidente desde 02/03/2026, FR 10/02/2026) mantem a gestao com 14,88%",
+    "nota_fonte": "A"
+  },
+  "fisher": {
+    "respostas": [
+      "sem",
+      "sem",
+      "sem",
+      "sem",
+      "sem",
+      "sem",
+      "sem",
+      "sem",
+      "sem",
+      "sem",
+      "sem",
+      "sem",
+      "sem",
+      "sem",
+      "sem"
+    ],
+    "itens": [
+      "1 sem: nao levantado em documento A/B nesta rodada (limite de 25 chamadas; relatorio da administracao e notas da DFP 2025 nao lidos)",
+      "2 sem: nao levantado em documento A/B nesta rodada (limite de 25 chamadas; relatorio da administracao e notas da DFP 2025 nao lidos)",
+      "3 sem: nao levantado em documento A/B nesta rodada (limite de 25 chamadas; relatorio da administracao e notas da DFP 2025 nao lidos)",
+      "4 sem: nao levantado em documento A/B nesta rodada (limite de 25 chamadas; relatorio da administracao e notas da DFP 2025 nao lidos)",
+      "5 sem: nao levantado em documento A/B nesta rodada (limite de 25 chamadas; relatorio da administracao e notas da DFP 2025 nao lidos)",
+      "6 sem: nao levantado em documento A/B nesta rodada (limite de 25 chamadas; relatorio da administracao e notas da DFP 2025 nao lidos)",
+      "7 sem: nao levantado em documento A/B nesta rodada (limite de 25 chamadas; relatorio da administracao e notas da DFP 2025 nao lidos)",
+      "8 sem: nao levantado em documento A/B nesta rodada (limite de 25 chamadas; relatorio da administracao e notas da DFP 2025 nao lidos)",
+      "9 sem: nao levantado em documento A/B nesta rodada (limite de 25 chamadas; relatorio da administracao e notas da DFP 2025 nao lidos)",
+      "10 sem: nao levantado em documento A/B nesta rodada (limite de 25 chamadas; relatorio da administracao e notas da DFP 2025 nao lidos)",
+      "11 sem: nao levantado em documento A/B nesta rodada (limite de 25 chamadas; relatorio da administracao e notas da DFP 2025 nao lidos)",
+      "12 sem: nao levantado em documento A/B nesta rodada (limite de 25 chamadas; relatorio da administracao e notas da DFP 2025 nao lidos)",
+      "13 sem: nao levantado em documento A/B nesta rodada (limite de 25 chamadas; relatorio da administracao e notas da DFP 2025 nao lidos)",
+      "14 sem: nao levantado em documento A/B nesta rodada (limite de 25 chamadas; relatorio da administracao e notas da DFP 2025 nao lidos)",
+      "15 sem: nao levantado em documento A/B nesta rodada (limite de 25 chamadas; relatorio da administracao e notas da DFP 2025 nao lidos)"
+    ],
+    "fonte": "Sem leitura do relatorio da administracao/DFP 2025; todas as respostas 'sem' (nota Fisher fica no padrao do metodo)"
+  },
+  "desconto_controlador": {
+    "tipo": "zero",
+    "razao": "SEM_RAZAO"
+  },
+  "_meta": {
+    "protocolo": "B36 v1",
+    "chamadas": 9,
+    "fim": "2026-11-24T19:45",
+    "nao_achado": [
+      "fisher (15 itens 'sem': relatorio da administracao e notas da DFP 2025 nao lidos)",
+      "desconto_controlador (sem evidencia A/B de risco de controlador; companhia sem controlador desde 23/02/2026)"
+    ]
+  }
+}

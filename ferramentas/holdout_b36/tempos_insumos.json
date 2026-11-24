@@ -18,5 +18,17 @@
  "ENGI11": {
   "segundos": 55.3,
   "chamadas": 9
+ },
+ "RAIL3": {
+  "segundos": 230.4,
+  "chamadas": 26
+ },
+ "EMBJ3": {
+  "segundos": 241.7,
+  "chamadas": 22
+ },
+ "SMFT3": {
+  "segundos": 107.3,
+  "chamadas": 11
  }
 }
