@@ -1077,3 +1077,38 @@ não entra).
 **Reabrir se:** a correção do H2 for aprovada (RANI3/SUZB3 reavaliadas pela regra nova, com antes × depois no `09`); a data
 de Peregrino ganhar fonte A/B (PRIO3); `trava_razao` com premissa divergente documentada (UNIP6).
 
+
+## 24/11/2026 — DECISÃO DO FRANK — H2 (B34): D/E a mercado, sem ponto fixo; revisa o AUD-13
+Proposta só do item H2 (Fase 5 item 2), com três opções e fonte, **sem mostrar palavras**; a tabela vem depois deste registro.
+| Opção | Regra | Fonte |
+|---|---|---|
+| **A. D/E a mercado, sem ponto fixo (escolhida)** | E = preço da data-base × ações; D = dívida bruta com arrendamentos (a mesma da ponte); um D/E no Hamada e nos pesos | Damodaran, *Investment Valuation* 2ª ed., cap. 8 pp. 24, 47, 49–51; cap. 15 p. 24 — nota B |
+| B. Ponto fixo partindo do mercado, com unicidade obrigatória (senão NÃO CONCLUSIVO) | mantém o laço e só o vigia | idem, cap. 15 pp. 7–8 — nota B; o trecho não cobre o beta no laço |
+| C. D/E-alvo do setor (emergentes, jan/2026) | ignora a alavancagem própria | não elegível: planilha de emergentes não aberta; "alvo" (McKinsey) NÃO VERIFICADO |
+**Por quê (Frank):** o AUD-13 foi revisto porque a fonte primária manda usar pesos a mercado (cap. 8, p. 47: "weights used should
+be based upon market value and not book value"), e o AUD-13 trocava um defeito (central dependente do preço) por outro (o laço
+central baixo → D/E alto → Ke alto → central mais baixo; RANI3 Ke 39,4%, KLBN11 65%).
+**Regras que vêm junto:**
+- "Dívida líquida" sai da Fase 5 item 2; vale **dívida bruta com arrendamentos** (cap. 15 p. 24; cap. 8 p. 51: "using net debt
+  ratios will overstate the value of riskier firms").
+- **Coerência obrigatória:** o desconto (Hamada e pesos) usa a mesma dívida que a ponte do valor da firma para o valor por ação
+  subtrai; a ponte soma o caixa; o fluxo de caixa trata o arrendamento do mesmo jeito (EBIT já com a depreciação do direito de
+  uso, sem o juro do arrendamento, e sem descontar o aluguel pago de novo). Teste que falha se desconto e ponte usarem dívidas
+  diferentes. Hoje divergem: a ponte desconta `outros_passivos_financeiros` e o D do WACC não — passa a entrar nos dois.
+- **Efeito conhecido, aceito e anotado no pré-registro (emenda 3) antes da tabela:** preço cai → D/E sobe → Ke sobe → valor justo
+  cai. Esse erro joga contra comprar; é aceito.
+- E do D/E = **preço da data-base**; nenhuma média de preço.
+- Sem teto na fórmula; Ke nominal > 30% é conferência e vira NÃO CONCLUSIVO, sem mexer de novo no método. `CONHECIDOS` não cresce.
+Fichas de fonte: `docs/research/2026-11-24-ke-alavancagem.md`. Tentativa 6/24 do pré-registro (§6 linha 13).
+**Reabrir se:** a 3ª ed. ou a McKinsey, abertas, divergirem do texto de 2002; ou a camada 6 mostrar que o efeito do preço no
+central piora o acerto. Nenhuma ordem de compra ou venda decorre desta entrada.
+**Ok do Frank na tabela (24/11):** SMTO3 CARA → NÃO CONCLUSIVO aceito (única palavra que o H2 muda).
+**Observação (Frank, 24/11): SMTO3 está a 0,3 p.p. do limite de 30% (Ke nominal 30,3%).** Só observar se ela ficar trocando de
+palavra entre rodadas; não mexer no método agora.
+**Medição que contradiz o efeito declarado (24/11, antes de regravar o golden):** a proposta e a emenda 3 diziam "preço cai → D/E
+sobe → Ke sobe → valor justo cai". Medido no hall (preço × 0,7 / 1 / 1,3, resto igual): em **17 dos 21** industriais o valor justo
+**sobe** quando o preço cai — com E menor a dívida pesa mais no WACC e Kd × (1 − t) < Ke, e esse canal vence a alta do Ke pelo
+Hamada. Só B3SA3, LEVE3 e RANI3 seguem a direção declarada (RECV3 sem central). Tamanho: preço −30% → central +0,2% (ABEV3) a
++14% (SUZB3); PETR4 e PRIO3 +7%, SMTO3 +3%. O erro foi da proposta (olhou só o canal do Ke). **Decisão de volta ao Frank**: o
+efeito real favorece comprar, o contrário da premissa com que ele foi aceito. Teste de coerência desconto × ponte: vermelho com a
+correção desfeita (D 2.800 × 3.100 esperado), verde com ela.

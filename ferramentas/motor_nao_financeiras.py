@@ -47,8 +47,7 @@ JANELA_MINIMA_PRECO_MEIO = 7   # v2.3 (§11.1): margem reexpressa ao preço de m
 MINIMO_ANOS_ALIQUOTA = 3  # v2.3: a mediana de 5 anos da alíquota exige pelo menos 3 exercícios válidos; senão vale 34%
 FIM_EXERCICIO = {"SMTO3": 3}  # mês de fechamento do exercício fora do ano-calendário (o resto: dezembro)
 ANO_IFRS16 = 2019         # AUD-03: primeiro exercício com o aluguel fora do EBITDA (margem de E&P só a partir dele)
-TOL_PONTO_FIXO = 1e-5     # AUD-13: |ΔE/E| que encerra a iteração dos pesos do WACC
-MAX_ITER_PONTO_FIXO = 200
+KE_NOM_CONFERENCIA = 0.30   # H2 (c), 24/11/2026: Ke nominal acima disto é conferência → NÃO CONCLUSIVO (não é teto da fórmula)
 
 
 @dataclass
@@ -212,6 +211,13 @@ def divida_liquida(b):
     bruta = v(b, "emprest_cp", 0) + v(b, "emprest_lp", 0) + v(b, "arrendamento", 0)   # IFRS 16 é dívida
     caixa = v(b, "caixa", 0) + v(b, "aplic_cp", 0)
     return bruta, caixa, bruta - caixa
+
+
+def divida_do_desconto(emp, b) -> float:
+    """D do desconto (H2, decisão do Frank em 24/11/2026): dívida bruta com arrendamentos (IFRS 16) + outros passivos
+    financeiros — a MESMA dívida que a ponte do valor da firma para o valor por ação subtrai (ponte = EV − D + caixa livre).
+    Vale no prêmio de Hamada e nos pesos do WACC. Damodaran, *Investment Valuation* 2ª ed., cap. 15 p. 24 (dívida bruta)."""
+    return divida_liquida(b)[0] + emp.outros_passivos_financeiros
 
 
 def deflator_exercicio(tk, ano) -> float:
@@ -650,11 +656,11 @@ def custo_divida(emp: Industrial, mk: Mercado, op: dict | None = None) -> dict:
 
 
 def wacc(emp: Industrial, mk: Mercado, ke_nom=None, kd=None, e_peso=None):
-    """WACC nominal. O peso do acionista é `e_peso` (R$ mil; o valor da casa no ponto fixo, AUD-13); sem ele, o preço."""
+    """WACC nominal. Pesos a valor de mercado (H2, 24/11/2026): E = preço × ações (R$ mil) e D = `divida_do_desconto`.
+    `e_peso` só existe para quem quiser forçar outro E (análise de sensibilidade); o motor passa o de mercado."""
     _, ltm = serie(emp.ticker)
-    bruta, caixa, dl = divida_liquida(ltm)
     e = emp.preco * emp.n_acoes / 1000 if e_peso is None else e_peso     # R$ mil
-    d = bruta
+    d = divida_do_desconto(emp, ltm)
     ke = ke_nom if ke_nom is not None else mk.ke_nom
     kd = custo_divida(emp, mk)["kd"] if kd is None else kd
     w = ke * e / (e + d) + kd * (1 - aliquota(emp)) * d / (e + d)
@@ -664,39 +670,25 @@ def wacc(emp: Industrial, mk: Mercado, ke_nom=None, kd=None, e_peso=None):
 def premio_alavancado(d: float, e: float, t: float) -> float:
     """Prêmio do Ke real pela alavancagem (doutrina §4, v2.4 — AUD-12, decisão do Frank em 08/10/2026): os 5 p.p. são o risco do
     negócio SEM dívida e a dívida soma risco ao acionista — Hamada (1972), Journal of Finance 27(2):435-452, sobre Modigliani-Miller:
-    prêmio = 5 p.p. × [1 + (1 − t) × D/E]. D = dívida bruta do WACC, E = valor da casa (ponto fixo), t = alíquota perpétua."""
+    prêmio = 5 p.p. × [1 + (1 − t) × D/E]. D = `divida_do_desconto`, E = valor de mercado (H2, 24/11/2026), t = alíquota perpétua."""
     return PREMIO_KE * (1 + (1 - t) * d / e)
 
 
 def estrutura_de_capital(emp: Industrial, mk: Mercado) -> dict:
-    """Ponto fixo dos pesos do WACC (doutrina §2, v2.4 — AUD-13, decisão do Frank em 08/10/2026).
+    """D/E a valor de mercado, sem ponto fixo (doutrina §2 e §4 — H2, decisão do Frank em 24/11/2026; revisa o AUD-13).
 
-    O peso do acionista é o valor que a casa calcula (central × ações), não o preço: com o preço, o central mudava quando só o
-    preço mudava, e o P/C comparava o preço com um número que dependia dele. Como o central depende do peso e do Ke (que depende de
-    D/E), repete-se valores() → central → E com amortecimento até |ΔE/E| < TOL_PONTO_FIXO. Sem central positivo (equity ≤ 0 pela
-    casa) não há ponto fixo: os pesos e o Ke ficam no patrimônio contábil, só para exibir — a palavra já é NÃO CONCLUSIVO.
-
-    A iteração PARTE do patrimônio contábil, não do preço (adversário, 08/10): partindo do preço, a KLBN11 desistia ou achava raiz
-    conforme o preço — o central voltava a depender dele. Sem PL positivo, parte de E = D (D/E = 1)."""
+    E = preço da data-base × ações (R$ mil; sem média de preço); D = `divida_do_desconto` (a mesma que a ponte subtrai). Um D/E só,
+    no prêmio de Hamada e nos pesos do WACC. Damodaran, *Investment Valuation* 2ª ed., cap. 8 p. 47 ("weights used should be based
+    upon market value and not book value") e p. 24 (D/E corrente). Até 24/11 o E era o valor da casa num ponto fixo (AUD-13): o
+    central baixo elevava o D/E, que elevava o Ke, que baixava o central (RANI3 Ke 39,4%, KLBN11 ~65%).
+    Efeito conhecido e aceito (pré-registro, emenda 3): preço cai → D/E sobe → Ke sobe → central cai (um passo, sem laço)."""
     _, ltm = serie(emp.ticker)
-    d = divida_liquida(ltm)[0]
-    t = aliquota(emp)
-    desc = desconto_pct(emp)
-    pl = v(ltm, "pl", 0) - v(ltm, "nao_controladores", 0)
-    e0 = pl if pl > 0 else max(d, 1.0)
-    e = e0
-    for i in range(1, MAX_ITER_PONTO_FIXO + 1):
-        mk_e = replace(mk, premio=premio_alavancado(d, e, t))
-        central = central_de(descontar(valores(emp, mk_e, e_peso=e)["anc"], desc))[0]
-        if central <= 0:
-            return dict(mk=replace(mk, premio=premio_alavancado(d, e0, t)), e_peso=e0, iteracoes=i,
-                        ponto_fixo=False, nota="sem central positivo: pesos e Ke no patrimônio contábil, só para exibir")
-        e_novo = central * emp.n_acoes / 1000
-        if abs(e_novo / e - 1) < TOL_PONTO_FIXO:
-            return dict(mk=replace(mk, premio=premio_alavancado(d, e_novo, t)), e_peso=e_novo, iteracoes=i, ponto_fixo=True,
-                        nota=f"ponto fixo em {i} iterações")
-        e = 0.5 * e + 0.5 * e_novo
-    raise RuntimeError(f"{emp.ticker}: pesos do WACC sem ponto fixo em {MAX_ITER_PONTO_FIXO} iterações (último E {e:.0f})")
+    d = divida_do_desconto(emp, ltm)
+    e = emp.preco * emp.n_acoes / 1000
+    if not e > 0:
+        raise ValueError(f"{emp.ticker}: valor de mercado do patrimônio ≤ 0 (preço {emp.preco}, ações {emp.n_acoes})")
+    return dict(mk=replace(mk, premio=premio_alavancado(d, e, aliquota(emp))), e_peso=e, d=d,
+                nota="D/E a mercado (preço da data-base × ações; dívida bruta com arrendamentos + outros passivos financeiros)")
 
 
 def valores(emp: Industrial, mk: Mercado, ke_nom=None, margem=None, g_real=None, g1=None, e_peso=None):
@@ -710,12 +702,14 @@ def valores(emp: Industrial, mk: Mercado, ke_nom=None, margem=None, g_real=None,
     w_real = (1 + w_nom) / (1 + mk.pi) - 1
     ke = ke_nom if ke_nom is not None else mk.ke_nom
     ke_real = (1 + ke) / (1 + mk.pi) - 1
-    bruta, caixa, dl = divida_liquida(ltm)
+    bruta, caixa, _ = divida_liquida(ltm)
     # v2.3: passivo com juros/financeiro fora das contas de empréstimo é dívida — entra na DL e, por ela, na ponte, no DL/EBITDA,
-    # no capital do ROIC, no EV e nos juros normalizados. O WACC fica com a dívida do balanço (peso menor de Kd = conservador).
-    # AUD-02: o provento já ex que ainda está no caixa é o mesmo tipo de passivo financeiro, medido do dado (não digitado)
+    # no capital do ROIC, no EV e nos juros normalizados. H2 (24/11/2026): a ponte subtrai a MESMA dívida do desconto (`d`, que já
+    # inclui os outros passivos financeiros) e soma o caixa livre.
+    # AUD-02: o provento já ex que ainda está no caixa não é do acionista de hoje — sai do caixa, medido do dado (não digitado)
     prov = proventos_ja_ex(emp, mk.data or None)
-    dl += emp.outros_passivos_financeiros + prov["total"]
+    caixa_livre = caixa - prov["total"]
+    dl = d - caixa_livre
     minor = v(ltm, "nao_controladores", 0) + emp.outros_passivos   # direitos à frente do acionista (operacional) só na ponte
     n = emp.n_acoes / 1000     # mil ações → valores em R$ mil / mil ações = R$/ação
     m = margem if margem is not None else op["m50"]
@@ -813,7 +807,7 @@ def valores(emp: Industrial, mk: Mercado, ke_nom=None, margem=None, g_real=None,
     # AUD-47: a âncora OE que some (OE normalizado ausente/zero ou Ke real ≤ g) fica registrada — a confiança segue a §11.3
     descartadas = ([] if emp.perfil == "ciclica" or oe_val else
                    ["Owner Earnings ÷ (Ke − g): " + ("OE normalizado ausente ou zero" if not oe_norm else "Ke real ≤ g")])
-    return dict(anc=anc, ancoras_descartadas=descartadas, op=op, wacc=w_nom, wacc_real=w_real, kd=kd, kd_info=cdiv, e=e, e_peso=e_w, d=d, dl=dl, bruta=bruta, caixa=caixa,
+    return dict(anc=anc, ancoras_descartadas=descartadas, op=op, wacc=w_nom, wacc_real=w_real, kd=kd, kd_info=cdiv, e=e, e_peso=e_w, d=d, dl=dl, bruta=bruta, caixa=caixa, caixa_livre=caixa_livre,
                 minor=minor, nopat=nopat, roic=roic, epv=epv, dcf=dcf_c, dcf_pond=dcf_pond, oe=oes, oe_norm=oe_norm,
                 oe_val=oe_val, reprod=reprod, reprod_reposicao=reprod_reposicao, cap_inv=cap_inv, n=n, m=m, gr=gr, aliquota=t_ef, aliquota_regra=t_regra,
                 aliquota_mediana=mediana_efetiva(emp), aliquota_fase=fase_fiscal(emp), beneficio_fiscal_acao=benef_firma / n,
@@ -933,7 +927,7 @@ def nota_alavancagem(dl_ebitda_norm: float | None) -> float:
 def avaliar(emp: Industrial, mk: Mercado) -> dict:
     exigir_declaracoes(emp)
     a, ltm = serie(emp.ticker)
-    # v2.4 (AUD-12/13): Ke da empresa pela alavancagem e pesos do WACC no ponto fixo; daqui em diante TODO uso do Ke
+    # v2.4 (AUD-12) + H2 (24/11/2026): Ke da empresa pela alavancagem a mercado (sem ponto fixo); daqui em diante TODO uso do Ke
     # (âncoras, OE, defasagem, trava, sensibilidade, Ke/g implícitos) é o da empresa
     ec = estrutura_de_capital(emp, mk)
     mk, ep = ec["mk"], ec["e_peso"]
@@ -1029,6 +1023,9 @@ def avaliar(emp: Industrial, mk: Mercado) -> dict:
     ausentes = criticos_ausentes(emp.ticker, r["op"]["anos"])
     if ausentes:
         p, conf = "NÃO CONCLUSIVO", "não conclusivo (dado crítico ausente: " + ", ".join(ausentes) + ")"
+    # H2 (c), 24/11/2026: Ke nominal acima de 30% é conferência, não teto da fórmula — a palavra não vale (pré-registro, emenda 3)
+    elif mk.ke_nom > KE_NOM_CONFERENCIA:
+        p, conf = "NÃO CONCLUSIVO", f"não conclusivo (Ke nominal {mk.ke_nom:.1%} > {KE_NOM_CONFERENCIA:.0%}: conferência do H2)"
 
     peg = (pl_atual / (100 * g_nom)) if pl_atual else None
     pegy = (pl_atual / (100 * (g_nom + dy))) if pl_atual else None
@@ -1072,7 +1069,7 @@ def avaliar(emp: Industrial, mk: Mercado) -> dict:
                 so_com_rerating=rf != rf_inv, carimbo_rf=bogle_liq_real < mk.rf_liq_real, trava=trava, peg=peg, pegy=pegy,
                 ke_implicito=ke_implicito(emp, mk, ep), g_implicito=g_implicito(emp, mk, ep), sens=sens,
                 ke_real_emp=mk.ke_real, ke_nom_emp=mk.ke_nom, premio_ke=mk.premio, de_peso=r["d"] / ep,
-                ponto_fixo=ec["ponto_fixo"], ponto_fixo_nota=ec["nota"], dado_critico_ausente=ausentes,
+                estrutura_nota=ec["nota"], dado_critico_ausente=ausentes,
                 # AUD-51: mediana efetiva a menos de 1 p.p. do limiar de 15% (degrau deliberado da v2.3 para 34%) — só aviso
                 aliquota_perto_do_limiar=(r["aliquota_regra"] in ("mediana", "permanente", "sem_origem")
                                           and r["aliquota_mediana"] is not None

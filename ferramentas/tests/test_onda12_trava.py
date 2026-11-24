@@ -26,16 +26,18 @@ def test_aud08_no_hall_nenhuma_justa_publica_com_trava_falha():
             assert r["trava"] or it["empresa"].trava_razao.strip(), tk
 
 
-def test_aud08_leve3_e_isae4_nao_conclusivas_pela_trava_e_razao_libera():
+def test_aud08_prio3_e_unip6_nao_conclusivas_pela_trava_e_razao_libera():
+    """3T26 (decisão do Frank, 23/11): PRIO3 e UNIP6 JUSTA na régua com a trava falha → NÃO CONCLUSIVO; até o 2T26 eram LEVE3 e
+    ISAE4 (hoje RADAR e JUSTA com o LTM de 30/09)."""
     import universo
     import motor_nao_financeiras as M
     t = universo.avaliar_todos()
-    for tk in ("LEVE3", "ISAE4"):
+    for tk in ("PRIO3", "UNIP6"):
         r = t[tk]["r"]
-        assert r["palavra_regua"] == "JUSTA" and r["trava"] is False and r["palavra"] == "NÃO CONCLUSIVO", tk
+        assert r["palavra_regua"] == "JUSTA" and not r["trava"] and r["palavra"] == "NÃO CONCLUSIVO", tk
         assert "trava" in r["confianca"]
-    leve = dataclasses.replace(t["LEVE3"]["empresa"], trava_razao="teste")
-    assert M.avaliar(leve, universo.MK)["palavra"] == "JUSTA"
+    prio = dataclasses.replace(t["PRIO3"]["empresa"], trava_razao="teste")
+    assert M.avaliar(prio, universo.MK)["palavra"] == "JUSTA"
 
 
 def test_trava_falha_do_numpy_tambem_derruba_a_justa():

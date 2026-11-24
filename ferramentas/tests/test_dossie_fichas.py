@@ -19,16 +19,31 @@ SUPERADOS = {
                         "dispersão cai abaixo de 3x (CMIN3-2026-10-06)",
 }
 ARQUIVOS = sorted(p.stem for p in VEREDITOS.glob("*.json"))
-# Onda 1.1 da auditoria (08/10/2026): receita de meio, OE e DPA em R$ de hoje (AUD-01/16) e provento já ex na dívida (AUD-02)
-# mudam o central destes dossiês. O registro é append-only (veredito novo = data nova) e ainda não há rodada de data nova:
-# o JSON antigo fica no disco e o recálculo na MESMA data é fixado aqui, para a regressão continuar valendo. Ver 09-diario.
-METODO_ONDA_1_1 = {
-    # Onda 1.2 (08/10/2026): Kd sintético (AUD-07), Ke pela alavancagem e pesos no ponto fixo (AUD-12/13), trava do §9 (AUD-08)
-    "BLAU3-2026-10-02": dict(central=8.2998, pc=1.3036, palavra="NÃO CONCLUSIVO"),  # 1.1: 8,798
-    "HYPE3-2026-10-06": dict(central=16.9224, pc=1.5955, palavra="CARA"),           # 1.1: 18,3522
-    # Onda 3 (v2.6, 10/10/2026): OE pelo lucro do controlador (AUD-15) — LEVE3 38,3732 → 38,4467; HYPE3 igual
-    "LEVE3-2026-10-06": dict(central=38.4467, pc=0.9507, palavra="NÃO CONCLUSIVO"), # 1.1: 42,5717 RADAR; agora JUSTA com trava falha
-    "CMIN3-2026-10-06": dict(central=3.3668, pc=1.4673, palavra="CARA"),            # salvo 3,6329
+# MÉTODO VIGENTE NA DATA DO VEREDITO. O JSON salvo é o registro (append-only) do método e do dado de quando foi gravado; o
+# recálculo na MESMA data, pelo método vigente, é fixado aqui — mudança de motor que mexa num dossiê aprovado falha nesta tabela.
+# Histórico: Onda 1.1/1.2 (08/10, AUD-01/02/07/12/13/08) e Onda 3 (10/10, AUD-15) — ver 09-diario.
+# 24/11/2026 (B34): (1) o recálculo passou a ser POINT-IN-TIME (`dossie.base.na_data`): LTM já publicado na data (Res. CVM 80,
+# art. 31, II) e IPCA até o mês D − 2 — com o motor de antes do H2 ele reproduz exatamente os valores salvos/fixados de FESA4,
+# SHUL4, VLID3, BLAU3, HYPE3-10-06 e LEVE3; (2) H2 (doutrina v2.7: D/E a mercado, sem ponto fixo) muda todos os centrais;
+# (3) dado, não método: CMIN3 — macro externa (FRED minério/PTAX) revisada depois da data, sem vintage no repo (com a macro de
+# antes, 3,3668 volta exato); ALLD3 — dois JCP aprovados em 29/09 que a API da B3 só listou depois de 19/10 (com o arquivo de
+# antes, 14,9142 volta exato). ALLD3 BARATA → RADAR no recálculo (dispersão 2,17 > 1,8, §11.3) — decisão do Frank no 09.
+METODO_VIGENTE = {
+    "ALLD3-2026-10-15": dict(central=15.9743, pc=0.3944, palavra="RADAR"),          # salvo 14,9142 BARATA (antes do H2)
+    "BLAU3-2026-10-02": dict(central=8.1372, pc=1.3297, palavra="NÃO CONCLUSIVO"),  # pré-H2 8,2998
+    "CMIN3-2026-10-06": dict(central=3.6810, pc=1.3420, palavra="CARA"),            # pré-H2 3,3668 (macro de antes)
+    "FESA4-2026-10-15": dict(central=7.7010, pc=0.8090, palavra="RADAR"),           # salvo 7,6189
+    "HYPE3-2026-10-06": dict(central=15.7668, pc=1.7125, palavra="CARA"),           # pré-H2 16,9224
+    "LEVE3-2026-10-06": dict(central=38.3920, pc=0.9520, palavra="NÃO CONCLUSIVO"), # pré-H2 38,4467
+    "SHUL4-2026-10-15": dict(central=3.7866, pc=1.3204, palavra="CARA"),            # salvo 3,9037
+    "VLID3-2026-10-15": dict(central=16.5501, pc=1.1390, palavra="CARA"),           # salvo 16,6050
+}
+# Notas da regra 11 no método vigente, quando diferem do JSON salvo (o resto das notas tem de bater com ele).
+NOTAS_VIGENTES = {
+    # H2: o moat compara ROIC com o WACC real, que mudou com o D/E a mercado
+    "ALLD3-2026-10-15": {"notas_regra11": {"moat": 1, "gestao": 1, "controlador": 5, "ciclo": 3, "fisher": 1}, "media_regra11": 2.2},
+    # Fase 3, fatia 2b (20/10/2026): a bonificação de 2021 da Schulz (FRE; a B3 não publica) desfaz a "diluição" → gestão 0 → 1
+    "SHUL4-2026-10-15": {"notas_regra11": {"moat": 0, "gestao": 1, "controlador": 3, "ciclo": 3, "fisher": 2}, "media_regra11": 2.0},
 }
 
 
@@ -43,36 +58,25 @@ def _recalcular(salvo):
         pytest.skip("dados/raw fora do disco (coletas brutas ignoradas pelo git; clone limpo/nuvem)")
 
 
-@pytest.mark.parametrize("nome", sorted(METODO_ONDA_1_1))
-def test_veredito_refeito_pela_onda_1_1(nome):
+@pytest.mark.parametrize("nome", sorted(METODO_VIGENTE))
+def test_veredito_no_metodo_vigente_na_data(nome):
     salvo = json.loads((VEREDITOS / f"{nome}.json").read_text(encoding="utf-8"))
     v = _recalcular(salvo)
-    novo = METODO_ONDA_1_1[nome]
+    novo = METODO_VIGENTE[nome]
     assert v["central"] == pytest.approx(novo["central"], abs=1e-3) and v["pc"] == pytest.approx(novo["pc"], abs=1e-3)
     assert v["palavra"] == novo["palavra"]
     assert v["central"] != pytest.approx(salvo["central"], abs=1e-3)      # o JSON antigo continua sendo o do método antigo
+    esperado = salvo | NOTAS_VIGENTES.get(nome, {})
+    if nome in NOTAS_VIGENTES:
+        assert all(salvo[k] != x for k, x in NOTAS_VIGENTES[nome].items())     # o JSON antigo segue o de antes
+    for k in ("desc_controlador", "media_regra11", "preco"):
+        assert v[k] == pytest.approx(esperado[k], abs=1e-4), k
+    for k in ("notas_regra11", "discricionario"):
+        assert v[k] == esperado[k], k
 
 
-# Fase 3, fatia 2b (20/10/2026): a bonificação de 2021 da Schulz (FRE; a B3 não publica) entra nos eventos e desfaz a
-# "diluição" de 14,8% a.a. → CAGR das ações −0,03% a.a. e gestão 0 → 1. Central, P/C e palavra iguais; o JSON salvo fica (o
-# registro é append-only, veredito novo = data nova). Ver 09-diario de 20/10.
-CORRIGIDO_FATIA_2B = {
-    "SHUL4-2026-10-15": {"notas_regra11": {"moat": 0, "gestao": 1, "controlador": 3, "ciclo": 3, "fisher": 2},
-                         "media_regra11": 2.0},
-}
-
-
-@pytest.mark.parametrize("nome", [n for n in ARQUIVOS if n not in SUPERADOS and n not in METODO_ONDA_1_1])
-def test_veredito_salvo_reproduz(nome):
-    salvo = json.loads((VEREDITOS / f"{nome}.json").read_text(encoding="utf-8"))
-    if nome in CORRIGIDO_FATIA_2B:
-        assert all(salvo[k] != v for k, v in CORRIGIDO_FATIA_2B[nome].items())     # o JSON antigo segue o de antes
-        salvo |= CORRIGIDO_FATIA_2B[nome]
-    v = _recalcular(salvo)
-    for k in ("central", "pc", "desc_controlador", "media_regra11", "preco"):
-        assert v[k] == pytest.approx(salvo[k], abs=1e-4), k
-    for k in ("palavra", "palavra_regua", "notas_regra11", "discricionario"):
-        assert v[k] == salvo[k], k
+def test_todo_veredito_salvo_esta_fixado_ou_superado():
+    assert set(ARQUIVOS) == set(METODO_VIGENTE) | set(SUPERADOS)
 
 
 def test_veredito_superado_tem_sucessor_mais_novo_e_continua_no_disco():
@@ -133,7 +137,7 @@ def test_normalizacao_chamada_sozinha_e_linha_adotada_igual_ao_central():
     with base.na_data(salvo["data_preco"]):          # a sensibilidade usa o mercado e o preço da data do veredito
         n = cmin3.normalizacao(dc)
     adotado = next(v for k, v in n["sensibilidade"].items() if k.startswith("c "))
-    assert adotado["central"] == pytest.approx(METODO_ONDA_1_1.get(atual, salvo)["central"], abs=1e-3)
+    assert adotado["central"] == pytest.approx(METODO_VIGENTE[atual]["central"], abs=1e-3)
 
 
 def test_aud23_b3_repete_linha_de_jcp_e_a_soma_nao_dobra():

@@ -123,12 +123,31 @@ def na_data(data: str | None):
     """Roda o dossiê noutra data-base (v2.3: veredito novo = data nova, o registro é append-only). Preço e mercado
     passam a ser os dessa data; ao sair, volta a DATA_BASE padrão."""
     global DATA_BASE
+    import inflacao
+    import ltm
+    import mercado as mercado_hall
+    from contextlib import ExitStack
     antes = DATA_BASE
     DATA_BASE = data or antes
+    pilha = ExitStack()
     try:
-        yield DATA_BASE
+        # B34 (24/11/2026): fora da data-base do hall, o recálculo é point-in-time — LTM já publicado na data (Res. CVM 80, art. 31,
+        # II: ITR em 45 dias) e "R$ de hoje" no IPCA que já tinha saído (mês D − 2). Na data do hall vale o dado vigente do hall.
+        if DATA_BASE != mercado_hall.dados()["data"]:
+            pilha.enter_context(ltm.na_data(DATA_BASE))
+            pilha.enter_context(inflacao.ate(inflacao.mes_publicado_em(DATA_BASE)))
+        _limpar_caches()
+        with pilha:
+            yield DATA_BASE
     finally:
         DATA_BASE = antes
+        _limpar_caches()
+
+
+def _limpar_caches():
+    """O motor guarda em cache a idade/fator do imobilizado (depende do IPCA e do LTM): entra e sai do corte sem resto."""
+    import motor_nao_financeiras as M
+    M.idade_e_fator.cache_clear()
 
 
 def mercado(data: str | None = None) -> Mercado:

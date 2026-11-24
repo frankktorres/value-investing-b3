@@ -22,7 +22,8 @@ def test_03_bate_com_o_motor(esp):
 def test_prompt_de_sexta_tem_o_hall_do_motor(esp):
     bloco = H.bloco_do_prompt(H.PROMPT.read_text(encoding="utf-8"))
     assert bloco == H.lista_prompt(esp)
-    assert "ISAE4" in bloco.split("NÃO CONCLUSIVO")[1]          # carteira sem palavra não tem preço de compra
+    nc = bloco.split("NÃO CONCLUSIVO")[1]                       # sem palavra não há preço de compra (3T26: PRIO3, SMTO3, ...)
+    assert "sem preço de compra" in nc and all(tk in nc for tk in ("PRIO3", "SMTO3", "KLBN11"))
 
 
 def _item(preco, central, palavra, qualidade=False):

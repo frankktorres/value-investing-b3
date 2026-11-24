@@ -5,17 +5,42 @@ A série antiga só tem "ltm_2T26": é o último recurso.
 """
 
 
+from contextlib import contextmanager
+
+_CORTE: str | None = None      # data AAAA-MM-DD do recálculo point-in-time (`na_data`); None = LTM vigente da série
+
+
 def ltm_de(reg):
+    if _CORTE is not None:
+        return ltm_guardado(reg, ref_na_data(reg, _CORTE))
     if "ltm" in reg:
         return reg["ltm"]
     return reg["ltm_2T26"]
 
 
 def ltm_ref_de(reg):
-    """Rótulo do trimestre do LTM ("2T26", "3T26"...); a série antiga sem "ltm_ref" é 2T26."""
+    """Rótulo do trimestre do LTM ("2T26", "3T26"...); a série antiga sem "ltm_ref" é 2T26. Dentro de `na_data`, o da data."""
+    if _CORTE is not None:
+        return ref_na_data(reg, _CORTE)
+    return _ref_vigente(reg)
+
+
+def _ref_vigente(reg):
     if "ltm_ref" in reg:
         return reg["ltm_ref"]
     return "2T26"
+
+
+@contextmanager
+def na_data(data_iso: str | None):
+    """Toda leitura de LTM dentro do bloco devolve o trimestre já publicado na data (dossiê recalculado na data dele)."""
+    global _CORTE
+    antes = _CORTE
+    _CORTE = data_iso
+    try:
+        yield
+    finally:
+        _CORTE = antes
 
 
 # ---------------------------------------------------------------- período derivado do rótulo do LTM (23/11/2026)
@@ -89,3 +114,48 @@ def ref_comum(regs) -> str:
     if len(refs) != 1:
         raise ValueError(f"séries com LTM de trimestres diferentes no mesmo grupo: {sorted(refs)} — recoletar (temporada.py)")
     return refs.pop()
+
+
+# ---------------------------------------------------------------- LTM na data (point-in-time, 24/11/2026 — B34)
+# Um dossiê de 06/10 recalculado em novembro lia o LTM do 3T26 (publicado depois da data dele). Na data D vale o trimestre mais
+# recente guardado na série (`ltm_<ref>`) cujo prazo de entrega do ITR já tinha passado em D. O 4T (DFP) tem outro prazo e falha
+# alto até ter fonte.
+PRAZO_ITR_DIAS = 45        # Resolução CVM 80/2022: ITR em até 45 dias do fim do trimestre (fonte em docs/research/2026-11-24-ke-alavancagem.md)
+
+
+def _fim_do_trimestre(ref: str):
+    import calendar
+    import datetime as dt
+    t, a = trimestre_e_ano(ref)
+    m = 3 * t
+    return dt.date(a, m, calendar.monthrange(a, m)[1])
+
+
+def refs_da_serie(reg) -> list[str]:
+    refs = {k[4:] for k in reg if k.startswith("ltm_") and k != "ltm_ref"}
+    if not refs and "ltm" in reg:
+        refs = {_ref_vigente(reg)}
+    return sorted(refs, key=lambda r: trimestre_e_ano(r)[::-1])
+
+
+def ref_na_data(reg, data_iso: str) -> str:
+    """O `ltm_ref` que já estava publicado (pelo prazo legal) na data AAAA-MM-DD."""
+    import datetime as dt
+    d = dt.date.fromisoformat(data_iso)
+    ok = []
+    for r in refs_da_serie(reg):
+        if trimestre_e_ano(r)[0] == 4:
+            raise ValueError(f"LTM {r}: prazo do DFP (4T) sem fonte conferida; decidir antes de usar na data")
+        if _fim_do_trimestre(r) + dt.timedelta(days=PRAZO_ITR_DIAS) <= d:
+            ok.append(r)
+    if not ok:
+        raise ValueError(f"nenhum LTM da série publicado até {data_iso} (refs {refs_da_serie(reg)})")
+    return ok[-1]
+
+
+def ltm_guardado(reg, ref: str) -> dict:
+    if f"ltm_{ref}" in reg:
+        return reg[f"ltm_{ref}"]
+    if _ref_vigente(reg) == ref and "ltm" in reg:
+        return reg["ltm"]
+    raise KeyError(f"série sem o LTM {ref}")

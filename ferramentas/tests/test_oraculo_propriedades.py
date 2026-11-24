@@ -34,7 +34,7 @@ N_IND = 500 if COMPLETO else 12
 N_FIN = 500
 DECISAO = ("BARATA", "RADAR", "JUSTA")
 PALAVRAS = (*F.ORDEM, "NÃO CONCLUSIVO")
-TOL_PF = 1e-4      # o ponto fixo do WACC para em |ΔE/E| < 1e-5 (TOL_PONTO_FIXO): ruído relativo do central dessa ordem
+TOL_PF = 1e-4      # folga relativa do central (era o ruído do ponto fixo do WACC, removido pelo H2 em 24/11/2026)
 # campo crítico (VALIDACAO §5) → chaves da série; dívida = as três linhas da bruta
 CRITICOS = {"caixa": ("caixa",), "divida": ("emprest_cp", "emprest_lp"), "pl": ("pl",), "lucro": ("lucro", "lucro_controlador"),
             "receita": ("receita",), "da": ("da",), "imobilizado": ("imobilizado",)}
@@ -170,11 +170,15 @@ def test_fluxo_maior_nao_baixa_o_central_financeira(tk, d):
 @seed(SEMENTE)
 @_cfg(N_IND)
 @given(tk=st.sampled_from(_ind()), f=st.floats(0.2, 5.0))
-def test_central_nao_depende_do_preco_industrial(tk, f):
+def test_preco_so_entra_pelo_e_do_d_e_industrial(tk, f):
+    """H2 (24/11/2026) revogou o "central não depende do preço" (AUD-13): o preço entra SÓ pelo E do D/E (Hamada e pesos);
+    a dívida não muda com ele."""
     emp = _empresas()[tk]
-    r = _avaliar(replace(emp, preco=emp.preco * f))
+    r, r0 = _avaliar(replace(emp, preco=emp.preco * f)), _base(tk)
     assert r is not None
-    assert r["central"] == pytest.approx(_base(tk)["central"], rel=1e-12), (tk, f)
+    assert r["e_peso"] == pytest.approx(emp.preco * f * emp.n_acoes / 1000, rel=1e-12), (tk, f)
+    assert r["d"] == pytest.approx(r0["d"], rel=1e-12), (tk, f)
+    assert r["premio_ke"] == pytest.approx(M.premio_alavancado(r["d"], r["e_peso"], r["aliquota"]), rel=1e-12), (tk, f)
 
 
 @seed(SEMENTE)
@@ -555,9 +559,7 @@ def test_desconto_do_controlador_so_no_valor_financeira(tk, pct):
     assert {k: r["notas"][k] for k in ("qualidade", "solidez")} == {k: r0["notas"][k] for k in ("qualidade", "solidez")}
 
 
-@pytest.mark.xfail(strict=True, reason="achado A1 (Fase 2, 22/10): nos industriais o desconto entra no E do ponto fixo do WACC "
-                                       "(estrutura_de_capital) e volta como Ke maior pelo Hamada e nota de qualidade diferente; "
-                                       "a decidir na Fase 3")
+# achado A1 (22/10) fechado em 24/11/2026 pelo H2: o E do WACC é o preço × ações, o desconto não volta ao Ke nem à nota
 @seed(SEMENTE)
 @_cfg(max(N_IND // 2, 6))
 @example(tk="KLBN11", pct=0.25)

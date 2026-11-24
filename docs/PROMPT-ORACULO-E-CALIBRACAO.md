@@ -110,7 +110,9 @@ evidência medida, opção A/B/C, efeito em P/C e nas palavras dos 47 (tabela), 
    faixa (Klarman; Damodaran, *Probabilistic Approaches*). A dispersão vira largura da faixa, não veto.
 2. **Ke**: rf normalizada vs spot (e o mesmo vértice para rf e π); spread de default soberano (Damodaran, `ctryprem`, versão
    vigente lida da planilha); beta setorial bottom-up desalavancado (Damodaran, betas por setor de emergentes); Hamada sobre
-   **dívida líquida** e **E a mercado**, com teto e sem ponto fixo.
+   **dívida bruta com arrendamentos** (a mesma da ponte) e **E a mercado** (preço da data-base), sem ponto fixo e sem teto na
+   fórmula — decidido em 24/11/2026 (`09`; pré-registro emenda 3). Até 24/11 dizia "dívida líquida" e "com teto": a fonte
+   recomenda dívida bruta (Damodaran, *Investment Valuation* 2ª ed., cap. 15 p. 24) e o teto não tem fonte A/B.
 3. **Crescimento**: gate real × real (ROIC real vs WACC real), por ROIC incremental e reinvestimento (g = taxa de
    reinvestimento × ROIC); compounder deixa de ser estruturalmente incomprável (Buffett/Munger, Fisher, Bill Miller).
 4. **Normalização**: ROE/margem do ciclo com critério explícito (mediana de 10 anos vs ciclo completo vs peso no

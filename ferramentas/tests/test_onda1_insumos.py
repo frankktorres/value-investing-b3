@@ -134,19 +134,25 @@ def test_aud02_todo_ticker_nao_financeiro_tem_nome_de_pregao():
 
 def test_aud02_wege3_com_os_dividendos_a_pagar_do_itr():
     """ITR 2T26: 2.01.05.02.01 R$ 2.468.860 mil + 2.02.02.02.07 R$ 3.464.232 mil (auditoria, seção 2.1)."""
-    from ltm import ltm_de
-    assert ltm_de(M.CVM["WEGE3"])["proventos_a_pagar"] == pytest.approx(5_933_092, abs=1)
+    # o número é do ITR 2T26 (fonte do teste): lê o LTM daquela data, guardado na série, não o vigente (3T26)
+    assert M.CVM["WEGE3"]["ltm_2T26"]["proventos_a_pagar"] == pytest.approx(5_933_092, abs=1)
 
 
 # ---------------------------------------------------------------- AUD-04: follow-on do ISAE4 (§11.2)
 def test_aud04_isae4_patrimonio_mais_caixa_captado_sobre_acoes_pos_oferta():
     import lote2_energia as L2
     e = next(x for x in L2.EMPRESAS if x.ticker == "ISAE4")
-    l = L2.ltm_de(L2.CVM["ISAE4"])
-    pl_ctrl, acoes = l["pl"] - l["nao_controladores"], l["acoes"]
+    import eventos
+    serie = L2.CVM["ISAE4"]
+    # 2T26 (balanço de 30/06, antes da oferta de jul/26): PL e ações somam o caixa captado e as ações novas → VPA 33,21
+    l2 = serie["ltm_2T26"]
     novas = 1_200_000 * 1000 / 27.0
-    assert e.vpa == pytest.approx((pl_ctrl + 1_200_000) * 1000 / (acoes + novas), rel=1e-9)
-    assert e.vpa == pytest.approx(33.21, abs=0.01)
+    vpa_2t = (l2["pl"] - l2["nao_controladores"] + 1_200_000) * 1000 / (l2["acoes"] + novas)
+    assert vpa_2t == pytest.approx(33.21, abs=0.01)
+    # 3T26 (balanço de 30/09): a oferta já está no balanço — nada se soma (decisão de 23/11)
+    l = L2.ltm_de(serie)
+    assert eventos.follow_on_e_balanco("ISAE4", serie)[1] is True
+    assert e.vpa == pytest.approx((l["pl"] - l["nao_controladores"]) * 1000 / l["acoes"], rel=1e-9)
 
 
 # ---------------------------------------------------------------- AUD-03: IFRS 16 na margem de E&P

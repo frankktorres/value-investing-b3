@@ -22,8 +22,10 @@ KE_TETO = 0.30
 COMPRA = ("BARATA", "RADAR")
 PIOTROSKI_FRACO = 3            # F ≤ 3 (Piotroski 2000, JAR 38)
 BENEISH_LIMIAR = -1.78         # M > −1,78 = provável manipulador (Beneish 1999, FAJ 55(5))
-# alarme de Ke conhecido na baseline de 22/10/2026, com a hipótese que o explica; sai daqui quando a Fase 6 corrigir
-CONHECIDOS = {"KLBN11": "H2", "SUZB3": "H2", "SLCE3": "H2", "SMTO3": "H2"}
+# alarme de Ke conhecido na baseline de 22/10/2026, com a hipótese que o explica; sai daqui quando a Fase 6 corrigir.
+# 24/11/2026 (B34, correção do H2 — pré-registro emenda 3): KLBN11, SUZB3 e SLCE3 saíram (Ke a mercado ≤ 30%). A SMTO3 fica:
+# Ke 30,3% pela alavancagem a mercado (D/E 2,18), não mais pelo laço; o motor já a dá NÃO CONCLUSIVO (H2 c).
+CONHECIDOS = {"SMTO3": "H2 (c): Ke a mercado > 30% → NÃO CONCLUSIVO"}
 
 
 def empresas() -> dict:

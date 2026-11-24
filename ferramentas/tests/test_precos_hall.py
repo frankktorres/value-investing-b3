@@ -20,7 +20,7 @@ def test_todo_preco_do_lote_e_o_fechamento_oficial(todos):
 
 
 def test_data_do_preco_vem_do_snapshot_nao_da_taxa(todos):
-    assert PH.PRECO_DATA_BR == "02/10/2026"
+    assert PH.PRECO_DATA_BR == "19/11/2026"      # data-base do 3T26 (23/11/2026)
     assert {it["data_preco"] for it in todos.values()} == {PH.PRECO_DATA_BR}
     assert all(it["data_preco"] is PH.PRECO_DATA_BR for it in todos.values())    # vem do snapshot, não do MK
     assert PH.SNAPSHOT.name.endswith(f"{PH.PRECO_DATA}.csv")

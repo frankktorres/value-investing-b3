@@ -69,7 +69,16 @@ def test_financeira_de_qualidade_altissima_continua_1_30():
 
 
 # ---------------------------------------------------------------- DCF reverso: ida e volta preço → g → preço
-@pytest.mark.parametrize("tk", ["SUZB3", "KEPL3", "PETR4"])      # PETR4 tem desconto de controlador por cenários
+def test_g_implicito_acima_do_teto_e_none_e_o_dcf_no_teto_fica_abaixo_do_preco():
+    """SUZB3 no 3T26 (P/C 5,7): nem g real de 8% (teto da busca) sustenta o preço — None é "acima do teto", não erro."""
+    import universo
+    emp = next(e for _, emps, _ in universo.GRUPOS for e in emps if e.ticker == "SUZB3")
+    assert M.g_implicito(emp, universo.MK) is None
+    teto = min(0.08, M.valores(emp, universo.MK)["wacc_real"] - 0.002)
+    assert M.valores(emp, universo.MK, g_real=teto)["dcf"]["base"] < emp.preco
+
+
+@pytest.mark.parametrize("tk", ["LEVE3", "KEPL3", "PETR4"])      # PETR4: desconto por cenários; LEVE3: g implícito < 0
 def test_g_implicito_ida_e_volta(tk):
     import universo
     emp = next(e for _, emps, _ in universo.GRUPOS for e in emps if e.ticker == tk)
