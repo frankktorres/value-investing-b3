@@ -34,5 +34,13 @@
  "GOAU4": {
   "segundos": 185.6,
   "chamadas": 15
+ },
+ "CSNA3": {
+  "segundos": 241.3,
+  "chamadas": 21
+ },
+ "USIM5": {
+  "segundos": 217.0,
+  "chamadas": 21
  }
 }

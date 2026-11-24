@@ -1,0 +1,65 @@
+{
+  "_doc": "Insumos nao mecanicos de USIM5 / Usiminas (B36 v1). Documentos baixados em ferramentas/dados/cvm/docs/USIMINAS/ (estatuto vigente de 27/04/2026, DFP 2025 v1 id 154757, fatos relevantes IPE 2023-2026, FRE 2026 v7 id 159805). Janela real do IPE = 2017-2026.",
+  "ma_ruim": {
+    "valor": false,
+    "fonte": "Nenhum fato relevante de aquisicao > 20% do ativo no IPE 2017-2026 (titulos de todos os fatos relevantes triados: so projecoes, dividas, paradas de alto-forno, MUSA, governanca). Unico item ligado a compra de empresas: 'Agio/aquisicao de empresas' R$ 112.627 mil (DFP 2025, consolidado) / ativo total R$ 35.684.766 mil = 0,3%. O impairment de R$ 1,7 bi na Siderurgia (reversao de R$ 293 mi na Mineracao; liquido R$ 1,4 bi no 4T22; FR 10/02/2023) e de ativos proprios, nao de aquisicao. Limite: precos de aquisicoes anteriores a 2017 e a decomposicao do agio nao lidos",
+    "nota_fonte": "A"
+  },
+  "interferencias": {
+    "valor": 1,
+    "fonte": "Decisao judicial documentada: em 18/06/2024 a 3a Turma do STJ (REsp 1.837.538/SP, embargos de declaracao) decidiu por maioria a favor do direito ao tag along (art. 254-A da Lei 6.404/76) pela alienacao de controle da Usiminas ao Grupo Ternium, ou seja, o grupo controlador alienou/adquiriu o controle sem estender oferta aos minoritarios ON (fato relevante da CSN, IPE 18/06/2024, A; a Usiminas confirmou a acao judicial em FR de 29/07/2024). Conta 1. NAO CONTADOS: compra das acoes do Grupo NSC pela Ternium (FR 30/03/2023, conclusao 03/07/2023; FR 05/11/2025, conclusao 11/02/2026): operacoes entre membros do grupo de controle, sem OPA nem proposta de fechamento de capital nos fatos relevantes lidos. Limite: nao li a integra do acordao",
+    "nota_fonte": "A"
+  },
+  "partes_rel_sobre_receita": {
+    "valor": 0.295,
+    "fonte": "DFP 2025 nota 38(d), consolidado, resultado de 2025: vendas a partes relacionadas R$ 1.106.818 mil + compras R$ 6.641.469 mil = R$ 7.748.287 mil / receita liquida consolidada 2025 R$ 26.263.450 mil (DRE e nota de receita) = 29,5%. Componentes (consolidado): acionistas controladores vendas 310.351 e compras 3.667; coligadas vendas 9.438 e compras 447.472; outras partes relacionadas vendas 28.951 e compras 662.243; controladas em conjunto vendas 758.078 e compras 5.528.087. Nota 38 cita compra de placas de empresa do Grupo Ternium fora do grupo de controle de R$ 4.771.916 mil em 2025. Atencao: o texto do PDF tem colunas embaralhadas; o total confere com a soma das linhas, mas a atribuicao linha a linha e incerta. Inclui fornecedores operacionais (MRS, Unigal etc.); so o grupo controlador direto (310.351 + 3.667) seria 1,2%",
+    "nota_fonte": "A"
+  },
+  "tag_along": {
+    "valor": 0.0,
+    "fonte": "Estatuto social da Usiminas (IPE, versao de 27/04/2026): art. 1 paragrafo unico sujeita a companhia ao Regulamento de Listagem do Nivel 1 (nao Novo Mercado); o estatuto nao contem clausula de OPA por alienacao de controle; as preferenciais classes A e B nao tem voto e so garantem dividendo 10% maior que o das ordinarias e bonificacoes em igualdade (art. 5, par. 1). A Lei 6.404 art. 254-A so assegura tag along a acoes com voto (ON, 80%). Para USIM5 (PN) = 0. Ver 'interferencias' sobre a decisao do STJ de 2024 (ON)",
+    "nota_fonte": "A"
+  },
+  "discricionario": {
+    "valor": true,
+    "fonte": "Acordo de acionistas documentado: FR 05/11/2025 (Segunda Alteracao e Consolidacao do Acordo de Acionistas, 03/07/2023; 'Acoes Vinculadas'; Grupo T/T passara a 71,02% das ordinarias, Previdencia Usiminas 7,05% das vinculadas, com direitos de voto e indicacao), FR 11/02/2026 (conclusao; acordo segue em vigor entre Grupo T/T e Previdencia Usiminas). FRE 2026 v7: Ternium Investments 34,48% das ON e Ternium Argentina/Prosid/Confab como controladores; transacoes com Ternium Brasil sob contrato de R$ 4,3 bi de compra de placas (FRE 2026, transacao_parte_relacionada). Limite: termos do acordo (vetos, quoruns) nao lidos",
+    "nota_fonte": "A"
+  },
+  "fisher": {
+    "respostas": ["sem", "sem", "sem", "sem", "nao", "sem", "sem", "sem", "sem", "sem", "sem", "sem", "sim", "sem", "sem"],
+    "itens": [
+      "1 potencial de mercado: sem - nenhum dado de mercado endereçavel A/B lido",
+      "2 decisao de seguir lancando: sem - nao avaliado em documento A/B",
+      "3 eficacia do P&D: sem - nao encontrado",
+      "4 forca de vendas: sem - participacao de mercado nao lida em fonte A/B",
+      "5 margem que vale a pena: nao - margem bruta consolidada 2025 8,3% (R$ 26.263,4 mi de receita menos custo R$ 24.079,5 mi), 2024 6,4%, 2023 6,5% (DFP 2025, DRE consolidada); EBITDA ajustado R$ 1.992,6 mi = margem de 8% em 2025 e 6% em 2024; EBITDA CVM 156 de R$ -89 mi em 2025 (DFP 2025, relatorio da administracao)",
+      "6 o que faz pela margem: sem - nao avaliado",
+      "7 relacoes de trabalho: sem - nao encontrado",
+      "8 relacoes entre executivos: sem - nao encontrado",
+      "9 profundidade da gestao: sem - eleicoes de diretoria em 23/05/2024 (reeleicao) e 14/05/2026 (IPE); historico nao avaliado",
+      "10 controles de custo e contabeis: sem - parecer do auditor sem ressalva na DFP 2025, mas parecer limpo nao basta como prova (mesma regua de ALLD3/BLAU3)",
+      "11 aspectos do setor: sem - nao encontrado",
+      "12 visao de longo prazo: sem - nao avaliado",
+      "13 crescimento sem diluicao: sim - capital integralizado de 1.253.079.108 acoes (705.260.684 ON + 547.818.424 PN) sem alteracao em todas as versoes do FRE de 2017, 2020, 2023 e 2026 (tabela capital_social, FRE CVM, A)",
+      "14 fala dos problemas: sem - nao avaliado em documento A/B",
+      "15 integridade inquestionavel: sem - ha decisao do STJ sobre tag along (ver interferencias), mas e questao de direito societario do grupo controlador, nao de integridade da gestao; nao lancado para nao contar duas vezes"
+    ],
+    "fonte": "DFP 2025 v1 (id 154757, CVM/RAD, A); FRE 2017/2020/2023/2026 (capital_social, A); IPE 2023-2026. Nota = arredondar(5 x 1 sim / 15) = 0. Conferido em 24/11/2026"
+  },
+  "desconto_controlador": {
+    "tipo": "zero",
+    "razao": "SEM_RAZAO"
+  },
+  "_meta": {
+    "protocolo": "B36 v1",
+    "chamadas": 17,
+    "fim": "2026-11-24T20:30",
+    "nao_achado": [
+      "fisher itens 1-4, 6-12, 14 e 15 (sem documento A/B lido; item 15 deliberadamente sem para nao duplicar a decisao do STJ ja contada em interferencias)",
+      "desconto_controlador (ha risco qualitativo de controlador: STJ tag along 2024, 71% das ON no Grupo T/T, compras de placas do Grupo Ternium; mas magnitude/probabilidade nao saem de documento A/B, entao zero/SEM_RAZAO)",
+      "ma_ruim: precos de aquisicoes anteriores a 2017 e termos do agio nao lidos (valor gravado com limite)",
+      "discricionario: termos do acordo de acionistas (vetos, quoruns) nao lidos; valor gravado pela existencia documentada do acordo",
+      "interferencias: integra do acordao do STJ nao lida (so o fato relevante da CSN)"
+    ]
+  }
+}
