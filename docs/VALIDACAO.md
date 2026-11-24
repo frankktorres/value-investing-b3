@@ -21,6 +21,10 @@ número **não mudou**, não que ele está certo.
 
 Teste que só confere "não quebra" ou só repete o golden é **camada 0**: conta como regressão, não como prova.
 
+**Ordem pré-registro → motor (24/11/2026, pré-registro emenda 7; bloqueia):** o `python -m oraculo` lê o git depois do commit
+b07482a (`ferramentas/oraculo/ordem.py`). Reprova commit que muda `docs/PRE-REGISTRO-*.md` junto com outro arquivo, commit de
+motor/lote/golden que cita "emenda N" sem um commit anterior só de pré-registro que a acrescentou, e árvore não commitada com os dois.
+
 ## 2. Definição de pronto por tipo de mudança
 
 ✔ = obrigatória · ◐ = obrigatória se a mudança tocar o que a camada cobre · — = não se aplica

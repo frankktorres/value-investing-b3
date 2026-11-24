@@ -37,8 +37,8 @@ SEM_PRECO = "sem preço de hoje"
 def numero_json(n: Numero) -> dict:
     """Número com a nota e a fonte já resolvidas (no modelo são @property e não entram no asdict)."""
     return {"rotulo": n.rotulo, "valor": n.valor, "unidade": n.unidade, "papel": n.papel, "obs": n.obs,
-            "nota": n.nota, "fonte": n.fonte,
-            "origens": [{"fonte": o.fonte, "nota": o.nota, "detalhe": o.detalhe} for o in n.origens]}
+            "nota": n.nota, "fonte": n.fonte, "baixo": n.baixo, "alto": n.alto,
+            "origens": [{"fonte": o.fonte, "nota": o.nota, "detalhe": o.detalhe, "data": o.data} for o in n.origens]}
 
 
 def relatorio_json(rel: Relatorio) -> dict:
@@ -111,8 +111,9 @@ def linha_hall(rel: Relatorio, vigente: str | None, preco_hoje: float | None, *,
     return {
         "tk": rel.tk, "nome": rel.nome, "origem": rel.origem, "dossie": dossie, "data_palavra": rel.data,
         "palavra": palavra, "palavra_motor": rel.palavra if rel.palavra != palavra else None,
-        "central": None if diverge else central, "nota_central": n_central.nota if n_central else "—",
-        "fonte_central": n_central.fonte if n_central else "",
+        "central": None if diverge else central,
+        "nota_central": n_central.nota if n_central and not diverge else "—",   # suspensa: sem número, sem nota
+        "fonte_central": n_central.fonte if n_central and not diverge else "",
         "compra": compra, "saida": saida,
         "saida_exc": bool(saida is not None and n_saida is not None and n_saida.rotulo.startswith("Saída (1,50")),
         "preco_ref": _finito(n_preco.valor) if n_preco else None, "nota_preco_ref": n_preco.nota if n_preco else "—",
@@ -211,7 +212,7 @@ def exportar(destino: Path = DADOS, hoje: str | None = None, log=print) -> dict:
         precos, pregao = monitor_semanal.ultimos_precos(tks, hoje)
     except (FileNotFoundError, ValueError, OSError) as ex:      # sem COTAHIST: régua e palavra valem, sem preço de hoje
         precos, pregao = {}, None
-        avisos.append(f"Sem cotação de hoje ({type(ex).__name__}: {ex}).")
+        avisos.append(_sem_caminho(f"Sem cotação de hoje ({type(ex).__name__}: {ex})."))
     velho = pregao is None or (date.fromisoformat(hoje) - date.fromisoformat(pregao)).days > monitor_semanal.DIAS_VELHO
     linhas, t0 = [], time.time()
     with _motor_uma_vez():

@@ -2,6 +2,7 @@
 import datetime as dt
 import json
 import pathlib
+import re
 import subprocess
 import sys
 
@@ -19,9 +20,30 @@ CHAVES = set(derivados_zip.CHAVES)
 def test_snapshot_versionado_cobre_as_chaves_dos_lotes():
     snap = json.loads(derivados_zip.SNAPSHOT.read_text(encoding="utf-8"))
     assert CHAVES <= set(snap)
-    assert set(snap["lote4.acoes_jun26"]) >= {"TIMS3", "VIVT3", "ITSA4", "FLRY3", "HYPE3", "ABEV3", "WEGE3", "ITUB"}
-    assert all(v > 1e6 for v in snap["lote4.acoes_jun26"].values())
+    acoes = snap["lote4.acoes"]                       # 23/11/2026: valor de balanço leva a ref do LTM de cada ticker
+    assert set(acoes) == {"ref", "valor"} and set(acoes["ref"]) == set(acoes["valor"])
+    assert all(len(r) == 4 and r[1] == "T" for r in acoes["ref"].values())
+    assert set(acoes["valor"]) >= {"TIMS3", "VIVT3", "ITSA4", "FLRY3", "HYPE3", "ABEV3", "WEGE3", "ITUB"}
+    assert all(v > 1e6 for v in acoes["valor"].values())
     assert set(snap["lote4.arrendamento_pago"]) == {"VIVT3", "WEGE3"}
+    assert not [k for k in snap if re.search(r"(jan|fev|mar|abr|mai|jun|jul|ago|set|out|nov|dez)_?\d{2}(?!\d)", k)]   # data no nome
+
+
+def test_obter_na_ref_so_usa_snapshot_do_mesmo_trimestre(tmp_path, monkeypatch):
+    """Sem os ZIPs, o snapshot de 2T26 não pode servir um LTM de 3T26 (ações de 30/06 com balanço de 30/09)."""
+    snap = tmp_path / "s.json"
+    snap.write_text(json.dumps({"k": {"ref": "2T26", "valor": 1}, "velha": 7}), encoding="utf-8")
+    monkeypatch.setattr(derivados_zip, "CVM", tmp_path)
+    monkeypatch.setattr(derivados_zip, "SNAPSHOT", snap)
+    monkeypatch.setattr(derivados_zip, "CALCULADOS", {})
+    assert derivados_zip.obter_na_ref("k", "2T26", ["itr_2099.zip"], lambda: 0) == 1
+    with pytest.raises(FileNotFoundError, match="LTM vigente é 3T26"):
+        derivados_zip.obter_na_ref("k", "3T26", ["itr_2099.zip"], lambda: 0)
+    with pytest.raises(FileNotFoundError, match="formato antigo"):
+        derivados_zip.obter_na_ref("velha", "2T26", ["itr_2099.zip"], lambda: 0)
+    (tmp_path / "itr_2099.zip").write_bytes(b"")          # com o ZIP: recalcula e grava a ref junto
+    assert derivados_zip.obter_na_ref("k", "3T26", ["itr_2099.zip"], lambda: 5) == 5
+    assert derivados_zip.CALCULADOS["k"] == {"ref": "3T26", "valor": 5}
 
 
 def test_manifesto_versionado_lista_os_zips_que_os_lotes_leem():

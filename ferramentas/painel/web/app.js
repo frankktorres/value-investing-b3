@@ -114,7 +114,7 @@ export function render() {
   let out;
   if (!ROTAS.includes(r.id)) {                       // hash desconhecido não cai calado no Hall (N9)
     contexto.textContent = 'Página não encontrada';
-    pag.replaceChildren(faixaErro(`A página "${location.hash}" não existe. Use o menu ou volte ao Hall (#/hall).`));
+    pag.replaceChildren(faixaErro(`A página "${location.hash}" não existe. Use o menu ou volte à lista de ações (#/hall).`));
     return;
   }
   if (r.id === 'empresa') {

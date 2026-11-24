@@ -43,6 +43,7 @@ def test_motor_divergente_suspende_a_regua_e_mantem_a_palavra_vigente():
     x = linha_hall(rel("NÃO CONCLUSIVO"), "JUSTA", 11.0, central_vigente=9.5, **MARCA)
     assert x["palavra"] == "JUSTA" and x["palavra_motor"] == "NÃO CONCLUSIVO"
     assert (x["central"], x["compra"], x["saida"], x["pc_hoje"]) == (None, None, None, None)
+    assert x["nota_central"] == "—"                                          # não entra no filtro "só A/B"
     assert x["situacao"] == exportar.SUSPENSA
     assert any("veredito novo" in a and "9,50" in a and "10,00" in a for a in x["avisos"])
     sem = linha_hall(rel("CARA"), None, 11.0, **MARCA)
@@ -82,6 +83,21 @@ def test_falha_ao_gravar_empresa_da_uma_linha_de_erro_sem_tmp_nem_caminho(monkey
         a = hall["empresas"][0]
         assert a["erro"].startswith("PermissionError") and str(exportar.RAIZ_REPO) not in a["erro"]
         assert not list(destino.rglob("*.tmp"))
+    finally:
+        shutil.rmtree(destino, ignore_errors=True)
+
+
+def test_aviso_sem_cotacao_nao_leva_caminho_da_maquina(monkeypatch):
+    destino = exportar.DADOS / f"_teste_{uuid.uuid4().hex[:8]}"
+    monkeypatch.setattr(exportar, "tickers", lambda: ([], set()))
+
+    def sem(tks, hoje):
+        raise FileNotFoundError(f"[Errno 2] No such file: '{exportar.RAIZ_REPO / 'ferramentas' / 'dados' / 'cotahist'}'")
+    monkeypatch.setattr("monitor_semanal.ultimos_precos", sem)
+    try:
+        hall = exportar.exportar(destino, hoje="2026-10-16", log=lambda *_: None)
+        assert hall["pregao_hoje"] is None and hall["dado_velho"] is True
+        assert hall["avisos"] and str(exportar.RAIZ_REPO) not in hall["avisos"][0]
     finally:
         shutil.rmtree(destino, ignore_errors=True)
 
@@ -168,15 +184,22 @@ def test_destino_padrao_e_ignorado_e_destino_versionavel_e_recusado(tmp_path):
 
 
 def test_painel_nao_importa_carteira_local():
-    """A tela pública não lê o arquivo de quantidades (dado pessoal entra só na fatia da carteira, em pasta ignorada)."""
+    """A tela não lê o arquivo de quantidades; o dado pessoal entra só pela carteira do contrato v0.2
+    (`contrato.py` → `relatorio.carteira.carregar`), gravado só em web/dados/privado/ (ignorado)."""
     for arq in (FERR / "painel").rglob("*.py"):
         if "tests" not in arq.parts:
             txt = arq.read_text(encoding="utf-8")
-            assert "carteira.local" not in txt and "ler_local" not in txt and "carregar(" not in txt, arq
+            assert "carteira.local" not in txt and "ler_local" not in txt, arq
+            if arq.name != "contrato.py":
+                assert "carregar(" not in txt, arq
+    txt = (FERR / "painel" / "contrato.py").read_text(encoding="utf-8")
+    assert txt.count("mod_carteira.carregar(") == 1 and '_gravar_json(privado / "carteira.json", cart)' in txt
 
 
 # ------------------------------------------------------------------------------ real (dados locais)
-TEM_DADOS = (FERR / "dados" / "cvm_series.json").exists()
+# cvm_series.json é versionado: sozinho não prova dado local; sem dados/raw (nuvem) também não há COTAHIST (QA 21/10/2026)
+from dados_opcionais import TEM_RAW  # noqa: E402
+TEM_DADOS = (FERR / "dados" / "cvm_series.json").exists() and TEM_RAW
 INTOCADOS = [FERR / "tests" / "golden.json", FERR / "prospectivo" / "registro.jsonl",
              *sorted((FERR / "dossie" / "vereditos").glob("*.json"))]
 
@@ -185,7 +208,7 @@ def _hash(p):
     return hashlib.sha256(p.read_bytes()).hexdigest() if p.exists() else None
 
 
-@pytest.mark.skipif(not TEM_DADOS, reason="dados/cvm_series.json fora do disco (dados brutos fora do git)")
+@pytest.mark.skipif(not TEM_DADOS, reason="dados locais fora do disco (dados/raw e COTAHIST ignorados pelo git)")
 def test_exportacao_real_e_vista():
     antes = {p: _hash(p) for p in INTOCADOS}
     destino = exportar.DADOS / f"_teste_{uuid.uuid4().hex[:8]}"                 # dentro da pasta ignorada

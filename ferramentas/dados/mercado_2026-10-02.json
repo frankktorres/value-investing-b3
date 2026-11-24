@@ -1,0 +1,21 @@
+{
+ "data_base": "2026-10-02",
+ "coletado_em": "2026-10-04",
+ "uso": "Mercado dos dossiês com data-base 02/10/2026 (BLAU3, CMIN3, HYPE3). Até 23/11/2026 era o mercado_vigente.json do hall; a gravação do 3T26 (data-base 19/11) o substituiu e o recálculo dos dossiês de 02/10 passou a falhar. Recriado em 24/11/2026 (B34) com os MESMOS números do mercado_vigente.json do commit 55934c8^ e da coleta bruta dados/mercado.json de 04/10 (sem coleta nova).",
+ "rf_real": 0.0706,
+ "pi": 0.0646,
+ "rf": {
+  "valor": 7.06,
+  "titulo": "Tesouro IPCA+ sem juros 15/08/2050 (o mais longo sem cupom à venda no Tesouro Direto em 02/10/2026)",
+  "tipo": "Tesouro Transparente, Taxa Compra Manhã (% a.a.); taxa venda manhã 7,18",
+  "fonte_url": "https://www.tesourotransparente.gov.br/ckan/dataset/df56aa42-484a-4a59-8184-7676580c81e3/resource/796d2059-14e9-44e3-80c9-2d9e30b405c1/download/PrecoTaxaTesouroDireto.csv",
+  "nota_fonte": "A"
+ },
+ "pi_implicita": {
+  "valor": 6.4593,
+  "tipo": "ANBIMA ETTJ de fechamento, inflação implícita no vértice de 2520 du (~10a), arredondada a 4 casas no motor (0,0646)",
+  "fonte_url": "https://www.anbima.com.br/informacoes/est-termo/CZ-down.asp (POST Idioma=PT&Dt_Ref=02/10/2026&saida=csv)",
+  "conferencia": "o mercado_2026-10-06.json registra que o mesmo POST para 02/10/2026 devolve 6,4593 (2520 du)",
+  "nota_fonte": "A"
+ }
+}

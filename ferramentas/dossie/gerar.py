@@ -61,7 +61,7 @@ def _calcular(tk: str) -> dict:
     anos = ficha.ANOS
     ins = insumos(tk)
     cnpj = base.CNPJ[tk]
-    eventos = base.eventos_em_acoes(tk)
+    eventos = base.eventos(tk)          # B3 + FRE (SHUL4 2021), os mesmos que ajustam o DPA
 
     mg = ev.margens(tk, anos, r0["op"]["med_outras"], True)
     rec = ev.receitas_reais(tk, anos)
@@ -69,7 +69,7 @@ def _calcular(tk: str) -> dict:
     rem = fr["remuneracao"]["dados"]
     rem_l, rem_txt = ev.remuneracao_sobre_lucro(tk, rem, anos)
     listado = min(a for a in anos if base.fechamento_do_ano(tk, int(a)))
-    dil, dil_txt = ev.diluicao(tk, anos, eventos, listado)
+    dil, dil_txt = ev.diluicao(tk, anos, eventos, listado, lambda q: base.escala(tk, q))
     r1, r1_f = ev.r1_da_triagem(tk), "Q4 da última triagem"
     if r1 is None:      # ticker do hall fica fora da triagem: o mesmo Q4, rodado só para ele, entra como insumo com fonte
         r1, r1_f = _valor(ins, "r1_retido")
@@ -160,7 +160,7 @@ def anexo(c: dict) -> str:
          "## Veredito mecânico (motor do hall, Ke da casa)", "",
          f"Mercado de {c['data']}: rf real {_f(mk.rf_real, 2, True)} · π implícita {_f(mk.pi, 2, True)} · Ke nominal "
          f"{_f(r.get('ke_nom_emp', mk.ke_nom), 2, True)}"
-         + (f" (v2.4: 5 p.p. × alavancagem, D/E {_f(r['de_peso'])} no ponto fixo; sem dívida seria {_f(mk.ke_nom, 2, True)})"
+         + (f" (v2.4: 5 p.p. × alavancagem, D/E {_f(r['de_peso'])} a mercado (v2.7); sem dívida seria {_f(mk.ke_nom, 2, True)})"
             if 'ke_nom_emp' in r else ""), "",
          f"Preço R$ {_f(c['preco'])} · central R$ {_f(r['central'])} · P/C {_f(r['pc'])} · "
          f"régua **{r['palavra_regua']}** → palavra final **{r['palavra']}** (dispersão {_f(r['dispersao'])}, confiança {r['confianca']})", "",

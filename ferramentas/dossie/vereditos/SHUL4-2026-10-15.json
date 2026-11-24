@@ -1,0 +1,27 @@
+{
+ "ticker": "SHUL4",
+ "data_preco": "2026-10-15",
+ "preco": 5.0,
+ "central": 3.9037,
+ "pc": 1.2808,
+ "palavra": "CARA",
+ "palavra_regua": "CARA",
+ "notas_regra11": {
+  "moat": 0,
+  "gestao": 0,
+  "controlador": 3,
+  "ciclo": 3,
+  "fisher": 2
+ },
+ "desc_controlador": 0.0106,
+ "desc_controlador_razao": "regra 8 (probabilidade x magnitude do risco prospectivo), sem evidência de interferência consumada (IPE 2020-26, ver 'interferencias'). SHUL4 é PN: sem voto e fora da OPA de alienação de controle (estatuto 26/12/2025, art. 4º §3º), com dividendo 10% maior que o da ON e dividendo mínimo de 25% (art. 31). Três pessoas físicas controlam 62,96% do capital votante (FRE 2026 v4), de modo que o risco que a nota e o valor central não capturam é a PN ficar fora do prêmio de controle: (a) venda do bloco de controle com OPA só para as ON (a PN não participa e a lei não a obriga), (b) fechamento de capital ou conversão/reorganização que trate a PN a preço abaixo do valor. Atenuantes: companhia com caixa líquido de R$ 133,6 mi após R$ 115,5 mi de dividendos em 2025 (relatório da administração 2025), recompras em ON e PN em 2021, 2024 e 2026, sem transação com controladores no consolidado. Não há OPA, proposta de fechamento de capital nem fato relevante nesse sentido em 2020-2026 no IPE. As probabilidades e perdas são estimativas minhas (não saem de fonte), no mesmo molde da BLAU3 e da ALLD3",
+ "media_regra11": 1.8333,
+ "discricionario": true,
+ "doutrina": "v2.3",
+ "template": "02 v4",
+ "rf_real": 0.0674,
+ "pi": 0.0575,
+ "aliquota": 0.34,
+ "aliquota_regra": "sem_origem",
+ "gerado_em": "2026-10-19"
+}

@@ -28,7 +28,7 @@ def P(t, st="cel"):
 gerar_pdf_lote1.P = P
 from lote1_bancos import DATA_BASE, MK
 from lote2_energia import alavancagem, metodo_regulado
-from lote6_quimica import (ACO, CLORO, EGIE, EGIE_DADOS, EGIE_DIV_AGO26, EGIE_FOLLOW_ON, EMPRESAS, N, PVC, SERIES, SODA)
+from lote6_quimica import (ACO, CLORO, EGIE, EGIE_DADOS, EMPRESAS, N, PVC, SERIES, SODA)
 from lote6_textos import AGENDA, ANTES, T
 from motor_financeiras import avaliar as avaliar_fin
 from motor_financeiras import projecao
@@ -440,9 +440,11 @@ def ficha_egie(emp, r, story):
     story.append(Spacer(1, 3))
     l = ltm_de(CVM["EGIE3"])
     fatos = [["Fato", "Valor", "Fonte"],
-             ["Patrimônio do controlador 30/06 − dividendo de ago/26", f"R$ {br(d['pl_old'] / 1e6, 2)} bi (dividendo R$ {br(EGIE_DIV_AGO26 / 1e6, 2)} bi, data-com 20/08)", "[CVM][SI]"],
-             ["+ follow-on de jul/26 (Jirau 40%)", f"R$ {br(EGIE_FOLLOW_ON['valor'] / 1e6, 2)} bi · {br(EGIE_FOLLOW_ON['acoes'] / 1e6, 1)} mi de ações", "PDF 07/09"],
-             ["Ações · VPA · P/VP", f"{br(N['EGIE3'] / 1e6, 1)} mi · R$ {br(emp.vpa)} · {br(r['pvp'])}×", "[CVM] ITR jun/26 + follow-on"],
+             [f"Patrimônio do controlador {d['ref']} − dividendo aprovado depois do balanço", f"R$ {br(d['pl_old'] / 1e6, 2)} bi (dividendo R$ {br(d['div_depois'] / 1e6, 2)} bi, já ex no preço)", "[CVM][B3]"],
+             [f"{'follow-on já no balanço' if d['follow_on_no_balanco'] else '+ follow-on'} de {d['follow_on']['mes_liquidacao']} (Jirau 40%)",
+              f"R$ {br(d['follow_on']['valor_mil'] / 1e6, 2)} bi · {br(d['follow_on']['acoes_novas'] / 1e6, 1)} mi de ações", "PDF 07/09"],
+             ["Ações · VPA · P/VP", f"{br(N['EGIE3'] / 1e6, 1)} mi · R$ {br(emp.vpa)} · {br(r['pvp'])}×",
+              f"[CVM] ITR {d['ref']}" + ("" if d["follow_on_no_balanco"] else " + follow-on")],
              ["Lucro 12m (controlador) · LPA nas ações de hoje", f"R$ {br(l['lucro_controlador'] / 1e6, 2)} bi · R$ {br(emp.lpa_12m, 3)}", "[CVM]"],
              ["ROE do negócio existente: 12m · longo prazo", f"{pct(d['roe_old_ini'])} · {pct(d['roe_old_lp'])} (mediana 2017–25 sem não recorrentes)", "[CVM]"],
              ["ROE combinado (dinheiro novo ao Ke): início · longo prazo", f"{pct(emp.roe_inicio)} · {pct(emp.roe_lp)} (peso do novo {pct(d['peso_novo'], 0)})", "motor"],
@@ -548,7 +550,7 @@ def tabela_indices():
     for y in range(2016, 2026):
         lin.append([str(y)] + [br(ix["anual"].loc[y, "real"], 0) for ix in (ACO, SODA, PVC, CLORO)])
     lin.append(["<b>Meio de ciclo = 100</b> (aço 2016–25; cloro-soda/PVC 2017–25)", "<b>100</b>", "<b>100</b>", "<b>100</b>", "<b>100</b>"])
-    lin.append(["12m até jun/2026 (base da receita)"] + [br(ix["ltm"], 0) for ix in (ACO, SODA, PVC, CLORO)])
+    lin.append([f"12m {ACO['janela_ltm'][0]} a {ACO['janela_ltm'][1]} (LTM, base da receita)"] + [br(ix["ltm"], 0) for ix in (ACO, SODA, PVC, CLORO)])
     lin.append([f"Último ({ACO['ultimo'][0]})"] + [br(ix["ultimo"][1], 0) for ix in (ACO, SODA, PVC, CLORO)])
     lin.append(["Fator de meio de ciclo (meio ÷ 12m)"] + [br(ix["fator"], 3) for ix in (ACO, SODA, PVC, CLORO)])
     return tabela(lin, [60 * mm, 30 * mm, 30 * mm, 30 * mm, 32 * mm])
@@ -609,7 +611,7 @@ def capa(res, rank, story):
                                   "e Owner Earnings; P/L histórico no Bogle."],
            ["Utility (EGIE3)", "Método de regulado do Lote 2: P/VP justificado e DDM 2 estágios, TIR real implícita. Patrimônio de jun/26 − dividendo de "
                                "ago/26 + follow-on de jul/26 (R$ 8,36 bi, Jirau 40%), com o dinheiro novo rendendo o Ke (VPL zero); ROE de longo prazo = "
-                               "mediana 2017–25 do ROE do controlador sem 'outras receitas' acima da mediana (UBP de 2024)."],
+                               "mediana 2017–25 do ROE do controlador sem 'outras receitas' acima da mediana (venda da TAG em 2024, R$ 1,34 bi; DFP 2024 conta 3.04.04.02)."],
            ["Correções no coletor (valem para todos os lotes)", "Custo de transação e AVP de debêntures saíram da D&A (SUZB3 2021–25, KLBN11); impairment "
                                "lido na conta mais alta que casa (GGBR4 2016: 3.04.03 com filho zerado) e separado do lançado em 3.04.05. Lotes 2, 3 e 5 "
                                "conferidos: nenhuma palavra muda (SUZB3 central 37,94 → 37,12; KLBN11 5,06 → 4,98). Reemitido no Lote 4 (05/10): reinvestimento do DCF = g real ÷ ROIC real (Fisher), antes ÷ ROIC nominal — LEVE3 36,82 → 36,76; UNIP6 dispersão 3,26 → 3,14."],

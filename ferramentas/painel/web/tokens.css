@@ -1,31 +1,42 @@
-/* Mesa de Value — tokens v0.1 (Claude Design, 19/10/2026; docs/design/). Uso: <html data-tema="claro|escuro">.
-   Acréscimo da mesa: RADAR (palavra do motor das financeiras/dossiê que o Design não previu) = contorno frio, sem tinta. */
-:root,[data-tema="claro"]{
-  --f-ui:'IBM Plex Sans',system-ui,sans-serif; --f-mono:'IBM Plex Mono',ui-monospace,monospace; --f-serif:'Source Serif 4',Georgia,serif;
-  --bg:#F3F3EF; --sf:#FFFFFF; --sf2:#EBEBE6; --ln:#D6D6CE; --ln2:#B9B9AF;
-  --ink:#15181C; --ink2:#454B53; --ink3:#5E646D; --ac:#23405F;
-  --barata-fg:#0B5560; --barata-bg:#DDEEF0; --barata-ln:#7FB6BD;
-  --radar-fg:#0B5560;  --radar-ln:#7FB6BD;
-  --justa-fg:#38424F;  --justa-ln:#AAB3C0;
-  --cara-fg:#7A3B04;   --cara-bg:#F5E6D3;   --cara-ln:#D2A06B;
-  --nc-fg:#454B53;     --nc-ln:#8A9099;
-  --serie-div:#2D5A7B; --serie-jcp:#5F8FB3;
-  --hatch:repeating-linear-gradient(135deg,transparent 0 4px,rgba(21,24,28,.10) 4px 5px);
-  --sh-popover:0 4px 16px rgba(21,24,28,.10);
-  --s1:4px; --s2:8px; --s3:12px; --s4:16px; --s5:24px; --s6:32px;
-  --r1:3px; --r2:6px; --r3:10px;
+/* Paleta v0.3 (22/10/2026): azul-noite de terminal de dados, acento violeta-elétrico e ciano. Palavra: turquesa (barata),
+   âmbar (cara), ardósia (justa) — sem verde/vermelho de trading. Todos os pares passam no WCAG (texto 4,5:1, contorno 3:1). */
+:root,[data-tema="escuro"]{
+  --f-ui:'IBM Plex Sans',system-ui,sans-serif; --f-mono:'IBM Plex Mono',ui-monospace,monospace; --f-display:'Space Grotesk','IBM Plex Sans',sans-serif;
+  --bg:#050A14; --sf:#0A1222; --sf2:#101B30; --ln:#1B2944; --ln2:#50688F;
+  --ink:#EEF4FF; --ink2:#AFC0DA; --ink3:#8599B9; --ac:#8C9BFF;
+  --barata-fg:#4FE8C6; --barata-bg:#062C2B; --barata-ln:#1F9C8A;
+  --justa-fg:#B9C8E2; --justa-ln:#5B7096;
+  --cara-fg:#FFBA55; --cara-bg:#2E1D06; --cara-ln:#B0782A;
+  --nc-fg:#AFC0DA; --nc-ln:#64789C;
+  --serie-div:#38C7F5; --serie-jcp:#8C7CFF;
+  --hatch:repeating-linear-gradient(135deg,transparent 0 4px,rgba(175,192,218,.14) 4px 5px);
+  --s1:4px; --s2:8px; --s3:12px; --s4:16px; --s5:24px; --s6:32px; --r1:4px; --r2:8px; --r3:12px;
 }
-[data-tema="escuro"]{
-  --bg:#0E1114; --sf:#161A1F; --sf2:#1D2229; --ln:#2C333B; --ln2:#424B55;
-  --ink:#E8EAED; --ink2:#B2B8C0; --ink3:#929AA5; --ac:#8FB6E0;
-  --barata-fg:#7FD0DA; --barata-bg:#12333A; --barata-ln:#2F6F79;
-  --radar-fg:#7FD0DA;  --radar-ln:#2F6F79;
-  --justa-fg:#BCC6D4;  --justa-ln:#46556A;
-  --cara-fg:#F0B979;   --cara-bg:#3A2810;   --cara-ln:#8A5F2B;
-  --nc-fg:#B2B8C0;     --nc-ln:#6B7480;
-  --serie-div:#8FB6E0; --serie-jcp:#4F86B0;
-  --hatch:repeating-linear-gradient(135deg,transparent 0 4px,rgba(232,234,237,.14) 4px 5px);
-  --sh-popover:0 8px 24px rgba(0,0,0,.5);
+[data-tema="claro"]{
+  --bg:#F2F6FC; --sf:#FFFFFF; --sf2:#E8EEF8; --ln:#D5DEEC; --ln2:#7A8AA6;
+  --ink:#07101F; --ink2:#3B4A66; --ink3:#4F6080; --ac:#4B3FE0;
+  --barata-fg:#036B5E; --barata-bg:#D4F7EF; --barata-ln:#2E9C8B;
+  --justa-fg:#33456A; --justa-ln:#7286A8;
+  --cara-fg:#8A4A00; --cara-bg:#FFEBCC; --cara-ln:#C07A1C;
+  --nc-fg:#3B4A66; --nc-ln:#7F8FAA;
+  --serie-div:#0E8FC2; --serie-jcp:#5B4FE0;
+  --hatch:repeating-linear-gradient(135deg,transparent 0 4px,rgba(7,16,31,.10) 4px 5px);
 }
-/* Nota de fonte: A sólido, B contorno, C tracejado, — pontilhado. Número com nota C/— => cor --ink3 + underline dotted. */
-/* Escala da régua: 50%..160% do central, fixa em todas as linhas. Números: font-variant-numeric: tabular-nums lining-nums. */
+/* Régua: escala fixa do central declarada em hall.fatores.escala_regua; compra e saída chegam prontas do motor. */
+/* Nota de fonte: A sólido, B contorno, C tracejado, — pontilhado. Números: tabular-nums lining-nums. */
+
+/* ---- Complemento: brilho, grade de fundo e gradiente da marca. RADAR = contorno turquesa sem preenchimento, glifo ▽. */
+:root,[data-tema="escuro"]{
+  --dot:rgba(140,155,255,.10); --hi:rgba(255,255,255,.04);
+  --glow-b:0 0 16px rgba(79,232,198,.28); --glow-p:0 0 12px rgba(238,244,255,.6); --glow-ac:0 0 0 1px rgba(140,155,255,.35),0 0 22px rgba(140,155,255,.18);
+  --grad:linear-gradient(90deg,#8C7CFF,#38C7F5 55%,#4FE8C6);
+  --aura:radial-gradient(1200px 420px at 15% -10%,rgba(140,124,255,.16),transparent 60%),radial-gradient(900px 360px at 95% 0%,rgba(56,199,245,.10),transparent 60%);
+  --radar-fg:var(--barata-fg); --radar-ln:var(--barata-ln);
+}
+[data-tema="claro"]{
+  --dot:rgba(75,63,224,.08); --hi:rgba(255,255,255,.9);
+  --glow-b:none; --glow-p:none; --glow-ac:0 0 0 1px rgba(75,63,224,.35),0 6px 18px rgba(75,63,224,.10);
+  --grad:linear-gradient(90deg,#5B4FE0,#0E8FC2 55%,#2E9C8B);
+  --aura:radial-gradient(1200px 420px at 15% -10%,rgba(91,79,224,.08),transparent 60%),radial-gradient(900px 360px at 95% 0%,rgba(14,143,194,.06),transparent 60%);
+  --radar-fg:var(--barata-fg); --radar-ln:var(--barata-ln);
+}

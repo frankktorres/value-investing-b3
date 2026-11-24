@@ -19,6 +19,8 @@ reportlab/pytest; sem banco; dados brutos fora do git (`ferramentas/dados/`). Br
 - Fila: `docs/MISSOES.md` (uma missão por turno) ← `docs/BACKLOG.md` (só tipo "executável"). Diário: `docs/RELATORIO-DIARIO.md`.
 - **Decisão reversível = decide, registra em `docs/DECISOES.md` e segue.** Só parar (e escrever em `docs/PENDENTE-FRANK.md`) em:
   senha/chave, dinheiro, apagar dados. **Nunca executar nem sugerir como feita ordem de compra/venda.**
+- Local: o hook `Stop` só guarda snapshot em `wip/auto`, nunca toca o `master` (decisão de 24/11); o commit no `master` é
+  explícito, com a suíte verde.
 - Na nuvem os hooks de auto-commit não rodam (`CLAUDE_CODE_REMOTE`): rode `bash scripts/cloud_setup.sh` e os testes,
   `git add` de caminhos específicos, commit e push **no ramo `claude/*` da sessão, nunca no `master`** (lá ~42 testes pulam
   sem dados). De manhã `ferramentas/conferir_noite.py` (Agendador, 07:15) roda a suíte da junção com os dados locais e

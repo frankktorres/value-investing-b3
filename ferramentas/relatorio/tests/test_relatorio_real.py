@@ -64,12 +64,14 @@ def test_financeira_mostra_dcf_epv_oe_como_nao_aplicaveis(bbse3):
 
 @requer_cvm
 @requer_suplemento_b3
-def test_dossie_hype3_bate_com_o_veredito_gravado_e_e_todo_a(hype3):
+def test_dossie_hype3_bate_com_o_veredito_gravado_e_decide(hype3):
     salvo = json.loads((RAIZ / "dossie" / "vereditos" / "HYPE3-2026-10-06.json").read_text(encoding="utf-8"))
     assert hype3.data == "2026-10-06"                      # a data-base é a do último veredito gravado
     assert hype3.palavra == salvo["palavra"]
     central = next(n for n in hype3.secoes[0].numeros if n.rotulo == "Valor central")
-    assert central.nota == "A"
+    # fase 3, fatia 1 (19/10): o Kd sintético (Damodaran, B) entra nas âncoras de fluxo → o central do dossiê é B, não A
+    assert central.nota == "B"
+    assert "Kd sintético (Damodaran)" in central.fonte
     _todo_numero_tem_fonte_ou_motivo(hype3)
     rotulos = {n.rotulo.split(" — ")[0] for s in hype3.secoes for n in s.numeros}
     assert {"DCF", "EPV (Greenwald)", "Buffett", "Graham", "Bazin"} <= rotulos

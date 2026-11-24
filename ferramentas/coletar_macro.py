@@ -77,8 +77,20 @@ def main() -> int:
             return 1
         print("parte comum confere valor a valor")
     DESTINO.write_text(json.dumps(nova, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
-    print(f"gravado em {DESTINO}")
+    registrar_no_manifesto(nova, fim)
+    print(f"gravado em {DESTINO} (data de coleta no MANIFESTO_MACRO.json)")
     return 0
+
+
+def registrar_no_manifesto(nova: list[dict], fim: str, hoje: str | None = None, manifesto=None) -> dict:
+    """23/11/2026 (Frank: "registre a data de coleta de cada série"): o IPCA entra no mesmo manifesto das séries FRED/PTAX."""
+    import coletar_macro_fred as cf
+    alvo = manifesto or cf.MANIFESTO
+    m = json.loads(alvo.read_text(encoding="utf-8")) if alvo.exists() else {}
+    m[cf.IPCA] = cf._resumo(cf.IPCA_INFO[0], cf.IPCA_INFO[1], SGS.format(serie=433, ini=f"01/01/{INICIO}", fim=fim),
+                            DESTINO.read_bytes(), [reg["data"] for reg in nova], hoje or date.today().isoformat())
+    cf._gravar_manifesto(m, alvo)
+    return m[cf.IPCA]
 
 
 if __name__ == "__main__":

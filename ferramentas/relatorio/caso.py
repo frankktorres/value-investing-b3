@@ -44,7 +44,7 @@ def _do_lote(tk: str) -> dict:
 
 
 def caso(tk: str, data: str | None = None) -> dict:
-    tk = tk.upper()
+    tk = tk.strip().upper()
     from dossie import gerar
     if tk in gerar.FICHAS:
         return _do_dossie(tk, data)

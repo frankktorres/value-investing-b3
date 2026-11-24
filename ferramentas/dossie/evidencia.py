@@ -55,16 +55,18 @@ def r1_da_triagem(tk: str) -> float | str | None:
     return None
 
 
-def diluicao(tk: str, anos: list[str], eventos: list[dict], primeiro_listado: str) -> tuple[float | None, str]:
+def diluicao(tk: str, anos: list[str], eventos: list[dict], primeiro_listado: str,
+             escala=lambda q: q) -> tuple[float | None, str]:
     """CAGR das ações em circulação desde o 1º fim de exercício com ação negociada (antes disso a contagem não é a do
-    acionista de bolsa), com as bonificações e desdobramentos desfeitos (não diluem). Recompra líquida → CAGR negativo."""
+    acionista de bolsa), com as bonificações e desdobramentos desfeitos (não diluem). Recompra líquida → CAGR negativo.
+    `escala(q)` = a contagem em unidades (`dossie.base.escala`: há formulário em milhares — VLID3 2020 saía 308% a.a.)."""
     a = CVM[tk]["anual"]
     xs = [x for x in anos if x >= primeiro_listado and a.get(x, {}).get("acoes")]
     if len(xs) < 2:
         return None, "menos de 2 exercícios com ação negociada"
 
     def ajust(x):       # só o evento aprovado DENTRO da janela: o anterior a ela (HYPE3, desdobramento de 2009) já está nas duas pontas
-        n = a[x]["acoes"]
+        n = escala(a[x]["acoes"])
         for e in eventos:
             if f"{xs[0]}-12-31" < e["aprovacao"] <= f"{x}-12-31":
                 n /= e["multiplicador"]

@@ -10,6 +10,12 @@ from dataclasses import dataclass, field
 
 from motor_financeiras import media_qualitativa
 
+
+def _br(x: float, casas: int) -> str:
+    """Número no texto da nota com vírgula decimal, como o resto da ficha (N10)."""
+    return f"{x:.{casas}f}".replace(".", ",")
+
+
 _EPS = 9  # casas decimais para comparar fronteiras sem ruído de ponto flutuante
 
 
@@ -50,7 +56,7 @@ def moat(roic_real, wacc_real, margens_brutas, margens_ebit=None):
         base = 1
     else:
         base = 0
-    comp.append(f"ROIC real > WACC real ({wacc_real:.4f}) em {n} de {janela} exercícios (f={f:.2f}) -> {base}")
+    comp.append(f"ROIC real > WACC real ({_br(wacc_real, 4)}) em {n} de {janela} exercícios (f={_br(f, 2)}) -> {base}")
     if margens_brutas is not None and len(margens_brutas) >= 3:
         serie, rot = margens_brutas, "margem bruta"
     elif margens_ebit is not None and len(margens_ebit) >= 3:
@@ -64,9 +70,9 @@ def moat(roic_real, wacc_real, margens_brutas, margens_ebit=None):
         dp = _dp_pp(serie)
         if dp > 5:
             base -= 1
-            comp.append(f"desvio-padrão da {rot} {dp:.2f} p.p. > 5: -1")
+            comp.append(f"desvio-padrão da {rot} {_br(dp, 2)} p.p. > 5: -1")
         else:
-            comp.append(f"desvio-padrão da {rot} {dp:.2f} p.p. <= 5: sem penalidade")
+            comp.append(f"desvio-padrão da {rot} {_br(dp, 2)} p.p. <= 5: sem penalidade")
     teto = 3 if janela < 7 else 4 if janela < 10 else 5
     if base > teto:
         comp.append(f"janela de {janela} exercícios: teto {teto}")
@@ -86,8 +92,8 @@ def ciclo(receitas_reais, margens_ebit, anos_prejuizo_operacional):
     dp = _dp_pp(margens_ebit)
     b_ = 5 if dp <= 3 else 4 if dp <= 5 else 3 if dp <= 8 else 2 if dp <= 12 else 1
     base = min(a_, b_)
-    comp = [f"maior queda anual da receita real {q * 100:.1f}% -> A={a_}",
-            f"desvio-padrão da margem EBIT {dp:.2f} p.p. -> B={b_}",
+    comp = [f"maior queda anual da receita real {_br(q * 100, 1)}% -> A={a_}",
+            f"desvio-padrão da margem EBIT {_br(dp, 2)} p.p. -> B={b_}",
             f"base = min(A, B) = {base}"]
     if anos_prejuizo_operacional >= 2:
         comp.append(f"{anos_prejuizo_operacional} anos de prejuízo operacional (>= 2): teto 1")
@@ -106,31 +112,31 @@ def gestao(r1_retido, cagr_acoes, rem_sobre_lucro, ma_ruim):
         comp.append(f"R$1 retido '{r1_retido}' (retenção <= 0, teste indefinido): 0")
     elif r1_retido >= 1.5:
         base += 1
-        comp.append(f"R$1 retido {r1_retido:.2f} >= 1,5: +1")
+        comp.append(f"R$1 retido {_br(r1_retido, 2)} >= 1,5: +1")
     elif r1_retido < 1.0:
         base -= 1
-        comp.append(f"R$1 retido {r1_retido:.2f} < 1,0: -1")
+        comp.append(f"R$1 retido {_br(r1_retido, 2)} < 1,0: -1")
     else:
-        comp.append(f"R$1 retido {r1_retido:.2f} entre 1,0 e 1,5: 0")
+        comp.append(f"R$1 retido {_br(r1_retido, 2)} entre 1,0 e 1,5: 0")
     if cagr_acoes is None:
         base -= 1
         comp.append("CAGR das ações sem evidência: -1 conservador")
     elif round(cagr_acoes, _EPS) >= 0.02:
         base -= 1
-        comp.append(f"CAGR das ações {cagr_acoes * 100:.2f}% a.a. >= 2%: -1 (diluição)")
+        comp.append(f"CAGR das ações {_br(cagr_acoes * 100, 2)}% a.a. >= 2%: -1 (diluição)")
     elif round(cagr_acoes, _EPS) <= -0.01:
         base += 1
-        comp.append(f"CAGR das ações {cagr_acoes * 100:.2f}% a.a. <= -1%: +1 (recompra)")
+        comp.append(f"CAGR das ações {_br(cagr_acoes * 100, 2)}% a.a. <= -1%: +1 (recompra)")
     else:
-        comp.append(f"CAGR das ações {cagr_acoes * 100:.2f}% a.a.: 0")
+        comp.append(f"CAGR das ações {_br(cagr_acoes * 100, 2)}% a.a.: 0")
     if rem_sobre_lucro is None:
         base -= 1
         comp.append("remuneração/lucro sem evidência: -1 conservador")
     elif round(rem_sobre_lucro, _EPS) > 0.05:
         base -= 1
-        comp.append(f"remuneração/lucro {rem_sobre_lucro * 100:.2f}% > 5%: -1")
+        comp.append(f"remuneração/lucro {_br(rem_sobre_lucro * 100, 2)}% > 5%: -1")
     else:
-        comp.append(f"remuneração/lucro {rem_sobre_lucro * 100:.2f}% <= 5%: 0")
+        comp.append(f"remuneração/lucro {_br(rem_sobre_lucro * 100, 2)}% <= 5%: 0")
     if ma_ruim is None:
         base -= 1
         comp.append("histórico de M&A sem evidência: -1 conservador")
@@ -156,21 +162,21 @@ def controlador(tem_controlador, tag_along, partes_rel_sobre_receita, interferen
         comp.append("tag along sem evidência: -1 conservador")
     elif round(tag_along, _EPS) < 1.0:
         base -= 1
-        comp.append(f"tag along {tag_along * 100:.0f}% < 100%: -1")
+        comp.append(f"tag along {_br(tag_along * 100, 0)}% < 100%: -1")
     else:
-        comp.append(f"tag along {tag_along * 100:.0f}%: 0")
+        comp.append(f"tag along {_br(tag_along * 100, 0)}%: 0")
     p = partes_rel_sobre_receita
     if p is None:
         base -= 1
         comp.append("partes relacionadas/receita sem evidência: -1 conservador")
     elif round(p, _EPS) > 0.15:
         base -= 2
-        comp.append(f"partes relacionadas {p * 100:.1f}% da receita > 15%: -2")
+        comp.append(f"partes relacionadas {_br(p * 100, 1)}% da receita > 15%: -2")
     elif round(p, _EPS) > 0.05:
         base -= 1
-        comp.append(f"partes relacionadas {p * 100:.1f}% da receita > 5%: -1")
+        comp.append(f"partes relacionadas {_br(p * 100, 1)}% da receita > 5%: -1")
     else:
-        comp.append(f"partes relacionadas {p * 100:.1f}% da receita <= 5%: 0")
+        comp.append(f"partes relacionadas {_br(p * 100, 1)}% da receita <= 5%: 0")
     n = interferencias
     if n is None:      # busca não feita/documentada ≠ "nenhuma": conservador como os demais (achado do adversário, 07/10)
         base -= 1
@@ -194,7 +200,7 @@ def fisher(respostas):
     n = sum(1 for r in respostas if r == "sim")
     base = math.floor(5 * n / 15 + 0.5)
     sem = sum(1 for r in respostas if r == "sem")
-    return Nota("fisher", base, [f"{n} 'sim' de 15 ({sem} sem evidência): 5 x {n}/15 = {5 * n / 15:.2f} -> {base}"])
+    return Nota("fisher", base, [f"{n} 'sim' de 15 ({sem} sem evidência): 5 x {n}/15 = {_br(5 * n / 15, 2)} -> {base}"])
 
 
 # ------------------------------------------------------------------ fechamento

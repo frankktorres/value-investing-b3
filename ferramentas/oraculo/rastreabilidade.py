@@ -117,8 +117,8 @@ def gerar_md(regras: list[dict]) -> str:
         f"**{len(com_teste)} com teste** · **{sum(1 for r in regras if r.get('lacuna'))} lacunas declaradas** · "
         "por camada do teste mais forte: " + ", ".join(f"{c}: {n}" for c, n in por_camada.items() if n),
         "",
-        "| id | § | linha | regra | tipo | funções | testes | camada | lacuna |",
-        "|---|---|---|---|---|---|---|---|---|",
+        "| id | § | linha | regra | tipo | funções | testes | camada | lacuna | nota |",
+        "|---|---|---|---|---|---|---|---|---|---|",
     ]
     for r in regras:
         def esc(s):
@@ -129,6 +129,7 @@ def gerar_md(regras: list[dict]) -> str:
             "<br>".join(f"`{t}`" for t in r.get("testes", [])) or "—",
             str(r["camada"]) if r.get("testes") else "—",
             esc(r.get("lacuna", "")) or "—",
+            esc(r.get("nota", "")) or "—",
         ]) + " |")
     return "\n".join(linhas) + "\n"
 

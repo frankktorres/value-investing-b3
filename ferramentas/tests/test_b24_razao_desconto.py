@@ -51,15 +51,20 @@ def test_marcador_sem_razao_conta_como_declarado():
     assert MF.falta_razao_desconto(e) is None
 
 
-def test_universo_todo_declarado_e_28_sem_fonte():
-    """Trava contra regressão: os 28 sem fonte A/B (14/10/2026) só saem desta conta com razão de fonte A/B escrita."""
+def test_universo_todo_declarado_e_23_sem_fonte():
+    """Trava contra regressão: os 23 sem fonte A/B (28 em 14/10/2026; B26 de 20/10 achou 5) só saem desta conta com razão de fonte A/B escrita."""
     emps = _universo()
     assert all(MF.falta_razao_desconto(e) is None for e in emps)
     sem = sorted(e.ticker for e in emps if e.desconto_controlador["razao"] == MF.SEM_RAZAO)
-    assert len(sem) == 28, sem
+    assert len(sem) == 23, sem
     leve = next(e for e in emps if e.ticker == "LEVE3")
     razao = leve.desconto_controlador["razao"]
     assert "FRE 2026" in razao and "DFP 2025 nota 13" in razao and "Ressalva do D3" in razao   # citação conferida contra o insumo
+    # B26 (20/10/2026): sem controlador pelo FRE 2026 (CVM id conferido na tabela de posição acionária)
+    ids = {"PRIO3": "161257", "KEPL3": "161068", "RECV3": "161485", "VBBR3": "159172", "B3SA3": "161005"}
+    for tk, id_doc in ids.items():
+        r = next(e for e in emps if e.ticker == tk).desconto_controlador["razao"]
+        assert r != MF.SEM_RAZAO and f"FRE 2026, CVM id {id_doc}, nota A" in r, tk
 
 
 def test_nenhum_codigo_monta_desconto_com_razao_vazia():

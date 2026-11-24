@@ -32,11 +32,13 @@ def _nota(n: Numero) -> str:
     return n.nota if decide(n.nota) or n.valor is None else f"**{n.nota}**"
 
 
-def render(rel: Relatorio) -> str:
-    L = [f"# {rel.tk} — {rel.nome}", "",
-         f"**Palavra: {rel.palavra}** · data-base {rel.data} · origem: {rel.origem}", "",
-         "Relatório gerado pelos motores do repositório (vista; não grava veredito). Nota da fonte: A oficial, B primária "
-         "com ressalva, C agregador ou não conferido, — sem fonte. Só A/B embasa decisão.", ""]
+def render(rel: Relatorio, cabecalho: list[str] | None = None) -> str:
+    """`cabecalho` substitui o topo padrão do relatório por empresa (o painel da carteira não tem palavra)."""
+    L = list(cabecalho) if cabecalho is not None else [
+        f"# {rel.tk} — {rel.nome}", "",
+        f"**Palavra: {rel.palavra}** · data-base {rel.data} · origem: {rel.origem}", "",
+        "Relatório gerado pelos motores do repositório (vista; não grava veredito). Nota da fonte: A oficial, B primária "
+        "com ressalva, C agregador ou não conferido, — sem fonte. Só A/B embasa decisão.", ""]
     if rel.avisos:
         L += ["## Avisos", ""] + [f"- {a}" for a in rel.avisos] + [""]
     for s in rel.secoes:

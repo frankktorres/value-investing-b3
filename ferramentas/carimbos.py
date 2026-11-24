@@ -15,7 +15,7 @@ CARIMBOS: dict[str, tuple[tuple[str, str], ...]] = {
               ("lucro não recorrente", DOUTRINA_7)),
     "KLBN11": (("dividendo não coberto por caixa (venda de terras)", DOUTRINA_7),),
     "SAPR11": (("lucro não recorrente", DOUTRINA_7),),
-    "EGIE3": (("lucro não recorrente (UBP)", DOUTRINA_7),),
+    "EGIE3": (("lucro não recorrente (venda da TAG em 2024; repactuação do UBP no 2T26, R$ 1,92 bi bruto)", DOUTRINA_7),),
     "VBBR3": (("múltiplo baixo em topo de ciclo", DOUTRINA_7),),
     "PETR4": (("múltiplo baixo em topo de ciclo", DOUTRINA_7),),
     "BRSR6": (("defeito estrutural (controlador)", "03-hall-de-acoes, fora do hall (05/10)"),),
@@ -25,4 +25,4 @@ CARIMBOS: dict[str, tuple[tuple[str, str], ...]] = {
 
 def de(ticker: str) -> list[str]:
     """Carimbos do ticker no formato que `entrada_parcial(armadilhas=…)` espera (texto + onde está escrito)."""
-    return [f"{c} [{f}]" for c, f in CARIMBOS.get(ticker, ())]
+    return [f"{c} [{f}]" for c, f in CARIMBOS.get(str(ticker).strip().upper(), ())]

@@ -1,0 +1,416 @@
+{
+ "data_base": "2026-10-02",
+ "gerado_em": "2026-10-04",
+ "tesouro_direto_TesouroTransparente": {
+  "2026-10-02": {
+   "IPCA+ sem juros 15/08/2050 (mais longo sem cupom)": {
+    "valor": 7.06,
+    "data": "2026-10-02",
+    "fonte_url": "https://www.tesourotransparente.gov.br/ckan/dataset/df56aa42-484a-4a59-8184-7676580c81e3/resource/796d2059-14e9-44e3-80c9-2d9e30b405c1/download/PrecoTaxaTesouroDireto.csv",
+    "tipo": "Tesouro Transparente, Taxa Compra Manha (manha, % a.a.) - Tesouro IPCA+ venc. 15/08/2050. Taxa venda manha=7.18"
+   },
+   "IPCA+ com juros 15/08/2060 (registro)": {
+    "valor": 7.08,
+    "data": "2026-10-02",
+    "fonte_url": "https://www.tesourotransparente.gov.br/ckan/dataset/df56aa42-484a-4a59-8184-7676580c81e3/resource/796d2059-14e9-44e3-80c9-2d9e30b405c1/download/PrecoTaxaTesouroDireto.csv",
+    "tipo": "Tesouro Transparente, Taxa Compra Manha (manha, % a.a.) - Tesouro IPCA+ c/ Juros Semestrais venc. 15/08/2060. Taxa venda manha=7.2"
+   },
+   "Prefixado sem cupom 01/01/2032 (mais longo)": {
+    "valor": 14.15,
+    "data": "2026-10-02",
+    "fonte_url": "https://www.tesourotransparente.gov.br/ckan/dataset/df56aa42-484a-4a59-8184-7676580c81e3/resource/796d2059-14e9-44e3-80c9-2d9e30b405c1/download/PrecoTaxaTesouroDireto.csv",
+    "tipo": "Tesouro Transparente, Taxa Compra Manha (manha, % a.a.) - Tesouro Prefixado venc. 01/01/2032. Taxa venda manha=14.27"
+   },
+   "IPCA+ sem juros 15/08/2032 (mais proximo do pre 2032)": {
+    "valor": 7.6,
+    "data": "2026-10-02",
+    "fonte_url": "https://www.tesourotransparente.gov.br/ckan/dataset/df56aa42-484a-4a59-8184-7676580c81e3/resource/796d2059-14e9-44e3-80c9-2d9e30b405c1/download/PrecoTaxaTesouroDireto.csv",
+    "tipo": "Tesouro Transparente, Taxa Compra Manha (manha, % a.a.) - Tesouro IPCA+ venc. 15/08/2032. Taxa venda manha=7.72"
+   },
+   "Prefixado com juros 01/01/2037 (mais longo)": {
+    "valor": 14.17,
+    "data": "2026-10-02",
+    "fonte_url": "https://www.tesourotransparente.gov.br/ckan/dataset/df56aa42-484a-4a59-8184-7676580c81e3/resource/796d2059-14e9-44e3-80c9-2d9e30b405c1/download/PrecoTaxaTesouroDireto.csv",
+    "tipo": "Tesouro Transparente, Taxa Compra Manha (manha, % a.a.) - Tesouro Prefixado c/ Juros Semestrais venc. 01/01/2037. Taxa venda manha=14.29"
+   },
+   "IPCA+ com juros 15/05/2037 (mais proximo do pre c/ juros 2037)": {
+    "valor": 7.52,
+    "data": "2026-10-02",
+    "fonte_url": "https://www.tesourotransparente.gov.br/ckan/dataset/df56aa42-484a-4a59-8184-7676580c81e3/resource/796d2059-14e9-44e3-80c9-2d9e30b405c1/download/PrecoTaxaTesouroDireto.csv",
+    "tipo": "Tesouro Transparente, Taxa Compra Manha (manha, % a.a.) - Tesouro IPCA+ c/ Juros Semestrais venc. 15/05/2037. Taxa venda manha=7.64"
+   },
+   "inflacao_implicita_2032 (pre 01/01/2032 vs IPCA+ 15/08/2032)": {
+    "valor": 6.087,
+    "data": "2026-10-02",
+    "fonte_url": "https://www.tesourotransparente.gov.br/ckan/dataset/df56aa42-484a-4a59-8184-7676580c81e3/resource/796d2059-14e9-44e3-80c9-2d9e30b405c1/download/PrecoTaxaTesouroDireto.csv",
+    "tipo": "calculo (1+pre)/(1+IPCA+)-1 com taxas compra manha; vencimentos diferem ~7,5 meses"
+   },
+   "inflacao_implicita_2037 (pre c/ juros 01/01/2037 vs IPCA+ c/ juros 15/05/2037)": {
+    "valor": 6.185,
+    "data": "2026-10-02",
+    "fonte_url": "https://www.tesourotransparente.gov.br/ckan/dataset/df56aa42-484a-4a59-8184-7676580c81e3/resource/796d2059-14e9-44e3-80c9-2d9e30b405c1/download/PrecoTaxaTesouroDireto.csv",
+    "tipo": "calculo (1+pre)/(1+IPCA+)-1 com taxas compra manha; vencimentos diferem ~4,5 meses"
+   }
+  },
+  "2026-10-01": {
+   "IPCA+ sem juros 15/08/2050 (mais longo sem cupom)": {
+    "valor": 7.06,
+    "data": "2026-10-01",
+    "fonte_url": "https://www.tesourotransparente.gov.br/ckan/dataset/df56aa42-484a-4a59-8184-7676580c81e3/resource/796d2059-14e9-44e3-80c9-2d9e30b405c1/download/PrecoTaxaTesouroDireto.csv",
+    "tipo": "Tesouro Transparente, Taxa Compra Manha (manha, % a.a.) - Tesouro IPCA+ venc. 15/08/2050. Taxa venda manha=7.18"
+   },
+   "IPCA+ com juros 15/08/2060 (registro)": {
+    "valor": 7.1,
+    "data": "2026-10-01",
+    "fonte_url": "https://www.tesourotransparente.gov.br/ckan/dataset/df56aa42-484a-4a59-8184-7676580c81e3/resource/796d2059-14e9-44e3-80c9-2d9e30b405c1/download/PrecoTaxaTesouroDireto.csv",
+    "tipo": "Tesouro Transparente, Taxa Compra Manha (manha, % a.a.) - Tesouro IPCA+ c/ Juros Semestrais venc. 15/08/2060. Taxa venda manha=7.22"
+   },
+   "Prefixado sem cupom 01/01/2032 (mais longo)": {
+    "valor": 14.12,
+    "data": "2026-10-01",
+    "fonte_url": "https://www.tesourotransparente.gov.br/ckan/dataset/df56aa42-484a-4a59-8184-7676580c81e3/resource/796d2059-14e9-44e3-80c9-2d9e30b405c1/download/PrecoTaxaTesouroDireto.csv",
+    "tipo": "Tesouro Transparente, Taxa Compra Manha (manha, % a.a.) - Tesouro Prefixado venc. 01/01/2032. Taxa venda manha=14.24"
+   },
+   "IPCA+ sem juros 15/08/2032 (mais proximo do pre 2032)": {
+    "valor": 7.62,
+    "data": "2026-10-01",
+    "fonte_url": "https://www.tesourotransparente.gov.br/ckan/dataset/df56aa42-484a-4a59-8184-7676580c81e3/resource/796d2059-14e9-44e3-80c9-2d9e30b405c1/download/PrecoTaxaTesouroDireto.csv",
+    "tipo": "Tesouro Transparente, Taxa Compra Manha (manha, % a.a.) - Tesouro IPCA+ venc. 15/08/2032. Taxa venda manha=7.74"
+   },
+   "Prefixado com juros 01/01/2037 (mais longo)": {
+    "valor": 14.09,
+    "data": "2026-10-01",
+    "fonte_url": "https://www.tesourotransparente.gov.br/ckan/dataset/df56aa42-484a-4a59-8184-7676580c81e3/resource/796d2059-14e9-44e3-80c9-2d9e30b405c1/download/PrecoTaxaTesouroDireto.csv",
+    "tipo": "Tesouro Transparente, Taxa Compra Manha (manha, % a.a.) - Tesouro Prefixado c/ Juros Semestrais venc. 01/01/2037. Taxa venda manha=14.21"
+   },
+   "IPCA+ com juros 15/05/2037 (mais proximo do pre c/ juros 2037)": {
+    "valor": 7.53,
+    "data": "2026-10-01",
+    "fonte_url": "https://www.tesourotransparente.gov.br/ckan/dataset/df56aa42-484a-4a59-8184-7676580c81e3/resource/796d2059-14e9-44e3-80c9-2d9e30b405c1/download/PrecoTaxaTesouroDireto.csv",
+    "tipo": "Tesouro Transparente, Taxa Compra Manha (manha, % a.a.) - Tesouro IPCA+ c/ Juros Semestrais venc. 15/05/2037. Taxa venda manha=7.65"
+   },
+   "inflacao_implicita_2032 (pre 01/01/2032 vs IPCA+ 15/08/2032)": {
+    "valor": 6.04,
+    "data": "2026-10-01",
+    "fonte_url": "https://www.tesourotransparente.gov.br/ckan/dataset/df56aa42-484a-4a59-8184-7676580c81e3/resource/796d2059-14e9-44e3-80c9-2d9e30b405c1/download/PrecoTaxaTesouroDireto.csv",
+    "tipo": "calculo (1+pre)/(1+IPCA+)-1 com taxas compra manha; vencimentos diferem ~7,5 meses"
+   },
+   "inflacao_implicita_2037 (pre c/ juros 01/01/2037 vs IPCA+ c/ juros 15/05/2037)": {
+    "valor": 6.101,
+    "data": "2026-10-01",
+    "fonte_url": "https://www.tesourotransparente.gov.br/ckan/dataset/df56aa42-484a-4a59-8184-7676580c81e3/resource/796d2059-14e9-44e3-80c9-2d9e30b405c1/download/PrecoTaxaTesouroDireto.csv",
+    "tipo": "calculo (1+pre)/(1+IPCA+)-1 com taxas compra manha; vencimentos diferem ~4,5 meses"
+   }
+  },
+  "2026-09-30": {
+   "IPCA+ sem juros 15/08/2050 (mais longo sem cupom)": {
+    "valor": 6.93,
+    "data": "2026-09-30",
+    "fonte_url": "https://www.tesourotransparente.gov.br/ckan/dataset/df56aa42-484a-4a59-8184-7676580c81e3/resource/796d2059-14e9-44e3-80c9-2d9e30b405c1/download/PrecoTaxaTesouroDireto.csv",
+    "tipo": "Tesouro Transparente, Taxa Compra Manha (manha, % a.a.) - Tesouro IPCA+ venc. 15/08/2050. Taxa venda manha=7.05"
+   },
+   "IPCA+ com juros 15/08/2060 (registro)": {
+    "valor": 6.99,
+    "data": "2026-09-30",
+    "fonte_url": "https://www.tesourotransparente.gov.br/ckan/dataset/df56aa42-484a-4a59-8184-7676580c81e3/resource/796d2059-14e9-44e3-80c9-2d9e30b405c1/download/PrecoTaxaTesouroDireto.csv",
+    "tipo": "Tesouro Transparente, Taxa Compra Manha (manha, % a.a.) - Tesouro IPCA+ c/ Juros Semestrais venc. 15/08/2060. Taxa venda manha=7.11"
+   },
+   "Prefixado sem cupom 01/01/2032 (mais longo)": {
+    "valor": 14.02,
+    "data": "2026-09-30",
+    "fonte_url": "https://www.tesourotransparente.gov.br/ckan/dataset/df56aa42-484a-4a59-8184-7676580c81e3/resource/796d2059-14e9-44e3-80c9-2d9e30b405c1/download/PrecoTaxaTesouroDireto.csv",
+    "tipo": "Tesouro Transparente, Taxa Compra Manha (manha, % a.a.) - Tesouro Prefixado venc. 01/01/2032. Taxa venda manha=14.14"
+   },
+   "IPCA+ sem juros 15/08/2032 (mais proximo do pre 2032)": {
+    "valor": 7.53,
+    "data": "2026-09-30",
+    "fonte_url": "https://www.tesourotransparente.gov.br/ckan/dataset/df56aa42-484a-4a59-8184-7676580c81e3/resource/796d2059-14e9-44e3-80c9-2d9e30b405c1/download/PrecoTaxaTesouroDireto.csv",
+    "tipo": "Tesouro Transparente, Taxa Compra Manha (manha, % a.a.) - Tesouro IPCA+ venc. 15/08/2032. Taxa venda manha=7.65"
+   },
+   "Prefixado com juros 01/01/2037 (mais longo)": {
+    "valor": 13.99,
+    "data": "2026-09-30",
+    "fonte_url": "https://www.tesourotransparente.gov.br/ckan/dataset/df56aa42-484a-4a59-8184-7676580c81e3/resource/796d2059-14e9-44e3-80c9-2d9e30b405c1/download/PrecoTaxaTesouroDireto.csv",
+    "tipo": "Tesouro Transparente, Taxa Compra Manha (manha, % a.a.) - Tesouro Prefixado c/ Juros Semestrais venc. 01/01/2037. Taxa venda manha=14.11"
+   },
+   "IPCA+ com juros 15/05/2037 (mais proximo do pre c/ juros 2037)": {
+    "valor": 7.39,
+    "data": "2026-09-30",
+    "fonte_url": "https://www.tesourotransparente.gov.br/ckan/dataset/df56aa42-484a-4a59-8184-7676580c81e3/resource/796d2059-14e9-44e3-80c9-2d9e30b405c1/download/PrecoTaxaTesouroDireto.csv",
+    "tipo": "Tesouro Transparente, Taxa Compra Manha (manha, % a.a.) - Tesouro IPCA+ c/ Juros Semestrais venc. 15/05/2037. Taxa venda manha=7.51"
+   },
+   "inflacao_implicita_2032 (pre 01/01/2032 vs IPCA+ 15/08/2032)": {
+    "valor": 6.036,
+    "data": "2026-09-30",
+    "fonte_url": "https://www.tesourotransparente.gov.br/ckan/dataset/df56aa42-484a-4a59-8184-7676580c81e3/resource/796d2059-14e9-44e3-80c9-2d9e30b405c1/download/PrecoTaxaTesouroDireto.csv",
+    "tipo": "calculo (1+pre)/(1+IPCA+)-1 com taxas compra manha; vencimentos diferem ~7,5 meses"
+   },
+   "inflacao_implicita_2037 (pre c/ juros 01/01/2037 vs IPCA+ c/ juros 15/05/2037)": {
+    "valor": 6.146,
+    "data": "2026-09-30",
+    "fonte_url": "https://www.tesourotransparente.gov.br/ckan/dataset/df56aa42-484a-4a59-8184-7676580c81e3/resource/796d2059-14e9-44e3-80c9-2d9e30b405c1/download/PrecoTaxaTesouroDireto.csv",
+    "tipo": "calculo (1+pre)/(1+IPCA+)-1 com taxas compra manha; vencimentos diferem ~4,5 meses"
+   }
+  }
+ },
+ "anbima_taxas_indicativas": {
+  "2026-10-02": {
+   "NTN-B 15/08/2050": {
+    "valor": 7.1377,
+    "data": "2026-10-02",
+    "fonte_url": "https://www.anbima.com.br/informacoes/merc-sec/arqs/ms261002.txt",
+    "tipo": "ANBIMA taxa indicativa mercado secundario (fechamento, % a.a.) - NTN-B (com cupom) venc. 15/08/2050; NTN-B Principal (sem cupom) nao consta no arquivo"
+   },
+   "NTN-B 15/08/2060": {
+    "valor": 7.0461,
+    "data": "2026-10-02",
+    "fonte_url": "https://www.anbima.com.br/informacoes/merc-sec/arqs/ms261002.txt",
+    "tipo": "ANBIMA taxa indicativa mercado secundario (fechamento, % a.a.) - NTN-B venc. 15/08/2060"
+   },
+   "LTN 01/01/2032": {
+    "valor": 14.2023,
+    "data": "2026-10-02",
+    "fonte_url": "https://www.anbima.com.br/informacoes/merc-sec/arqs/ms261002.txt",
+    "tipo": "ANBIMA taxa indicativa mercado secundario (fechamento, % a.a.) - LTN venc. 01/01/2032 (prefixado sem cupom mais longo)"
+   },
+   "NTN-B 15/08/2032": {
+    "valor": 7.56,
+    "data": "2026-10-02",
+    "fonte_url": "https://www.anbima.com.br/informacoes/merc-sec/arqs/ms261002.txt",
+    "tipo": "ANBIMA taxa indicativa mercado secundario (fechamento, % a.a.) - NTN-B venc. 15/08/2032"
+   },
+   "NTN-F 01/01/2037": {
+    "valor": 14.2835,
+    "data": "2026-10-02",
+    "fonte_url": "https://www.anbima.com.br/informacoes/merc-sec/arqs/ms261002.txt",
+    "tipo": "ANBIMA taxa indicativa mercado secundario (fechamento, % a.a.) - NTN-F venc. 01/01/2037 (prefixado c/ cupom mais longo)"
+   },
+   "NTN-B 15/05/2037": {
+    "valor": 7.4991,
+    "data": "2026-10-02",
+    "fonte_url": "https://www.anbima.com.br/informacoes/merc-sec/arqs/ms261002.txt",
+    "tipo": "ANBIMA taxa indicativa mercado secundario (fechamento, % a.a.) - NTN-B venc. 15/05/2037"
+   },
+   "inflacao_implicita_2032 (LTN 01/01/2032 vs NTN-B 15/08/2032)": {
+    "valor": 6.175,
+    "data": "2026-10-02",
+    "fonte_url": "https://www.anbima.com.br/informacoes/merc-sec/arqs/ms261002.txt",
+    "tipo": "calculo com taxas indicativas ANBIMA; vencimentos diferem ~7,5 meses"
+   },
+   "inflacao_implicita_2037 (NTN-F 01/01/2037 vs NTN-B 15/05/2037)": {
+    "valor": 6.311,
+    "data": "2026-10-02",
+    "fonte_url": "https://www.anbima.com.br/informacoes/merc-sec/arqs/ms261002.txt",
+    "tipo": "calculo com taxas indicativas ANBIMA; vencimentos diferem ~4,5 meses"
+   }
+  },
+  "2026-10-01": {
+   "NTN-B 15/08/2050": {
+    "valor": 7.2431,
+    "data": "2026-10-01",
+    "fonte_url": "https://www.anbima.com.br/informacoes/merc-sec/arqs/ms261001.txt",
+    "tipo": "ANBIMA taxa indicativa mercado secundario (fechamento, % a.a.) - NTN-B (com cupom) venc. 15/08/2050; NTN-B Principal (sem cupom) nao consta no arquivo"
+   },
+   "NTN-B 15/08/2060": {
+    "valor": 7.1432,
+    "data": "2026-10-01",
+    "fonte_url": "https://www.anbima.com.br/informacoes/merc-sec/arqs/ms261001.txt",
+    "tipo": "ANBIMA taxa indicativa mercado secundario (fechamento, % a.a.) - NTN-B venc. 15/08/2060"
+   },
+   "LTN 01/01/2032": {
+    "valor": 14.2208,
+    "data": "2026-10-01",
+    "fonte_url": "https://www.anbima.com.br/informacoes/merc-sec/arqs/ms261001.txt",
+    "tipo": "ANBIMA taxa indicativa mercado secundario (fechamento, % a.a.) - LTN venc. 01/01/2032 (prefixado sem cupom mais longo)"
+   },
+   "NTN-B 15/08/2032": {
+    "valor": 7.6392,
+    "data": "2026-10-01",
+    "fonte_url": "https://www.anbima.com.br/informacoes/merc-sec/arqs/ms261001.txt",
+    "tipo": "ANBIMA taxa indicativa mercado secundario (fechamento, % a.a.) - NTN-B venc. 15/08/2032"
+   },
+   "NTN-F 01/01/2037": {
+    "valor": 14.2401,
+    "data": "2026-10-01",
+    "fonte_url": "https://www.anbima.com.br/informacoes/merc-sec/arqs/ms261001.txt",
+    "tipo": "ANBIMA taxa indicativa mercado secundario (fechamento, % a.a.) - NTN-F venc. 01/01/2037 (prefixado c/ cupom mais longo)"
+   },
+   "NTN-B 15/05/2037": {
+    "valor": 7.58,
+    "data": "2026-10-01",
+    "fonte_url": "https://www.anbima.com.br/informacoes/merc-sec/arqs/ms261001.txt",
+    "tipo": "ANBIMA taxa indicativa mercado secundario (fechamento, % a.a.) - NTN-B venc. 15/05/2037"
+   },
+   "inflacao_implicita_2032 (LTN 01/01/2032 vs NTN-B 15/08/2032)": {
+    "valor": 6.115,
+    "data": "2026-10-01",
+    "fonte_url": "https://www.anbima.com.br/informacoes/merc-sec/arqs/ms261001.txt",
+    "tipo": "calculo com taxas indicativas ANBIMA; vencimentos diferem ~7,5 meses"
+   },
+   "inflacao_implicita_2037 (NTN-F 01/01/2037 vs NTN-B 15/05/2037)": {
+    "valor": 6.191,
+    "data": "2026-10-01",
+    "fonte_url": "https://www.anbima.com.br/informacoes/merc-sec/arqs/ms261001.txt",
+    "tipo": "calculo com taxas indicativas ANBIMA; vencimentos diferem ~4,5 meses"
+   }
+  },
+  "2026-09-30": {
+   "NTN-B 15/08/2050": {
+    "valor": 7.2,
+    "data": "2026-09-30",
+    "fonte_url": "https://www.anbima.com.br/informacoes/merc-sec/arqs/ms260930.txt",
+    "tipo": "ANBIMA taxa indicativa mercado secundario (fechamento, % a.a.) - NTN-B (com cupom) venc. 15/08/2050; NTN-B Principal (sem cupom) nao consta no arquivo"
+   },
+   "NTN-B 15/08/2060": {
+    "valor": 7.1152,
+    "data": "2026-09-30",
+    "fonte_url": "https://www.anbima.com.br/informacoes/merc-sec/arqs/ms260930.txt",
+    "tipo": "ANBIMA taxa indicativa mercado secundario (fechamento, % a.a.) - NTN-B venc. 15/08/2060"
+   },
+   "LTN 01/01/2032": {
+    "valor": 14.1125,
+    "data": "2026-09-30",
+    "fonte_url": "https://www.anbima.com.br/informacoes/merc-sec/arqs/ms260930.txt",
+    "tipo": "ANBIMA taxa indicativa mercado secundario (fechamento, % a.a.) - LTN venc. 01/01/2032 (prefixado sem cupom mais longo)"
+   },
+   "NTN-B 15/08/2032": {
+    "valor": 7.6157,
+    "data": "2026-09-30",
+    "fonte_url": "https://www.anbima.com.br/informacoes/merc-sec/arqs/ms260930.txt",
+    "tipo": "ANBIMA taxa indicativa mercado secundario (fechamento, % a.a.) - NTN-B venc. 15/08/2032"
+   },
+   "NTN-F 01/01/2037": {
+    "valor": 14.0928,
+    "data": "2026-09-30",
+    "fonte_url": "https://www.anbima.com.br/informacoes/merc-sec/arqs/ms260930.txt",
+    "tipo": "ANBIMA taxa indicativa mercado secundario (fechamento, % a.a.) - NTN-F venc. 01/01/2037 (prefixado c/ cupom mais longo)"
+   },
+   "NTN-B 15/05/2037": {
+    "valor": 7.5432,
+    "data": "2026-09-30",
+    "fonte_url": "https://www.anbima.com.br/informacoes/merc-sec/arqs/ms260930.txt",
+    "tipo": "ANBIMA taxa indicativa mercado secundario (fechamento, % a.a.) - NTN-B venc. 15/05/2037"
+   },
+   "inflacao_implicita_2032 (LTN 01/01/2032 vs NTN-B 15/08/2032)": {
+    "valor": 6.037,
+    "data": "2026-09-30",
+    "fonte_url": "https://www.anbima.com.br/informacoes/merc-sec/arqs/ms260930.txt",
+    "tipo": "calculo com taxas indicativas ANBIMA; vencimentos diferem ~7,5 meses"
+   },
+   "inflacao_implicita_2037 (NTN-F 01/01/2037 vs NTN-B 15/05/2037)": {
+    "valor": 6.09,
+    "data": "2026-09-30",
+    "fonte_url": "https://www.anbima.com.br/informacoes/merc-sec/arqs/ms260930.txt",
+    "tipo": "calculo com taxas indicativas ANBIMA; vencimentos diferem ~4,5 meses"
+   }
+  }
+ },
+ "anbima_ettj_inflacao_implicita": {
+  "inflacao_implicita_vertice_mais_longo_2520du_~10a": {
+   "valor": 6.4593,
+   "data": "2026-10-02",
+   "fonte_url": "https://www.anbima.com.br/informacoes/est-termo/CZ-down.asp",
+   "tipo": "ANBIMA ETTJ inflacao implicita, 2520 du (~10a); ETTJ IPCA 7,4233 / PREF 14,3621; curva PREF termina em 2520 du, logo e o vertice mais longo e tambem o de ~10a"
+  },
+  "inflacao_implicita_1260du_~5a": {
+   "valor": 6.1721,
+   "data": "2026-10-02",
+   "fonte_url": "https://www.anbima.com.br/informacoes/est-termo/CZ-down.asp",
+   "tipo": "ANBIMA ETTJ, 1260 du; IPCA 7,6177 / PREF 14,2600"
+  },
+  "inflacao_implicita_756du_~3a": {
+   "valor": 5.9724,
+   "data": "2026-10-02",
+   "fonte_url": "https://www.anbima.com.br/informacoes/est-termo/CZ-down.asp",
+   "tipo": "ANBIMA ETTJ, 756 du"
+  },
+  "ETTJ_IPCA_real_8316du_~33a": {
+   "valor": 6.7918,
+   "data": "2026-10-02",
+   "fonte_url": "https://www.anbima.com.br/informacoes/est-termo/CZ-down.asp",
+   "tipo": "ANBIMA ETTJ real (IPCA) vertice mais longo; sem PREF nesse prazo, sem implicita"
+  },
+  "ETTJ_IPCA_real_2520du": {
+   "valor": 7.4233,
+   "data": "2026-10-02",
+   "fonte_url": "https://www.anbima.com.br/informacoes/est-termo/CZ-down.asp",
+   "tipo": "ANBIMA ETTJ real 2520 du"
+  },
+  "nota": "CZ-down.asp so devolve a ultima data (02/10/2026); ETTJ de 01/10 e 30/09 nao obtida."
+ },
+ "focus": {
+  "relatorio": "Focus - Relatorio de Mercado de 25/09/2026 (publicado seg 28/09; o de 02/10 sai em 05/10, ainda nao publicado)",
+  "IPCA_2026": {
+   "valor": 4.99,
+   "data": "2026-09-25",
+   "fonte_url": "https://www.bcb.gov.br/content/focus/focus/R20260925.pdf",
+   "tipo": "Focus BCB, mediana agregada, IPCA 2026 (API 4,9915; media 4,9861; 144 resp.). Conferido na API Olinda (https://olinda.bcb.gov.br/olinda/servico/Expectativas/versao/v1/odata/ExpectativasMercadoAnuais)"
+  },
+  "IPCA_2027": {
+   "valor": 4.31,
+   "data": "2026-09-25",
+   "fonte_url": "https://www.bcb.gov.br/content/focus/focus/R20260925.pdf",
+   "tipo": "Focus BCB, mediana agregada, IPCA 2027 (API 4,3118; media 4,342). Conferido na API Olinda (https://olinda.bcb.gov.br/olinda/servico/Expectativas/versao/v1/odata/ExpectativasMercadoAnuais)"
+  },
+  "IPCA_2028": {
+   "valor": 3.8,
+   "data": "2026-09-25",
+   "fonte_url": "https://www.bcb.gov.br/content/focus/focus/R20260925.pdf",
+   "tipo": "Focus BCB, mediana agregada, IPCA 2028 (media 3,8369). Conferido na API Olinda (https://olinda.bcb.gov.br/olinda/servico/Expectativas/versao/v1/odata/ExpectativasMercadoAnuais)"
+  },
+  "IPCA_2029": {
+   "valor": 3.5,
+   "data": "2026-09-25",
+   "fonte_url": "https://www.bcb.gov.br/content/focus/focus/R20260925.pdf",
+   "tipo": "Focus BCB, mediana agregada, IPCA 2029 (API 3,5003; media 3,6814), ultimo ano da tabela do PDF. Conferido na API Olinda (https://olinda.bcb.gov.br/olinda/servico/Expectativas/versao/v1/odata/ExpectativasMercadoAnuais)"
+  },
+  "IPCA_2030": {
+   "valor": 3.5,
+   "data": "2026-09-25",
+   "fonte_url": "https://olinda.bcb.gov.br/olinda/servico/Expectativas/versao/v1/odata/ExpectativasMercadoAnuais",
+   "tipo": "Focus API Olinda, mediana IPCA 2030 (media 3,6648; 105 resp.); proxy de longo prazo. Meta de inflacao = 3,0%"
+  },
+  "IPCA_longo_prazo": "nao existe serie 'longo prazo' separada no relatorio/API (sem 2031); usar 2029/2030 = 3,50 como proxy",
+  "Selic_fim_2026": {
+   "valor": 13.5,
+   "data": "2026-09-25",
+   "fonte_url": "https://www.bcb.gov.br/content/focus/focus/R20260925.pdf",
+   "tipo": "Focus BCB, mediana agregada, Selic fim de 2026 (% a.a.; media 13,4678; 138 resp.). Conferido na API Olinda (https://olinda.bcb.gov.br/olinda/servico/Expectativas/versao/v1/odata/ExpectativasMercadoAnuais)"
+  },
+  "Selic_fim_2027": {
+   "valor": 12.0,
+   "data": "2026-09-25",
+   "fonte_url": "https://www.bcb.gov.br/content/focus/focus/R20260925.pdf",
+   "tipo": "Focus BCB, mediana agregada, Selic fim de 2027 (media 11,9745; 137 resp.). Conferido na API Olinda (https://olinda.bcb.gov.br/olinda/servico/Expectativas/versao/v1/odata/ExpectativasMercadoAnuais)"
+  },
+  "Selic_fim_2028": {
+   "valor": 10.5,
+   "data": "2026-09-25",
+   "fonte_url": "https://www.bcb.gov.br/content/focus/focus/R20260925.pdf",
+   "tipo": "Focus BCB, mediana agregada, Selic fim de 2028. Conferido na API Olinda (https://olinda.bcb.gov.br/olinda/servico/Expectativas/versao/v1/odata/ExpectativasMercadoAnuais)"
+  },
+  "Selic_fim_2029": {
+   "valor": 10.0,
+   "data": "2026-09-25",
+   "fonte_url": "https://www.bcb.gov.br/content/focus/focus/R20260925.pdf",
+   "tipo": "Focus BCB, mediana agregada, Selic fim de 2029. Conferido na API Olinda (https://olinda.bcb.gov.br/olinda/servico/Expectativas/versao/v1/odata/ExpectativasMercadoAnuais)"
+  }
+ },
+ "selic_vigente": {
+  "valor": 13.75,
+  "data": "2026-10-02",
+  "fonte_url": "https://www.bcb.gov.br/api/servico/sitebcb/historicotaxasjuros",
+  "tipo": "Meta Selic vigente (% a.a.): Copom 281a reuniao, 16/09/2026, corte de 0,25 p.p. (de 14,00), vigencia desde 17/09/2026 (BCB, historico de taxas de juros). Trajetoria: 17/06 14,25; 05/08 14,00; 16/09 13,75"
+ },
+ "titulos_mais_longos_a_venda_02_10": {
+  "IPCA+ sem juros": "15/08/2050",
+  "IPCA+ com juros": "15/08/2060",
+  "Prefixado sem juros": "01/01/2032",
+  "Prefixado com juros": "01/01/2037"
+ },
+ "nao_encontrado": [
+  "Taxa indicativa ANBIMA da NTN-B Principal 2050 (sem cupom): ms*.txt so traz NTN-B com cupom; usei Tesouro Transparente",
+  "ETTJ ANBIMA de 01/10 e 30/09",
+  "Serie 'longo prazo' separada do Focus"
+ ]
+}

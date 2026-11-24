@@ -6,7 +6,7 @@ from __future__ import annotations
 import argparse
 import sys
 
-from painel import exportar, servir
+from painel import contrato, exportar, servir
 
 
 def main(argv=None) -> int:
@@ -18,6 +18,10 @@ def main(argv=None) -> int:
     a = ap.parse_args(argv)
     if a.exportar:
         exportar.main([])
+        try:                                                # contrato da tela v0.2 (web/dados/contrato/)
+            contrato.main([])
+        except Exception as ex:                             # noqa: BLE001 — a tela sobe com a última leitura válida
+            print(f"contrato v0.2 não gerado: {type(ex).__name__}: {ex}", file=sys.stderr)
     elif not (exportar.DADOS / "hall.json").exists():
         print("Sem dados ainda: rode `python -m painel --exportar` (ou `painel --exportar` na raiz).", file=sys.stderr)
     servir.servir(a.porta, abrir=not a.sem_abrir)

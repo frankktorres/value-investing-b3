@@ -79,3 +79,16 @@ def test_caminho_estranho_responde_sem_derrubar(srv, caminho, status):
 @pytest.mark.parametrize("metodo", ["POST", "PUT", "DELETE"])
 def test_somente_leitura(srv, metodo):
     assert _get(srv, "/dados/hall.json", metodo)[0].status in (405, 501)
+
+
+def test_segundo_servidor_na_mesma_porta_falha(tmp_path, srv):
+    """N9: bind exclusivo — dois `painel` na mesma porta davam ERR_CONNECTION_REFUSED intermitente no Windows."""
+    with pytest.raises(OSError):
+        servir.servidor(srv.server_address[1], tmp_path)
+
+
+def test_servir_porta_em_uso_sai_com_mensagem(srv, capsys):
+    with pytest.raises(SystemExit) as e:
+        servir.servir(srv.server_address[1], abrir=False)
+    assert e.value.code == 1
+    assert "em uso" in capsys.readouterr().err

@@ -1,0 +1,21 @@
+{
+ "_nota": "Anos fixos que ainda restam no código dos lotes (janelas de exercício como range(2016, 2026), chaves '2024'/'2025', nomes de ZIP do DFP/FRE). Só pode cair: test_lotes_sem_data_fixa.py reprova se subir e pede para baixar o número quando cair. Zerar = missão B32 do BACKLOG, prazo 31/01/2027 (antes do DFP 2026). Datas de mês/dia/trimestre têm tolerância zero e não entram aqui. contabil_digitado (24/11/2026, decisão do Frank após o oráculo): VPA/LPA por ação digitados como número (os 10 bancos e seguradoras do lote 1, do 2T26) — mesma catraca, mesmo prazo, mesma missão.",
+ "prazo": "2027-01-31",
+ "missao": "B32",
+ "por_arquivo": {
+  "lote1_bancos.py": 0,
+  "lote2_energia.py": 13,
+  "lote3_agro.py": 8,
+  "lote4_saude_telecom.py": 25,
+  "lote5_petroleo.py": 20,
+  "lote6_quimica.py": 18
+ },
+ "contabil_digitado": {
+  "lote1_bancos.py": 20,
+  "lote2_energia.py": 0,
+  "lote3_agro.py": 0,
+  "lote4_saude_telecom.py": 0,
+  "lote5_petroleo.py": 0,
+  "lote6_quimica.py": 0
+ }
+}

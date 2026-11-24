@@ -19,7 +19,7 @@ import sys
 from pathlib import Path
 
 AQUI = Path(__file__).resolve().parent
-PRECO_DATA = "2026-10-02"
+PRECO_DATA = "2026-11-19"
 PRECO_DATA_BR = "/".join(reversed(PRECO_DATA.split("-")))      # formato do golden (`data_preco`)
 PRECO_FONTE = "COTAHIST_A2026.ZIP (B3), PREULT do pregão"
 SNAPSHOT = AQUI / "dados" / f"precos_hall_{PRECO_DATA}.csv"

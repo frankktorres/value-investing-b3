@@ -1,0 +1,82 @@
+{
+  "_doc": "Insumos não mecânicos do dossiê FESA4 / Cia de Ferro Ligas da Bahia - FERBASA (CNPJ 15.141.799/0001-03, cód. CVM 003069). Data-base 19/10/2026. Documentos em ferramentas/dados/cvm/docs/FERBASA/: DFP 2025 v1 (dfp2025_v1/: 00 = relatório da administração, 01 = notas explicativas); FRE 2026 v2 (fre2026_v2/, id 160456, recebido em 12/08/2026); IPE 2017-2026 em ipe/ (59 PDFs lidos por filtro: todos os 24 fatos relevantes de 2017-2026, estatutos 2024-2026, comunicado de transação com a controladora, comunicados de esclarecimento/ação judicial/participação relevante). Janela real do IPE indexado = 2017-2026 (723 documentos), não 15 anos; a DFP 2018 e anteriores só entram pelos zips de dados da CVM (números), sem as notas. Controladora: Fundação José Carvalho (98,83% das ON, 26,48% das PN, 50,6% do capital total; FRE 2026), logo o controlador é discricionário. FESA4 = ação PN (sem voto, dividendo 10% maior que a ON, prioridade no reembolso; estatuto art. 6). SEM INSUMO (deixados fora de propósito): (a) tag_along - o estatuto (versão do AGOE 20/04/2026, IPE 30/04/2026) não tem nenhuma cláusula de oferta pública na alienação de controle (Nível 1; só diz que as PN não votam) e o FRE 2026 não traz o item em texto extraível/estruturado; o direito legal das ON não é fonte A/B (lei, não RAD/B3) e as PN não têm tag along no estatuto; o gerador cairá no padrão da regra 11 (tag along sem evidência: -1); (b) r1_retido - ticker do hall; o Q4 de R$1 retido não foi rodado nesta tarefa; (c) 'ajustes' das notas - não aplicáveis aqui.",
+  "ma_ruim": {
+    "valor": false,
+    "fonte": "Uma aquisição > 20% do ativo no histórico lido: Complexo Eólico BW Guirapá I (7 SPEs, 81 MW médios; Fato Relevante 27/10/2017 e 22/12/2017; fechamento em 02/04/2018 por 100% das ações, IPE). Preço-base R$ 450 mi (+ até R$ 40 mi contingente) e enterprise value até R$ 811,7 mi (FR 22/12/2017), contra ativo consolidado de R$ 1.856,5 mi em 31/12/2017 (DFP 2017, CVM): 450/1.856 = 24,2% do ativo (43,7% pelo EV). Saldo devedor de R$ 137 mi com os vendedores quitado antecipadamente e refinanciado com o Bradesco a CDI+0,7% (FR 30/09/2019). Sinais de destruição de valor NÃO encontrados: DFP 2025 nota 6 (consolidado): 'não foram identificados indicativos de impairment para nenhuma empresa da Companhia' e 'A Ferbasa possui registrado um ganho com compra vantajosa decorrente da aquisição da BW Guirapá, portanto não existe goodwill contabilizado'; relatório da administração 2025: BW Guirapá segue consolidada (energia disponível para o mix da FERBASA a partir de 2036). Outras operações: 45% da NK 232 Empreendimentos (Auren; parques Ventos de São Ciro e São Bernardo) por R$ 37,8 mi, fechada em 09/02/2024 (FR 09/02/2024), e Bahia Minas Bioenergia com a Aperam (FR 27/12/2023; R$ 16,3 mi aportados em 2025, relatório da administração 2025), ambas bem abaixo de 20% do ativo de R$ 4.459 mi (DFP 2025). Limites: o retorno realizado da BW Guirapá (fluxo versus preço pago) não foi calculado; só a DFP 2025 foi lida em notas (DFP 2018-2024 só nos números da CVM); o testemunho de 'sem impairment' é da própria companhia/auditor nas notas",
+    "nota_fonte": "A"
+  },
+  "interferencias": {
+    "valor": 0,
+    "fonte": "Busca no IPE da CVM 2017-2026 (723 documentos da FERBASA: 24 fatos relevantes, 173 comunicados ao mercado, 50 avisos aos acionistas, 118 assembleias, 9 versões de estatuto, 2 'Comunicação sobre Transação entre Partes Relacionadas'; títulos de todos os fatos relevantes e comunicados triados, 59 PDFs baixados e lidos nos pontos relevantes). Nenhuma operação da controladora (Fundação José Carvalho, FJC) contra o minoritário: sem aumento de capital dirigido, sem recompra da FJC, sem corte de payout imposto (proventos de 2025: R$ 240 mi em JCP, payout de 127% do lucro de R$ 188,7 mi; relatório da administração 2025), sem OPA nem fechamento de capital. CASOS EXAMINADOS E NÃO CONTADOS: (1) Comunicado ao Mercado de 26/12/2017: contrato de promessa de compra e venda, com a FJC, do imóvel que a Companhia ocupa ao lado do parque metalúrgico, por R$ 17,5 mi (50% na assinatura), 'recomendada unanimemente pela comissão independente constituída especialmente para esse fim e aprovada pela unanimidade dos membros do Conselho de Administração': transação com a controladora com ritos de governança, sem evidência de preço abusivo (o valor de mercado do imóvel não consta nos documentos lidos); contada como parte relacionada, não como interferência; (2) ação do Sr. José Eduardo Cabral de Carvalho contra a FJC e a FERBASA sobre doações de ações feitas pelo pai nos anos 70 (Comunicados de 12/01/2022 e 23/09/2022): disputa de terceiros com a controladora, a companhia foi citada em 22/09/2022; é risco de controle (vai para o desconto), não ato da controladora; (3) convênios culturais/educacionais com a FJC (ver partes_rel_sobre_receita): pactuados em Termo de Cooperação, contados na rubrica de partes relacionadas; (4) trocas de CEO (13/04/2018 e 19/09/2022) e indicações de conselheiros pelo minoritário em todas as AGOs 2017-2026 (comunicados anuais): sem fato prejudicial; (5) vendas de PN da Trígono Capital (5,05% em 2021 a 4,98% em 11/2025; comunicados de participação relevante): operação entre acionistas",
+    "nota_fonte": "A"
+  },
+  "partes_rel_sobre_receita": {
+    "valor": 0.007,
+    "fonte": "DFP 2025 nota 28 (saldos e transações com partes relacionadas, consolidado, exercício 2025) e DRE consolidada (receita líquida R$ 2.334.454 mil). Com a controladora FJC: receita de vendas R$ 145 mil (madeira, cal virgem e pó de escória) e outras despesas operacionais R$ 16.188 mil (Termo de Cooperação para vagas em escolas da FJC, convênio 'Um Campeão na Escola', Memorial José Carvalho; nota 28 (iii)); (145 + 16.188) / 2.334.454 = 0,70%. JCP a pagar à FJC de R$ 71.627 mil é distribuição pro rata, não entra. Os arrendamentos de R$ 2.460 mil são entre a Companhia e suas controladas e se eliminam no consolidado. FRE 2026 v2 confere os mesmos contratos com a FJC (R$ 14,3 mi do termo de 22/07/2024, R$ 2,0 mi do convênio de 01/02/2021 e R$ 3,1 mi do memorial de 01/07/2022, valores de contrato plurianual, não do ano). ATENÇÃO, DECISÃO DE CRITÉRIO: a mesma nota registra R$ 403.278 mil de receita de vendas de ferroligas (FeSi75) à Marubeni Corporation (17,3% da receita; contas a receber de R$ 35.404 mil), classificada como 'parte relacionada' por ser sócia da controlada Silbasa (junto da JMC); não é controladora nem coligada da FERBASA e a venda é de exportação, por isso NÃO foi somada (mesma régua do ALLD3: só transação do dono/coligada). Se o Frank preferir somar a Marubeni, o valor sobe para 0,1799 (> 15%: -2 na nota do controlador). Remuneração de familiares do pessoal-chave (R$ 2.306 mil) não entra",
+    "nota_fonte": "A"
+  },
+  "discricionario": {
+    "valor": true,
+    "fonte": "FRE 2026 v2 (id 160456, posição acionária): Fundação José Carvalho, controladora, com 98,83% das ações ordinárias, 26,478% das PN e 50,595% do capital total; sem acordo de acionistas; ações em tesouraria 4,051%; free float de 45,3% do capital (1,06% das ON e 67,4% das PN). FRE 2026, fatores de risco b.1: 'A Fundação José Carvalho detém 98,80% das ações ordinárias da Companhia, tendo poderes para, entre outras matérias, eleger a maioria dos membros do Conselho de Administração e controlar o resultado das principais tomadas de decisões que requerem a aprovação dos acionistas, tais como reorganizações societárias, transações com partes relacionadas e pagamento de dividendos futuros'. Estatuto (IPE 30/04/2026, art. 6 §1): PN sem voto. Logo o poder sobre payout, capital e contratos é do controlador, que também vota as transações com ele mesmo (convênios da nota 28)",
+    "nota_fonte": "A"
+  },
+  "fisher": {
+    "respostas": [
+      "sem",
+      "sem",
+      "sem",
+      "sem",
+      "sim",
+      "sem",
+      "sem",
+      "sem",
+      "sem",
+      "sem",
+      "sem",
+      "sim",
+      "sim",
+      "sim",
+      "sem"
+    ],
+    "itens": [
+      "1 potencial de mercado: sem - mercado cíclico de commodity (aço bruto mundial -2% em 2025; FeCr mundial -5%, relatório da administração 2025, A); proteção comercial nos EUA (sobretaxa de 69% sobre o FeSi) e cotas/CBAM na UE; sem evidência de mercado endereçável em expansão",
+      "2 decisão de seguir lançando: sem - projetos em curso (nova fábrica de FeCrAC, fábrica de biorredutor em Maracás, expansão de cromo; relatório da administração 2025), mas sem métrica de retorno nos documentos lidos",
+      "3 eficácia do P&D: sem - sem gasto de P&D divulgado nos documentos lidos; comitê de inovação não estatutário (FRE 2026) sem resultado medido",
+      "4 força de vendas: sem - participação de mercado e preço relativo não encontrados em fonte A/B",
+      "5 margem que vale a pena: sim - receita líquida de R$ 2.334,5 mi e lucro líquido positivo em todos os 10 anos de 2016 a 2025; margem EBIT de 0,4% (2016) a 37,0% (2022), 17,4% na média simples dos 10 anos (DRE consolidada, DFP 2016-2025, CVM). Atenção: 2025 caiu a 2,0% de EBIT (margem bruta 17,6%) e o EBITDA ajustado 7,9% (R$ 183,8 mi, -47,8% sobre 2024); é margem de commodity, volátil",
+      "6 o que faz pela margem: sem - 2025 teve queda de margem por preço em dólar e custo de energia e minério; consultorias de eficiência operacional somaram R$ 43,4 mi (2024: R$ 36,0 mi), mas sem resultado medido; a margem recuou",
+      "7 relações de trabalho: sem - todos os colaboradores representados por sindicatos de categoria com acordos coletivos (FRE 2026), risco de greve listado como fator de risco; sem série de greves/turnover para provar",
+      "8 relações entre executivos: sem - não encontrado",
+      "9 profundidade da gestão: sem - FRE 2026 lista diretores com primeiro mandato em 2011, 2013, 2015 e 2023 e três novos em 20/04/2026, CEO desde 19/09/2022; sem prova de qualidade da sucessão",
+      "10 controles de custo e contábeis: sem - o parecer do auditor (PwC) é citado no relatório da administração 2025 mas o texto do parecer não consta nos arquivos baixados; sem prova",
+      "11 aspectos do setor: sem - não encontrado",
+      "12 visão de longo prazo: sim - compra do Complexo Eólico BW Guirapá em 2018 (energia para o mix da empresa a partir de 2036), PPA de 35 MW médios por 20 anos com parques da Auren (FR 09/02/2024), contrato de carvão de 35 anos com a Aperam e Bahia Minas Bioenergia (FR 27/12/2023), 64 mil ha de floresta e integração mineração-metalurgia-energia (relatório da administração 2025, A)",
+      "13 crescimento sem diluição: sim - 353.280.000 ações após o desdobramento de 1:4 (AGE de 20/12/2023, sem alterar o capital) e 353.175.000 em 2025 (cancelamento de 105 mil ações da tesouraria em 07/11/2024); aumento de capital de R$ 244,95 mi em 2023 foi por incorporação de reserva, sem ações novas; recompra de PN de até 3,2 mi ações (FR 29/05/2025 e 28/05/2026); sem emissão primária nos 3 últimos exercícios (FRE 2026: 'Não houve oferta pública de distribuição'). Série anterior a 2023 não conferida em fonte A",
+      "14 fala dos problemas: sim - o relatório da administração 2025 atribui a queda de 47,8% do EBITDA aos preços em dólar e aos custos de energia e minério de cromo e o FRE 2026 admite 'limitações na maturidade de seus processos de governança, tomada de decisão e priorização de investimentos' (fator de risco a.13); esclareceu por Comunicado a ação judicial do herdeiro (23/09/2022), a invasão do MST (16/11/2022) e o incêndio na Fábrica 2 (03/11/2020)",
+      "15 integridade inquestionável: sem - nenhum acordo de leniência, improbidade ou condenação de integridade encontrado nos fatos relevantes, comunicados e no FRE 2026 (busca por 'corrupção', 'leniência', 'inquérito'), mas ausência de achado não é prova; há política anticorrupção e canal de denúncia só para empregados (FRE 2026); transações com a controladora seguem em convênios próprios (nota 28)"
+    ],
+    "fonte": "DFP 2025 v1 (relatório da administração e nota 6, 28; CVM/RAD, A); DFP 2016-2025 (DRE consolidada, zips da CVM, A); FRE 2026 v2 (id 160456, A); IPE 2017-2026 (FRs e comunicados citados, A). Nota = arredondar(5 x 4 sim / 15) = 1. Conferido em 19/10/2026. As alegações da companhia (itens 2, 12, 14) são nota A de existência do texto, não prova do fato",
+    "nota_fonte": "A"
+  },
+  "desconto_controlador": {
+    "tipo": "cenarios",
+    "razao": "regra 8 (probabilidade x magnitude do risco prospectivo), sem evidência de interferência consumada (IPE 2017-26, ver 'interferencias'). Controlador permanente e institucional: Fundação José Carvalho com 98,83% das ON e 50,6% do capital, finalidade educacional/social descrita no relatório da administração 2025 ('cinquentenário da FUNDAÇÃO'). A FESA4 é PN (sem voto; dividendo estatutário 10% maior que a ON, art. 6 do estatuto). Riscos que a nota e o valor central não capturam: (a) venda/transferência do controle sem OPA para as PN, já que o estatuto (versão 20/04/2026, Nível 1) não traz cláusula de oferta na alienação de controle e a PN não vota; a disputa judicial do herdeiro José Eduardo Cabral de Carvalho contra a FJC e a FERBASA sobre doações de ações dos anos 70 (Comunicados 12/01/2022 e 23/09/2022) é o gatilho conhecido; (b) cargas sociais da FJC sobre o caixa da empresa: R$ 16,3 mi em 2025 = 8,7% do lucro líquido de R$ 188,7 mi, em convênios aprovados por conselho que a FJC elege (nota 28 da DFP 2025; FRE 2026 b.1), com chance de crescer; (c) payout de 127% em 2025 (R$ 240 mi de JCP) é pro rata e mais lento que o caixa líquido de R$ 718,4 mi; não conta como extração. As probabilidades e perdas são estimativas minhas (não saem de fonte), no mesmo molde do ALLD3",
+    "cenarios": [
+      {
+        "nome": "Sem extração: a FJC mantém o controle e as transações ficam do tamanho atual (R$ 16 mi/ano em convênios)",
+        "prob": 0.85,
+        "perda": 0.0
+      },
+      {
+        "nome": "Convênios e aportes à FJC e a empresas ligadas crescem acima do pactuado, aprovados por conselho eleito pela controladora",
+        "prob": 0.1,
+        "perda": 0.05
+      },
+      {
+        "nome": "Controle muda de mãos (disputa judicial do herdeiro ou venda) sem OPA para as PN, porque o estatuto não obriga oferta e a PN não vota",
+        "prob": 0.05,
+        "perda": 0.1
+      }
+    ]
+  }
+}

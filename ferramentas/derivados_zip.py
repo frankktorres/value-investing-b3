@@ -44,11 +44,25 @@ def obter(chave: str, zips: list[str], calcular, pasta: pathlib.Path | None = No
     return snap[chave]
 
 
+def obter_na_ref(chave: str, ref, zips: list[str], calcular, pasta: pathlib.Path | None = None):
+    """Como `obter`, para valor de um BALANÇO (ações, holding, receita do trimestre): guarda {"ref", "valor"} e só usa o
+    snapshot se a `ref` for a do LTM vigente (23/11/2026). Antes a chave tinha a data no nome ("acoes_jun26") e, sem os ZIPs,
+    a nuvem usaria ações de 30/06 com um LTM de 30/09 sem perceber. `ref` = "3T26" ou {ticker: ref} quando cada ticker do
+    grupo pode estar num trimestre (temporada com publicação parcial)."""
+    pacote = obter(chave, zips, lambda: {"ref": ref, "valor": calcular()}, pasta)
+    achado = pacote.get("ref") if isinstance(pacote, dict) else None
+    if achado != ref:
+        raise FileNotFoundError(f"snapshot de '{chave}' é do {achado or 'formato antigo, sem ref'}; o LTM vigente é {ref}: "
+                                f"traga {zips} e rode `python bootstrap_dados.py --derivados`")
+    return pacote["valor"]
+
+
 # fase 3, fatia 3: P/L histórico das não financeiras do hall (pl_historico.do_hall). Vem dos parquets do COTAHIST (backtest), não
 # dos ZIPs da CVM: entra no snapshot quando foi recalculado, mas não é exigido — sem o COTAHIST, o --derivados regrava as chaves da
 # CVM e mantém as do P/L como estavam (adversário, 20/10).
 PL_HIST = ("B3SA3", "SMTO3", "SLCE3", "TIMS3", "VIVT3", "FLRY3", "HYPE3", "ABEV3", "WEGE3", "LEVE3")
-CHAVES_CVM = ("lote4.acoes_jun26", "lote4.arrendamento_pago", "lote4.itsa", "lote5.base_prio3", "lote6.acoes_jun26")
+# 23/11/2026: as chaves de balanço perderam a data do nome (a ref vai no valor, `obter_na_ref`)
+CHAVES_CVM = ("lote4.acoes", "lote4.arrendamento_pago", "lote4.itsa", "lote5.base_prio3", "lote6.acoes")
 CHAVES_COTAHIST = tuple(f"pl_hist.{tk}" for tk in PL_HIST)
 CHAVES = CHAVES_CVM + CHAVES_COTAHIST
 
@@ -62,7 +76,7 @@ def gravar_snapshot() -> int:
     cot = [c for c in CHAVES_COTAHIST if c in CALCULADOS]
     if cot and len(cot) != len(CHAVES_COTAHIST):
         raise RuntimeError(f"P/L histórico recalculado só em parte: {sorted(set(CHAVES_COTAHIST) - set(cot))}; snapshot não gravado")
-    snap = _snapshot()
+    snap = {k: v for k, v in _snapshot().items() if k in CHAVES}      # chave que saiu de CHAVES (ex.: nome com data) não fica
     snap.update(CALCULADOS)
     SNAPSHOT.write_text(json.dumps(snap, ensure_ascii=False, indent=1, sort_keys=True) + "\n", encoding="utf-8", newline="\n")
     return len(CALCULADOS)

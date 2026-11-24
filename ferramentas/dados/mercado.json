@@ -1,7 +1,45 @@
 {
- "data_base": "2026-10-02",
- "gerado_em": "2026-10-04",
+ "data_base": "2026-11-19",
+ "gerado_em": "2026-11-23",
  "tesouro_direto_TesouroTransparente": {
+  "2026-11-19": {
+   "IPCA+ sem juros 15/08/2050 (mais longo sem cupom)": {
+    "valor": 7.56,
+    "data": "2026-11-19",
+    "fonte_url": "https://www.tesourotransparente.gov.br/ckan/dataset/df56aa42-484a-4a59-8184-7676580c81e3/resource/796d2059-14e9-44e3-80c9-2d9e30b405c1/download/PrecoTaxaTesouroDireto.csv",
+    "tipo": "Tesouro Transparente, Taxa Compra Manha (manha, % a.a.) - Tesouro IPCA+ venc. 15/08/2050. Taxa venda manha=7.68"
+   },
+   "IPCA+ com juros 15/08/2060 (registro)": {
+    "valor": 7.58,
+    "data": "2026-11-19",
+    "fonte_url": "https://www.tesourotransparente.gov.br/ckan/dataset/df56aa42-484a-4a59-8184-7676580c81e3/resource/796d2059-14e9-44e3-80c9-2d9e30b405c1/download/PrecoTaxaTesouroDireto.csv",
+    "tipo": "Tesouro Transparente, Taxa Compra Manha (manha, % a.a.) - Tesouro IPCA+ com Juros Semestrais venc. 15/08/2060. Taxa venda manha=7.7"
+   },
+   "Prefixado sem cupom 01/01/2032 (mais longo)": {
+    "valor": 15.43,
+    "data": "2026-11-19",
+    "fonte_url": "https://www.tesourotransparente.gov.br/ckan/dataset/df56aa42-484a-4a59-8184-7676580c81e3/resource/796d2059-14e9-44e3-80c9-2d9e30b405c1/download/PrecoTaxaTesouroDireto.csv",
+    "tipo": "Tesouro Transparente, Taxa Compra Manha (manha, % a.a.) - Tesouro Prefixado venc. 01/01/2032. Taxa venda manha=15.55"
+   },
+   "IPCA+ sem juros 15/08/2032 (mais proximo do pre 2032)": {
+    "valor": 7.82,
+    "data": "2026-11-19",
+    "fonte_url": "https://www.tesourotransparente.gov.br/ckan/dataset/df56aa42-484a-4a59-8184-7676580c81e3/resource/796d2059-14e9-44e3-80c9-2d9e30b405c1/download/PrecoTaxaTesouroDireto.csv",
+    "tipo": "Tesouro Transparente, Taxa Compra Manha (manha, % a.a.) - Tesouro IPCA+ venc. 15/08/2032. Taxa venda manha=7.94"
+   },
+   "Prefixado com juros 01/01/2037 (mais longo)": {
+    "valor": 15.36,
+    "data": "2026-11-19",
+    "fonte_url": "https://www.tesourotransparente.gov.br/ckan/dataset/df56aa42-484a-4a59-8184-7676580c81e3/resource/796d2059-14e9-44e3-80c9-2d9e30b405c1/download/PrecoTaxaTesouroDireto.csv",
+    "tipo": "Tesouro Transparente, Taxa Compra Manha (manha, % a.a.) - Tesouro Prefixado com Juros Semestrais venc. 01/01/2037. Taxa venda manha=15.48"
+   },
+   "IPCA+ com juros 15/05/2037 (mais proximo do pre c/ juros 2037)": {
+    "valor": 7.72,
+    "data": "2026-11-19",
+    "fonte_url": "https://www.tesourotransparente.gov.br/ckan/dataset/df56aa42-484a-4a59-8184-7676580c81e3/resource/796d2059-14e9-44e3-80c9-2d9e30b405c1/download/PrecoTaxaTesouroDireto.csv",
+    "tipo": "Tesouro Transparente, Taxa Compra Manha (manha, % a.a.) - Tesouro IPCA+ com Juros Semestrais venc. 15/05/2037. Taxa venda manha=7.84"
+   }
+  },
   "2026-10-02": {
    "IPCA+ sem juros 15/08/2050 (mais longo sem cupom)": {
     "valor": 7.06,
@@ -307,36 +345,36 @@
  },
  "anbima_ettj_inflacao_implicita": {
   "inflacao_implicita_vertice_mais_longo_2520du_~10a": {
-   "valor": 6.4593,
-   "data": "2026-10-02",
+   "valor": 7.1706,
+   "data": "2026-11-19",
    "fonte_url": "https://www.anbima.com.br/informacoes/est-termo/CZ-down.asp",
-   "tipo": "ANBIMA ETTJ inflacao implicita, 2520 du (~10a); ETTJ IPCA 7,4233 / PREF 14,3621; curva PREF termina em 2520 du, logo e o vertice mais longo e tambem o de ~10a"
+   "tipo": "ANBIMA ETTJ inflacao implicita, 2520 du (~10a); ETTJ IPCA 7.8404 / PREF 15.5733; curva PREF termina em 2520 du"
   },
   "inflacao_implicita_1260du_~5a": {
-   "valor": 6.1721,
-   "data": "2026-10-02",
+   "valor": 7.2158,
+   "data": "2026-11-19",
    "fonte_url": "https://www.anbima.com.br/informacoes/est-termo/CZ-down.asp",
-   "tipo": "ANBIMA ETTJ, 1260 du; IPCA 7,6177 / PREF 14,2600"
+   "tipo": "ANBIMA ETTJ, 1260 du; IPCA 7.9469 / PREF 15.7362"
   },
   "inflacao_implicita_756du_~3a": {
-   "valor": 5.9724,
-   "data": "2026-10-02",
+   "valor": 7.1857,
+   "data": "2026-11-19",
    "fonte_url": "https://www.anbima.com.br/informacoes/est-termo/CZ-down.asp",
    "tipo": "ANBIMA ETTJ, 756 du"
   },
   "ETTJ_IPCA_real_8316du_~33a": {
-   "valor": 6.7918,
-   "data": "2026-10-02",
+   "valor": 7.4721,
+   "data": "2026-11-19",
    "fonte_url": "https://www.anbima.com.br/informacoes/est-termo/CZ-down.asp",
-   "tipo": "ANBIMA ETTJ real (IPCA) vertice mais longo; sem PREF nesse prazo, sem implicita"
+   "tipo": "ANBIMA ETTJ real (IPCA) vertice 8316 du; sem PREF nesse prazo"
   },
   "ETTJ_IPCA_real_2520du": {
-   "valor": 7.4233,
-   "data": "2026-10-02",
+   "valor": 7.8404,
+   "data": "2026-11-19",
    "fonte_url": "https://www.anbima.com.br/informacoes/est-termo/CZ-down.asp",
    "tipo": "ANBIMA ETTJ real 2520 du"
   },
-  "nota": "CZ-down.asp so devolve a ultima data (02/10/2026); ETTJ de 01/10 e 30/09 nao obtida."
+  "nota": "CZ-down.asp (POST Idioma=PT&Dt_Ref=19/11/2026&saida=csv), coletado em 23/11/2026; a ETTJ de 02/10 está em _historico/2026-11-23 mercado/."
  },
  "focus": {
   "relatorio": "Focus - Relatorio de Mercado de 25/09/2026 (publicado seg 28/09; o de 02/10 sai em 05/10, ainda nao publicado)",

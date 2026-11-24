@@ -1,0 +1,27 @@
+{
+ "ticker": "ALLD3",
+ "data_preco": "2026-10-15",
+ "preco": 6.3,
+ "central": 14.9142,
+ "pc": 0.4224,
+ "palavra": "BARATA",
+ "palavra_regua": "BARATA",
+ "notas_regra11": {
+  "moat": 0,
+  "gestao": 1,
+  "controlador": 5,
+  "ciclo": 3,
+  "fisher": 1
+ },
+ "desc_controlador": 0.01,
+ "desc_controlador_razao": "regra 8 (probabilidade x magnitude do risco prospectivo), sem evidência de interferência consumada (IPE 2020-26, ver 'interferencias'). Contexto novo: em 27/08/2026 a Advent (FIPs) deixou de exercer o controle e cai para 24,9% (11/09/2026), ainda vendendo; as três famílias Radomysler somam 29,1% em ações, sem acordo de voto, num free float de 91,6% (FRE 2026 v4). O risco do controlador antigo (extração) praticamente se extinguiu: partes relacionadas 0,06% da receita, sem contrato com a Advent no consolidado. Entram só os riscos que a nota e o valor central não capturam: (a) um bloco familiar de ~29% virar controle de fato sem OPA, porque o estatuto (art. 46) só dispara com 'controle' efetivamente exercido e não tem gatilho percentual; (b) fechamento de capital/OPA por esse bloco a preço abaixo do valor, mitigado pelo art. 48 (aceitação de mais de 1/3 do free float). Não há OPA, nem proposta de fechamento de capital, nem fato relevante nesse sentido em 2025-2026 no IPE. As probabilidades e perdas são estimativas minhas (não saem de fonte), no mesmo molde da BLAU3",
+ "media_regra11": 2.0,
+ "discricionario": false,
+ "doutrina": "v2.3",
+ "template": "02 v4",
+ "rf_real": 0.0674,
+ "pi": 0.0575,
+ "aliquota": 0.34,
+ "aliquota_regra": "sem_dado",
+ "gerado_em": "2026-10-19"
+}

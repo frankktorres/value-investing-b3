@@ -19,6 +19,7 @@ class Origem:
     fonte: str                        # nome curto, o que vai na coluna (ex.: "CVM DFP/ITR")
     nota: str
     detalhe: str = ""                 # descrição completa, na legenda de fontes do relatório
+    data: str = ""                    # AAAA-MM-DD da posição da fonte (pregão, balanço, fato) quando o registro a sabe; "" = não sabe
 
     def __post_init__(self):
         if self.nota not in NOTAS:
@@ -44,6 +45,8 @@ class Numero:
     origens: tuple[Origem, ...] = ()
     papel: str = ""                   # "central" (entra na mediana) | "informativo" | "" (resultado/indicador)
     obs: str = ""
+    baixo: float | None = None        # faixa do método quando o motor a calcula (DCF: cenários pessimista e otimista), R$/ação
+    alto: float | None = None
 
     @property
     def nota(self) -> str:

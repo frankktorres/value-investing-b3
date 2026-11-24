@@ -944,3 +944,215 @@ relatório real da UNIP6). **D1:** `temporada.py --gravar` não baixa mais; só 
 `monitor_semanal.vbs` avisa falha da temporada e do painel da carteira (antes silenciosa), aviso 50 → 30 min (limite de 1 h da tarefa). Simulação real
 2T26: 6 min 17 s, 31 publicaram, nenhuma mudança. **Backup:** `backup_dados.py` levava `dados/privado/` (carteira, desde 19/10) ao OneDrive — agora
 excluída (inviolável 2). Adversário: 1 defeito (404) corrigido; mapeamento §7 → ticker e todos os chamadores conferidos. Nenhuma ordem de compra ou venda decorre desta mudança.
+
+## 21/10/2026 (tarde) — PENDENTE #7: o "UBP R$ 1,3 bi" da EGIE3 era a venda da TAG; casos do §7 com ano e fonte (proposta, #9)
+**#7 (EGIE3), lido nos ZIPs da CVM (nota A, consolidado, CD_CVM 17329):** o repo chamava de "UBP de 2024" o não recorrente limpo do ROE de longo
+prazo. São dois eventos: **(1) DFP 2024, conta 3.04.04.02 "Alienação de participação societária em controlada em conjunto" = R$ 1.336,1 mi** (venda
+da TAG; outras receitas operacionais) — é isso que `lote6_quimica.roe_limpo` tira (outras receitas acima da mediana, após IR de 34%); **(2) ITR 2T26,
+conta 3.06.01.01 "Repactuação do UBP" = R$ 1.921,5 mi** (receita financeira, no trimestre; ≈ R$ 1,27 bi após 34% — origem provável do "R$ 1,3 bi"
+da imprensa). Corrigido só o rótulo: `03-hall:33` (e a cópia do Desktop), `atualizar_hall_lote6.py:35`, `lote6_textos.py:115`,
+`gerar_pdf_lote6.py:612`, docstring de `lote6_quimica.py:133`, e o carimbo EGIE3 em `carimbos.py` ("venda da TAG em 2024; repactuação do UBP no
+2T26, R$ 1,92 bi bruto"). **Nenhum número, palavra, central ou golden mudou** (o cálculo já tirava a conta certa; o 2T26 não entra na janela
+2017–25). Observação para a temporada 3T26: o lucro 12m da EGIE3 (R$ 3,96 bi no LTM 2T26) carrega a repactuação; o patrimônio de jun/26 também.
+O §7 da doutrina ainda diz "Engie (UBP R$ 1,3 bi)" — entra na proposta do #9 abaixo.
+
+**#9 — casos do §7 (proposta; a doutrina NÃO foi alterada, aguarda o Frank):** DFP/ITR locais (CVM, nota A); ROE = lucro do controlador ÷ PL
+final; ROIC ≈ EBIT × 0,66 ÷ (PL + dívida bruta − caixa) (aproximação desta conferência, não do motor).
+- Sanepar: **DFP 2025 (individual), 3.04.04.01 "Receita Precatórios – Ação Judicial IRPJ" = R$ 2.055,8 mi**, compensada em parte por 3.04.05.03
+  "Provisão Passivo Regulatório" −R$ 1.541,8 mi. Carimbo vale em 2026.
+- Engie: ver #7 (TAG 2024 R$ 1.336,1 mi; UBP 2T26 R$ 1.921,5 mi). Carimbo vale em 2026.
+- Mahle "R$ 121 mi": **DFP 2023, 3.06 Resultado financeiro = +R$ 121,8 mi** (+ ganho de variação monetária/IAS 29 em 3.04.05.03: R$ 70,9 mi
+  2023, 116,7 mi 2024, 61,4 mi 2025). "ROE 77% / ROIC 30%" não reproduz exato em nenhum ano: ROE 82,0% (2023), 70,3% (2024), 70,5% (2025);
+  ROIC ≈ 37% / 39% / 33%; dívida bruta R$ 1,66 bi × PL ≈ R$ 0,86 bi em 2025. Os dois carimbos valem em 2026.
+- Unipar "240% do lucro": 2025 dá **270%** (DFC 6.03.03 dividendos pagos R$ 1.319,7 mi ÷ lucro do controlador R$ 488,6 mi, DFP 2025); caixa
+  R$ 2,14 bi (2023) → R$ 1,07 bi (2025) = "metade em 3 anos" confere; dívida R$ 2,06 → 3,53 bi. "ROE 20% / ROIC 7,7%": 2024 dá ROE 19,7%,
+  ROIC ≈ 11,6%; 2025 ROE 26,9%, ROIC ≈ 12,3%. Os dois carimbos valem em 2026.
+- Vibra "+300% a/a": **ITR 2T26 × 2T25: EBIT R$ 3.861 mi × R$ 1.023 mi (+277%)**; margem bruta 8,89% no 2T26, a maior da série trimestral
+  2022–26. Carimbo de topo de ciclo vale em 2026 (é atual, não de 2023).
+- Petrobras "Brent 104": EIA RBRTE (nota A) — média 2022 US$ 100,93, set/2026 US$ 114,16 (números do QA de 21/10; nesta tarde a página da EIA
+  não abriu para reconferir). Margem bruta LTM 2T26 50,6% × pico 52,7% (2023). Carimbo vale em 2026.
+**Proposta de texto do §7** (aplicar só com o ok do Frank): trocar os casos por "Sanepar (precatório IRPJ R$ 2,06 bi, 2025), Engie (venda da TAG
+R$ 1,34 bi em 2024; UBP R$ 1,92 bi no 2T26), Mahle (resultado financeiro +R$ 122 mi em 2023; IAS 29)" / "Unipar (270% do lucro em 2025)" /
+"Mahle (ROE 70%, ROIC ~33%, 2025), Unipar (ROE 27%, ROIC ~12%, 2025)" / "Vibra (EBIT +277% a/a no 2T26), Petrobras (Brent US$ 114 em set/2026,
+EIA)", com "(DFP/ITR CVM)" na legenda. **Nenhum carimbo sai.** Nenhuma ordem de compra ou venda decorre desta entrada.
+
+## 21/10/2026 (tarde, 2) — Frank: #8 = (a); #9 = "ok §7" → doutrina 2.6.1
+**#8:** sem controlador nem acordo no FRE = razão válida do desconto de controlador (§5); fica como o B26 fez (PRIO3, KEPL3, RECV3, VBBR3, B3SA3).
+Nada recalculado. **#9:** a proposta da entrada anterior foi aplicada ao §7 (e ao exemplo da Unipar no §6, item 5) e ao checklist `04` (Engie:
+TAG 2024, UBP 2T26), nas cópias do Desktop também; doutrina 2.6 → **2.6.1** (só exemplos; nenhuma regra, carimbo, palavra, central ou golden
+mudou); versão anterior em `_historico/2026-10-21 doutrina v2.6/`. Nenhuma ordem de compra ou venda decorre desta entrada.
+
+## 22/10/2026 — N7: motor recusa dado inválido (nenhuma palavra, central ou golden mudou)
+`motor_financeiras`: `palavra` e `nota_preco` recusam P/C NaN, None, 0 e negativo (+inf segue válido: central ≤ 0 → NÃO CONCLUSIVO);
+`precos_de_referencia` devolve sem preço para central NaN/±inf/None; `entrada_parcial` devolve `(False, ["dado inválido…"])` para NaN/None/inf em
+pc, dispersão, central ou notas; `descontar` exige desconto em [0, 1]; `media_qualitativa` exige notas em 0–5. `motor_nao_financeiras`:
+`central_de` recusa âncora NaN/inf/vazia; `qualifica_saida` recusa mais anos acima do que a série tem. `carimbos.de` e `relatorio.caso` aceitam
+ticker com espaço/minúscula. Teste novo `tests/test_n7_dado_invalido.py`; no `test_aud88` saiu o caso `pc = 0 → BARATA` (preço 0 não é dado).
+Golden intacto; 867 passed, 42 skipped. Nenhuma ordem de compra ou venda decorre desta entrada.
+
+## 22/10/2026 — N2: testes das regras sem cobertura (só testes; motor, palavra e golden intactos)
+`tests/test_n2_regras_sem_cobertura.py`: desconto de controlador por cenários (Σ prob × perda; só âncora > 0), cada degrau da escala da nota de
+Preço (e saturação), saída a 1,30× em financeira (nunca 1,50×, §9) e DCF reverso `g_implicito` com ida e volta preço → g → preço (SUZB3, KEPL3,
+PETR4, esta com cenários). Nenhum defeito achado. Suíte 894 passed, 42 skipped. Nenhuma ordem de compra ou venda decorre desta entrada.
+
+## 22/10/2026 — N9: servidor exclusivo e guardas do front da tela (nenhuma palavra, central ou golden mudou)
+`painel/servir.py`: bind exclusivo (`SO_EXCLUSIVEADDRUSE` no Windows, sem `SO_REUSEADDR`); o 2º `painel` na mesma porta sai com "Porta N em uso". `web/app.js`: contrato sem `versao`
+→ faixa de erro (não mais "versão undefined"); `hall.json` sem `fatores`/`escala_regua`/`empresas` → faixa "está incompleto" (não mais TypeError e tela vazia); hash desconhecido →
+"Página não encontrada" (não cai calado no Hall; a rota Sistema entra na lista quando a N4 existir). Testes: dois servidores na mesma porta (Linux) e guardas estáticos do front. Conferência no
+navegador (Windows, 2 servidores; hall.json truncado) fica para o Frank — a nuvem não tem navegador de teste.
+
+## 22/10/2026 — N10: CLIs sem traceback e vírgula decimal nas notas do dossiê (nenhuma palavra, central ou golden mudou)
+`temporada.py --trimestre/--simular` com rótulo inválido (5T26, 4T26, 9T99) e `triagem/rodar.py --data` inexistente (2026-13-40) saem com rc 2 e mensagem de uso, antes de qualquer
+download ou gravação (`type=` do argparse). O ponto decimal do texto da ALLD3 ("18.2%", "(0.1048)") vinha de `dossie/notas.py` (componentes das notas, `f"{x:.4f}"`):
+20 pontos passaram a `_br()` (vírgula). Só o texto; as notas e a palavra não mudam. Os `dossie/vereditos/*.json` já gravados mantêm o texto antigo até a próxima geração com `--data`
+nova (não regerados: sobrescreveria o veredito vigente). Testes: `tests/test_n10_clis_argumento_invalido.py`. Suíte 909 passed, 42 skipped.
+
+## 22/10/2026 — N11: cadastro do relatório (nenhuma palavra, central ou golden mudou)
+`relatorio/quali.py` `CADASTRO` passou de 1 para 6 tickers: CNPJ de EGIE3, PETR4, TAEE11, ITUB4 e SAPR11 (`triagem_2026-10-02.csv`) abre o FRE (governança, remuneração) no relatório;
+pregão só da PETR4 (já usado no hall). Os pregões de EGIE3, TAEE11, ITUB4 e SAPR11 ficam `None`: a API da B3 responde 403 na nuvem e nome de pregão não se chuta (decisão: sem
+dado conferido, o bloco de proventos avisa em vez de inventar). N8: nº de ações em mil não chega ao valor (ver `docs/QA-2026-10-21.md`). Suíte 930 passed, 42 skipped.
+
+## 22/10/2026 — N3: contrato da tela liga o que o motor já calcula (nenhuma palavra, central ou golden mudou)
+`relatorio.modelo.Origem` ganha `data` (AAAA-MM-DD, "" = não sabe) e `Numero` ganha `baixo`/`alto`; `quanti.secao_preco` preenche a faixa do DCF com os cenários pessimista e otimista do motor
+(com o desconto de controlador, só em valor > 0 — igual ao valor da âncora); `calendario_secao` ganha as colunas Dividendos e JCP (líquidos); `painel/contrato.py` lê `setor` da triagem,
+`data` de cada fonte e os pares baixo/alto e dividendos/jcp. Front: setor na linha do Hall, data na lista de fontes, barra do calendário empilhada dividendo × JCP (Ocultar mantém uma barra só).
+Probabilidade/impacto de risco, tipo/efeito de premissa, yield projetado e concentração por setor da carteira seguem sem fonte. Conferência visual no navegador fica para o Frank (dia). Suíte 937 passed, 42 skipped.
+
+## 22/10/2026 — N4: tela Sistema (nenhuma palavra, central ou golden mudou)
+`painel/sistema.py` grava `web/dados/contrato/sistema.json` (chamado por `contrato.gerar`): idade de COTAHIST (último pregão do hall), CVM (`MANIFESTO.json`), proventos da B3 (o arquivo mais antigo de
+`dados/proventos_hall/`), monitor (última rodada do `historico.csv`) e temporada (último `BOLETINS/*-temporada.md`); último boletim do monitor e da temporada; data (`golden_log.md`) e motivo (`golden.json`) do
+golden; e a última suíte — registro novo: `conftest.pytest_sessionfinish` grava `dados/suite_ultima.json` (ignorado pelo git; só suíte completa, ≥ 400 testes, sem caminho/`-k`/`-m`; leva os argumentos usados).
+Ausente = `null` + "sem registro". Front: rota `#/sistema` (`telas/sistema.js`), menu sem o "em breve". Conferência visual no navegador fica para o Frank (dia). Suíte 949 passed, 42 skipped.
+Achado: `tests/test_b23_petr4_premissas.py` e `tests/test_carimbos.py` não coletam na nuvem (fonte `C:/Windows/Fonts/arial.ttf` nos `gerar_pdf_lote*`) — vai ao BACKLOG.
+
+## 22/10/2026 — N5: contraste dos tokens da tela (nenhuma cor, palavra ou golden mudou)
+`painel/tests/test_contraste_tokens.py` calcula a razão WCAG dos pares de `web/tokens.css` nos temas claro e escuro: todo texto (`--ink`…`--nc-fg` sobre `--bg/--sf/--sf2` e sobre o fundo do próprio chip)
+passa de 4,5:1 (o menor é `--ink3` sobre `--sf2` no claro, 5,09) e as séries do gráfico de 3:1. Contornos abaixo de 3:1 (`--ln2` e os `*-ln` dos chips): lista fixada no teste e em `PENDENTE-FRANK.md` #10 —
+trocar cor é decisão visual do Frank. Nenhuma ordem de compra ou venda decorre desta entrada.
+
+## 22/10/2026 — Q01: PDFs dos lotes importáveis fora do Windows (nenhuma palavra, central ou golden mudou)
+`gerar_pdf_lote1.py` registrava `C:/Windows/Fonts/arial*.ttf` ao importar, e por isso `test_b23_petr4_premissas` e `test_carimbos` não coletavam na nuvem. Agora usa a Arial do Windows se existir e,
+senão, a Liberation Sans (métricas idênticas) — só para o módulo importar; PDF gerado fora do Windows não é o vigente. Suíte inteira sem `--ignore`: 963 passed, 42 skipped.
+
+## 30/10/2026 — Reforma Parte A + Autocorreções da Auditoria (nenhuma palavra, central ou golden mudou)
+Registro retroativo das 11 edições da Parte A (feitas antes da abertura do ramo `gemini/reforma`, agora consolidadas sob a carta branca) e das 4 autocorreções da auditoria em `_auditoria_antigravity/`:
+1. **Autocorreções da auditoria:** (a) registro retroativo desta Parte A no `09` e em `docs/DECISOES.md`; (b) suíte `tests/test_parte_a_auditoria.py` escrita especificamente para falhar sem as correções da Parte A e passar com elas, e substituição do filtro por texto de `conftest.py` pela função estrutural `_skip_de_plataforma(item)`; (c) reavaliação de `F3-02` de `CRÍTICO` para `MÉDIO` (citando `H1(b)` de `docs/oraculo/hipoteses-2026-10-22.md`: 2 tickers mudam a trava e 0 têm $|\Delta\text{central}| \ge 10\%$) e refutação de `F3-04(a)` (`H5`) com `ctryprem` de Damodaran ($K_{e,D,\text{real}} = 12,40\%$ vs $12,06\%$ da casa); (d) correção da descrição do commit `05e6636` (o hook `auto_commit.py` comitou deleções já existentes de 25 PDFs) e restauração dos 16 PDFs que faltavam em `_historico/` a partir do commit `4c49d00` para `_historico/2026-10-30 pdfs-lotes-4c49d00/`.
+2. **Correções de infraestrutura e código da Parte A (0 palavras/centrais mudaram):** `ferramentas/pytest.ini` (isola da árvore externa); `backtest/cotahist.py` (normaliza linhas UTF-8 de 246B para latin-1 245B e ignora linhas `>245B` fora do universo à vista); `.claude/hooks/auto_commit.py` (`decidir_destino` manda deleções e `PROTEGIDOS` para `wip/auto`, e `--dry` não lê `sys.stdin`); `conferir_noite.py` (adiciona `carteira.local.json`, `dados/privado` e `.hypothesis` em `FORA` e usa `-ra`); `motor_nao_financeiras.py` (pré-carrega `lote4.arrendamento_pago` no `CVM` sem depender de `import lote4_saude_telecom`); `gerar_pdf_lote4.py` (`central_rapido` aplica `1 - desconto_pct(emp)`); `historico_arquivos.py` (`guardar` cria pasta pai); `coletar_statusinvest.py` (valida HTTP 200 e JSON antes de gravar); `test_oraculo_propriedades.py` (`@example` determinístico nos testes `xfail`); `oraculo/armadilhas/__main__.py` (roda `hall03.py --corrigir` após `regerar_golden`). Nenhuma ordem de compra ou venda decorre desta entrada.
+
+## 30/10/2026 — PR4-01a (F1-02 / H10 + O3b): dado crítico ausente força NÃO CONCLUSIVO; provento sem valor não soma zero (0 palavras, 0 centrais mudaram)
+Implementado `criticos_ausentes(tk, anos)` em `motor_nao_financeiras.py` cobrindo LTM (`caixa`, `divida` = `emprest_cp`/`emprest_lp`, `pl`, `da`, `imobilizado`) e exercícios da janela (`pl`, `da`, `imobilizado`), forçando `palavra = "NÃO CONCLUSIVO"` com motivo `"não conclusivo (dado crítico ausente: ...)"`. Em `montar_series.py`, eventos sem valor (`v is None`) vão para `eventos_sem_valor` sem somar `0` silencioso. Removido `@pytest.mark.xfail` de `test_h10_dado_critico_ausente_nunca_da_palavra_de_decisao` e adicionados `test_h10_zero_declarado_continua_valendo_e_ausente_vira_nao_conclusivo`, `test_h10_razao_do_nao_conclusivo_nomeia_o_campo`, `test_o3b_campo_ausente_num_exercicio_da_janela_nunca_da_palavra_de_decisao`, `test_o3b_ebit_ausente_no_ltm_falha_alto` e `test_o3b_montar_series.py`. Como todas as 21 industriais do Hall têm os campos críticos presentes em `cvm_series.json`, 0 palavras e 0 centrais mudam. Nenhuma ordem de compra ou venda decorre desta entrada.
+
+## 30/10/2026 — PR4-01b (F1-03): escala de ações unificada em `reescalar_acoes` (0 palavras, 0 centrais mudaram)
+Substituídas as heurísticas divergentes de escala do número de ações (`n < 1e7` em `lote3_agro.py:37` e `lote4_saude_telecom.py:150`, `n < 1e8` em `lote4_saude_telecom.py:84` e ausência de checagem em `lote6_quimica.py:102`) pela função `reescalar_acoes(n, ref=None, limiar=2e7)` em `motor_nao_financeiras.py`. O limiar antigo `n < 1e8` multiplicaria por 1.000 qualquer empresa com 20M–99M ações já em unidades; `reescalar_acoes` preserva ações entre 20M e 100M em unidades, converte formulários em milhares até 20 bilhões de ações (incluindo `ABEV3` com 15,45M mil, `ITSA4` com 11,21M mil e `ITUB` com 11,02M mil) e aceita referência explícita do FRE em distância logarítmica. Teste adicionado em `tests/test_n8_escala_acoes.py`. 0 palavras e 0 centrais mudam. Nenhuma ordem de compra ou venda decorre desta entrada.
+
+## 30/10/2026 — PR4-01c (F1-05): CADASTRO completo dos 41 tickers do Hall em `relatorio/quali.py` e classes PN/PNB/UNT em `proventos_ex.py` (0 palavras, 0 centrais mudaram)
+Expandido `CADASTRO` em `relatorio/quali.py` de 6 para todos os 41 tickers do Hall com os CNPJs oficiais da CVM (`triagem_2026-10-02.csv` / `cvm_series.json`) e os nomes de pregão já validados em `proventos_ex.PREGAO` (mantendo `None` nos 15 tickers sem cache na B3, conforme regra do N11). Completado `CLASSE` em `proventos_ex.py` para `ITUB4`, `BBDC4`, `CMIG4`, `BRSR6`, `BRBI11`, `SANB11`, `SAPR11` e `TAEE11`. Agora o relatório por empresa (`python -m relatorio <TK>`) abre o bloco de governança do FRE para qualquer uma das 41 empresas do Hall. Teste `test_f1_05_cadastro_cobre_todos_os_41_tickers_do_hall` adicionado em `tests/test_n11_cadastro_relatorio.py`. 0 palavras e 0 centrais mudam. Nenhuma ordem de compra ou venda decorre desta entrada.
+
+## 30/10/2026 — PR4-02 (F5-01): fim do auto-mascaramento no Oráculo (`reconciliacao.py` e `sanidade.py`) (0 palavras, 0 centrais mudaram)
+Em `oraculo/reconciliacao.py`, erros de identidade contábil (`bp`, `bp_partes`, `dfc`, `dfc_saldo`) e erros de escala do número de ações (`acoes_lote` fora de `[0,5; 2,0]`) passam a ser classificados como `"falha"` bloqueante em **qualquer** ticker avaliado com palavra ativa (`BARATA`, `RADAR`, `JUSTA` ou `CARA`), deixando como `"bandeira"` apenas quando o próprio motor já recusou o papel (`NÃO CONCLUSIVO`). Antes, multiplicar `n_acoes` por 1.000 dividia o central por 1.000, transformava o papel em `CARA` e rebaixava o erro de `"falha"` para `"bandeira"` (`exit 0`). Em `oraculo/sanidade.py`, `central <= 0` fora de `NÃO CONCLUSIVO` também entra em `bloqueantes`. Testes em `tests/test_oraculo_reconciliacao_sanidade.py`. 0 palavras e 0 centrais mudam. Nenhuma ordem de compra ou venda decorre desta entrada.
+
+## 23/11/2026 — Fase 0 (resgate): causa da árvore corrompida e integração só da parte de engenharia (0 palavras, 0 centrais mudaram)
+**Causa (provável, evidência forte):** em 31/10 às 09:23:19 a extensão Antigravity do VS Code (`google.google-antigravity` 1.13.0, servidor iniciado às 09:23:08) gravou 21 arquivos no mesmo segundo por "Workspace Edit", reinserindo ao lado das novas as linhas que os commits da reforma tinham removido; não foi o git (sem `merge=union`, reflog sem operação após 00:19) nem o OneDrive (a pasta não é sincronizada). Efeito: 4 `.py` sem parse, suíte sem carregar, monitor falhando em 06, 13 e 20/11 e temporada 3T26 parada. **Feito:** cópia fria fora do repositório + `_historico/2026-11-23 arvore-corrompida/` (patch, zip, prova linha a linha); ramo `resgate/gemini-reforma-2026-10-31` no GitHub; 23 arquivos restaurados ao HEAD (todo `+` era pré-imagem ou versão anterior do git; `MANIFESTO.json` mantido, sha do `itr_2026.zip` real); `master` → `14a6175` (Parte A, F1-02/03/05, F5-01: suíte com `EXIGIR_DADOS=1` 1.076 passed, 0 falha, golden intacto); PR4-03 a 06 no ramo `reforma/parte-2-metodo` (14 falhas com dados: 11 por vereditos/fixtures não refeitos e 3 do `g_implicito` = `None`, bug introduzido no PR4-04 `2633b39`, achado por bisect); ramos `claude/*` e `wip/auto` viraram tags `arquivo/*`; temporada 3T26 coletada sem gravar (31 de 31 publicaram, 5 palavras mudariam pelo motor do `master`: EGIE3 e PETR4 JUSTA → RADAR, LEVE3 NC → JUSTA, RANI3 e SUZB3 CARA → NC — aguardam decisão); monitor de 23/11 válido. Tarefas: `MonitorSemanal` religada ao fim (o `master` está são); `ConferirNoite` segue desligada (os ramos que ela retestava todo dia foram arquivados). Nenhuma ordem de compra ou venda decorre desta entrada.
+
+## 23/11/2026 — Datas do LTM nos lotes: 3 bugs do 3T26 corrigidos e teste que reprova data fixa (0 palavras, 0 centrais mudaram no 2T26)
+**Por quê:** a decomposição preço × resultado das trocas do 3T26 achou datas do 2T26 escritas à mão nos lotes, que erravam em silêncio com o LTM de 30/09: PETR4/RECV3 (janela do barril fixa em jul/25–jun/26: o barril do trimestre novo entrava como volume; PETR4 EPV 62,36 em vez do certo), EGIE3 (follow-on de jul/2026 somado e dividendo de ago/2026 tirado do PL de 30/09, que já os continha: VPA 15,96 → 20,41, "BARATA" falsa) e ISAE4 (mesmo follow-on). No levantamento, o mesmo tipo em UNIP6/GGBR4 (índices BLS), PRIO3 (trimestres 2026-01..06), ações e balanço de 30/06 (lotes 4 e 6, ITSA4), WEGE3 (data-com digitada), CMIN3 (dossiê) e `lote1.DATA_BASE`. **Regra do Frank:** a correção não pode ser outra data ou número digitado. **Feito:** helpers em `ltm.py` (janela, data do balanço, trimestres, ZIP, tudo do `ltm_ref`); cada ticker lê ações e balanço na data do PRÓPRIO LTM (temporada com publicação parcial não quebra — achado do adversário); snapshot dos ZIPs guarda a ref e recusa outra (`derivados_zip.obter_na_ref`); follow-on, bonificação e extraordinário viram fatos com fonte em `dados/eventos_societarios.json`, e o follow-on só entra se o balanço ainda não o contém (data × ações do balanço, discordância falha alto — `eventos.py`); dividendo pós-balanço da EGIE3 pela B3 (`ajuste_b3`, R$ 770,81 mi no 2T26 contra 770,80 digitados; EGIE3 no `proventos_ex.PREGAO`); barril nominal só exige Brent e PTAX; `coletar_macro_fred.py` voltou a funcionar (o FRED não responde ao User-Agent "Mozilla/5.0"). Teste `tests/test_lotes_sem_data_fixa.py`: data de mês/dia/trimestre nos lotes = tolerância zero (hoje 0); anos de exercício numa catraca que só cai (85 hoje; missão B32, prazo 31/01/2027, inclui ler o balanço pelo DFP no 4T). **Provas:** `rodar_tudo.py` "sem mudanças em relação ao golden"; suíte com `EXIGIR_DADOS=1` verde; ensaio do 3T26 em cópia isolada (macro até out/2026, preço e taxa de 19/11): EGIE3 VPA 15,05 (central 25,04, NÃO CONCLUSIVO pela trava 3b), PETR4 central 53,43 (RADAR), PRIO3 CARA → JUSTA. **Pareceres:** adversário (3 defeitos, todos corrigidos e com teste); oráculo RESSALVA — premissa nova da PRIO3 no 3T26 (os 2 últimos trimestres até o LTM = 2T+3T26, antes 1S26) sem registro próprio: fica registrada aqui; PL do controlador da EGIE3 subiu R$ 6,30 bi de 30/06 a 30/09 contra R$ 7,59 bi de oferta − dividendo (≈ R$ 2 bi a explicar, mais o custo da oferta "a conferir no RI") — conferir antes de decidir a EGIE3. Nada gravado do 3T26 (gravação única depois: LTM 3T26 + preço e taxa de 19/11 + macro com as revisões do BLS). Nenhuma ordem de compra ou venda decorre desta entrada.
+
+## 23/11/2026 — GRAVAÇÃO DO 3T26: LTM de 30/09 + data-base 19/11/2026 (8 palavras mudaram, todas por decisão do Frank)
+**O que foi gravado (de uma vez, §4):** LTM 3T26 de 31 tickers (`temporada.py --gravar`; 31 de 31 publicaram); preço = fechamento COTAHIST de 19/11/2026 (último pregão antes do feriado de 20/11) para os 41, **inclusive as 20 financeiras, que deixaram de digitar o preço** (`preco("TK")` do snapshot `dados/precos_hall_2026-11-19.csv`); rf 7,56% (Tesouro IPCA+ 15/08/2050, compra da manhã de 19/11, Tesouro Transparente, A) e π 7,17% (ETTJ ANBIMA 19/11, 2520 du, 7,1706%, A); macro FRED/BCB até out/2026 com as revisões do BLS aceitas (decisão do Frank) — o `MANIFESTO_MACRO.json` registra a data de coleta de **cada** série (agora inclusive o IPCA) e as datas revisadas (`revisoes_aceitas`: WPU1017 3, WPU101704 2, WPU1012 4, WPU0662 4, WPU06130302 3, PCU325180 3); proventos e suplemento da B3 baixados em 23/11. Golden regravado (`rodar_tudo.py --motivo`), `03` corrigido pelo motor (0 divergências). Versões anteriores em `_historico/2026-11-23 */`.
+**Palavras (decisões do Frank em 23/11, ticker a ticker):** RANI3 CARA → NÃO CONCLUSIVO (P/C 3,40) · SUZB3 CARA → NÃO CONCLUSIVO (3,90) · UNIP6 CARA → JUSTA (1,06; fora do hall) · LEVE3 NÃO CONCLUSIVO → RADAR (0,86) · PETR4 JUSTA → RADAR (0,80; "a leitura honesta, sem o bug") · **PRIO3 CARA → JUSTA (1,07)**: a base são os 2 últimos trimestres até o LTM, anualizados (`ltm.trimestres_ate(ltm_ref, 2)`, anda sozinha a cada trimestre), porque Peregrino entrou no consolidado no meio dos 12m e o 12m subestima o volume de hoje · **ISAE4 NÃO CONCLUSIVO → JUSTA, marcada "NO LIMITE"** (P/C 1,0899, a 0,01 da faixa CARA; vence RF: empate) · **EGIE3 JUSTA → NÃO CONCLUSIVO** (P/C 1,01; a trava do §9 fez o certo, decisão do Frank) — **missão B33**: explicar no RI do 3T26 os ~R$ 2 bi que faltam no PL (custo da oferta e dividendo pago); só depois reavaliar. Quadro: 29 CARA · 4 JUSTA · 2 RADAR · 6 NÃO CONCLUSIVO (41).
+**Bug achado na gravação:** com a saída redirecionada para arquivo, o subprocesso da coleta herdava cp1252 e morria no `print` do "→"; os 31 tickers saíam "coleta falhou" e a temporada media só preço e taxa (ISAE4 CARA, PRIO3 CARA — números que não eram os do 3T26). Corrigido (`temporada.coletar` força `PYTHONIOENCODING=utf-8`; teste `test_coleta_em_subprocesso_forca_utf8_com_saida_redirecionada`). A rotina noturna redireciona a saída: sem a correção, toda temporada da nuvem sairia assim.
+**Reabrir se:** PRIO3 — quando os 4 trimestres do LTM já tiverem Peregrino, a razão dos 2 trimestres vence (avaliar voltar aos 12m); ISAE4 — P/C acima de 1,10 em qualquer atualização de preço; financeiras — `vpa`/`lpa_12m` seguem digitados do 2T26 (B15/9f, pendente). de compra ou venda decorre desta entrada.
+**ESTADO (fim de 23/11): NÃO juntado no master** — ramo `gravacao/3t26`. A suíte com dados deu 21 falhas: (1) **bug do motor** — `aplicar_trava` testava `trava is False` e o motor das não financeiras devolvia `np.False_`: a trava do §9 falhava sem derrubar a JUSTA. Corrigido (com teste); com ele **PRIO3 e UNIP6 saem NÃO CONCLUSIVO** (trava falha, sem `trava_razao`) — as JUSTAs aceitas pelo Frank vinham do bug: **decisão de volta ao Frank** (aceitar NC ou escrever a premissa que diverge); o golden gravado ainda tem as duas como JUSTA; (2) vereditos salvos dos dossiês (BLAU3, CMIN3, HYPE3, LEVE3, ALLD3, FESA4, SHUL4, VLID3) não se reproduzem: dependem da macro vigente (IPCA/BLS revisados mudam o "R$ de hoje") e do LTM vigente — não são point-in-time (lacuna de desenho antiga, exposta agora; BLAU3 pede `mercado_2026-10-02.json`); (3) testes com o estado de 2T26/02-10 escrito (ISAE4/LEVE3 NC, WEGE3 e ISAE4 balanço de 30/06, data do preço, prompt de sexta); (4) a conferir: monitor reproduz o golden com preço velho na ABCB4, `g_implicito` da SUZB3 = None, exportação do painel (BLAU3); (5) **oráculo: BLOQUEIA** (parecer de 23/11, antes do conserto da trava): sanidade em falha — RANI3 Ke nominal 39,4% > 30% (nova ocorrência da H2: D/E 4,71 no ponto fixo × ~1,4 a mercado; era 29,97% em 22/10); pelo pré-registro (emenda 1, §0) a RANI3 NÃO entra em `CONHECIDOS` e o ramo não vai ao master até o Frank decidir entre (a) esperar a correção da H2 (Fase 6) ou (b) emenda datada e append-only no §7, declarada post-hoc; não cabe gravação parcial (§4). Também exige: suíte verde, motivo do golden citando a camada (1–5) que provou os valores (VALIDACAO §4), `painel --exportar` antes do oráculo (a sanidade lê o `hall.json` de 22/10), `dados/mercado_2026-10-02.json` para o dossiê de 02/10; NC de RANI3 e SUZB3 é produto do artefato H2 (Ke inflado derruba EPV/DCF); KLBN11 com dispersão inf (EPV −0,61, segue NC); PRIO3: data de consolidação de Peregrino sem fonte A/B (a conferir). Nenhuma ordem de compra ou venda decorre desta entrada.
+
+## 23/11/2026 (noite) — Decisões do Frank sobre o bloqueio do oráculo na gravação do 3T26
+**RANI3 (Ke 39,4% > teto de 30%, H2):** opção **(a)**. Nada de exceção escrita no pré-registro depois de ver o resultado —
+"seria mudar a regra para caber no número". Mas sem esperar a Fase 6 inteira: a **correção do defeito H2** (Hamada sobre
+dívida bruta e E do modelo no ponto fixo: central baixo → D/E alto → Ke alto → central mais baixo) vira a **próxima tarefa**
+(missão **B34**), porque é ela que também deixa RANI3 e SUZB3 NÃO CONCLUSIVO. O 3T26 (ramo `gravacao/3t26`) só entra no
+`master` depois disso, com a suíte verde e o oráculo sem BLOQUEIA. CONHECIDOS do `oraculo/sanidade.py` segue catraca (a RANI3
+não entra).
+**PRIO3 e UNIP6:** aceito **NÃO CONCLUSIVO** (a trava do §9 falha e não há `trava_razao`; o JUSTA anterior vinha do bug do
+`np.False_`, corrigido no ramo). Fica assim até a data de consolidação de Peregrino na PRIO3 ter fonte A/B.
+**Efeito no quadro do 3T26 (a regravar no ramo):** PRIO3 e UNIP6 JUSTA → NÃO CONCLUSIVO; ISAE4 segue JUSTA "no limite".
+**Reabrir se:** a correção do H2 for aprovada (RANI3/SUZB3 reavaliadas pela regra nova, com antes × depois no `09`); a data
+de Peregrino ganhar fonte A/B (PRIO3); `trava_razao` com premissa divergente documentada (UNIP6).
+
+
+## 24/11/2026 — DECISÃO DO FRANK — H2 (B34): D/E a mercado, sem ponto fixo; revisa o AUD-13
+Proposta só do item H2 (Fase 5 item 2), com três opções e fonte, **sem mostrar palavras**; a tabela vem depois deste registro.
+| Opção | Regra | Fonte |
+|---|---|---|
+| **A. D/E a mercado, sem ponto fixo (escolhida)** | E = preço da data-base × ações; D = dívida bruta com arrendamentos (a mesma da ponte); um D/E no Hamada e nos pesos | Damodaran, *Investment Valuation* 2ª ed., cap. 8 pp. 24, 47, 49–51; cap. 15 p. 24 — nota B |
+| B. Ponto fixo partindo do mercado, com unicidade obrigatória (senão NÃO CONCLUSIVO) | mantém o laço e só o vigia | idem, cap. 15 pp. 7–8 — nota B; o trecho não cobre o beta no laço |
+| C. D/E-alvo do setor (emergentes, jan/2026) | ignora a alavancagem própria | não elegível: planilha de emergentes não aberta; "alvo" (McKinsey) NÃO VERIFICADO |
+**Por quê (Frank):** o AUD-13 foi revisto porque a fonte primária manda usar pesos a mercado (cap. 8, p. 47: "weights used should
+be based upon market value and not book value"), e o AUD-13 trocava um defeito (central dependente do preço) por outro (o laço
+central baixo → D/E alto → Ke alto → central mais baixo; RANI3 Ke 39,4%, KLBN11 65%).
+**Regras que vêm junto:**
+- "Dívida líquida" sai da Fase 5 item 2; vale **dívida bruta com arrendamentos** (cap. 15 p. 24; cap. 8 p. 51: "using net debt
+  ratios will overstate the value of riskier firms").
+- **Coerência obrigatória:** o desconto (Hamada e pesos) usa a mesma dívida que a ponte do valor da firma para o valor por ação
+  subtrai; a ponte soma o caixa; o fluxo de caixa trata o arrendamento do mesmo jeito (EBIT já com a depreciação do direito de
+  uso, sem o juro do arrendamento, e sem descontar o aluguel pago de novo). Teste que falha se desconto e ponte usarem dívidas
+  diferentes. Hoje divergem: a ponte desconta `outros_passivos_financeiros` e o D do WACC não — passa a entrar nos dois.
+- **Efeito conhecido, aceito e anotado no pré-registro (emenda 3) antes da tabela:** preço cai → D/E sobe → Ke sobe → valor justo
+  cai. Esse erro joga contra comprar; é aceito.
+- E do D/E = **preço da data-base**; nenhuma média de preço.
+- Sem teto na fórmula; Ke nominal > 30% é conferência e vira NÃO CONCLUSIVO, sem mexer de novo no método. `CONHECIDOS` não cresce.
+Fichas de fonte: `docs/research/2026-11-24-ke-alavancagem.md`. Tentativa 6/24 do pré-registro (§6 linha 13).
+**Reabrir se:** a 3ª ed. ou a McKinsey, abertas, divergirem do texto de 2002; ou a camada 6 mostrar que o efeito do preço no
+central piora o acerto. Nenhuma ordem de compra ou venda decorre desta entrada.
+**Ok do Frank na tabela (24/11):** SMTO3 CARA → NÃO CONCLUSIVO aceito (única palavra que o H2 muda).
+**Observação (Frank, 24/11): SMTO3 está a 0,3 p.p. do limite de 30% (Ke nominal 30,3%).** Só observar se ela ficar trocando de
+palavra entre rodadas; não mexer no método agora.
+**Medição que contradiz o efeito declarado (24/11, antes de regravar o golden):** a proposta e a emenda 3 diziam "preço cai → D/E
+sobe → Ke sobe → valor justo cai". Medido no hall (preço × 0,7 / 1 / 1,3, resto igual): em **17 dos 21** industriais o valor justo
+**sobe** quando o preço cai — com E menor a dívida pesa mais no WACC e Kd × (1 − t) < Ke, e esse canal vence a alta do Ke pelo
+Hamada. Só B3SA3, LEVE3 e RANI3 seguem a direção declarada (RECV3 sem central). Tamanho: preço −30% → central +0,2% (ABEV3) a
++14% (SUZB3); PETR4 e PRIO3 +7%, SMTO3 +3%. O erro foi da proposta (olhou só o canal do Ke). **Decisão de volta ao Frank**: o
+efeito real favorece comprar, o contrário da premissa com que ele foi aceito. Teste de coerência desconto × ponte: vermelho com a
+correção desfeita (D 2.800 × 3.100 esperado), verde com ela.
+**Decisão do Frank sobre a emenda 4 (24/11):** opção 1 — mantém A. A direção declarada estava errada (o efeito é a favor da compra,
+até +14% numa queda de 30%); A foi escolhida pela fonte, antes da tabela, não pelo resultado (pré-registro, emenda 5). Teste fixa a
+regra econômica (Kd × (1 − t) < Ke → mais dívida baixa o WACC), o efeito medido fica como observação. Remédio: BACKLOG **B35** (Kd que
+reage à alavancagem, hipótese pré-registrada antes de rodar; não agora).
+**Dossiês recalculados na data (point-in-time, 24/11):** o recálculo do dossiê usa o LTM já publicado na data (Res. CVM 80/2022, art.
+31, II — ITR em 45 dias; nota A) e o IPCA até o mês D − 2 (convenção conservadora; divulgação do IBGE nota C, release não aberto).
+`dados/mercado_2026-10-02.json` recriado com os números do mercado vigente até 23/11 (sem coleta nova). Com o motor de antes do H2 o
+recálculo reproduz exato FESA4, SHUL4, VLID3, BLAU3, HYPE3-10-06 e LEVE3; restam duas diferenças de DADO, explicadas: CMIN3 (macro
+FRED/PTAX revisada depois da data, sem vintage — com a macro de antes volta 3,3668) e ALLD3 (dois JCP aprovados em 29/09 que a API da
+B3 só listou depois de 19/10 — com o arquivo de antes volta 14,9142).
+**DECISÃO DO FRANK — ALLD3 (24/11):** o H2 leva o recálculo da ALLD3 em 15/10 de **BARATA → RADAR** (central 14,91 → 15,97, P/C 0,39;
+dispersão DCF 16,6 / OE 7,7 = 2,17 > 1,8, §11.3; moat 0 → 1 pelo WACC real). **Aceito RADAR no recálculo.** O veredito salvo de 15/10
+(BARATA) fica como registro (append-only); o painel mostra o aviso DIVERGE até um dossiê novo com data nova. Nenhuma ordem de compra
+ou venda decorre desta entrada.
+**Adversário (24/11, commit c108bce):** 1 achado reproduzido e corrigido — o minério da CMIN3 (`dossie/fichas/cmin3.py`) lia o IPCA
+direto do arquivo e ficava em cache, fora do corte na data: no dossiê de 06/10 usava o IPCA de setembro (ainda não publicado) e
+misturava duas bases de "R$ de hoje". Agora o mês do IPCA do motor entra no cálculo e na chave do cache; CMIN3-10-06 3,6810 → 3,6317
+(CARA, igual); teste de regressão. Textos "no ponto fixo" atualizados. Nada mais reproduzido (estado global depois do corte, data do
+hall, saída com exceção, mesmo D em todos os lugares, Ke > 30% → NC, chamadores antigos). **Limite conhecido:** o corte usa o prazo
+legal do ITR (45 dias), não a data real de entrega (DT_RECEB) — um ITR entregue com atraso seria usado antes de existir.
+**Agente `oraculo` (24/11, ramo `gravacao/3t26` × master): BLOQUEIA** — só pelo item de overfitting: a emenda 3 (escolha da opção A)
+entrou no mesmo commit que o motor e o golden (sem prova de ordem) e a aceitação foi mantida depois de a premissa ("joga contra
+comprar") se mostrar falsa. Ressalvas: o efeito máximo é KLBN11 +18,8% (não +14%; corrigido no `01`, BACKLOG, testes e emenda 6); a ALLD3
+faltava na contagem de palavras; 30% virou veto sem fonte A/B do número; WACC com os outros passivos financeiros é menos conservador;
+financeiras com VPA/LPA do 2T26 digitados ao preço de 19/11; golden do 3T26 (23/11) sem camada citada; Graham/Klarman (valor que se
+mexe com o preço). Reproduzido por ele: suíte verde, oráculo sem bloqueante, teste do H2 vermelho no motor do master. **O ramo NÃO foi
+juntado no master; decisão de volta ao Frank.**
+**Decisão do Frank sobre o BLOQUEIA (24/11): opção 1, aceita o risco por escrito** (pré-registro, emenda 7, commit próprio
+4dc5bf6, antes do commit do motor). **Registro honesto:** a opção A foi escolhida pela fonte, antes da tabela; a decisão de
+**manter** A, depois de a premissa cair, veio **depois** de ver a tabela e se apoia só na fonte (Damodaran, cap. 8 p. 47). Nenhuma
+compra nova surgiu: zero BARATA no hall antes e depois; o H2 só desceu palavras (SMTO3 CARA → NÃO CONCLUSIVO; dossiê ALLD3 BARATA →
+RADAR no recálculo). LEVE3 e PETR4 em RADAR vêm do 3T26 (23/11), antes do B34. Condições cumpridas antes do merge:
+(1) **Graham/Klarman** — o Graham-BR e o revisado se mexiam com o preço porque o fator f usava o Ke **alavancado** da empresa, e o
+D/E a mercado vazava o preço para um método que não usa o custo de capital da empresa (SMTO3 com preço −30%: Graham-BR −7,9%,
+revisado −15,2%). O `01` §11 manda o Ke da casa ("Graham-BR ignora a estrutura de capital"): corrigido (`mk_casa`), teste
+`test_graham_nao_se_mexe_com_o_preco` vermelho com a correção desfeita (9,52 × 9,88) e verde com ela. Graham não é âncora: nenhum
+central nem palavra muda. O lucro normalizado (Klarman) e o Graham original não se mexiam (medido). Resta pequeno e legítimo: o
+teto de renda traz o provento a valor presente pelo Ke da empresa (§6.3), até −0,25% com o preço −30%. (2) **Trava nova:** emenda do
+pré-registro em commit próprio, antes do motor; o `python -m oraculo` confere pelo git (check `ordem`, bloqueante, corte b07482a;
+`ferramentas/oraculo/ordem.py`, 12 testes num git sintético) e o agente `oraculo` tem o item no checklist. (3) **Financeiras:** os
+20 VPA/LPA digitados do 2T26 (10 bancos e seguradoras do lote 1) entram na catraca de datas fixas (`contabil_digitado`), prazo
+31/01/2027, missão B32. (4) **BACKLOG B36:** hold-out — congelar a v2.7 e rodar em 20 ações fora dos 41, lista registrada antes de
+rodar, antes de qualquer calibração nova (B35 incluída). (5) Motivo do golden do 3T26: adendo com a camada no `tests/golden_log.md`
+(camadas 4, 1 e 5; sem camada 3 — limite declarado).

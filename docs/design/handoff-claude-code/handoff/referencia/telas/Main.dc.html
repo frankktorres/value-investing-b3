@@ -1,0 +1,404 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Hall — Mesa de Value</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+.mv{--f-ui:'IBM Plex Sans',system-ui,sans-serif;--f-mono:'IBM Plex Mono',ui-monospace,monospace;--f-serif:'Space Grotesk','IBM Plex Sans',system-ui,sans-serif;
+--bg:#070B12;--sf:#0E1520;--sf2:#141D2B;--ln:#1E2A3B;--ln2:#2B3C54;--ink:#EAF0F8;--ink2:#A9B8CC;--ink3:#8496AE;--ac:#8A97FF;
+--b-fg:#5EE0CF;--b-bg:#0B2E31;--b-ln:#1C6B68;--j-fg:#B4C3D9;--j-bg:#141D2B;--j-ln:#3B4F6B;--c-fg:#FFC06E;--c-bg:#33220B;--c-ln:#8C5C1F;--n-fg:#A9B8CC;--n-ln:#5A6C86;
+--s-div:#6CA8FF;--s-jcp:#3E6FC0;--hatch:repeating-linear-gradient(135deg,transparent 0 4px,rgba(169,184,204,.16) 4px 5px);--sh2:0 12px 32px rgba(0,0,0,.55);
+--dot:rgba(138,151,255,.11);--hi:rgba(255,255,255,.035);--glow-b:0 0 14px rgba(94,224,207,.22);--glow-p:0 0 12px rgba(234,240,248,.55);
+--r1:4px;--r2:8px;--r3:12px;
+font-family:var(--f-ui);font-size:13px;line-height:1.4;color:var(--ink);background:var(--bg);min-height:100vh;-webkit-font-smoothing:antialiased}
+.mv[data-tema="claro"]{--bg:#F3F6FB;--sf:#FFFFFF;--sf2:#ECF0F7;--ln:#DCE3EE;--ln2:#BFCADA;--ink:#0A1220;--ink2:#42516A;--ink3:#566680;--ac:#3646D6;
+--b-fg:#0A6660;--b-bg:#DAF4F0;--b-ln:#62C2B8;--j-fg:#384866;--j-bg:#ECF0F7;--j-ln:#A5B3C9;--c-fg:#874900;--c-bg:#FFEDD2;--c-ln:#E0A85F;--n-fg:#42516A;--n-ln:#8493AA;
+--s-div:#2C55B5;--s-jcp:#5A85D8;--hatch:repeating-linear-gradient(135deg,transparent 0 4px,rgba(10,18,32,.10) 4px 5px);--sh2:0 8px 28px rgba(10,18,32,.14);
+--dot:rgba(54,70,214,.09);--hi:rgba(255,255,255,.9);--glow-b:none;--glow-p:none}
+.mv *{box-sizing:border-box}
+.mv button,.mv select,.mv input{font:inherit;color:inherit}
+.mv :focus-visible{outline:2px solid var(--ac);outline-offset:2px}
+.num{font-variant-numeric:tabular-nums lining-nums;font-feature-settings:"tnum" 1,"lnum" 1}
+.mono{font-family:var(--f-mono)}
+.cap{font:500 11px/1.2 var(--f-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--ink3)}
+.topbar{display:flex;flex-wrap:wrap;align-items:center;gap:8px 24px;padding:8px 24px;background:var(--sf);border-bottom:1px solid var(--ln)}
+.brand{font:600 19px/1 var(--f-serif);letter-spacing:-.01em;display:flex;align-items:baseline;gap:8px;color:var(--ink)}
+.brand small{font:500 11px var(--f-mono);color:var(--ink3);letter-spacing:.08em}
+.nav{display:flex;flex-wrap:wrap;gap:4px}
+.nav a{padding:10px 12px;color:var(--ink2);text-decoration:none;border-bottom:2px solid transparent;font-weight:500}
+.nav a:hover{color:var(--ink)}
+.nav a.on{color:var(--ink);border-bottom-color:var(--ac)}
+.tools{margin-left:auto;display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+.btn{display:inline-flex;align-items:center;gap:6px;height:32px;padding:0 10px;border:1px solid var(--ln2);background:var(--sf);border-radius:var(--r2);cursor:pointer;white-space:nowrap}
+.btn:hover{background:var(--sf2)}
+.btn[aria-pressed="true"]{background:var(--ink);color:var(--sf);border-color:var(--ink)}
+.search{display:flex;align-items:center;gap:6px;height:32px;padding:0 10px;border:1px solid var(--ln2);border-radius:var(--r2);background:var(--bg);width:200px;color:var(--ink3)}
+.search input{border:0;background:transparent;outline:none;width:100%;color:var(--ink)}
+.search kbd{font:500 10px var(--f-mono);border:1px solid var(--ln2);border-radius:3px;padding:1px 4px;color:var(--ink3)}
+.vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+.strip{display:flex;flex-wrap:wrap;align-items:center;gap:4px 20px;padding:6px 24px;font:12px/1.3 var(--f-mono);color:var(--ink3);border-bottom:1px solid var(--ln);background:var(--bg)}
+.strip b{color:var(--ink2);font-weight:500}
+.ilu{padding:2px 8px;border:1px dashed var(--n-ln);border-radius:3px;background:var(--hatch);color:var(--ink2)}
+.dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--ink2);margin-right:6px}
+.page{padding:20px 24px 32px;display:flex;flex-direction:column;gap:16px;max-width:1520px;margin:0 auto}
+.h1{font:600 26px/1.15 var(--f-serif);letter-spacing:-.01em;margin:0}
+.sub{color:var(--ink2);margin:4px 0 0}
+.tabs{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px}
+.tab{display:flex;flex-direction:column;align-items:flex-start;gap:8px;padding:10px 12px;border:1px solid var(--ln);border-radius:var(--r2);background:var(--sf);cursor:pointer;text-align:left}
+.tab:hover{border-color:var(--ln2)}
+.tab[aria-pressed="true"]{border-color:var(--ink);box-shadow:inset 0 0 0 1px var(--ink)}
+.tab .n{font:600 24px/1 var(--f-serif)}
+.tab .p{font:12px var(--f-mono);color:var(--ink3);margin-left:6px}
+.dist{display:flex;height:8px;border-radius:2px;overflow:hidden;gap:2px}
+.seg-barata{background:var(--b-fg)}.seg-justa{background:var(--j-ln)}.seg-cara{background:var(--c-fg)}
+.seg-nc{background:var(--hatch);border:1px dashed var(--n-ln)}
+.toolbar{display:flex;flex-wrap:wrap;align-items:center;gap:8px 20px}
+.toolbar label{display:flex;align-items:center;gap:8px;color:var(--ink2)}
+.toolbar select{height:32px;padding:0 8px;border:1px solid var(--ln2);border-radius:var(--r2);background:var(--sf)}
+.toolbar .grow{margin-left:auto;color:var(--ink3);font:12px var(--f-mono)}
+.chip{display:inline-flex;align-items:center;gap:6px;height:22px;padding:0 8px;border-radius:var(--r1);font:600 11px/1 var(--f-mono);letter-spacing:.05em;border:1px solid;white-space:nowrap}
+.chip-barata{color:var(--b-fg);background:var(--b-bg);border-color:var(--b-ln)}
+.chip-justa{color:var(--j-fg);background:transparent;border-color:var(--j-ln)}
+.chip-cara{color:var(--c-fg);background:var(--c-bg);border-color:var(--c-ln)}
+.chip-nc{color:var(--n-fg);border-style:dashed;border-color:var(--n-ln);background:var(--hatch)}
+.chip-todas{border:0;padding:0;height:auto;color:var(--ink2);font:500 11px var(--f-mono)}
+.gl{display:inline-block;width:8px;height:8px;background:currentColor;flex:none}
+.gl-barata{clip-path:polygon(0 0,100% 0,50% 100%)}
+.gl-cara{clip-path:polygon(50% 0,100% 100%,0 100%)}
+.gl-justa{height:6px;background:none;border-top:2px solid currentColor;border-bottom:2px solid currentColor}
+.gl-nc{background:none;border:1.5px dashed currentColor;border-radius:50%}
+.gl-todas{display:none}
+.nt{display:inline-grid;place-items:center;min-width:15px;height:15px;padding:0 3px;border-radius:3px;font:600 10px/1 var(--f-mono);vertical-align:1px;margin-left:5px}
+.nt-A{background:var(--ink);color:var(--sf)}
+.nt-B{border:1.5px solid var(--ink2);color:var(--ink2)}
+.nt-C{border:1px dashed var(--ink3);color:var(--ink3)}
+.nt-x{border:1px dotted var(--ink3);color:var(--ink3)}
+.v-w{color:var(--ink3);text-decoration:underline dotted var(--ink3);text-underline-offset:3px}
+.tbl{border:1px solid var(--ln);border-radius:var(--r2);background:var(--sf);overflow-x:auto}
+.tbl-in{min-width:1120px}
+.scroll{max-height:540px;overflow-y:auto}
+.row{--cols:minmax(150px,1.1fr) 138px minmax(190px,1.8fr) 78px 66px 96px 82px 52px 82px 76px 56px;display:grid;grid-template-columns:var(--cols);gap:0 8px;align-items:center;padding:6px 14px;border-bottom:1px solid var(--ln);min-height:44px}
+.row:hover{background:var(--bg)}
+.row.th{position:sticky;top:0;z-index:2;background:var(--sf2);min-height:34px;border-bottom:1px solid var(--ln2)}
+.row.th:hover{background:var(--sf2)}
+.row.velho .dim{opacity:.62}
+.r{text-align:right}
+.tk{display:block;color:var(--ink);text-decoration:none}
+.tk b{font:600 14px/1.2 var(--f-mono);letter-spacing:.01em}
+.tk:hover b{text-decoration:underline;text-underline-offset:3px}
+.tk span{display:block;color:var(--ink3);font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.reg{position:relative;height:22px}
+.reg:before{content:"";position:absolute;left:0;right:0;top:10px;height:2px;background:var(--ln2)}
+.reg-z{position:absolute;top:6px;height:10px;border-radius:2px}
+.reg-zb{background:var(--b-bg);border:1px solid var(--b-ln)}
+.reg-zc{background:var(--c-bg);border:1px solid var(--c-ln)}
+.reg-t{position:absolute;top:4px;width:1px;height:14px;background:var(--ink2)}
+.reg-c{position:absolute;top:6px;width:9px;height:9px;margin-left:-4px;transform:rotate(45deg);border:1.5px solid var(--ink);background:var(--sf)}
+.reg-p{position:absolute;top:1px;width:2px;height:20px;margin-left:-1px;background:var(--ink)}
+.reg-p:before{content:"";position:absolute;left:-2px;top:-2px;width:6px;height:6px;border-radius:50%;background:var(--ink)}
+.reg-nc{height:22px;display:flex;align-items:center;border:1px dashed var(--n-ln);border-radius:3px;background:var(--hatch);padding:0 8px;font:11px var(--f-mono);color:var(--ink2)}
+.small{font-size:12px;color:var(--ink3)}
+.tag{white-space:nowrap;display:inline-flex;align-items:center;gap:4px;height:18px;padding:0 6px;border:1px solid var(--c-ln);border-radius:3px;background:var(--c-bg);color:var(--c-fg);font:600 10px var(--f-mono);letter-spacing:.04em;text-transform:uppercase}
+.legend{display:flex;flex-wrap:wrap;align-items:center;gap:8px 24px;padding:10px 14px;border-top:1px solid var(--ln);color:var(--ink2);font-size:12px;background:var(--sf)}
+.legend .it{display:flex;align-items:center;gap:8px}
+.mini{position:relative;width:64px;height:18px}
+.mini:before{content:"";position:absolute;left:0;right:0;top:8px;height:2px;background:var(--ln2)}
+.sp{display:block;width:84px;height:24px}
+.sp path{fill:none;stroke:var(--ink2);stroke-width:1.4;stroke-linejoin:round}
+.sp line{stroke:var(--ink3);stroke-width:1;stroke-dasharray:2 2}
+
+.mv.pane{min-height:0}
+.shell{display:flex;flex-wrap:wrap;min-height:100vh}
+.side{flex:0 0 220px;width:220px;border-right:1px solid var(--ln);background:var(--sf);padding:18px 12px;display:flex;flex-direction:column;gap:22px;align-self:stretch}
+.brandl{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--ink);padding:0 4px}
+.brandl b{display:block;font:700 16px/1.1 var(--f-serif);letter-spacing:-.01em}
+.brandl small{display:block;font:500 9.5px/1.3 var(--f-mono);letter-spacing:.08em;color:var(--ink3);margin-top:3px}
+.snav{display:flex;flex-direction:column;gap:2px}
+.snav .sec{font:500 10px var(--f-mono);letter-spacing:.1em;color:var(--ink3);padding:10px 10px 4px}
+.snav a{display:flex;align-items:center;gap:10px;padding:9px 10px;border-radius:8px;color:var(--ink2);text-decoration:none;font-weight:500}
+.snav a:hover{background:var(--sf2);color:var(--ink)}
+.snav a.on{background:var(--sf2);color:var(--ink);box-shadow:inset 0 0 0 1px var(--ln2)}
+.snav a.on svg{color:var(--ac)}
+.sfoot{margin-top:auto}
+.side .strip{flex-direction:column;align-items:flex-start;gap:6px;border:1px solid var(--ln);border-radius:10px;padding:10px 12px;background:var(--bg);font-size:11px}
+.content{flex:1 1 640px;min-width:0;background-image:radial-gradient(var(--dot) 1px,transparent 1px);background-size:22px 22px;display:flex;flex-direction:column}
+.topbar{display:flex;flex-wrap:wrap;align-items:center;gap:8px 16px;padding:10px 24px;background:var(--bg);border-bottom:1px solid var(--ln);position:relative}
+.topbar .crumbtop{display:flex;align-items:center;gap:8px}
+.topbar .tools{margin-left:auto}
+.search{display:flex;align-items:center;gap:8px;height:34px;padding:0 10px;border:1px solid var(--ln2);border-radius:10px;background:var(--sf);width:240px;color:var(--ink3)}
+.search input{border:0;background:transparent;outline:none;width:100%;color:var(--ink)}
+.search kbd{font:500 10px var(--f-mono);border:1px solid var(--ln2);border-radius:4px;padding:1px 5px;color:var(--ink3)}
+.vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+.btn{height:34px;border-radius:10px;background:var(--sf)}
+.card,.tbl,.tab,.pane,.st,.q,.stat{border-radius:var(--r3);box-shadow:inset 0 1px 0 var(--hi)}
+.stat{padding:10px 14px;border:1px solid var(--ln);background:var(--sf)}
+.h1{font:700 30px/1.1 var(--f-serif);letter-spacing:-.025em}
+.card h2,.nome{font-family:var(--f-serif);font-weight:600;letter-spacing:-.01em}
+.tab .n,.kpi .v,.stat .v,.tkr{font-family:var(--f-serif)}
+.tab .n{font-size:30px;font-weight:600}
+.kpi .v{font-size:34px;font-weight:600;letter-spacing:-.02em}
+.stat .v{font-size:26px;letter-spacing:-.02em}
+.chip{border-radius:999px;padding:0 10px}
+.chip.lg{padding:0 14px}
+.chip-barata{box-shadow:var(--glow-b)}
+.tag{border-radius:999px;padding:0 8px}
+.reg-z,.bigreg .z,.mr .zb,.mr .zc{border-radius:999px}
+.reg-p,.bigreg .px,.big .px,.mr .p{box-shadow:var(--glow-p)}
+.reg-nc{border-radius:999px}
+.row.th,.pos.h,.prem.h,.mrow.h{background:transparent}
+.row.th{background:var(--sf2)}
+.cap{letter-spacing:.09em}
+.banner,.box{border-radius:var(--r3)}
+.meter{border-radius:999px}.meter i{border-radius:999px}
+</style>
+</helmet>
+<div class="mv" data-tema="{{tema}}">
+<div class="shell"><aside class="side"><a class="brandl" href="Main.dc.html"><svg width="30" height="30" viewBox="0 0 28 28" aria-hidden="true"><rect x="1" y="1" width="26" height="26" rx="8" fill="none" stroke="var(--ac)" stroke-width="1.5"/><path d="M7 14h14" stroke="var(--ink2)" stroke-width="1.5"/><path d="M14 9l5 5-5 5-5-5z" fill="var(--sf)" stroke="var(--ink)" stroke-width="1.5"/><path d="M8.5 9v10" stroke="var(--ac)" stroke-width="2"/></svg><span><b>Mesa de Value</b><small>B3 · LONGO PRAZO</small></span></a><nav class="snav" aria-label="Seções"><div class="sec">ANÁLISE</div><a class="on" aria-current="page" href="Main.dc.html"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="5" height="5" rx="1"/><rect x="9" y="2" width="5" height="5" rx="1"/><rect x="2" y="9" width="5" height="5" rx="1"/><rect x="9" y="9" width="5" height="5" rx="1"/></svg>Hall</a><a href="Empresa.dc.html"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 14V3h6v11M9 7h4v7M5.5 5.5h1M5.5 8h1M5.5 10.5h1"/></svg>Empresa</a><a href="Carteira.dc.html"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="8" cy="8" r="6"/><path d="M8 2v6h6"/></svg>Carteira</a><a href="Sistema.dc.html"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1.5 8h3l1.5-4 3 8 1.5-4h4"/></svg>Monitor</a><div class="sec">SISTEMA</div><a href="Sistema.dc.html"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 4h10M3 8h10M3 12h10"/><circle cx="6" cy="4" r="1.4"/><circle cx="10" cy="8" r="1.4"/><circle cx="5" cy="12" r="1.4"/></svg>Sistema</a></nav><div class="sfoot"><div class="strip">
+    <span><span class="dot"></span><b>Local</b> · somente leitura · nada sai desta máquina</span>
+    <span>Cotações <b>19/10/2026 17:45</b></span>
+    <span>Demonstrações <b>2T26</b> (CVM)</span>
+    <span class="ilu">DADOS ILUSTRATIVOS</span>
+  </div></div></aside><div class="content">
+<header class="topbar"><div class="crumbtop"><span class="cap">Hall · 41 empresas</span></div><div class="tools"><label class="search"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="7" cy="7" r="4.5"/><path d="M10.5 10.5 14 14"/></svg><span class="vh">Buscar ticker ou empresa</span><input type="search" placeholder="Buscar ticker ou empresa"><kbd>/</kbd></label><button class="btn" type="button" aria-pressed="{{ocultarStr}}" onClick="{{toggleOcultar}}"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M1.5 8s2.3-4.5 6.5-4.5S14.5 8 14.5 8 12.2 12.5 8 12.5 1.5 8 1.5 8Z"/><circle cx="8" cy="8" r="2"/></svg>Ocultar valores</button><button class="btn" type="button" aria-label="Alternar tema claro e escuro" onClick="{{toggleTema}}"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M13 9.5A5.5 5.5 0 0 1 6.5 3 5.5 5.5 0 1 0 13 9.5Z"/></svg>{{temaRotulo}}</button></div></header>
+
+  <main class="page">
+    <div>
+      <h1 class="h1">Hall</h1>
+      <p class="sub">41 empresas, uma palavra cada. A palavra compara o preço de hoje com a régua: compra, central (mediana dos métodos centrais) e saída.</p>
+    </div>
+
+    <div>
+      <div class="tabs" role="group" aria-label="Filtrar por palavra">
+        <sc-for list="{{tabs}}" as="t" hint-placeholder-count="5">
+          <button class="tab" type="button" aria-pressed="{{t.on}}" onClick="{{t.click}}">
+            <span class="chip chip-{{t.cls}}"><i class="gl gl-{{t.cls}}"></i>{{t.label}}</span>
+            <span><span class="n num">{{t.n}}</span><span class="p num">{{t.pct}}</span></span>
+          </button>
+        </sc-for>
+      </div>
+      <div class="dist" style="margin-top:10px" role="img" aria-label="Distribuição das palavras no hall">
+        <sc-for list="{{segs}}" as="s" hint-placeholder-count="4">
+          <div class="seg-{{s.cls}}" style="width:{{s.w}}%"></div>
+        </sc-for>
+      </div>
+    </div>
+
+    <div class="toolbar">
+      <label>Ordenar por
+        <select value="{{ordem}}" onChange="{{onOrdem}}">
+          <option value="pc">P/C (menor primeiro)</option>
+          <option value="dy">Yield (maior primeiro)</option>
+          <option value="tk">Ticker (A–Z)</option>
+          <option value="velho">Dado mais velho</option>
+        </select>
+      </label>
+      <label><input type="checkbox" checked="{{soAB}}" onChange="{{onSoAB}}">Só central com fonte A ou B</label>
+      <span class="grow num">Exibindo {{nShown}} de 41</span>
+    </div>
+
+    <section class="tbl" aria-label="Hall de empresas">
+      <div class="tbl-in" role="table">
+        <div class="row th cap" role="row">
+          <div role="columnheader">Empresa</div>
+          <div role="columnheader">Palavra</div>
+          <div role="columnheader">Régua</div>
+          <div class="r" role="columnheader">Preço R$</div>
+          <div class="r" role="columnheader">Compra</div>
+          <div class="r" role="columnheader">Central</div>
+          <div class="r" role="columnheader">Saída</div>
+          <div class="r" role="columnheader">P/C</div>
+          <div class="r" role="columnheader">Yield</div>
+          <div role="columnheader">Preço 12m</div>
+          <div class="r" role="columnheader">Carteira</div>
+        </div>
+        <div class="scroll">
+          <sc-for list="{{rows}}" as="r" hint-placeholder-count="8">
+            <div class="row {{r.velho}}" role="row">
+              <div role="cell" style="display:flex;align-items:center;gap:8px;min-width:0"><a class="tk" href="Empresa.dc.html" style="min-width:0"><b>{{r.tk}}</b><span>{{r.sub}}</span></a><sc-if value="{{r.isVelho}}" hint-placeholder-val="{{ false }}"><span class="tag">{{r.dadoTag}}</span></sc-if></div>
+              <div role="cell"><span class="chip chip-{{r.cls}}"><i class="gl gl-{{r.cls}}"></i>{{r.palavra}}</span></div>
+              <div role="cell" class="dim">
+                <sc-if value="{{r.isNC}}" hint-placeholder-val="{{ false }}">
+                  <div class="reg-nc">sem central firme · só informativo</div>
+                </sc-if>
+                <sc-if value="{{r.notNC}}" hint-placeholder-val="{{ true }}">
+                  <div class="reg" role="img" aria-label="{{r.aria}}">
+                    <div class="reg-z reg-zb" style="left:0;width:{{r.pCompra}}%"></div>
+                    <div class="reg-z reg-zc" style="left:{{r.pSaida}}%;right:0"></div>
+                    <div class="reg-t" style="left:{{r.pCompra}}%"></div>
+                    <div class="reg-t" style="left:{{r.pSaida}}%"></div>
+                    <div class="reg-c" style="left:{{r.pCentral}}%"></div>
+                    <div class="reg-p" style="left:{{r.pPreco}}%"></div>
+                  </div>
+                </sc-if>
+              </div>
+              <div class="r num dim" role="cell">{{r.preco}}<span class="nt nt-A" title="Nota A: cotação B3">A</span></div>
+              <div class="r num dim" role="cell">{{r.compra}}</div>
+              <div class="r num dim" role="cell"><span class="v-{{r.firm}}">{{r.central}}</span><span class="nt nt-{{r.gC}}" title="{{r.gCtitle}}">{{r.gCtxt}}</span><div class="small num">{{r.nm}}</div></div>
+              <div class="r num dim" role="cell">{{r.saida}}<div class="small">{{r.excTxt}}</div></div>
+              <div class="r num dim" role="cell"><b>{{r.pc}}</b></div>
+              <div class="r num dim" role="cell"><span class="v-{{r.firmDy}}">{{r.dy}}</span><span class="nt nt-{{r.gDy}}" title="{{r.gDyTitle}}">{{r.gDyTxt}}</span></div>
+              <div role="cell" class="dim">
+                <svg class="sp" viewBox="0 0 84 24" aria-label="Preço nos últimos 12 meses" role="img"><line x1="0" x2="84" y1="{{r.yc}}" y2="{{r.yc}}"/><path d="{{r.spark}}"/></svg>
+              </div>
+              <div class="r num" role="cell">{{r.peso}}</div>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+      <div class="legend">
+        <span class="it"><span class="mini"><span class="reg-z reg-zb" style="left:0;width:22px"></span><span class="reg-t" style="left:22px"></span><span class="reg-c" style="left:32px"></span><span class="reg-t" style="left:42px"></span><span class="reg-z reg-zc" style="left:42px;right:0"></span><span class="reg-p" style="left:15px"></span></span>faixa de compra · central · faixa de saída · <b>traço grosso = preço de hoje</b> (escala 50%–160% do central · compra 0,70× · saída 1,30×, ou 1,50× com exceção de qualidade)</span>
+        <span class="it"><span class="nt nt-A" style="margin:0">A</span> oficial (CVM, B3)</span>
+        <span class="it"><span class="nt nt-B" style="margin:0">B</span> primária com ressalva</span>
+        <span class="it"><span class="nt nt-C" style="margin:0">C</span> agregador · <span class="v-w">menos firme</span></span>
+        <span class="it"><span class="nt nt-x" style="margin:0">—</span> sem fonte</span>
+        <span class="it small">Só A e B embasam decisão.</span>
+      </div>
+    </section>
+  </main>
+</div></div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"tema":{"editor":"enum","options":["claro","escuro"],"default":"escuro","section":"Tema"}}'>
+class Component extends DCLogic {
+  constructor(...a) {
+    super(...a);
+    this.state = { filtro: 'todas', ordem: 'pc', soAB: false, ocultar: false, tema: null };
+  }
+  fmt(n, d) { d = d == null ? 2 : d; return n.toLocaleString('pt-BR', { minimumFractionDigits: d, maximumFractionDigits: d }); }
+  dados() {
+    // TICKER|Empresa|Setor|preço÷central|central|nota central|métodos|yield %|nota yield|dias sem atualizar|peso %
+    return [
+      'BBAS3|Banco do Brasil|Bancos|0.66|41.20|B|5/6|9.8|B|0|8.4',
+      'ITUB4|Itaú Unibanco|Bancos|0.97|36.80|A|6/7|6.1|B|0|10.2',
+      'BBDC4|Bradesco|Bancos|0.83|15.60|B|5/7|7.4|B|0|0',
+      'BBSE3|BB Seguridade|Seguros|1.02|36.10|A|5/6|8.9|B|0|5.1',
+      'CXSE3|Caixa Seguridade|Seguros|1.34|13.20|B|4/6|8.2|C|0|0',
+      'TAEE11|Taesa|Energia elétrica|0.69|38.50|A|5/6|10.9|B|0|9.7',
+      'TRPL4|ISA Energia|Energia elétrica|0.92|29.40|A|5/6|7.8|B|0|4.3',
+      'CPLE6|Copel|Energia elétrica|1.31|10.90|B|5/7|5.6|B|0|0',
+      'EGIE3|Engie Brasil|Energia elétrica|0.88|40.10|A|6/6|7.2|B|0|6.0',
+      'CMIG4|Cemig|Energia elétrica|1.09|10.40|B|4/6|8.1|B|0|3.8',
+      'ELET3|Eletrobras|Energia elétrica|1.40|38.00|C|3/6|3.1|C|0|0',
+      'SAPR11|Sanepar|Saneamento|0.70|33.50|A|5/6|6.9|B|1|2.2',
+      'SBSP3|Sabesp|Saneamento|1.32|112.00|B|5/7|2.6|B|0|0',
+      'CSMG3|Copasa|Saneamento|0.95|31.20|B|4/6|7.7|B|0|3.1',
+      'VIVT3|Vivo|Telecom|1.05|56.80|A|5/6|6.4|B|0|5.9',
+      'PETR4|Petrobras|Petróleo e gás|0.86|41.00|C|3/6|12.1|C|0|7.5',
+      'PRIO3|PRIO|Petróleo e gás|0|||||||0',
+      'VBBR3|Vibra|Distribuição|0.90|30.00|B|4/6|7.0|B|0|0',
+      'UGPA3|Ultrapar|Distribuição|1.30|14.20|B|4/6|4.9|B|0|0',
+      'CSAN3|Cosan|Holding|0|||||||0',
+      'VALE3|Vale|Mineração|0.91|74.00|C|3/6|8.8|C|0|6.6',
+      'GGBR4|Gerdau|Siderurgia|1.13|21.70|B|4/6|5.2|B|0|0',
+      'KLBN11|Klabin|Papel e celulose|0.68|27.50|B|4/6|5.7|B|0|0',
+      'SUZB3|Suzano|Papel e celulose|1.33|55.00|C|3/6|3.9|C|0|0',
+      'WEGE3|WEG|Bens de capital|1.55|41.00|A|5/7|1.5|B|0|0',
+      'ABEV3|Ambev|Bebidas|1.08|14.80|A|6/7|5.3|B|0|4.4',
+      'RADL3|RaiaDrogasil|Varejo farmacêutico|1.31|21.40|B|5/7|1.3|B|0|0',
+      'HYPE3|Hypera|Farmacêutico|0.62|38.90|B|4/6|4.2|C|57|0',
+      'FLRY3|Fleury|Saúde|1.14|17.80|B|4/6|5.6|B|0|0',
+      'RENT3|Localiza|Locação|0|||||||0',
+      'B3SA3|B3|Bolsa|1.35|12.30|A|5/6|5.0|B|0|0',
+      'ODPV3|Odontoprev|Saúde|0.96|14.50|B|4/6|8.4|B|0|3.3',
+      'CMIN3|CSN Mineração|Mineração|0.70|6.40|C|3/6|11.5|C|0|0',
+      'CPFE3|CPFL Energia|Energia elétrica|0.94|38.20|A|5/6|7.9|B|0|4.0',
+      'NEOE3|Neoenergia|Energia elétrica|1.31|29.50|B|4/6|6.0|B|0|0',
+      'ALUP11|Alupar|Energia elétrica|0.64|34.00|A|5/6|7.6|B|0|4.8',
+      'AURE3|Auren|Energia elétrica|0|||||||0',
+      'MULT3|Multiplan|Shoppings|1.30|28.70|B|4/6|4.8|B|0|0',
+      'BRSR6|Banrisul|Bancos|0.84|14.30|B|4/6|8.7|B|0|2.9',
+      'SANB11|Santander Brasil|Bancos|1.12|31.50|B|5/7|5.8|B|0|0',
+      'LREN3|Lojas Renner|Varejo|0|||||||0'
+    ];
+  }
+  linha(s, i) {
+    const p = s.split('|');
+    const nc = !p[4];
+    const EXC = ['ITUB4', 'WEGE3', 'RADL3', 'EGIE3', 'ABEV3'];
+    const fs = EXC.indexOf(p[0]) >= 0 ? 1.5 : 1.3;
+    const r = parseFloat(p[3]);
+    const central = nc ? null : parseFloat(p[4]);
+    const preco = nc ? 18 + ((i * 7) % 40) + 0.35 : central * r;
+    let cls = 'nc', palavra = 'NÃO CONCLUSIVO';
+    if (!nc) { if (r <= 0.70) { cls = 'barata'; palavra = 'BARATA'; } else if (r >= fs) { cls = 'cara'; palavra = 'CARA'; } else { cls = 'justa'; palavra = 'JUSTA'; } }
+    const lo = nc ? 0 : central * 0.5, hi = nc ? 1 : central * 1.6;
+    const pos = (x) => Math.max(0, Math.min(100, (x - lo) / (hi - lo) * 100));
+    // sparkline determinística
+    let seed = ((i + 1) * 2654435761) >>> 0;
+    const rnd = () => { seed = (seed * 1664525 + 1013904223) >>> 0; return seed / 4294967296; };
+    let x = 0; const walk = []; for (let k = 0; k < 24; k++) { x += rnd() - 0.5; walk.push(x); }
+    const ptsv = walk.map((a) => preco * (1 + 0.035 * (a - walk[23])));
+    const all = nc ? ptsv : ptsv.concat([central]);
+    const mn = Math.min.apply(null, all), mx = Math.max.apply(null, all);
+    const Y = (v) => 21 - (v - mn) / (mx - mn || 1) * 18;
+    const d = ptsv.map((v, k) => (k ? 'L' : 'M') + (k * 84 / 23).toFixed(1) + ' ' + Y(v).toFixed(1)).join('');
+    const gC = nc ? 'x' : p[5];
+    const gD = p[8] || 'x';
+    const dias = parseInt(p[9] || '0', 10);
+    const peso = parseFloat(p[10] || '0');
+    const dado = dias === 0 ? 'hoje' : (dias < 30 ? 'há ' + dias + ' d' : 'há ' + dias + ' d');
+    const nome = { A: 'Nota A: oficial', B: 'Nota B: primária com ressalva', C: 'Nota C: agregador, menos firme', x: 'Sem fonte' };
+    const money = (v) => this.fmt(v, 2);
+    return {
+      tk: p[0], sub: p[1] + ' · ' + p[2], cls: cls, palavra: palavra,
+      isNC: nc, notNC: !nc, velho: dias > 7 ? 'velho' : '', isVelho: dias > 7,
+      pCompra: pos(central * 0.70), pCentral: pos(central), pSaida: pos(central * fs),
+      pPreco: Math.max(2, Math.min(98, pos(preco))),
+      aria: p[0] + ': ' + palavra + ', preço ' + money(preco) + ' contra central ' + (nc ? 'indefinido' : money(central)),
+      preco: money(preco),
+      compra: nc ? '—' : money(central * 0.70),
+      central: nc ? '—' : money(central), saida: nc ? '—' : money(central * fs), excTxt: nc ? '' : (fs === 1.5 ? 'exc. 1,50×' : '1,30×'),
+      gC: gC, gCtxt: gC === 'x' ? '—' : gC, gCtitle: nome[gC], firm: (gC === 'A' || gC === 'B') ? 'f' : 'w',
+      nm: nc ? 'sem métodos firmes' : p[6] + ' métodos',
+      pc: nc ? '—' : this.fmt(r, 2),
+      dy: p[7] ? this.fmt(parseFloat(p[7]), 1) + '%' : '—', gDy: gD, gDyTxt: gD === 'x' ? '—' : gD, gDyTitle: nome[gD], firmDy: (gD === 'A' || gD === 'B') ? 'f' : 'w',
+      dyNum: p[7] ? parseFloat(p[7]) : -1,
+      spark: d, yc: nc ? -10 : Y(central).toFixed(1),
+      peso: this.state.ocultar ? '•••' : (peso ? this.fmt(peso, 1) + '%' : '—'),
+      dado: dado, dadoTag: 'velho', dias: dias, rNum: nc ? 99 : r
+    };
+  }
+  renderVals() {
+    const S = this.state;
+    const tema = S.tema || this.props.tema || 'escuro';
+    const all = this.dados().map((s, i) => this.linha(s, i));
+    const cont = { barata: 0, justa: 0, cara: 0, nc: 0 };
+    all.forEach((r) => { cont[r.cls]++; });
+    const mk = (k, label) => ({
+      cls: k, label: label, n: k === 'todas' ? all.length : cont[k],
+      pct: k === 'todas' ? '' : this.fmt(cont[k] / all.length * 100, 0) + '%',
+      on: S.filtro === k ? 'true' : 'false',
+      click: () => this.setState({ filtro: k })
+    });
+    const tabs = [mk('todas', 'TODAS'), mk('barata', 'BARATA'), mk('justa', 'JUSTA'), mk('cara', 'CARA'), mk('nc', 'NÃO CONCLUSIVO')];
+    const segs = ['barata', 'justa', 'cara', 'nc'].map((k) => ({ cls: k, w: cont[k] / all.length * 100 }));
+    let rows = all.filter((r) => S.filtro === 'todas' || r.cls === S.filtro);
+    if (S.soAB) rows = rows.filter((r) => r.gC === 'A' || r.gC === 'B');
+    const ord = S.ordem;
+    rows = rows.slice().sort((a, b) => {
+      if (ord === 'pc') return a.rNum - b.rNum;
+      if (ord === 'dy') return b.dyNum - a.dyNum;
+      if (ord === 'velho') return b.dias - a.dias;
+      return a.tk < b.tk ? -1 : 1;
+    });
+    return {
+      tema: tema, temaRotulo: tema === 'escuro' ? 'Modo claro' : 'Modo escuro',
+      tabs: tabs, segs: segs, rows: rows, nShown: rows.length, ordem: S.ordem, soAB: S.soAB,
+      ocultarStr: S.ocultar ? 'true' : 'false',
+      toggleOcultar: () => this.setState({ ocultar: !S.ocultar }),
+      toggleTema: () => this.setState({ tema: tema === 'escuro' ? 'claro' : 'escuro' }),
+      onOrdem: (e) => this.setState({ ordem: e.target.value }),
+      onSoAB: (e) => this.setState({ soAB: e.target.checked })
+    };
+  }
+}
+</script>
+</body>
+</html>

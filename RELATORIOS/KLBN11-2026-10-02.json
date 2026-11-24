@@ -1,0 +1,1883 @@
+{
+ "tk": "KLBN11",
+ "nome": "Klabin (unit)",
+ "data": "2026-10-02",
+ "origem": "hall, lote 3",
+ "palavra": "NÃO CONCLUSIVO",
+ "secoes": [
+  {
+   "titulo": "Veredito",
+   "numeros": [
+    {
+     "rotulo": "Preço",
+     "valor": 18.62,
+     "unidade": "R$",
+     "origens": [
+      {
+       "fonte": "COTAHIST",
+       "nota": "A",
+       "detalhe": "B3, COTAHIST, fechamento (PREULT) de 2026-10-02"
+      }
+     ],
+     "papel": "",
+     "obs": ""
+    },
+    {
+     "rotulo": "Valor central",
+     "valor": 2.620360862036964,
+     "unidade": "R$",
+     "origens": [
+      {
+       "fonte": "CVM DFP/ITR",
+       "nota": "A",
+       "detalhe": "CVM, DFP 2016–25 + ITR de 2026 (LTM), dados abertos"
+      },
+      {
+       "fonte": "lote (digitado)",
+       "nota": "C",
+       "detalhe": "escalar digitado no lote a partir da StatusInvest ou dos fatos do lote, sem fonte primária por campo (cabeçalho do lote)"
+      },
+      {
+       "fonte": "StatusInvest (DPA)",
+       "nota": "C",
+       "detalhe": "DPA por data-com da StatusInvest"
+      },
+      {
+       "fonte": "Tesouro + ANBIMA",
+       "nota": "A",
+       "detalhe": "rf: Tesouro IPCA+ sem juros 15/08/2050 (o mais longo sem cupom à venda no Tesouro Direto), taxa de compra da manhã (Tesouro Transparente, PrecoTaxaTesouroDireto.csv); π: inflação implícita da ETTJ ANBIMA de fechamento, vértice 2520 du (~10 anos), arredondada a 4 casas (6,4593%) — 2026-10-02 (mercado_vigente.json)"
+      },
+      {
+       "fonte": "CVM DFP/ITR",
+       "nota": "A",
+       "detalhe": "CVM, DFP 2016–25 + ITR de 2026 (LTM), dados abertos"
+      },
+      {
+       "fonte": "lote (digitado)",
+       "nota": "C",
+       "detalhe": "escalar digitado no lote a partir da StatusInvest ou dos fatos do lote, sem fonte primária por campo (cabeçalho do lote)"
+      },
+      {
+       "fonte": "StatusInvest (DPA)",
+       "nota": "C",
+       "detalhe": "DPA por data-com da StatusInvest"
+      },
+      {
+       "fonte": "Tesouro + ANBIMA",
+       "nota": "A",
+       "detalhe": "rf: Tesouro IPCA+ sem juros 15/08/2050 (o mais longo sem cupom à venda no Tesouro Direto), taxa de compra da manhã (Tesouro Transparente, PrecoTaxaTesouroDireto.csv); π: inflação implícita da ETTJ ANBIMA de fechamento, vértice 2520 du (~10 anos), arredondada a 4 casas (6,4593%) — 2026-10-02 (mercado_vigente.json)"
+      },
+      {
+       "fonte": "CVM DFP/ITR",
+       "nota": "A",
+       "detalhe": "CVM, DFP 2016–25 + ITR de 2026 (LTM), dados abertos"
+      },
+      {
+       "fonte": "lote (digitado)",
+       "nota": "C",
+       "detalhe": "escalar digitado no lote a partir da StatusInvest ou dos fatos do lote, sem fonte primária por campo (cabeçalho do lote)"
+      },
+      {
+       "fonte": "StatusInvest (DPA)",
+       "nota": "C",
+       "detalhe": "DPA por data-com da StatusInvest"
+      }
+     ],
+     "papel": "",
+     "obs": ""
+    },
+    {
+     "rotulo": "Preço ÷ central (P/C)",
+     "valor": 7.10589150897543,
+     "unidade": "x",
+     "origens": [
+      {
+       "fonte": "CVM DFP/ITR",
+       "nota": "A",
+       "detalhe": "CVM, DFP 2016–25 + ITR de 2026 (LTM), dados abertos"
+      },
+      {
+       "fonte": "lote (digitado)",
+       "nota": "C",
+       "detalhe": "escalar digitado no lote a partir da StatusInvest ou dos fatos do lote, sem fonte primária por campo (cabeçalho do lote)"
+      },
+      {
+       "fonte": "StatusInvest (DPA)",
+       "nota": "C",
+       "detalhe": "DPA por data-com da StatusInvest"
+      },
+      {
+       "fonte": "Tesouro + ANBIMA",
+       "nota": "A",
+       "detalhe": "rf: Tesouro IPCA+ sem juros 15/08/2050 (o mais longo sem cupom à venda no Tesouro Direto), taxa de compra da manhã (Tesouro Transparente, PrecoTaxaTesouroDireto.csv); π: inflação implícita da ETTJ ANBIMA de fechamento, vértice 2520 du (~10 anos), arredondada a 4 casas (6,4593%) — 2026-10-02 (mercado_vigente.json)"
+      },
+      {
+       "fonte": "CVM DFP/ITR",
+       "nota": "A",
+       "detalhe": "CVM, DFP 2016–25 + ITR de 2026 (LTM), dados abertos"
+      },
+      {
+       "fonte": "lote (digitado)",
+       "nota": "C",
+       "detalhe": "escalar digitado no lote a partir da StatusInvest ou dos fatos do lote, sem fonte primária por campo (cabeçalho do lote)"
+      },
+      {
+       "fonte": "StatusInvest (DPA)",
+       "nota": "C",
+       "detalhe": "DPA por data-com da StatusInvest"
+      },
+      {
+       "fonte": "Tesouro + ANBIMA",
+       "nota": "A",
+       "detalhe": "rf: Tesouro IPCA+ sem juros 15/08/2050 (o mais longo sem cupom à venda no Tesouro Direto), taxa de compra da manhã (Tesouro Transparente, PrecoTaxaTesouroDireto.csv); π: inflação implícita da ETTJ ANBIMA de fechamento, vértice 2520 du (~10 anos), arredondada a 4 casas (6,4593%) — 2026-10-02 (mercado_vigente.json)"
+      },
+      {
+       "fonte": "CVM DFP/ITR",
+       "nota": "A",
+       "detalhe": "CVM, DFP 2016–25 + ITR de 2026 (LTM), dados abertos"
+      },
+      {
+       "fonte": "lote (digitado)",
+       "nota": "C",
+       "detalhe": "escalar digitado no lote a partir da StatusInvest ou dos fatos do lote, sem fonte primária por campo (cabeçalho do lote)"
+      },
+      {
+       "fonte": "StatusInvest (DPA)",
+       "nota": "C",
+       "detalhe": "DPA por data-com da StatusInvest"
+      },
+      {
+       "fonte": "COTAHIST",
+       "nota": "A",
+       "detalhe": "B3, COTAHIST, fechamento (PREULT) de 2026-10-02"
+      }
+     ],
+     "papel": "",
+     "obs": ""
+    },
+    {
+     "rotulo": "Compra (0,70 × central)",
+     "valor": 1.8342526034258746,
+     "unidade": "R$",
+     "origens": [
+      {
+       "fonte": "CVM DFP/ITR",
+       "nota": "A",
+       "detalhe": "CVM, DFP 2016–25 + ITR de 2026 (LTM), dados abertos"
+      },
+      {
+       "fonte": "lote (digitado)",
+       "nota": "C",
+       "detalhe": "escalar digitado no lote a partir da StatusInvest ou dos fatos do lote, sem fonte primária por campo (cabeçalho do lote)"
+      },
+      {
+       "fonte": "StatusInvest (DPA)",
+       "nota": "C",
+       "detalhe": "DPA por data-com da StatusInvest"
+      },
+      {
+       "fonte": "Tesouro + ANBIMA",
+       "nota": "A",
+       "detalhe": "rf: Tesouro IPCA+ sem juros 15/08/2050 (o mais longo sem cupom à venda no Tesouro Direto), taxa de compra da manhã (Tesouro Transparente, PrecoTaxaTesouroDireto.csv); π: inflação implícita da ETTJ ANBIMA de fechamento, vértice 2520 du (~10 anos), arredondada a 4 casas (6,4593%) — 2026-10-02 (mercado_vigente.json)"
+      },
+      {
+       "fonte": "CVM DFP/ITR",
+       "nota": "A",
+       "detalhe": "CVM, DFP 2016–25 + ITR de 2026 (LTM), dados abertos"
+      },
+      {
+       "fonte": "lote (digitado)",
+       "nota": "C",
+       "detalhe": "escalar digitado no lote a partir da StatusInvest ou dos fatos do lote, sem fonte primária por campo (cabeçalho do lote)"
+      },
+      {
+       "fonte": "StatusInvest (DPA)",
+       "nota": "C",
+       "detalhe": "DPA por data-com da StatusInvest"
+      },
+      {
+       "fonte": "Tesouro + ANBIMA",
+       "nota": "A",
+       "detalhe": "rf: Tesouro IPCA+ sem juros 15/08/2050 (o mais longo sem cupom à venda no Tesouro Direto), taxa de compra da manhã (Tesouro Transparente, PrecoTaxaTesouroDireto.csv); π: inflação implícita da ETTJ ANBIMA de fechamento, vértice 2520 du (~10 anos), arredondada a 4 casas (6,4593%) — 2026-10-02 (mercado_vigente.json)"
+      },
+      {
+       "fonte": "CVM DFP/ITR",
+       "nota": "A",
+       "detalhe": "CVM, DFP 2016–25 + ITR de 2026 (LTM), dados abertos"
+      },
+      {
+       "fonte": "lote (digitado)",
+       "nota": "C",
+       "detalhe": "escalar digitado no lote a partir da StatusInvest ou dos fatos do lote, sem fonte primária por campo (cabeçalho do lote)"
+      },
+      {
+       "fonte": "StatusInvest (DPA)",
+       "nota": "C",
+       "detalhe": "DPA por data-com da StatusInvest"
+      }
+     ],
+     "papel": "",
+     "obs": ""
+    },
+    {
+     "rotulo": "1ª parcela, exceção de qualidade (0,80 × central)",
+     "valor": 2.096288689629571,
+     "unidade": "R$",
+     "origens": [
+      {
+       "fonte": "CVM DFP/ITR",
+       "nota": "A",
+       "detalhe": "CVM, DFP 2016–25 + ITR de 2026 (LTM), dados abertos"
+      },
+      {
+       "fonte": "lote (digitado)",
+       "nota": "C",
+       "detalhe": "escalar digitado no lote a partir da StatusInvest ou dos fatos do lote, sem fonte primária por campo (cabeçalho do lote)"
+      },
+      {
+       "fonte": "StatusInvest (DPA)",
+       "nota": "C",
+       "detalhe": "DPA por data-com da StatusInvest"
+      },
+      {
+       "fonte": "Tesouro + ANBIMA",
+       "nota": "A",
+       "detalhe": "rf: Tesouro IPCA+ sem juros 15/08/2050 (o mais longo sem cupom à venda no Tesouro Direto), taxa de compra da manhã (Tesouro Transparente, PrecoTaxaTesouroDireto.csv); π: inflação implícita da ETTJ ANBIMA de fechamento, vértice 2520 du (~10 anos), arredondada a 4 casas (6,4593%) — 2026-10-02 (mercado_vigente.json)"
+      },
+      {
+       "fonte": "CVM DFP/ITR",
+       "nota": "A",
+       "detalhe": "CVM, DFP 2016–25 + ITR de 2026 (LTM), dados abertos"
+      },
+      {
+       "fonte": "lote (digitado)",
+       "nota": "C",
+       "detalhe": "escalar digitado no lote a partir da StatusInvest ou dos fatos do lote, sem fonte primária por campo (cabeçalho do lote)"
+      },
+      {
+       "fonte": "StatusInvest (DPA)",
+       "nota": "C",
+       "detalhe": "DPA por data-com da StatusInvest"
+      },
+      {
+       "fonte": "Tesouro + ANBIMA",
+       "nota": "A",
+       "detalhe": "rf: Tesouro IPCA+ sem juros 15/08/2050 (o mais longo sem cupom à venda no Tesouro Direto), taxa de compra da manhã (Tesouro Transparente, PrecoTaxaTesouroDireto.csv); π: inflação implícita da ETTJ ANBIMA de fechamento, vértice 2520 du (~10 anos), arredondada a 4 casas (6,4593%) — 2026-10-02 (mercado_vigente.json)"
+      },
+      {
+       "fonte": "CVM DFP/ITR",
+       "nota": "A",
+       "detalhe": "CVM, DFP 2016–25 + ITR de 2026 (LTM), dados abertos"
+      },
+      {
+       "fonte": "lote (digitado)",
+       "nota": "C",
+       "detalhe": "escalar digitado no lote a partir da StatusInvest ou dos fatos do lote, sem fonte primária por campo (cabeçalho do lote)"
+      },
+      {
+       "fonte": "StatusInvest (DPA)",
+       "nota": "C",
+       "detalhe": "DPA por data-com da StatusInvest"
+      }
+     ],
+     "papel": "",
+     "obs": ""
+    },
+    {
+     "rotulo": "Saída (1,30 × central)",
+     "valor": 3.4064691206480533,
+     "unidade": "R$",
+     "origens": [
+      {
+       "fonte": "CVM DFP/ITR",
+       "nota": "A",
+       "detalhe": "CVM, DFP 2016–25 + ITR de 2026 (LTM), dados abertos"
+      },
+      {
+       "fonte": "lote (digitado)",
+       "nota": "C",
+       "detalhe": "escalar digitado no lote a partir da StatusInvest ou dos fatos do lote, sem fonte primária por campo (cabeçalho do lote)"
+      },
+      {
+       "fonte": "StatusInvest (DPA)",
+       "nota": "C",
+       "detalhe": "DPA por data-com da StatusInvest"
+      },
+      {
+       "fonte": "Tesouro + ANBIMA",
+       "nota": "A",
+       "detalhe": "rf: Tesouro IPCA+ sem juros 15/08/2050 (o mais longo sem cupom à venda no Tesouro Direto), taxa de compra da manhã (Tesouro Transparente, PrecoTaxaTesouroDireto.csv); π: inflação implícita da ETTJ ANBIMA de fechamento, vértice 2520 du (~10 anos), arredondada a 4 casas (6,4593%) — 2026-10-02 (mercado_vigente.json)"
+      },
+      {
+       "fonte": "CVM DFP/ITR",
+       "nota": "A",
+       "detalhe": "CVM, DFP 2016–25 + ITR de 2026 (LTM), dados abertos"
+      },
+      {
+       "fonte": "lote (digitado)",
+       "nota": "C",
+       "detalhe": "escalar digitado no lote a partir da StatusInvest ou dos fatos do lote, sem fonte primária por campo (cabeçalho do lote)"
+      },
+      {
+       "fonte": "StatusInvest (DPA)",
+       "nota": "C",
+       "detalhe": "DPA por data-com da StatusInvest"
+      },
+      {
+       "fonte": "Tesouro + ANBIMA",
+       "nota": "A",
+       "detalhe": "rf: Tesouro IPCA+ sem juros 15/08/2050 (o mais longo sem cupom à venda no Tesouro Direto), taxa de compra da manhã (Tesouro Transparente, PrecoTaxaTesouroDireto.csv); π: inflação implícita da ETTJ ANBIMA de fechamento, vértice 2520 du (~10 anos), arredondada a 4 casas (6,4593%) — 2026-10-02 (mercado_vigente.json)"
+      },
+      {
+       "fonte": "CVM DFP/ITR",
+       "nota": "A",
+       "detalhe": "CVM, DFP 2016–25 + ITR de 2026 (LTM), dados abertos"
+      },
+      {
+       "fonte": "lote (digitado)",
+       "nota": "C",
+       "detalhe": "escalar digitado no lote a partir da StatusInvest ou dos fatos do lote, sem fonte primária por campo (cabeçalho do lote)"
+      },
+      {
+       "fonte": "StatusInvest (DPA)",
+       "nota": "C",
+       "detalhe": "DPA por data-com da StatusInvest"
+      }
+     ],
+     "papel": "",
+     "obs": ""
+    },
+    {
+     "rotulo": "Ke nominal (custo do acionista)",
+     "valor": 0.6465635566036971,
+     "unidade": "%",
+     "origens": [
+      {
+       "fonte": "Tesouro + ANBIMA",
+       "nota": "A",
+       "detalhe": "rf: Tesouro IPCA+ sem juros 15/08/2050 (o mais longo sem cupom à venda no Tesouro Direto), taxa de compra da manhã (Tesouro Transparente, PrecoTaxaTesouroDireto.csv); π: inflação implícita da ETTJ ANBIMA de fechamento, vértice 2520 du (~10 anos), arredondada a 4 casas (6,4593%) — 2026-10-02 (mercado_vigente.json)"
+      }
+     ],
+     "papel": "",
+     "obs": ""
+    },
+    {
+     "rotulo": "Dispersão das âncoras (maior ÷ menor)",
+     "valor": 21.324875213798595,
+     "unidade": "x",
+     "origens": [
+      {
+       "fonte": "CVM DFP/ITR",
+       "nota": "A",
+       "detalhe": "CVM, DFP 2016–25 + ITR de 2026 (LTM), dados abertos"
+      },
+      {
+       "fonte": "lote (digitado)",
+       "nota": "C",
+       "detalhe": "escalar digitado no lote a partir da StatusInvest ou dos fatos do lote, sem fonte primária por campo (cabeçalho do lote)"
+      },
+      {
+       "fonte": "StatusInvest (DPA)",
+       "nota": "C",
+       "detalhe": "DPA por data-com da StatusInvest"
+      },
+      {
+       "fonte": "Tesouro + ANBIMA",
+       "nota": "A",
+       "detalhe": "rf: Tesouro IPCA+ sem juros 15/08/2050 (o mais longo sem cupom à venda no Tesouro Direto), taxa de compra da manhã (Tesouro Transparente, PrecoTaxaTesouroDireto.csv); π: inflação implícita da ETTJ ANBIMA de fechamento, vértice 2520 du (~10 anos), arredondada a 4 casas (6,4593%) — 2026-10-02 (mercado_vigente.json)"
+      },
+      {
+       "fonte": "CVM DFP/ITR",
+       "nota": "A",
+       "detalhe": "CVM, DFP 2016–25 + ITR de 2026 (LTM), dados abertos"
+      },
+      {
+       "fonte": "lote (digitado)",
+       "nota": "C",
+       "detalhe": "escalar digitado no lote a partir da StatusInvest ou dos fatos do lote, sem fonte primária por campo (cabeçalho do lote)"
+      },
+      {
+       "fonte": "StatusInvest (DPA)",
+       "nota": "C",
+       "detalhe": "DPA por data-com da StatusInvest"
+      },
+      {
+       "fonte": "Tesouro + ANBIMA",
+       "nota": "A",
+       "detalhe": "rf: Tesouro IPCA+ sem juros 15/08/2050 (o mais longo sem cupom à venda no Tesouro Direto), taxa de compra da manhã (Tesouro Transparente, PrecoTaxaTesouroDireto.csv); π: inflação implícita da ETTJ ANBIMA de fechamento, vértice 2520 du (~10 anos), arredondada a 4 casas (6,4593%) — 2026-10-02 (mercado_vigente.json)"
+      },
+      {
+       "fonte": "CVM DFP/ITR",
+       "nota": "A",
+       "detalhe": "CVM, DFP 2016–25 + ITR de 2026 (LTM), dados abertos"
+      },
+      {
+       "fonte": "lote (digitado)",
+       "nota": "C",
+       "detalhe": "escalar digitado no lote a partir da StatusInvest ou dos fatos do lote, sem fonte primária por campo (cabeçalho do lote)"
+      },
+      {
+       "fonte": "StatusInvest (DPA)",
+       "nota": "C",
+       "detalhe": "DPA por data-com da StatusInvest"
+      }
+     ],
+     "papel": "",
+     "obs": ""
+    },
+    {
+     "rotulo": "Ke implícito no preço (o retorno que o mercado aceita)",
+     "valor": 0.17363849443942575,
+     "unidade": "%",
+     "origens": [
+      {
+       "fonte": "CVM DFP/ITR",
+       "nota": "A",
+       "detalhe": "CVM, DFP 2016–25 + ITR de 2026 (LTM), dados abertos"
+      },
+      {
+       "fonte": "lote (digitado)",
+       "nota": "C",
+       "detalhe": "escalar digitado no lote a partir da StatusInvest ou dos fatos do lote, sem fonte primária por campo (cabeçalho do lote)"
+      },
+      {
+       "fonte": "StatusInvest (DPA)",
+       "nota": "C",
+       "detalhe": "DPA por data-com da StatusInvest"
+      },
+      {
+       "fonte": "Tesouro + ANBIMA",
+       "nota": "A",
+       "detalhe": "rf: Tesouro IPCA+ sem juros 15/08/2050 (o mais longo sem cupom à venda no Tesouro Direto), taxa de compra da manhã (Tesouro Transparente, PrecoTaxaTesouroDireto.csv); π: inflação implícita da ETTJ ANBIMA de fechamento, vértice 2520 du (~10 anos), arredondada a 4 casas (6,4593%) — 2026-10-02 (mercado_vigente.json)"
+      },
+      {
+       "fonte": "CVM DFP/ITR",
+       "nota": "A",
+       "detalhe": "CVM, DFP 2016–25 + ITR de 2026 (LTM), dados abertos"
+      },
+      {
+       "fonte": "lote (digitado)",
+       "nota": "C",
+       "detalhe": "escalar digitado no lote a partir da StatusInvest ou dos fatos do lote, sem fonte primária por campo (cabeçalho do lote)"
+      },
+      {
+       "fonte": "StatusInvest (DPA)",
+       "nota": "C",
+       "detalhe": "DPA por data-com da StatusInvest"
+      },
+      {
+       "fonte": "Tesouro + ANBIMA",
+       "nota": "A",
+       "detalhe": "rf: Tesouro IPCA+ sem juros 15/08/2050 (o mais longo sem cupom à venda no Tesouro Direto), taxa de compra da manhã (Tesouro Transparente, PrecoTaxaTesouroDireto.csv); π: inflação implícita da ETTJ ANBIMA de fechamento, vértice 2520 du (~10 anos), arredondada a 4 casas (6,4593%) — 2026-10-02 (mercado_vigente.json)"
+      },
+      {
+       "fonte": "CVM DFP/ITR",
+       "nota": "A",
+       "detalhe": "CVM, DFP 2016–25 + ITR de 2026 (LTM), dados abertos"
+      },
+      {
+       "fonte": "lote (digitado)",
+       "nota": "C",
+       "detalhe": "escalar digitado no lote a partir da StatusInvest ou dos fatos do lote, sem fonte primária por campo (cabeçalho do lote)"
+      },
+      {
+       "fonte": "StatusInvest (DPA)",
+       "nota": "C",
+       "detalhe": "DPA por data-com da StatusInvest"
+      },
+      {
+       "fonte": "COTAHIST",
+       "nota": "A",
+       "detalhe": "B3, COTAHIST, fechamento (PREULT) de 2026-10-02"
+      }
+     ],
+     "papel": "informativo",
+     "obs": ""
+    }
+   ],
+   "texto": [
+    "Palavra: **NÃO CONCLUSIVO** (régua pelo P/C: CARA; confiança: não conclusivo).",
+    "Vence a renda fixa (Bogle líquido real ≥ rf líquida + 3 p.p.)? Não.",
+    "Exceção da 1ª parcela a 0,80×: não — sem palavra (NÃO CONCLUSIVO); qualidade 3,3 < 8; solidez 4,4 < 7; dispersão das âncoras > 1,8× (carimbos de armadilha escritos no texto da ficha não entram nesta conta)."
+   ],
+   "avisos": [
+    "O valor central depende de insumo com nota C (só A/B embasa decisão): DPA por data-com da StatusInvest; escalar digitado no lote a partir da StatusInvest ou dos fatos do lote, sem fonte primária por campo (cabeçalho do lote)."
+   ],
+   "tabelas": []
+  },
+  {
+   "titulo": "Preço justo por método",
+   "numeros": [
+    {
+     "rotulo": "EPV (Greenwald) de meio de ciclo",
+     "valor": 0.36254279641575393,
+     "unidade": "R$",
+     "origens": [
+      {
+       "fonte": "CVM DFP/ITR",
+       "nota": "A",
+       "detalhe": "CVM, DFP 2016–25 + ITR de 2026 (LTM), dados abertos"
+      },
+      {
+       "fonte": "lote (digitado)",
+       "nota": "C",
+       "detalhe": "escalar digitado no lote a partir da StatusInvest ou dos fatos do lote, sem fonte primária por campo (cabeçalho do lote)"
+      },
+      {
+       "fonte": "StatusInvest (DPA)",
+       "nota": "C",
+       "detalhe": "DPA por data-com da StatusInvest"
+      },
+      {
+       "fonte": "Tesouro + ANBIMA",
+       "nota": "A",
+       "detalhe": "rf: Tesouro IPCA+ sem juros 15/08/2050 (o mais longo sem cupom à venda no Tesouro Direto), taxa de compra da manhã (Tesouro Transparente, PrecoTaxaTesouroDireto.csv); π: inflação implícita da ETTJ ANBIMA de fechamento, vértice 2520 du (~10 anos), arredondada a 4 casas (6,4593%) — 2026-10-02 (mercado_vigente.json)"
+      }
+     ],
+     "papel": "central",
+     "obs": ""
+    },
+    {
+     "rotulo": "DCF normalizado — 3 cenários de margem de meio de ciclo (25/50/25)",
+     "valor": 2.620360862036964,
+     "unidade": "R$",
+     "origens": [
+      {
+       "fonte": "CVM DFP/ITR",
+       "nota": "A",
+       "detalhe": "CVM, DFP 2016–25 + ITR de 2026 (LTM), dados abertos"
+      },
+      {
+       "fonte": "lote (digitado)",
+       "nota": "C",
+       "detalhe": "escalar digitado no lote a partir da StatusInvest ou dos fatos do lote, sem fonte primária por campo (cabeçalho do lote)"
+      },
+      {
+       "fonte": "StatusInvest (DPA)",
+       "nota": "C",
+       "detalhe": "DPA por data-com da StatusInvest"
+      },
+      {
+       "fonte": "Tesouro + ANBIMA",
+       "nota": "A",
+       "detalhe": "rf: Tesouro IPCA+ sem juros 15/08/2050 (o mais longo sem cupom à venda no Tesouro Direto), taxa de compra da manhã (Tesouro Transparente, PrecoTaxaTesouroDireto.csv); π: inflação implícita da ETTJ ANBIMA de fechamento, vértice 2520 du (~10 anos), arredondada a 4 casas (6,4593%) — 2026-10-02 (mercado_vigente.json)"
+      }
+     ],
+     "papel": "central",
+     "obs": ""
+    },
+    {
+     "rotulo": "Greenwald — valor de reprodução (PL contábil)",
+     "valor": 7.731179893227541,
+     "unidade": "R$",
+     "origens": [
+      {
+       "fonte": "CVM DFP/ITR",
+       "nota": "A",
+       "detalhe": "CVM, DFP 2016–25 + ITR de 2026 (LTM), dados abertos"
+      },
+      {
+       "fonte": "lote (digitado)",
+       "nota": "C",
+       "detalhe": "escalar digitado no lote a partir da StatusInvest ou dos fatos do lote, sem fonte primária por campo (cabeçalho do lote)"
+      },
+      {
+       "fonte": "StatusInvest (DPA)",
+       "nota": "C",
+       "detalhe": "DPA por data-com da StatusInvest"
+      }
+     ],
+     "papel": "central",
+     "obs": ""
+    },
+    {
+     "rotulo": "Graham — √(22,5 × LPA normalizado × VPA)",
+     "valor": null,
+     "unidade": "R$",
+     "origens": [
+      {
+       "fonte": "CVM DFP/ITR",
+       "nota": "A",
+       "detalhe": "CVM, DFP 2016–25 + ITR de 2026 (LTM), dados abertos"
+      },
+      {
+       "fonte": "lote (digitado)",
+       "nota": "C",
+       "detalhe": "escalar digitado no lote a partir da StatusInvest ou dos fatos do lote, sem fonte primária por campo (cabeçalho do lote)"
+      }
+     ],
+     "papel": "informativo",
+     "obs": ""
+    },
+    {
+     "rotulo": "Graham-BR — o 22,5 reescalado ao Ke real de hoje",
+     "valor": null,
+     "unidade": "R$",
+     "origens": [
+      {
+       "fonte": "CVM DFP/ITR",
+       "nota": "A",
+       "detalhe": "CVM, DFP 2016–25 + ITR de 2026 (LTM), dados abertos"
+      },
+      {
+       "fonte": "lote (digitado)",
+       "nota": "C",
+       "detalhe": "escalar digitado no lote a partir da StatusInvest ou dos fatos do lote, sem fonte primária por campo (cabeçalho do lote)"
+      },
+      {
+       "fonte": "Tesouro + ANBIMA",
+       "nota": "A",
+       "detalhe": "rf: Tesouro IPCA+ sem juros 15/08/2050 (o mais longo sem cupom à venda no Tesouro Direto), taxa de compra da manhã (Tesouro Transparente, PrecoTaxaTesouroDireto.csv); π: inflação implícita da ETTJ ANBIMA de fechamento, vértice 2520 du (~10 anos), arredondada a 4 casas (6,4593%) — 2026-10-02 (mercado_vigente.json)"
+      }
+     ],
+     "papel": "informativo",
+     "obs": ""
+    },
+    {
+     "rotulo": "Graham revisado — LPA × (8,5 + 2g), reescalado ao Ke",
+     "valor": null,
+     "unidade": "R$",
+     "origens": [
+      {
+       "fonte": "CVM DFP/ITR",
+       "nota": "A",
+       "detalhe": "CVM, DFP 2016–25 + ITR de 2026 (LTM), dados abertos"
+      },
+      {
+       "fonte": "lote (digitado)",
+       "nota": "C",
+       "detalhe": "escalar digitado no lote a partir da StatusInvest ou dos fatos do lote, sem fonte primária por campo (cabeçalho do lote)"
+      },
+      {
+       "fonte": "Tesouro + ANBIMA",
+       "nota": "A",
+       "detalhe": "rf: Tesouro IPCA+ sem juros 15/08/2050 (o mais longo sem cupom à venda no Tesouro Direto), taxa de compra da manhã (Tesouro Transparente, PrecoTaxaTesouroDireto.csv); π: inflação implícita da ETTJ ANBIMA de fechamento, vértice 2520 du (~10 anos), arredondada a 4 casas (6,4593%) — 2026-10-02 (mercado_vigente.json)"
+      }
+     ],
+     "papel": "informativo",
+     "obs": ""
+    },
+    {
+     "rotulo": "Bazin — DPA sustentável ÷ 6%",
+     "valor": 20.883220978379196,
+     "unidade": "R$",
+     "origens": [
+      {
+       "fonte": "StatusInvest (DPA)",
+       "nota": "C",
+       "detalhe": "DPA por data-com da StatusInvest"
+      },
+      {
+       "fonte": "CVM DFP/ITR",
+       "nota": "A",
+       "detalhe": "CVM, DFP 2016–25 + ITR de 2026 (LTM), dados abertos"
+      },
+      {
+       "fonte": "lote (digitado)",
+       "nota": "C",
+       "detalhe": "escalar digitado no lote a partir da StatusInvest ou dos fatos do lote, sem fonte primária por campo (cabeçalho do lote)"
+      }
+     ],
+     "papel": "informativo",
+     "obs": ""
+    },
+    {
+     "rotulo": "Teto de renda — DPA líquido ÷ rf líquida (valor presente)",
+     "valor": null,
+     "unidade": "R$",
+     "origens": [
+      {
+       "fonte": "StatusInvest (DPA)",
+       "nota": "C",
+       "detalhe": "DPA por data-com da StatusInvest"
+      },
+      {
+       "fonte": "StatusInvest (datas)",
+       "nota": "C",
+       "detalhe": "datas de pagamento da StatusInvest, só para a defasagem do provento (§6.3)"
+      },
+      {
+       "fonte": "CVM DFP/ITR",
+       "nota": "A",
+       "detalhe": "CVM, DFP 2016–25 + ITR de 2026 (LTM), dados abertos"
+      },
+      {
+       "fonte": "lote (digitado)",
+       "nota": "C",
+       "detalhe": "escalar digitado no lote a partir da StatusInvest ou dos fatos do lote, sem fonte primária por campo (cabeçalho do lote)"
+      },
+      {
+       "fonte": "Tesouro + ANBIMA",
+       "nota": "A",
+       "detalhe": "rf: Tesouro IPCA+ sem juros 15/08/2050 (o mais longo sem cupom à venda no Tesouro Direto), taxa de compra da manhã (Tesouro Transparente, PrecoTaxaTesouroDireto.csv); π: inflação implícita da ETTJ ANBIMA de fechamento, vértice 2520 du (~10 anos), arredondada a 4 casas (6,4593%) — 2026-10-02 (mercado_vigente.json)"
+      }
+     ],
+     "papel": "informativo",
+     "obs": ""
+    },
+    {
+     "rotulo": "Bogle — retorno esperado em 10 anos (DY + g + re-rating)",
+     "valor": 0.13717194479761866,
+     "unidade": "%",
+     "origens": [
+      {
+       "fonte": "StatusInvest (DPA)",
+       "nota": "C",
+       "detalhe": "DPA por data-com da StatusInvest"
+      },
+      {
+       "fonte": "StatusInvest (datas)",
+       "nota": "C",
+       "detalhe": "datas de pagamento da StatusInvest, só para a defasagem do provento (§6.3)"
+      },
+      {
+       "fonte": "lote (digitado)",
+       "nota": "C",
+       "detalhe": "escalar digitado no lote a partir da StatusInvest ou dos fatos do lote, sem fonte primária por campo (cabeçalho do lote)"
+      },
+      {
+       "fonte": "CVM DFP/ITR",
+       "nota": "A",
+       "detalhe": "CVM, DFP 2016–25 + ITR de 2026 (LTM), dados abertos"
+      },
+      {
+       "fonte": "lote (digitado)",
+       "nota": "C",
+       "detalhe": "escalar digitado no lote a partir da StatusInvest ou dos fatos do lote, sem fonte primária por campo (cabeçalho do lote)"
+      },
+      {
+       "fonte": "COTAHIST",
+       "nota": "A",
+       "detalhe": "B3, COTAHIST, fechamento (PREULT) de 2026-10-02"
+      },
+      {
+       "fonte": "Tesouro + ANBIMA",
+       "nota": "A",
+       "detalhe": "rf: Tesouro IPCA+ sem juros 15/08/2050 (o mais longo sem cupom à venda no Tesouro Direto), taxa de compra da manhã (Tesouro Transparente, PrecoTaxaTesouroDireto.csv); π: inflação implícita da ETTJ ANBIMA de fechamento, vértice 2520 du (~10 anos), arredondada a 4 casas (6,4593%) — 2026-10-02 (mercado_vigente.json)"
+      }
+     ],
+     "papel": "informativo",
+     "obs": ""
+    },
+    {
+     "rotulo": "Lynch — PEG (P/L ÷ crescimento nominal)",
+     "valor": null,
+     "unidade": "x",
+     "origens": [
+      {
+       "fonte": "COTAHIST",
+       "nota": "A",
+       "detalhe": "B3, COTAHIST, fechamento (PREULT) de 2026-10-02"
+      },
+      {
+       "fonte": "CVM DFP/ITR",
+       "nota": "A",
+       "detalhe": "CVM, DFP 2016–25 + ITR de 2026 (LTM), dados abertos"
+      },
+      {
+       "fonte": "lote (digitado)",
+       "nota": "C",
+       "detalhe": "escalar digitado no lote a partir da StatusInvest ou dos fatos do lote, sem fonte primária por campo (cabeçalho do lote)"
+      },
+      {
+       "fonte": "Tesouro + ANBIMA",
+       "nota": "A",
+       "detalhe": "rf: Tesouro IPCA+ sem juros 15/08/2050 (o mais longo sem cupom à venda no Tesouro Direto), taxa de compra da manhã (Tesouro Transparente, PrecoTaxaTesouroDireto.csv); π: inflação implícita da ETTJ ANBIMA de fechamento, vértice 2520 du (~10 anos), arredondada a 4 casas (6,4593%) — 2026-10-02 (mercado_vigente.json)"
+      }
+     ],
+     "papel": "informativo",
+     "obs": ""
+    },
+    {
+     "rotulo": "Dividend yield sustentável (valor presente)",
+     "valor": 0.06192594479761873,
+     "unidade": "%",
+     "origens": [
+      {
+       "fonte": "StatusInvest (DPA)",
+       "nota": "C",
+       "detalhe": "DPA por data-com da StatusInvest"
+      },
+      {
+       "fonte": "StatusInvest (datas)",
+       "nota": "C",
+       "detalhe": "datas de pagamento da StatusInvest, só para a defasagem do provento (§6.3)"
+      },
+      {
+       "fonte": "COTAHIST",
+       "nota": "A",
+       "detalhe": "B3, COTAHIST, fechamento (PREULT) de 2026-10-02"
+      },
+      {
+       "fonte": "Tesouro + ANBIMA",
+       "nota": "A",
+       "detalhe": "rf: Tesouro IPCA+ sem juros 15/08/2050 (o mais longo sem cupom à venda no Tesouro Direto), taxa de compra da manhã (Tesouro Transparente, PrecoTaxaTesouroDireto.csv); π: inflação implícita da ETTJ ANBIMA de fechamento, vértice 2520 du (~10 anos), arredondada a 4 casas (6,4593%) — 2026-10-02 (mercado_vigente.json)"
+      }
+     ],
+     "papel": "informativo",
+     "obs": ""
+    },
+    {
+     "rotulo": "Valor central (mediana das âncoras, já com o desconto de controlador)",
+     "valor": 2.620360862036964,
+     "unidade": "R$",
+     "origens": [
+      {
+       "fonte": "CVM DFP/ITR",
+       "nota": "A",
+       "detalhe": "CVM, DFP 2016–25 + ITR de 2026 (LTM), dados abertos"
+      },
+      {
+       "fonte": "lote (digitado)",
+       "nota": "C",
+       "detalhe": "escalar digitado no lote a partir da StatusInvest ou dos fatos do lote, sem fonte primária por campo (cabeçalho do lote)"
+      },
+      {
+       "fonte": "StatusInvest (DPA)",
+       "nota": "C",
+       "detalhe": "DPA por data-com da StatusInvest"
+      },
+      {
+       "fonte": "Tesouro + ANBIMA",
+       "nota": "A",
+       "detalhe": "rf: Tesouro IPCA+ sem juros 15/08/2050 (o mais longo sem cupom à venda no Tesouro Direto), taxa de compra da manhã (Tesouro Transparente, PrecoTaxaTesouroDireto.csv); π: inflação implícita da ETTJ ANBIMA de fechamento, vértice 2520 du (~10 anos), arredondada a 4 casas (6,4593%) — 2026-10-02 (mercado_vigente.json)"
+      },
+      {
+       "fonte": "CVM DFP/ITR",
+       "nota": "A",
+       "detalhe": "CVM, DFP 2016–25 + ITR de 2026 (LTM), dados abertos"
+      },
+      {
+       "fonte": "lote (digitado)",
+       "nota": "C",
+       "detalhe": "escalar digitado no lote a partir da StatusInvest ou dos fatos do lote, sem fonte primária por campo (cabeçalho do lote)"
+      },
+      {
+       "fonte": "StatusInvest (DPA)",
+       "nota": "C",
+       "detalhe": "DPA por data-com da StatusInvest"
+      },
+      {
+       "fonte": "Tesouro + ANBIMA",
+       "nota": "A",
+       "detalhe": "rf: Tesouro IPCA+ sem juros 15/08/2050 (o mais longo sem cupom à venda no Tesouro Direto), taxa de compra da manhã (Tesouro Transparente, PrecoTaxaTesouroDireto.csv); π: inflação implícita da ETTJ ANBIMA de fechamento, vértice 2520 du (~10 anos), arredondada a 4 casas (6,4593%) — 2026-10-02 (mercado_vigente.json)"
+      },
+      {
+       "fonte": "CVM DFP/ITR",
+       "nota": "A",
+       "detalhe": "CVM, DFP 2016–25 + ITR de 2026 (LTM), dados abertos"
+      },
+      {
+       "fonte": "lote (digitado)",
+       "nota": "C",
+       "detalhe": "escalar digitado no lote a partir da StatusInvest ou dos fatos do lote, sem fonte primária por campo (cabeçalho do lote)"
+      },
+      {
+       "fonte": "StatusInvest (DPA)",
+       "nota": "C",
+       "detalhe": "DPA por data-com da StatusInvest"
+      }
+     ],
+     "papel": "",
+     "obs": ""
+    }
+   ],
+   "texto": [],
+   "avisos": [],
+   "tabelas": []
+  },
+  {
+   "titulo": "Sensibilidade do valor central",
+   "numeros": [],
+   "texto": [],
+   "avisos": [],
+   "tabelas": [
+    [
+     "Central (R$/ação) com Ke ±1 p.p. × margem ±2 p.p.",
+     [
+      "Ke \\ margem",
+      "-2 p.p.",
+      "+0 p.p.",
+      "+2 p.p."
+     ],
+     [
+      [
+       "-1 p.p.",
+       "2,52",
+       "2,82",
+       "4,26"
+      ],
+      [
+       "+0 p.p.",
+       "2,44",
+       "2,62",
+       "4,05"
+      ],
+      [
+       "+1 p.p.",
+       "2,36",
+       "2,43",
+       "3,85"
+      ]
+     ]
+    ]
+   ]
+  },
+  {
+   "titulo": "Vantagem competitiva (moat)",
+   "numeros": [
+    {
+     "rotulo": "Exercícios com ROIC real > WACC real",
+     "valor": "0 de 10",
+     "unidade": "",
+     "origens": [
+      {
+       "fonte": "CVM DFP/ITR",
+       "nota": "A",
+       "detalhe": "CVM, DFP 2016–25 + ITR de 2026 (LTM), dados abertos"
+      }
+     ],
+     "papel": "informativo",
+     "obs": ""
+    },
+    {
+     "rotulo": "WACC real",
+     "valor": 0.09021947983247314,
+     "unidade": "%",
+     "origens": [
+      {
+       "fonte": "CVM DFP/ITR",
+       "nota": "A",
+       "detalhe": "CVM, DFP 2016–25 + ITR de 2026 (LTM), dados abertos"
+      },
+      {
+       "fonte": "Tesouro + ANBIMA",
+       "nota": "A",
+       "detalhe": "rf: Tesouro IPCA+ sem juros 15/08/2050 (o mais longo sem cupom à venda no Tesouro Direto), taxa de compra da manhã (Tesouro Transparente, PrecoTaxaTesouroDireto.csv); π: inflação implícita da ETTJ ANBIMA de fechamento, vértice 2520 du (~10 anos), arredondada a 4 casas (6,4593%) — 2026-10-02 (mercado_vigente.json)"
+      }
+     ],
+     "papel": "informativo",
+     "obs": ""
+    },
+    {
+     "rotulo": "ROIC a custo de reposição (último)",
+     "valor": 0.054690034820807046,
+     "unidade": "%",
+     "origens": [
+      {
+       "fonte": "CVM DFP/ITR",
+       "nota": "A",
+       "detalhe": "CVM, DFP 2016–25 + ITR de 2026 (LTM), dados abertos"
+      }
+     ],
+     "papel": "informativo",
+     "obs": ""
+    },
+    {
+     "rotulo": "ROC de Greenblatt (EBIT ÷ capital tangível)",
+     "valor": 0.09971311161357914,
+     "unidade": "%",
+     "origens": [
+      {
+       "fonte": "CVM DFP/ITR",
+       "nota": "A",
+       "detalhe": "CVM, DFP 2016–25 + ITR de 2026 (LTM), dados abertos"
+      }
+     ],
+     "papel": "informativo",
+     "obs": "ranking; não entra na nota"
+    },
+    {
+     "rotulo": "Earnings yield (EBIT ÷ EV)",
+     "valor": 0.062283321469424,
+     "unidade": "%",
+     "origens": [
+      {
+       "fonte": "CVM DFP/ITR",
+       "nota": "A",
+       "detalhe": "CVM, DFP 2016–25 + ITR de 2026 (LTM), dados abertos"
+      },
+      {
+       "fonte": "COTAHIST",
+       "nota": "A",
+       "detalhe": "B3, COTAHIST, fechamento (PREULT) de 2026-10-02"
+      }
+     ],
+     "papel": "informativo",
+     "obs": "ranking; não entra na nota"
+    },
+    {
+     "rotulo": "Nota de moat (0–5)",
+     "valor": 3,
+     "unidade": "",
+     "origens": [
+      {
+       "fonte": "nota arbitrada (pré-v4)",
+       "nota": "—",
+       "detalhe": "nota 0–5 do QUAL do lote, arbitrada antes da regra 11 (02 v4); o dossiê do ticker a substitui por nota com evidência"
+      }
+     ],
+     "papel": "informativo",
+     "obs": "arbitrada no lote"
+    }
+   ],
+   "texto": [],
+   "avisos": [],
+   "tabelas": [
+    [
+     "ROIC real × WACC real e margens por exercício — fonte: CVM DFP/ITR, nota A",
+     [
+      "Ano",
+      "ROIC real",
+      "WACC real",
+      "Margem bruta",
+      "Margem EBIT aj."
+     ],
+     [
+      [
+       "2016",
+       "-4,3%",
+       "9,0%",
+       "33,8%",
+       "19,7%"
+      ],
+      [
+       "2017",
+       "1,3%",
+       "9,0%",
+       "32,7%",
+       "18,5%"
+      ],
+      [
+       "2018",
+       "5,2%",
+       "9,0%",
+       "43,0%",
+       "29,8%"
+      ],
+      [
+       "2019",
+       "1,5%",
+       "9,0%",
+       "33,3%",
+       "18,7%"
+      ],
+      [
+       "2020",
+       "3,6%",
+       "9,0%",
+       "39,5%",
+       "24,3%"
+      ],
+      [
+       "2021",
+       "2,6%",
+       "9,0%",
+       "45,8%",
+       "33,0%"
+      ],
+      [
+       "2022",
+       "1,8%",
+       "9,0%",
+       "47,5%",
+       "33,0%"
+      ],
+      [
+       "2023",
+       "2,1%",
+       "9,0%",
+       "38,0%",
+       "23,6%"
+      ],
+      [
+       "2024",
+       "1,7%",
+       "9,0%",
+       "37,5%",
+       "22,9%"
+      ],
+      [
+       "2025",
+       "1,1%",
+       "9,0%",
+       "35,4%",
+       "20,7%"
+      ]
+     ]
+    ]
+   ]
+  },
+  {
+   "titulo": "Gestão e alocação de capital",
+   "numeros": [
+    {
+     "rotulo": "Nota de gestão (0–5)",
+     "valor": 3,
+     "unidade": "",
+     "origens": [
+      {
+       "fonte": "nota arbitrada (pré-v4)",
+       "nota": "—",
+       "detalhe": "nota 0–5 do QUAL do lote, arbitrada antes da regra 11 (02 v4); o dossiê do ticker a substitui por nota com evidência"
+      }
+     ],
+     "papel": "informativo",
+     "obs": "arbitrada no lote (pré-v4)"
+    }
+   ],
+   "texto": [],
+   "avisos": [
+    "Ticker do hall sem dossiê: R$ 1 retido, diluição e M&A não foram medidos (precisam de ficha: CVM + FRE + insumos A/B)."
+   ],
+   "tabelas": []
+  },
+  {
+   "titulo": "Endividamento e solidez",
+   "numeros": [
+    {
+     "rotulo": "Dívida bruta",
+     "valor": 36700043.0,
+     "unidade": "R$ mil",
+     "origens": [
+      {
+       "fonte": "CVM DFP/ITR",
+       "nota": "A",
+       "detalhe": "CVM, DFP 2016–25 + ITR de 2026 (LTM), dados abertos"
+      }
+     ],
+     "papel": "informativo",
+     "obs": "balanço do último trimestre"
+    },
+    {
+     "rotulo": "Caixa e aplicações",
+     "valor": 10108760.0,
+     "unidade": "R$ mil",
+     "origens": [
+      {
+       "fonte": "CVM DFP/ITR",
+       "nota": "A",
+       "detalhe": "CVM, DFP 2016–25 + ITR de 2026 (LTM), dados abertos"
+      }
+     ],
+     "papel": "informativo",
+     "obs": ""
+    },
+    {
+     "rotulo": "Dívida líquida",
+     "valor": 27147283.0,
+     "unidade": "R$ mil",
+     "origens": [
+      {
+       "fonte": "CVM DFP/ITR",
+       "nota": "A",
+       "detalhe": "CVM, DFP 2016–25 + ITR de 2026 (LTM), dados abertos"
+      }
+     ],
+     "papel": "informativo",
+     "obs": ""
+    },
+    {
+     "rotulo": "DL ÷ EBITDA (LTM)",
+     "valor": 3.393367957900526,
+     "unidade": "x",
+     "origens": [
+      {
+       "fonte": "CVM DFP/ITR",
+       "nota": "A",
+       "detalhe": "CVM, DFP 2016–25 + ITR de 2026 (LTM), dados abertos"
+      }
+     ],
+     "papel": "informativo",
+     "obs": "sem dívida líquida positiva = sem alavancagem"
+    },
+    {
+     "rotulo": "DL ÷ EBITDA normalizado",
+     "valor": 3.049233214131998,
+     "unidade": "x",
+     "origens": [
+      {
+       "fonte": "CVM DFP/ITR",
+       "nota": "A",
+       "detalhe": "CVM, DFP 2016–25 + ITR de 2026 (LTM), dados abertos"
+      }
+     ],
+     "papel": "informativo",
+     "obs": "entra na nota de solidez"
+    },
+    {
+     "rotulo": "Cobertura de juros (EBIT ÷ juros)",
+     "valor": 1.5788202653665204,
+     "unidade": "x",
+     "origens": [
+      {
+       "fonte": "CVM DFP/ITR",
+       "nota": "A",
+       "detalhe": "CVM, DFP 2016–25 + ITR de 2026 (LTM), dados abertos"
+      }
+     ],
+     "papel": "informativo",
+     "obs": "juros: juros pagos (DFC)"
+    },
+    {
+     "rotulo": "Altman Z'' (não financeiras)",
+     "valor": 4.982352892429007,
+     "unidade": "",
+     "origens": [
+      {
+       "fonte": "CVM DFP/ITR",
+       "nota": "A",
+       "detalhe": "CVM, DFP 2016–25 + ITR de 2026 (LTM), dados abertos"
+      }
+     ],
+     "papel": "informativo",
+     "obs": "zona cinzenta"
+    },
+    {
+     "rotulo": "Piotroski F (0–9)",
+     "valor": 5,
+     "unidade": "",
+     "origens": [
+      {
+       "fonte": "CVM DFP/ITR",
+       "nota": "A",
+       "detalhe": "CVM, DFP 2016–25 + ITR de 2026 (LTM), dados abertos"
+      }
+     ],
+     "papel": "informativo",
+     "obs": "exibido; não entra na nota (v2.6)"
+    },
+    {
+     "rotulo": "Beneish M",
+     "valor": -2.523723591287613,
+     "unidade": "",
+     "origens": [
+      {
+       "fonte": "CVM DFP/ITR",
+       "nota": "A",
+       "detalhe": "CVM, DFP 2016–25 + ITR de 2026 (LTM), dados abertos"
+      }
+     ],
+     "papel": "informativo",
+     "obs": "> −1,78 = alerta (doutrina §8); exibido"
+    },
+    {
+     "rotulo": "Sloan — accruals ÷ ativo médio",
+     "valor": -0.07659914886407122,
+     "unidade": "%",
+     "origens": [
+      {
+       "fonte": "CVM DFP/ITR",
+       "nota": "A",
+       "detalhe": "CVM, DFP 2016–25 + ITR de 2026 (LTM), dados abertos"
+      }
+     ],
+     "papel": "informativo",
+     "obs": "qualidade do lucro; exibido"
+    },
+    {
+     "rotulo": "Custo da dívida Kd (nominal)",
+     "valor": 0.15816075999999993,
+     "unidade": "%",
+     "origens": [
+      {
+       "fonte": "Damodaran (ratings)",
+       "nota": "B",
+       "detalhe": "Damodaran, Ratings, Interest Coverage Ratios and Default Spread, jan/2026 (base do autor)"
+      },
+      {
+       "fonte": "Tesouro + ANBIMA",
+       "nota": "A",
+       "detalhe": "rf: Tesouro IPCA+ sem juros 15/08/2050 (o mais longo sem cupom à venda no Tesouro Direto), taxa de compra da manhã (Tesouro Transparente, PrecoTaxaTesouroDireto.csv); π: inflação implícita da ETTJ ANBIMA de fechamento, vértice 2520 du (~10 anos), arredondada a 4 casas (6,4593%) — 2026-10-02 (mercado_vigente.json)"
+      }
+     ],
+     "papel": "informativo",
+     "obs": "origem sintético, rating sintético BB"
+    },
+    {
+     "rotulo": "Peso da dívida no capital (D ÷ (D+E))",
+     "valor": 11.413821124509514,
+     "unidade": "%",
+     "origens": [
+      {
+       "fonte": "CVM DFP/ITR",
+       "nota": "A",
+       "detalhe": "CVM, DFP 2016–25 + ITR de 2026 (LTM), dados abertos"
+      },
+      {
+       "fonte": "COTAHIST",
+       "nota": "A",
+       "detalhe": "B3, COTAHIST, fechamento (PREULT) de 2026-10-02"
+      }
+     ],
+     "papel": "informativo",
+     "obs": ""
+    },
+    {
+     "rotulo": "Nota de solidez (0–10)",
+     "valor": 4.353058034156348,
+     "unidade": "",
+     "origens": [
+      {
+       "fonte": "CVM DFP/ITR",
+       "nota": "A",
+       "detalhe": "CVM, DFP 2016–25 + ITR de 2026 (LTM), dados abertos"
+      }
+     ],
+     "papel": "informativo",
+     "obs": "média de DL/EBITDA norm., cobertura e Altman (doutrina §10)"
+    }
+   ],
+   "texto": [],
+   "avisos": [],
+   "tabelas": []
+  },
+  {
+   "titulo": "Governança e controlador",
+   "numeros": [
+    {
+     "rotulo": "Nota de controlador (0–5)",
+     "valor": 3,
+     "unidade": "",
+     "origens": [
+      {
+       "fonte": "nota arbitrada (pré-v4)",
+       "nota": "—",
+       "detalhe": "nota 0–5 do QUAL do lote, arbitrada antes da regra 11 (02 v4); o dossiê do ticker a substitui por nota com evidência"
+      }
+     ],
+     "papel": "informativo",
+     "obs": "arbitrada no lote (pré-v4)"
+    }
+   ],
+   "texto": [],
+   "avisos": [
+    "Sem FRE para este ticker: CNPJ não cadastrado em relatorio/quali.py (CADASTRO)."
+   ],
+   "tabelas": []
+  },
+  {
+   "titulo": "Dividendos e JCP",
+   "numeros": [
+    {
+     "rotulo": "DPA sustentável (menor entre a média 5a e o FCFE)",
+     "valor": 1.2529932587027517,
+     "unidade": "R$",
+     "origens": [
+      {
+       "fonte": "StatusInvest (DPA)",
+       "nota": "C",
+       "detalhe": "DPA por data-com da StatusInvest"
+      },
+      {
+       "fonte": "CVM DFP/ITR",
+       "nota": "A",
+       "detalhe": "CVM, DFP 2016–25 + ITR de 2026 (LTM), dados abertos"
+      },
+      {
+       "fonte": "lote (digitado)",
+       "nota": "C",
+       "detalhe": "escalar digitado no lote a partir da StatusInvest ou dos fatos do lote, sem fonte primária por campo (cabeçalho do lote)"
+      }
+     ],
+     "papel": "informativo",
+     "obs": ""
+    },
+    {
+     "rotulo": "FCFE por ação",
+     "valor": 1.2529932587027517,
+     "unidade": "R$",
+     "origens": [
+      {
+       "fonte": "CVM DFP/ITR",
+       "nota": "A",
+       "detalhe": "CVM, DFP 2016–25 + ITR de 2026 (LTM), dados abertos"
+      },
+      {
+       "fonte": "lote (digitado)",
+       "nota": "C",
+       "detalhe": "escalar digitado no lote a partir da StatusInvest ou dos fatos do lote, sem fonte primária por campo (cabeçalho do lote)"
+      }
+     ],
+     "papel": "informativo",
+     "obs": ""
+    },
+    {
+     "rotulo": "Provento coberto pelo FCFE?",
+     "valor": "não",
+     "unidade": "",
+     "origens": [
+      {
+       "fonte": "CVM DFP/ITR",
+       "nota": "A",
+       "detalhe": "CVM, DFP 2016–25 + ITR de 2026 (LTM), dados abertos"
+      },
+      {
+       "fonte": "StatusInvest (DPA)",
+       "nota": "C",
+       "detalhe": "DPA por data-com da StatusInvest"
+      },
+      {
+       "fonte": "lote (digitado)",
+       "nota": "C",
+       "detalhe": "escalar digitado no lote a partir da StatusInvest ou dos fatos do lote, sem fonte primária por campo (cabeçalho do lote)"
+      }
+     ],
+     "papel": "informativo",
+     "obs": ""
+    },
+    {
+     "rotulo": "Payout sustentável (DPA sust. ÷ LPA normalizado)",
+     "valor": null,
+     "unidade": "%",
+     "origens": [
+      {
+       "fonte": "StatusInvest (DPA)",
+       "nota": "C",
+       "detalhe": "DPA por data-com da StatusInvest"
+      },
+      {
+       "fonte": "CVM DFP/ITR",
+       "nota": "A",
+       "detalhe": "CVM, DFP 2016–25 + ITR de 2026 (LTM), dados abertos"
+      },
+      {
+       "fonte": "lote (digitado)",
+       "nota": "C",
+       "detalhe": "escalar digitado no lote a partir da StatusInvest ou dos fatos do lote, sem fonte primária por campo (cabeçalho do lote)"
+      }
+     ],
+     "papel": "informativo",
+     "obs": "acima de 100% distribui mais do que ganha"
+    },
+    {
+     "rotulo": "Dividend yield sustentável (valor presente)",
+     "valor": 0.06192594479761873,
+     "unidade": "%",
+     "origens": [
+      {
+       "fonte": "StatusInvest (DPA)",
+       "nota": "C",
+       "detalhe": "DPA por data-com da StatusInvest"
+      },
+      {
+       "fonte": "StatusInvest (datas)",
+       "nota": "C",
+       "detalhe": "datas de pagamento da StatusInvest, só para a defasagem do provento (§6.3)"
+      },
+      {
+       "fonte": "COTAHIST",
+       "nota": "A",
+       "detalhe": "B3, COTAHIST, fechamento (PREULT) de 2026-10-02"
+      },
+      {
+       "fonte": "Tesouro + ANBIMA",
+       "nota": "A",
+       "detalhe": "rf: Tesouro IPCA+ sem juros 15/08/2050 (o mais longo sem cupom à venda no Tesouro Direto), taxa de compra da manhã (Tesouro Transparente, PrecoTaxaTesouroDireto.csv); π: inflação implícita da ETTJ ANBIMA de fechamento, vértice 2520 du (~10 anos), arredondada a 4 casas (6,4593%) — 2026-10-02 (mercado_vigente.json)"
+      }
+     ],
+     "papel": "informativo",
+     "obs": ""
+    },
+    {
+     "rotulo": "Teto de Bazin (DPA ÷ 6%)",
+     "valor": 20.883220978379196,
+     "unidade": "R$",
+     "origens": [
+      {
+       "fonte": "StatusInvest (DPA)",
+       "nota": "C",
+       "detalhe": "DPA por data-com da StatusInvest"
+      },
+      {
+       "fonte": "CVM DFP/ITR",
+       "nota": "A",
+       "detalhe": "CVM, DFP 2016–25 + ITR de 2026 (LTM), dados abertos"
+      },
+      {
+       "fonte": "lote (digitado)",
+       "nota": "C",
+       "detalhe": "escalar digitado no lote a partir da StatusInvest ou dos fatos do lote, sem fonte primária por campo (cabeçalho do lote)"
+      }
+     ],
+     "papel": "informativo",
+     "obs": ""
+    },
+    {
+     "rotulo": "Defasagem do pagamento (meses)",
+     "valor": 2.0,
+     "unidade": "",
+     "origens": [
+      {
+       "fonte": "StatusInvest (datas)",
+       "nota": "C",
+       "detalhe": "datas de pagamento da StatusInvest, só para a defasagem do provento (§6.3)"
+      }
+     ],
+     "papel": "informativo",
+     "obs": "desconta o dividendo a valor presente (§6.3); data de pagamento é StatusInvest (C)"
+    }
+   ],
+   "texto": [],
+   "avisos": [
+    "Série de proventos da B3 não disponível: nome de pregão não cadastrado (CADASTRO em relatorio/quali.py). Valores abaixo são os do motor."
+   ],
+   "tabelas": []
+  },
+  {
+   "titulo": "Riscos e bandeiras",
+   "numeros": [
+    {
+     "rotulo": "Altman Z'' fora da zona segura",
+     "valor": 4.982352892429007,
+     "unidade": "",
+     "origens": [
+      {
+       "fonte": "CVM DFP/ITR",
+       "nota": "A",
+       "detalhe": "CVM, DFP 2016–25 + ITR de 2026 (LTM), dados abertos"
+      }
+     ],
+     "papel": "informativo",
+     "obs": "DISPARA — zona cinzenta; corte da doutrina"
+    },
+    {
+     "rotulo": "Beneish M acima de −1,78",
+     "valor": -2.523723591287613,
+     "unidade": "",
+     "origens": [
+      {
+       "fonte": "CVM DFP/ITR",
+       "nota": "A",
+       "detalhe": "CVM, DFP 2016–25 + ITR de 2026 (LTM), dados abertos"
+      }
+     ],
+     "papel": "informativo",
+     "obs": "ok — alerta de manipulação > −1,78; corte da doutrina"
+    },
+    {
+     "rotulo": "Accruals de Sloan altos (|Sloan| > 10% do ativo)",
+     "valor": -0.07659914886407122,
+     "unidade": "%",
+     "origens": [
+      {
+       "fonte": "CVM DFP/ITR",
+       "nota": "A",
+       "detalhe": "CVM, DFP 2016–25 + ITR de 2026 (LTM), dados abertos"
+      }
+     ],
+     "papel": "informativo",
+     "obs": "ok — lucro muito acima/abaixo do caixa; informativo — corte do relatório (heurística do projeto, sem fonte)"
+    },
+    {
+     "rotulo": "Cobertura de juros abaixo de 1,5×",
+     "valor": 1.5788202653665204,
+     "unidade": "x",
+     "origens": [
+      {
+       "fonte": "CVM DFP/ITR",
+       "nota": "A",
+       "detalhe": "CVM, DFP 2016–25 + ITR de 2026 (LTM), dados abertos"
+      }
+     ],
+     "papel": "informativo",
+     "obs": "ok — EBIT ÷ juros; informativo — corte do relatório (heurística do projeto, sem fonte)"
+    },
+    {
+     "rotulo": "DL ÷ EBITDA normalizado acima de 3×",
+     "valor": 3.049233214131998,
+     "unidade": "x",
+     "origens": [
+      {
+       "fonte": "CVM DFP/ITR",
+       "nota": "A",
+       "detalhe": "CVM, DFP 2016–25 + ITR de 2026 (LTM), dados abertos"
+      }
+     ],
+     "papel": "informativo",
+     "obs": "DISPARA — alavancagem; informativo — corte do relatório (heurística do projeto, sem fonte)"
+    },
+    {
+     "rotulo": "ROIC real < WACC real na maioria dos exercícios",
+     "valor": "0 de 10 acima",
+     "unidade": "",
+     "origens": [
+      {
+       "fonte": "CVM DFP/ITR",
+       "nota": "A",
+       "detalhe": "CVM, DFP 2016–25 + ITR de 2026 (LTM), dados abertos"
+      }
+     ],
+     "papel": "informativo",
+     "obs": "DISPARA — menos da metade dos anos acima do WACC; informativo — corte do relatório (heurística do projeto, sem fonte)"
+    },
+    {
+     "rotulo": "Payout sustentável acima de 100%",
+     "valor": null,
+     "unidade": "%",
+     "origens": [
+      {
+       "fonte": "StatusInvest (DPA)",
+       "nota": "C",
+       "detalhe": "DPA por data-com da StatusInvest"
+      },
+      {
+       "fonte": "CVM DFP/ITR",
+       "nota": "A",
+       "detalhe": "CVM, DFP 2016–25 + ITR de 2026 (LTM), dados abertos"
+      },
+      {
+       "fonte": "lote (digitado)",
+       "nota": "C",
+       "detalhe": "escalar digitado no lote a partir da StatusInvest ou dos fatos do lote, sem fonte primária por campo (cabeçalho do lote)"
+      }
+     ],
+     "papel": "informativo",
+     "obs": "DISPARA — prejuízo normalizado com dividendo conta como disparo; informativo — corte do relatório (heurística do projeto, sem fonte)"
+    },
+    {
+     "rotulo": "Dispersão das âncoras acima de 1,8×",
+     "valor": 21.324875213798595,
+     "unidade": "x",
+     "origens": [
+      {
+       "fonte": "CVM DFP/ITR",
+       "nota": "A",
+       "detalhe": "CVM, DFP 2016–25 + ITR de 2026 (LTM), dados abertos"
+      },
+      {
+       "fonte": "lote (digitado)",
+       "nota": "C",
+       "detalhe": "escalar digitado no lote a partir da StatusInvest ou dos fatos do lote, sem fonte primária por campo (cabeçalho do lote)"
+      },
+      {
+       "fonte": "StatusInvest (DPA)",
+       "nota": "C",
+       "detalhe": "DPA por data-com da StatusInvest"
+      },
+      {
+       "fonte": "Tesouro + ANBIMA",
+       "nota": "A",
+       "detalhe": "rf: Tesouro IPCA+ sem juros 15/08/2050 (o mais longo sem cupom à venda no Tesouro Direto), taxa de compra da manhã (Tesouro Transparente, PrecoTaxaTesouroDireto.csv); π: inflação implícita da ETTJ ANBIMA de fechamento, vértice 2520 du (~10 anos), arredondada a 4 casas (6,4593%) — 2026-10-02 (mercado_vigente.json)"
+      },
+      {
+       "fonte": "CVM DFP/ITR",
+       "nota": "A",
+       "detalhe": "CVM, DFP 2016–25 + ITR de 2026 (LTM), dados abertos"
+      },
+      {
+       "fonte": "lote (digitado)",
+       "nota": "C",
+       "detalhe": "escalar digitado no lote a partir da StatusInvest ou dos fatos do lote, sem fonte primária por campo (cabeçalho do lote)"
+      },
+      {
+       "fonte": "StatusInvest (DPA)",
+       "nota": "C",
+       "detalhe": "DPA por data-com da StatusInvest"
+      },
+      {
+       "fonte": "Tesouro + ANBIMA",
+       "nota": "A",
+       "detalhe": "rf: Tesouro IPCA+ sem juros 15/08/2050 (o mais longo sem cupom à venda no Tesouro Direto), taxa de compra da manhã (Tesouro Transparente, PrecoTaxaTesouroDireto.csv); π: inflação implícita da ETTJ ANBIMA de fechamento, vértice 2520 du (~10 anos), arredondada a 4 casas (6,4593%) — 2026-10-02 (mercado_vigente.json)"
+      },
+      {
+       "fonte": "CVM DFP/ITR",
+       "nota": "A",
+       "detalhe": "CVM, DFP 2016–25 + ITR de 2026 (LTM), dados abertos"
+      },
+      {
+       "fonte": "lote (digitado)",
+       "nota": "C",
+       "detalhe": "escalar digitado no lote a partir da StatusInvest ou dos fatos do lote, sem fonte primária por campo (cabeçalho do lote)"
+      },
+      {
+       "fonte": "StatusInvest (DPA)",
+       "nota": "C",
+       "detalhe": "DPA por data-com da StatusInvest"
+      }
+     ],
+     "papel": "informativo",
+     "obs": "DISPARA — desce um nível na régua; > 3× = não conclusivo; corte da doutrina"
+    },
+    {
+     "rotulo": "Âncora única (menos de 2 âncoras calculáveis)",
+     "valor": 3,
+     "unidade": "",
+     "origens": [
+      {
+       "fonte": "CVM DFP/ITR",
+       "nota": "A",
+       "detalhe": "CVM, DFP 2016–25 + ITR de 2026 (LTM), dados abertos"
+      },
+      {
+       "fonte": "lote (digitado)",
+       "nota": "C",
+       "detalhe": "escalar digitado no lote a partir da StatusInvest ou dos fatos do lote, sem fonte primária por campo (cabeçalho do lote)"
+      },
+      {
+       "fonte": "StatusInvest (DPA)",
+       "nota": "C",
+       "detalhe": "DPA por data-com da StatusInvest"
+      },
+      {
+       "fonte": "Tesouro + ANBIMA",
+       "nota": "A",
+       "detalhe": "rf: Tesouro IPCA+ sem juros 15/08/2050 (o mais longo sem cupom à venda no Tesouro Direto), taxa de compra da manhã (Tesouro Transparente, PrecoTaxaTesouroDireto.csv); π: inflação implícita da ETTJ ANBIMA de fechamento, vértice 2520 du (~10 anos), arredondada a 4 casas (6,4593%) — 2026-10-02 (mercado_vigente.json)"
+      },
+      {
+       "fonte": "CVM DFP/ITR",
+       "nota": "A",
+       "detalhe": "CVM, DFP 2016–25 + ITR de 2026 (LTM), dados abertos"
+      },
+      {
+       "fonte": "lote (digitado)",
+       "nota": "C",
+       "detalhe": "escalar digitado no lote a partir da StatusInvest ou dos fatos do lote, sem fonte primária por campo (cabeçalho do lote)"
+      },
+      {
+       "fonte": "StatusInvest (DPA)",
+       "nota": "C",
+       "detalhe": "DPA por data-com da StatusInvest"
+      },
+      {
+       "fonte": "Tesouro + ANBIMA",
+       "nota": "A",
+       "detalhe": "rf: Tesouro IPCA+ sem juros 15/08/2050 (o mais longo sem cupom à venda no Tesouro Direto), taxa de compra da manhã (Tesouro Transparente, PrecoTaxaTesouroDireto.csv); π: inflação implícita da ETTJ ANBIMA de fechamento, vértice 2520 du (~10 anos), arredondada a 4 casas (6,4593%) — 2026-10-02 (mercado_vigente.json)"
+      },
+      {
+       "fonte": "CVM DFP/ITR",
+       "nota": "A",
+       "detalhe": "CVM, DFP 2016–25 + ITR de 2026 (LTM), dados abertos"
+      },
+      {
+       "fonte": "lote (digitado)",
+       "nota": "C",
+       "detalhe": "escalar digitado no lote a partir da StatusInvest ou dos fatos do lote, sem fonte primária por campo (cabeçalho do lote)"
+      },
+      {
+       "fonte": "StatusInvest (DPA)",
+       "nota": "C",
+       "detalhe": "DPA por data-com da StatusInvest"
+      }
+     ],
+     "papel": "informativo",
+     "obs": "ok — confiança baixa (§11); corte da doutrina"
+    },
+    {
+     "rotulo": "Defasagem do provento ≥ 12 meses",
+     "valor": 2.0,
+     "unidade": "",
+     "origens": [
+      {
+       "fonte": "StatusInvest (datas)",
+       "nota": "C",
+       "detalhe": "datas de pagamento da StatusInvest, só para a defasagem do provento (§6.3)"
+      }
+     ],
+     "papel": "informativo",
+     "obs": "ok; informativo — corte do relatório (heurística do projeto, sem fonte)"
+    },
+    {
+     "rotulo": "Não vence a renda fixa (Bogle líquido real < rf líquida + 3 p.p.)",
+     "valor": "Não",
+     "unidade": "",
+     "origens": [
+      {
+       "fonte": "Tesouro + ANBIMA",
+       "nota": "A",
+       "detalhe": "rf: Tesouro IPCA+ sem juros 15/08/2050 (o mais longo sem cupom à venda no Tesouro Direto), taxa de compra da manhã (Tesouro Transparente, PrecoTaxaTesouroDireto.csv); π: inflação implícita da ETTJ ANBIMA de fechamento, vértice 2520 du (~10 anos), arredondada a 4 casas (6,4593%) — 2026-10-02 (mercado_vigente.json)"
+      }
+     ],
+     "papel": "informativo",
+     "obs": "DISPARA — carimbo do §9; corte da doutrina"
+    },
+    {
+     "rotulo": "Valor central depende de insumo C ou sem fonte",
+     "valor": "C",
+     "unidade": "",
+     "origens": [
+      {
+       "fonte": "CVM DFP/ITR",
+       "nota": "A",
+       "detalhe": "CVM, DFP 2016–25 + ITR de 2026 (LTM), dados abertos"
+      },
+      {
+       "fonte": "lote (digitado)",
+       "nota": "C",
+       "detalhe": "escalar digitado no lote a partir da StatusInvest ou dos fatos do lote, sem fonte primária por campo (cabeçalho do lote)"
+      },
+      {
+       "fonte": "StatusInvest (DPA)",
+       "nota": "C",
+       "detalhe": "DPA por data-com da StatusInvest"
+      },
+      {
+       "fonte": "Tesouro + ANBIMA",
+       "nota": "A",
+       "detalhe": "rf: Tesouro IPCA+ sem juros 15/08/2050 (o mais longo sem cupom à venda no Tesouro Direto), taxa de compra da manhã (Tesouro Transparente, PrecoTaxaTesouroDireto.csv); π: inflação implícita da ETTJ ANBIMA de fechamento, vértice 2520 du (~10 anos), arredondada a 4 casas (6,4593%) — 2026-10-02 (mercado_vigente.json)"
+      },
+      {
+       "fonte": "CVM DFP/ITR",
+       "nota": "A",
+       "detalhe": "CVM, DFP 2016–25 + ITR de 2026 (LTM), dados abertos"
+      },
+      {
+       "fonte": "lote (digitado)",
+       "nota": "C",
+       "detalhe": "escalar digitado no lote a partir da StatusInvest ou dos fatos do lote, sem fonte primária por campo (cabeçalho do lote)"
+      },
+      {
+       "fonte": "StatusInvest (DPA)",
+       "nota": "C",
+       "detalhe": "DPA por data-com da StatusInvest"
+      },
+      {
+       "fonte": "Tesouro + ANBIMA",
+       "nota": "A",
+       "detalhe": "rf: Tesouro IPCA+ sem juros 15/08/2050 (o mais longo sem cupom à venda no Tesouro Direto), taxa de compra da manhã (Tesouro Transparente, PrecoTaxaTesouroDireto.csv); π: inflação implícita da ETTJ ANBIMA de fechamento, vértice 2520 du (~10 anos), arredondada a 4 casas (6,4593%) — 2026-10-02 (mercado_vigente.json)"
+      },
+      {
+       "fonte": "CVM DFP/ITR",
+       "nota": "A",
+       "detalhe": "CVM, DFP 2016–25 + ITR de 2026 (LTM), dados abertos"
+      },
+      {
+       "fonte": "lote (digitado)",
+       "nota": "C",
+       "detalhe": "escalar digitado no lote a partir da StatusInvest ou dos fatos do lote, sem fonte primária por campo (cabeçalho do lote)"
+      },
+      {
+       "fonte": "StatusInvest (DPA)",
+       "nota": "C",
+       "detalhe": "DPA por data-com da StatusInvest"
+      }
+     ],
+     "papel": "informativo",
+     "obs": "DISPARA — só A/B embasa decisão (doutrina §2); corte da doutrina"
+    }
+   ],
+   "texto": [
+    "**7 bandeira(s) disparada(s):** Altman Z'' fora da zona segura (4,98); DL ÷ EBITDA normalizado acima de 3× (3,05×); ROIC real < WACC real na maioria dos exercícios (0 de 10 acima); Payout sustentável acima de 100% (—); Dispersão das âncoras acima de 1,8× (21,32×); Não vence a renda fixa (Bogle líquido real < rf líquida + 3 p.p.) (Não); Valor central depende de insumo C ou sem fonte (C)."
+   ],
+   "avisos": [],
+   "tabelas": []
+  },
+  {
+   "titulo": "Premissas de julgamento (método, não dado)",
+   "numeros": [],
+   "texto": [
+    "Perfil do motor: ciclica.",
+    "Desconto de controlador: zero (0,0% no valor) — sem razão documentada",
+    "g real perpétuo: 1,0% (só conta com ROIC acima do WACC).",
+    "Notas qualitativas: arbitrada, pré-v4."
+   ],
+   "avisos": [],
+   "tabelas": []
+  }
+ ],
+ "avisos": [
+  "Comentários do analista (um por bloco qualitativo): a escrever em relatorio/textos/KLBN11.json, cada um com fonte A/B — nenhum texto é inventado; os blocos mostram só números com fonte.",
+  "Premissas do hall digitadas no lote (data-base do hall); o dossiê do ticker troca os escalares por dado A da CVM/B3.",
+  "O valor central depende de insumo com nota C (só A/B embasa decisão): DPA por data-com da StatusInvest; escalar digitado no lote a partir da StatusInvest ou dos fatos do lote, sem fonte primária por campo (cabeçalho do lote)."
+ ]
+}

@@ -5,6 +5,9 @@ módulo ES com tipo errado.
 """
 from __future__ import annotations
 
+import os
+import socket
+import sys
 import webbrowser
 from functools import partial
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
@@ -54,12 +57,28 @@ class Leitura(SimpleHTTPRequestHandler):
         pass
 
 
+class Exclusivo(ThreadingHTTPServer):
+    """Bind exclusivo: no Windows `SO_REUSEADDR` deixa um 2º servidor subir na mesma porta e as conexões se dividem entre
+    os dois (ERR_CONNECTION_REFUSED intermitente). Aqui o 2º falha com OSError (N9)."""
+    allow_reuse_address = False
+
+    def server_bind(self):
+        if os.name == "nt":
+            self.socket.setsockopt(socket.SOL_SOCKET, socket.SO_EXCLUSIVEADDRUSE, 1)
+        super().server_bind()
+
+
 def servidor(porta: int = PORTA, pasta: Path = WEB) -> ThreadingHTTPServer:
-    return ThreadingHTTPServer((HOST, porta), partial(Leitura, directory=str(pasta)))
+    return Exclusivo((HOST, porta), partial(Leitura, directory=str(pasta)))
 
 
 def servir(porta: int = PORTA, abrir: bool = True) -> None:
-    srv = servidor(porta)
+    try:
+        srv = servidor(porta)
+    except OSError as e:
+        print(f"Porta {porta} em uso (já há uma Mesa de Value aberta?): {e.strerror or e}. "
+              f"Abra http://{HOST}:{porta}/ ou feche o outro servidor.", file=sys.stderr)
+        raise SystemExit(1)
     url = f"http://{HOST}:{srv.server_address[1]}/"
     print(f"Mesa de Value em {url} (Ctrl+C para parar)", flush=True)
     if abrir:

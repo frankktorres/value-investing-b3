@@ -32,7 +32,7 @@ def motivo(tk, r):
         tir = (1 + r["ke_implicito"]) / (1 + MK.pi) - 1 if r["ke_implicito"] else None
         return (f"**recalculado v2.2 (05/10)**; TIR real {br(100 * tir, 1) + '%' if tir else 'n.d.'}; ROE lp {br(100 * EGIE.roe_lp, 1)}% × Ke nominal "
                 f"{br(100 * MK.ke_nom, 1)}%; método de regulado (P/VP justificado + DDM); patrimônio + follow-on de R$ 8,36 bi (Jirau 40%) ao Ke, "
-                f"1.416 mi de ações; ROE lp do negócio existente {br(100 * EGIE_DADOS['roe_old_lp'], 1)}% (sem UBP de 2024); **no fio:** vira CARA com ROE "
+                f"1.416 mi de ações; ROE lp do negócio existente {br(100 * EGIE_DADOS['roe_old_lp'], 1)}% (sem o ganho da venda da TAG em 2024); **no fio:** vira CARA com ROE "
                 f"< {br(100 * VIRADA['roe_virada'], 1)}% (média 2017–25 → {br(VIRADA['central_media'])}; ROE 12m → {br(VIRADA['central_roe_atual'])}); "
                 "trava JUSTA passa só com re-rating")
     m = f"**recalculado v2.2 (05/10)**; {ke}; ROIC {pct_ou_nd(r['roic'])} contábil / {pct_ou_nd(r['roic_reposicao'])} a reposição × WACC {br(100 * r['wacc'], 1)}%; confiança {r['confianca']}"

@@ -1,0 +1,27 @@
+{
+ "ticker": "VLID3",
+ "data_preco": "2026-10-15",
+ "preco": 18.85,
+ "central": 16.605,
+ "pc": 1.1352,
+ "palavra": "CARA",
+ "palavra_regua": "CARA",
+ "notas_regra11": {
+  "moat": 0,
+  "gestao": 0,
+  "controlador": 5,
+  "ciclo": 2,
+  "fisher": 2
+ },
+ "desc_controlador": 0.01,
+ "desc_controlador_razao": "regra 8 (probabilidade x magnitude do risco prospectivo), sem evidência de interferência consumada (IPE 2017-26, ver 'interferencias'). Contexto: a Valid é uma empresa de capital disperso sem controlador (FRE 2026 v4), mas a Alaska (gestora) acumulou 45,13% das ON em 27/05/2026 (comunicado) e 46,262% no FRE de 11/08/2026, vindo de 30,51% em 08/11/2024; BTG Gestão tem 11,917%; free float 94,581%. A poison pill foi retirada em abril de 2024 (AGE aprovou a consolidação do estatuto; o estatuto de 03/11/2025 só tem regras padrão do Novo Mercado) e o art. 43 só dispara com 'Controle' efetivamente exercido, sem gatilho percentual. O risco de extração do controlador antigo não existe: partes relacionadas 0% da receita, sem contrato com acionista. Entram só os riscos que a nota e o valor central não capturam: (a) o bloco da Alaska (que repetidamente declara só 'operações financeiras', sem acordo de voto) virar controle de fato sem OPA para os demais, hoje 46% e sem o escudo da poison pill; (b) fechamento de capital/saída do Novo Mercado a preço abaixo do valor, mitigado pelos arts. 45-46 do estatuto (OPA exigida, dispensável por AGE com 2/3 das ações em circulação em primeira convocação). Não há OPA, nem proposta de fechamento de capital, nem fato relevante nesse sentido em 2017-2026. As probabilidades e perdas são estimativas minhas (não saem de fonte), no mesmo molde da ALLD3 e da BLAU3",
+ "media_regra11": 1.8,
+ "discricionario": false,
+ "doutrina": "v2.3",
+ "template": "02 v4",
+ "rf_real": 0.0674,
+ "pi": 0.0575,
+ "aliquota": 0.1518,
+ "aliquota_regra": "mediana",
+ "gerado_em": "2026-10-19"
+}

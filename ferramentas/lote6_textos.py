@@ -112,7 +112,7 @@ T = {
     renda="Pode manter; compra nova só ≤ R$ {compra}. Yield sustentável líquido {dy_liq}; payout mínimo de 55%.",
     capital="Não. {palavra} ({pc}× o central); compra ≤ R$ {compra}.",
     de_para="A rev. 03/10 (R$ 26,70) era o central de 07/09 reescalado, com TIR de 9,0–9,4% calculada a Ke de IPCA 4%. Agora: método de regulado do "
-            "Lote 2 (P/VP justificado + DDM), ROE de longo prazo limpo da UBP de 2024, patrimônio de jun/26 − dividendo de ago/26 + follow-on de "
+            "Lote 2 (P/VP justificado + DDM), ROE de longo prazo limpo do ganho da venda da TAG em 2024, patrimônio de jun/26 − dividendo de ago/26 + follow-on de "
             "jul/26 e 1.416 mi de ações. Razão (c).",
     autocritica=["O ROE de longo prazo vem de anos com payout ~100% (PL pequeno); com payout de 55% o PL cresce e o ROE tende a cair — com o ROE "
                  "de 12m o central seria R$ {central_roe_atual}.",

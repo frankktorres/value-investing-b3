@@ -2,6 +2,18 @@
 *Fila de trabalho da rotina autônoma. Cada missão: executável só com o GitHub, com "pronto quando" verificável. Ao terminar, mover para "Feitas" e registrar em `RELATORIO-DIARIO.md`. Fonte: `BACKLOG.md` (tipo executável). Desde 22/10 a rotina grava no ramo `claude/*` dela; o `ferramentas/conferir_noite.py` junta no master de manhã, com os dados locais (`DECISOES.md`, 22/10).*
 
 ## Próximas (ordem de prioridade)
+
+**B33 — EGIE3: explicar os ~R$ 2 bi que faltam no PL do 3T26, antes de reavaliar a palavra.** *(23/11/2026)*
+O PL do controlador subiu R$ 6,30 bi de 30/06 a 30/09/2026; oferta de jul/26 (R$ 8,36 bi) − dividendo de ago/26 (R$ 770,8 mi, B3) daria R$ 7,59 bi. Conferir no RI do 3T26 (release e ITR) e na DMPL do ITR 3T26 (CVM, nota A) o custo da oferta (gastos com emissão de ações, líquidos de IR) e o dividendo efetivamente pago/declarado no trimestre, e o resultado do 3T26 que entra no PL. Fato com fonte → `ferramentas/dados/eventos_societarios.json` (nunca número no código). Não mudar a palavra: a EGIE3 fica NÃO CONCLUSIVO (trava do §9, decisão do Frank de 23/11) até o Frank ver a conta. *Pronto quando:* a diferença está explicada linha a linha com fonte A/B em `docs/` (ou o resíduo declarado), e a reavaliação proposta está em `PENDENTE-FRANK.md`.
+
+**B32 — Zerar a catraca de anos fixos nos lotes (prazo 31/01/2027, antes do DFP 2026).** *(23/11/2026)*
+Datas de mês/dia/trimestre nos lotes já estão zeradas (tolerância zero em `tests/test_lotes_sem_data_fixa.py`). Restam os anos:
+`range(2016, 2026)`/`range(2021, 2026)` → janela a partir do último exercício do DFP na série (`CVM[tk]["anual"]`); chaves
+`"2024"/"2025"` → os 2 últimos exercícios; `dfp_2025.zip`, `itr_2025.zip`, `fre_2026.zip` → do ano do LTM (`ltm.ano_de`); início
+de janela com quebra estrutural (ex. PETR4 2019, RECV3 2020) é fato: vai para dado com `janela_razao`, não para o código.
+Junto, antes do DFP 2026: ler o balanço pelo DFP quando o LTM for 4T (`ltm.zip_itr("4T26")` falha alto hoje — ações e
+holding dos lotes 4 e 6 e ITSA4). Uma fatia por lote; golden idêntico em cada uma (refatoração pura). *Pronto quando:* `tests/datas_fixas_catraca.json` com 0 em
+todos os lotes, suíte verde com `EXIGIR_DADOS=1` e `python rodar_tudo.py` "sem mudanças".
 *Fila da madrugada de 23/10 (montada em 22/10 fim do dia): **O3 → N12 → O4 → O5**. O3 em ramo próprio (muda palavra); as
 outras no ramo da sessão. Fio condutor: `docs/PROMPT-ORACULO-E-CALIBRACAO.md` (ler "Princípios invioláveis" e as Fases 3–4
 antes de começar). Fases 0–2 feitas (9fd7159, 9e9e8ac); relatórios de 22/10 em `docs/oraculo/`.*
@@ -177,6 +189,7 @@ Front lê só o contrato. Tira o "Sistema em breve" do `index.html:27`.
 (nenhuma)
 
 ## Feitas
+- **B34** (24/11, com o Frank): defeito H2 corrigido — D/E a mercado (preço da data-base × ações), sem ponto fixo; D = dívida bruta com arrendamentos + outros passivos financeiros, a mesma da ponte; Ke nominal > 30% → NÃO CONCLUSIVO (doutrina v2.7). Golden regravado (SMTO3 CARA → NC; PRIO3/UNIP6 → NC pela trava). Dossiês recalculados na data (point-in-time). Oráculo sem BLOQUEIA; suíte verde com `EXIGIR_DADOS=1`; 3T26 juntado no master. Ver `09` de 24/11.
 - **Q01** (backlog, 22/10): `gerar_pdf_lote1.py` cai para a Liberation Sans (métricas da Arial) quando a Arial do Windows não existe; `test_b23` e `test_carimbos` voltam a coletar na nuvem (suíte 963 passed, 42 skipped, sem `--ignore`). PDFs do Windows inalterados.
 - **N5** (22/10, noite): `painel/tests/test_contraste_tokens.py` — texto ≥ 4,5:1 e séries ≥ 3:1 nos dois temas passam; contornos abaixo de 3:1 listados (teste fixa a lista) e em `PENDENTE-FRANK.md` #10; nenhuma cor trocada.
 - **N4** (22/10, noite): `painel/sistema.py` + `sistema.json` + `telas/sistema.js` (rota `#/sistema`); registro da suíte pelo `conftest`; `test_sistema.py`, `test_web_estatico`. Conferência visual: Frank (dia).

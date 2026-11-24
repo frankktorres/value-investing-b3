@@ -1,0 +1,316 @@
+"""Contrato da tela v0.2: só traduz o que os motores gravaram — ausente vira None (nunca estimativa), palavra do motor
+como está (RADAR inclusive), fatores da régua lidos do motor, carteira só em pasta ignorada. Fixtures sintéticas."""
+import json
+import subprocess
+
+import pytest
+
+from painel import contrato
+from painel.contrato import br_num, classe_cenario, linha_hall, monitor, palavra_codigo
+from relatorio.modelo import Numero, Origem, Relatorio, Secao
+
+FAT = {"compra": 0.70, "compra_parcial_qualidade": 0.80, "saida": 1.30, "saida_qualidade": 1.50,
+       "escala_regua": [0.5, 1.6]}
+
+
+def bruta(**kw):
+    x = {"tk": "TESTA3", "nome": "Teste SA", "origem": "hall, lote 1", "dossie": False, "data_palavra": "2026-10-02",
+         "palavra": "CARA", "palavra_motor": None, "central": 10.0, "nota_central": "B", "fonte_central": "CVM",
+         "compra": 7.0, "saida": 13.0, "saida_exc": False, "preco_ref": 12.0, "nota_preco_ref": "A",
+         "preco_hoje": 14.0, "pc_hoje": 1.4, "situacao": "≥ SAÍDA", "n_central": 2, "n_informativo": 3,
+         "fora_do_hall": False, "na_carteira": False, "avisos": [], "erro": None}
+    x.update(kw)
+    return x
+
+
+def num(rotulo, valor, unidade="R$", papel="", nota="A", obs=""):
+    return {"rotulo": rotulo, "valor": valor, "unidade": unidade, "papel": papel, "obs": obs, "nota": nota,
+            "fonte": "CVM", "origens": [{"fonte": "CVM", "nota": nota, "detalhe": ""}]}
+
+
+def bruto_emp(secoes):
+    return {"tk": "TESTA3", "data": "2026-10-02", "avisos": [], "secoes": secoes}
+
+
+def secao(titulo, numeros=(), texto=(), tabelas=()):
+    return {"titulo": titulo, "numeros": list(numeros), "texto": list(texto), "avisos": [], "tabelas": list(tabelas)}
+
+
+@pytest.mark.parametrize("s,v", [("R$ 1.234,56", 1234.56), ("12,3%", 0.123), ("1,23×", 1.23), ("—", None), ("", None),
+                                 ("sem data", None), (3.5, 3.5), (float("nan"), None), (None, None), ("-2,00", -2.0)])
+def test_br_num(s, v):
+    assert br_num(s) == (pytest.approx(v) if v is not None else None)
+
+
+def test_palavra_do_motor_como_esta():
+    assert palavra_codigo("NÃO CONCLUSIVO") == "NAO_CONCLUSIVO"
+    assert palavra_codigo("RADAR") == "RADAR" and palavra_codigo(None) is None
+
+
+def test_fatores_vem_do_motor():
+    import motor_financeiras as m
+    f = contrato.fatores()
+    assert (f["compra"], f["saida"], f["saida_qualidade"]) == (m.COMPRA, m.SAIDA_PADRAO, m.SAIDA_QUALIDADE)
+
+
+def test_linha_hall_traduz_sem_inventar():
+    x = linha_hall(bruta(saida_exc=True, saida=15.0), None, None, None, "2026-10-20", 7, FAT)
+    assert x["fator_saida"] == 1.5 and x["central_nota"] == "B" and x["metodos_total"] == 5
+    # o que o motor não entrega fica None: setor, yield (sem seção de dividendos), série, defasagem
+    assert x["setor"] is None and x["yield_sust"] is None and x["yield_nota"] == "—"
+    assert x["serie_12m"] is None and x["dias_defasagem"] is None and x["velho"] is None
+
+
+def test_linha_hall_sem_regua_e_dado_velho():
+    x = linha_hall(bruta(palavra="NÃO CONCLUSIVO", central=None, compra=None, saida=None, pc_hoje=None,
+                         situacao="sem palavra"), None, [["2026-10-09", 1.0]], "2026-10-01", "2026-10-20", 7, FAT)
+    assert x["palavra"] == "NAO_CONCLUSIVO" and x["fator_saida"] is None and x["pc"] is None
+    assert x["dias_defasagem"] == 19 and x["velho"] is True          # velho não troca a palavra
+
+
+def test_metodos_separa_central_de_informativo_e_baixo_alto_none():
+    b = bruto_emp([secao("Preço justo por método", [
+        num("DCF — fluxo de caixa", 9.0, papel="central"), num("Graham", 8.0, papel="informativo", nota="C"),
+        num("Bogle — retorno", 0.12, "%", "informativo"), num("Valor central (mediana)", 9.0)])])
+    met, ind = contrato.metodos(b)
+    assert [m["nome"] for m in met] == ["DCF", "Graham"] and [i["nome"] for i in ind] == ["Bogle"]
+    assert met[0]["entra_no_central"] and not met[1]["entra_no_central"]
+    assert met[0]["baixo"] is None and met[0]["alto"] is None and met[0]["descricao"] == "fluxo de caixa"
+
+
+def test_sensibilidade_grade_do_motor_base_e_tom():
+    tab = {"titulo": "Central com Ke × margem", "cabecalho": ["Ke \\ margem", "-2 p.p.", "+0 p.p.", "+2 p.p."],
+           "linhas": [["-1 p.p.", "30,00", "21,00", "16,00"], ["+0 p.p.", "12,00", "10,00", "—"]]}
+    s = contrato.sensibilidade(bruto_emp([secao("Sensibilidade do valor central", tabelas=[tab])]), 14.0, FAT, 1.3)
+    assert s["base"] == [1, 1] and s["valores"][1] == [12.0, 10.0, None]
+    assert s["classe"][0] == ["bem_acima", "bem_acima", "acima"]       # 14 ≤ 0,7×21 = 14,7
+    assert s["classe"][1] == ["abaixo", "bem_abaixo", None]            # 14 < 1,3×12; 14 ≥ 1,3×10
+    assert contrato.sensibilidade(bruto_emp([]), 14.0, FAT, 1.3) is None
+    assert classe_cenario(10.0, None, 0.7, 1.3) is None
+
+
+def test_premissas_qualitativo_riscos():
+    b = bruto_emp([
+        secao("Premissas de julgamento (método, não dado)", texto=["Perfil do motor: utility.", "Texto solto"]),
+        secao("Vantagem competitiva (moat)", [num("Nota de moat (0–5)", 4, "", nota="—"), num("ROE", 0.2, "%")]),
+        secao("Riscos e bandeiras", [num("Payout acima de 100%", 0.75, "%", obs="ok"),
+                                     num("Valor central depende de C", "C", obs="DISPARA — só A/B")])])
+    p = contrato.premissas(b)
+    assert p[0] == {"nome": "Perfil do motor", "valor": "utility", "tipo": "julgamento", "nota": None, "efeito": None}
+    assert p[1]["nome"] == "Texto solto" and p[1]["valor"] is None
+    q = {x["eixo"]: x for x in contrato.qualitativo(b)}
+    assert q["moat"]["nota_eixo"]["valor"] == 4 and q["moat"]["nota_eixo"]["escala"] == [0, 5]
+    assert len(q["moat"]["numeros"]) == 1 and q["gestao"]["nota_eixo"] is None
+    r = contrato.riscos(b)["itens"]
+    assert [x["disparou"] for x in r] == [False, True] and r[0]["probabilidade"] is None
+
+
+def test_proventos_tabela_do_dossie():
+    tab = {"titulo": "Proventos por exercício (data-com) — fonte: B3", "cabecalho": ["Ano", "DPA total", "JCP", "%"],
+           "linhas": [["2025", "R$ 0,79", "R$ 0,36", "45,1%"], ["2026 (parcial)", "R$ 0,23", "R$ 0,23", "100,0%"]]}
+    p = contrato.proventos(bruto_emp([secao("Dividendos e JCP", tabelas=[tab])]))
+    assert p["historico"][0] == {"ano": "2025", "parcial": False, "total": 0.79, "jcp": 0.36,
+                                 "dividendos": pytest.approx(0.43)}
+    assert p["historico"][1]["parcial"] and p["yield_proj"] is None
+    # D5 (21/10): só 2025 completo na série → 1, "pelo menos" (a série começa nele); o parcial não conta
+    a = p["anos_seguidos"]
+    assert (a["valor"], a["minimo"], a["nota"]) == (1, True, "A") and a["obs"].startswith("2025–2025")
+    vazio = contrato.proventos(bruto_emp([]))
+    assert vazio["historico"] is None and vazio["anos_seguidos"] is None
+
+
+def test_anos_seguidos_quebra_no_ano_sem_provento_ou_faltando():
+    import proventos_hall as ph
+    assert ph.anos_seguidos({}) == (0, False)
+    assert ph.anos_seguidos({"2016": 1.0, "2017": 0.0, "2018": 1.0, "2019": 2.0}) == (2, False)
+    assert ph.anos_seguidos({"2016": 1.0, "2018": 1.0, "2019": 2.0}) == (2, False)   # 2017 faltando quebra
+    assert ph.anos_seguidos({"2016": 1.0, "2017": 1.0}) == (2, True)                   # chega ao início: "pelo menos"
+    assert ph.anos_seguidos({"2024": 1.0, "2025": 0.0}) == (0, False)
+    linhas = [{"ano": "2024", "parcial": False, "total": 1.0}, {"ano": "2025", "parcial": False, "total": 0.0}]
+    z = contrato._anos_seguidos(linhas, {"fonte": "B3 proventos", "nota": "A"})
+    assert z["valor"] == 0 and z["obs"] == "sem provento em 2025" and not z["minimo"]
+
+
+def test_carteira_traduz_tabelas_do_relatorio():
+    o = (Origem("carteira local", "B"),)
+    rel = Relatorio("CARTEIRA", "Painel", "2026-10-15", "x", "—", secoes=[
+        Secao("Meta de renda", numeros=[Numero("Meta (R$ por mês)", 100.0, "R$", o),
+                                         Numero("Renda líquida por mês (média de 12 meses)", 25.0, "R$", o),
+                                         Numero("Meta atingida", 0.25, "%", o), Numero("Falta por mês", 75.0, "R$", o)]),
+        Secao("Posições na régua da doutrina", tabelas=[("Posições (maior valor primeiro)", [""] * 11,
+              [["TESTA3", "1", "R$ 14,00", "R$ 14,00", "100,0%", "CARA", "R$ 10,00", "1,40×", "R$ 7,00", "R$ 13,00",
+                "na saída ou acima"]])]),
+        Secao("Renda", tabelas=[("Renda de 12 meses", [""] * 7,
+              [["TESTA3", "1,00", "0,00", "7,1%", "R$ 1,00", "R$ 0,90", "—"], ["Total", "", "", "", "", "", ""]])]),
+        Secao("Calendário de pagamento", tabelas=[
+            ("Pagamento por mês", [""] * 7, [["2026-11", "R$ 0,90", "TESTA3", "a receber", "estimada", "R$ 0,50", "R$ 0,40"],
+                                            ["2026-12", "—", "", "sem pagamento", "", "—", "—"]]),
+            ("A receber (pagamento depois de 2026-10-15)", [""] * 8,
+             [["TESTA3", "2026-10-01", "sem data", "sem data", "JCP", "0,50", "R$ 0,41", "sim"]])])])
+    linhas = {"TESTA3": linha_hall(bruta(), None, None, None, "2026-10-20", 7, FAT)}
+    c = contrato.carteira(rel, linhas, [])
+    assert c["pct_meta"]["valor"] == 0.25 and c["falta"]["valor"] == 75.0 and c["n_papeis"] == 1
+    p = c["posicoes"][0]
+    assert p["peso"] == pytest.approx(1.0) and p["renda_liquida_ano"] == 0.9 and p["central"] == 10.0
+    assert c["calendario"][0]["liquido"] == 0.9
+    assert c["calendario"][0]["dividendos"] == 0.5 and c["calendario"][0]["jcp"] == 0.4        # N3: dividendo × JCP por mês
+    assert c["calendario"][1]["dividendos"] is None and c["calendario"][1]["jcp"] is None       # mês sem pagamento: "—"
+    assert c["pagamentos"][0]["data"] is None and c["pagamentos"][0]["na_renda_12m"] is True
+    assert c["setores"] is None and c["patrimonio"]["valor"] is None      # ausente no relatório → None
+
+
+def test_monitor_entrou_e_saiu():
+    def r(rod, tk, alerta, pc):
+        return {"rodada": rod, "pregao": rod, "ticker": tk, "preco": "10", "central": "10", "pc": pc, "alerta": alerta}
+    m = monitor([r("2026-10-09", "A", "", "0.8"), r("2026-10-09", "B", "≥ SAÍDA", "1.4"), r("2026-10-09", "C", "", "1"),
+                 r("2026-10-16", "A", "≤ COMPRA", "0.69"), r("2026-10-16", "B", "", "1.2"), r("2026-10-16", "C", "", "1"),
+                 r("2026-10-16", "D", "", "1")])
+    assert [x["ticker"] for x in m["entraram_compra"]] == ["A"] and m["entraram_compra"][0]["pc_anterior"] == 0.8
+    assert [x["ticker"] for x in m["sairam_saida"]] == ["B"] and m["sem_mudanca"] == 2 and m["novos"] == ["D"]   # C e D (novo, sem alerta)
+    assert monitor([])["rodada"] is None
+
+
+def test_real_contrato_sem_valor_inventado():
+    """Com os dados locais: todo campo do contrato que o motor não dá é None, e a palavra é a do exportador."""
+    hall_p = contrato.DESTINO / "hall.json"
+    if not hall_p.exists():
+        pytest.skip("sem web/dados/contrato (rode python -m painel.contrato)")
+    h = json.loads(hall_p.read_text(encoding="utf-8"))
+    bruto = {x["tk"]: x for x in json.loads((contrato.DADOS / "hall.json").read_text(encoding="utf-8"))["empresas"]}
+    assert subprocess.run(["git", "check-ignore", "-q", "--", str(contrato.PRIVADO / "carteira.json")],
+                          cwd=contrato.DADOS).returncode == 0
+    pessoais = {"peso", "peso_carteira", "renda_liquida_ano", "renda_bruta_ano", "preco_medio", "quantidade", "meta"}
+    for e in h["empresas"]:
+        assert not pessoais & set(e), e["ticker"]                     # hall sem dado pessoal (fica em privado/)
+        assert e["setor"] == contrato.setor_de(e["ticker"])         # FCA da triagem; None se a triagem não cobre
+        assert e["palavra"] == palavra_codigo(bruto[e["ticker"]]["palavra"])
+        assert e["central"] == bruto[e["ticker"]]["central"] and e["compra"] == bruto[e["ticker"]]["compra"]
+
+
+# ------------------------------------------------------------------------------ regressões do adversário (20/10/2026)
+def test_sem_cotacao_velho_e_desconhecido():
+    assert linha_hall(bruta(), None, None, None, "2026-10-20", 7, FAT)["velho"] is None
+
+
+def test_monitor_ticker_removido_e_novo_ja_em_alerta():
+    def r(rod, tk, alerta):
+        return {"rodada": rod, "pregao": rod, "ticker": tk, "preco": "10", "central": "10", "pc": "1", "alerta": alerta}
+    m = monitor([r("2026-10-10", "AAA3", "≤ COMPRA"), r("2026-10-10", "BBB3", "≥ SAÍDA"),
+                 r("2026-10-16", "CCC3", "≤ COMPRA")])
+    assert [x["ticker"] for x in m["sairam_compra"]] == ["AAA3"] and m["sairam_compra"][0]["removido"]
+    assert [x["ticker"] for x in m["sairam_saida"]] == ["BBB3"]
+    assert [x["ticker"] for x in m["entraram_compra"]] == ["CCC3"] and m["entraram_compra"][0]["novo"]
+    assert m["removidos"] == ["AAA3", "BBB3"] and m["novos"] == ["CCC3"]
+    so_uma = monitor([r("2026-10-16", "CCC3", "≤ COMPRA")])
+    assert so_uma["entraram_compra"] == [] and so_uma["rodada_anterior"] is None   # 1ª rodada: nada "entrou"
+
+
+@pytest.mark.parametrize("cab,linhas", [(["Ke \\ m", "+0 p.p."], [[]]), ([], [["+0 p.p.", "1,00"]]),
+                                        (["Ke \\ m", "-2 p.p.", "+0 p.p."], [["+0 p.p.", "10,00"]])])
+def test_sensibilidade_irregular_vira_none(cab, linhas):
+    tab = {"titulo": "x", "cabecalho": cab, "linhas": linhas}
+    assert contrato.sensibilidade(bruto_emp([secao("Sensibilidade", tabelas=[tab])]), 10.0, FAT, 1.3) is None
+
+
+def test_pagamento_sem_data_nao_e_declarado_e_valor_por_acao_fica_texto():
+    rel = Relatorio("CARTEIRA", "Painel", "2026-10-15", "x", "—", secoes=[
+        Secao("Calendário de pagamento", tabelas=[("A receber (x)", [""] * 8, [
+            ["T3", "2026-10-01", "sem data", "sem data", "JCP", "0,00", "R$ 0,41", "sim"],
+            ["T3", "2026-10-01", "2026-11-01", "estimada", "JCP", "0,03", "R$ 0,41", "sim"]])])])
+    pg = contrato.carteira(rel, {}, [])["pagamentos"]
+    assert [p["status"] for p in pg] == [None, "estimado"] and pg[0]["por_acao_txt"] == "0,00"
+    assert "por_acao" not in pg[0]
+
+
+def test_carteira_quebrada_nao_derruba_o_resto(tmp_path, monkeypatch):
+    from relatorio import carteira as mod
+    monkeypatch.setattr(mod, "carregar", lambda *a, **k: (_ for _ in ()).throw(ValueError("renda.jsonl linha 1")))
+    monkeypatch.setattr(mod, "garantir_ignorado", lambda p: None)
+    monkeypatch.setattr(contrato, "series_12m", lambda tks, hoje: ({}, {}))
+    import monitor_semanal
+    monkeypatch.setattr(monitor_semanal, "HISTORICO", tmp_path / "nao_existe.csv")
+    origem = tmp_path / "bruto"
+    (origem / "empresas").mkdir(parents=True)
+    (origem / "hall.json").write_text(json.dumps({"gerado_em": "x", "pregao_hoje": None, "avisos": [],
+                                                  "empresas": [bruta()]}), encoding="utf-8")
+    (origem / "empresas" / "TESTA3.json").write_text(json.dumps(bruto_emp([])), encoding="utf-8")
+    r = contrato.gerar(origem, tmp_path / "c", tmp_path / "p", hoje="2026-10-20", log=lambda *_: None)
+    assert r["carteira"]["vazia"] and "renda.jsonl" in r["carteira"]["erro"]
+    assert r["monitor"]["aviso"] and (tmp_path / "c" / "monitor.json").exists()
+    assert any("Sem série" in a for a in r["hall"]["avisos"]) and r["hall"]["empresas"][0]["velho"] is None
+
+
+def test_vence_renda_fixa_vem_do_motor():
+    """Comparação com a renda fixa sempre na tela (Frank, 20/10/2026): a resposta é a do motor, sem conta nova."""
+    b = bruto_emp([secao("Riscos e bandeiras", [
+        num("Não vence a renda fixa (Bogle líquido real < rf líquida + 3 p.p.)", "Empate", "", obs="ok")])])
+    x = linha_hall(bruta(), b, None, None, "2026-10-20", 7, FAT)
+    assert x["vence_rf"] == "Empate" and x["vence_rf_nota"] == "A"
+    y = linha_hall(bruta(), bruto_emp([]), None, None, "2026-10-20", 7, FAT)
+    assert y["vence_rf"] is None and y["vence_rf_nota"] == "—" and y["vence_rf_criterio"] is None
+
+
+# ------------------------------------------------------------------------------ N3: o contrato liga o que o motor já calcula
+def test_setor_do_fca_sem_prefixo_de_holding_e_none_sem_fonte(tmp_path, monkeypatch):
+    monkeypatch.setattr(contrato, "_setores", lambda: {
+        "ENERG3": "Energia Elétrica", "HOLD3": "Emp. Adm. Part. - Energia Elétrica"})
+    assert contrato.setor_de("ENERG3") == "Energia Elétrica"
+    assert contrato.setor_de("HOLD3") == "Energia Elétrica"                  # a holding segue o setor declarado
+    assert contrato.setor_de("XXXX3") is None
+    assert linha_hall(bruta(tk="HOLD3"), None, None, None, "2026-10-20", 7, FAT)["setor"] == "Energia Elétrica"
+    assert linha_hall(bruta(tk="XXXX3"), None, None, None, "2026-10-20", 7, FAT)["setor"] is None
+
+
+def test_setores_le_a_triagem_mais_recente(tmp_path, monkeypatch):
+    pasta = tmp_path / "triagem" / "dados"
+    pasta.mkdir(parents=True)
+    (pasta / "triagem_2026-10-02.csv").write_text("ticker,setor\nAAA3,Velho\n", encoding="utf-8")
+    (pasta / "triagem_2026-11-02.csv").write_text("ticker,setor\nAAA3,Novo\nBBB3,\n", encoding="utf-8")
+    monkeypatch.setattr(contrato, "__file__", str(tmp_path / "painel" / "contrato.py"))
+    contrato._setores.cache_clear()
+    try:
+        assert contrato._setores() == {"AAA3": "Novo"}                      # setor vazio não vira texto
+    finally:
+        contrato._setores.cache_clear()
+
+
+def test_fontes_leva_a_data_mais_recente_declarada_e_none_sem_data():
+    def n(fonte, data):
+        x = num("x", 1.0)
+        x["origens"] = [{"fonte": fonte, "nota": "A", "detalhe": "", "data": data}]
+        return x
+    b = bruto_emp([secao("Veredito", [n("COTAHIST", "2026-10-02"), n("COTAHIST", "2026-09-30"), n("CVM", "")])])
+    por_nome = {f["nome"]: f for f in contrato.fontes(b)}
+    assert por_nome["COTAHIST"]["data"] == "2026-10-02" and por_nome["COTAHIST"]["n_numeros"] == 2
+    assert por_nome["CVM"]["data"] is None                                   # origem sem data declarada: sem chute
+
+
+def test_origens_do_insumos_a_declaram_data():
+    import insumos_a
+    import precos_hall
+    assert insumos_a.PRECO_COTAHIST.data == precos_hall.PRECO_DATA
+    assert insumos_a.ACOES_ITR("2T26").data == "2026-06-30" and insumos_a.ACOES_ITR("3T26").data == "2026-09-30"
+    assert insumos_a.NAV_SLCE3.data == "2026-06-15"
+
+
+def test_metodos_dcf_traz_faixa_dos_cenarios_e_os_outros_ficam_sem():
+    dcf = num("DCF — fluxo de caixa", 9.0, papel="central")
+    dcf.update(baixo=6.0, alto=12.0)
+    b = bruto_emp([secao("Preço justo por método", [dcf, num("EPV", 8.0, papel="central")])])
+    met, _ = contrato.metodos(b)
+    assert (met[0]["baixo"], met[0]["base"], met[0]["alto"]) == (6.0, 9.0, 12.0)
+    assert met[1]["baixo"] is None and met[1]["alto"] is None
+
+
+def test_quanti_faixa_do_dcf_vem_dos_cenarios_com_o_desconto_de_controlador():
+    from relatorio import quanti
+    r = {"dcf": {"pessimista": 50.0, "base": 60.0, "otimista": 80.0}, "desc_controlador": 0.10}
+    assert quanti._faixa_dcf(r) == (pytest.approx(45.0), pytest.approx(72.0))
+    assert quanti._faixa_dcf({"dcf": {"pessimista": -5.0, "base": 4.0, "otimista": 9.0}, "desc_controlador": 0.5}) == (-5.0, 4.5)
+    assert quanti._faixa_dcf({}) == (None, None)                              # financeira: sem DCF
+
+
+def test_exportar_leva_baixo_alto_e_data_da_origem():
+    from painel.exportar import numero_json
+    j = numero_json(Numero("DCF", 9.0, "R$", (Origem("COTAHIST", "A", "d", data="2026-10-02"),), "central", "", 6.0, 12.0))
+    assert (j["baixo"], j["alto"]) == (6.0, 12.0) and j["origens"][0]["data"] == "2026-10-02"

@@ -1,0 +1,15 @@
+diff --git a/ferramentas/motor_nao_financeiras.py b/ferramentas/motor_nao_financeiras.py
+index c52f736..64a2e3a 100644
+--- a/ferramentas/motor_nao_financeiras.py
++++ b/ferramentas/motor_nao_financeiras.py
+@@ -753,8 +753,8 @@ def valores(emp: Industrial, mk: Mercado, ke_nom=None, margem=None, g_real=None,
+     # fluxo do acionista: o crédito com prazo incide sobre o lucro depois dos juros normalizados, ao Ke real
+     benef_acao = beneficio_fiscal(emp, lair_norm, ke_real)
+     # o OE é fluxo do acionista (depois dos juros da DL do balanço): os dois outros passivos saem por inteiro
+-    oe_val = ((oe_norm / (ke_real - gr) + benef_acao - emp.outros_passivos - emp.outros_passivos_financeiros - prov["total"]) / n
+-              if oe_norm and ke_real > gr else None)
++    oe_val = ((oe_norm / (ke - gr) + benef_acao - emp.outros_passivos - emp.outros_passivos_financeiros - prov["total"]) / n
++              if oe_norm and ke > gr else None)
+ 
+     reprod = (emp.reproducao_por_acao if emp.reproducao_por_acao else
+               (v(ltm, "pl", 0) - prov["no_pl"] - v(ltm, "nao_controladores", 0)) / n)

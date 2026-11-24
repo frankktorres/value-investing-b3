@@ -34,7 +34,7 @@ N_IND = 500 if COMPLETO else 12
 N_FIN = 500
 DECISAO = ("BARATA", "RADAR", "JUSTA")
 PALAVRAS = (*F.ORDEM, "NÃO CONCLUSIVO")
-TOL_PF = 1e-4      # o ponto fixo do WACC para em |ΔE/E| < 1e-5 (TOL_PONTO_FIXO): ruído relativo do central dessa ordem
+TOL_PF = 1e-4      # folga relativa do central (era o ruído do ponto fixo do WACC, removido pelo H2 em 24/11/2026)
 # campo crítico (VALIDACAO §5) → chaves da série; dívida = as três linhas da bruta
 CRITICOS = {"caixa": ("caixa",), "divida": ("emprest_cp", "emprest_lp"), "pl": ("pl",), "lucro": ("lucro", "lucro_controlador"),
             "receita": ("receita",), "da": ("da",), "imobilizado": ("imobilizado",)}
@@ -170,11 +170,15 @@ def test_fluxo_maior_nao_baixa_o_central_financeira(tk, d):
 @seed(SEMENTE)
 @_cfg(N_IND)
 @given(tk=st.sampled_from(_ind()), f=st.floats(0.2, 5.0))
-def test_central_nao_depende_do_preco_industrial(tk, f):
+def test_preco_so_entra_pelo_e_do_d_e_industrial(tk, f):
+    """H2 (24/11/2026) revogou o "central não depende do preço" (AUD-13): o preço entra SÓ pelo E do D/E (Hamada e pesos);
+    a dívida não muda com ele."""
     emp = _empresas()[tk]
-    r = _avaliar(replace(emp, preco=emp.preco * f))
+    r, r0 = _avaliar(replace(emp, preco=emp.preco * f)), _base(tk)
     assert r is not None
-    assert r["central"] == pytest.approx(_base(tk)["central"], rel=1e-12), (tk, f)
+    assert r["e_peso"] == pytest.approx(emp.preco * f * emp.n_acoes / 1000, rel=1e-12), (tk, f)
+    assert r["d"] == pytest.approx(r0["d"], rel=1e-12), (tk, f)
+    assert r["premio_ke"] == pytest.approx(M.premio_alavancado(r["d"], r["e_peso"], r["aliquota"]), rel=1e-12), (tk, f)
 
 
 @seed(SEMENTE)
@@ -470,15 +474,73 @@ def test_dado_critico_ausente_nunca_da_palavra_de_decisao(tk, campo, f):
     _confere_ausente(tk, campo, f)
 
 
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason="H10 aceita (22/10): sem caixa, dívida, PL, D&A ou imobilizado o motor publica palavra de decisão "
-                          "(motor_nao_financeiras.py:176-177, 214, 250, 273-277, 287, 297); corrige na Fase 3")
 @seed(SEMENTE)
 @_cfg(max(N_IND, 20), phases=[Phase.explicit, Phase.reuse, Phase.generate])
 @example(tk="WEGE3", campo="da", f=0.6)
 @given(tk=st.sampled_from(_ind()), campo=st.sampled_from(H10_ABERTOS), f=st.floats(0.5, 1.05))
 def test_h10_dado_critico_ausente_nunca_da_palavra_de_decisao(tk, campo, f):
+    """H10 (Fase 3): os campos que davam zero silencioso agora viram NÃO CONCLUSIVO (`M.criticos_ausentes`)."""
     _confere_ausente(tk, campo, f)
+
+
+def test_h10_zero_declarado_continua_valendo_e_ausente_vira_nao_conclusivo():
+    """Ausente ≠ zero (VALIDACAO §5): caixa = 0 informado pela fonte não é recusa; caixa sem a chave no LTM é."""
+    tk = _ind()[0]
+    serie = copy.deepcopy(M.CVM[tk])
+    ltm = M.ltm_de(serie)
+    assert M.criticos_ausentes(tk) == []
+    for chave, esperado in ((0.0, []), (None, ["caixa"])):
+        ltm2 = dict(ltm)
+        if chave is None:
+            ltm2.pop("caixa", None)
+        else:
+            ltm2["caixa"] = chave
+        with mock.patch.object(M, "serie", lambda t, _l=ltm2: (serie["anual"], _l)):
+            assert M.criticos_ausentes(tk) == esperado
+    # dívida: só é ausente sem CP E sem LP (empresa sem LP informa só a CP)
+    ltm3 = {k: x for k, x in ltm.items() if k != "emprest_lp"}
+    with mock.patch.object(M, "serie", lambda t: (serie["anual"], ltm3)):
+        assert M.criticos_ausentes(tk) == []
+    ltm4 = {k: x for k, x in ltm3.items() if k != "emprest_cp"}
+    with mock.patch.object(M, "serie", lambda t: (serie["anual"], ltm4)):
+        assert M.criticos_ausentes(tk) == ["divida"]
+
+
+def test_h10_razao_do_nao_conclusivo_nomeia_o_campo():
+    tk = next(t for t in _ind() if _base(t)["palavra"] != "NÃO CONCLUSIVO")
+    with _serie(tk, _sem_campo(M.CVM[tk], ("imobilizado",))):
+        r = _avaliar(_empresas()[tk])
+    assert r["palavra"] == "NÃO CONCLUSIVO" and r["dado_critico_ausente"][0] == "imobilizado"
+    assert "dado crítico ausente: imobilizado" in r["confianca"]
+
+
+@seed(SEMENTE)
+@_cfg(max(N_IND, 20))
+@given(tk=st.sampled_from(_ind()), campo=st.sampled_from(M.CRITICOS_ANO), i=st.integers(0, 9), f=st.floats(0.5, 1.05))
+def test_o3b_campo_ausente_num_exercicio_da_janela_nunca_da_palavra_de_decisao(tk, campo, i, f):
+    """O3b: o campo some de UM exercício da janela das âncoras (o LTM fica) → nunca BARATA/RADAR/JUSTA."""
+    anos = M.premissas_operacionais(_empresas()[tk])["anos"]
+    ano = anos[i % len(anos)]
+    nova = copy.deepcopy(M.CVM[tk])
+    nova["anual"][ano].pop(campo, None)
+    emp = _empresas()[tk]
+    with _serie(tk, nova):
+        r = _avaliar(emp)
+        if r is None or not (r["central"] > 0):
+            return
+        r = _avaliar(replace(emp, preco=f * r["central"]))
+    assert r is None or r["palavra"] not in DECISAO, (tk, campo, ano, f, r["palavra"])
+    assert r is None or f"{campo} ({ano})" in r["dado_critico_ausente"]
+
+
+def test_o3b_ebit_ausente_no_ltm_falha_alto():
+    """EBIT sem chave no LTM não vira zero: o motor recusa com erro (nenhuma palavra sai)."""
+    tk = _ind()[0]
+    nova = copy.deepcopy(M.CVM[tk])
+    nova["ltm"].pop("ebit", None)
+    with _serie(tk, nova), pytest.raises(KeyError):
+        with _rapido():
+            M.avaliar(_empresas()[tk], MK)
 
 
 # ================================================================ §5 (D5.09): o desconto do controlador entra uma vez, no valor
@@ -497,9 +559,7 @@ def test_desconto_do_controlador_so_no_valor_financeira(tk, pct):
     assert {k: r["notas"][k] for k in ("qualidade", "solidez")} == {k: r0["notas"][k] for k in ("qualidade", "solidez")}
 
 
-@pytest.mark.xfail(strict=True, reason="achado A1 (Fase 2, 22/10): nos industriais o desconto entra no E do ponto fixo do WACC "
-                                       "(estrutura_de_capital) e volta como Ke maior pelo Hamada e nota de qualidade diferente; "
-                                       "a decidir na Fase 3")
+# achado A1 (22/10) fechado em 24/11/2026 pelo H2: o E do WACC é o preço × ações, o desconto não volta ao Ke nem à nota
 @seed(SEMENTE)
 @_cfg(max(N_IND // 2, 6))
 @example(tk="KLBN11", pct=0.25)

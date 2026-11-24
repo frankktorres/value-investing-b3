@@ -90,26 +90,20 @@ def _variante(func, trocas: dict[str, str]):
 
 TRAVA_CASA = "cria = roic_c is not None and min(roic_c, roic_rep_c if roic_rep_c is not None else roic_c) > w_nom"
 VALORES_V = _variante(M.valores, {TRAVA_CASA: "cria = _CRIA(roic_c, roic_rep_c, w_nom, w_real)"})
-ESTRUTURA_V = _variante(M.estrutura_de_capital, {"e0 = pl if pl > 0 else max(d, 1.0)": "e0 = _E0(emp, pl, d)"})
 CRIA = {
     "casa": lambda rc, rr, wn, wr: rc is not None and min(rc, rr if rr is not None else rc) > wn,
     # H1, "mesma base": ROIC contábil (nominal) × WACC nominal E ROIC a reposição (≈ real) × WACC real — o "nunca misture" do 01 l.55
     "real": lambda rc, rr, wn, wr: rc is not None and rc > wn and (rr if rr is not None else rc) > wr,
     "sem": lambda rc, rr, wn, wr: rc is not None,       # H9 R-mercado: g declarado sem trava
 }
-E0 = {"pl": lambda emp, pl, d: pl if pl > 0 else max(d, 1.0),
-      "mercado": lambda emp, pl, d: emp.preco * emp.n_acoes / 1000,
-      "3pl": lambda emp, pl, d: 3 * pl if pl > 0 else 3 * max(d, 1.0)}
 
 
 @contextlib.contextmanager
-def variante(trava="casa", e0="pl", aliquota=None, desconto=None, dm=0.0):
+def variante(trava="casa", aliquota=None, desconto=None, dm=0.0):
     """Ativa a regra alternativa no módulo do motor só dentro do bloco."""
     pilha = contextlib.ExitStack()
     pilha.enter_context(mock.patch.object(M, "valores", VALORES_V))
-    pilha.enter_context(mock.patch.object(M, "estrutura_de_capital", ESTRUTURA_V))
     pilha.enter_context(mock.patch.object(M, "_CRIA", CRIA[trava], create=True))
-    pilha.enter_context(mock.patch.object(M, "_E0", E0[e0], create=True))
     if aliquota is not None:
         pilha.enter_context(mock.patch.object(M, "aliquota_regra", lambda e, t=aliquota: (t, "explicita")))
         pilha.enter_context(mock.patch.object(M, "aliquota", lambda e, t=aliquota: t))
@@ -124,7 +118,7 @@ def variante(trava="casa", e0="pl", aliquota=None, desconto=None, dm=0.0):
 
 
 def central_industrial(emp, mk=MK, ke_nom=None):
-    """Mesmo caminho do `avaliar` até o central (ponto fixo → âncoras → desconto → mediana); `ke_nom` fixa o Ke do acionista."""
+    """Mesmo caminho do `avaliar` até o central (D/E a mercado → âncoras → desconto → mediana); `ke_nom` fixa o Ke do acionista."""
     ec = M.estrutura_de_capital(emp, mk)
     r = M.valores(emp, ec["mk"], ke_nom=ke_nom, e_peso=ec["e_peso"])
     return M.central_de(M.descontar(r["anc"], M.desconto_pct(emp)))[0], r, ec
@@ -162,19 +156,18 @@ def h1():
 
 # ---------------------------------------------------------------- H2
 def h2():
+    """H2 sob a regra de 24/11/2026 (pré-registro, emenda 3): D/E a mercado, sem ponto fixo. (a) o Ke e o D/E não dependem do
+    central (margem ±10% não os muda) — o laço some por construção; (b) caixa ↑ com a dívida bruta igual não reduz o central;
+    (c) Ke nominal > 30% é conferência (a palavra vira NÃO CONCLUSIVO). O teste de 22/10 (3 pontos de partida) não se aplica."""
     linhas, falha_a, falha_b = [], [], []
     for tk in ind():
         emp, r0 = empresas()[tk], base(tk)
-        cs = {}
-        for k in E0:
-            try:
-                with variante(e0=k):
-                    cs[k] = central_industrial(emp)[0]
-            except Exception as ex:
-                cs[k] = None
-        vals = [c for c in cs.values() if c is not None]
-        spread = (max(vals) - min(vals)) / abs(r0["central"]) if len(vals) == len(cs) and r0["central"] else None
-        if spread is None or spread > 0.01:
+        kes = {}
+        for dm in (-0.1, 0.1):
+            with variante(dm=dm * r0["m"]):
+                _, r, ec = central_industrial(emp)
+                kes[dm] = (ec["mk"].ke_nom, r["d"] / ec["e_peso"])
+        if any(abs(k - r0["ke_nom_emp"]) > 1e-12 or abs(de - r0["de_peso"]) > 1e-12 for k, de in kes.values()):
             falha_a.append(tk)
         # (b) caixa a mais (10% da dívida bruta, mín. R$ 1 mi) com a mesma dívida bruta: o central não pode cair
         serie = copy.deepcopy(M.CVM[tk])
@@ -192,15 +185,16 @@ def h2():
             M.idade_e_fator.cache_clear()
         if cb is not None and cb < r0["central"] * (1 - 1e-4):
             falha_b.append(tk)
-        linhas.append(dict(ticker=tk, ke_nom=r0["ke_nom_emp"], de=r0["de_peso"], centrais=cs, spread=spread, central_caixa=cb,
-                           central=r0["central"]))
+        linhas.append(dict(ticker=tk, ke_nom=r0["ke_nom_emp"], de=r0["de_peso"], central_caixa=cb, central=r0["central"],
+                           palavra=r0["palavra"]))
     acima = [l["ticker"] for l in linhas if l["ke_nom"] > S.KE_TETO]
-    aceita = bool(falha_a) or len(acima) >= 2
-    return dict(status="aceita" if aceita else "refutada", linhas=linhas, tentativa=True,
-                resumo=f"(a) ponto fixo com 3 partidas (PL, mercado, 3×PL): {len(falha_a)} ticker(s) com |Δcentral| > 1% "
-                       f"({', '.join(falha_a) or '—'}). (b) caixa a mais com a mesma bruta baixa o central em {len(falha_b)} "
-                       f"({', '.join(falha_b) or '—'}). (c) Ke nominal > 30% em {len(acima)} ({', '.join(acima)}). "
-                       f"Critério: aceita se (a) falhar em algum OU ≥ 2 violarem (c).")
+    sem_nc = [l["ticker"] for l in linhas if l["ke_nom"] > S.KE_TETO and l["palavra"] != "NÃO CONCLUSIVO"]
+    aceita = bool(falha_a) or bool(falha_b) or bool(sem_nc)
+    return dict(status="aceita" if aceita else "refutada", linhas=linhas, tentativa=False,
+                resumo=f"(a) Ke/D-E dependem do central (margem ±10%) em {len(falha_a)} ({', '.join(falha_a) or '—'}). "
+                       f"(b) caixa a mais com a mesma bruta baixa o central em {len(falha_b)} ({', '.join(falha_b) or '—'}). "
+                       f"(c) Ke nominal > 30% em {len(acima)} ({', '.join(acima) or '—'}), sem NÃO CONCLUSIVO em "
+                       f"{len(sem_nc)} ({', '.join(sem_nc) or '—'}). Regra de 24/11 (emenda 3): refutada = defeito corrigido.")
 
 
 # ---------------------------------------------------------------- H3

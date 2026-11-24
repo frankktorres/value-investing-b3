@@ -14,6 +14,7 @@ Sem ticker com ITR novo: avisa e sai com código 0.
 """
 import argparse
 import json
+import os
 import pathlib
 import re
 import sys
@@ -37,6 +38,15 @@ def interpretar_trimestre(rotulo):
     q, ano = int(m.group(1)), 2000 + int(m.group(2))
     mes, dia = TRIMESTRE_FIM[q]
     return ano, mes, f"{ano}-{mes:02d}-{dia:02d}"
+
+
+def _trimestre_arg(valor):
+    """`type=` do argparse: rótulo inválido (5T26, 4T26, 9T99) vira erro de uso (rc 2), não traceback."""
+    try:
+        interpretar_trimestre(valor)
+    except ValueError as e:
+        raise argparse.ArgumentTypeError(str(e))
+    return valor.strip().upper()
 
 
 def trimestre_atual(hoje=None):
@@ -213,7 +223,10 @@ def coletar(tickers, arq, ano, mes, tentativas=3):
         for k in range(0, len(faltam), LOTE_COLETA):
             lote = faltam[k:k + LOTE_COLETA]
             arg = json.dumps({"tks": lote, "anos": [ano - 1], "arq": str(arq), "ano": ano, "mes": mes})
-            subprocess.run([sys.executable, "-c", _CHAMADA, arg], cwd=AQUI, check=False)
+            # 23/11/2026: com a saída redirecionada para arquivo (rotina, `> log`), o Windows usa cp1252 e o coletor morria no
+            # print do "→" — todos os tickers ficavam "coleta falhou" e a temporada media só preço e taxa.
+            subprocess.run([sys.executable, "-c", _CHAMADA, arg], cwd=AQUI, check=False,
+                           env={**os.environ, "PYTHONIOENCODING": "utf-8"})
         if arq.exists():
             tudo = json.loads(arq.read_text(encoding="utf-8"))
             bons.update({tk: tudo[tk] for tk in faltam if ltm_utilizavel(tudo.get(tk))})
@@ -252,8 +265,8 @@ def injetar(novo):
 def main(argv=None):
     sys.stdout.reconfigure(encoding="utf-8")
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
-    ap.add_argument("--trimestre", help="ex.: 3T26 (padrão: o último que fechou)")
-    ap.add_argument("--simular", metavar="TRIM", help="ensaio com um trimestre já coletado (ex.: 2T26); sem download")
+    ap.add_argument("--trimestre", type=_trimestre_arg, help="ex.: 3T26 (padrão: o último que fechou)")
+    ap.add_argument("--simular", metavar="TRIM", type=_trimestre_arg, help="ensaio com um trimestre já coletado (ex.: 2T26); sem download")
     ap.add_argument("--gravar", action="store_true", help="grava a coleta nova em dados/cvm_series.json")
     ap.add_argument("--saida", help="pasta do boletim (padrão: BOLETINS/)")
     args = ap.parse_args(argv)

@@ -1,0 +1,13 @@
+diff --git a/ferramentas/motor_financeiras.py b/ferramentas/motor_financeiras.py
+index 9f80b80..a1387d4 100644
+--- a/ferramentas/motor_financeiras.py
++++ b/ferramentas/motor_financeiras.py
+@@ -97,7 +97,7 @@ def _exigir_preco_relativo(pc, quem: str) -> None:
+ def palavra(pc: float) -> str:
+     _exigir_preco_relativo(pc, "palavra")
+     pc = round(pc, 9)    # AUD-46: preço = 0,70 × central dava 0,7000000000000001 e caía em RADAR
+-    if pc <= 0.70: return "BARATA"
++    if pc <= 0.75: return "BARATA"
+     if pc <= 0.90: return "RADAR"
+     if pc <= 1.10: return "JUSTA"
+     return "CARA"

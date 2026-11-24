@@ -36,10 +36,13 @@ def test_aud24_ninguem_volta_ao_glob():
 
 
 def test_aud26_correcoes_do_lote4_sao_idempotentes():
+    """Fase 3, fatia 2: o DPA/JCP das não financeiras sai da B3 no carregamento do motor (`proventos_hall.aplicar`), não mais de
+    `lote4.corrigir_proventos` no import do lote; reaplicar não muda nada."""
     import lote4_saude_telecom as l4
+    import proventos_hall
     from motor_nao_financeiras import CVM, SI
     antes = copy.deepcopy((SI, CVM))
-    l4.corrigir_proventos()
+    proventos_hall.aplicar(SI)
     l4.arrendamento_pago_proxy()
     assert (SI, CVM) == antes
 

@@ -23,10 +23,57 @@ TEXTOS = pathlib.Path(__file__).resolve().parent / "textos"
 ANO_FRE = 2026
 # CNPJ (FCA/FRE) e nome de pregão (NOMRES do COTAHIST = tradingName da B3) dos tickers do hall que têm relatório; os do
 # dossiê vêm de `dossie.base`. Ticker fora das duas tabelas fica sem FRE e sem proventos da B3 (o bloco avisa).
-CADASTRO = {"BBSE3": ("17.344.597/0001-94", "BBSEGURIDADE")}
+# N11 (22/10/2026): CNPJ de `triagem/dados/triagem_2026-10-02.csv` (EGIE3 conferido no cadastro da CVM); pregão `None` = ainda não
+# confirmado na API da B3 (tradingName) — a rede da nuvem barra b3.com.br (403), então não se grava palpite: o bloco de proventos
+# avisa e o FRE já aparece. Confirmar na máquina do Frank: TAEE11 (TAESA?), ITUB4 (ITAUUNIBANCO?), EGIE3, SAPR11.
+# F1-05 (30/10/2026): CADASTRO expandido para cobrir todos os 41 tickers do Hall com CNPJ oficial da CVM (`triagem_2026-10-02.csv` /
+# `cvm_series.json`, nota A) e nome de pregão conferido em `proventos_ex.PREGAO` (tickers sem pregão conferido na API da B3 ficam com `None`).
+CADASTRO = {
+    "ABCB4": ("28.195.667/0001-06", "ABC BRASIL"),
+    "ABEV3": ("07.526.557/0001-00", "AMBEV SA"),
+    "B3SA3": ("09.346.601/0001-25", "B3"),
+    "BBAS3": ("00.000.000/0001-91", "BRASIL"),
+    "BBDC4": ("60.746.948/0001-12", None),
+    "BBSE3": ("17.344.597/0001-94", "BBSEGURIDADE"),
+    "BRBI11": ("10.739.356/0001-03", None),
+    "BRSR6": ("92.702.067/0001-96", None),
+    "CMIG4": ("17.155.730/0001-64", None),
+    "CPFE3": ("02.429.144/0001-93", None),
+    "CPLE3": ("76.483.817/0001-20", None),
+    "CSMG3": ("17.281.106/0001-03", None),
+    "CXSE3": ("22.543.331/0001-00", None),
+    "EGIE3": ("02.474.103/0001-19", None),
+    "FLRY3": ("60.840.055/0001-31", "FLEURY"),
+    "GGBR4": ("33.611.500/0001-19", "GERDAU"),
+    "HYPE3": ("02.932.074/0001-91", "HYPERA"),
+    "ISAE4": ("02.998.611/0001-04", "ISA ENERGIA"),
+    "ITSA4": ("61.532.644/0001-15", "ITAUSA"),
+    "ITUB4": ("60.872.504/0001-23", None),
+    "KEPL3": ("91.983.056/0001-69", "KEPLER WEBER"),
+    "KLBN11": ("89.637.490/0001-45", "KLABIN SA"),
+    "LEVE3": ("60.476.884/0001-87", "METAL LEVE"),
+    "PETR4": ("33.000.167/0001-01", "PETROBRAS"),
+    "PRIO3": ("10.629.105/0001-68", "PETRORIO"),
+    "PSSA3": ("02.149.205/0001-69", None),
+    "RANI3": ("92.791.243/0001-03", "IRANI"),
+    "RECV3": ("03.342.704/0001-30", "PETRORECSA"),
+    "SANB11": ("90.400.888/0001-42", None),
+    "SAPR11": ("76.484.013/0001-45", None),
+    "SBSP3": ("43.776.517/0001-80", None),
+    "SLCE3": ("89.096.457/0001-55", "SLC AGRICOLA"),
+    "SMTO3": ("51.466.860/0001-56", "SAO MARTINHO"),
+    "SUZB3": ("16.404.287/0001-55", "SUZANO S.A."),
+    "TAEE11": ("07.859.971/0001-30", None),
+    "TIMS3": ("02.421.421/0001-11", "TIM"),
+    "UGPA3": ("33.256.439/0001-39", "ULTRAPAR"),
+    "UNIP6": ("33.958.695/0001-78", "UNIPAR"),
+    "VBBR3": ("34.274.233/0001-02", "VIBRA"),
+    "VIVT3": ("02.558.157/0001-62", "TELEF BRASIL"),
+    "WEGE3": ("84.429.695/0001-11", "WEG"),
+}
 CORTE_BENEISH, CORTE_SLOAN, CORTE_COBERTURA, CORTE_DL_EBITDA = -1.78, 0.10, 1.5, 3.0
 CORTE_DISPERSAO, CORTE_DILUICAO, CORTE_DEFASAGEM = 1.8, 0.02, 12.0
-INFO_CORTE = "informativo — corte do relatório (a conferir)"
+INFO_CORTE = "informativo — corte do relatório (heurística do projeto, sem fonte)"
 
 
 def _n(rot, valor, origens=(), unidade="", obs="", papel="informativo"):
@@ -313,16 +360,25 @@ def _tag_along(c: dict):
 
 # ------------------------------------------------------------------------------------------------------------ DIVIDENDOS
 def _proventos(c: dict):
-    """(DPA por ano, JCP por ano, motivo) da B3 — vazio se o ticker não tem nome de pregão cadastrado."""
+    """(DPA por ano, JCP por ano, motivo) da B3 — vazio se o ticker não tem nome de pregão cadastrado. Não financeira do hall
+    e dossiê: o coletor do hall (`proventos_hall`, o mesmo DPA que o motor lê — classe certa, parcelas somadas, eventos B3 +
+    FRE; no dossiê, data-com até a data do veredito). Financeira: a regra antiga (`base.proventos_b3_legado`) até a fatia 4."""
+    import proventos_hall
     from dossie import base
+    if _regra_do_hall(c):
+        try:
+            d, j = proventos_hall.dpa_jcp(c["tk"], c["data"] if c["dossie"] is not None else None)
+            return d, j, ""
+        except Exception as ex:  # noqa: BLE001 — falha do dado vira aviso, nunca número inventado
+            return {}, {}, f"proventos da B3 indisponíveis: {type(ex).__name__}: {ex}"
     cnpj, pregao = _cadastro(c)
     if not pregao:
-        return {}, {}, "nome de pregão não cadastrado (CADASTRO em relatorio/quali.py)"
+        return {}, {}, "nome de pregão não cadastrado ou ainda não conferido na API da B3 (CADASTRO em relatorio/quali.py)"
     tk, inserido = c["tk"], False
     if tk not in base.PREGAO:
         base.PREGAO[tk], inserido = pregao, True
     try:
-        d, j = base.proventos_b3(tk)
+        d, j = base.proventos_b3_legado(tk)
         return d, j, ""
     except Exception as ex:  # noqa: BLE001 — qualquer falha do dado vira aviso, nunca número inventado
         return {}, {}, f"proventos da B3 indisponíveis: {type(ex).__name__}: {ex}"
@@ -331,14 +387,25 @@ def _proventos(c: dict):
             base.PREGAO.pop(tk, None)
 
 
+def _regra_do_hall(c: dict) -> bool:
+    import proventos_hall
+    return c["tk"] in proventos_hall.NF_HALL or c["dossie"] is not None
+
+
 def secao_dividendos(c: dict) -> Secao:
     r, t, emp = c["r"], pr.tabela(c), c["empresa"]
     s = Secao("Dividendos e JCP")
     dpa, jcp, motivo = _proventos(c)
     ano_corrente = c["data"][:4]
-    o_b3 = Origem("B3 proventos", "A", "B3, proventos em dinheiro por data-com (API pública), R$ por ação ON de hoje")
+    import proventos_hall
+    o_b3 = (proventos_hall.ORIGEM_B3 if _regra_do_hall(c) else
+            Origem("B3 proventos", "A", "B3, proventos em dinheiro por data-com (API pública), R$ por ação de hoje na classe "
+                   "do ticker (regra anterior à fase 3: linha igual conta uma vez)"))
     if dpa:
-        anos = [a for a in sorted(dpa) if a < ano_corrente][-10:]
+        # ano civil sem provento conta como zero (proventos_b3 só devolve anos com pagamento); começa no 1º ano com dado
+        ini = max(int(min(dpa)), int(ano_corrente) - 10)
+        anos = [str(a) for a in range(ini, int(ano_corrente))]
+        dpa = {**{a: 0.0 for a in anos}, **dpa}
         linhas = [[a, fmt(dpa[a], "R$"), fmt(jcp.get(a, 0.0), "R$"), _pct(jcp.get(a, 0.0) / dpa[a]) if dpa[a] else "—"] for a in anos]
         if ano_corrente in dpa:
             linhas.append([f"{ano_corrente} (parcial)", fmt(dpa[ano_corrente], "R$"), fmt(jcp.get(ano_corrente, 0.0), "R$"),
@@ -347,7 +414,8 @@ def secao_dividendos(c: dict) -> Secao:
         pagos = sum(1 for a in anos if dpa[a] > 0)
         s.numeros += [
             _n("Exercícios completos com provento (últimos 10)", f"{pagos} de {len(anos)}", [o_b3]),
-            _n("DPA médio dos últimos 5 exercícios completos", sum(dpa[a] for a in anos[-5:]) / len(anos[-5:]), [o_b3], "R$"),
+            _n("DPA médio dos últimos 5 exercícios completos", sum(dpa[a] for a in anos[-5:]) / len(anos[-5:]) if anos else None,
+               [o_b3], "R$"),
         ]
     else:
         s.avisos.append(f"Série de proventos da B3 não disponível: {motivo}. Valores abaixo são os do motor.")
@@ -412,13 +480,17 @@ def secao_riscos(c: dict) -> Secao:
         teste("ROIC real < WACC real na maioria dos exercícios", f"{r.get('roic_anos_acima')} de {total} acima", [o],
               total > 0 and r["roic_anos_acima"] < total / 2, "menos da metade dos anos acima do WACC")
         pay = r["dpa_sust"] / r["lpa_norm"] if r.get("lpa_norm") and r["lpa_norm"] > 0 else None
-        teste("Payout sustentável acima de 100%", pay, pr.de(t, "proventos", "serie", "acoes"), pay is not None and pay > 1, "", "%")
+        teste("Payout sustentável acima de 100%", pay, pr.de(t, "proventos", "serie", "acoes"), (pay is not None and pay > 1) or (pay is None and r["dpa_sust"] > 0 and r.get("lpa_norm") is not None
+                                                  and r["lpa_norm"] <= 0),
+              "prejuízo normalizado com dividendo conta como disparo" if pay is None else "", "%")
         if c["dossie"] is not None and c["dossie"]["dil"] is not None:
             teste("Diluição: CAGR das ações ≥ 2% a.a.", c["dossie"]["dil"], [t["acoes"]], c["dossie"]["dil"] >= CORTE_DILUICAO,
                   "regra da nota de gestão (notas.gestao)", "%", doutrina=True)
     else:
         pay = emp.payout
-        teste("Payout acima de 100%", pay, pr.de(t, "payout"), pay is not None and pay > 1, "", "%")
+        teste("Payout acima de 100%", pay, pr.de(t, "payout"), (pay is not None and pay > 1) or (pay is None and r["dpa_sust"] > 0 and r.get("lpa_norm") is not None
+                                                  and r["lpa_norm"] <= 0),
+              "prejuízo normalizado com dividendo conta como disparo" if pay is None else "", "%")
         teste("ROE de longo prazo abaixo do Ke", (emp.roe_lp - r["ke"]) if emp.roe_lp is not None else None,
               pr.de(t, "roe_lp", "mercado"), emp.roe_lp is not None and emp.roe_lp < r["ke"], "spread negativo destrói valor", "%")
         if emp.horizonte_finito:

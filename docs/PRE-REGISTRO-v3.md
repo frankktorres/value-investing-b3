@@ -250,6 +250,7 @@ WEG; ROE recorrente do Itaú; Kerr 1998 (HARKing); Barr et al. 2015; Harvey, Liu
 | 10 | 22/10/2026 | H9 R-fonte | **variante, conta 5/24:** Ke de Damodaran (β = 1, marcado), alíquota 34%, desconto 0; margem e g da casa (marcados) | 20 industriais | taxa 98% → **empilhamento não confirmado** nas duas | idem |
 | 11 | 22/10/2026 | H10 | teste (não conta): tira o campo de todos os períodos | 21 industriais | caixa 14, dívida 14, PL 9, D&A 18, imobilizado 16 com palavra de decisão; lucro e receita 0 → **aceita (bug)** | idem |
 | 12 | 22/10/2026 | H11 | conferência de fonte (não conta) | 8 reguladas | nenhuma nota técnica lida no primário → **a conferir** | idem |
+| 13 | 24/11/2026 | H2 (correção, emenda 3) | **variante, conta 6/24:** D/E a mercado (preço da data-base), D = dívida bruta com arrendamentos + outros passivos financeiros (= ponte), sem ponto fixo; Ke nominal > 30% → NÃO CONCLUSIVO | 21 industriais (3T26, preço de 19/11) | Ke > 30%: 5 → 1 (SMTO3 30,3%, D/E 2,18 a mercado); palavra muda só na SMTO3 (CARA → NÃO CONCLUSIVO); RANI3, SUZB3, SLCE3 seguem NÃO CONCLUSIVO por dispersão > 3, KLBN11 e RECV3 por EPV < 0 | B34 |
 
 Nota das linhas 1–12: as variantes rodaram três vezes no mesmo código. As duas primeiras execuções quebraram antes de gravar (a
 H7 com tipo do numpy; depois a pasta de saída inexistente). Como as variantes são determinísticas, cada uma conta uma vez.
@@ -292,3 +293,76 @@ Relatório: `docs/oraculo/hipoteses-2026-10-22.md` (e `.json`).
    - **Contagem de tentativas (§0.4).** Entra no §6 toda execução das H1–H11. Conta no orçamento de 24 só a execução que
      calcula central ou palavra sob uma regra ou um dado alternativos (H1b, H2a, H4, H9). Teste de propriedade, conferência
      de fonte e estatística descritiva não contam.
+3. **24/11/2026 — correção do H2 (Fase 5 item 2, só a alavancagem do Ke e os pesos do WACC); decidida pelo Frank pela fonte e
+   pela lógica, escrita ANTES de calcular qualquer palavra sob a regra nova.**
+   - **Regra escolhida (opção A).** Um D/E só, a valor de mercado, usado no prêmio de Hamada e nos pesos do WACC, **sem ponto
+     fixo**: E = preço da data-base × ações (todas as classes; sem média de preço); D = a mesma dívida que a ponte do valor da
+     firma desconta (dívida bruta com arrendamentos + outros passivos financeiros). A ponte soma o caixa. Fonte: Damodaran,
+     *Investment Valuation* 2ª ed., cap. 8 pp. 21, 24, 47, 49–51 e cap. 15 p. 24 — nota B (edição de 2002; fichas em
+     `docs/research/2026-11-24-ke-alavancagem.md`). Revisa o AUD-13 (E = valor da casa no ponto fixo).
+   - **"Dívida líquida" sai** da Fase 5 item 2: a fonte recomenda dívida bruta ("using net debt ratios will overstate the value
+     of riskier firms", cap. 8 p. 51).
+   - **Sem teto na fórmula** (não há fonte A/B para o número). Ke nominal > 30% continua conferência: vira NÃO CONCLUSIVO, sem
+     nova mudança de método.
+   - **Efeito conhecido, aceito antes da tabela.** O central passa a depender do preço por um passo (sem laço): preço cai → D/E
+     sobe → Ke sobe → valor justo cai. Esse erro joga contra comprar; é aceito (Frank, 24/11). O simétrico, declarado na
+     proposta: preço sobe → D/E cai → valor justo sobe (menos conservador do lado da venda).
+   - **Testes do H2 sob a regra nova.** (a) o Ke e os pesos não dependem do central (margem ±10% não muda Ke nem D/E) — o laço
+     some por construção, então "pontos de partida" não se aplica; (b) caixa ↑ com dívida bruta igual não reduz o central;
+     (c) Ke nominal ≤ 30% em todo o hall é conferência, não alvo. Mais um teste de coerência: o D do desconto (Hamada e pesos)
+     é o mesmo D que a ponte subtrai, e o fluxo não desconta o arrendamento uma segunda vez.
+   - **Achado A1** (desconto do controlador no E do ponto fixo) deixa de existir: o E não vem mais do central.
+   - **Contagem (§0.4):** a execução da regra nova sobre o hall é tentativa e conta **6/24** (linha 13 do §6).
+4. **24/11/2026 — medição, sem decisão: a direção do efeito declarada na emenda 3 está errada na maioria do hall.**
+   - Medido com o preço × 0,7 / 1 / 1,3 (resto igual), regra da emenda 3: em 17 dos 21 industriais o central **sobe** quando o
+     preço cai (o peso da dívida no WACC cresce e Kd × (1 − t) < Ke; esse canal vence a alta do Ke pelo Hamada). Seguem a direção
+     declarada só B3SA3, LEVE3 e RANI3; RECV3 sem central. Preço −30% → central de +0,2% (ABEV3) a +14% (SUZB3).
+   - O efeito real favorece comprar, o oposto da premissa da aceitação ("joga contra comprar"). Fica com o Frank; não é
+     tentativa nova (não muda regra nem palavra).
+5. **24/11/2026 — decisão do Frank sobre a emenda 4: mantém a opção A (correção da direção declarada).**
+   - **A direção declarada na emenda 3 estava errada.** Lá: "preço cai → D/E sobe → Ke sobe → valor justo cai; joga contra
+     comprar". Medido (emenda 4): é o **oposto** na maioria do hall — o efeito é **a favor da compra**, até +14% no central numa
+     queda de 30% do preço (SUZB3). O erro foi da proposta, que olhou só o canal do Ke e não o dos pesos do WACC.
+   - **Manter A não foi decisão tomada por resultado.** A foi escolhida pela fonte (Damodaran, cap. 8 p. 47: pesos a mercado),
+     antes de qualquer tabela; a medição corrige a descrição do efeito, não a escolha. Nenhuma palavra muda em relação à tabela
+     de 24/11.
+   - **Teste:** "favorece comprar" não é propriedade desejada. O teste fixa a regra econômica — com Kd × (1 − t) < Ke, mais
+     dívida no peso baixa o WACC — e o efeito medido fica como observação, não como alvo.
+   - **Remédio para depois, fora desta tentativa:** custo da dívida que sobe com a alavancagem (`docs/BACKLOG.md` B35), com
+     hipótese pré-registrada antes de rodar.
+6. **24/11/2026 — correções de fato da emenda 4/5 e da linha 13 do §6, apontadas pelo agente `oraculo` (parecer BLOQUEIA); sem
+   decisão nova.**
+   - **Tamanho do efeito do preço:** o máximo medido numa queda de 30% é **+18,8% na KLBN11** (SUZB3 +14%, PETR4/PRIO3/UNIP6 ~+7%), não
+     "+14%" como nas emendas 4 e 5: a medição foi lida só até a SUZB3.
+   - **Palavras:** além da SMTO3 no hall, o H2 muda o recálculo do dossiê **ALLD3 (15/10) de BARATA → RADAR** (dispersão 2,17 > 1,8);
+     a linha 13 do §6 ("palavra muda só na SMTO3") está incompleta. Decisão do Frank no `09` (aceita RADAR no recálculo; o veredito
+     salvo fica).
+   - **Prova de ordem:** a emenda 3 e a linha 13 entraram no **mesmo commit** (c108bce) que o motor e o golden. A ordem dentro da
+     sessão foi emenda 3 → motor → tabela, mas o git não a prova; a regra do §0.1 pede o registro antes da execução, e a prova
+     independente disso não existe. Declarado; aceite do risco é do Frank.
+   - **"Pronto quando" do B34:** escrito em 23/11 como "Ke ≤ 30% em todo o hall"; o Frank o redefiniu em 24/11, antes de qualquer
+     tabela, como conferência ("se algum passar, vira NÃO CONCLUSIVO, sem mexer de novo no método"). Fica registrado aqui.
+7. **24/11/2026 — aceite do risco pelo Frank, trava de ordem pelo git e congelamento até o hold-out; escrita e commitada SOZINHA,
+   antes do commit que corrige o motor (Graham).**
+   - **Aceite por escrito (Frank, 24/11, resposta ao parecer BLOQUEIA):** aceita o risco de a emenda 3 não ter prova de ordem no
+     git (mesmo commit c108bce do motor e do golden) e de a opção A ter sido mantida depois de a premissa da aceitação cair.
+   - **Registro honesto da ordem.** A opção A foi escolhida pela fonte, **antes** da tabela de palavras. A decisão de **manter** A,
+     depois de a premissa ("joga contra comprar") se mostrar falsa (emenda 4), veio **depois** de ver a tabela e se apoia só na
+     fonte (Damodaran, cap. 8 p. 47). Nenhuma compra nova surgiu: zero BARATA no hall antes e depois; as palavras que o H2 mudou
+     só desceram (SMTO3 CARA → NÃO CONCLUSIVO no hall; recálculo do dossiê ALLD3 BARATA → RADAR). LEVE3 e PETR4 em RADAR vêm da
+     gravação do 3T26 (23/11), antes do B34.
+   - **Trava nova (vale daqui em diante; corte no commit b07482a).** Emenda do pré-registro vai num **commit próprio** — só
+     arquivos `docs/PRE-REGISTRO-*.md` — **antes** do commit de motor, lote ou golden que a usa; esse commit cita "emenda N" na
+     mensagem. O `python -m oraculo` confere pelo git (check `ordem`, bloqueante): commit que mistura pré-registro com outro
+     arquivo, ou commit de motor/lote/golden que cita uma emenda que nenhum commit anterior (só de pré-registro) acrescentou,
+     reprova.
+   - **Graham (ressalva do parecer).** O fator f do Graham-BR e do Graham revisado usava o Ke **alavancado** da empresa; com o D/E
+     a mercado, o preço vazava para eles (Graham-BR −8% e revisado −15% na SMTO3 com o preço −30%). O `01` §11 manda o Ke da casa
+     ("Graham-BR ignora a estrutura de capital"). Correção de código para a regra escrita, não variante: Graham não é âncora,
+     nenhum central nem palavra muda; **não conta** no orçamento (§0.4). O lucro normalizado (Klarman) e o Graham original não
+     se mexiam com o preço (medido).
+   - **Congelamento.** Antes de qualquer calibração nova, o método v2.7 fica congelado e roda num **hold-out** de 20 ações fora
+     dos 41 do hall, que ninguém olhou; a lista é registrada (commit próprio, como esta emenda) antes de rodar (`docs/BACKLOG.md`
+     B36).
+   - **Financeiras.** Os VPA/LPA dos 10 bancos e seguradoras, digitados do 2T26 e usados com o preço de 19/11, entram na catraca
+     de datas fixas (`tests/datas_fixas_catraca.json`, `contabil_digitado`), mesmo prazo: 31/01/2027 (B32). Limite conhecido até lá.

@@ -27,7 +27,7 @@ Cíclica (minério de ferro). Ciclo normalizado EM NÚMERO antes do veredito (02
 """
 from __future__ import annotations
 
-from ltm import ltm_de
+from ltm import janela_ltm, ltm_de, ltm_ref_de
 import json
 import pathlib
 from functools import lru_cache
@@ -40,7 +40,6 @@ from motor_nao_financeiras import CVM, Industrial
 TK = "CMIN3"
 ANOS = [str(a) for a in range(2019, 2026)]
 JANELA_PRECO = (2016, 2025)
-LTM = ("2025-07", "2026-06")
 RAZAO_JANELA = ("1º DFP com DRE na CVM é o de 2020, com o comparativo de 2019 (registro pré-IPO; IPO fev/2021): janela = o "
                 "máximo disponível (02 regra 4); a margem de cada ano é reexpressa ao minério de meio de 10 anos (fator_preco)")
 MACRO = pathlib.Path(__file__).resolve().parents[2] / "dados" / "macro"
@@ -52,9 +51,23 @@ def _fred(nome: str, col: int = 1) -> pd.Series:
     return pd.Series(pd.to_numeric(b.iloc[:, col], errors="coerce").values, index=pd.to_datetime(b.iloc[:, 0])).dropna()
 
 
-@lru_cache(maxsize=None)
 def minerio() -> dict:
-    """Minério 62% (US$/t) × PTAX, em R$ de hoje (IPCA). Mesmo tratamento do barril (lote5_petroleo.macro)."""
+    """Minério do LTM vigente da CMIN3 (23/11/2026: a janela dos 12m sai do `ltm_ref`; antes fixa em jul/25–jun/26)."""
+    base.carregar(TK)
+    import inflacao
+    return _minerio(ltm_ref_de(CVM[TK]), inflacao.BASE_MES)     # B34: o mês do "R$ de hoje" do motor (corte na data)
+
+
+minerio.cache_clear = lambda: _minerio.cache_clear()     # os testes limpam o cache por aqui
+
+
+@lru_cache(maxsize=None)
+def _minerio(ref: str, base_mes: int) -> dict:
+    """Minério 62% (US$/t) × PTAX, em R$ de hoje (IPCA). Mesmo tratamento do barril (lote5_petroleo.macro).
+
+    `base_mes` = último mês do IPCA do motor (`inflacao.BASE_MES`): nada depois dele entra, e o "R$ de hoje" do minério é o do
+    motor — no dossiê recalculado na data (`base.na_data`) o IPCA ainda não publicado ficava de fora só no motor (adversário,
+    24/11/2026). Na chave do cache, então o corte não reaproveita o resultado sem corte."""
     p = pd.DataFrame(json.loads((MACRO / "ptax_media_mensal.json").read_text()))
     ptax = pd.Series(p["valor"].astype(float).values, index=pd.to_datetime(p["data"], dayfirst=True))
     i = pd.DataFrame(json.loads((MACRO / "ipca_mensal.json").read_text()))
@@ -63,6 +76,7 @@ def minerio() -> dict:
     df = pd.DataFrame({"usd": _fred(serie), "ptax": ptax, "ipca": ipca, "cpi": _fred("cpi_us_fred.csv")})
     df["cpi"] = df["cpi"].interpolate(limit_area="inside")     # out/2025 sem CPI (paralisação do governo dos EUA)
     df = df.dropna()
+    df = df[df.index <= pd.Timestamp(year=base_mes // 12, month=base_mes % 12 + 1, day=1)]
     bi, bc = df["ipca"].iloc[-1], df["cpi"].iloc[-1]
     df["rs"] = df["usd"] * df["ptax"]
     df["rs_real"] = df["rs"] * bi / df["ipca"]
@@ -71,9 +85,10 @@ def minerio() -> dict:
     anual = df.groupby(df.index.year).mean()
     a0, a1 = JANELA_PRECO
     meio = anual.loc[a0:a1]
-    ltm = df.loc[LTM[0]:LTM[1]]
+    ini, fim = janela_ltm(ref)
+    ltm = df.loc[ini:fim]
     if len(ltm) != 12:
-        raise ValueError(f"minério: 12m incompletos ({len(ltm)} meses)")
+        raise ValueError(f"minério: 12m incompletos em {ini}–{fim} ({len(ltm)} meses; dados/macro: coletar_macro_fred.py e coletar_macro.py)")
     return dict(
         base=df.index[-1].strftime("%m/%Y"), anual=anual,
         meio_rs_real=meio["rs_real"].mean(), meio_usd_real=meio["usd_real"].mean(), meio_fx_real=meio["fx_real"].mean(),

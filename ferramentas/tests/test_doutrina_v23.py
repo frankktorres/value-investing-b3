@@ -251,9 +251,9 @@ def test_5_financeiro_entra_na_dl_e_no_capital_operacional_so_na_ponte():
     assert fi["dl"] == pytest.approx(op["dl"] + X)
     assert fi["cap_inv"] == pytest.approx(op["cap_inv"] + X) and fi["roic"] < op["roic"]
     assert fi["dl_ebitda"] > op["dl_ebitda"]
-    # com g = 0 não há trava de crescimento: a ponte firma → equity desconta o mesmo valor nos dois casos
-    for k in op["ancoras"]:
-        assert fi["ancoras"][k] == pytest.approx(op["ancoras"][k]), k
+    # H2 (24/11/2026): o passivo financeiro também entra no D do desconto (Hamada e pesos), como na ponte — antes só na ponte
+    assert fi["d"] == pytest.approx(op["d"] + X) and op["d"] == pytest.approx(M.divida_liquida(M.serie("TESTEV23P")[1])[0])
+    assert fi["premio_ke"] > op["premio_ke"]
 
 
 def test_5_outros_passivos_sem_fonte_nao_roda():

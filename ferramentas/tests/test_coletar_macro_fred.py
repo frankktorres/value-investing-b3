@@ -64,8 +64,16 @@ def test_ptax_mesma_regra(tmp_path):
 def test_manifesto_do_repo_confere_com_os_arquivos():
     """Todo arquivo macro lido pelos lotes está no manifesto, com o sha256 e a data de coleta."""
     m = json.loads((MACRO_REAL / "MANIFESTO_MACRO.json").read_text(encoding="utf-8"))
-    esperados = {*c.SERIES_FRED, c.PTAX}
+    esperados = {*c.SERIES_FRED, c.PTAX, c.IPCA}
     assert set(m) == esperados
     for arq, info in m.items():
         assert c.sha_normalizado((MACRO_REAL / arq).read_bytes()) == info["sha256"], f"{arq} mudou sem passar pelo coletor"
         assert info["coletado_em"] and info["url"] and info["linhas"] > 0
+
+
+def test_revisao_aceita_fica_registrada_no_manifesto():
+    """23/11/2026: com --aceitar-revisoes, o manifesto diz quantas e quais datas a fonte revisou nesta coleta."""
+    r = c._resumo("X", "d", "u", b"a", ["2026-07-01", "2026-08-01"], "2026-11-23",
+                  ["2026-07-01: antigo 1 × novo 2"])
+    assert r["coletado_em"] == "2026-11-23" and r["revisoes_aceitas"] == {"n": 1, "datas": ["2026-07-01"]}
+    assert "revisoes_aceitas" not in c._resumo("X", "d", "u", b"a", ["2026-07-01"], "2026-11-23")

@@ -1,0 +1,31 @@
+/* Mesa de Value — tokens v0.1 (Claude Design, 19/10/2026; docs/design/). Uso: <html data-tema="claro|escuro">.
+   Acréscimo da mesa: RADAR (palavra do motor das financeiras/dossiê que o Design não previu) = contorno frio, sem tinta. */
+:root,[data-tema="claro"]{
+  --f-ui:'IBM Plex Sans',system-ui,sans-serif; --f-mono:'IBM Plex Mono',ui-monospace,monospace; --f-serif:'Source Serif 4',Georgia,serif;
+  --bg:#F3F3EF; --sf:#FFFFFF; --sf2:#EBEBE6; --ln:#D6D6CE; --ln2:#B9B9AF;
+  --ink:#15181C; --ink2:#454B53; --ink3:#5E646D; --ac:#23405F;
+  --barata-fg:#0B5560; --barata-bg:#DDEEF0; --barata-ln:#7FB6BD;
+  --radar-fg:#0B5560;  --radar-ln:#7FB6BD;
+  --justa-fg:#38424F;  --justa-ln:#AAB3C0;
+  --cara-fg:#7A3B04;   --cara-bg:#F5E6D3;   --cara-ln:#D2A06B;
+  --nc-fg:#454B53;     --nc-ln:#8A9099;
+  --serie-div:#2D5A7B; --serie-jcp:#5F8FB3;
+  --hatch:repeating-linear-gradient(135deg,transparent 0 4px,rgba(21,24,28,.10) 4px 5px);
+  --sh-popover:0 4px 16px rgba(21,24,28,.10);
+  --s1:4px; --s2:8px; --s3:12px; --s4:16px; --s5:24px; --s6:32px;
+  --r1:3px; --r2:6px; --r3:10px;
+}
+[data-tema="escuro"]{
+  --bg:#0E1114; --sf:#161A1F; --sf2:#1D2229; --ln:#2C333B; --ln2:#424B55;
+  --ink:#E8EAED; --ink2:#B2B8C0; --ink3:#929AA5; --ac:#8FB6E0;
+  --barata-fg:#7FD0DA; --barata-bg:#12333A; --barata-ln:#2F6F79;
+  --radar-fg:#7FD0DA;  --radar-ln:#2F6F79;
+  --justa-fg:#BCC6D4;  --justa-ln:#46556A;
+  --cara-fg:#F0B979;   --cara-bg:#3A2810;   --cara-ln:#8A5F2B;
+  --nc-fg:#B2B8C0;     --nc-ln:#6B7480;
+  --serie-div:#8FB6E0; --serie-jcp:#4F86B0;
+  --hatch:repeating-linear-gradient(135deg,transparent 0 4px,rgba(232,234,237,.14) 4px 5px);
+  --sh-popover:0 8px 24px rgba(0,0,0,.5);
+}
+/* Nota de fonte: A sólido, B contorno, C tracejado, — pontilhado. Número com nota C/— => cor --ink3 + underline dotted. */
+/* Escala da régua: 50%..160% do central, fixa em todas as linhas. Números: font-variant-numeric: tabular-nums lining-nums. */

@@ -18,7 +18,7 @@ ANOS = [str(a) for a in range(2016, 2026)]
 
 # ---------------------------------------------------------------- AUD-88: régua da palavra
 @pytest.mark.parametrize("pc,esperada", [
-    (0.0, "BARATA"), (0.70, "BARATA"), (0.7001, "RADAR"),
+    (0.70, "BARATA"), (0.7001, "RADAR"),
     (0.90, "RADAR"), (0.9001, "JUSTA"),
     (1.10, "JUSTA"), (1.1001, "CARA"), (3.0, "CARA"),
 ])

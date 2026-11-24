@@ -1,0 +1,31 @@
+{
+ "_nota": "Fatos societários usados pelos lotes, com fonte (23/11/2026: saíram do código; os lotes não escrevem data). eventos.py decide pela data do balanço do LTM se o evento já está nele e confere pelo próprio balanço (ações).",
+ "follow_on": {
+  "EGIE3": {
+   "mes_liquidacao": "2026-07",
+   "valor_mil": 8360000,
+   "acoes_novas": 274100000,
+   "fonte": "follow-on de jul/2026: 274,1 mi de ações, R$ 8,36 bi, para 40% de Jirau [PDF 07/09 e 03/10]; antes em lote6_quimica.EGIE_FOLLOW_ON"
+  },
+  "ISAE4": {
+   "mes_liquidacao": "2026-07",
+   "valor_mil": 1200000,
+   "preco_oferta": 27.0,
+   "fonte": "follow-on de jul/2026, R$ 1,2 bi a R$ 27 (fatos_lote2.json, PDF rev. 03/10); valor bruto, custo da oferta a conferir no RI; antes em lote2_energia.FOLLOW_ON"
+  }
+ },
+ "bonificacao": {
+  "EGIE3": {
+   "data": "2025-12-01",
+   "fator": 1.4,
+   "fonte": "bonificação de 40% em 01/12/2025 [PDF 03/10]: provento de data-com anterior ÷ 1,4 na base pós-bonificação; antes em lote6_quimica.ajustar_dpa"
+  }
+ },
+ "dividendo_extraordinario": {
+  "WEGE3": {
+   "data_com": "2025-12-19",
+   "parcelas": 3,
+   "fonte": "extraordinário de dez/2025: R$ 1,2385 em 3 parcelas de data-com 19/12/2025 [PDF 03/10]; antes em lote4_saude_telecom.g1_sustentavel"
+  }
+ }
+}

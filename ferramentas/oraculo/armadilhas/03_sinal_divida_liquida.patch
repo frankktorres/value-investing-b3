@@ -1,0 +1,13 @@
+diff --git a/ferramentas/motor_nao_financeiras.py b/ferramentas/motor_nao_financeiras.py
+index c52f736..a50f83e 100644
+--- a/ferramentas/motor_nao_financeiras.py
++++ b/ferramentas/motor_nao_financeiras.py
+@@ -702,7 +702,7 @@ def valores(emp: Industrial, mk: Mercado, ke_nom=None, margem=None, g_real=None,
+     lair_norm = lucro_pre_ir - kd * max(dl, 0.0)
+     benef_firma = beneficio_fiscal(emp, lair_norm, w_real)
+     epv_firma = nopat / w_real + benef_firma
+-    epv = (epv_firma - dl - minor) / n
++    epv = (epv_firma + dl - minor) / n
+ 
+     g1_ = emp.g1_real if g1 is None else g1
+ 

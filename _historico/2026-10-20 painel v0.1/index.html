@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="pt-BR" data-tema="claro">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mesa de Value</title>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="tokens.css">
+<link rel="stylesheet" href="estilo.css">
+<script type="module" src="app.js"></script>
+</head>
+<body>
+<header class="topbar">
+  <div class="brand">Mesa de Value <small>B3</small></div>
+  <nav class="nav" aria-label="Seções" id="nav"></nav>
+  <div class="tools">
+    <label class="search"><span class="vh">Buscar ticker ou empresa</span><input id="busca" type="search" placeholder="Buscar ticker ou empresa" autocomplete="off"><kbd>/</kbd></label>
+    <button class="btn" type="button" id="ocultar" aria-pressed="false" title="Esconde valores pessoais (quantidade, renda, valores da carteira)">Ocultar valores</button>
+    <button class="btn" type="button" id="tema" aria-label="Alternar tema claro e escuro">Escuro</button>
+  </div>
+</header>
+<div class="strip" id="faixa">
+  <span><span class="dot"></span><b>Local</b> · somente leitura · nada sai desta máquina</span>
+</div>
+<main class="page" id="pagina" aria-live="polite"></main>
+</body>
+</html>

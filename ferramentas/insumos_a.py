@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import math
 
+from precos_hall import PRECO_DATA
 from relatorio.modelo import Origem
 
 _REG: dict[tuple[str, str], tuple[object, Origem]] = {}
@@ -61,18 +62,23 @@ IPCA_BCB = Origem("BCB (IPCA)", "A", "BCB, SGS 433 (IPCA mensal, dados/macro/ipc
                   "anual até a data-base")
 RECEITA_CVM = Origem("CVM DFP/ITR", "A", "CVM, receita líquida do DFP/ITR (LTM) em R$ de hoje (IPCA, BCB): média dos "
                      "exercícios declarados no lote (receita_media)")
-ACOES_ITR_JUN26 = Origem("CVM (ações)", "A", "CVM, composição do capital do ITR de 30/06/2026, sem tesouraria (snapshot "
-                         "derivados_zip quando o ZIP falta)")
+def ACOES_ITR(ref: str) -> Origem:
+    """Ações da composição do capital do ITR na data do balanço do LTM (23/11/2026: antes fixo em 30/06/2026)."""
+    from ltm import data_do_balanco
+    d = data_do_balanco(ref)
+    return Origem("CVM (ações)", "A", f"CVM, composição do capital do ITR de {d[8:10]}/{d[5:7]}/{d[:4]}, sem tesouraria "
+                  "(snapshot derivados_zip quando o ZIP falta)", data=d)
 PRECO_COTAHIST = Origem("COTAHIST", "A", "B3, COTAHIST, fechamento (PREULT) do pregão da data-base — snapshot versionado "
-                        "dados/precos_hall_<data>.csv (precos_hall.preco)")
+                        "dados/precos_hall_<data>.csv (precos_hall.preco)", data=PRECO_DATA)
 RECEITA_MEIO_BRENT = Origem("CVM + EIA/BCB", "A", "receita e D&A do DFP/ITR (CVM) × barril de meio de ciclo ÷ barril do período-base: Brent "
                             "(EIA, série DCOILBRENTEU via FRED, sem transformação) × PTAX média mensal (BCB SGS 3698), IPCA (BCB SGS 433) — "
                             "lote5_petroleo.base_ep; nota da série conferida pelo verificador-fonte em 20/10/2026")
 RECEITA_MEIO_ACO = Origem("CVM + BLS/BCB", "A", "receita 12m do ITR (CVM) × aço de meio de ciclo ÷ aço dos 12m: BLS PPI WPU1017 (via FRED, "
                           "sem transformação) × PTAX (BCB SGS 3698), IPCA (BCB SGS 433) — lote6_quimica.indice; nota conferida em 20/10/2026")
-RECEITA_MEIO_CLORO = Origem("CVM + BLS/BCB", "B", "receita 12m do ITR (CVM) × cesta soda/PVC de meio de ciclo ÷ cesta dos 12m: BLS PPI "
-                            "PCU3251803251804 (A) e WPU0662 (página do FRED não aberta na conferência de 20/10/2026 → B até conferir) "
-                            "× PTAX, IPCA (BCB) — lote6_quimica.indice")
+RECEITA_MEIO_CLORO = Origem("CVM + BLS/BCB", "A", "receita 12m do ITR (CVM) × cesta soda/PVC de meio de ciclo ÷ cesta dos 12m: BLS PPI "
+                            "PCU3251803251804 e WPU0662 (Thermoplastic Resins and Plastics Materials, NSA; FRED e API v1 do BLS "
+                            "conferidos em 20/10/2026 — B31: os meses publicados batem com o CSV, salvo as revisões dos preliminares "
+                            "de mai–ago/2026) × PTAX, IPCA (BCB) — lote6_quimica.indice")
 
 
 def _aliquota_tims3():
@@ -86,7 +92,7 @@ G1_CVM = Origem("CVM + B3", "A", "g do 1º estágio = ROE mediano 2021–25 (luc
                 "lote4_saude_telecom.g1_sustentavel")
 NAV_SLCE3 = Origem("SLC (fato relevante)", "A", "SLC Agrícola, fato relevante 'Portfólio de Terras: Atualização 2026' (15/06/2026): NAV "
                    "R$ 13.824 mi ÷ 498.745.930 ações; terras avaliadas pela Deloitte (terra nua, NBR 14653), demais itens contábeis "
-                   "de 31/03/2026 (lote3_agro.SLCE3_NAV_MI)")
+                   "de 31/03/2026 (lote3_agro.SLCE3_NAV_MI)", data="2026-06-15")
 PL_HIST_CVM = Origem("CVM + COTAHIST", "A", "P/L histórico: mediana dos anos com 0 < P/L < 40 de fechamento do fim do exercício (B3, "
                      "COTAHIST) × ações do DFP ÷ lucro do controlador (CVM) — pl_historico.do_hall")
 ALIQUOTA_FASE_DFP = Origem("DFP/release (prazo do crédito)", "A", "prazo do crédito de IR declarado em fiscal.ALIQUOTA_FASE com a fonte "

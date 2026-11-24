@@ -19,7 +19,7 @@ Ciclo declarado ANTES do veredito (doutrina §2, regra 4; §11.1 "preço de comm
     R$ 8,36 bi, para 40% de Jirau): somado ao patrimônio e suposto render o Ke (VPL zero) — o valor sobe exatamente pelo caixa captado.
 P/L histórico no Bogle só na LEVE3 (lucro de GGBR4 e UNIP6 dominado pelo preço da commodity).
 """
-from ltm import ltm_de
+from ltm import data_do_balanco, janela_ltm, ltm_de, ltm_ref_de, zip_itr
 import json
 import pathlib
 import statistics as st
@@ -27,16 +27,18 @@ import sys
 
 import pandas as pd
 
-from derivados_zip import obter
+import eventos
+from derivados_zip import obter_na_ref
 from pl_historico import do_hall
 from precos_hall import preco
-from insumos_a import ACOES_ITR_JUN26, RECEITA_MEIO_ACO, RECEITA_MEIO_CLORO, registrar
+from proventos_ex import ajuste_b3
+from insumos_a import ACOES_ITR, RECEITA_MEIO_ACO, RECEITA_MEIO_CLORO, registrar
 from lote1_bancos import MK
 from lote2_energia import pl_hist, solidez
 from lote3_agro import jcp
 from motor_financeiras import SEM_RAZAO, Financeira
 from motor_financeiras import avaliar as avaliar_fin
-from motor_nao_financeiras import CVM, SI, Industrial, avaliar
+from motor_nao_financeiras import CVM, SI, Industrial, avaliar, reescalar_acoes
 
 AQUI = pathlib.Path(__file__).parent
 MACRO = AQUI / "dados" / "macro"
@@ -62,9 +64,11 @@ def _base():
     return ptax, ipca
 
 
-def indice(pesos, a0=2016, a1=2025):
+def indice(pesos, ref, a0=2016, a1=2025):
     """Índice de preço em R$ (índice US$ × PTAX), média a0–a1 = 100 em R$ de hoje. Retorna meio, 12m e fator de meio de ciclo.
-    A janela do preço é a mesma da margem (UNIP6: 2017–25; a série de soda também não tem jan–set/2016)."""
+    A janela do preço é a mesma da margem (UNIP6: 2017–25; a série de soda também não tem jan–set/2016).
+    Os 12m são os do LTM do ticker (`ref`, 23/11/2026; antes fixos em jul/25–jun/26): a receita de 12m e o preço dos 12m têm de
+    ser do mesmo período, senão a alta de preço do trimestre novo entra como volume."""
     ptax, ipca = _base()
     idx = None
     for k, w in pesos.items():
@@ -77,29 +81,32 @@ def indice(pesos, a0=2016, a1=2025):
     df["real"] = df["rs"] * base_i / df["ipca"]
     anual = df.groupby(df.index.year).mean()
     meio = anual.loc[a0:a1, "real"].mean()
-    ltm = df.loc["2025-07":"2026-06", "rs"].mean()
-    ltm_real = df.loc["2025-07":"2026-06", "real"].mean()
+    ini, fim = janela_ltm(ref)
+    doze = df.loc[ini:fim]
+    if len(doze) != 12:
+        raise ValueError(f"índice {list(pesos)} com {len(doze)} de 12 meses em {ini}–{fim} (dados/macro): atualizar coletar_macro_fred.py")
+    ltm, ltm_real = doze["rs"].mean(), doze["real"].mean()
     k = 100 / meio                      # reescala: meio de ciclo = 100
     return dict(anual=anual * k, meio=100.0, ltm=ltm * k, ltm_real=ltm_real * k, fator=meio / ltm, janela=f"{a0}–{a1 - 2000:02d}", ultimo=(df.index[-1].strftime("%m/%Y"), df["rs"].iloc[-1] * k),
-                base=df.index[-1].strftime("%m/%Y"), idx_usd=anual["idx"])
+                base=df.index[-1].strftime("%m/%Y"), idx_usd=anual["idx"], janela_ltm=(ini, fim))
 
 
-ACO = indice({"WPU1017": 1.0})
-CLORO = indice({"PCU3251803251804": 0.5, "WPU0662": 0.5}, 2017)
-SODA = indice({"PCU3251803251804": 1.0}, 2017)
-PVC = indice({"WPU0662": 1.0}, 2017)
+ACO = indice({"WPU1017": 1.0}, ltm_ref_de(CVM["GGBR4"]))
+CLORO = indice({"PCU3251803251804": 0.5, "WPU0662": 0.5}, ltm_ref_de(CVM["UNIP6"]), 2017)
+SODA = indice({"PCU3251803251804": 1.0}, ltm_ref_de(CVM["UNIP6"]), 2017)
+PVC = indice({"WPU0662": 1.0}, ltm_ref_de(CVM["UNIP6"]), 2017)
 
 
-def _acoes_zip(tk):
-    """Ações em circulação em 30/06/2026 (ITR, composição do capital), sem tesouraria."""
+def _acoes_zip(tk, ref):
+    """Ações em circulação na data do balanço do LTM (ITR, composição do capital), sem tesouraria."""
     import io
     import zipfile
-    z = zipfile.ZipFile(AQUI / "dados" / "cvm" / "itr_2026.zip")
+    z = zipfile.ZipFile(AQUI / "dados" / "cvm" / zip_itr(ref))
     n = [x for x in z.namelist() if "composicao" in x][0]
     df = pd.read_csv(io.BytesIO(z.read(n)), sep=";", encoding="latin-1", dtype=str)
     cod = {"LEVE3": "MAHLE METAL LEVE", "EGIE3": "ENGIE BRASIL ENERGIA", "UNIP6": "UNIPAR CARBOCLORO", "GGBR4": "GERDAU S.A."}[tk]
-    d = df[df["DENOM_CIA"].str.startswith(cod) & (df["DT_REFER"] == "2026-06-30")].iloc[-1]
-    return float(d["QT_ACAO_TOTAL_CAP_INTEGR"]) - float(d["QT_ACAO_TOTAL_TESOURO"])
+    d = df[df["DENOM_CIA"].str.startswith(cod) & (df["DT_REFER"] == data_do_balanco(ref))].iloc[-1]
+    return reescalar_acoes(float(d["QT_ACAO_TOTAL_CAP_INTEGR"]) - float(d["QT_ACAO_TOTAL_TESOURO"]))
 
 
 # ---------------------------------------------------------------- proventos ajustados (StatusInvest não ajusta bonificação)
@@ -107,30 +114,35 @@ def ajustar_dpa(tk, n_atual):
     """EGIE3 (financeira, StatusInvest até a fase 3, fatia 4). GGBR4, UNIP6 e LEVE3 têm o DPA da B3 com os eventos em ações
     exatos (`proventos_hall`, fatia 2) — o ajuste aproximado por contagem de ações saiu."""
     s = SI[tk]
-    if tk == "EGIE3":       # bonificação de 40% em 01/12/2025 [PDF 03/10]: data-com anterior ÷ 1,4
+    if tk == "EGIE3":       # bonificação (fato com fonte em dados/eventos_societarios.json): data-com anterior ÷ fator
+        bon = eventos.bonificacao(tk)
         dpa, jc = {}, {}
         for e in s["eventos"]:
             d, m, a = e["data_com"].split("/")
-            f = 1 / 1.4 if (a, m, d) < ("2025", "12", "01") else 1.0
+            f = 1 / bon["fator"] if f"{a}-{m}-{d}" < bon["data"] else 1.0
             dpa[a] = dpa.get(a, 0) + e["valor"] * f
             if "JCP" in (e["tipo"] or "").upper():
                 jc[a] = jc.get(a, 0) + e["valor"] * f
         s["dpa_por_ano_datacom"], s["jcp_por_ano_datacom"] = dict(sorted(dpa.items())), dict(sorted(jc.items()))
 
 
-N = obter("lote6.acoes_jun26", ["itr_2026.zip"], lambda: {tk: _acoes_zip(tk) for tk in ("LEVE3", "EGIE3", "UNIP6", "GGBR4")})   # AUD-38
+# 23/11/2026: cada ticker na data do balanço do PRÓPRIO LTM (antes fixa em 30/06/2026; publicação parcial na temporada)
+REFS6 = {tk: ltm_ref_de(CVM[tk]) for tk in ("LEVE3", "EGIE3", "UNIP6", "GGBR4")}
+N = obter_na_ref("lote6.acoes", REFS6, sorted({zip_itr(r) for r in REFS6.values()}),
+                 lambda: {tk: _acoes_zip(tk, r) for tk, r in REFS6.items()})   # AUD-38
 for _tk in ("LEVE3", "UNIP6", "GGBR4"):   # fase 3: procedência por campo (insumos_a); o número não muda
-    registrar(_tk, "acoes", N[_tk], ACOES_ITR_JUN26)
-EGIE_FOLLOW_ON = dict(acoes=274.1e6, valor=8_360_000, data="jul/2026")        # R$ mil; [PDF 07/09 e 03/10]
-EGIE_DIV_AGO26 = 770_800      # R$ mil, data-com 20/08/2026 (R$ 0,5442 × 1.416 mi): sai do PL de 30/06 — o preço de 02/10 já é ex
-N["EGIE3"] += EGIE_FOLLOW_ON["acoes"]
+    registrar(_tk, "acoes", N[_tk], ACOES_ITR(REFS6[_tk]))
+# Follow-on de jul/2026 (fato com fonte em dados/eventos_societarios.json): só soma se o balanço do LTM ainda não o contém
+EGIE_FO, EGIE_FO_NO_BALANCO = eventos.follow_on_e_balanco("EGIE3", CVM["EGIE3"], reescalar_acoes)
+if not EGIE_FO_NO_BALANCO:
+    N["EGIE3"] += EGIE_FO["acoes_novas"]
 for _tk in N:
     ajustar_dpa(_tk, N[_tk])
 
 
 # ---------------------------------------------------------------- EGIE3 (regulado)
 def roe_limpo(tk, anos):
-    """ROE do controlador por ano, sem 'outras receitas' acima da mediana de 10 anos (após IR de 34%) — UBP de 2024 etc."""
+    """ROE do controlador por ano, sem 'outras receitas' acima da mediana de 10 anos (após IR de 34%) — venda da TAG em 2024 etc."""
     a = CVM[tk]["anual"]
     xs = [((a[y].get("outras_receitas_op") or 0) + (a[y].get("outras_despesas_op") or 0)) / a[y]["receita"] for y in map(str, range(2016, 2026))]
     med = st.median(xs)
@@ -144,17 +156,24 @@ def roe_limpo(tk, anos):
 
 
 def egie():
+    """Patrimônio do controlador do LTM − dividendo aprovado depois do balanço e já ex no preço (B3, `ajuste_b3`; antes
+    R$ 770,8 mi digitados) + o follow-on só se o balanço ainda não o contém (23/11/2026: com o LTM de 30/09 o lote somava a
+    oferta e tirava o dividendo de novo — VPA 15,96 → 20,41). O modelo do dinheiro novo rendendo o Ke continua o mesmo."""
     l = ltm_de(CVM["EGIE3"])
-    pl_old = l["pl"] - l["nao_controladores"] - EGIE_DIV_AGO26
-    pl_new = pl_old + EGIE_FOLLOW_ON["valor"]
+    div_depois = ajuste_b3("EGIE3", N["EGIE3"], REFS6["EGIE3"], MK.data)["depois"]
+    pl_balanco = l["pl"] - l["nao_controladores"] - div_depois
+    valor_fo = EGIE_FO["valor_mil"]
+    pl_new = pl_balanco if EGIE_FO_NO_BALANCO else pl_balanco + valor_fo
+    pl_old = pl_new - valor_fo
     roes = roe_limpo("EGIE3", range(2017, 2026))
     roe_old_lp = st.median(roes.values())
     roe_old_ini = l["lucro_controlador"] / pl_old
-    w = EGIE_FOLLOW_ON["valor"] / pl_new
+    w = valor_fo / pl_new
     # P/VP justificado é linear no ROE: ROE combinado = média ponderada (antigo × Ke no dinheiro novo) ⇔ valor antigo + caixa captado
     blend = lambda r: (1 - w) * r + w * MK.ke_nom
-    dados = dict(pl_old=pl_old, pl_new=pl_new, roes=roes, roe_old_lp=roe_old_lp, roe_old_ini=roe_old_ini, peso_novo=w)
-    return Financeira("EGIE3", "Engie Brasil Energia", "utility", desconto_controlador=dict(tipo="zero", razao=SEM_RAZAO), preco=30.70, vpa=pl_new * 1000 / N["EGIE3"], lpa_12m=l["lucro_controlador"] * 1000 / N["EGIE3"],
+    dados = dict(pl_old=pl_old, pl_new=pl_new, roes=roes, roe_old_lp=roe_old_lp, roe_old_ini=roe_old_ini, peso_novo=w,
+                 div_depois=div_depois, follow_on=EGIE_FO, follow_on_no_balanco=EGIE_FO_NO_BALANCO, ref=REFS6["EGIE3"])
+    return Financeira("EGIE3", "Engie Brasil Energia", "utility", desconto_controlador=dict(tipo="zero", razao=SEM_RAZAO), preco=preco("EGIE3"), vpa=pl_new * 1000 / N["EGIE3"], lpa_12m=l["lucro_controlador"] * 1000 / N["EGIE3"],
                       roe_lp=blend(roe_old_lp), roe_inicio=blend(roe_old_ini), payout=0.55,
                       dpa_medio_5a=sum(SI["EGIE3"]["dpa_por_ano_datacom"].get(str(a), 0) for a in range(2021, 2026)) / 5,
                       jcp_share=jcp("EGIE3"), pl_hist=pl_hist("EGIE3"), solidez_manual=solidez("EGIE3"),
@@ -215,7 +234,8 @@ if __name__ == "__main__":
     ki = r["ke_implicito"]
     tir = (1 + ki) / (1 + MK.pi) - 1 if ki else None
     d = EGIE_DADOS
-    print(f"EGIE3  P {EGIE.preco:.2f} VPA {EGIE.vpa:.2f} (PL antigo {d['pl_old']/1e6:.2f} bi + {EGIE_FOLLOW_ON['valor']/1e6:.2f}) ROE lp {EGIE.roe_lp:.1%} "
+    print(f"EGIE3  P {EGIE.preco:.2f} VPA {EGIE.vpa:.2f} (PL antigo {d['pl_old']/1e6:.2f} bi + {d['follow_on']['valor_mil']/1e6:.2f}"
+          f"{', já no balanço' if d['follow_on_no_balanco'] else ''}) ROE lp {EGIE.roe_lp:.1%} "
           f"(antigo {d['roe_old_lp']:.1%}) ini {EGIE.roe_inicio:.1%} (antigo {d['roe_old_ini']:.1%}) g {r['g']:.1%} | central {r['central']:.2f} P/C {r['pc']:.2f} "
           f"{r['palavra']} | " + " | ".join(f"{k}: {x:.2f}" for k, x in r["ancoras"].items()) + f" | TIR real {tir and f'{tir:.1%}'} | Bogle {r['bogle_nom']:.1%} "
           f"RF {r['vence_rf']}/{r['rf_sem_rerating']} | nota {r['notas']['geral']:.1f}")

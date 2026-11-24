@@ -14,6 +14,7 @@ from __future__ import annotations
 
 import json
 import pathlib
+from contextlib import contextmanager
 
 AQUI = pathlib.Path(__file__).parent
 _SERIE = json.loads((AQUI / "dados" / "macro" / "ipca_mensal.json").read_text(encoding="utf-8"))
@@ -28,21 +29,57 @@ def _mes(data: str) -> int:
     return int(aa) * 12 + int(mm) - 1
 
 
-_INDICE: dict[int, float] = {}
+_INDICE_TODO: dict[int, float] = {}
 _acc = 1.0
 for _reg in _SERIE:
     _acc *= 1 + float(_reg["valor"]) / 100
-    _INDICE[_mes(_reg["data"])] = _acc
+    _INDICE_TODO[_mes(_reg["data"])] = _acc
 
-PRIMEIRO_MES, BASE_MES = min(_INDICE), max(_INDICE)
-BASE = _INDICE[BASE_MES]
-DATA_BASE = f"{BASE_MES % 12 + 1:02d}/{BASE_MES // 12}"
-COBERTURA_ANOS = (BASE_MES - PRIMEIRO_MES) / 12
+# Estado do índice até o mês de corte (padrão: a série inteira). DEFLATOR e MEDIA_ANO são mutados NO LUGAR por `_aplicar`, porque
+# outros módulos os importam por nome (`from inflacao import DEFLATOR`).
+_INDICE: dict[int, float] = {}
+MEDIA_ANO: dict[int, float] = {}
+DEFLATOR: dict[str, float] = {}
 
-_ANOS = sorted({m // 12 for m in _INDICE})
-MEDIA_ANO = {a: sum(v for m, v in _INDICE.items() if m // 12 == a) / sum(1 for m in _INDICE if m // 12 == a)
-             for a in _ANOS}
-DEFLATOR = {str(a): BASE / MEDIA_ANO[a] for a in _ANOS}
+
+def _aplicar(corte: int | None) -> None:
+    global PRIMEIRO_MES, BASE_MES, BASE, DATA_BASE, COBERTURA_ANOS, _ANOS
+    idx = {m: x for m, x in _INDICE_TODO.items() if corte is None or m <= corte}
+    if not idx:
+        raise ValueError(f"IPCA sem nenhum mês até o corte {corte}")
+    _INDICE.clear()
+    _INDICE.update(idx)
+    PRIMEIRO_MES, BASE_MES = min(_INDICE), max(_INDICE)
+    BASE = _INDICE[BASE_MES]
+    DATA_BASE = f"{BASE_MES % 12 + 1:02d}/{BASE_MES // 12}"
+    COBERTURA_ANOS = (BASE_MES - PRIMEIRO_MES) / 12
+    _ANOS = sorted({m // 12 for m in _INDICE})
+    MEDIA_ANO.clear()
+    MEDIA_ANO.update({a: sum(v for m, v in _INDICE.items() if m // 12 == a) / sum(1 for m in _INDICE if m // 12 == a)
+                      for a in _ANOS})
+    DEFLATOR.clear()
+    DEFLATOR.update({str(a): BASE / MEDIA_ANO[a] for a in _ANOS})
+
+
+_aplicar(None)
+
+
+def mes_publicado_em(data_iso: str) -> int:
+    """Último mês do IPCA que já estava publicado na data (AAAA-MM-DD): o IBGE divulga o IPCA de um mês no mês seguinte, então
+    em qualquer dia do mês M o de M − 2 já saiu (o de M − 1 pode ainda não ter saído) — regra conservadora, sem olhar o futuro."""
+    a, m = int(data_iso[:4]), int(data_iso[5:7])
+    return a * 12 + (m - 1) - 2
+
+
+@contextmanager
+def ate(mes_corte: int | None):
+    """R$ "de hoje" = R$ do mês de corte, só dentro do bloco (dossiê recalculado na data dele, point-in-time). Na saída volta a
+    série inteira, mesmo com erro."""
+    _aplicar(mes_corte)
+    try:
+        yield
+    finally:
+        _aplicar(None)
 
 
 def _indice_ano(ano: str | int) -> float:

@@ -6,6 +6,8 @@ import pytest
 
 import conferir_noite as C
 
+DADOS_LOCAIS = C.dados_locais
+
 
 def _git(cwd, *args):
     return subprocess.run(["git", *args], cwd=cwd, check=True, capture_output=True, text=True).stdout.strip()
@@ -95,6 +97,50 @@ def test_ramo_ja_contido_e_apagado(repo, monkeypatch):
     _git(repo, "push", "-q", "origin", "master:claude/velho")
     assert C.main([]) == 0
     assert "claude/velho" not in _remotos(repo)
+
+
+def test_commit_que_chega_durante_a_suite_nao_se_perde(repo, monkeypatch, tmp_path):
+    """Adversário 22/10: o delete sem lease apagava o commit que a rotina empurrou enquanto a suíte rodava."""
+    _rodada(repo, "claude/noite-7")
+    outro = tmp_path / "outro"
+    _git(tmp_path, "clone", "-q", _git(repo, "remote", "get-url", "origin"), str(outro))
+
+    def suite_com_commit_tardio(wt):
+        _git(outro, "checkout", "-q", "claude/noite-7")
+        (outro / "tardio.txt").write_text("t\n")
+        _git(outro, "add", ".")
+        _git(outro, "commit", "-q", "-m", "tardio")
+        _git(outro, "push", "-q", "origin", "claude/noite-7")
+        return 0, "10 passed"
+
+    monkeypatch.setattr(C, "suite", suite_com_commit_tardio)
+    assert C.main([]) == 0
+    assert "origin/claude/noite-7" in _remotos(repo)                       # ficou: tem o commit tardio
+    assert _git(repo, "log", "-1", "--format=%s", "origin/claude/noite-7") == "tardio"
+
+
+def test_suite_com_teste_pulado_nao_e_verde(tmp_path):
+    """Adversário 22/10: rc 0 com tudo pulado ia ao master; agora pulado = vermelho (EXIGIR_DADOS + resumo)."""
+    (tmp_path / "ferramentas").mkdir()
+    (tmp_path / "ferramentas" / "test_pula.py").write_text("import pytest\n\ndef test_x():\n    pytest.skip('sem dado')\n")
+    rc, resumo = C.suite(tmp_path)
+    assert rc != 0 and "skipped" in resumo
+
+
+def test_dado_com_acento_vai_para_a_worktree_como_copia(repo, tmp_path):
+    """Adversário 22/10: sem `-z` o caminho com acento vinha em octal e sumia; hard link deixava o teste regravar o original."""
+    (repo / ".gitignore").write_text("ferramentas/dados/*.zip\n")
+    dados = repo / "ferramentas" / "dados"
+    dados.mkdir(parents=True)
+    (dados / "preços_2024.zip").write_bytes(b"original")
+    locais = DADOS_LOCAIS()                                                # o fixture troca C.dados_locais por []
+    assert "ferramentas/dados/preços_2024.zip" in locais
+    wt = tmp_path / "wt"
+    for rel in locais:
+        C.espelhar(rel, wt)
+    copia = wt / "ferramentas" / "dados" / "preços_2024.zip"
+    copia.write_bytes(b"REGRAVADO")
+    assert (dados / "preços_2024.zip").read_bytes() == b"original"
 
 
 def test_conflito_nao_envia(repo, monkeypatch):

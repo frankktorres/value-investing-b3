@@ -8,10 +8,11 @@ Método de regulado (doutrina §11.2, utility):
   · DCF regulatório = P/VP justificado: patrimônio (proxy da base regulatória) × (ROE − g) ÷ (Ke − g)
   · DDM em 2 estágios (ROE do início converge ao de longo prazo em 5 anos)
   · TIR real implícita = Ke implícito no preço, em termos reais — comparada à rf (piso) e ao Ke real (sempre).
-VPA/LPA/ROE/proventos: StatusInvest (base pós-bonificação, coerente com o preço). Alavancagem e cobertura: CVM (12m até jun/26).
+VPA/LPA/ROE/proventos: StatusInvest (base pós-bonificação, coerente com o preço). Alavancagem e cobertura: CVM (12m do LTM vigente).
 """
 from ltm import ltm_de
 import json
+import eventos
 import series_vigente
 import pathlib
 import statistics as st
@@ -20,6 +21,7 @@ import sys
 from lote1_bancos import MK
 from juros import juros_do_periodo
 from motor_financeiras import SEM_RAZAO, Financeira, avaliar, interp
+from precos_hall import preco
 
 AQUI = pathlib.Path(__file__).parent
 CVM = series_vigente.carregar_cvm()     # AUD-103: com o LTM da temporada por cima, quando houver
@@ -90,18 +92,21 @@ def ind(tk, k):
 # Doutrina §11.2 — emissão de ações depois do balanço: patrimônio + caixa captado, o dinheiro novo rendendo o Ke (VPL zero), igual
 # ao EGIE3 (lote6.egie). AUD-04 (08/10/2026): o VPA da StatusInvest dividia o PL de 30/06 (sem o dinheiro) pelas ações de depois
 # da oferta. Ações novas = valor ÷ preço da oferta; somadas às da CVM dão as 703,3 mi que a StatusInvest já usava.
-FOLLOW_ON = {"ISAE4": dict(valor=1_200_000, preco=27.0, data="jul/2026",       # R$ mil; R$ 1,2 bi a R$ 27 [fatos_lote2; PDF 03/10]
-                           fonte="follow-on de jul/2026 (fatos_lote2.json, PDF rev. 03/10); valor bruto — custo da oferta a conferir no RI")}
+# 23/11/2026: o fato (valor, preço, mês de liquidação, fonte) está em dados/eventos_societarios.json e o caixa/ações da oferta só
+# entram se o balanço do LTM ainda não os contém (`eventos.follow_on_e_balanco`) — com o LTM de 30/09 eram contados duas vezes.
+FOLLOW_ON = {tk: f for tk in ("ISAE4",) if (f := eventos.follow_on(tk))}
 
 
 def follow_on(tk, roe_antigo_lp, roe_antigo_ini):
     """(VPA, ROE de longo prazo, ROE de partida) com o follow-on: o P/VP justificado é linear no ROE, então o ROE ponderado
-    (antigo no PL antigo, Ke no dinheiro novo) equivale a valor antigo + caixa captado."""
-    f, l = FOLLOW_ON[tk], ltm_de(CVM[tk])
-    pl_old = l["pl"] - l["nao_controladores"]
-    pl_new = pl_old + f["valor"]
-    w = f["valor"] / pl_new
-    acoes = l["acoes"] + f["valor"] * 1000 / f["preco"]
+    (antigo no PL antigo, Ke no dinheiro novo) equivale a valor antigo + caixa captado. Com a oferta já no balanço, o PL e as
+    ações do LTM já a contêm: nada se soma, e o peso do dinheiro novo continua sendo valor ÷ PL."""
+    f, dentro = eventos.follow_on_e_balanco(tk, CVM[tk])
+    l = ltm_de(CVM[tk])
+    pl_balanco = l["pl"] - l["nao_controladores"]
+    pl_new = pl_balanco if dentro else pl_balanco + f["valor_mil"]
+    w = f["valor_mil"] / pl_new
+    acoes = l["acoes"] if dentro else l["acoes"] + f["acoes_novas"]
     return pl_new * 1000 / acoes, (1 - w) * roe_antigo_lp + w * MK.ke_nom, (1 - w) * roe_antigo_ini + w * MK.ke_nom
 
 
@@ -161,21 +166,22 @@ def metodo_regulado(tk: str) -> str:
             "sem base regulatória e WACC regulatório com fonte A/B")
 
 
-# Preços = fechamento oficial (PREULT do COTAHIST) de 02/10/2026 — data e fonte em precos_hall.py (AUD-67).
+# Preços = fechamento oficial (PREULT do COTAHIST) do pregão `precos_hall.PRECO_DATA`, lido do snapshot (23/11/2026:
+# antes digitados; AUD-67).
 EMPRESAS = [
-    F("TAEE11", "Taesa (unit)", 42.85, payout=0.75, qual=QUAL(4, 3, 3, 4, 3)),
-    F("ISAE4", "ISA Energia (ex-CTEEP)", 28.19, payout=0.60, qual=QUAL(4, 4, 4, 4, 3)),
-    F("CPFE3", "CPFL Energia", 48.09, payout=0.60, qual=QUAL(4, 4, 4, 4, 4)),
-    F("CMIG4", "Cemig", 11.41, payout=0.50, qual=QUAL(3, 3, 1, 3, 3),
+    F("TAEE11", "Taesa (unit)", preco("TAEE11"), payout=0.75, qual=QUAL(4, 3, 3, 4, 3)),
+    F("ISAE4", "ISA Energia (ex-CTEEP)", preco("ISAE4"), payout=0.60, qual=QUAL(4, 4, 4, 4, 3)),
+    F("CPFE3", "CPFL Energia", preco("CPFE3"), payout=0.60, qual=QUAL(4, 4, 4, 4, 4)),
+    F("CMIG4", "Cemig", preco("CMIG4"), payout=0.50, qual=QUAL(3, 3, 1, 3, 3),
       desconto={"tipo": "fixo", "pct": 0.177,
                 "razao": "MG: MP 579 (2012), corte de dividendo e venda de ativos (2016) consumados; Propag/federalização — precedente da casa: "
                          "40% de probabilidade de um cenário com valor 44% menor (0,4 × 44% = 17,7%)"}),
-    F("CPLE3", "Copel", 16.61, payout=0.55, qual=QUAL(3, 3, 4, 3, 3)),
-    F("SAPR11", "Sanepar (unit)", 35.21, payout=0.35, roe_inicio=0.10, qual=QUAL(4, 3, 1, 4, 3),
+    F("CPLE3", "Copel", preco("CPLE3"), payout=0.55, qual=QUAL(3, 3, 4, 3, 3)),
+    F("SAPR11", "Sanepar (unit)", preco("SAPR11"), payout=0.35, roe_inicio=0.10, qual=QUAL(4, 3, 1, 4, 3),
       desconto={"tipo": "fixo", "pct": 0.15,
                 "razao": "PR: Agepar destinou R$ 4,4 bi à tarifa em 2026 (V2 consumado) — precedente da casa: 15%"}),
-    F("CSMG3", "Copasa", 56.25, payout=0.60, qual=QUAL(4, 3, 3, 4, 3)),
-    F("SBSP3", "Sabesp", 28.23, payout=0.25, qual=QUAL(5, 4, 4, 4, 4)),
+    F("CSMG3", "Copasa", preco("CSMG3"), payout=0.60, qual=QUAL(4, 3, 3, 4, 3)),
+    F("SBSP3", "Sabesp", preco("SBSP3"), payout=0.25, qual=QUAL(5, 4, 4, 4, 4)),
 ]
 
 if __name__ == "__main__":

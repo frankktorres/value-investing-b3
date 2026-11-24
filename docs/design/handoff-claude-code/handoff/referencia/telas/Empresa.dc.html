@@ -1,0 +1,475 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Empresa — Mesa de Value</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+.mv{--f-ui:'IBM Plex Sans',system-ui,sans-serif;--f-mono:'IBM Plex Mono',ui-monospace,monospace;--f-serif:'Space Grotesk','IBM Plex Sans',system-ui,sans-serif;
+--bg:#070B12;--sf:#0E1520;--sf2:#141D2B;--ln:#1E2A3B;--ln2:#2B3C54;--ink:#EAF0F8;--ink2:#A9B8CC;--ink3:#8496AE;--ac:#8A97FF;
+--b-fg:#5EE0CF;--b-bg:#0B2E31;--b-ln:#1C6B68;--j-fg:#B4C3D9;--j-bg:#141D2B;--j-ln:#3B4F6B;--c-fg:#FFC06E;--c-bg:#33220B;--c-ln:#8C5C1F;--n-fg:#A9B8CC;--n-ln:#5A6C86;
+--s-div:#6CA8FF;--s-jcp:#3E6FC0;--hatch:repeating-linear-gradient(135deg,transparent 0 4px,rgba(169,184,204,.16) 4px 5px);--sh2:0 12px 32px rgba(0,0,0,.55);
+--dot:rgba(138,151,255,.11);--hi:rgba(255,255,255,.035);--glow-b:0 0 14px rgba(94,224,207,.22);--glow-p:0 0 12px rgba(234,240,248,.55);
+--r1:4px;--r2:8px;--r3:12px;
+font-family:var(--f-ui);font-size:13px;line-height:1.4;color:var(--ink);background:var(--bg);min-height:100vh;-webkit-font-smoothing:antialiased}
+.mv[data-tema="claro"]{--bg:#F3F6FB;--sf:#FFFFFF;--sf2:#ECF0F7;--ln:#DCE3EE;--ln2:#BFCADA;--ink:#0A1220;--ink2:#42516A;--ink3:#566680;--ac:#3646D6;
+--b-fg:#0A6660;--b-bg:#DAF4F0;--b-ln:#62C2B8;--j-fg:#384866;--j-bg:#ECF0F7;--j-ln:#A5B3C9;--c-fg:#874900;--c-bg:#FFEDD2;--c-ln:#E0A85F;--n-fg:#42516A;--n-ln:#8493AA;
+--s-div:#2C55B5;--s-jcp:#5A85D8;--hatch:repeating-linear-gradient(135deg,transparent 0 4px,rgba(10,18,32,.10) 4px 5px);--sh2:0 8px 28px rgba(10,18,32,.14);
+--dot:rgba(54,70,214,.09);--hi:rgba(255,255,255,.9);--glow-b:none;--glow-p:none}
+.mv *{box-sizing:border-box}
+.mv button,.mv select,.mv input{font:inherit;color:inherit}
+.mv :focus-visible{outline:2px solid var(--ac);outline-offset:2px}
+.num{font-variant-numeric:tabular-nums lining-nums;font-feature-settings:"tnum" 1,"lnum" 1}
+.mono{font-family:var(--f-mono)}
+.cap{font:500 11px/1.2 var(--f-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--ink3)}
+.topbar{display:flex;flex-wrap:wrap;align-items:center;gap:8px 24px;padding:8px 24px;background:var(--sf);border-bottom:1px solid var(--ln)}
+.brand{font:600 19px/1 var(--f-serif);letter-spacing:-.01em;display:flex;align-items:baseline;gap:8px}
+.brand small{font:500 11px var(--f-mono);color:var(--ink3);letter-spacing:.08em}
+.nav{display:flex;flex-wrap:wrap;gap:4px}
+.nav a{padding:10px 12px;color:var(--ink2);text-decoration:none;border-bottom:2px solid transparent;font-weight:500}
+.nav a:hover{color:var(--ink)}
+.nav a.on{color:var(--ink);border-bottom-color:var(--ac)}
+.tools{margin-left:auto;display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+.btn{display:inline-flex;align-items:center;gap:6px;height:32px;padding:0 10px;border:1px solid var(--ln2);background:var(--sf);border-radius:var(--r2);cursor:pointer;white-space:nowrap}
+.btn:hover{background:var(--sf2)}
+.btn[aria-pressed="true"]{background:var(--ink);color:var(--sf);border-color:var(--ink)}
+.strip{display:flex;flex-wrap:wrap;align-items:center;gap:4px 20px;padding:6px 24px;font:12px/1.3 var(--f-mono);color:var(--ink3);border-bottom:1px solid var(--ln)}
+.strip b{color:var(--ink2);font-weight:500}
+.ilu{padding:2px 8px;border:1px dashed var(--n-ln);border-radius:3px;background:var(--hatch);color:var(--ink2)}
+.dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--ink2);margin-right:6px}
+.page{padding:16px 24px 40px;display:flex;flex-direction:column;gap:20px;max-width:1520px;margin:0 auto}
+.crumb{font:12px var(--f-mono);color:var(--ink3)}
+.crumb a{color:var(--ink2)}
+.chip{display:inline-flex;align-items:center;gap:6px;height:22px;padding:0 8px;border-radius:var(--r1);font:600 11px/1 var(--f-mono);letter-spacing:.05em;border:1px solid;white-space:nowrap}
+.chip.lg{height:30px;padding:0 12px;font-size:14px}
+.chip-barata{color:var(--b-fg);background:var(--b-bg);border-color:var(--b-ln)}
+.chip-justa{color:var(--j-fg);border-color:var(--j-ln)}
+.chip-cara{color:var(--c-fg);background:var(--c-bg);border-color:var(--c-ln)}
+.chip-nc{color:var(--n-fg);border-style:dashed;border-color:var(--n-ln);background:var(--hatch)}
+.gl{display:inline-block;width:8px;height:8px;background:currentColor;flex:none}
+.gl-barata{clip-path:polygon(0 0,100% 0,50% 100%)}
+.nt{display:inline-grid;place-items:center;min-width:15px;height:15px;padding:0 3px;border-radius:3px;font:600 10px/1 var(--f-mono);vertical-align:1px;margin-left:5px}
+.nt-A{background:var(--ink);color:var(--sf)}
+.nt-B{border:1.5px solid var(--ink2);color:var(--ink2)}
+.nt-C{border:1px dashed var(--ink3);color:var(--ink3)}
+.nt-x{border:1px dotted var(--ink3);color:var(--ink3)}
+.v-w{color:var(--ink3);text-decoration:underline dotted var(--ink3);text-underline-offset:3px}
+.head{display:flex;flex-wrap:wrap;gap:16px 40px;align-items:flex-end;justify-content:space-between}
+.tkr{font:600 32px/1 var(--f-mono);letter-spacing:-.01em}
+.nome{font:600 24px/1.15 var(--f-serif);letter-spacing:-.01em}
+.stats{display:flex;flex-wrap:wrap;gap:12px 32px}
+.stat .cap{margin-bottom:4px}
+.stat .v{font:600 26px/1 var(--f-serif)}
+.stat .v small{font:500 12px var(--f-mono);color:var(--ink3);margin-left:2px}
+.card{background:var(--sf);border:1px solid var(--ln);border-radius:var(--r2);padding:16px}
+.card h2{font:600 17px/1.2 var(--f-serif);margin:0 0 2px}
+.card .lead{color:var(--ink3);margin:0 0 12px;font-size:12.5px}
+.subnav{display:flex;flex-wrap:wrap;gap:4px 20px;border-bottom:1px solid var(--ln);padding-bottom:0}
+.subnav a{padding:8px 0;color:var(--ink2);text-decoration:none;border-bottom:2px solid transparent;margin-bottom:-1px;font-weight:500}
+.subnav a:hover{color:var(--ink)}
+.subnav a.on{color:var(--ink);border-bottom-color:var(--ac)}
+.cols{display:flex;flex-wrap:wrap;gap:20px;align-items:flex-start}
+.main{flex:999 1 640px;min-width:0;display:flex;flex-direction:column;gap:20px}
+.aside{flex:1 1 340px;min-width:0;display:flex;flex-direction:column;gap:20px;max-width:100%}
+.xs{overflow-x:auto}
+/* régua grande */
+.bigreg{position:relative;height:112px;margin:0 8px}
+.bigreg .track{position:absolute;left:0;right:0;top:54px;height:2px;background:var(--ln2)}
+.bigreg .z{position:absolute;top:42px;height:26px;border-radius:3px;font:500 10px var(--f-mono);letter-spacing:.08em;padding:0 8px;display:flex;align-items:center;text-transform:uppercase}
+.bigreg .zb{left:0;width:19.3%;background:var(--b-bg);border:1px solid var(--b-ln);color:var(--b-fg)}
+.bigreg .zc{left:83.6%;right:0;background:var(--c-bg);border:1px solid var(--c-ln);color:var(--c-fg);justify-content:flex-end}
+.bigreg .tick{position:absolute;top:38px;width:1.5px;height:34px;background:var(--ink2);margin-left:-.75px}
+.bigreg .cd{position:absolute;top:48px;left:51.4%;width:14px;height:14px;margin-left:-7px;transform:rotate(45deg);border:2px solid var(--ink);background:var(--sf)}
+.bigreg .px{position:absolute;top:24px;left:18.2%;width:3px;height:56px;margin-left:-1.5px;background:var(--ink)}
+.bigreg .px:before{content:"";position:absolute;left:-4px;top:-4px;width:11px;height:11px;border-radius:50%;background:var(--ink)}
+.bigreg .lb{position:absolute;white-space:nowrap;font:12px/1.25 var(--f-mono);color:var(--ink2)}
+.bigreg .lb b{display:block;font:600 14px var(--f-mono);color:var(--ink)}
+/* métodos */
+.mrow{display:grid;grid-template-columns:230px minmax(280px,1fr) 128px;gap:0 12px;align-items:center;border-bottom:1px solid var(--ln);min-height:42px}
+.mrow .nm{padding:6px 0}
+.mrow .nm b{font-weight:600}
+.mrow .nm .sb{display:block;color:var(--ink3);font-size:12px}
+.pl{position:relative;height:42px}
+.vl{position:absolute;top:0;bottom:0;width:0;border-left:1px dashed var(--ln2)}
+.vl.c{border-left:1.5px solid var(--ink2)}
+.vl.p{border-left:2px solid var(--ink)}
+.rb{position:absolute;top:15px;height:12px;border-radius:2px;background:var(--ln);border:1.5px solid var(--ink2)}
+.rb.inf{background:var(--hatch);border:1.5px dashed var(--ink3)}
+.bdot{position:absolute;top:14px;width:14px;height:14px;margin-left:-7px;border-radius:50%;background:var(--ink);border:2px solid var(--sf)}
+.bdot.inf{background:var(--sf);border:2px solid var(--ink3)}
+.mrow .val{text-align:right}
+.mrow .val b{font-weight:600}
+.mrow .val span{display:block;color:var(--ink3);font-size:12px}
+.mrow.h{min-height:48px;border-bottom:1px solid var(--ln2)}
+.mrow.h .pl{height:48px}
+.ax{position:absolute;bottom:4px;white-space:nowrap;font:11px/1.2 var(--f-mono);color:var(--ink2)}
+.grp{padding:10px 0 4px}
+/* sensibilidade */
+.sens{display:grid;grid-template-columns:76px repeat(5,minmax(58px,1fr));gap:3px;font-size:12.5px}
+.sens .hd{font:500 11px var(--f-mono);color:var(--ink3);display:flex;align-items:center;justify-content:center;min-height:26px}
+.sens .cell{display:flex;align-items:center;justify-content:center;min-height:38px;border-radius:3px;border:1px solid var(--ln)}
+.sens .up2{background:var(--b-bg);border-color:var(--b-ln);color:var(--b-fg)}
+.sens .up1{background:var(--sf);border-color:var(--b-ln);color:var(--ink)}
+.sens .dn1{background:var(--sf);border-color:var(--c-ln);color:var(--ink)}
+.sens .dn2{background:var(--c-bg);border-color:var(--c-ln);color:var(--c-fg)}
+.sens .base{box-shadow:0 0 0 2px var(--ink);font-weight:600}
+/* premissas */
+.prem{display:grid;grid-template-columns:minmax(90px,1.2fr) 58px 86px 34px minmax(90px,1fr);gap:0 10px;align-items:center;border-bottom:1px solid var(--ln);padding:7px 0}
+.prem.h{padding:4px 0;border-bottom:1px solid var(--ln2)}
+.prem.j{background:var(--hatch)}
+.tag{display:inline-flex;align-items:center;height:18px;padding:0 6px;border:1px solid var(--c-ln);border-radius:3px;background:var(--c-bg);color:var(--c-fg);font:600 10px var(--f-mono);letter-spacing:.04em;text-transform:uppercase}
+.tag.n{background:transparent;border-color:var(--ln2);color:var(--ink2)}
+.tor{position:relative;height:12px}
+.tor:before{content:"";position:absolute;left:50%;top:-3px;bottom:-3px;width:1px;background:var(--ink2)}
+.tor i{position:absolute;top:2px;height:8px;background:var(--ink2);border-radius:1px}
+/* qualitativo */
+.qgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(260px,100%),1fr));gap:12px}
+.q{border:1px solid var(--ln);border-radius:var(--r2);padding:12px;background:var(--sf)}
+.q h3{margin:0 0 6px;font:600 13px var(--f-ui);display:flex;justify-content:space-between;align-items:center}
+.pips{display:flex;gap:3px;align-items:center;margin-bottom:6px}
+.pip{width:14px;height:6px;border:1.5px solid var(--ink2);border-radius:1px}
+.pip.on{background:var(--ink2)}
+.q p{margin:0;color:var(--ink2);font-size:12.5px}
+.q .w{font:600 12px var(--f-mono);margin-left:8px;color:var(--ink)}
+.risk{display:grid;grid-template-columns:1fr auto;gap:2px 8px;font-size:12.5px;color:var(--ink2)}
+.risk b{font:500 11px var(--f-mono);color:var(--ink);white-space:nowrap}
+/* aside */
+.hist{display:flex;align-items:flex-end;gap:6px;height:96px;border-bottom:1px solid var(--ln2)}
+.hist .col{flex:1;display:flex;flex-direction:column;justify-content:flex-end;height:100%}
+.hist .col i{display:block}
+.hist .d{background:var(--s-div)}.hist .j{background:var(--s-jcp)}
+.hist .pr{border:1.5px dashed var(--ink3);background:var(--hatch)}
+.yrs{display:flex;gap:6px;font:11px var(--f-mono);color:var(--ink3)}
+.yrs span{flex:1;text-align:center}
+.lg{display:flex;flex-wrap:wrap;gap:4px 14px;margin-top:8px;font-size:12px;color:var(--ink2)}
+.lg i{display:inline-block;width:10px;height:10px;margin-right:6px;vertical-align:-1px}
+.bar{height:14px;border-radius:2px;background:var(--ink2)}
+.bar.rf{background:var(--s-jcp)}
+.kv{display:grid;grid-template-columns:1fr auto;gap:6px 12px;align-items:center}
+.src{display:grid;grid-template-columns:1fr auto auto;gap:6px 10px;align-items:center;border-bottom:1px solid var(--ln);padding:6px 0;font-size:12.5px}
+.src:last-child{border-bottom:0}
+.small{font-size:12px;color:var(--ink3)}
+
+.mv.pane{min-height:0}
+.shell{display:flex;flex-wrap:wrap;min-height:100vh}
+.side{flex:0 0 220px;width:220px;border-right:1px solid var(--ln);background:var(--sf);padding:18px 12px;display:flex;flex-direction:column;gap:22px;align-self:stretch}
+.brandl{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--ink);padding:0 4px}
+.brandl b{display:block;font:700 16px/1.1 var(--f-serif);letter-spacing:-.01em}
+.brandl small{display:block;font:500 9.5px/1.3 var(--f-mono);letter-spacing:.08em;color:var(--ink3);margin-top:3px}
+.snav{display:flex;flex-direction:column;gap:2px}
+.snav .sec{font:500 10px var(--f-mono);letter-spacing:.1em;color:var(--ink3);padding:10px 10px 4px}
+.snav a{display:flex;align-items:center;gap:10px;padding:9px 10px;border-radius:8px;color:var(--ink2);text-decoration:none;font-weight:500}
+.snav a:hover{background:var(--sf2);color:var(--ink)}
+.snav a.on{background:var(--sf2);color:var(--ink);box-shadow:inset 0 0 0 1px var(--ln2)}
+.snav a.on svg{color:var(--ac)}
+.sfoot{margin-top:auto}
+.side .strip{flex-direction:column;align-items:flex-start;gap:6px;border:1px solid var(--ln);border-radius:10px;padding:10px 12px;background:var(--bg);font-size:11px}
+.content{flex:1 1 640px;min-width:0;background-image:radial-gradient(var(--dot) 1px,transparent 1px);background-size:22px 22px;display:flex;flex-direction:column}
+.topbar{display:flex;flex-wrap:wrap;align-items:center;gap:8px 16px;padding:10px 24px;background:var(--bg);border-bottom:1px solid var(--ln);position:relative}
+.topbar .crumbtop{display:flex;align-items:center;gap:8px}
+.topbar .tools{margin-left:auto}
+.search{display:flex;align-items:center;gap:8px;height:34px;padding:0 10px;border:1px solid var(--ln2);border-radius:10px;background:var(--sf);width:240px;color:var(--ink3)}
+.search input{border:0;background:transparent;outline:none;width:100%;color:var(--ink)}
+.search kbd{font:500 10px var(--f-mono);border:1px solid var(--ln2);border-radius:4px;padding:1px 5px;color:var(--ink3)}
+.vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+.btn{height:34px;border-radius:10px;background:var(--sf)}
+.card,.tbl,.tab,.pane,.st,.q,.stat{border-radius:var(--r3);box-shadow:inset 0 1px 0 var(--hi)}
+.stat{padding:10px 14px;border:1px solid var(--ln);background:var(--sf)}
+.h1{font:700 30px/1.1 var(--f-serif);letter-spacing:-.025em}
+.card h2,.nome{font-family:var(--f-serif);font-weight:600;letter-spacing:-.01em}
+.tab .n,.kpi .v,.stat .v,.tkr{font-family:var(--f-serif)}
+.tab .n{font-size:30px;font-weight:600}
+.kpi .v{font-size:34px;font-weight:600;letter-spacing:-.02em}
+.stat .v{font-size:26px;letter-spacing:-.02em}
+.chip{border-radius:999px;padding:0 10px}
+.chip.lg{padding:0 14px}
+.chip-barata{box-shadow:var(--glow-b)}
+.tag{border-radius:999px;padding:0 8px}
+.reg-z,.bigreg .z,.mr .zb,.mr .zc{border-radius:999px}
+.reg-p,.bigreg .px,.big .px,.mr .p{box-shadow:var(--glow-p)}
+.reg-nc{border-radius:999px}
+.row.th,.pos.h,.prem.h,.mrow.h{background:transparent}
+.row.th{background:var(--sf2)}
+.cap{letter-spacing:.09em}
+.banner,.box{border-radius:var(--r3)}
+.meter{border-radius:999px}.meter i{border-radius:999px}
+</style>
+</helmet>
+<div class="mv" data-tema="{{tema}}">
+<div class="shell"><aside class="side"><a class="brandl" href="Main.dc.html"><svg width="30" height="30" viewBox="0 0 28 28" aria-hidden="true"><rect x="1" y="1" width="26" height="26" rx="8" fill="none" stroke="var(--ac)" stroke-width="1.5"/><path d="M7 14h14" stroke="var(--ink2)" stroke-width="1.5"/><path d="M14 9l5 5-5 5-5-5z" fill="var(--sf)" stroke="var(--ink)" stroke-width="1.5"/><path d="M8.5 9v10" stroke="var(--ac)" stroke-width="2"/></svg><span><b>Mesa de Value</b><small>B3 · LONGO PRAZO</small></span></a><nav class="snav" aria-label="Seções"><div class="sec">ANÁLISE</div><a href="Main.dc.html"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="5" height="5" rx="1"/><rect x="9" y="2" width="5" height="5" rx="1"/><rect x="2" y="9" width="5" height="5" rx="1"/><rect x="9" y="9" width="5" height="5" rx="1"/></svg>Hall</a><a class="on" aria-current="page" href="Empresa.dc.html"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 14V3h6v11M9 7h4v7M5.5 5.5h1M5.5 8h1M5.5 10.5h1"/></svg>Empresa</a><a href="Carteira.dc.html"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="8" cy="8" r="6"/><path d="M8 2v6h6"/></svg>Carteira</a><a href="Sistema.dc.html"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1.5 8h3l1.5-4 3 8 1.5-4h4"/></svg>Monitor</a><div class="sec">SISTEMA</div><a href="Sistema.dc.html"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 4h10M3 8h10M3 12h10"/><circle cx="6" cy="4" r="1.4"/><circle cx="10" cy="8" r="1.4"/><circle cx="5" cy="12" r="1.4"/></svg>Sistema</a></nav><div class="sfoot"><div class="strip">
+    <span><span class="dot"></span><b>Local</b> · somente leitura</span>
+    <span>Cotação <b>19/10/2026 17:45</b></span>
+    <span>Demonstrações <b>2T26</b> (CVM)</span>
+    <span class="ilu">DADOS ILUSTRATIVOS</span>
+  </div></div></aside><div class="content">
+<header class="topbar"><div class="crumbtop"><span class="cap">Hall / TAEE11 · relatório</span></div><div class="tools"><label class="search"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="7" cy="7" r="4.5"/><path d="M10.5 10.5 14 14"/></svg><span class="vh">Buscar ticker ou empresa</span><input type="search" placeholder="Buscar ticker ou empresa"><kbd>/</kbd></label><button class="btn" type="button" aria-pressed="{{ocultarStr}}" onClick="{{toggleOcultar}}"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M1.5 8s2.3-4.5 6.5-4.5S14.5 8 14.5 8 12.2 12.5 8 12.5 1.5 8 1.5 8Z"/><circle cx="8" cy="8" r="2"/></svg>Ocultar valores</button><button class="btn" type="button" aria-label="Alternar tema claro e escuro" onClick="{{toggleTema}}"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M13 9.5A5.5 5.5 0 0 1 6.5 3 5.5 5.5 0 1 0 13 9.5Z"/></svg>{{temaRotulo}}</button></div></header>
+
+  <main class="page">
+    <div class="crumb"><a href="Main.dc.html">Hall</a> / TAEE11</div>
+
+    <div class="head">
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <div style="display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 16px"><span class="tkr">TAEE11</span><span class="nome">Taesa</span></div>
+        <div style="display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px"><span class="chip chip-barata lg"><i class="gl gl-barata"></i>BARATA</span><span class="small">Energia elétrica · Transmissão · dado de hoje</span></div>
+      </div>
+      <div class="stats">
+        <div class="stat"><div class="cap">Preço</div><div class="v num">26,57<small>R$</small><span class="nt nt-A" title="Nota A: cotação B3">A</span></div></div>
+        <div class="stat"><div class="cap">Central</div><div class="v num">38,50<small>R$</small><span class="nt nt-A" title="Nota A">A</span></div></div>
+        <div class="stat"><div class="cap">P/C</div><div class="v num">0,69</div></div>
+        <div class="stat"><div class="cap">Yield proj.</div><div class="v num">10,9%<span class="nt nt-B" title="Nota B: primária com ressalva">B</span></div></div>
+      </div>
+    </div>
+
+    <nav class="subnav" aria-label="Neste relatório">
+      <a class="on" href="#valuation">Valuation</a><a href="#sens">Sensibilidade</a><a href="#premissas">Premissas</a><a href="#qual">Qualitativo</a><a href="#prov">Proventos</a><a href="#fontes">Fontes</a>
+    </nav>
+
+    <section class="card" aria-label="Régua de preço">
+      <div class="cap" style="margin-bottom:6px">Régua · R$ por ação · compra 0,70× e saída 1,30× do central (1,50× com exceção de qualidade)</div>
+      <div class="bigreg" role="img" aria-label="Preço de hoje R$ 26,57, abaixo da faixa de compra a R$ 26,95. Central R$ 38,50. Saída R$ 50,05.">
+        <div class="track"></div>
+        <div class="z zb">Faixa de compra</div>
+        <div class="z zc">Faixa de saída</div>
+        <div class="tick" style="left:19.3%"></div>
+        <div class="tick" style="left:83.6%"></div>
+        <div class="cd"></div>
+        <div class="px"></div>
+        <div class="lb" style="left:18.2%;top:0;transform:translateX(-100%);text-align:right;padding-right:8px"><b class="num">26,57</b>hoje</div>
+        <div class="lb" style="left:19.3%;top:80px;padding-left:6px"><b class="num">26,95</b>compra</div>
+        <div class="lb" style="left:51.4%;top:80px;transform:translateX(-50%);text-align:center"><b class="num">38,50</b>central</div>
+        <div class="lb" style="left:83.6%;top:80px;padding-left:6px"><b class="num">50,05</b>saída</div>
+      </div>
+    </section>
+
+    <div class="cols">
+      <div class="main">
+
+        <section class="card" id="valuation" aria-label="Métodos de valuation">
+          <h2>Valuation por método</h2>
+          <p class="lead">Cada barra é a faixa do método (cenário baixo a alto); o ponto é o caso-base. Central = mediana dos métodos marcados como central; os informativos ficam fora.</p>
+          <div class="xs"><div style="min-width:640px">
+            <div class="mrow h">
+              <div class="cap">Entram no central</div>
+              <div class="pl">
+                <div class="vl p" style="left:18.2%"></div><div class="vl" style="left:19.3%"></div><div class="vl c" style="left:51.4%"></div><div class="vl" style="left:83.6%"></div>
+                <div class="ax" style="left:18.2%;transform:translateX(-100%);padding-right:6px">hoje</div>
+                <div class="ax" style="left:19.3%;padding-left:6px">compra</div>
+                <div class="ax" style="left:51.4%;transform:translateX(-50%)">central</div>
+                <div class="ax" style="left:83.6%;padding-left:6px">saída</div>
+              </div>
+              <div class="cap" style="text-align:right">Base (faixa)</div>
+            </div>
+            <sc-for list="{{entram}}" as="m" hint-placeholder-count="5">
+              <div class="mrow">
+                <div class="nm"><b>{{m.n}}</b><span class="nt nt-{{m.g}}">{{m.gt}}</span><span class="sb">{{m.sub}}</span></div>
+                <div class="pl">
+                  <div class="vl p" style="left:18.2%"></div><div class="vl" style="left:19.3%"></div><div class="vl c" style="left:51.4%"></div><div class="vl" style="left:83.6%"></div>
+                  <div class="rb" style="left:{{m.l}}%;width:{{m.w}}%"></div>
+                  <div class="bdot" style="left:{{m.b}}%"></div>
+                </div>
+                <div class="val num"><b>{{m.base}}</b><span>{{m.faixa}}</span></div>
+              </div>
+            </sc-for>
+            <div class="grp cap">Só informativos · não entram no central</div>
+            <sc-for list="{{info}}" as="m" hint-placeholder-count="3">
+              <div class="mrow">
+                <div class="nm"><b>{{m.n}}</b><span class="nt nt-{{m.g}}">{{m.gt}}</span><span class="sb">{{m.sub}}</span></div>
+                <div class="pl">
+                  <div class="vl p" style="left:18.2%"></div><div class="vl" style="left:19.3%"></div><div class="vl c" style="left:51.4%"></div><div class="vl" style="left:83.6%"></div>
+                  <div class="rb inf" style="left:{{m.l}}%;width:{{m.w}}%"></div>
+                  <div class="bdot inf" style="left:{{m.b}}%"></div>
+                </div>
+                <div class="val num"><b class="v-w">{{m.base}}</b><span>{{m.faixa}}</span></div>
+              </div>
+            </sc-for>
+          </div></div>
+        </section>
+
+        <div class="cols" style="gap:20px">
+          <section class="card" id="sens" style="flex:1 1 420px;min-width:0" aria-label="Sensibilidade do DCF">
+            <h2>Sensibilidade do DCF</h2>
+            <p class="lead">Valor por ação (R$) variando WACC e crescimento perpétuo. Contorno grosso = caso-base.</p>
+            <div class="xs"><div class="sens" style="min-width:400px">
+              <div class="hd">WACC ↓ · g →</div>
+              <sc-for list="{{gs}}" as="g" hint-placeholder-count="5"><div class="hd">{{g}}</div></sc-for>
+              <sc-for list="{{matriz}}" as="lin" hint-placeholder-count="5">
+                <div class="hd">{{lin.w}}</div>
+                <sc-for list="{{lin.cells}}" as="c" hint-placeholder-count="5"><div class="cell num {{c.cls}}">{{c.v}}</div></sc-for>
+              </sc-for>
+            </div></div>
+            <div class="lg" style="margin-top:10px"><span><i style="background:var(--b-bg);border:1px solid var(--b-ln)"></i>bem acima do preço de hoje</span><span><i style="border:1px solid var(--b-ln)"></i>acima</span><span><i style="border:1px solid var(--c-ln)"></i>abaixo</span><span><i style="background:var(--c-bg);border:1px solid var(--c-ln)"></i>bem abaixo</span></div>
+            <p class="small" style="margin:8px 0 0"><span class="tag n">pré-calculado</span> Grade de valores calculada pelo motor. Esta tela só exibe; nada é recalculado aqui.</p>
+          </section>
+
+          <section class="card" id="premissas" style="flex:1 1 440px;min-width:0" aria-label="Premissas">
+            <h2>Premissas</h2>
+            <p class="lead">Ordenadas pelo efeito no central. Hachurado = premissa de julgamento.</p>
+            <div class="xs"><div style="min-width:0">
+              <div class="prem h cap"><div>Premissa</div><div class="r" style="text-align:right">Valor</div><div>Tipo</div><div>Fonte</div><div>Efeito ± R$</div></div>
+              <sc-for list="{{prem}}" as="p" hint-placeholder-count="6">
+                <div class="prem {{p.cls}}">
+                  <div>{{p.n}}</div>
+                  <div class="num" style="text-align:right">{{p.v}}</div>
+                  <div><span class="tag {{p.tcls}}">{{p.t}}</span></div>
+                  <div><span class="nt nt-{{p.g}}" style="margin:0">{{p.gt}}</span></div>
+                  <div style="display:flex;align-items:center;gap:8px"><div class="tor" style="flex:1"><i style="left:{{p.l}}%;width:{{p.w}}%"></i></div><span class="num small">{{p.ef}}</span></div>
+                </div>
+              </sc-for>
+            </div></div>
+          </section>
+        </div>
+
+        <section class="card" id="qual" aria-label="Qualitativo">
+          <h2>Qualitativo</h2>
+          <p class="lead">Avaliação do analista em cinco níveis, sempre com a base que a sustenta. Não é nota de compra.</p>
+          <div class="qgrid">
+            <sc-for list="{{quals}}" as="q" hint-placeholder-count="4">
+              <div class="q">
+                <h3><span>{{q.n}}</span><span class="nt nt-{{q.g}}" style="margin:0">{{q.gt}}</span></h3>
+                <div class="pips" role="img" aria-label="{{q.aria}}"><sc-for list="{{q.pips}}" as="pp" hint-placeholder-count="5"><i class="pip {{pp}}"></i></sc-for><span class="w">{{q.rot}}</span></div>
+                <p>{{q.txt}}</p>
+              </div>
+            </sc-for>
+            <div class="q">
+              <h3><span>Riscos</span><span class="nt nt-x" style="margin:0">—</span></h3>
+              <div class="risk">
+                <span>Renovação de concessões</span><b>prob. média · impacto alto</b>
+                <span>Revisão tarifária (RAP)</span><b>prob. média · impacto médio</b>
+                <span>Alavancagem em aquisições</span><b>prob. baixa · impacto médio</b>
+              </div>
+              <p class="small" style="margin-top:8px">Julgamento do analista; sem fonte pública que quantifique.</p>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <aside class="aside" aria-label="Resumo lateral">
+        <section class="card" aria-label="Veredito">
+          <div class="cap" style="margin-bottom:8px">Leitura da régua</div>
+          <span class="chip chip-barata lg"><i class="gl gl-barata"></i>BARATA</span>
+          <p style="margin:10px 0 0">Preço de hoje está <b class="num">1,4%</b> abaixo da faixa de compra e <b class="num">31,0%</b> abaixo do central.</p>
+          <div class="kv" style="margin-top:12px">
+            <span class="small">Métodos no central</span><b class="num">5 de 8</b>
+            <span class="small">Com fonte A ou B</span><b class="num">4 de 5</b>
+          </div>
+          <p class="small" style="margin:12px 0 0">Palavra descreve o preço contra a régua. Não é recomendação.</p>
+        </section>
+
+        <section class="card" id="prov" aria-label="Proventos">
+          <h2>Proventos</h2>
+          <p class="lead">Yield sobre o preço da época (%), dividendos e JCP.</p>
+          <div class="hist" role="img" aria-label="Yield anual de proventos de 2018 a 2025 e projeção de 2026">
+            <sc-for list="{{hist}}" as="h" hint-placeholder-count="9">
+              <div class="col"><i class="{{h.cj}}" style="height:{{h.hj}}%"></i><i class="{{h.cd}}" style="height:{{h.hd}}%"></i></div>
+            </sc-for>
+          </div>
+          <div class="yrs"><sc-for list="{{hist}}" as="h" hint-placeholder-count="9"><span>{{h.ano}}</span></sc-for></div>
+          <div class="lg"><span><i style="background:var(--s-div)"></i>Dividendos</span><span><i style="background:var(--s-jcp)"></i>JCP</span><span><i style="border:1.5px dashed var(--ink3);background:var(--hatch)"></i>projeção (premissa)</span></div>
+          <div class="kv" style="margin-top:12px">
+            <span class="small">Yield projetado 2026</span><span class="num"><b>10,9%</b><span class="nt nt-B">B</span></span>
+            <span class="small">Payout (últimos 12m)</span><span class="num"><b>92%</b><span class="nt nt-A">A</span></span>
+            <span class="small">Anos seguidos com proventos</span><span class="num"><b>8</b><span class="nt nt-A">A</span></span>
+          </div>
+        </section>
+
+                <section class="card" aria-label="Na carteira">
+          <h2>Na carteira</h2>
+          <p class="lead">Dado pessoal, só neste computador.</p>
+          <div class="kv">
+            <span class="small">Peso na carteira</span><b class="num">{{pesoCart}}</b>
+            <span class="small">Renda anual estimada</span><b class="num">{{rendaCart}}</b>
+            <span class="small">Preço médio</span><b class="num">{{pmCart}}</b>
+          </div>
+        </section>
+
+        <section class="card" id="fontes" aria-label="Fontes e frescor">
+          <h2>Fontes e frescor</h2>
+          <p class="lead">Só A e B embasam decisão.</p>
+          <div class="src"><span>CVM · ITR/DFP</span><span class="small num">2T26</span><span class="nt nt-A" style="margin:0">A</span></div>
+          <div class="src"><span>B3 · cotação</span><span class="small num">19/10/2026</span><span class="nt nt-A" style="margin:0">A</span></div>
+          <div class="src"><span>RI da companhia · apresentação</span><span class="small num">2T26</span><span class="nt nt-B" style="margin:0">B</span></div>
+          <div class="src"><span>Agregador de múltiplos de pares</span><span class="small num">12/10/2026</span><span class="nt nt-C" style="margin:0">C</span></div>
+          <div class="src"><span>Premissas do analista</span><span class="small">julgamento</span><span class="nt nt-x" style="margin:0">—</span></div>
+        </section>
+      </aside>
+    </div>
+  </main>
+</div></div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"tema":{"editor":"enum","options":["claro","escuro"],"default":"escuro","section":"Tema"}}'>
+class Component extends DCLogic {
+  constructor(...a) { super(...a); this.state = { ocultar: false, tema: null }; }
+  f(n, d) { d = d == null ? 2 : d; return n.toLocaleString('pt-BR', { minimumFractionDigits: d, maximumFractionDigits: d }); }
+  renderVals() {
+    const S = this.state, f = (n, d) => this.f(n, d);
+    const tema = S.tema || this.props.tema || 'escuro';
+    const X = (v) => (v - 20) / 36 * 100;
+    const mk = (n, sub, lo, b, hi, g) => ({
+      n: n, sub: sub, g: g, gt: g === 'x' ? '—' : g,
+      l: X(lo), w: Math.max(0, X(hi) - X(lo)), b: X(b),
+      base: f(b), faixa: lo === hi ? 'ponto único' : f(lo) + '–' + f(hi)
+    });
+    const entram = [
+      mk('DCF', 'FCFF, 5 anos + perpetuidade', 33.2, 40.1, 47.5, 'B'),
+      mk('EPV', 'Poder de ganho atual, sem crescimento', 31.0, 36.4, 41.8, 'A'),
+      mk('DDM', 'Dividendos descontados (Gordon)', 34.5, 38.5, 43.2, 'B'),
+      mk('Bazin', 'Dividendo médio ÷ taxa-alvo', 33.9, 37.6, 40.2, 'A'),
+      mk('Graham', 'Lucro × patrimônio', 35.6, 39.4, 42.9, 'A')
+    ];
+    const info = [
+      mk('Múltiplos de pares', 'EV/EBITDA do setor', 28.0, 34.0, 40.5, 'C'),
+      mk('Consenso de analistas', 'Preço-alvo agregado', 32.0, 36.0, 42.0, 'C'),
+      mk('Valor patrimonial', 'Patrimônio líquido ÷ ações', 23.1, 23.1, 23.1, 'A')
+    ];
+    // grade pré-calculada pelo motor (valores prontos)
+    const matriz = [
+      { w: '10,5%', cells: [{ v: '39,71', cls: 'up2' }, { v: '42,40', cls: 'up2' }, { v: '45,45', cls: 'up2' }, { v: '48,93', cls: 'up2' }, { v: '52,95', cls: 'up2' }] },
+      { w: '11,0%', cells: [{ v: '37,50', cls: 'up2' }, { v: '39,91', cls: 'up2' }, { v: '42,61', cls: 'up2' }, { v: '45,67', cls: 'up2' }, { v: '49,17', cls: 'up2' }] },
+      { w: '11,5%', cells: [{ v: '35,53', cls: 'up2' }, { v: '37,69', cls: 'up2' }, { v: '40,10', cls: 'up2 base' }, { v: '42,81', cls: 'up2' }, { v: '45,89', cls: 'up2' }] },
+      { w: '12,0%', cells: [{ v: '33,75', cls: 'up2' }, { v: '35,70', cls: 'up2' }, { v: '37,87', cls: 'up2' }, { v: '40,29', cls: 'up2' }, { v: '43,02', cls: 'up2' }] },
+      { w: '12,5%', cells: [{ v: '32,15', cls: 'up1' }, { v: '33,92', cls: 'up2' }, { v: '35,88', cls: 'up2' }, { v: '38,06', cls: 'up2' }, { v: '40,49', cls: 'up2' }] }
+    ];
+    const prem = [
+      { n: 'WACC', v: '11,5%', t: 'derivada', g: 'B', ef: '2,10', e: 2.10 },
+      { n: 'Crescimento perpétuo (g)', v: '3,0%', t: 'julgamento', g: 'x', ef: '1,84', e: 1.84 },
+      { n: 'Renovação de concessões', v: 'sim, sem custo', t: 'julgamento', g: 'x', ef: '1,60', e: 1.60 },
+      { n: 'Reajuste da receita (RAP)', v: 'IPCA', t: 'oficial', g: 'A', ef: '1,10', e: 1.10 },
+      { n: 'Payout futuro', v: '90%', t: 'julgamento', g: 'x', ef: '0,70', e: 0.70 },
+      { n: 'Capex de manutenção', v: '4% da RAP', t: 'derivada', g: 'B', ef: '0,35', e: 0.35 }
+    ].map((p) => ({
+      n: p.n, v: p.v, t: p.t === 'julgamento' ? 'Julgamento' : (p.t === 'oficial' ? 'Oficial' : 'Derivada'),
+      tcls: p.t === 'julgamento' ? '' : 'n', cls: p.t === 'julgamento' ? 'j' : '',
+      g: p.g, gt: p.g === 'x' ? '—' : p.g, ef: '±' + p.ef, l: 50 - p.e / 2.4 * 50, w: p.e / 2.4 * 100
+    }));
+    const pips = (n) => [0, 1, 2, 3, 4].map((i) => (i < n ? 'on' : ''));
+    const quals = [
+      { n: 'Qualidade do negócio', g: 'B', n5: 4, rot: 'Forte', txt: 'Receita regulada e indexada, contratos longos, margem estável.' },
+      { n: 'Dívida', g: 'A', n5: 3, rot: 'Adequada', txt: 'Dívida líquida/EBITDA em 2,6×; vencimentos escalonados até 2034.' },
+      { n: 'Governança', g: 'B', n5: 4, rot: 'Boa', txt: 'Controle definido, conselho com independentes, histórico de comunicação regular.' },
+      { n: 'Dividendos', g: 'A', n5: 4, rot: 'Recorrentes', txt: 'Proventos todos os anos do histórico; payout alto depende da RAP.' }
+    ].map((q) => ({ n: q.n, g: q.g, gt: q.g, pips: pips(q.n5), rot: q.rot, txt: q.txt, aria: q.rot + ': ' + q.n5 + ' de 5' }));
+    const H = [[2018, 5.1, 2.0], [2019, 4.8, 2.9], [2020, 6.0, 2.4], [2021, 6.2, 3.1], [2022, 7.0, 3.3], [2023, 6.4, 2.8], [2024, 7.3, 3.1], [2025, 7.5, 3.4]];
+    const hist = H.map((r) => ({ ano: String(r[0]).slice(2), cd: 'd', cj: 'j', hd: r[1] / 12 * 100, hj: r[2] / 12 * 100 }));
+    hist.push({ ano: '26p', cd: 'pr', cj: 'pr', hd: 7.6 / 12 * 100, hj: 3.3 / 12 * 100 });
+    const oc = S.ocultar;
+    return {
+      tema: tema, temaRotulo: tema === 'escuro' ? 'Modo claro' : 'Modo escuro',
+      ocultarStr: oc ? 'true' : 'false',
+      toggleOcultar: () => this.setState({ ocultar: !S.ocultar }),
+      toggleTema: () => this.setState({ tema: tema === 'escuro' ? 'claro' : 'escuro' }),
+      entram: entram, info: info, matriz: matriz, gs: ['2,0%', '2,5%', '3,0%', '3,5%', '4,0%'],
+      prem: prem, quals: quals, hist: hist,
+      pesoCart: oc ? '•••' : '9,7%', rendaCart: oc ? 'R$ •••' : 'R$ 4.120,00', pmCart: oc ? 'R$ •••' : 'R$ 31,20'
+    };
+  }
+}
+</script>
+</body>
+</html>

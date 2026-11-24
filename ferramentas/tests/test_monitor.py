@@ -177,10 +177,11 @@ COTA = Path(__file__).resolve().parent.parent / "backtest" / "dados" / "cotahist
 
 @pytest.mark.skipif(not COTA.exists(), reason="COTAHIST 2026 fora do disco")
 def test_no_pregao_do_hall_reproduz_o_golden():
-    """Em 02/10/2026 (preços do 03) o P/C do monitor = o do golden a 2%: mesma fonte de central."""
+    """No pregão do hall (preços do 03, `precos_hall.PRECO_DATA`) o P/C do monitor = o do golden a 2%: mesma fonte de central."""
+    import precos_hall as PH
     refs = M.referencias_do_hall()
-    precos, pregao = M.ultimos_precos(set(refs), "2026-10-02")
-    assert pregao == "2026-10-02"
+    precos, pregao = M.ultimos_precos(set(refs), PH.PRECO_DATA)
+    assert pregao == PH.PRECO_DATA
     g = json.loads((Path(__file__).parent / "golden.json").read_text(encoding="utf-8"))["tickers"]
     comparados = 0
     for x in M.linhas_hall(refs, precos):
@@ -188,7 +189,7 @@ def test_no_pregao_do_hall_reproduz_o_golden():
         if gp is not None and math.isfinite(gp):    # AUD-52: P/C sem central é null no golden
             assert x["pc"] == pytest.approx(gp, rel=0.02), x["ticker"]
             comparados += 1
-    assert comparados == 40      # só a RECV3 tem central ≤ 0 (a KLBN11 voltou a positivo com o ponto fixo partindo do contábil)
+    assert comparados == 40      # só a RECV3 tem central ≤ 0 (KLBN11 com central positivo; D/E a mercado desde o H2, 24/11/2026)
 
 
 @pytest.mark.skipif(not COTA.exists(), reason="COTAHIST 2026 fora do disco")
@@ -197,7 +198,7 @@ def test_nenhum_nao_conclusivo_do_hall_sai_compra_ou_saida():
     refs = M.referencias_do_hall()
     precos, _ = M.ultimos_precos(set(refs), "2026-10-06")
     nc = [x for x in M.linhas_hall(refs, precos) if x["palavra"] == "NÃO CONCLUSIVO"]
-    assert {x["ticker"] for x in nc} >= {"ISAE4", "KLBN11", "SLCE3"}
+    assert {x["ticker"] for x in nc} >= {"PRIO3", "KLBN11", "SLCE3"}      # 3T26: ISAE4 saiu (JUSTA), PRIO3 entrou
     assert all(x["alerta"] in (M.NC, "sem preço") for x in nc), [(x["ticker"], x["alerta"]) for x in nc]
 
 

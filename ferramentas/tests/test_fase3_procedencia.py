@@ -168,9 +168,69 @@ def test_pl_hist_da_cvm_registrado_e_smto3_em_marco():
     assert pl_historico.mediana("X", anual, no_dia, lambda q: q, fechamento=px) == pytest.approx(1.0)
     antes = [{**ev[0], "data_com": "2025-12-29"}]                    # já ex no fechamento: preço e DFP na base nova
     assert pl_historico.mediana("X", anual, antes, lambda q: q, fechamento=px) == pytest.approx(2.0)
-    assert pl_historico.mediana("X", {"2025": {"lucro": -5.0, "acoes": 1.0}}, [], lambda q: q, px) is None
+    assert pl_historico.mediana("X", {"2025": {"lucro": -5.0, "acoes": 1.0}}, [], lambda q: q, fechamento=px) is None
     with pytest.raises(ValueError, match="units"):
         pl_historico.do_hall("KLBN11", 1e9)
+
+
+def test_pl_hist_2016_19_pelo_lpa_com_trava_nas_acoes():
+    """B30 (20/10): ano sem ações no DFP → preço ÷ LPA básico, só se lucro ÷ LPA cai a menos de TOL_LPA das ações do 1º DFP
+    com composição, levadas à base do preço pelos eventos entre os dois fechamentos."""
+    px = lambda tk, d: (d[:4] + "-12-28", 10.0)
+    anual = {"2019": {"lucro_controlador": 100.0}, "2020": {"lucro_controlador": 100.0, "acoes": 100_000.0}}   # LPA "real" 1,0
+    pub = lambda tk, a: f"{a + 1}-03-01"                                  # entrega do DFP
+    med = lambda lpa, ev=(): pl_historico.mediana("X", anual, list(ev), lambda q: q, fechamento=px, lpa=lambda tk, a: lpa,
+                                                   publicacao=pub)
+    assert med(1.0) == pytest.approx(10.0)                              # 2019 = 10 ÷ 1,0; 2020 = 10 × 100 mil ÷ 100 mil
+    assert med(1.2) == pytest.approx((10 / 1.2 + 10.0) / 2)             # 83 mil implícitas: dentro de 1,25 → entra
+    assert med(2.0) == pytest.approx(10.0)                              # 50 mil implícitas: fora → só 2020
+    assert med(0.1) == pytest.approx(10.0)                              # erro de escala (TIMS3 2020): 1 mi de ações → ano fora
+    desdobro = [{"aprovacao": "2020-04-01", "data_com": "2020-05-01", "multiplicador": 2.0}]
+    anual_d = {"2019": {"lucro_controlador": 100.0}, "2020": {"lucro_controlador": 100.0, "acoes": 200_000.0}}
+    m = pl_historico.mediana("X", anual_d, desdobro, lambda q: q, fechamento=px, lpa=lambda tk, a: 1.0, publicacao=pub)
+    assert m == pytest.approx((10.0 + 20.0) / 2)                        # 2019 na base antiga (50 mil × 2 = 100 mil) entra
+    reexpresso = pl_historico.mediana("X", anual_d, desdobro, lambda q: q, fechamento=px, lpa=lambda tk, a: 0.5, publicacao=pub)
+    assert reexpresso == pytest.approx(20.0)                            # LPA já na base nova: 200 mil ≠ 100 mil → fora
+    ambiguo = [{"aprovacao": "2020-02-10", "data_com": "2020-02-20", "multiplicador": 1.1}]   # antes da entrega: reexpresso?
+    assert med(1.05, ambiguo) == pytest.approx(10.0)                    # 2019 fora; fica só 2020 (ex antes do fechamento)
+    assert med(1.05, [{**ambiguo[0], "aprovacao": "2020-04-10", "data_com": "2020-04-20"}]) == pytest.approx(
+        (10.0 + 10.0 / 1.05) / 2)                                       # aprovado depois da entrega: LPA na base do preço, entra
+    sem_entrega = pl_historico.mediana("X", anual, [], lambda q: q, fechamento=px, lpa=lambda tk, a: 1.0, publicacao=lambda tk, a: None)
+    assert sem_entrega == pytest.approx(10.0)
+    prejuizo = {"2019": {"lucro_controlador": 100.0}, "2020": {"lucro_controlador": -5.0, "acoes": 100_000.0},
+                "2021": {"lucro_controlador": 100.0, "acoes": 130_000.0}}                    # ref = 2020, apesar do prejuízo
+    m = pl_historico.mediana("X", prejuizo, [], lambda q: q, fechamento=px, lpa=lambda tk, a: 1.0, publicacao=pub)
+    assert m == pytest.approx((10.0 + 13.0) / 2)
+    assert pl_historico.mediana("X", {"2019": {"lucro_controlador": 100.0}}, [], lambda q: q, fechamento=px,
+                                lpa=lambda tk, a: 1.0, publicacao=pub) is None
+
+
+@pytest.mark.skipif(not all((pl_historico.DFP / f"dfp_{a}.zip").exists() for a in range(2016, 2026)), reason="DFP ausente")
+def test_lpa_basico_da_cvm_confere_com_lucro_sobre_acoes_2020_25():
+    """O LPA da DRE (3.99.01.xx) bate com lucro ÷ ações do DFP em 2020–25 dentro de 5%, menos os casos declarados (o LPA usa a
+    média ponderada e a PN recebe 10% a mais), e todos ficam dentro da trava, menos o erro de escala da TIMS3 2020."""
+    from motor_nao_financeiras import CVM
+    assert pl_historico.lpa_basico("B3SA3", 2019) == pytest.approx(1.326246)
+    assert pl_historico.lpa_basico("FESA4", 2016) == pytest.approx(0.8515)    # a PN, não a ON (0,7741)
+    assert pl_historico.lpa_basico("FLRY3", 2023) == pytest.approx(0.87479)   # consolidado zerado → individual
+    assert pl_historico.lpa_basico("VLID3", 2016) == pytest.approx(1.36483)   # consolidado zerado → individual
+    assert pl_historico.publicacao_dfp("WEGE3", 2017) == "2018-02-28"
+    fora = {("TIMS3", 2020): 0.105, ("FLRY3", 2022): 1.136, ("FLRY3", 2023): 1.125}   # escala da CVM; média ponderada
+    # da fusão com o Pardini (ago/2022; 2023 pelo individual)
+    for tk in ("B3SA3", "SMTO3", "SLCE3", "TIMS3", "VIVT3", "FLRY3", "HYPE3", "ABEV3", "WEGE3", "LEVE3"):
+        for ano in range(2020, 2026):
+            d = CVM[tk]["anual"][str(ano)]
+            v, lucro = pl_historico.lpa_basico(tk, ano), d.get("lucro_controlador")
+            if not (v and lucro and lucro > 0 and d.get("acoes")):
+                continue
+            q = d["acoes"] * (1000 if (tk == "VIVT3" and ano <= 2021) or tk == "ABEV3" else 1)   # composição em milhares
+            r = v * q / (lucro * 1000)
+            if (tk, ano) in fora:
+                assert r == pytest.approx(fora[tk, ano], abs=0.005), (tk, ano)
+            else:
+                assert abs(r - 1) < 0.05, (tk, ano, r)
+    assert abs(math.log(fora["TIMS3", 2020])) > math.log(pl_historico.TOL_LPA) > abs(math.log(fora["FLRY3", 2022]))
+    assert pl_historico.lpa_basico("TIMS3", 2024) == pytest.approx(1.3)       # consolidado zerado (TIM 2024–25) → individual
 
 
 @pytest.mark.skipif(not (pl_historico.COTAHIST / "precos_2026.parquet").exists(), reason="COTAHIST ausente (clone limpo)")
