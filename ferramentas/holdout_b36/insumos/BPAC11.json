@@ -1,0 +1,33 @@
+{
+  "prudencial": {
+    "valor": {"cet1": 11.64},
+    "fonte": "ITR 3T26 (DT_REFER 2026-09-30, versao 2, recebido 2026-11-13, CVM/RAD ID 162649), Notas Explicativas, nota de Gestao de Capital (Basileia): Capital Principal R$ 76.834.406 mil / Exposicao total ponderada pelo risco R$ 660.211.068 mil = 11,64% (calculo proprio; o ITR publica Basileia 16,3% e Nivel I 12,9%, nao o CET1 pronto). inad90 e cobertura: nao publicados no ITR/Relatorio da Administracao; ficam fora.",
+    "nota_fonte": "A"
+  },
+  "discricionario": {
+    "valor": true,
+    "fonte": "FRE 2026 (fre_cia_aberta_posicao_acionaria, versao 5): BTG Pactual Holding Financeira Ltda (79,63% das ON) e BTG Pactual Holding S.A. (99,92% das ON dela) constam como Acionista_Controlador=S e Participante_Acordo_Acionistas=S; Estatuto social vigente (IPE 19/05/2026), art. 42: companhia observa acordos de acionistas e os votos em contrariedade sao declarados nulos; art. 49 par.3: estrutura de Partnership. Criterio do protocolo: 'acordo' documentado = poder discricionario.",
+    "nota_fonte": "A"
+  },
+  "desconto_controlador": {
+    "tipo": "zero",
+    "razao": "SEM_RAZAO",
+    "fonte": "IPE 2020-2026: 21 fatos relevantes (oferta primaria, recompra, desdobramento, aquisicoes, reorganizacoes, Banco Pan 13/10/2025, direito de recesso 12/01/2026); nenhum documenta interferencia consumada do controlador contra minoritario. Fato relevante 13/10/2025: incorporacao de acoes do PAN com premio >30% sobre o preco de mercado da PN do PAN, em units do BTG. Estatuto art. 49 (IPE 19/05/2026): oferta publica a todos os acionistas na alienacao de controle, tratamento igualitario (Nivel 2).",
+    "nota_fonte": "A"
+  },
+  "_meta": {
+    "protocolo": "B36 v1",
+    "chamadas": 22,
+    "fim": "2026-11-24T18:45",
+    "nao_achado": [
+      "payout_politica (estatuto art. 35: dividendo obrigatorio de apenas 1% do lucro liquido ajustado; sem politica formal com payout minimo/alvo nos documentos lidos)",
+      "qualitativo.moat",
+      "qualitativo.gestao",
+      "qualitativo.controlador (tag along 100% e sem interferencia achados, mas partes relacionadas/receita nao calculavel para banco sem DRE por documento)",
+      "qualitativo.ciclo",
+      "qualitativo.fisher",
+      "prudencial.inad90",
+      "prudencial.cobertura"
+    ]
+  }
+}
