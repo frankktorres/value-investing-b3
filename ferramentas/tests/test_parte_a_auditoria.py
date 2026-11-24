@@ -2,7 +2,7 @@
 
 Cada teste aqui FALHA sem a respectiva correção da Parte A e PASSA com ela.
 """
-import importlib.util
+import json
 import os
 import pathlib
 import subprocess
@@ -121,8 +121,10 @@ def test_conftest_skip_de_plataforma_estrutural():
     assert conftest._skip_de_plataforma(_ItemFake(fn_skip_dado_com_palavra_posix, tem_marker=True)) is True
 
 
-def test_auto_commit_delecao_ou_protegido_vai_para_wip_e_dry_nao_trava():
-    """F6-02 e F6-06: deleções ou arquivos protegidos nunca vão direto ao master, e `--dry` não trava no stdin."""
+def test_auto_commit_so_snapshot_em_wip_nunca_no_master_e_dry_nao_trava(tmp_path):
+    """Decisão de 24/11/2026 (F49 do UNION) + F6-02/F6-06: o hook Stop só guarda snapshot em `wip/auto` — `master`
+    (local e remoto), HEAD, índice e árvore de trabalho ficam intocados, mesmo para doc, deleção e arquivo protegido —
+    e `--dry` não trava no stdin."""
     hook_path = RAIZ_REPO / ".claude" / "hooks" / "auto_commit.py"
     # 1. Subprocesso com stdin em PIPE (não-TTY): com --dry não pode ler stdin
     proc = subprocess.run(
@@ -135,18 +137,62 @@ def test_auto_commit_delecao_ou_protegido_vai_para_wip_e_dry_nao_trava():
     )
     assert proc.returncode == 0
 
-    # 2. Verifica em decidir_destino que deleção ("D") ou arquivo protegido força desvio para wip
-    spec = importlib.util.spec_from_file_location("auto_commit_mod", hook_path)
-    mod = importlib.util.module_from_spec(spec)
-    sys.argv = [str(hook_path), "--dry"]
-    spec.loader.exec_module(mod)
+    # 2. Hook de verdade num repositório descartável com remoto: só `wip/auto` muda
+    fora = ("CLAUDE_CODE_REMOTE", "GIT_INDEX_FILE", "GIT_DIR", "GIT_WORK_TREE")
+    env = {k: v for k, v in os.environ.items() if k not in fora}
+    repo, origem = tmp_path / "repo", tmp_path / "origem.git"
+    env.update(CLAUDE_PROJECT_DIR=str(repo), GIT_AUTHOR_NAME="teste", GIT_AUTHOR_EMAIL="teste@example.invalid",
+               GIT_COMMITTER_NAME="teste", GIT_COMMITTER_EMAIL="teste@example.invalid")
 
-    dest_del, _ = mod.decidir_destino([("D ", "RELATORIOS/Lotes/Setor_1_Energia.pdf")])
-    assert dest_del == "wip"
-    dest_prot, _ = mod.decidir_destino([(" M", "01-doutrina-value-investing.md")])
-    assert dest_prot == "wip"
-    dest_doc, _ = mod.decidir_destino([(" M", "docs/BACKLOG.md")])
-    assert dest_doc == "master"
+    def g(*args, cwd=repo):
+        r = subprocess.run(["git", "-c", "commit.gpgsign=false", "-c", "core.hooksPath=", *args], cwd=str(cwd), env=env,
+                           capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=60)
+        assert r.returncode == 0, f"git {args}: {r.stderr}"
+        return r.stdout.strip()
+
+    g("init", "-q", "--bare", str(origem), cwd=tmp_path)
+    g("init", "-q", "-b", "master", str(repo), cwd=tmp_path)
+    (repo / "docs").mkdir()
+    (repo / "docs" / "BACKLOG.md").write_text("antes\n", encoding="utf-8")
+    (repo / "01-doutrina-value-investing.md").write_text("doutrina antes\n", encoding="utf-8")
+    (repo / "some.md").write_text("vai ser apagado\n", encoding="utf-8")
+    g("add", "--", "docs/BACKLOG.md", "01-doutrina-value-investing.md", "some.md")
+    g("commit", "-q", "-m", "base")
+    g("remote", "add", "origin", str(origem))
+    g("push", "-q", "-u", "origin", "master")
+    base = g("rev-parse", "HEAD")
+
+    (repo / "docs" / "BACKLOG.md").write_text("depois\n", encoding="utf-8")          # só doc: antes ia ao master
+    (repo / "01-doutrina-value-investing.md").write_text("doutrina depois\n", encoding="utf-8")  # protegido
+    (repo / "some.md").unlink()                                                        # deleção
+    (repo / "novo.md").write_text("novo\n", encoding="utf-8")                          # não rastreado
+    status_antes = g("status", "--porcelain")
+
+    def rodar_hook():
+        r = subprocess.run([sys.executable, str(hook_path)], cwd=str(repo), env=env, input="{}", capture_output=True,
+                           text=True, timeout=120)
+        assert r.returncode == 0
+        return json.loads(r.stdout)["systemMessage"]
+
+    aviso = rodar_hook()
+    assert "wip/auto" in aviso and "push ok" in aviso, aviso
+
+    assert g("rev-parse", "--abbrev-ref", "HEAD") == "master"
+    assert g("rev-parse", "HEAD") == base                                   # master local intocado
+    assert g("ls-remote", "origin", "refs/heads/master").split()[0] == base  # master remoto intocado
+    assert g("status", "--porcelain") == status_antes                       # índice e árvore intocados
+    wip = g("rev-parse", "wip/auto")
+    assert wip != base
+    assert g("ls-remote", "origin", "refs/heads/wip/auto").split()[0] == wip  # só wip/auto foi empurrado
+    assert g("show", "wip/auto:docs/BACKLOG.md") == "depois"
+    assert g("show", "wip/auto:01-doutrina-value-investing.md") == "doutrina depois"
+    assert sorted(g("ls-tree", "-r", "--name-only", "wip/auto").split()) == [
+        "01-doutrina-value-investing.md", "docs/BACKLOG.md", "novo.md"]
+
+    # 3. Sem mudança nova, não empilha snapshot repetido; e o master continua onde estava
+    assert "nada novo" in rodar_hook()
+    assert g("rev-parse", "wip/auto") == wip
+    assert g("rev-parse", "master") == base
 
 
 def test_conferir_noite_exclui_carteira_privada_e_hypothesis():

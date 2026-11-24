@@ -1,10 +1,13 @@
-"""Hook Stop: commit + push automáticos.
+"""Hook Stop: só snapshot em wip/auto. NUNCA commita nem empurra o master.
 
-- Na nuvem (CLAUDE_CODE_REMOTE) não faz nada: lá o Claude commita sozinho (ver CLAUDE.md).
-- Varre segredo nos arquivos alterados; se achar, não commita nada.
-- Testes dos módulos alterados verdes -> commit em master + push.
-- Testes vermelhos, ausentes para código, ou DRY -> commit só no ramo wip/auto (plumbing; a árvore de trabalho não muda).
-- Só doc/dados sem código -> commit direto em master.
+Decisão do Frank de 24/11/2026 (igual à F49 do UNION, de 25/10): até aqui o hook commitava e empurrava no `master` a
+cada fim de turno (ex.: b33c14e), com só os testes do módulo — ou sem teste nenhum quando só mudava documento. O
+`master` agora só recebe o commit explícito da sessão (suíte verde; motor/doutrina/golden com registro no 09).
+
+- Na nuvem (CLAUDE_CODE_REMOTE) não faz nada: lá o Claude commita no ramo claude/* (ver CLAUDE.md).
+- Varre segredo/dado pessoal nos arquivos alterados; se achar, não guarda nem envia nada.
+- Árvore suja -> commit em wip/auto por plumbing (HEAD, índice e árvore de trabalho não mudam) + push só de wip/auto.
+- Árvore limpa com commit local sem push -> só avisa.
 Uso: python auto_commit.py [--dry]   (--dry só mostra a decisão)
 """
 import json
@@ -16,11 +19,8 @@ import tempfile
 from pathlib import Path
 
 RAIZ = Path(os.environ.get("CLAUDE_PROJECT_DIR") or Path(__file__).resolve().parents[2])
-FERR = RAIZ / "ferramentas"
 DRY = "--dry" in sys.argv
-RAMO = "master"
 WIP = "wip/auto"
-PROTEGIDOS = ("ferramentas/tests/golden.json", "01-doutrina-value-investing.md", "03-hall-de-acoes.md")
 
 SEGREDO_ARQ = re.compile(r"(^|/)\.env|\.pem$|\.key$|\.p12$|id_rsa|credentials", re.I)
 SEGREDO_TXT = re.compile(
@@ -38,7 +38,7 @@ def git(*args, env=None, check=False):
 
 
 def alterados():
-    """Caminhos alterados/novos (não ignorados) e removidos."""
+    """Caminhos alterados/novos (não ignorados) e removidos. A origem de uma renomeação entra como removida."""
     r = git("status", "--porcelain=v1", "-z", "--untracked-files=all")
     itens, partes = [], r.stdout.split("\0")
     i = 0
@@ -48,9 +48,11 @@ def alterados():
         if len(p) < 4:
             continue
         st, caminho = p[:2], p[3:]
-        if st[0] in "RC":
-            i += 1  # pula o caminho de origem
         itens.append((st, caminho))
+        if st[0] in "RC":
+            if st[0] == "R" and i < len(partes) and partes[i]:
+                itens.append(("D ", partes[i]))  # sem isto o arquivo antigo ficaria no snapshot
+            i += 1  # pula o caminho de origem
     return itens
 
 
@@ -75,82 +77,29 @@ def varrer_segredo(itens):
     return achados
 
 
-def testes_dos_modulos(itens):
-    """Retorna (lista_de_comandos, motivo_sem_teste). Código alterado fora de ferramentas/ ou no backtest -> sem verificação."""
-    py = [c.replace("\\", "/") for st, c in itens if c.endswith(".py") and "D" not in st]
-    if not py:
-        return [], None
-    alvos = set()
-    for c in py:
-        if not c.startswith("ferramentas/"):
-            return None, f"código fora de ferramentas/: {c}"
-        if c.startswith("ferramentas/backtest/"):
-            return None, f"backtest (suíte de ~13 min, só local): {c}"
-        p = Path(c)
-        if "tests" in p.parts or p.name.startswith("test_"):
-            alvos.add(str(RAIZ / c))
-            continue
-        stem = p.stem
-        achou = False
-        for t in FERR.rglob("test_*.py"):
-            if "backtest" in t.parts:
-                continue
-            try:
-                if re.search(rf"\b{re.escape(stem)}\b", t.read_text(encoding="utf-8", errors="ignore")):
-                    alvos.add(str(t))
-                    achou = True
-            except OSError:
-                pass
-        if not achou:
-            return None, f"nenhum teste referencia o módulo {stem}"
-    return [sys.executable, "-m", "pytest", "-q", "-p", "no:cacheprovider", *sorted(alvos)], None
-
-
-def rodar_testes(cmd):
-    r = subprocess.run(cmd, cwd=FERR, capture_output=True, text=True, timeout=900, encoding="utf-8", errors="replace")
-    return r.returncode == 0, (r.stdout + r.stderr)[-1500:]
-
-
-def msg_commit(itens, sufixo=""):
+def msg_commit(itens):
     n = len(itens)
     nomes = ", ".join(Path(c).name for _, c in itens[:3]) + ("…" if n > 3 else "")
-    return f"auto: {n} arquivo(s) — {nomes}{sufixo}\n\nCo-Authored-By: Claude Sonnet 5.5 <noreply@anthropic.com>"
-
-
-def commit_master(itens, msg):
-    for st, c in itens:
-        git("add", "-A", "--", c, check=True)  # sempre caminho a caminho, nunca "add ."
-    git("commit", "-q", "-m", msg, check=True)
-    return git("push", "origin", RAMO)
+    return f"auto: snapshot de {n} arquivo(s) — {nomes} [wip]\n\nCo-Authored-By: Claude Sonnet 5.5 <noreply@anthropic.com>"
 
 
 def commit_wip(itens, msg):
-    """Commit no ramo wip/auto sem trocar de branch nem tocar a árvore/índice reais."""
+    """Snapshot (HEAD + alterações) em wip/auto sem trocar de branch nem tocar HEAD, índice ou árvore de trabalho.
+    Só a ref wip/auto é escrita e só ela é empurrada."""
+    head = git("rev-parse", "HEAD", check=True).stdout.strip()
     with tempfile.TemporaryDirectory() as d:
         env = {**os.environ, "GIT_INDEX_FILE": str(Path(d) / "idx")}
-        pai = git("rev-parse", "--verify", "-q", f"refs/heads/{WIP}").stdout.strip() or git("rev-parse", "HEAD").stdout.strip()
-        git("read-tree", pai, env=env, check=True)
-        for st, c in itens:
-            git("add", "-A", "--", c, env=env, check=True)
+        git("read-tree", head, env=env, check=True)
+        for st, c in itens:  # sempre caminho a caminho, nunca "add ."
+            git("add", "-A", "--", c, env=env, check="D" not in st)  # removido que nem estava no HEAD: nada a fazer
         arvore = git("write-tree", env=env, check=True).stdout.strip()
-        novo = git("commit-tree", arvore, "-p", pai, "-m", msg, check=True).stdout.strip()
+    pai = git("rev-parse", "--verify", "-q", f"refs/heads/{WIP}").stdout.strip() or head
+    if git("rev-parse", f"{pai}^{{tree}}").stdout.strip() == arvore:
+        return "igual ao último snapshot: nada novo a guardar"
+    novo = git("commit-tree", arvore, "-p", pai, "-m", msg, check=True).stdout.strip()
     git("update-ref", f"refs/heads/{WIP}", novo, check=True)
-    return git("push", "origin", f"{WIP}:{WIP}")
-
-
-def decidir_destino(itens):
-    """Decide ('master'|'wip', info) para a lista de (status, caminho)."""
-    tem_delecao = any("D" in st for st, _ in itens)
-    tem_protegido = any(c.replace("\\", "/") in PROTEGIDOS for _, c in itens)
-    cmd, motivo = testes_dos_modulos(itens)
-    if tem_delecao or tem_protegido:
-        return "wip", "deleção ou arquivo protegido alterado (requer revisão antes do master)"
-    if cmd is None:
-        return "wip", f"sem teste verificável ({motivo})"
-    if cmd:
-        ok, saida = rodar_testes(cmd)
-        return ("master", "testes verdes") if ok else ("wip", "testes VERMELHOS:\n" + saida)
-    return "master", "sem código alterado"
+    r = git("push", "origin", f"{WIP}:{WIP}")
+    return f"push {'ok' if r.returncode == 0 else 'FALHOU: ' + r.stderr.strip()[:200]}"
 
 
 def main():
@@ -162,22 +111,19 @@ def main():
                 return "stop_hook_active"
         except Exception:
             pass
-    if git("rev-parse", "--abbrev-ref", "HEAD").stdout.strip() != RAMO:
-        return f"fora de {RAMO}: nada feito"
     itens = alterados()
     if not itens:
-        return "árvore limpa"
+        n = git("rev-list", "--count", "@{u}..HEAD").stdout.strip()
+        return "árvore limpa" + (f"; ATENÇÃO: {n} commit(s) local(is) sem push" if n not in ("", "0") else "")
     achados = varrer_segredo(itens)
     if achados:
-        return "BLOQUEADO por varredura de segredo/dado pessoal:\n  " + "\n  " .join(achados)
-    destino, info = decidir_destino(itens)
+        return "BLOQUEADO por varredura de segredo/dado pessoal (nada guardado nem enviado):\n  " + "\n  ".join(achados)
+    if f"branch refs/heads/{WIP}" in git("worktree", "list", "--porcelain").stdout.splitlines():
+        return f"{WIP} está em uso (checkout aqui ou em outra worktree): snapshot NÃO gravado"
     if DRY:
-        return f"[dry] destino={destino}; {info}; {len(itens)} arquivo(s)"
-    if destino == "master":
-        r = commit_master(itens, msg_commit(itens))
-    else:
-        r = commit_wip(itens, msg_commit(itens, " [wip]"))
-    return f"{destino}: {info}; push {'ok' if r.returncode == 0 else 'FALHOU: ' + r.stderr.strip()[:200]}"
+        return f"[dry] snapshot de {len(itens)} arquivo(s) em {WIP}; master intocado"
+    info = commit_wip(itens, msg_commit(itens))
+    return f"snapshot de {len(itens)} arquivo(s) em {WIP}; {info}; master intocado (o commit no master é explícito)"
 
 
 if __name__ == "__main__":

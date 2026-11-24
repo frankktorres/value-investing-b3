@@ -14,6 +14,6 @@ description: Fecha o turno deste projeto passando o pendente para docs/MISSOES.m
 3. **Frank:** o que depende dele (senha, dinheiro, decisão) → `docs/PENDENTE-FRANK.md`; decisão reversível tomada → `docs/DECISOES.md`.
 4. **Relatório:** nova entrada no topo de `docs/RELATORIO-DIARIO.md` (máx. 10 linhas).
 5. **Brief:** se algo relevante mudou, siga a regra do `CLAUDE.md` (PROJECT_BRIEF.md).
-6. **Testes + push:** rode `cd ferramentas && python -m pytest --ignore=backtest -q` (ou só os módulos tocados). Verde → `git add` dos caminhos específicos (nunca `add .`), commit e `git push origin master`. Vermelho → não vá para `master`: commit no ramo `wip/auto` (o hook Stop faz isso) e diga qual teste falhou. Na nuvem faça você mesmo, o hook está desligado.
+6. **Testes + push:** rode `cd ferramentas && python -m pytest --ignore=backtest -q` (ou só os módulos tocados). Verde → `git add` dos caminhos específicos (nunca `add .`), commit e `git push origin master`. Vermelho → não vá para `master`: deixe a árvore como está (o hook Stop guarda o snapshot em `wip/auto`; ele nunca commita no `master`, então o commit verde é sempre seu) e diga qual teste falhou. Na nuvem faça você mesmo, o hook está desligado.
 7. **Varredura:** antes do commit, confira que nenhum arquivo staged é `.env*`/chave/token nem traz quantidade, preço médio, valor ou corretora da carteira. Se tiver, pare e avise.
 8. **Resposta final (curta, PT):** o que foi feito, hash do commit, `local = origin/master?`, o que o Frank precisa fazer (ou "nada, espere").
