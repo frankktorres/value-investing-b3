@@ -1156,3 +1156,19 @@ pré-registro em commit próprio, antes do motor; o `python -m oraculo` confere 
 31/01/2027, missão B32. (4) **BACKLOG B36:** hold-out — congelar a v2.7 e rodar em 20 ações fora dos 41, lista registrada antes de
 rodar, antes de qualquer calibração nova (B35 incluída). (5) Motivo do golden do 3T26: adendo com a camada no `tests/golden_log.md`
 (camadas 4, 1 e 5; sem camada 3 — limite declarado).
+
+### 24/11/2026 — B36 hold-out: pré-registro, executor e piloto (em andamento)
+Pré-registro antes de rodar: B37/B38 no BACKLOG (b123bdc), seletor mecânico (d70abb7, rodado uma vez), **emenda 8 sozinha**
+(5680ac2: regra, lista das 20, ficha-padrão, protocolo, critério sem a linha 5, previsões por evento societário, B38). Executor,
+protocolo fixo dos insumos, cadastro e coleta automática das 20 (a892817); equivalência ALLD3 executor = `dossie.gerar` verde.
+**Consertos do executor no piloto** (permitidos pela emenda 8; não tocam motor, ficha-padrão nem protocolo; equivalência verde
+depois): (1) banco não coleta série da CVM — o executor lia `cvm_series_holdout.json[BPAC11]` e dava KeyError; (2) regulado:
+a defasagem do provento é medida como no hall (datas da StatusInvest), mas sobre a série do próprio ticker — o `defasagem.py`
+só conhece o dicionário do hall (KeyError em EQTL3, ENEV3, ENGI11). (3) BPAC11: timeout da API da B3 na 1ª coleta, refeita.
+**Falhas de método já vistas no teste seco** (só status, sem palavra; viram BACKLOG, sem conserto): CSAN3 e MRVE3 (evento
+"CIS RED CAP") e TEND3 e NATU3 (evento "INCORPORACAO") — `proventos_hall` falha alto em evento sem semântica conferida; MBRF3
+sem capital integralizado no FRE 2026 (`base.acoes_fre`); IGTI11 com 3 dividendos iguais na B3 (pede DMPL em
+`GRUPOS_CONFERIDOS`). Seis erros já superam o limite (1) da emenda (≥ 16 de 20 sem erro). **Falha de protocolo:** "payout
+mínimo/alvo" deixou a EQTL3 com o piso estatutário de 25% como payout de longo prazo. **Piloto** (insumos pelo protocolo,
+subagente Sonnet): RADL3 NÃO CONCLUSIVO (P/C 3,47, Ke 21,9%; 16 automáticos / 6 pesquisa / 15 vazios), BPAC11 CARA (3,04;
+10/2/8), EQTL3 CARA (2,59; 10/2/6). Resto e relatório: próxima sessão.

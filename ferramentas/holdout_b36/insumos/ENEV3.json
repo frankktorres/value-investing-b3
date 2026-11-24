@@ -1,0 +1,25 @@
+{
+  "payout_politica": {
+    "valor": 0.25,
+    "fonte": "Estatuto Social da Eneva (IPE, entrega 30/04/2025, versao vigente mais recente no IPE), art. 26 par. 3: 'dividendo obrigatorio anual, nao inferior a 25% (vinte e cinco por cento) do lucro liquido do exercicio', ajustado pela reserva legal e de contingencias; art. 27: JCP imputavel ao dividendo obrigatorio. Atencao: e piso estatutario, nao alvo; nao ha numero de payout-alvo em documento lido (art. 26 par. 2 f permite reter ate 100% em Reserva de Investimentos).",
+    "nota_fonte": "A"
+  },
+  "discricionario": {
+    "valor": false,
+    "fonte": "FRE 2026 v5 (29/09/2026; fre_cia_aberta_posicao_acionaria_2026.csv, CNPJ 04.423.567/0001-21): nenhum acionista com Acionista_Controlador='S' nem Participante_Acordo_Acionistas='S' (maiores: Banco BTG Pactual 25,626%, BPAC Infra FIP 22,5% [gestao BTG], Dynamo 7,104%; Outros 43,5%; tesouraria 1,236%). Fato Relevante 31/03/2025 (IPE): distrato do acordo de acionistas Dynamo/Atmos/Velt, 'nao mais vinculados por qualquer acordo'. Estatuto (IPE 30/04/2025): 1 voto por acao (art. 5 par. 2), sem golden share nem voto especial; art. 31 e tag along via OPA (Novo Mercado). Ressalva: BTG e BPAC Infra FIP, ambos ligados ao BTG, somam ~48% (se consolidados) e o FRE lista transacoes com partes relacionadas BTG (venda/compra de energia ACL R$ 1,35 bi e R$ 1,24 bi, 2024; gas natural 2025) - risco vai para desconto, nao para poder discricionario documentado.",
+    "nota_fonte": "A"
+  },
+  "desconto_controlador": {
+    "tipo": "zero",
+    "razao": "SEM_RAZAO"
+  },
+  "_meta": {
+    "protocolo": "B36 v1",
+    "chamadas": 9,
+    "fim": "2026-11-24T19:30",
+    "nao_achado": [
+      "qualitativo (notas moat/gestao/controlador/ciclo/fisher exigem series calculadas e documento A/B por nota; nao levantadas)",
+      "desconto_controlador fixo: sem interferencia consumada documentada (IPE nao varrido em titulos de 2017-2023)"
+    ]
+  }
+}
