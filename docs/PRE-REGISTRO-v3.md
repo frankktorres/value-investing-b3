@@ -330,3 +330,15 @@ Relatório: `docs/oraculo/hipoteses-2026-10-22.md` (e `.json`).
      dívida no peso baixa o WACC — e o efeito medido fica como observação, não como alvo.
    - **Remédio para depois, fora desta tentativa:** custo da dívida que sobe com a alavancagem (`docs/BACKLOG.md` B35), com
      hipótese pré-registrada antes de rodar.
+6. **24/11/2026 — correções de fato da emenda 4/5 e da linha 13 do §6, apontadas pelo agente `oraculo` (parecer BLOQUEIA); sem
+   decisão nova.**
+   - **Tamanho do efeito do preço:** o máximo medido numa queda de 30% é **+18,8% na KLBN11** (SUZB3 +14%, PETR4/PRIO3/UNIP6 ~+7%), não
+     "+14%" como nas emendas 4 e 5: a medição foi lida só até a SUZB3.
+   - **Palavras:** além da SMTO3 no hall, o H2 muda o recálculo do dossiê **ALLD3 (15/10) de BARATA → RADAR** (dispersão 2,17 > 1,8);
+     a linha 13 do §6 ("palavra muda só na SMTO3") está incompleta. Decisão do Frank no `09` (aceita RADAR no recálculo; o veredito
+     salvo fica).
+   - **Prova de ordem:** a emenda 3 e a linha 13 entraram no **mesmo commit** (c108bce) que o motor e o golden. A ordem dentro da
+     sessão foi emenda 3 → motor → tabela, mas o git não a prova; a regra do §0.1 pede o registro antes da execução, e a prova
+     independente disso não existe. Declarado; aceite do risco é do Frank.
+   - **"Pronto quando" do B34:** escrito em 23/11 como "Ke ≤ 30% em todo o hall"; o Frank o redefiniu em 24/11, antes de qualquer
+     tabela, como conferência ("se algum passar, vira NÃO CONCLUSIVO, sem mexer de novo no método"). Fica registrado aqui.

@@ -3,9 +3,6 @@
 
 ## Próximas (ordem de prioridade)
 
-**B34 — Corrigir o defeito H2 do Ke (próxima tarefa; com o Frank, não na rotina da noite: precisa dos ZIPs).** *(23/11/2026)*
-O oráculo BLOQUEIA a gravação do 3T26 pela RANI3 (Ke 39,4% > 30%). Decisão do Frank: nada de exceção datada no pré-registro; corrigir o H2 (Hamada com dívida bruta e E do modelo no ponto fixo). Passos: proposta só do item H2 (`docs/PROMPT-ORACULO-E-CALIBRACAO.md` Fase 5 item 2; opções com fonte A/B e tabela de palavras) → ⏸ Frank escolhe → teste das propriedades H2 (a)(b)(c) do `docs/PRE-REGISTRO-v3.md` → motor → `python -m oraculo` + agente `oraculo` APROVA → `rodar_tudo.py --motivo` citando a camada → `09`. *Pronto quando:* Ke ≤ 30% em todo o hall sem crescer `CONHECIDOS`, suíte verde com `EXIGIR_DADOS=1` no ramo `gravacao/3t26` e fast-forward no `master`.
-
 **B33 — EGIE3: explicar os ~R$ 2 bi que faltam no PL do 3T26, antes de reavaliar a palavra.** *(23/11/2026)*
 O PL do controlador subiu R$ 6,30 bi de 30/06 a 30/09/2026; oferta de jul/26 (R$ 8,36 bi) − dividendo de ago/26 (R$ 770,8 mi, B3) daria R$ 7,59 bi. Conferir no RI do 3T26 (release e ITR) e na DMPL do ITR 3T26 (CVM, nota A) o custo da oferta (gastos com emissão de ações, líquidos de IR) e o dividendo efetivamente pago/declarado no trimestre, e o resultado do 3T26 que entra no PL. Fato com fonte → `ferramentas/dados/eventos_societarios.json` (nunca número no código). Não mudar a palavra: a EGIE3 fica NÃO CONCLUSIVO (trava do §9, decisão do Frank de 23/11) até o Frank ver a conta. *Pronto quando:* a diferença está explicada linha a linha com fonte A/B em `docs/` (ou o resíduo declarado), e a reavaliação proposta está em `PENDENTE-FRANK.md`.
 
@@ -192,6 +189,7 @@ Front lê só o contrato. Tira o "Sistema em breve" do `index.html:27`.
 (nenhuma)
 
 ## Feitas
+- **B34** (24/11, com o Frank): defeito H2 corrigido — D/E a mercado (preço da data-base × ações), sem ponto fixo; D = dívida bruta com arrendamentos + outros passivos financeiros, a mesma da ponte; Ke nominal > 30% → NÃO CONCLUSIVO (doutrina v2.7). Golden regravado (SMTO3 CARA → NC; PRIO3/UNIP6 → NC pela trava). Dossiês recalculados na data (point-in-time). Oráculo sem BLOQUEIA; suíte verde com `EXIGIR_DADOS=1`; 3T26 juntado no master. Ver `09` de 24/11.
 - **Q01** (backlog, 22/10): `gerar_pdf_lote1.py` cai para a Liberation Sans (métricas da Arial) quando a Arial do Windows não existe; `test_b23` e `test_carimbos` voltam a coletar na nuvem (suíte 963 passed, 42 skipped, sem `--ignore`). PDFs do Windows inalterados.
 - **N5** (22/10, noite): `painel/tests/test_contraste_tokens.py` — texto ≥ 4,5:1 e séries ≥ 3:1 nos dois temas passam; contornos abaixo de 3:1 listados (teste fixa a lista) e em `PENDENTE-FRANK.md` #10; nenhuma cor trocada.
 - **N4** (22/10, noite): `painel/sistema.py` + `sistema.json` + `telas/sistema.js` (rota `#/sistema`); registro da suíte pelo `conftest`; `test_sistema.py`, `test_web_estatico`. Conferência visual: Frank (dia).

@@ -681,7 +681,9 @@ def estrutura_de_capital(emp: Industrial, mk: Mercado) -> dict:
     no prêmio de Hamada e nos pesos do WACC. Damodaran, *Investment Valuation* 2ª ed., cap. 8 p. 47 ("weights used should be based
     upon market value and not book value") e p. 24 (D/E corrente). Até 24/11 o E era o valor da casa num ponto fixo (AUD-13): o
     central baixo elevava o D/E, que elevava o Ke, que baixava o central (RANI3 Ke 39,4%, KLBN11 ~65%).
-    Efeito conhecido e aceito (pré-registro, emenda 3): preço cai → D/E sobe → Ke sobe → central cai (um passo, sem laço)."""
+    Efeito do preço (um passo, sem laço; pré-registro, emendas 4–6): preço cai → D/E sobe → Ke sobe, MAS o peso da dívida (Kd × (1 − t)
+    < Ke) baixa o WACC — medido, o central SOBE em 17 de 21 industriais (até +18,8% na KLBN11 numa queda de 30%). Registrado, não
+    desejado; remédio em estudo no BACKLOG B35 (Kd que reage à alavancagem)."""
     _, ltm = serie(emp.ticker)
     d = divida_do_desconto(emp, ltm)
     e = emp.preco * emp.n_acoes / 1000

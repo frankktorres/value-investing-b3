@@ -93,7 +93,7 @@ def test_regra_economica_com_kd_liquido_abaixo_do_ke_mais_divida_no_peso_baixa_o
     (E menor, mesma D) baixa o WACC; com Kd × (1 − t) > Ke, sobe.
 
     OBSERVAÇÃO, NÃO ALVO (pré-registro, emendas 4 e 5): no motor, o preço menor reduz E; esse canal costuma vencer a alta do Ke
-    pelo Hamada e o central sobe quando o preço cai (17 de 21 industriais em 24/11/2026, até +14% numa queda de 30%). Esse efeito
+    pelo Hamada e o central sobe quando o preço cai (17 de 21 industriais em 24/11/2026, até +18,8% na KLBN11 numa queda de 30%). Esse efeito
     não é propriedade desejada e não é testado aqui; o remédio é o B35 (Kd que reage à alavancagem)."""
     emp = _caso("TESTEH2W")
     ke, t = 0.25, M.aliquota(emp)

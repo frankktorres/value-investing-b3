@@ -1132,3 +1132,10 @@ misturava duas bases de "R$ de hoje". Agora o mês do IPCA do motor entra no cá
 (CARA, igual); teste de regressão. Textos "no ponto fixo" atualizados. Nada mais reproduzido (estado global depois do corte, data do
 hall, saída com exceção, mesmo D em todos os lugares, Ke > 30% → NC, chamadores antigos). **Limite conhecido:** o corte usa o prazo
 legal do ITR (45 dias), não a data real de entrega (DT_RECEB) — um ITR entregue com atraso seria usado antes de existir.
+**Agente `oraculo` (24/11, ramo `gravacao/3t26` × master): BLOQUEIA** — só pelo item de overfitting: a emenda 3 (escolha da opção A)
+entrou no mesmo commit que o motor e o golden (sem prova de ordem) e a aceitação foi mantida depois de a premissa ("joga contra
+comprar") se mostrar falsa. Ressalvas: o efeito máximo é KLBN11 +18,8% (não +14%; corrigido no `01`, BACKLOG, testes e emenda 6); a ALLD3
+faltava na contagem de palavras; 30% virou veto sem fonte A/B do número; WACC com os outros passivos financeiros é menos conservador;
+financeiras com VPA/LPA do 2T26 digitados ao preço de 19/11; golden do 3T26 (23/11) sem camada citada; Graham/Klarman (valor que se
+mexe com o preço). Reproduzido por ele: suíte verde, oráculo sem bloqueante, teste do H2 vermelho no motor do master. **O ramo NÃO foi
+juntado no master; decisão de volta ao Frank.**
