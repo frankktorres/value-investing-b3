@@ -142,5 +142,20 @@ def achados(fonte: str) -> dict[str, list[tuple[int, object]]]:
     return out
 
 
+CONTABEIS = ("vpa", "lpa_12m")      # por ação, de um trimestre só (o 2T26): envelhecem calados a cada ITR novo
+
+
+def contabeis_digitados(fonte: str) -> list[tuple[int, str, float]]:
+    """VPA/LPA digitados como número no código (`vpa=19.75`): ficam presos ao trimestre em que foram lidos enquanto o preço anda
+    (oráculo de 24/11/2026: bancos com VPA/LPA do 2T26 ao preço de 19/11). Mesma catraca dos anos fixos, mesmo prazo (B32)."""
+    return [(n.lineno, n.arg, n.value.value) for n in ast.walk(ast.parse(fonte))
+            if isinstance(n, ast.keyword) and n.arg in CONTABEIS and isinstance(n.value, ast.Constant)
+            and isinstance(n.value.value, (int, float)) and not isinstance(n.value.value, bool)]
+
+
+def varrer_contabeis() -> dict[str, int]:
+    return {p.name: len(contabeis_digitados(p.read_text(encoding="utf-8"))) for p in arquivos_dos_lotes()}
+
+
 def varrer() -> dict[str, dict[str, list[tuple[int, object]]]]:
     return {p.name: achados(p.read_text(encoding="utf-8")) for p in arquivos_dos_lotes()}

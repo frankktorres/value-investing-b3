@@ -1139,3 +1139,20 @@ faltava na contagem de palavras; 30% virou veto sem fonte A/B do número; WACC c
 financeiras com VPA/LPA do 2T26 digitados ao preço de 19/11; golden do 3T26 (23/11) sem camada citada; Graham/Klarman (valor que se
 mexe com o preço). Reproduzido por ele: suíte verde, oráculo sem bloqueante, teste do H2 vermelho no motor do master. **O ramo NÃO foi
 juntado no master; decisão de volta ao Frank.**
+**Decisão do Frank sobre o BLOQUEIA (24/11): opção 1, aceita o risco por escrito** (pré-registro, emenda 7, commit próprio
+4dc5bf6, antes do commit do motor). **Registro honesto:** a opção A foi escolhida pela fonte, antes da tabela; a decisão de
+**manter** A, depois de a premissa cair, veio **depois** de ver a tabela e se apoia só na fonte (Damodaran, cap. 8 p. 47). Nenhuma
+compra nova surgiu: zero BARATA no hall antes e depois; o H2 só desceu palavras (SMTO3 CARA → NÃO CONCLUSIVO; dossiê ALLD3 BARATA →
+RADAR no recálculo). LEVE3 e PETR4 em RADAR vêm do 3T26 (23/11), antes do B34. Condições cumpridas antes do merge:
+(1) **Graham/Klarman** — o Graham-BR e o revisado se mexiam com o preço porque o fator f usava o Ke **alavancado** da empresa, e o
+D/E a mercado vazava o preço para um método que não usa o custo de capital da empresa (SMTO3 com preço −30%: Graham-BR −7,9%,
+revisado −15,2%). O `01` §11 manda o Ke da casa ("Graham-BR ignora a estrutura de capital"): corrigido (`mk_casa`), teste
+`test_graham_nao_se_mexe_com_o_preco` vermelho com a correção desfeita (9,52 × 9,88) e verde com ela. Graham não é âncora: nenhum
+central nem palavra muda. O lucro normalizado (Klarman) e o Graham original não se mexiam (medido). Resta pequeno e legítimo: o
+teto de renda traz o provento a valor presente pelo Ke da empresa (§6.3), até −0,25% com o preço −30%. (2) **Trava nova:** emenda do
+pré-registro em commit próprio, antes do motor; o `python -m oraculo` confere pelo git (check `ordem`, bloqueante, corte b07482a;
+`ferramentas/oraculo/ordem.py`, 12 testes num git sintético) e o agente `oraculo` tem o item no checklist. (3) **Financeiras:** os
+20 VPA/LPA digitados do 2T26 (10 bancos e seguradoras do lote 1) entram na catraca de datas fixas (`contabil_digitado`), prazo
+31/01/2027, missão B32. (4) **BACKLOG B36:** hold-out — congelar a v2.7 e rodar em 20 ações fora dos 41, lista registrada antes de
+rodar, antes de qualquer calibração nova (B35 incluída). (5) Motivo do golden do 3T26: adendo com a camada no `tests/golden_log.md`
+(camadas 4, 1 e 5; sem camada 3 — limite declarado).

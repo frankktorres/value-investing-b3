@@ -4,7 +4,7 @@
     python -m oraculo --completo                     # propriedades com 500 exemplos também nos industriais (emenda 2)
     python -m oraculo --sem-gravar                   # só imprime (usado pelas armadilhas, que rodam num worktree)
 Grava docs/oraculo/AAAA-MM-DD.md e uma linha em docs/oraculo/registro.jsonl. Sai com 1 se algum check BLOQUEANTE falhar
-(docs/VALIDACAO.md §1): rastreabilidade, propriedades, reconciliação com "falha" (identidade contábil quebrada em ticker com
+(docs/VALIDACAO.md §1): ordem pré-registro → motor pelo git (emenda 7), rastreabilidade, propriedades, reconciliação com "falha" (identidade contábil quebrada em ticker com
 palavra de decisão) e os alarmes de artefato da sanidade (não finito, Ke > 30% fora dos conhecidos).
 """
 from __future__ import annotations
@@ -26,7 +26,7 @@ SAIDA = RAIZ / "docs" / "oraculo"
 GOLDEN = FERRAMENTAS / "tests" / "golden.json"
 DOUTRINA = RAIZ / "01-doutrina-value-investing.md"
 PROPRIEDADES = "tests/test_oraculo_propriedades.py"
-BLOQUEANTES = ("rastreabilidade", "propriedades", "reconciliacao", "sanidade")
+BLOQUEANTES = ("ordem", "rastreabilidade", "propriedades", "reconciliacao", "sanidade")
 
 
 def _commit() -> str:
@@ -42,6 +42,11 @@ def _commit() -> str:
 def _doutrina() -> str:
     m = re.search(r"Versão\s+([\d.]+)", DOUTRINA.read_text(encoding="utf-8")[:500])
     return m.group(1) if m else "?"
+
+
+def ordem() -> dict:
+    from oraculo import ordem as O
+    return O.verificar(RAIZ)
 
 
 def rastreabilidade() -> dict:
@@ -102,13 +107,15 @@ def relatorio(hoje: str, meta: dict, res: dict) -> str:
          f"gerado por `cd ferramentas && python -m oraculo{' --completo' if meta['completo'] else ''}`. Só lê e relata; "
          "nenhuma palavra, central, golden ou doutrina muda (docs/ORACULO.md §1a).", "",
          "| Check | Camada | Status | Bloqueia? |", "|---|---|---|---|"]
-    camada = dict(rastreabilidade="§3 matriz", propriedades="2", reconciliacao="4", sanidade="5")
+    camada = dict(ordem="emenda 7 (git)", rastreabilidade="§3 matriz", propriedades="2", reconciliacao="4", sanidade="5")
     for k in BLOQUEANTES:
         L.append(f"| {k} | {camada[k]} | **{res[k]['status']}** | {'sim' if res[k]['status'] == 'falha' else 'não'} |")
     for k in BLOQUEANTES:
         if "erro" in res[k]:
             L += ["", f"## {k}: o conferente quebrou", f"- {res[k]['erro']}"]
     ok = {k: v for k, v in res.items() if "erro" not in v}
+    if "ordem" in ok:
+        L += _ordem(ok["ordem"])
     if "rastreabilidade" in ok:
         L += _rastreabilidade(ok["rastreabilidade"])
     if "propriedades" in ok:
@@ -118,6 +125,13 @@ def relatorio(hoje: str, meta: dict, res: dict) -> str:
     if "sanidade" in ok:
         L += _sanidade(ok["sanidade"])
     return "\n".join(L) + "\n"
+
+
+def _ordem(o):
+    L = ["", "## Ordem pré-registro → motor (git)",
+         f"{o['commits']} commits depois de {o['corte']}; emendas registradas: {o['emendas']}."]
+    L += [f"- PROBLEMA: {p}" for p in o["problemas"]] or ["- sem problemas"]
+    return L
 
 
 def _rastreabilidade(ra):
@@ -185,7 +199,7 @@ def main(argv: list[str] | None = None) -> int:
                 completo=completo)
     res = {}
     # a sanidade roda antes da reconciliação: a palavra que decide se uma divergência bloqueia é a do motor agora
-    for nome, f in (("rastreabilidade", rastreabilidade), ("propriedades", lambda: propriedades(completo)),
+    for nome, f in (("ordem", ordem), ("rastreabilidade", rastreabilidade), ("propriedades", lambda: propriedades(completo)),
                     ("sanidade", sanidade), ("reconciliacao", lambda: reconciliacao(res.get("sanidade", {}).get("palavras")))):
         print(f"[oráculo] {nome}…", flush=True)
         try:

@@ -930,7 +930,10 @@ def avaliar(emp: Industrial, mk: Mercado) -> dict:
     exigir_declaracoes(emp)
     a, ltm = serie(emp.ticker)
     # v2.4 (AUD-12) + H2 (24/11/2026): Ke da empresa pela alavancagem a mercado (sem ponto fixo); daqui em diante TODO uso do Ke
-    # (âncoras, OE, defasagem, trava, sensibilidade, Ke/g implícitos) é o da empresa
+    # (âncoras, OE, defasagem, trava, sensibilidade, Ke/g implícitos) é o da empresa — EXCETO o fator f do Graham, que é do Ke da
+    # casa: o Graham-BR "ignora a estrutura de capital" (`01` §11); com o Ke alavancado o D/E a mercado vazava o preço para o Graham
+    # (24/11/2026, ressalva do oráculo)
+    mk_casa = mk
     ec = estrutura_de_capital(emp, mk)
     mk, ep = ec["mk"], ec["e_peso"]
     r = valores(emp, mk, e_peso=ep)
@@ -980,9 +983,9 @@ def avaliar(emp: Industrial, mk: Mercado) -> dict:
     lpa_norm = lucro_norm / n
     vpa = (v(ltm, "pl", 0) - r["proventos_ja_ex"]["no_pl"] - v(ltm, "nao_controladores", 0)) / n
     graham_orig = math.sqrt(22.5 * lpa_norm * vpa) if lpa_norm > 0 and vpa > 0 else None
-    graham_br = math.sqrt(22.5 * mk.fator_graham * lpa_norm * vpa) if lpa_norm > 0 and vpa > 0 else None
+    graham_br = math.sqrt(22.5 * mk_casa.fator_graham * lpa_norm * vpa) if lpa_norm > 0 and vpa > 0 else None
     g_real_pct = 100 * r["gr"]
-    graham_rev = lpa_norm * (8.5 + 2 * g_real_pct) * mk.fator_graham if lpa_norm > 0 else None
+    graham_rev = lpa_norm * (8.5 + 2 * g_real_pct) * mk_casa.fator_graham if lpa_norm > 0 else None
 
     dpa = SI[emp.ticker]["dpa_por_ano_datacom"]
     # AUD-16: DPA de cada ano da data-com em R$ de hoje — é comparado ao OE (já em R$ de hoje) e vira yield sobre o preço de hoje

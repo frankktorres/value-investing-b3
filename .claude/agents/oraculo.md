@@ -37,7 +37,9 @@ doutrina e pelo pré-registro. Comentário no código que "explica por que está
 4. **Resultados:** quais palavras, centrais ou Ke mudam, ticker a ticker, e por quê? Algum Ke passou de 30%? Apareceu
    NaN ou inf?
 5. **Overfitting:** a variante estava no `PRE-REGISTRO-v3.md` §6 **antes** do commit que a roda? As tentativas estão
-   contadas (teto de 24)? O critério de aceitação foi definido antes?
+   contadas (teto de 24)? O critério de aceitação foi definido antes? **Prova pelo git (emenda 7):** a emenda está num commit
+   só de `docs/PRE-REGISTRO-*.md`, ancestral do commit de motor/lote/golden que a cita? (`git log --stat`; o check `ordem` do
+   `python -m oraculo` confere isso e bloqueia.)
 6. **Coerência com os mestres:** que princípio, de que autor (Graham, Buffett/Munger, Klarman, Marks, Fisher, Damodaran,
    Greenwald), a mudança serve ou fere?
 7. **Golden:** se ele foi regravado, o `--motivo` cita a camada que provou o novo valor?

@@ -112,6 +112,17 @@ def test_e_do_d_e_e_o_preco_da_data_base_sem_media():
         assert r["de_peso"] == pytest.approx((BRUTA_LP + ARREND + OPF) / r["e_peso"])
 
 
+def test_graham_nao_se_mexe_com_o_preco():
+    """O Graham não usa custo de capital da empresa: o fator f é do Ke da casa (`01` §11, "Graham-BR ignora a estrutura de
+    capital"). Com o Ke alavancado, o D/E a mercado vazava o preço para o Graham-BR e o revisado (ressalva do oráculo, 24/11)."""
+    emp = _caso("TESTEH2G")
+    r0, r1 = (M.avaliar(dataclasses.replace(emp, preco=p), MK) for p in (emp.preco, emp.preco * 0.5))
+    assert r1["ke_nom_emp"] > r0["ke_nom_emp"]                        # o Ke da empresa mexe (D/E a mercado) ...
+    for c in ("lpa_norm", "vpa", "graham_orig", "graham_br", "graham_rev"):
+        assert r1[c] == pytest.approx(r0[c], rel=1e-12), c            # ... o Graham, não
+    assert r0["graham_br"] == pytest.approx((22.5 * MK.fator_graham * r0["lpa_norm"] * r0["vpa"]) ** 0.5)
+
+
 # ---------------------------------------------------------------- conferência no hall (dados reais)
 def test_hall_ke_acima_de_30_so_com_nao_conclusivo_e_d_igual_ao_da_ponte():
     import universo

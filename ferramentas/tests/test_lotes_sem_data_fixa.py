@@ -80,3 +80,27 @@ def test_verificador_pega_o_que_deve_e_ignora_prosa(fonte, zero, ano):
 def test_catraca_cobre_os_lotes_que_existem():
     cat = json.loads(CATRACA.read_text(encoding="utf-8"))
     assert set(cat["por_arquivo"]) == {p.name for p in D.arquivos_dos_lotes()}
+    assert set(cat["contabil_digitado"]) == {p.name for p in D.arquivos_dos_lotes()}
+
+
+def test_vpa_e_lpa_digitados_so_podem_cair():
+    """Oráculo de 24/11/2026: os 10 bancos e seguradoras do lote 1 avaliam com VPA/LPA do 2T26 digitados ao preço de 19/11.
+    Decisão do Frank (24/11): entram na catraca de datas fixas, mesmo prazo (31/01/2027, B32); devem sair do ITR da CVM."""
+    cat = json.loads(CATRACA.read_text(encoding="utf-8"))
+    limite, atual = cat["contabil_digitado"], D.varrer_contabeis()
+    subiu = {f: (limite.get(f, 0), n) for f, n in atual.items() if n > limite.get(f, 0)}
+    assert not subiu, f"VPA/LPA digitado novo nos lotes (catraca → atual): {subiu} — leia do ITR/DFP, não digite"
+    caiu = {f: (limite[f], n) for f, n in atual.items() if f in limite and n < limite[f]}
+    assert not caiu, f"a catraca de VPA/LPA caiu {caiu}: baixe os números em {CATRACA.name}"
+    if dt.date.today().isoformat() > cat["prazo"] and sum(atual.values()):
+        warnings.warn(f"missão {cat['missao']}: prazo {cat['prazo']} vencido com {sum(atual.values())} VPA/LPA digitados nos lotes")
+
+
+@pytest.mark.parametrize("fonte, n", [
+    ('Financeira("X", vpa=19.75, lpa_12m=4.247)', 2),
+    ('Financeira("X", vpa=v, lpa_12m=ltm["lpa"])', 0),     # vindo de dado, não conta
+    ('d = dict(vpa=1)', 1),
+    ('f(vpa_hist=1.0, roe_lp=0.17)', 0),
+])
+def test_contador_de_vpa_lpa(fonte, n):
+    assert len(D.contabeis_digitados(fonte)) == n
