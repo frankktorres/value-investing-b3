@@ -1,0 +1,61 @@
+{
+  "ma_ruim": {
+    "valor": false,
+    "fonte": "Ativo total consolidado 31/12/2025 R$ 100.575 mi (DFP 2025, BPA, conta 1); limite de 20% = R$ 20,1 bi. Aquisições da janela IPE 2017-2026 (fatos relevantes): LafargeHolcim Brasil, base US$ 1,025 bi (FR 10/09/2021; conclusão FR 06/09/2022; mesmo a R$ 6/US$ seria ~R$ 6,2 bi, abaixo do limite); CEEE-G R$ 928 mi (FR 29/07/2022 e 21/10/2022); Estrela (logística, 70%) R$ 742,5 mi (FR 30/12/2024; conclusão FR 02/04/2025); Elizabeth Cimentos, Metalgrafica Iguacu, Santa Ana/Topazio, Quebra-Queixo e Panatlantica (29,91%) tem titulos nos FRs de 2021-2023, valores nao lidos, mas todos bem menores que o limite. Nenhuma passa de 20% do ativo. Limite: baixa contabil/impairment dessas compras nao foi lido nas notas da DFP",
+    "nota_fonte": "A"
+  },
+  "interferencias": {
+    "valor": 0,
+    "fonte": "IPE CVM da CSN (CNPJ 33.042.730/0001-04, codigo 4030), 1.030 documentos 2017-2026: titulos dos 117 fatos relevantes e dos 15 comunicados de transacao entre partes relacionadas triados; lidos FR 28/08/2018 e 29/08/2018, FR 22/11/2022, FR 30/03/2023, FR 30/10/2023, comunicado 04/09/2026. Nenhuma operacao do controlador (Vicunha Acos/Rio Purus) contra o minoritario: sem aumento de capital dirigido, sem OPA/fechamento de capital, sem compra/venda de ativo com o controlador. CASOS EXAMINADOS E NAO CONTADOS: (1) bloqueio judicial dos dividendos declarados em 17/08/2018 (ordem da 10a Vara de Execucoes Fiscais Federal de SP) e cancelamento pelo conselho em 29/08/2018: decisao judicial por execucao fiscal, nao ato do controlador; (2) disputa Rio Purus x CFL pelo controle da Vicunha Acos encerrada em 20/11/2022 (FR 22/11/2022 e 30/03/2023), com dividendo de R$ 2,314 bi pago a todos os acionistas (pro rata). Limite: janela IPE 2017-2026 (nao 10 anos completos de 2016), comunicados ao mercado e avisos aos acionistas nao triados um a um, atas de assembleia nao lidas",
+    "nota_fonte": "A"
+  },
+  "partes_rel_sobre_receita": {
+    "valor": 0.0514,
+    "fonte": "FRE 2026 v5 (CVM, id 161326), tabela transacao_parte_relacionada, exercicio 2025 (data 2025-12-31), excluidas as controladas (eliminadas na consolidacao) e os dividendos: coligadas (Panatlantica fornecimento R$ 1.920.204 mil + compras R$ 149.257 mil; Arvedi Metalfer R$ 74.581 mil; Equibras e outras) e Fundacao CSN (R$ 4.374 mil) = R$ 2.201.431 mil, mais mutuos 2025 a TLSA e FTL (Transnordestina, coligadas) R$ 100.669 mil (valores em R$ unidade na tabela, convertidos para mil) = R$ 2.302.100 mil; sobre receita liquida consolidada 2025 R$ 44.797.946 mil (DFP 2025, DRE 3.01) = 5,14%. Sem o mutuo: 4,91%. Nenhuma transacao com o controlador (Vicunha Acos/Rio Purus) na tabela. Limite: unidades da tabela do FRE sao mistas; assumido R$ mil nas linhas de 31/12/2025",
+    "nota_fonte": "A"
+  },
+  "tag_along": {
+    "valor": 0.8,
+    "fonte": "Estatuto social consolidado (AGO/E 26/04/2024; IPE 08/05/2024): sem clausula de tag along, sem adesao a Novo Mercado/Nivel 2 (busca por 'aliena', '254', 'Nivel', 'Novo Mercado', 'oferta publica' sem clausula de OPA por alienacao de controle); art. 6: so acoes ordinarias (1.326.093.947 acoes ON, FRE 2026 capital social). Vale o piso legal da Lei 6.404/76 art. 254-A: 80% do preco do controlador para ON (lei, documento oficial)",
+    "nota_fonte": "A"
+  },
+  "discricionario": {
+    "valor": true,
+    "fonte": "Acordo de Acionistas Vicunha Acos S.A. (40,99% das ON) e CFL Ana Participacoes (10,25%), vigencia de 10 anos, arquivado na CSN (FR 30/03/2023; texto IPE 11/07/2025 v2, clausula 2.2): por 5 anos a CFL Ana vota as acoes conforme orientacao previa da Vicunha Acos na eleicao do Conselho de Administracao e do Conselho Fiscal e na definicao do numero de membros; direito de preferencia da Vicunha na venda das acoes da CFL Ana; lock-up de 9 meses. Bloco vinculado 51,24% das ON controla a eleicao do conselho",
+    "nota_fonte": "A"
+  },
+  "fisher": {
+    "respostas": ["sem", "sem", "sem", "sem", "sem", "sem", "sem", "sem", "sem", "sem", "sem", "sem", "sim", "sem", "sem"],
+    "itens": [
+      "1 potencial de mercado: sem - nao lido documento A/B de mercado enderecavel",
+      "2 decisao de seguir lancando: sem - nao lido",
+      "3 eficacia do P&D: sem - nao aplicavel/nao lido",
+      "4 forca de vendas: sem - nao lido",
+      "5 margem que vale a pena: sem - margem bruta consolidada 46,1% (2021), 30,0%, 26,3%, 26,8%, 27,7% (2025); EBIT/receita 42,9%, 17,2%, 11,4%, 9,8%, 10,8% (DFP 2021-2025, DRE consolidada 3.01/3.03/3.05); queda desde 2021 mas sem limiar documentado para sim/nao",
+      "6 o que faz pela margem: sem - nao lido",
+      "7 relacoes de trabalho: sem - nao encontrado",
+      "8 relacoes entre executivos: sem - nao encontrado",
+      "9 profundidade da gestao: sem - FR 18/03/2024 'Novos executivos no Grupo CSN' e FR 14/08/2024 eleicao de diretor so por titulo; nao lido",
+      "10 controles de custo e contabeis: sem - parecer do auditor nao lido",
+      "11 aspectos do setor: sem - nao encontrado",
+      "12 visao de longo prazo: sem - FR 15/01/2026 'Atualizacao Estrategica' so por titulo",
+      "13 crescimento sem diluicao: sim - 1.326.093.947 acoes ON, ultima alteracao de capital aprovada em 18/05/2022 (FRE 2026 v5, capital social); 135.904.451 acoes = 10,25% no FR de 22/11/2022 (=1.325,9 mi de acoes), sem emissao desde entao; aquisicoes de 2021-2025 financiadas por debentures e IPOs de controladas (FRs). Serie anterior a 2022 nao conferida",
+      "14 fala dos problemas: sem - nao lido",
+      "15 integridade inquestionavel: sem - nenhum documento A/B lido sobre o tema"
+    ],
+    "fonte": "FRE 2026 v5, DFP 2021-2025 (DRE consolidada), IPE 2017-2026 (CVM, A). Nota = arredondar(5 x 1 sim / 15) = 0. Apenas o item 13 tem documento lido; os demais ficam 'sem' por falta de leitura de fonte A/B, nao por evidencia contraria"
+  },
+  "desconto_controlador": {
+    "tipo": "zero",
+    "razao": "SEM_RAZAO"
+  },
+  "_meta": {
+    "protocolo": "B36 v1",
+    "chamadas": 21,
+    "fim": "2026-11-24T20:30",
+    "nao_achado": [
+      "fisher itens 1-12, 14 e 15 (sem documento A/B lido)",
+      "desconto_controlador (sem evidencia A/B de risco atual do controlador; disputa Rio Purus x CFL encerrada em 2022)"
+    ]
+  }
+}
