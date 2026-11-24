@@ -54,15 +54,20 @@ def _fred(nome: str, col: int = 1) -> pd.Series:
 def minerio() -> dict:
     """Minério do LTM vigente da CMIN3 (23/11/2026: a janela dos 12m sai do `ltm_ref`; antes fixa em jul/25–jun/26)."""
     base.carregar(TK)
-    return _minerio(ltm_ref_de(CVM[TK]))
+    import inflacao
+    return _minerio(ltm_ref_de(CVM[TK]), inflacao.BASE_MES)     # B34: o mês do "R$ de hoje" do motor (corte na data)
 
 
 minerio.cache_clear = lambda: _minerio.cache_clear()     # os testes limpam o cache por aqui
 
 
 @lru_cache(maxsize=None)
-def _minerio(ref: str) -> dict:
-    """Minério 62% (US$/t) × PTAX, em R$ de hoje (IPCA). Mesmo tratamento do barril (lote5_petroleo.macro)."""
+def _minerio(ref: str, base_mes: int) -> dict:
+    """Minério 62% (US$/t) × PTAX, em R$ de hoje (IPCA). Mesmo tratamento do barril (lote5_petroleo.macro).
+
+    `base_mes` = último mês do IPCA do motor (`inflacao.BASE_MES`): nada depois dele entra, e o "R$ de hoje" do minério é o do
+    motor — no dossiê recalculado na data (`base.na_data`) o IPCA ainda não publicado ficava de fora só no motor (adversário,
+    24/11/2026). Na chave do cache, então o corte não reaproveita o resultado sem corte."""
     p = pd.DataFrame(json.loads((MACRO / "ptax_media_mensal.json").read_text()))
     ptax = pd.Series(p["valor"].astype(float).values, index=pd.to_datetime(p["data"], dayfirst=True))
     i = pd.DataFrame(json.loads((MACRO / "ipca_mensal.json").read_text()))
@@ -71,6 +76,7 @@ def _minerio(ref: str) -> dict:
     df = pd.DataFrame({"usd": _fred(serie), "ptax": ptax, "ipca": ipca, "cpi": _fred("cpi_us_fred.csv")})
     df["cpi"] = df["cpi"].interpolate(limit_area="inside")     # out/2025 sem CPI (paralisação do governo dos EUA)
     df = df.dropna()
+    df = df[df.index <= pd.Timestamp(year=base_mes // 12, month=base_mes % 12 + 1, day=1)]
     bi, bc = df["ipca"].iloc[-1], df["cpi"].iloc[-1]
     df["rs"] = df["usd"] * df["ptax"]
     df["rs_real"] = df["rs"] * bi / df["ipca"]

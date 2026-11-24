@@ -693,7 +693,7 @@ def estrutura_de_capital(emp: Industrial, mk: Mercado) -> dict:
 
 def valores(emp: Industrial, mk: Mercado, ke_nom=None, margem=None, g_real=None, g1=None, e_peso=None):
     """Âncoras ao Ke dado. Retorna dict de valores por ação e insumos. g1 sobrepõe emp.g1_real (DCF reverso de 2 estágios).
-    `e_peso` = peso do acionista no WACC (ponto fixo, AUD-13); None = preço (uso avulso, sensibilidades dos PDFs)."""
+    `e_peso` = peso do acionista no WACC (a mercado desde o H2, 24/11/2026: `estrutura_de_capital`); None = preço × ações."""
     a, ltm = serie(emp.ticker)
     op = premissas_operacionais(emp)
     cdiv = custo_divida(emp, mk, op)

@@ -1112,3 +1112,23 @@ Hamada. Só B3SA3, LEVE3 e RANI3 seguem a direção declarada (RECV3 sem central
 +14% (SUZB3); PETR4 e PRIO3 +7%, SMTO3 +3%. O erro foi da proposta (olhou só o canal do Ke). **Decisão de volta ao Frank**: o
 efeito real favorece comprar, o contrário da premissa com que ele foi aceito. Teste de coerência desconto × ponte: vermelho com a
 correção desfeita (D 2.800 × 3.100 esperado), verde com ela.
+**Decisão do Frank sobre a emenda 4 (24/11):** opção 1 — mantém A. A direção declarada estava errada (o efeito é a favor da compra,
+até +14% numa queda de 30%); A foi escolhida pela fonte, antes da tabela, não pelo resultado (pré-registro, emenda 5). Teste fixa a
+regra econômica (Kd × (1 − t) < Ke → mais dívida baixa o WACC), o efeito medido fica como observação. Remédio: BACKLOG **B35** (Kd que
+reage à alavancagem, hipótese pré-registrada antes de rodar; não agora).
+**Dossiês recalculados na data (point-in-time, 24/11):** o recálculo do dossiê usa o LTM já publicado na data (Res. CVM 80/2022, art.
+31, II — ITR em 45 dias; nota A) e o IPCA até o mês D − 2 (convenção conservadora; divulgação do IBGE nota C, release não aberto).
+`dados/mercado_2026-10-02.json` recriado com os números do mercado vigente até 23/11 (sem coleta nova). Com o motor de antes do H2 o
+recálculo reproduz exato FESA4, SHUL4, VLID3, BLAU3, HYPE3-10-06 e LEVE3; restam duas diferenças de DADO, explicadas: CMIN3 (macro
+FRED/PTAX revisada depois da data, sem vintage — com a macro de antes volta 3,3668) e ALLD3 (dois JCP aprovados em 29/09 que a API da
+B3 só listou depois de 19/10 — com o arquivo de antes volta 14,9142).
+**DECISÃO DO FRANK — ALLD3 (24/11):** o H2 leva o recálculo da ALLD3 em 15/10 de **BARATA → RADAR** (central 14,91 → 15,97, P/C 0,39;
+dispersão DCF 16,6 / OE 7,7 = 2,17 > 1,8, §11.3; moat 0 → 1 pelo WACC real). **Aceito RADAR no recálculo.** O veredito salvo de 15/10
+(BARATA) fica como registro (append-only); o painel mostra o aviso DIVERGE até um dossiê novo com data nova. Nenhuma ordem de compra
+ou venda decorre desta entrada.
+**Adversário (24/11, commit c108bce):** 1 achado reproduzido e corrigido — o minério da CMIN3 (`dossie/fichas/cmin3.py`) lia o IPCA
+direto do arquivo e ficava em cache, fora do corte na data: no dossiê de 06/10 usava o IPCA de setembro (ainda não publicado) e
+misturava duas bases de "R$ de hoje". Agora o mês do IPCA do motor entra no cálculo e na chave do cache; CMIN3-10-06 3,6810 → 3,6317
+(CARA, igual); teste de regressão. Textos "no ponto fixo" atualizados. Nada mais reproduzido (estado global depois do corte, data do
+hall, saída com exceção, mesmo D em todos os lugares, Ke > 30% → NC, chamadores antigos). **Limite conhecido:** o corte usa o prazo
+legal do ITR (45 dias), não a data real de entrega (DT_RECEB) — um ITR entregue com atraso seria usado antes de existir.

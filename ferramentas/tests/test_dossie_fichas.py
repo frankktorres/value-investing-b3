@@ -31,7 +31,8 @@ ARQUIVOS = sorted(p.stem for p in VEREDITOS.glob("*.json"))
 METODO_VIGENTE = {
     "ALLD3-2026-10-15": dict(central=15.9743, pc=0.3944, palavra="RADAR"),          # salvo 14,9142 BARATA (antes do H2)
     "BLAU3-2026-10-02": dict(central=8.1372, pc=1.3297, palavra="NÃO CONCLUSIVO"),  # pré-H2 8,2998
-    "CMIN3-2026-10-06": dict(central=3.6810, pc=1.3420, palavra="CARA"),            # pré-H2 3,3668 (macro de antes)
+    "CMIN3-2026-10-06": dict(central=3.6317, pc=1.3602, palavra="CARA"),            # pré-H2 3,3668 (macro de antes); minério
+                                                                                    # no IPCA da data (adversário 24/11: era 3,6810)
     "FESA4-2026-10-15": dict(central=7.7010, pc=0.8090, palavra="RADAR"),           # salvo 7,6189
     "HYPE3-2026-10-06": dict(central=15.7668, pc=1.7125, palavra="CARA"),           # pré-H2 16,9224
     "LEVE3-2026-10-06": dict(central=38.3920, pc=0.9520, palavra="NÃO CONCLUSIVO"), # pré-H2 38,4467
@@ -166,3 +167,15 @@ def test_aud23_divergencia_acima_de_3_por_cento_vira_alerta():
     assert base.divergencias_b3_si({"2024": 1.2651}, {"2024": 1.1678}) == [("2024", 1.2651, 1.1678)]
     assert base.divergencias_b3_si({"2024": 1.20}, {"2024": 1.19}) == []
     assert [a for a, _, _ in base.divergencias_b3_si({"2024": 1.0}, {"2025": 1.0})] == ["2024", "2025"]
+
+
+@requer_suplemento_b3
+def test_minerio_da_cmin3_no_mesmo_r_de_hoje_do_motor_na_data():
+    """Adversário (24/11/2026): o minério lia o IPCA direto do arquivo e ficava em cache — no recálculo na data ele usava o IPCA
+    de um mês ainda não publicado e misturava duas bases de "R$ de hoje"."""
+    import inflacao
+    from dossie import base
+    fora = cmin3.minerio()["base"]
+    with base.na_data("2026-10-06"):
+        assert cmin3.minerio()["base"] == inflacao.DATA_BASE == "08/2026"
+    assert cmin3.minerio()["base"] == fora
