@@ -366,3 +366,88 @@ Relatório: `docs/oraculo/hipoteses-2026-10-22.md` (e `.json`).
      B36).
    - **Financeiras.** Os VPA/LPA dos 10 bancos e seguradoras, digitados do 2T26 e usados com o preço de 19/11, entram na catraca
      de datas fixas (`tests/datas_fixas_catraca.json`, `contabil_digitado`), mesmo prazo: 31/01/2027 (B32). Limite conhecido até lá.
+8. **24/11/2026 — hold-out B36: regra de escolha, lista das 20, ficha-padrão, protocolo e critério de "passou"; escrita e
+   commitada SOZINHA, antes de rodar qualquer ação.** Método v2.7 congelado no commit d70abb7 (motor, doutrina e golden
+   iguais aos do master e5ce4ef).
+   - **Regra de escolha (mecânica, `ferramentas/holdout_b36/selecionar.py`, commit d70abb7, rodada uma vez em 24/11).**
+     (1) T = 19/11/2026, último pregão do COTAHIST; ações e units do mercado à vista. (2) Liquidez = média do VOLTOT nos 250
+     pregões até T, dia sem negócio = zero. (3) Um papel por CNPJ (o mais líquido) e as exclusões mecânicas da triagem: sem
+     identidade na CVM, recuperação/falência (FCA + CODBDI), §8 (educação, AZUL, GOLL, IRBR), piso de liquidez. (4) ≥ 10
+     exercícios de DFP visíveis na CVM em T, com demonstração no ZIP. (5) Fora, por CNPJ, o que gente já olhou: os 41 do
+     golden, os 6 dossiês (ALLD3, BLAU3, CMIN3, FESA4, SHUL4, VLID3), a fila do `06` de 08/10 (20) e a triagem manual de
+     07/09 (`NOTAS_06_ANTIGO`, 22). (6) As 20 mais líquidas; empate pela ordem alfabética. O seletor não lê preço, central,
+     P/C nem Q1–Q5 (teste `test_holdout_b36_selecionar.py`). Funil: 351 linhas (uma por CNPJ, mais os tickers sem identidade); 124 abaixo do piso, 76 já olhadas, 39
+     sem identidade, 35 com menos de 10 DFPs, 8 §8, 7 em recuperação; 62 elegíveis.
+   - **Contaminação residual, declarada.** O `06` (saída de máquina) mostra o P/C proxy de ~150 tickers, entre eles parte
+     destas 20; ninguém escolheu por ele, e a regra não o lê.
+   - **Lista (ordem de liquidez, R$ mi/dia; setor da FCA):** 1 BPAC11 661,9 (bancos) · 2 EMBJ3 466,3 (máquinas e veículos) ·
+     3 EQTL3 381,4 (energia elétrica) · 4 ENEV3 314,9 (energia elétrica) · 5 RADL3 223,2 (comércio) · 6 RAIL3 211,0
+     (holding — transporte e logística) · 7 ENGI11 173,7 (holding — energia elétrica) · 8 CSAN3 169,5 (agricultura — açúcar e
+     álcool) · 9 SMFT3 163,7 (lazer) · 10 MBRF3 162,3 (alimentos) · 11 CSNA3 102,8 (siderurgia) · 12 GOAU4 99,6 (holding —
+     siderurgia) · 13 USIM5 96,8 (siderurgia) · 14 TEND3 88,6 (construção) · 15 NATU3 84,9 (higiene) · 16 MOVI3 78,0
+     (transporte e logística) · 17 MRVE3 74,6 (construção) · 18 AZZA3 74,3 (vestuário) · 19 IGTI11 74,0 (holding — comércio,
+     shoppings) · 20 BEEF3 73,5 (alimentos).
+   - **Caminho por tipo, pelo setor da FCA (como o hall):** "Bancos" → `motor_financeiras.Financeira` perfil `banco`
+     (BPAC11); setor com "Energia Elétrica" ou "Saneamento" → `Financeira` perfil `utility`, método de regulado do §11.2,
+     igual ao `lote2_energia.F` (EQTL3, ENEV3, ENGI11); o resto → `motor_nao_financeiras.Industrial` pelo `dossie.gerar`
+     (16). Holding ("Emp. Adm. Part.") roda pelo consolidado do seu setor, sem SOTP (limite declarado; o hall faz SOTP só na
+     ITSA4); se o caminho falhar, conta como erro.
+   - **Ficha-padrão, igual para todas (não se ajusta por ação).** Industrial: `ANOS` = os 10 últimos exercícios do DFP
+     (2016–2025); perfil `ciclica` se o setor da FCA for siderurgia/metalurgia, agricultura, alimentos, papel e celulose,
+     petróleo e gás, mineração ou química (CSAN3, MBRF3, CSNA3, GOAU4, USIM5, BEEF3), `servicos` no resto; `outras_liquidas`
+     = sim e `g_real` = 1% (os do hall e dos dossiês); `desconto_controlador` pelo protocolo; cíclica **sem** normalização de
+     preço própria (a CMIN3 tem; aqui fica como limite declarado). Financeira (banco e regulado): VPA, LPA, ROE atual e de 10
+     anos, P/L histórico, DPA de 5 anos, JCP e anos pagos lidos **por código** da StatusInvest, como o `lote2_energia.F` faz
+     no hall (nota C, declarada); payout = mediana de 5 anos desses dados, salvo política formal com fonte A/B achada pelo
+     protocolo; solidez do regulado pela alavancagem da CVM (`lote2_energia.solidez`); notas qualitativas e prudencial do
+     banco só pelo protocolo, senão vazias.
+   - **Protocolo dos insumos (fixo).** Um subagente Sonnet por ação, teto de 25 chamadas, roteiro único: FRE 2026, IPE,
+     estatuto e DFP 2025, nesta ordem. Pede os insumos do dossiê: M&A ruim, interferências, partes relacionadas ÷ receita,
+     tag along, controlador discricionário, as 15 respostas de Fisher, o desconto de controlador (tipo, razão, cenários) e,
+     nas financeiras, as notas qualitativas e o prudencial (CET1, inadimplência 90, cobertura). Só fonte A/B vale; o que não
+     achar fica vazio (padrão do método). Desconto sem evidência A/B = `zero` com `SEM_RAZAO`, como 23 do hall.
+   - **Classes de cada insumo, fixadas aqui:** **automático** = sai de CVM, B3, COTAHIST, StatusInvest ou da regra padrão por
+     código, sem leitura (séries, FRE estruturado, proventos, notas mecânicas de moat/ciclo/gestão, R$ 1 retido da triagem,
+     itens da ficha-padrão); **pesquisa** = valor digitado a partir de leitura com fonte A/B (insumo do subagente, correção de
+     dado); **vazio** = não achado, ficou no padrão do método. "Digitada à mão" = pesquisa. A classe sai do código (de onde o
+     valor veio), não de rótulo.
+   - **Critério de "passou" (todos):** (1) rodam sem erro (sai palavra, NÃO CONCLUSIVO incluso) ≥ 16 de 20; (2) NÃO
+     CONCLUSIVO, entre as que rodam, ≤ 6; (3) Ke nominal > 30% ≤ 2; (4) valor absurdo (central ≤ 0, P/C < 0,2 ou > 5) ≤ 2;
+     (6) vazios por ação: mediana ≤ 50% dos insumos não automáticos do seu tipo; (7) tempo por ação (relógio, do cadastro
+     ao veredito): mediana ≤ 20 min. **A linha (5) foi retirada antes de rodar (Frank, 24/11):** com ~22 insumos não
+     automáticos por industrial e ~15 por financeira, "≤ 25 digitadas" passaria sempre. No lugar entra o **% de insumos
+     automáticos por ação, relatado fora do critério**: mede a distância até "qualquer ação", não a qualidade do método.
+     Também só relatados (§0.3): dispersão > 1,8×, P/C mediano contra o do hall, nº de BARATA, erros explícitos do motor e a
+     tabela por ação automático × pesquisa × vazio.
+   - **Eventos societários e previsões, escritos antes de rodar.** Fonte: títulos dos fatos relevantes do IPE 2017–2026 e
+     tickers por CNPJ na FCA `valor_mobiliario` (CVM, nota A). O FRE estruturado (`fre_2026.zip`) não traz a seção de
+     reorganizações; o texto do FRE não foi lido, e 2016 fica sem IPE no disco. Previsão = o que deve sair e por quê; o
+     relatório compara previsto × observado.
+
+     | Ação | Evento nos 10 anos (IPE/FCA) | Previsão | Por quê |
+     |---|---|---|---|
+     | AZZA3 | Incorporou Reserva (2020), Vicenza (2023) e o Grupo Soma (2024; nome Azzas 2154); código ARZZ3 → AZZA3; reorganização em 09/2026 | **NÃO CONCLUSIVO** | A janela de 10 anos mistura a Arezzo sozinha com a Arezzo + Soma: ações e receita real saltam em 2024, a diluição pesa na gestão e a margem mediana é de outra empresa |
+     | NATU3 | Natura &Co (2019, Avon) e incorporação da Natura &Co pela Natura Cosméticos (06/2025); linha nova de NATU3 na FCA em 07/2025 | **valor absurdo** | DFP de 2016–24 é a operadora sem a holding; ações e preço de antes de 2025 são de outra entidade (NTCO3/NATU3): número por ação incoerente na janela |
+     | MBRF3 | Marfrig consolida a BRF desde 2022 e a incorporou em 2025 (MBRF); código MRFG3 → MBRF3 | **NÃO CONCLUSIVO** (Ke > 30%) | Dívida alta com o D/E a mercado no Hamada (v2.7) e minoritários grandes até 2025 |
+     | EMBJ3 | Código EMBR3 → EMBJ3; Eve (2022) segue consolidada com minoritários; cisão interna da Yaborã (2021) | **erro** | A série de preço do COTAHIST pelo código novo é curta: fechamento de fim de ano, "listado desde" e P/L histórico dependem do ticker |
+     | CSAN3 (holding) | Reorganização com a Cosan Limited (2021), desdobramento (2021), Raízen por equivalência | **NÃO CONCLUSIVO** | Holding alavancada sem SOTP: dívida da holding + perdas da Raízen na equivalência derrubam o lucro normalizado e sobem o Ke |
+     | GOAU4 (holding) | Nenhuma reorganização; consolida a Gerdau com minoritários grandes | **roda, sem absurdo** | O motor desconta os minoritários (AUD-15); sem SOTP não há desconto de holding, e a palavra deve ficar perto da GGBR4 do hall |
+     | IGTI11 (holding) | 2021: a Jereissati (JPSA3, mesmo CNPJ) incorporou a Iguatemi e virou Iguatemi S.A. (IGTI11, unit) | **valor absurdo** | DFP de antes de 2021 é a holding com minoritários; preço e ações são de JPSA3 e depois da unit |
+     | MOVI3 | Reorganização do grupo JSL (2020), incorporação da CS Frotas (2021), cisão de controlada (2024) | **NÃO CONCLUSIVO** (Ke > 30%) | Locadora com dívida alta e emissão de ações na janela |
+     | ENEV3 | Incorporou a Parnaíba (2018), Focus (2022) e ativos do BTG (2024, com follow-on) | **valor absurdo** (P/C > 5) | O método de regulado vive de payout e DDM, e a Eneva quase não distribui |
+     | BEEF3 | Mato Grosso Bovinos (2017), Athena Foods (2020), units BEEF11 (2025) | **NÃO CONCLUSIVO** (Ke > 30%) | PL pequeno diante da dívida: D/E a mercado alto |
+     | RAIL3 | Incorporação de ações da Malha Norte (2023–25) | roda | Evento pequeno diante da base |
+     | BPAC11 | Reorganização (2017), desdobramento (2021), incorporação de ações (2025); units sem ligação na FCA (`IDENTIDADE_MANUAL`) | roda (motor de banco) | Banco com dados da StatusInvest pelo mesmo código do hall |
+     | ENGI11 | Incorporações entre controladas (2017–26) | roda (regulado) | Eventos internos ao grupo |
+     | MRVE3 | Cisão da LOG (2018) | roda | A cisão encolhe a base no início da janela, sem quebra depois |
+     | RADL3, TEND3, CSNA3, USIM5, SMFT3, EQTL3 | Só eventos pequenos ou desdobramentos nos títulos do IPE (SMFT3: mudança de controle em 2026) | roda | Sem quebra de base visível no IPE |
+   - **Congelamento e consertos.** Ninguém ajusta motor, doutrina, golden, ficha-padrão nem protocolo durante a B36; falha
+     de método vira item novo no BACKLOG, sem conserto. No piloto (as primeiras ações), consertar o **executor**
+     (`holdout_b36/rodar.py`, cadastro, coleta) é permitido só se não tocar motor, ficha-padrão nem protocolo e se o teste de
+     equivalência (ALLD3 pelo executor = `dossie.gerar`) seguir verde; cada conserto vai no `09` com o motivo.
+   - **Conferência prospectiva (B38), registrada antes de rodar:** em **19/11/2027**, para cada uma das 20, retorno total de
+     12 meses (19/11/2026 → 19/11/2027; preço do COTAHIST + proventos pela data-ex da B3) contra o Ibovespa (retorno total)
+     e a NTN-B (IPCA+ do mesmo prazo, Tesouro), cruzado com a palavra da B36. Leitura pré-declarada: retorno excedente médio
+     por palavra (CARA × não CARA), descritivo, sem teste de significância (n = 20); a média das 20 também é relatada como
+     comparador (regra do B25). Não se antecipa a data.
+   - **Orçamento (§0.4):** não conta como tentativa: não há variante de regra.
