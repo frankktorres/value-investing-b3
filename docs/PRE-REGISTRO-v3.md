@@ -342,3 +342,27 @@ Relatório: `docs/oraculo/hipoteses-2026-10-22.md` (e `.json`).
      independente disso não existe. Declarado; aceite do risco é do Frank.
    - **"Pronto quando" do B34:** escrito em 23/11 como "Ke ≤ 30% em todo o hall"; o Frank o redefiniu em 24/11, antes de qualquer
      tabela, como conferência ("se algum passar, vira NÃO CONCLUSIVO, sem mexer de novo no método"). Fica registrado aqui.
+7. **24/11/2026 — aceite do risco pelo Frank, trava de ordem pelo git e congelamento até o hold-out; escrita e commitada SOZINHA,
+   antes do commit que corrige o motor (Graham).**
+   - **Aceite por escrito (Frank, 24/11, resposta ao parecer BLOQUEIA):** aceita o risco de a emenda 3 não ter prova de ordem no
+     git (mesmo commit c108bce do motor e do golden) e de a opção A ter sido mantida depois de a premissa da aceitação cair.
+   - **Registro honesto da ordem.** A opção A foi escolhida pela fonte, **antes** da tabela de palavras. A decisão de **manter** A,
+     depois de a premissa ("joga contra comprar") se mostrar falsa (emenda 4), veio **depois** de ver a tabela e se apoia só na
+     fonte (Damodaran, cap. 8 p. 47). Nenhuma compra nova surgiu: zero BARATA no hall antes e depois; as palavras que o H2 mudou
+     só desceram (SMTO3 CARA → NÃO CONCLUSIVO no hall; recálculo do dossiê ALLD3 BARATA → RADAR). LEVE3 e PETR4 em RADAR vêm da
+     gravação do 3T26 (23/11), antes do B34.
+   - **Trava nova (vale daqui em diante; corte no commit b07482a).** Emenda do pré-registro vai num **commit próprio** — só
+     arquivos `docs/PRE-REGISTRO-*.md` — **antes** do commit de motor, lote ou golden que a usa; esse commit cita "emenda N" na
+     mensagem. O `python -m oraculo` confere pelo git (check `ordem`, bloqueante): commit que mistura pré-registro com outro
+     arquivo, ou commit de motor/lote/golden que cita uma emenda que nenhum commit anterior (só de pré-registro) acrescentou,
+     reprova.
+   - **Graham (ressalva do parecer).** O fator f do Graham-BR e do Graham revisado usava o Ke **alavancado** da empresa; com o D/E
+     a mercado, o preço vazava para eles (Graham-BR −8% e revisado −15% na SMTO3 com o preço −30%). O `01` §11 manda o Ke da casa
+     ("Graham-BR ignora a estrutura de capital"). Correção de código para a regra escrita, não variante: Graham não é âncora,
+     nenhum central nem palavra muda; **não conta** no orçamento (§0.4). O lucro normalizado (Klarman) e o Graham original não
+     se mexiam com o preço (medido).
+   - **Congelamento.** Antes de qualquer calibração nova, o método v2.7 fica congelado e roda num **hold-out** de 20 ações fora
+     dos 41 do hall, que ninguém olhou; a lista é registrada (commit próprio, como esta emenda) antes de rodar (`docs/BACKLOG.md`
+     B36).
+   - **Financeiras.** Os VPA/LPA dos 10 bancos e seguradoras, digitados do 2T26 e usados com o preço de 19/11, entram na catraca
+     de datas fixas (`tests/datas_fixas_catraca.json`, `contabil_digitado`), mesmo prazo: 31/01/2027 (B32). Limite conhecido até lá.
