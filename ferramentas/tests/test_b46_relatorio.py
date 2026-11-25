@@ -66,6 +66,24 @@ def test_falha_quando_preco_mexe_no_central_acima_do_limite():
     assert not r2["passou"] and "preco_0.7" in r2["falhas"][0]
 
 
+def test_central_nao_positivo_que_nao_muda_passa_e_que_muda_falha():
+    # emenda 12, C2a: "mudam o central em no máximo 0,5%" — 0 → 0 e −2,77 → −2,77 não mudam; −2,77 → −2,70 muda (relativo
+    # indefinido com central ≤ 0 → reprova)
+    res = _res()
+    for n in ("preco_0.7", "preco_1.3"):
+        res["linhas"][0]["choques"][n] = dict(res["linhas"][0]["completo"], central=0.0)
+    res["linhas"][0]["completo"]["central"] = 0.0
+    res["linhas"][0]["choques"]["divida_1.1"]["central"] = 0.0
+    assert R.c2(res)["passou"]
+    res["linhas"][0]["completo"]["central"] = -2.77
+    for n in ("preco_0.7", "preco_1.3"):
+        res["linhas"][0]["choques"][n]["central"] = -2.77
+    res["linhas"][0]["choques"]["divida_1.1"]["central"] = -2.80
+    assert R.c2(res)["passou"]
+    res["linhas"][0]["choques"]["preco_0.7"]["central"] = -2.70
+    assert not R.c2(res)["passou"]
+
+
 def test_falha_quando_mais_divida_sobe_o_central_acima_do_limite():
     res = _res()
     res["linhas"][1]["choques"]["divida_1.1"] = dict(res["linhas"][1]["completo"], central=res["linhas"][1]["completo"]["central"] * 1.01)

@@ -251,6 +251,7 @@ WEG; ROE recorrente do Itaú; Kerr 1998 (HARKing); Barr et al. 2015; Harvey, Liu
 | 11 | 22/10/2026 | H10 | teste (não conta): tira o campo de todos os períodos | 21 industriais | caixa 14, dívida 14, PL 9, D&A 18, imobilizado 16 com palavra de decisão; lucro e receita 0 → **aceita (bug)** | idem |
 | 12 | 22/10/2026 | H11 | conferência de fonte (não conta) | 8 reguladas | nenhuma nota técnica lida no primário → **a conferir** | idem |
 | 13 | 24/11/2026 | H2 (correção, emenda 3) | **variante, conta 6/24:** D/E a mercado (preço da data-base), D = dívida bruta com arrendamentos + outros passivos financeiros (= ponte), sem ponto fixo; Ke nominal > 30% → NÃO CONCLUSIVO | 21 industriais (3T26, preço de 19/11) | Ke > 30%: 5 → 1 (SMTO3 30,3%, D/E 2,18 a mercado); palavra muda só na SMTO3 (CARA → NÃO CONCLUSIVO); RANI3, SUZB3, SLCE3 seguem NÃO CONCLUSIVO por dispersão > 3, KLBN11 e RECV3 por EPV < 0 | B34 |
+| 14 | 25/11/2026 | B46 (emenda 12) | **variante, conta 7/24:** "separar a dificuldade" (Damodaran 2009) — D/E da continuidade = min(a mercado, indústria Damodaran EM) + âncoras de continuidade × (1 − π), π = média de (i) rating da cobertura e (ii) Z'' → Tabela 5 | conjunto de desenvolvimento: 31 industriais avaliados (hall 17, dossiês 4, B36 10); 12 não avaliados com a razão | **NÃO CONCLUSIVA** (como previsto): C1, C2, C4 passam; C3 15 de 24 < 2/3 (discordam HYPE3, RANI3, RECV3, SLCE3, CMIN3, EMBJ3, SMFT3, MRVE3, BEEF3). Ke previsto confere nas 5 (22,4/23,0/22,0/23,3/23,1%). 1ª leitura do código deu FALHA por erro do leitor no C2a (central ≤ 0 sem mudança), corrigido para o texto e declarado. Relatado: Ke > 30% 6 → 0; P/C mediano 1,61 → 2,33. Nada a implantar | `docs/b46/B46-2026-11.md` |
 
 Nota das linhas 1–12: as variantes rodaram três vezes no mesmo código. As duas primeiras execuções quebraram antes de gravar (a
 H7 com tipo do numpy; depois a pasta de saída inexistente). Como as variantes são determinísticas, cada uma conta uma vez.
@@ -576,23 +577,25 @@ Relatório: `docs/oraculo/hipoteses-2026-10-22.md` (e `.json`).
      continuidade); o calote entra duas vezes (Kd de CC no WACC + π), o que é conservador; o relatório separa o efeito de cada
      parte. CSAN3 (holding) cai em "Retail (Automotive)": classificação duvidosa, prevista aqui e não corrigida depois.
    - **Critério (sobre o conjunto de desenvolvimento: industriais do hall, os 6 dossiês e os industriais da B36).**
-     **C1 — conferência:** o Ke da variante de cada ticker = (1 + rf real + 5 p.p. × [1 + (1 − t) × D/E_cont]) × (1 + π) − 1
-     recalculado à parte; π = Tabela 5 pela classe; cada âncora de continuidade do modo completo = a do modo "só D/E" × (1 − π)
+     **C1 — conferência:** o Ke da variante de cada ticker = (1 + rf real + 5 p.p. × [1 + (1 − t) × D/E_cont]) × (1 + i) − 1
+     recalculado à parte (aqui i = inflação implícita da curva, 7,17%; no resto desta emenda π é a probabilidade de calote); π = Tabela 5 pela classe; cada âncora de continuidade do modo completo = a do modo "só D/E" × (1 − π)
      e a reprodução igual. **C2 — propriedades**, choque fixo: (2a) no grupo com D/E a mercado ÷ 1,3 > D/E da indústria (fica
      acima do limite nos dois choques), preço × 0,7 e × 1,3 mudam o central em no máximo 0,5%; (2b) nesse grupo, dívida bruta
      +10% com juros +10% (caixa e preço fixos) nunca sobe o central; abaixo do limite a direção não é prevista (efeito H2, o
      Kd não reage) e é só relatada; (2c) π não cai com rating pior (nas duas escalas). **C3 — π mensurável:** |π(i) − π(ii)|
      ≤ 20 p.p. (≈ uma faixa da régua, que tem faixas de 0,20 no P/C) em ≥ 2/3 dos industriais avaliados com D/E a mercado >
-     D/E da indústria. **C4:** zero "não avaliado" silencioso; erro novo (ex.: dívida sem juros com `kd_ri`) listado com razão.
+     D/E da indústria; ticker desse grupo com uma estimativa só **fica no denominador como não concordante**. **C4:** zero "não avaliado" silencioso; erro novo (ex.: dívida sem juros com `kd_ri`) listado com razão.
    - **O que cada linha prova (ajuste do Frank, 25/11):** C1 e C2 são **conferência de mecânica** (o C2a passa por construção
      no grupo acima do limite); **só o C3 testa a hipótese**. "PASSA" = mecânica certa + π mensurável, **não** "valor certo";
      a prova continua sendo o HOLD-OUT 2.
    - **Leitura pré-declarada:** C1–C4 cumpridos → **PASSA** → proposta ⏸ ao Frank (implantar é mudança de doutrina; prova no
-     HOLD-OUT 2). C1 falha, ou C2 falha fora do previsto → **FALHA** (a variante não sai). C3 não cumprido → **NÃO
-     CONCLUSIVA**: o π não é identificável com as fontes de hoje; nada a implantar, a B46 segue aberta com o motivo.
+     HOLD-OUT 2). C1 falha, C2 falha fora do previsto ou C4 falha → **FALHA** (a variante não sai). C3 não cumprido → **NÃO
+     CONCLUSIVA**: o π não é identificável com as fontes de hoje; nada a implantar, a B46 segue aberta com o motivo. **FALHA
+     prevalece sobre NÃO CONCLUSIVA** quando as duas ocorrem.
    - **Só relatado (§0.3):** nº de Ke > 30% (quase por construção; não é critério), palavras, P/C mediano, nº de BARATA,
-     Δcentral por ticker separado em parte do D/E e parte do π. **O relatório mostra as 41 do hall** (financeiras: não se
-     aplica): palavras que mudariam e Δcentral por ticker nas duas partes; ticker do hall com palavra mudada vai ao
+     Δcentral por ticker separado em parte do D/E e parte do π. **O relatório mostra o hall dos lotes do motor** (39: 21
+     industriais + 18 financeiras e reguladas do motor de financeiras, em que a variante não se aplica; EGIE3 e ITSA4, que
+     estão no `hall.json` mas não nos lotes de `oraculo/sanidade.py`, ficam fora e o relatório diz isso): palavras que mudariam e Δcentral por ticker nas duas partes; ticker do hall com palavra mudada vai ao
      `docs/PENDENTE-FRANK.md` junto com a proposta (ajuste do Frank).
    - **Insumos fixados antes de rodar** (motor de hoje, mercado de 19/11/2026: rf real 7,56%, π 7,17%). Formato: ticker —
      indústria (D/E da indústria) · D/E a mercado · rating (i). O Z'' e o π (ii) **não** foram calculados antes deste commit

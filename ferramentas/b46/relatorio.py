@@ -67,6 +67,15 @@ def c1(res: dict) -> dict:
     return dict(passou=not falhas, falhas=falhas)
 
 
+def _no_limite(novo: float, antes: float) -> bool:
+    """C2a: o central muda no máximo 0,5%. Sem mudança nenhuma passa, inclusive com central ≤ 0 (0 → 0); com central ≤ 0 e
+    alguma mudança, a variação relativa não se define e reprova. (25/11: a 1ª versão reprovava todo central ≤ 0, mais que o
+    texto da emenda 12 — erro do leitor, corrigido e declarado no relatório.)"""
+    if abs(novo - antes) <= 1e-9:
+        return True
+    return antes > 0 and _rel(novo, antes) <= LIMITE_PRECO
+
+
 def grupo_acima(l: dict) -> bool:
     """C2: D/E a mercado ÷ 1,3 > D/E da indústria (acima do limite nos dois choques de preço)."""
     c = l.get("completo") or {}
@@ -84,7 +93,7 @@ def c2(res: dict) -> dict:
             grupo.append(l["tk"])
             for n in ("preco_0.7", "preco_1.3"):
                 x = ch[n]
-                if not _ok(x) or c["central"] <= 0 or _rel(x["central"], c["central"]) > LIMITE_PRECO:
+                if not _ok(x) or not _no_limite(x["central"], c["central"]):
                     falhas.append(f"{l['tk']}: {n} muda o central ({c['central']} → {x.get('central')}) {x.get('erro') or ''}")
             x = ch["divida_1.1"]
             if not _ok(x) or x["central"] > c["central"] + 1e-9:
@@ -154,6 +163,11 @@ def gerar(res: dict) -> str:
          f"## Leitura pela regra: **{lei}**", "",
          "C1 e C2 são conferência de mecânica; **só o C3 testa a hipótese**. PASSA = mecânica certa + π mensurável, não \"valor "
          "certo\"; a prova é o HOLD-OUT 2 (ajuste do Frank, 25/11).", "",
+         "**Nota de execução (declarada).** A 1ª geração deste relatório deu **FALHA** por erro do leitor: o C2a reprovava todo "
+         "central ≤ 0, mesmo sem nenhuma mudança com o preço (RECV3, SMFT3, CSNA3 e MOVI3 com 0 → 0; RAIL3 e MRVE3 com o mesmo "
+         "negativo). O texto da emenda 12 é \"mudam o central em no máximo 0,5%\"; o leitor foi corrigido para o texto, com teste "
+         "(`tests/test_b46_relatorio.py`), sem mudar regra nem limite. As duas leituras dão o mesmo efeito: nada a implantar.", "",
+         "**Fora do hall dos lotes:** EGIE3 e ITSA4 estão no `hall.json` mas não nos lotes de `oraculo/sanidade.py` (emenda 12).", "",
          "| Linha | O que confere | Resultado |", "|---|---|---|",
          f"| C1 | Ke, π e âncoras recalculados à parte | {'passou' if r1['passou'] else '**não** — ' + '; '.join(r1['falhas'][:5])} |",
          f"| C2 | preço ×0,7/×1,3 e dívida +10% no grupo acima do limite ({len(r2['grupo'])}); π monotônico | "
