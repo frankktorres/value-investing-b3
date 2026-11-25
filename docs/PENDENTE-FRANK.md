@@ -1,5 +1,6 @@
 # PENDENTE-FRANK
 *A rotina escreve aqui só o que trava em decisão, senha, dinheiro ou apagar dados. Frank: responda na linha e mova para `DECISOES.md`. Itens do `BACKLOG.md` tipo "decisão Frank" estão resumidos aqui.*
+*O que é do Frank (CLAUDE.md, "Quem decide"): mudar palavra (motor, doutrina, régua, golden), aceitar risco que o `oraculo` bloqueou, gastar dinheiro, apagar/reescrever histórico, mudar o `00-DNA.md`, liberar config de qualidade/travas (`MESA_LIBERA_CONFIG`), senha/chave. Toda pergunta leva **recomendação + porquê em 1 linha**; quem registra segue em outra tarefa.*
 
 ## Abertas
 | # | Pergunta | Opções / recomendação | Backlog | Desde |
