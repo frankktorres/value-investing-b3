@@ -8,7 +8,9 @@ a série já tem) e prova que a recoleta é aditiva: todo valor que a série ant
 divergência → nada é gravado e o relatório diz onde. Grava só `lucros_acumulados` nos containers que a série antiga já tem
 (`anual/<ano>`, `ltm`, `ltm_<ref vigente>`); chave nova do formato atual do coletor (ex.: `ltm_ref` nas séries antigas) não
 entra. `ltm_<ref>` de trimestre anterior (o `ltm_2T26` do hall, gravado antes da AUD-68: ações do DFP, `lucro_controlador`
-sem o saneamento) é retrato histórico — fica intocado e listado; a 1ª conferência (25/11) mostrou que só ele divergia.
+sem o saneamento) é recoletado no próprio mês e também recebe a 2.03.05 — o dossiê na data lê esse container
+(`ltm.na_data`; achado do `adversario`, 25/11). Ali só `acoes` e `lucro_controlador` podem divergir (AUD-68), e ficam como
+estavam. `python -m b57.recoletar historicos hall` faz só essa parte (o principal já gravado não é refeito).
 A versão anterior de cada arquivo vai para `dados/_historico/` (`_historico/` da pasta do arquivo).
 """
 from __future__ import annotations
@@ -115,33 +117,58 @@ def acrescentar(velho: dict, novo: dict) -> tuple[dict, list[str]]:
     return out, sem
 
 
-def processar(grupo: str, gravar: bool) -> dict:
+def _explicada_aud68(caminho: str, historicos: list[str]) -> bool:
+    """`ltm_<ref>` de trimestre anterior gravado antes da AUD-68 (ex.: o `ltm_2T26` do hall): ações do DFP em vez das do ITR e
+    3.11.01 = 0 em vez de None. Só esses campos podem divergir ali; o resto tem de bater (adversário, 25/11: o dossiê na data
+    lê esse container por `ltm.na_data`, então ele também precisa da 2.03.05)."""
+    for h in historicos:
+        p = f"/{h}/"
+        if caminho.startswith(p):
+            resto = caminho[len(p):]
+            return resto.split(":")[0] in ("acoes", "lucro_controlador") or resto.startswith("reapresentados/")
+    return False
+
+
+def processar(grupo: str, gravar: bool, so_historicos: bool = False) -> dict:
+    """`so_historicos`: só os `ltm_<ref>` de trimestre anterior (o principal já foi recoletado e gravado)."""
     arq = ARQUIVOS[grupo]
     series = json.loads(arq.read_text(encoding="utf-8"))
     rel, saida = {}, {}
     for tk, reg in series.items():
         try:
             principal, refs = trimestres(reg)
-            novo = recoletar(grupo, tk, MES[principal[:2]])
-            # `ltm_<ref>` de trimestre anterior (ex.: o `ltm_2T26` do hall, gravado antes da AUD-68) é retrato histórico: o
-            # motor lê o LTM vigente (`ltm.ltm_de`). Fica intocado, fora da comparação e do campo novo, e é listado.
             historicos = [f"ltm_{r}" for r in refs if r != principal]
-            reg_cmp = {k: v for k, v in reg.items() if k not in historicos}
+            novo = dict(reg) if so_historicos else recoletar(grupo, tk, MES[principal[:2]])
+            for h in historicos:                 # cada trimestre anterior recoletado no próprio mês
+                novo[h] = recoletar(grupo, tk, MES[h[4:6]])[h]
+            reg_cmp = {k: reg[k] for k in historicos} if so_historicos else reg
         except Exception as x:          # noqa: BLE001 — registra a falha com a razão; o arquivo não é gravado
             rel[tk] = dict(erro=f"{type(x).__name__}: {x}")
             continue
         todas = divergencias(reg_cmp, novo)
-        explicadas = [x for x in todas if x in EXPLICADAS.get((grupo, tk), ())]
+        explicadas = [x for x in todas if x in EXPLICADAS.get((grupo, tk), ()) or _explicada_aud68(x, historicos)]
         div = [x for x in todas if x not in explicadas]
-        out, sem = acrescentar(reg_cmp, novo)
-        out.update({k: reg[k] for k in historicos})
-        rel[tk] = dict(divergencias=div, divergencias_explicadas=explicadas, sem_campo=sem, historicos_intocados=historicos)
+        if so_historicos:
+            out = json.loads(json.dumps(reg))
+            sem = []
+            for h in historicos:
+                if isinstance(out[h], dict) and out[h] and not out[h].get("erro"):
+                    if novo[h].get(CAMPO) is None:
+                        sem.append(h)
+                    else:
+                        out[h][CAMPO] = novo[h][CAMPO]
+        else:
+            out, sem = acrescentar(reg_cmp, novo)
+        rel[tk] = dict(divergencias=div, divergencias_explicadas=explicadas, sem_campo=sem, historicos=historicos)
         saida[tk] = {k: out[k] for k in reg}            # mesma ordem de chaves do arquivo antigo
     ok = all(not r.get("erro") and not r["divergencias"] for r in rel.values())
     if gravar and ok:
         hist = arq.parent / "_historico"
         hist.mkdir(exist_ok=True)
-        shutil.copy2(arq, hist / f"{arq.stem}_{DATA}_antes_B57{arq.suffix}")
+        destino, n = hist / f"{arq.stem}_{DATA}_antes_B57{arq.suffix}", 2
+        while destino.exists():                 # nunca sobrescreve um backup anterior
+            destino, n = hist / f"{arq.stem}_{DATA}_antes_B57_{n}{arq.suffix}", n + 1
+        shutil.copy2(arq, destino)
         arq.write_text(json.dumps(saida, ensure_ascii=False, indent=1), encoding="utf-8")
     return dict(arquivo=str(arq), aditiva=ok, gravado=bool(gravar and ok), tickers=rel)
 
@@ -149,11 +176,11 @@ def processar(grupo: str, gravar: bool) -> dict:
 def main(argv=None) -> int:
     sys.stdout.reconfigure(encoding="utf-8")
     a = list(argv if argv is not None else sys.argv[1:])
-    if a[:1] not in (["conferir"], ["gravar"]):
+    if a[:1] not in (["conferir"], ["gravar"], ["historicos"]):
         print(__doc__)
         return 2
     grupos = a[1:] or list(ARQUIVOS)
-    rel = {g: processar(g, a[0] == "gravar") for g in grupos}
+    rel = {g: processar(g, a[0] != "conferir", so_historicos=a[0] == "historicos") for g in grupos}
     arq_rel = AQUI / "recoleta_B57.json"
     todos = json.loads(arq_rel.read_text(encoding="utf-8")) if arq_rel.exists() else {}
     todos.update(rel)                       # rodar um grupo só não apaga o relatório dos outros
