@@ -113,3 +113,13 @@ def test_valor_de_mercado_prefere_a_unit():
     assert vm == pytest.approx(300 / 3 * 21.85 / 1000) and "unit" in nota
     vm, nota = valor_mercado(acoes, {"on": 10.0, "pn": None})
     assert vm == pytest.approx(3.0) and "PN sem pregão" in nota
+
+
+def test_relatorio_emenda11_duas_versoes_e_leitura_indicio_so_no_ibovespa():
+    r = _resultado({"i": -0.0293, "ii": -0.0489, "iii": -0.0142})
+    r["estimativas"]["i_emenda9"] = {"nome": "Bancos v9", "ke_real": 0.0742, "ke_mesa_real": 0.1286, "sens": {}}
+    r["deltas_emenda9"] = {"i": -0.0544, "ii": -0.0489, "iii": -0.0142}
+    r["gatilho_emenda9"] = c.gatilho(r["deltas_emenda9"])
+    md = rel.montar(r)
+    assert "**NÃO DISPARA**" in md and "indício só no Ibovespa" in md and "sem prioridade de calibração" in md
+    assert "(i) v. emenda 9" in md and "-5,44 p.p." in md and "DISPARA, mediana -4,89 p.p." in md

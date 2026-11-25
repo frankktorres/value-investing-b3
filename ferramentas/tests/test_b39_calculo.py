@@ -121,3 +121,36 @@ def test_gatilho_com_duas_e_a_media_com_uma_nao_conclusiva():
     assert r["mediana"] == pytest.approx(0.035) and r["veredito"] == "DISPARA" and r["faltam"] == ["ii"]
     r = c.gatilho({"i": 0.10, "ii": None, "iii": None})
     assert r["veredito"] == "NÃO CONCLUSIVA" and r["mediana"] is None
+
+
+# ------------------------------------------------------------------ emenda 11: (i) toda em real
+ITUB4_ROE_NOM = {2016: 0.186947, 2017: 0.169033, 2018: 0.166897, 2019: 0.180795, 2020: 0.124320,
+                 2021: 0.167774, 2022: 0.173788, 2023: 0.175907, 2024: 0.195487, 2025: 0.205596}
+IPCA_ANO = {2016: 0.062881, 2017: 0.029473, 2018: 0.037455, 2019: 0.043060, 2020: 0.045173,       # SGS 433, jan–dez
+            2021: 0.100611, 2022: 0.057848, 2023: 0.046211, 2024: 0.048313, 2025: 0.042644}
+
+
+def test_itub4_a_mao_emenda11():
+    # ROE real 2023 = 1,175907/1,046211 − 1 = 12,397%; 2018 = 1,166897/1,037455 − 1 = 12,477% → mediana dos 10 = 12,437%
+    rr = c.roe_reais(ITUB4_ROE_NOM, IPCA_ANO)
+    assert rr[2023] == pytest.approx(0.123967, abs=1e-6) and rr[2018] == pytest.approx(0.124768, abs=1e-6)
+    rn = c.roe_normalizado(rr)
+    assert rn == pytest.approx(0.124368, abs=1e-6)
+    # Ke real = 1% + (12,437% − 1%) ÷ 1,948 = 6,871%
+    assert c.ke_banco_real(rn, 1.948031, 0.01) == pytest.approx(0.06871, abs=1e-5)
+
+
+def test_falha_se_misturar_roe_historico_com_pi_futuro():
+    # a conta da emenda 9 (ROE nominal histórico, g nominal com a π futura de 7,17%) dá 5,43% no ITUB4: 1,4 p.p. abaixo
+    misturado = c.ke_banco(c.roe_normalizado(ITUB4_ROE_NOM), 1.948031, 0.01, 0.071706)[1]
+    certo = c.ke_banco_real(c.roe_normalizado(c.roe_reais(ITUB4_ROE_NOM, IPCA_ANO)), 1.948031, 0.01)
+    assert misturado == pytest.approx(0.0543, abs=1e-4)
+    assert certo - misturado > 0.014
+    # e as duas só coincidem se a π histórica for igual à futura (aqui, IPCA constante = π)
+    const = {a: 0.071706 for a in ITUB4_ROE_NOM}
+    assert c.ke_banco_real(c.roe_normalizado(c.roe_reais(ITUB4_ROE_NOM, const)), 1.948031, 0.01) == pytest.approx(misturado, abs=1e-4)
+
+
+def test_inflacao_acumulada():
+    assert c.inflacao_acumulada([0.01] * 12) == pytest.approx(1.01 ** 12 - 1)
+    assert c.roe_reais({2020: 0.1, 2030: 0.1}, {2020: 0.05}) == {2020: pytest.approx(1.1 / 1.05 - 1)}
