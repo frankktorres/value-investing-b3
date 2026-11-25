@@ -28,6 +28,7 @@ PROTEGIDOS = [
     ".claude/settings.json", ".claude/hooks/trava_config.py", ".claude/hooks/avisos.py", ".claude/hooks/auto_commit.py",
     "ferramentas/tests/test_travas.py", "ferramentas/tests/test_b37_trava_master.py",
     "ferramentas/tests/test_motor_puro.py", "ferramentas/tests/test_docs_caminhos.py",
+    "ferramentas/conferir_noite.py", "ferramentas/tests/test_conferir_noite_travas.py",   # PENDENTE #11 (25/11)
 ]
 sys.path.insert(0, str(RAIZ / ".claude" / "hooks"))
 import avisos  # noqa: E402
@@ -130,6 +131,16 @@ def test_protegidos_com_hash_fixado():
     difere = sorted(rel for rel in PROTEGIDOS if gravado.get(rel) != atual[rel])
     assert not difere, ("arquivo protegido mudou sem liberação do Frank (trava 4.2): " + ", ".join(difere)
                         + ". Liberado? `MESA_LIBERA_CONFIG=1 python tests/test_travas.py --gravar-hashes`")
+
+
+def test_canario_deny_fecha_o_furo_do_pre_push():
+    """PENDENTE #11: pular o pre-push (flag de pular hooks, trocar o hooksPath) é negado no Bash e no PowerShell."""
+    deny = set(json.loads((RAIZ / ".claude" / "settings.json").read_text(encoding="utf-8"))["permissions"]["deny"])
+    for shell in ("Bash", "PowerShell"):
+        for padrao in ("*--no-verify*", "*core.hooksPath*", "*hooksPath=*", "*MESA_LIBERA_CONFIG*", "*GOLDEN_REGRAVAR*"):
+            assert f"{shell}({padrao})" in deny, f"{shell}({padrao}) fora do deny"
+    for rel in ("ferramentas/conferir_noite.py", "ferramentas/tests/test_conferir_noite_travas.py"):
+        assert rel in trava_config.TRAVAS_ARQUIVOS and rel in PROTEGIDOS, rel
 
 
 PISO_MINIMO = 1237   # B37: o piso do pre-push nunca abaixo disto (adversário, 25/11: baixar por Bash anularia o max())
