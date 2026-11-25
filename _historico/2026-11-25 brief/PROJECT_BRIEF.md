@@ -1,5 +1,5 @@
 # PROJECT BRIEF — Mesa de Value Investing B3
-*Versão de 25/11/2026 (B36 hold-out FEITO: NÃO PASSOU, 1 de 6 linhas; falhas B40–B48; B39 pré-registrada); antes, 24/11/2026, noite 2 (B36 hold-out em andamento: emenda 8 pré-registrada sozinha, executor `holdout_b36/`, piloto de 3; antes, hook Stop só snapshot em `wip/auto`; antes, à tarde: B34 + desbloqueio do oráculo: emenda 7, Graham no Ke da casa, check `ordem`, hold-out B36; defeito H2 do Ke corrigido — D/E a mercado sem ponto fixo, doutrina v2.7; dossiês recalculados na data, point-in-time; 3T26 juntado no master; antes: 23/11, gravação do 3T26 com data-base 19/11)*
+*Versão de 24/11/2026, noite 2 (B36 hold-out em andamento: emenda 8 pré-registrada sozinha, executor `holdout_b36/`, piloto de 3; antes, hook Stop só snapshot em `wip/auto`; antes, à tarde: B34 + desbloqueio do oráculo: emenda 7, Graham no Ke da casa, check `ordem`, hold-out B36; defeito H2 do Ke corrigido — D/E a mercado sem ponto fixo, doutrina v2.7; dossiês recalculados na data, point-in-time; 3T26 juntado no master; antes: 23/11, gravação do 3T26 com data-base 19/11)*
 
 ## 1. Projeto
 Mesa de análise fundamentalista da B3 para dividendos/JCP e longo prazo: doutrina escrita (v2.7) + motores de valuation em Python que
@@ -36,7 +36,7 @@ MVP de uso pessoal, maduro no cálculo. Um usuário real, sem terceiros. Prazo e
 - **`backtest/`:** ledger point-in-time + COTAHIST (parado no portão do proxy). **`monitor_semanal.py`**, **`temporada.py`**, **`registro_prospectivo.py`**.
 - **Testes:** pytest com golden dos 41 tickers: 963 passed + 42 pulados no hall (22/10, nuvem, sem `--ignore`; era 458 em 09/10; `EXIGIR_DADOS=1` transforma skip em falha) + 308 no backtest (09/10; rodar SOZINHO, ~13 min, e com a máquina folgada: a suíte inteira estoura memória se algo mais estiver aberto). Mudança no `Mercado` ou nos motores exige rodar as duas suítes.
 
-## 5. Top 6 gargalos
+## 5. Top 5 gargalos
 1. **Insumos e premissas, não fórmulas.** Auditoria de 08/10: 109 achados, 5 ALTO; motores conferem a 0–0,36%, mas insumos movem o central
    em 5–48% (AUD-01 receita nominal × real, `motor_nao_financeiras.py:386`; AUD-02 dividendos fora da DL, `lote4_saude_telecom.py:193`;
    AUD-03 IFRS 16 na PETR4; AUD-04 follow-on ISAE4 — corrigidos na Onda 1.1). Na 1.2 (v2.4) o custo de capital passou a depender da dívida
@@ -53,9 +53,8 @@ MVP de uso pessoal, maduro no cálculo. Um usuário real, sem terceiros. Prazo e
    incluída (A1 e H2 fechados em 24/11 pelo D/E a mercado). Também: Ke > 30% em 4 tickers (H2) e `roe_lp` a ≥ 1 p.p. do DFP em 5 financeiras (H8). Correção na Fase 3, com ⏸
    antes de mudar palavra.) Backtest parou: proxy reproduziu a palavra em 70,7% (portão ≥ 80%). Validação agora só prospectiva,
    lenta por natureza. Pré-registro fixado em 14/10 (B25): IC de postos P/C × retorno excedente sobre a média do hall; 1ª leitura possível em out/2027.
-4. **A Mesa ainda não analisa uma ação qualquer sozinha (B36, 25/11).** Hold-out da v2.7 em 20 ações fora do hall: NÃO PASSOU (1 de 6 linhas do critério). 6 de 20 param em evento societário/dado (B40–B43), 9 de 14 saem NÃO CONCLUSIVO, 6 com valor absurdo (central ≤ 0, P/C > 5), 3 com Ke > 30%, vazios medianos 75%, só 43% dos insumos saem de código; tempo mediano 2,6 min. P/C mediano 3,26 × hall 1,82. Relatório `docs/holdout/B36-2026-11.md`.
-5. **Universo que não gera compra.** Blue chips eficientes: quase tudo JUSTA/CARA, zero compra; triagem de toda a B3 deixou 5 de 104 no portão.
-6. **Risco de burocracia.** O projeto paralelo (`analisador/`) morreu por regra nova a cada sessão sem decisão; o próprio repo registra sinais
+4. **Universo que não gera compra.** Blue chips eficientes: quase tudo JUSTA/CARA, zero compra; triagem de toda a B3 deixou 5 de 104 no portão.
+5. **Risco de burocracia.** O projeto paralelo (`analisador/`) morreu por regra nova a cada sessão sem decisão; o próprio repo registra sinais
    da mesma doença. Comitê único (mesma família de modelo; 2º comitê pausado).
 
 ## 6. Próximos 4 marcos
@@ -112,7 +111,6 @@ MVP de uso pessoal, maduro no cálculo. Um usuário real, sem terceiros. Prazo e
 6. Licença pretendida do código (fechado/aberto)?
 
 ## 12. O que mudou
-- 25/11/2026 (B36 concluída): as 20 rodadas e o relatório gerado dos JSONs (`holdout_b36/relatorio.py`) — NÃO PASSOU; marco B36 fechado; gargalo novo §5.4 (Mesa não roda sozinha: eventos societários, central ≤ 0, Ke > 30%, protocolo de insumos), falhas B40–B48; B39 (Ke × Ke implícito, X = 3 p.p.) pré-registrada para depois.
 - 24/11/2026 (noite 2, B36): ferramenta nova `ferramentas/holdout_b36/` (seletor mecânico por liquidez, executor que reusa `dossie.gerar`/`motor_financeiras` sem tocar os registros globais, protocolo fixo de insumos por subagente Sonnet); emenda 8 commitada antes de rodar (5680ac2); 6 das 20 já falham por método (eventos em ações sem semântica, FRE sem capital, dividendos repetidos) — critério 1 reprovado; piloto RADL3/BPAC11/EQTL3 com 43–56% de insumos automáticos; B37 (trava pre-push) e B38 (conferência em 19/11/2027) no BACKLOG.
 - 24/11/2026 (noite): hook `Stop` (`.claude/hooks/auto_commit.py`) deixa de commitar/empurrar no `master`; só guarda snapshot em `wip/auto` (decisão do Frank, igual à F49 do UNION). O `master` só recebe commit explícito com a suíte verde.
 - 24/11/2026 (B34): doutrina v2.7 — D/E a mercado sem ponto fixo (Damodaran, *Investment Valuation* cap. 8/15, nota B); dossiê recalculado na data (LTM pelo prazo do ITR, Res. CVM 80 art. 31 II; IPCA até D − 2); `dados/mercado_2026-10-02.json`; teste de coerência desconto × ponte; BACKLOG B35; 3T26 + H2 juntados no master (fast-forward).

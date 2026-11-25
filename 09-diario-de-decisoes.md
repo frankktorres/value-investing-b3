@@ -1195,3 +1195,19 @@ RED CAP (B40) e INCORPORACAO (B41), MBRF3 sem capital no FRE (B42), IGTI11 divid
 ainda **não** analisa uma ação qualquer sozinha — 43% dos insumos saem de código, 6 de 20 param em evento societário e, das
 que rodam, só 5 dão palavra fora do NÃO CONCLUSIVO. Nenhuma palavra do hall mudou; motor, doutrina, golden, ficha e protocolo
 intocados.
+
+### 25/11/2026 — B39: emenda 9 do pré-registro, antes de rodar
+Acréscimos do Frank viraram a **emenda 9** (`docs/PRE-REGISTRO-v3.md`, commit próprio aa937fd), que substitui o teste e o
+gatilho do B39 (nada rodado). Tudo em **Ke real** com a rf do DNA §1.1 (IPCA+ sem cupom ~10 anos, π da curva) nos dois lados;
+X = 3 p.p. mantido, agora no real (~0,15 p.p. de diferença). **Três estimativas:** (i) bancos do hall + BPAC11 por Gordon com
+ROE = mediana de 10 exercícios (LTM só sensibilidade); (ii) Ibovespa por E10 real ÷ P (lucro médio real de 10 anos, princípio do
+CAPE; sem PETR/VALE só relatado); (iii) rf − spread de default + ERP total do Brasil (Damodaran `ctryprem` jan/2026). **Gatilho:**
+|mediana dos 3 Δ| > 3 p.p. → nível do Ke entra na calibração (B35/B46). **Decisões técnicas minhas, declaradas na emenda:**
+(a) na (iii) o spread de default sai da NTN-B antes de somar o ERP total (método do Damodaran; senão o risco-país conta duas
+vezes) — a forma literal "rf + ERP total" fica como sensibilidade; (b) na (ii) o Ke implícito é o EPV reverso (E10 ÷ P, sem
+crescimento), o mesmo princípio da âncora EPV; Gordon com payout fica como sensibilidade; (c) o Ke da Mesa de (ii) e (iii) é
+rf + prêmio da Mesa aplicado ao índice (média ponderada: 5 p.p. nas financeiras, Hamada a mercado com t = 34% nas demais).
+Fontes de Shiller e Damodaran ainda **a abrir** (nota B só depois).
+**Aceite (Frank, 25/11):** as 3 escolhas (a)–(c) aprovadas. **Condição de execução:** antes de qualquer conta, abrir e ler
+o `ctryprem` de jan/2026 e o texto do método de risco-país do Damodaran e a definição do CAPE do Shiller; dar nota A/B e
+conferir a emenda 9 contra eles; divergência → **emenda 10** em commit próprio, e só então rodar.

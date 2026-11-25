@@ -46,3 +46,5 @@ livros/
 claude tools/
 AÇÕES VALUE INVESTING.txt
 INVESTIDORES.txt
+# B39: brutos baixados (Tesouro CSV, ctryprem, cache da CVM) — rebaixáveis por python -m b39.insumos / b39.cvm
+ferramentas/b39/dados/
