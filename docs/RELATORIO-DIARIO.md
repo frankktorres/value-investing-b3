@@ -1,6 +1,15 @@
 # RELATORIO-DIARIO
 *Uma entrada por dia/turno, a mais nova em cima: o que foi feito (com commit), decisões tomadas, o que ficou, erros. Máx. 10 linhas por entrada.*
 
+## 25/11/2026 — B46, Ke > 30% nas muito alavancadas (sessão do Frank)
+- Fiz: emenda 12 antes de rodar (5461a47): "separar a dificuldade" (Damodaran 2009, fonte aberta no primário) — D/E da indústria na
+  continuidade + π de calote (rating da cobertura × Z'' de Altman). Medição em `ferramentas/b46/` sem tocar o motor (e8a039b).
+- Resultado: **NÃO CONCLUSIVA** (tentativa 7/24), como previsto: mecânica certa, π não identificável (C3 15 de 24). Ke previsto
+  bateu nas 5. Nada implantado; golden igual.
+- Erros: o leitor do C2a reprovava central ≤ 0 sem mudança (1ª leitura FALHA) e o `adversario` achou 2 defeitos do executor —
+  todos corrigidos para o texto da emenda, com teste, e re-execução igual. Novo: B57 (X2 do Z'').
+- Precisa de você: nada.
+
 ## 25/11/2026 — B40, cisão com redução de capital (sessão do Frank)
 - Fiz: `CIS RED CAP` com semântica conferida (b2b9d60). Multiplicador 1, a ação nova fica registrada e fora do DPA. Fonte A no FRE da CVM (0 ações canceladas): Cosan 2014, MRV 2018 e GPA 2020 (fora da B36).
 - Provado: CSAN3 e MRVE3 rodam (NÃO CONCLUSIVO; Ke 38,8% e 32,3% → B46). Golden igual. Suíte 1302 verde.
