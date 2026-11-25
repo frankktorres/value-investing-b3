@@ -363,9 +363,14 @@ def owner_earnings_ano(emp: Industrial, ano, anterior, kd_real, ciclica=False, t
 
 # ---------------------------------------------------------------- qualidade contábil
 def altman_z2(d):
+    # B57 (emenda 13 do PRE-REGISTRO-v3; docs/b57/FONTES-B57.md): X2 = lucros retidos ÷ ativo, e o lucro retido da Lei 6.404
+    # está nas reservas de lucros (2.03.04) + lucros/prejuízos acumulados (2.03.05). Sem a 2.03.05 (série antiga não
+    # recoletada) → erro explícito: com 0 o prejuízo acumulado sumiria do X2, que era o defeito.
     at = d["ativo"]
+    if d.get("lucros_acumulados") is None:
+        raise ValueError("Z'' sem a conta 2.03.05 (lucros/prejuízos acumulados): série não recoletada (B57)")
     x1 = (v(d, "ac", 0) - v(d, "pc", 0)) / at
-    x2 = v(d, "reservas_lucro", 0) / at
+    x2 = (v(d, "reservas_lucro", 0) + d["lucros_acumulados"]) / at
     x3 = v(d, "ebit", 0) / at
     x4 = v(d, "pl", 0) / (v(d, "pc", 0) + v(d, "pnc", 0))
     z = 3.25 + 6.56 * x1 + 3.26 * x2 + 6.72 * x3 + 1.05 * x4

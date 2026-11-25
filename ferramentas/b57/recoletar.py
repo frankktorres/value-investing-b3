@@ -37,6 +37,11 @@ ARQUIVOS = {
     "b36": FERRAMENTAS / "holdout_b36" / "dados" / "cvm_series_holdout.json",
 }
 DATA = "2026-11-25"
+# Divergências em campo ANTIGO, explicadas e fora do escopo da B57: a série da CMIN3 é de 02/10, antes da AUD-68 (3.11.01 = 0 vira
+# None; ações do ITR). O valor antigo fica como está (nada é reescrito) e a conta nova entra; o conserto é o B60 do BACKLOG.
+EXPLICADAS = {("dossie", "CMIN3"): ("/anual/2022/lucro_controlador: 0.0 → None", "/anual/2023/lucro_controlador: 0.0 → None",
+                                    "/anual/2024/lucro_controlador: 0.0 → None",
+                                    "/ltm_2T26/acoes: 54267151083.0 → 5402435438.0")}
 
 
 def trimestres(reg: dict) -> tuple[str, list[str]]:
@@ -125,10 +130,12 @@ def processar(grupo: str, gravar: bool) -> dict:
         except Exception as x:          # noqa: BLE001 — registra a falha com a razão; o arquivo não é gravado
             rel[tk] = dict(erro=f"{type(x).__name__}: {x}")
             continue
-        div = divergencias(reg_cmp, novo)
+        todas = divergencias(reg_cmp, novo)
+        explicadas = [x for x in todas if x in EXPLICADAS.get((grupo, tk), ())]
+        div = [x for x in todas if x not in explicadas]
         out, sem = acrescentar(reg_cmp, novo)
         out.update({k: reg[k] for k in historicos})
-        rel[tk] = dict(divergencias=div, sem_campo=sem, historicos_intocados=historicos)
+        rel[tk] = dict(divergencias=div, divergencias_explicadas=explicadas, sem_campo=sem, historicos_intocados=historicos)
         saida[tk] = {k: out[k] for k in reg}            # mesma ordem de chaves do arquivo antigo
     ok = all(not r.get("erro") and not r["divergencias"] for r in rel.values())
     if gravar and ok:
@@ -147,7 +154,10 @@ def main(argv=None) -> int:
         return 2
     grupos = a[1:] or list(ARQUIVOS)
     rel = {g: processar(g, a[0] == "gravar") for g in grupos}
-    (AQUI / "recoleta_B57.json").write_text(json.dumps(rel, ensure_ascii=False, indent=1), encoding="utf-8")
+    arq_rel = AQUI / "recoleta_B57.json"
+    todos = json.loads(arq_rel.read_text(encoding="utf-8")) if arq_rel.exists() else {}
+    todos.update(rel)                       # rodar um grupo só não apaga o relatório dos outros
+    arq_rel.write_text(json.dumps(todos, ensure_ascii=False, indent=1), encoding="utf-8")
     for g, r in rel.items():
         ruins = {tk: x for tk, x in r["tickers"].items() if x.get("erro") or x["divergencias"]}
         sem = {tk: x["sem_campo"] for tk, x in r["tickers"].items() if x.get("sem_campo")}

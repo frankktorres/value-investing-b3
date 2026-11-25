@@ -98,7 +98,8 @@
     "recompra": 0.0,
     "arrendamento_pago": 0.0,
     "arrendamento_pago_com_juros": 0.0,
-    "juros_pagos": 10356.0
+    "juros_pagos": 10356.0,
+    "lucros_acumulados": 0.0
    },
    "2018": {
     "receita": 782165.0,
@@ -149,7 +150,8 @@
     "recompra": 0.0,
     "arrendamento_pago": 0.0,
     "arrendamento_pago_com_juros": 0.0,
-    "juros_pagos": 13817.0
+    "juros_pagos": 13817.0,
+    "lucros_acumulados": 0.0
    },
    "2019": {
     "receita": 977501.0,
@@ -200,7 +202,8 @@
     "recompra": 0.0,
     "arrendamento_pago": 0.0,
     "arrendamento_pago_com_juros": 0.0,
-    "juros_pagos": 15283.0
+    "juros_pagos": 15283.0,
+    "lucros_acumulados": 0.0
    },
    "2020": {
     "receita": 1181804.0,
@@ -252,7 +255,8 @@
     "arrendamento_pago": 0.0,
     "arrendamento_pago_com_juros": 0.0,
     "juros_pagos": 15925.0,
-    "acoes": 148000000.0
+    "acoes": 148000000.0,
+    "lucros_acumulados": 0.0
    },
    "2021": {
     "receita": 1366407.0,
@@ -304,7 +308,8 @@
     "arrendamento_pago": 1224.0,
     "arrendamento_pago_com_juros": 0.0,
     "juros_pagos": 25848.0,
-    "acoes": 179393939.0
+    "acoes": 179393939.0,
+    "lucros_acumulados": 0.0
    },
    "2022": {
     "receita": 1406909.0,
@@ -356,7 +361,8 @@
     "arrendamento_pago": 2686.0,
     "arrendamento_pago_com_juros": 0.0,
     "juros_pagos": 37728.0,
-    "acoes": 177830739.0
+    "acoes": 177830739.0,
+    "lucros_acumulados": 0.0
    },
    "2023": {
     "receita": 1372633.0,
@@ -408,7 +414,8 @@
     "arrendamento_pago": 4268.0,
     "arrendamento_pago_com_juros": 0.0,
     "juros_pagos": 35636.0,
-    "acoes": 177680739.0
+    "acoes": 177680739.0,
+    "lucros_acumulados": 0.0
    },
    "2024": {
     "receita": 1754376.0,
@@ -460,7 +467,8 @@
     "arrendamento_pago": 5884.0,
     "arrendamento_pago_com_juros": 0.0,
     "juros_pagos": 76877.0,
-    "acoes": 177680739.0
+    "acoes": 177680739.0,
+    "lucros_acumulados": 0.0
    },
    "2025": {
     "receita": 1702382.0,
@@ -512,7 +520,8 @@
     "arrendamento_pago": 7023.0,
     "arrendamento_pago_com_juros": 0.0,
     "juros_pagos": 71517.0,
-    "acoes": 228757802.0
+    "acoes": 228757802.0,
+    "lucros_acumulados": 0.0
    }
   },
   "ltm_2T26": {
@@ -565,7 +574,8 @@
    "arrendamento": 0.0,
    "arrendamento_saldo": 32023.0,
    "biologico": 0.0,
-   "acoes": 228757802.0
+   "acoes": 228757802.0,
+   "lucros_acumulados": 0.0
   },
   "auditoria_linhas_dfc": {
    "2016": {},
@@ -911,7 +921,8 @@
     "recompra": 0.0,
     "arrendamento_pago": 17809.0,
     "arrendamento_pago_com_juros": 0.0,
-    "juros_pagos": 141250.0
+    "juros_pagos": 141250.0,
+    "lucros_acumulados": 0.0
    },
    "2020": {
     "receita": 13789531.0,
@@ -963,7 +974,8 @@
     "arrendamento_pago": 18375.0,
     "arrendamento_pago_com_juros": 0.0,
     "juros_pagos": 56990.0,
-    "acoes": 181001902.0
+    "acoes": 181001902.0,
+    "lucros_acumulados": 0.0
    },
    "2021": {
     "receita": 19039870.0,
@@ -1015,7 +1027,8 @@
     "arrendamento_pago": 15527.0,
     "arrendamento_pago_com_juros": 0.0,
     "juros_pagos": 75489.0,
-    "acoes": 5380431538.0
+    "acoes": 5380431538.0,
+    "lucros_acumulados": 0.0
    },
    "2022": {
     "receita": 13272564.0,
@@ -1067,7 +1080,8 @@
     "arrendamento_pago": 22656.0,
     "arrendamento_pago_com_juros": 0.0,
     "juros_pagos": 295972.0,
-    "acoes": 5485338838.0
+    "acoes": 5485338838.0,
+    "lucros_acumulados": 0.0
    },
    "2023": {
     "receita": 18880426.0,
@@ -1119,7 +1133,8 @@
     "arrendamento_pago": 18763.0,
     "arrendamento_pago_com_juros": 0.0,
     "juros_pagos": 557623.0,
-    "acoes": 5485338838.0
+    "acoes": 5485338838.0,
+    "lucros_acumulados": 0.0
    },
    "2024": {
     "receita": 16496317.0,
@@ -1171,7 +1186,8 @@
     "arrendamento_pago": 27378.0,
     "arrendamento_pago_com_juros": 0.0,
     "juros_pagos": 678258.0,
-    "acoes": 5432044538.0
+    "acoes": 5432044538.0,
+    "lucros_acumulados": 0.0
    },
    "2025": {
     "receita": 18025121.0,
@@ -1223,7 +1239,8 @@
     "arrendamento_pago": 27525.0,
     "arrendamento_pago_com_juros": 0.0,
     "juros_pagos": 661375.0,
-    "acoes": 54267151083.0
+    "acoes": 54267151083.0,
+    "lucros_acumulados": 0.0
    }
   },
   "ltm_2T26": {
@@ -1276,7 +1293,8 @@
    "arrendamento": 0.0,
    "arrendamento_saldo": 0.0,
    "biologico": 0.0,
-   "acoes": 54267151083.0
+   "acoes": 54267151083.0,
+   "lucros_acumulados": 442014.0
   },
   "auditoria_linhas_dfc": {
    "2016": {},
@@ -1586,7 +1604,8 @@
     "recompra": 0.0,
     "arrendamento_pago": 22410.0,
     "arrendamento_pago_com_juros": 0.0,
-    "juros_pagos": 30682.0
+    "juros_pagos": 30682.0,
+    "lucros_acumulados": 0.0
    },
    "2020": {
     "receita": 4722413.0,
@@ -1639,7 +1658,8 @@
     "arrendamento_pago": 27716.0,
     "arrendamento_pago_com_juros": 0.0,
     "juros_pagos": 19832.0,
-    "acoes": 80415.0
+    "acoes": 80415.0,
+    "lucros_acumulados": 0.0
    },
    "2021": {
     "receita": 5738533.0,
@@ -1692,7 +1712,8 @@
     "arrendamento_pago": 34341.0,
     "arrendamento_pago_com_juros": 0.0,
     "juros_pagos": 22301.0,
-    "acoes": 93221.0
+    "acoes": 93221.0,
+    "lucros_acumulados": 0.0
    },
    "2022": {
     "receita": 5127781.0,
@@ -1745,7 +1766,8 @@
     "arrendamento_pago": 39380.0,
     "arrendamento_pago_com_juros": 0.0,
     "juros_pagos": 111936.0,
-    "acoes": 93221.0
+    "acoes": 93221.0,
+    "lucros_acumulados": 0.0
    },
    "2023": {
     "receita": 5854915.0,
@@ -1798,7 +1820,8 @@
     "arrendamento_pago": 38683.0,
     "arrendamento_pago_com_juros": 0.0,
     "juros_pagos": 87470.0,
-    "acoes": 93221.0
+    "acoes": 93221.0,
+    "lucros_acumulados": 0.0
    },
    "2024": {
     "receita": 5521381.0,
@@ -1851,7 +1874,8 @@
     "arrendamento_pago": 35932.0,
     "arrendamento_pago_com_juros": 0.0,
     "juros_pagos": 74093.0,
-    "acoes": 94059.0
+    "acoes": 94059.0,
+    "lucros_acumulados": 0.0
    },
    "2025": {
     "receita": 5504620.0,
@@ -1904,7 +1928,8 @@
     "arrendamento_pago": 34779.0,
     "arrendamento_pago_com_juros": 0.0,
     "juros_pagos": 56815.0,
-    "acoes": 94931.0
+    "acoes": 94931.0,
+    "lucros_acumulados": 0.0
    }
   },
   "ltm": {
@@ -1957,7 +1982,8 @@
    "arrendamento_saldo": 59142.0,
    "biologico": 0.0,
    "proventos_a_pagar": 193.0,
-   "acoes": 95962.0
+   "acoes": 95962.0,
+   "lucros_acumulados": 0.0
   },
   "ltm_ref": "2T26",
   "ltm_2T26": {
@@ -2010,7 +2036,8 @@
    "arrendamento_saldo": 59142.0,
    "biologico": 0.0,
    "proventos_a_pagar": 193.0,
-   "acoes": 95962.0
+   "acoes": 95962.0,
+   "lucros_acumulados": 0.0
   },
   "auditoria_linhas_dfc": {
    "2016": {},
@@ -2179,7 +2206,8 @@
     "recompra": 0.0,
     "arrendamento_pago": 0.0,
     "arrendamento_pago_com_juros": 0.0,
-    "juros_pagos": 0.0
+    "juros_pagos": 0.0,
+    "lucros_acumulados": 0.0
    },
    "2017": {
     "receita": 1108722.0,
@@ -2231,7 +2259,8 @@
     "recompra": 0.0,
     "arrendamento_pago": 0.0,
     "arrendamento_pago_com_juros": 0.0,
-    "juros_pagos": 0.0
+    "juros_pagos": 0.0,
+    "lucros_acumulados": 0.0
    },
    "2018": {
     "receita": 1381056.0,
@@ -2283,7 +2312,8 @@
     "recompra": 0.0,
     "arrendamento_pago": 0.0,
     "arrendamento_pago_com_juros": 0.0,
-    "juros_pagos": 27024.0
+    "juros_pagos": 27024.0,
+    "lucros_acumulados": 0.0
    },
    "2019": {
     "receita": 1279550.0,
@@ -2335,7 +2365,8 @@
     "recompra": 0.0,
     "arrendamento_pago": 17904.0,
     "arrendamento_pago_com_juros": 0.0,
-    "juros_pagos": 47785.0
+    "juros_pagos": 47785.0,
+    "lucros_acumulados": 0.0
    },
    "2020": {
     "receita": 1622019.0,
@@ -2388,7 +2419,8 @@
     "arrendamento_pago": 26768.0,
     "arrendamento_pago_com_juros": 0.0,
     "juros_pagos": 32334.0,
-    "acoes": 85096700.0
+    "acoes": 85096700.0,
+    "lucros_acumulados": 0.0
    },
    "2021": {
     "receita": 2389477.0,
@@ -2441,7 +2473,8 @@
     "arrendamento_pago": 26149.0,
     "arrendamento_pago_com_juros": 0.0,
     "juros_pagos": 30590.0,
-    "acoes": 85096700.0
+    "acoes": 85096700.0,
+    "lucros_acumulados": 0.0
    },
    "2022": {
     "receita": 3139016.0,
@@ -2494,7 +2527,8 @@
     "arrendamento_pago": 34707.0,
     "arrendamento_pago_com_juros": 0.0,
     "juros_pagos": 35468.0,
-    "acoes": 85096700.0
+    "acoes": 85096700.0,
+    "lucros_acumulados": 0.0
    },
    "2023": {
     "receita": 2435135.0,
@@ -2547,7 +2581,8 @@
     "arrendamento_pago": 70879.0,
     "arrendamento_pago_com_juros": 0.0,
     "juros_pagos": 33351.0,
-    "acoes": 85096700.0
+    "acoes": 85096700.0,
+    "lucros_acumulados": 0.0
    },
    "2024": {
     "receita": 2236704.0,
@@ -2600,7 +2635,8 @@
     "arrendamento_pago": 89663.0,
     "arrendamento_pago_com_juros": 0.0,
     "juros_pagos": 26452.0,
-    "acoes": 340386800.0
+    "acoes": 340386800.0,
+    "lucros_acumulados": 0.0
    },
    "2025": {
     "receita": 2334454.0,
@@ -2653,7 +2689,8 @@
     "arrendamento_pago": 67732.0,
     "arrendamento_pago_com_juros": 0.0,
     "juros_pagos": 26299.0,
-    "acoes": 338867600.0
+    "acoes": 338867600.0,
+    "lucros_acumulados": 0.0
    }
   },
   "ltm": {
@@ -2707,7 +2744,8 @@
    "arrendamento_saldo": 38299.0,
    "biologico": 571790.0,
    "proventos_a_pagar": 75.0,
-   "acoes": 338867600.0
+   "acoes": 338867600.0,
+   "lucros_acumulados": 1937.0
   },
   "ltm_ref": "2T26",
   "ltm_2T26": {
@@ -2761,7 +2799,8 @@
    "arrendamento_saldo": 38299.0,
    "biologico": 571790.0,
    "proventos_a_pagar": 75.0,
-   "acoes": 338867600.0
+   "acoes": 338867600.0,
+   "lucros_acumulados": 1937.0
   },
   "auditoria_linhas_dfc": {
    "2016": {
@@ -2969,7 +3008,8 @@
     "recompra": 0.0,
     "arrendamento_pago": 0.0,
     "arrendamento_pago_com_juros": 0.0,
-    "juros_pagos": 25374.0
+    "juros_pagos": 25374.0,
+    "lucros_acumulados": 0.0
    },
    "2017": {
     "receita": 686769.0,
@@ -3021,7 +3061,8 @@
     "recompra": 0.0,
     "arrendamento_pago": 0.0,
     "arrendamento_pago_com_juros": 0.0,
-    "juros_pagos": 19204.0
+    "juros_pagos": 19204.0,
+    "lucros_acumulados": 0.0
    },
    "2018": {
     "receita": 946587.0,
@@ -3073,7 +3114,8 @@
     "recompra": 0.0,
     "arrendamento_pago": 0.0,
     "arrendamento_pago_com_juros": 0.0,
-    "juros_pagos": 34038.0
+    "juros_pagos": 34038.0,
+    "lucros_acumulados": 0.0
    },
    "2019": {
     "receita": 1060404.0,
@@ -3125,7 +3167,8 @@
     "recompra": 0.0,
     "arrendamento_pago": 0.0,
     "arrendamento_pago_com_juros": 0.0,
-    "juros_pagos": 33823.0
+    "juros_pagos": 33823.0,
+    "lucros_acumulados": 0.0
    },
    "2020": {
     "receita": 1051181.0,
@@ -3178,7 +3221,8 @@
     "arrendamento_pago": 0.0,
     "arrendamento_pago_com_juros": 0.0,
     "juros_pagos": 25564.0,
-    "acoes": 89252424.0
+    "acoes": 89252424.0,
+    "lucros_acumulados": 0.0
    },
    "2021": {
     "receita": 1705670.0,
@@ -3231,7 +3275,8 @@
     "arrendamento_pago": 0.0,
     "arrendamento_pago_com_juros": 0.0,
     "juros_pagos": 31767.0,
-    "acoes": 178510448.0
+    "acoes": 178510448.0,
+    "lucros_acumulados": 0.0
    },
    "2022": {
     "receita": 2093038.0,
@@ -3284,7 +3329,8 @@
     "arrendamento_pago": 0.0,
     "arrendamento_pago_com_juros": 0.0,
     "juros_pagos": 59698.0,
-    "acoes": 357143344.0
+    "acoes": 357143344.0,
+    "lucros_acumulados": 0.0
    },
    "2023": {
     "receita": 1925762.0,
@@ -3337,7 +3383,8 @@
     "arrendamento_pago": 0.0,
     "arrendamento_pago_com_juros": 0.0,
     "juros_pagos": 63543.0,
-    "acoes": 357148744.0
+    "acoes": 357148744.0,
+    "lucros_acumulados": 0.0
    },
    "2024": {
     "receita": 1945886.0,
@@ -3390,7 +3437,8 @@
     "arrendamento_pago": 0.0,
     "arrendamento_pago_com_juros": 0.0,
     "juros_pagos": 50563.0,
-    "acoes": 357148519.0
+    "acoes": 357148519.0,
+    "lucros_acumulados": 0.0
    },
    "2025": {
     "receita": 1938864.0,
@@ -3443,7 +3491,8 @@
     "arrendamento_pago": 0.0,
     "arrendamento_pago_com_juros": 0.0,
     "juros_pagos": 46288.0,
-    "acoes": 356554219.0
+    "acoes": 356554219.0,
+    "lucros_acumulados": 0.0
    }
   },
   "ltm": {
@@ -3503,7 +3552,8 @@
      "original": 52418.0,
      "comparativo": 1.0
     }
-   }
+   },
+   "lucros_acumulados": 71112.0
   },
   "ltm_ref": "2T26",
   "ltm_2T26": {
@@ -3563,7 +3613,8 @@
      "original": 52418.0,
      "comparativo": 1.0
     }
-   }
+   },
+   "lucros_acumulados": 71112.0
   },
   "auditoria_linhas_dfc": {
    "2016": {
@@ -3756,7 +3807,8 @@
     "recompra": 0.0,
     "arrendamento_pago": 0.0,
     "arrendamento_pago_com_juros": 0.0,
-    "juros_pagos": 62965.0
+    "juros_pagos": 62965.0,
+    "lucros_acumulados": 0.0
    },
    "2017": {
     "receita": 1574474.0,
@@ -3808,7 +3860,8 @@
     "recompra": 0.0,
     "arrendamento_pago": 0.0,
     "arrendamento_pago_com_juros": 0.0,
-    "juros_pagos": 63131.0
+    "juros_pagos": 63131.0,
+    "lucros_acumulados": 0.0
    },
    "2018": {
     "receita": 1734312.0,
@@ -3860,7 +3913,8 @@
     "recompra": 0.0,
     "arrendamento_pago": 0.0,
     "arrendamento_pago_com_juros": 0.0,
-    "juros_pagos": 53050.0
+    "juros_pagos": 53050.0,
+    "lucros_acumulados": 0.0
    },
    "2019": {
     "receita": 2007962.0,
@@ -3912,7 +3966,8 @@
     "recompra": 0.0,
     "arrendamento_pago": 21749.0,
     "arrendamento_pago_com_juros": 0.0,
-    "juros_pagos": 54887.0
+    "juros_pagos": 54887.0,
+    "lucros_acumulados": 0.0
    },
    "2020": {
     "receita": 1939142.0,
@@ -3965,7 +4020,8 @@
     "arrendamento_pago": 30166.0,
     "arrendamento_pago_com_juros": 0.0,
     "juros_pagos": 52601.0,
-    "acoes": 69305.0
+    "acoes": 69305.0,
+    "lucros_acumulados": -202455.0
    },
    "2021": {
     "receita": 2198001.0,
@@ -4018,7 +4074,8 @@
     "arrendamento_pago": 25116.0,
     "arrendamento_pago_com_juros": 0.0,
     "juros_pagos": 85180.0,
-    "acoes": 79713029.0
+    "acoes": 79713029.0,
+    "lucros_acumulados": 0.0
    },
    "2022": {
     "receita": 1879437.0,
@@ -4071,7 +4128,8 @@
     "arrendamento_pago": 18432.0,
     "arrendamento_pago_com_juros": 0.0,
     "juros_pagos": 155841.0,
-    "acoes": 79824502.0
+    "acoes": 79824502.0,
+    "lucros_acumulados": 0.0
    },
    "2023": {
     "receita": 2255510.0,
@@ -4124,7 +4182,8 @@
     "arrendamento_pago": 13984.0,
     "arrendamento_pago_com_juros": 0.0,
     "juros_pagos": 94601.0,
-    "acoes": 80128303.0
+    "acoes": 80128303.0,
+    "lucros_acumulados": 0.0
    },
    "2024": {
     "receita": 2171344.0,
@@ -4177,7 +4236,8 @@
     "arrendamento_pago": 14040.0,
     "arrendamento_pago_com_juros": 0.0,
     "juros_pagos": 80782.0,
-    "acoes": 79144497.0
+    "acoes": 79144497.0,
+    "lucros_acumulados": 0.0
    },
    "2025": {
     "receita": 2062563.0,
@@ -4230,7 +4290,8 @@
     "arrendamento_pago": 16879.0,
     "arrendamento_pago_com_juros": 0.0,
     "juros_pagos": 71772.0,
-    "acoes": 78459945.0
+    "acoes": 78459945.0,
+    "lucros_acumulados": 0.0
    }
   },
   "ltm": {
@@ -4284,7 +4345,8 @@
    "arrendamento_saldo": 710481.0,
    "biologico": 0.0,
    "proventos_a_pagar": 57563.0,
-   "acoes": 78243077.0
+   "acoes": 78243077.0,
+   "lucros_acumulados": 92016.0
   },
   "ltm_ref": "2T26",
   "ltm_2T26": {
@@ -4338,7 +4400,8 @@
    "arrendamento_saldo": 710481.0,
    "biologico": 0.0,
    "proventos_a_pagar": 57563.0,
-   "acoes": 78243077.0
+   "acoes": 78243077.0,
+   "lucros_acumulados": 92016.0
   },
   "auditoria_linhas_dfc": {
    "2016": {
