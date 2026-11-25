@@ -1,0 +1,6 @@
+{
+ "_nota": "Trava 4.5 (25/11/2026): impurezas que já existiam nos motores quando a trava nasceu. Só pode cair (test_motor_puro.py reprova se subir e pede para baixar quando cair; o hook trava_config só aceita baixar). motor_nao_financeiras.py:33 lê dados/derivados_zip.json no import (arrendamento pago do lote 4) — dado local versionado, não rede nem relógio; tirar = passar como argumento (mexe no motor: só com teste verde e registro no 09).",
+ "por_arquivo": {
+  "motor_nao_financeiras.py": {".read_text() (arquivo)": 1}
+ }
+}

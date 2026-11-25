@@ -1,0 +1,10 @@
+{
+ "_nota": "Trava 4.6 (25/11/2026): caminhos citados entre crases nos documentos vigentes que não existem no git nem são ignorados, no dia em que a trava nasceu. Lista que só encolhe (test_docs_caminhos.py reprova caminho novo e pede para tirar daqui o que for consertado; o hook trava_config só aceita encolher). Alguns são falso positivo conhecido (padrão loteN, caminho fora do repo, nome de repositório, pasta relativa ignorada); consertar o texto e tirar daqui.",
+ "por_arquivo": {
+  "README.md": ["atualizar_hall_loteN.py", "gerar_pdf_loteN.py"],
+  "PROJECT_BRIEF.md": ["OneDrive/Backups/value-investing", "cvm", "frankktorres/value-investing-b3", "gerar_pdf_loteN.py",
+                       "suite_ultima.json", "web/dados/hall.json"],
+  "docs/VALIDACAO.md": ["ferramentas/oraculo/insumos_externos.py", "ferramentas/oraculo/screens.py",
+                        "ferramentas/oraculo/sombra.py"]
+ }
+}
