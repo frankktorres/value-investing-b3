@@ -24,7 +24,12 @@ AQUI = Path(__file__).resolve().parent
 FATOS = AQUI / "dados" / "fatos_b39.parquet"
 ANOS_DFP = range(2015, 2026)
 ANOS_ITR = (2025, 2026)
-RE_DIV = re.compile(r"dividend|juros sobre (o )?capital|\bjcp\b", re.I)
+RE_DIV = re.compile(r"dividend|juros sobre (?:o )?capital|\bjcp\b", re.I)
+# Plano de banco desde 2023 (Res. CMN 4.966): "Lucro ou Prejuízo Líquido Consolidado do Período" (3.11) e "Atribuído AOS Sócios da
+# Empresa Controladora" (3.11.01). As regex de `fatos_cvm.POR_DESCRICAO` só casam o plano antigo ("Lucro/Prejuízo…", "a Sócios"):
+# lucro de BB e Bradesco saía vazio de 2023 em diante. Aqui a leitura é mais larga, só para o plano financeiro.
+RE_LC_FIN = re.compile(r"^atribu[íi]d[oa]s? (?:a|aos) s[óo]cios d[ae] (?:empresa )?controladora", re.I)
+RE_L_FIN = re.compile(r"^lucro(?: ou |/| )?preju[íi]zo (?:l[íi]quido )?(?:consolidado )?d[oa] (?:per[íi]odo|exerc[íi]cio)", re.I)
 
 
 # ------------------------------------------------------------------------------------------------ identidade
@@ -155,6 +160,56 @@ def _dividendos(base: pd.DataFrame) -> float:
     return 0.0
 
 
+def lucro_fin(rows: pd.DataFrame, so_acumulado: bool = False) -> float | None:
+    """Lucro do controlador do plano financeiro pela descrição larga (consolidado → individual); senão o lucro consolidado."""
+    for conj in ("con", "ind"):
+        b = rows[(rows["conjunto"] == conj) & (rows["ordem_exerc"] == "ULTIMO") & (rows["bloco"] == "DRE")]
+        if b.empty:
+            continue
+        if so_acumulado:
+            ini = b["dt_ini_exerc"].dropna()
+            if not ini.empty:
+                b = b[b["dt_ini_exerc"] == ini.min()]
+        achado = None
+        for rx in (RE_LC_FIN, RE_L_FIN):          # controlador = 0 com lucro ≠ 0 é linha não preenchida (ABCB4 2022–23)
+            x = b[b["descricao"].str.contains(rx, na=False)]
+            if len(x):
+                v = x["valor"].astype(float)
+                achado = float(v.loc[v.abs().idxmax()])
+                if achado != 0:
+                    return achado
+        if achado is not None:
+            return achado
+    return None
+
+
+def acoes_referencia(cd_cvm: int, data_base: str) -> float | None:
+    """Contagem de ações do ledger (FRE/composição, com a unidade já saneada em `diagnostico_acoes`), só como régua de escala."""
+    from backtest.ledger.pit import _acoes_em
+    try:
+        return _acoes_em(cd_cvm, data_base)[0]
+    except FileNotFoundError:
+        return None
+
+
+def escalar_acoes(acoes: dict, ref: float | None, qtd_teorica: float | None) -> tuple[dict, str]:
+    """A composição do capital vem em MILHARES em parte das companhias. × 1000 quando a contagem × 1000 fica a menos de 2× da
+    referência do ledger, ou (sem referência) quando a contagem é menor que a quantidade teórica do Ibovespa (só flutuante)."""
+    n = acoes["on"] + acoes["pn"]
+    if n <= 0:
+        return acoes, ""
+    mil = {k: v * 1000 for k, v in acoes.items()}
+    if ref:
+        if 0.5 <= n * 1000 / ref <= 2 and not 0.5 <= n / ref <= 2:
+            return mil, f"composição em milhares (× 1000; referência do ledger {ref:,.0f})"
+        if not 0.5 <= n / ref <= 2:
+            return acoes, f"contagem difere da referência do ledger ({n:,.0f} × {ref:,.0f})"
+        return acoes, ""
+    if qtd_teorica and n < qtd_teorica:
+        return mil, "composição em milhares (× 1000; menor que a quantidade teórica do Ibovespa)"
+    return acoes, ""
+
+
 def companhia(g: pd.DataFrame, cnpj: str, data_base: str) -> dict:
     """Anuais (lucro e PL do controlador, dividendos pagos), último balanço até T (PL, dívida, ações) e lucro LTM."""
     plano = plano_de(g)
@@ -165,9 +220,18 @@ def companhia(g: pd.DataFrame, cnpj: str, data_base: str) -> dict:
             continue
         sub = dfp[dfp["dt_refer"] == dr]
         c, conj, _ini, meses, amb = _contas_de(sub, dr, plano)
+        if c and conj == "con" and not lucro_controlador(c) and not _pl_controlador(c):
+            # consolidado entregue todo zerado (TIMS3 2024–25): vale o individual
+            ci = _contas_de(sub[sub["conjunto"] == "ind"], dr, plano)
+            if ci[0] and (lucro_controlador(ci[0]) or _pl_controlador(ci[0])):
+                c, conj, _ini, meses, amb = ci
+                out["avisos"].append(f"DFP {dr}: consolidado zerado, usado o individual")
         if not c or meses < 11:
             continue
-        out["anuais"][int(dr[:4])] = {"dt_refer": dr, "conjunto": conj, "lucro": lucro_controlador(c),
+        lucro = lucro_controlador(c)
+        if not lucro and plano == FINANCEIRO:      # None ou 0 com o plano de banco: leitura larga pela descrição
+            lucro = lucro_fin(sub)
+        out["anuais"][int(dr[:4])] = {"dt_refer": dr, "conjunto": conj, "lucro": lucro,
                                       "pl": _pl_controlador(c), "dividendos": _dividendos(sub), "ambiguo": amb}
     # último ITR entregue até T (pelo DT_RECEB do índice da CVM)
     idx = indice_docs("itr", int(data_base[:4]))
@@ -175,27 +239,42 @@ def companhia(g: pd.DataFrame, cnpj: str, data_base: str) -> dict:
     if idx.empty:
         out["avisos"].append("sem ITR de 2026 entregue até T")
         return out
-    dr = idx["DT_REFER"].max()
+    itr = _do_zip_proprio(g, "itr")
+    entregues = sorted(idx["DT_REFER"].unique(), reverse=True)
+    dr, c = entregues[0], {}
+    for d_ in entregues:                       # o mais recente entregue até T que tenha números no CSV
+        c, conj, _ini, meses, _amb = _contas_de(itr[itr["dt_refer"] == d_], d_, plano, so_acumulado=True)
+        if c:
+            if d_ != entregues[0]:
+                out["avisos"].append(f"ITR {entregues[0]} entregue até T, sem números no CSV da CVM: usado o {d_}")
+            dr = d_
+            break
+    if not c:
+        out["avisos"].append("ITR entregue até T sem números no CSV")
+        return out
     tardia = indice_docs("itr", int(data_base[:4]))
     tardia = tardia[(tardia["CNPJ_CIA"] == cnpj) & (tardia["DT_REFER"] == dr) & (tardia["DT_RECEB"] > data_base)]
     if len(tardia):
         out["avisos"].append(f"ITR {dr} reapresentado depois de T (o CSV guarda só a última versão)")
-    itr = _do_zip_proprio(g, "itr")
-    c, conj, _ini, meses, _amb = _contas_de(itr[itr["dt_refer"] == dr], dr, plano, so_acumulado=True)
     acoes = acoes_por_classe(cnpj, dr)
     out["ultimo"] = {"dt_refer": dr, "dt_receb": str(idx[idx["DT_REFER"] == dr]["DT_RECEB"].max()), "conjunto": conj,
                      "pl": _pl_controlador(c) if c else None,
                      "divida": (sum(float(c.get(k) or 0.0) for k in ("emprest_cp", "emprest_lp", "arrendamento"))
                                 if c and plano == INDUSTRIAL else None),
-                     "acoes": acoes, "lucro_ytd": lucro_controlador(c) if c else None, "meses_ytd": meses}
+                     "acoes": acoes, "lucro_ytd": _lucro(c, itr[itr["dt_refer"] == dr], plano), "meses_ytd": meses}
     # LTM = exercício anterior + YTD de agora − YTD do ano anterior (mesmo trimestre)
     ant = dr.replace(dr[:4], str(int(dr[:4]) - 1), 1)
     c0, _, _, m0, _ = _contas_de(itr[itr["dt_refer"] == ant], ant, plano, so_acumulado=True)
     out["ultimo"]["pl_ano_antes"] = _pl_controlador(c0) if c0 else None
     fy = out["anuais"].get(int(dr[:4]) - 1)
     if c and c0 and fy and m0 == meses and fy["lucro"] is not None and fy["dt_refer"].endswith("12-31"):
-        y1, y0 = lucro_controlador(c), lucro_controlador(c0)
+        y1, y0 = out["ultimo"]["lucro_ytd"], _lucro(c0, itr[itr["dt_refer"] == ant], plano)
         out["ltm"] = None if y1 is None or y0 is None else fy["lucro"] + y1 - y0
     else:
         out["ltm"] = None
     return out
+
+
+def _lucro(c: dict, rows: pd.DataFrame, plano: str) -> float | None:
+    x = lucro_controlador(c) if c else None
+    return lucro_fin(rows, so_acumulado=True) if x is None and plano == FINANCEIRO else x

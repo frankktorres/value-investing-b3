@@ -52,11 +52,27 @@ def precos_por_classe(tickers: set[str], precos: dict) -> dict:
     return {"on": precos[ton][0] if ton else None, "pn": precos[tpn][0] if tpn else None, "ticker_on": ton, "ticker_pn": tpn}
 
 
-def valor_mercado(acoes: dict | None, p: dict) -> tuple[float | None, str]:
-    """R$ mil = (ON × preço ON + PN × preço PN) ÷ 1000. Classe com ações e sem pregão usa o preço da outra (declarado)."""
+def _unit(tks: set[str], precos: dict, cnpj: str) -> tuple[str, float, float] | None:
+    """(ticker, preço, ações por unit) da unit negociada; composição da FCA em T (`backtest.motor.perfil.acoes_por_papel`)."""
+    from backtest.motor import perfil
+    for t in sorted(tks):
+        if t.endswith("11") and t in precos:
+            k = perfil.acoes_por_papel(t, cnpj, T)
+            if k and k > 1:
+                return t, precos[t][0], float(k)
+    return None
+
+
+def valor_mercado(acoes: dict | None, p: dict, unit=None) -> tuple[float | None, str]:
+    """R$ mil = (ON × preço ON + PN × preço PN) ÷ 1000. Com unit negociada (composição da FCA), vale a unit para todas as ações:
+    (ON + PN) ÷ ações por unit × preço da unit — a unit é o papel líquido; a classe avulsa pode ser ilíquida (IGTI3: R$ 75 mil no
+    dia, 0,39 do valor pela unit; adversário de 25/11). Classe com ações e sem pregão usa o preço da outra (declarado)."""
     if not acoes:
         return None, "sem composição do capital"
     pon, ppn, nota = p["on"], p["pn"], ""
+    if unit:
+        t, pu, k = unit
+        return (acoes["on"] + acoes["pn"]) / k * pu / 1000, f"pela unit {t} ({k:g} ações por unit)"
     if acoes["on"] > 0 and pon is None:
         pon, nota = ppn, "ON sem pregão: preço da PN"
     if acoes["pn"] > 0 and ppn is None:
@@ -99,10 +115,17 @@ def montar() -> dict:
                 empresas.append(e)
                 continue
             b = cvm.companhia(g, e["cnpj"], T)
-            tks = set(cvm.tickers_por_cnpj().get(e["cnpj"], set())) | set(e["tickers"])
+            raizes = {t[:4] for t in e["tickers"]}
+            tks = set(cvm.tickers_por_cnpj().get(e["cnpj"], set())) | set(e["tickers"]) | {t for t in precos if t[:4] in raizes}
             p = precos_por_classe(tks, precos)
             u = b.get("ultimo", {})
-            vm, nota_vm = valor_mercado(u.get("acoes"), p)
+            if u.get("acoes"):
+                qt = sum(x["qtd_teorica"] for x in ibov["componentes"] if x["ticker"] in e["tickers"]) or None
+                u["acoes_cvm"] = u["acoes"]
+                u["acoes"], u["nota_acoes"] = cvm.escalar_acoes(u["acoes"], cvm.acoes_referencia(e["cd_cvm"], T), qt)
+                if u["nota_acoes"]:
+                    b["avisos"].append(u["nota_acoes"])
+            vm, nota_vm = valor_mercado(u.get("acoes"), p, unit=_unit(tks, precos, e["cnpj"]))
             fin = bool(set(e["tickers"]) & FINANCEIRAS_MESA) or b["plano"] == cvm.FINANCEIRO
             anos = sorted(a for a in b["anuais"] if a >= 2016)[-c.JANELA:]
             reais = {}

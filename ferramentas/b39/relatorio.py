@@ -50,7 +50,10 @@ def montar(r: dict) -> str:
     if g["veredito"] == "DISPARA":
         L += ["**Saída (emenda 9): só uma proposta, sem mudar nada.** O nível do Ke/prêmio entra na calibração (B35, com a B46), "
               "como tentativa contada no orçamento de 24 (§0.4), e o prêmio p do DNA §1.1 sai dessa calibração. "
-              "⏸ Decisão do Frank, em outro chat.", ""]
+              "⏸ Decisão do Frank, em outro chat.", "",
+              f"Proposta (só ordem de grandeza; o número sai da calibração, não daqui): o Ke real da Mesa está {pp(-g['mediana'])} "
+              "acima da mediana do que o mercado cobra. A coluna \"prêmio implícito\" abaixo mostra o intervalo do que as três "
+              "leituras dão para o prêmio sobre a rf de 10 anos; a calibração (B35 + B46) escolhe dentro dele, com o orçamento do §0.4.", ""]
     elif g["veredito"] == "NÃO DISPARA":
         L += ["**Saída (emenda 9):** o Ke fica, com este motivo; a causa do \"tudo CARA\" se procura em outra camada "
               "(âncoras, normalização; DNA, causas b–d).", ""]
@@ -67,10 +70,12 @@ def montar(r: dict) -> str:
           f"| Carteira do Ibovespa | {m['ibov']['n']} ações | {m['ibov']['fonte']}, consultada em {m['ibov']['data_da_carteira_b3']} (nota A) |",
           f"| IPCA (lucro real) | até {r['mes_ipca']} | SGS 433 (nota A) |", "",
           "## As três estimativas (Ke real)", "",
-          "| | Estimativa | Ke implícito | Ke da Mesa | Δ |", "|---|---|---|---|---|"]
+          "| | Estimativa | Ke implícito | Ke da Mesa | Δ | Prêmio implícito (Ke − rf) | Prêmio da Mesa |", "|---|---|---|---|---|---|---|"]
     for k in ("i", "ii", "iii"):
         x = e[k]
-        L.append(f"| ({k}) | {x['nome']} | {pct(x['ke_real'])} | {pct(x['ke_mesa_real'])} | {pp(dl[k])} |")
+        pi_ = None if x["ke_real"] is None else x["ke_real"] - m["rf_real"]
+        pm = None if x["ke_mesa_real"] is None else x["ke_mesa_real"] - m["rf_real"]
+        L.append(f"| ({k}) | {x['nome']} | {pct(x['ke_real'])} | {pct(x['ke_mesa_real'])} | {pp(dl[k])} | {pp(pi_)} | {pp(pm)} |")
     ii = e["ii"]
     L += ["", f"Ke da Mesa: (i) rf + 5 p.p.; (ii) e (iii) rf + o prêmio do índice ponderado pelo valor de mercado (5 p.p. nas "
           "financeiras; 5 × [1 + 0,66 × D/E] nas demais, D/E a mercado). (ii) pondera só as que entraram no E10; (iii), todas.", "",

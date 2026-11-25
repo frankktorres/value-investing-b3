@@ -92,3 +92,24 @@ def test_bancos_e_financeiras_batem_com_o_lote1():
     seg = set(re.findall(r'Financeira\("([A-Z0-9]+)",\s*"[^"]*",\s*"seguradora', src))
     assert bancos | {"BPAC11"} == set(rodar.BANCOS)
     assert seg <= rodar.FINANCEIRAS_MESA
+
+
+# ------------------------------------------------------------------ regressões do adversário (25/11)
+def test_lucro_fin_controlador_zerado_cai_no_lucro_consolidado():
+    import pandas as pd
+    from b39.cvm import lucro_fin
+    linhas = pd.DataFrame({"conjunto": "con", "ordem_exerc": "ULTIMO", "bloco": "DRE", "dt_ini_exerc": "2022-01-01",
+                           "descricao": ["Lucro ou Prejuízo Líquido Consolidado do Período",
+                                         "Atribuído aos Sócios da Empresa Controladora"], "valor": [789718.0, 0.0]})
+    assert lucro_fin(linhas) == 789718.0                      # ABCB4 2022: 3.11.01 = 0 não é lucro zero
+    linhas.loc[1, "valor"] = 700000.0
+    assert lucro_fin(linhas) == 700000.0                      # controlador preenchido vence
+
+
+def test_valor_de_mercado_prefere_a_unit():
+    from b39.rodar import valor_mercado
+    acoes = {"on": 100.0, "pn": 200.0}
+    vm, nota = valor_mercado(acoes, {"on": 2.83, "pn": None}, unit=("IGTI11", 21.85, 3.0))
+    assert vm == pytest.approx(300 / 3 * 21.85 / 1000) and "unit" in nota
+    vm, nota = valor_mercado(acoes, {"on": 10.0, "pn": None})
+    assert vm == pytest.approx(3.0) and "PN sem pregão" in nota
