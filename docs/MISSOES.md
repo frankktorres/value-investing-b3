@@ -189,6 +189,7 @@ Front lê só o contrato. Tira o "Sistema em breve" do `index.html:27`.
 (nenhuma)
 
 ## Feitas
+- **B46** (25/11, emenda 12 5461a47 → e8a039b): "separar a dificuldade" (Damodaran 2009) pré-registrada e rodada sobre o conjunto de desenvolvimento, tentativa 7/24 → **NÃO CONCLUSIVA** (C3 15/24; o π da cobertura e o do Z'' discordam). Nada implantado; motor, doutrina e golden intocados. `oraculo` RESSALVA, `senior` SEGUE COM AJUSTES (aplicados), `adversario` 2 defeitos do executor corrigidos com re-execução igual; B57 nova. Suíte 1324 verde.
 - **B40** (25/11, b2b9d60): `CIS RED CAP` com semântica conferida (×1, ação nova em `recebe`, fora do DPA; fonte A = FRE `capital_social_reducao` de Cosan 2014, MRV 2018, GPA 2020); CSAN3/MRVE3 rodam (NÃO CONCLUSIVO); B55/B56 novos; PENDENTE #12 respondido (B46 sim, B35 até o HOLD-OUT 2). Suíte 1302 verde.
 - **Pacote de autonomia** (25/11, `docs/research/2026-11-25-pacote-autonomia.md`): agente `senior` + "Quem decide" (2b5d810); B37 trava do push (f879b4d); agentes adaptados (d86b7fb); travas 4.2–4.6 (dcc9a5f); skills `mesa-*` (04513d3); B51/B52 (540a325). `senior`: PARA → 8 achados corrigidos → SEGUE COM AJUSTES; resta o #11 do `PENDENTE-FRANK.md` (`--no-verify`). Fumaça: escolha pela causa (a) com o `senior` OK; push vermelho barrado no clone OK
 - **B34** (24/11, com o Frank): defeito H2 corrigido — D/E a mercado (preço da data-base × ações), sem ponto fixo; D = dívida bruta com arrendamentos + outros passivos financeiros, a mesma da ponte; Ke nominal > 30% → NÃO CONCLUSIVO (doutrina v2.7). Golden regravado (SMTO3 CARA → NC; PRIO3/UNIP6 → NC pela trava). Dossiês recalculados na data (point-in-time). Oráculo sem BLOQUEIA; suíte verde com `EXIGIR_DADOS=1`; 3T26 juntado no master. Ver `09` de 24/11.
@@ -226,6 +227,10 @@ Front lê só o contrato. Tira o "Sistema em breve" do `index.html:27`.
 
 ## Passagem de turno
 *A skill `/mesa-fechar` reescreve esta seção: o que ficou pendente, onde parou, próximo passo.*
+- 25/11/2026 (B46): tentativa 7/24 NÃO CONCLUSIVA, no master (e8a039b); nada em andamento. Causa (a) segue aberta: o D/E da
+  indústria resolve o Ke, mas o π não é identificável e foi medido com o defeito do X2 do Z'' (B57). Próximo passo (DNA): **B57**
+  (dado do Z'' que o motor usa na nota de solidez — mexe no motor: oráculo e `09`); em paralelo, sem gastar tentativa, causa (c)
+  B41. Rodar a B46 de novo depois da B57 = tentativa 8/24. Ver a última linha "Próximo passo (DNA):" do `DECISOES.md`.
 - 25/11/2026 (B40): cisão com redução de capital resolvida e no master (b2b9d60); nada em andamento. Próximo passo (DNA):
   causa (a), **B46 sozinha** (Ke > 30%), hipótese pré-registrada em commit próprio antes de rodar (tentativa 7/24); em paralelo,
   sem gastar tentativa, causa (c) B41 (INCORPORACAO). Ver a última linha "Próximo passo (DNA):" do `DECISOES.md`.
