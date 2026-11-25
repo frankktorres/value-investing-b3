@@ -1,5 +1,7 @@
 # PROJECT BRIEF — Mesa de Value Investing B3
-*Versão de 25/11/2026 (B36 hold-out FEITO: NÃO PASSOU, 1 de 6 linhas; falhas B40–B48; B39 pré-registrada); antes, 24/11/2026, noite 2 (B36 hold-out em andamento: emenda 8 pré-registrada sozinha, executor `holdout_b36/`, piloto de 3; antes, hook Stop só snapshot em `wip/auto`; antes, à tarde: B34 + desbloqueio do oráculo: emenda 7, Graham no Ke da casa, check `ordem`, hold-out B36; defeito H2 do Ke corrigido — D/E a mercado sem ponto fixo, doutrina v2.7; dossiês recalculados na data, point-in-time; 3T26 juntado no master; antes: 23/11, gravação do 3T26 com data-base 19/11)*
+> **Norte do projeto: `docs/00-DNA.md` (ler primeiro).**
+
+*Versão de 25/11/2026, noite (`docs/00-DNA.md` criado: visão, princípios, 4 causas da B36, marcos M1–M5); antes, 25/11/2026 (B36 hold-out FEITO: NÃO PASSOU, 1 de 6 linhas; falhas B40–B48; B39 pré-registrada); antes, 24/11/2026, noite 2 (B36 hold-out em andamento: emenda 8 pré-registrada sozinha, executor `holdout_b36/`, piloto de 3; antes, hook Stop só snapshot em `wip/auto`; antes, à tarde: B34 + desbloqueio do oráculo: emenda 7, Graham no Ke da casa, check `ordem`, hold-out B36; defeito H2 do Ke corrigido — D/E a mercado sem ponto fixo, doutrina v2.7; dossiês recalculados na data, point-in-time; 3T26 juntado no master; antes: 23/11, gravação do 3T26 com data-base 19/11)*
 
 ## 1. Projeto
 Mesa de análise fundamentalista da B3 para dividendos/JCP e longo prazo: doutrina escrita (v2.7) + motores de valuation em Python que
@@ -59,6 +61,8 @@ MVP de uso pessoal, maduro no cálculo. Um usuário real, sem terceiros. Prazo e
    da mesma doença. Comitê único (mesma família de modelo; 2º comitê pausado).
 
 ## 6. Próximos 4 marcos
+0. **Marcos até a visão: `docs/00-DNA.md` §5** (M1 motor generaliza — HOLD-OUT 2 + hold-out no tempo 2016–20 → 2021–25 →
+   M2 ticker → relatório → M3 renda fixa, pares e veredito contra a RF → M4 notícias → M5 tela). Os itens abaixo são histórico.
 1. Onda 1 da auditoria concluída (1.1 a 1.4: PDFs reemitidos em v2.5, pasta de upload sincronizada, versões dos prompts, Ke/retorno do `03` gerados
    pelo motor) → **Onda 2 (concluída):** feitos clone do zero (AUD-38/73), manifesto dos ZIPs (109), EOL do golden_sha (108), teste analítico do DDM (17), backup (05), testes de fórmula/limiar/NaN/ROIC real/bordas/skip (27, 28, 30, 31, 88, 89, 90) e, na 3ª parte, registro com corrente (102), preço real (82), série vigente (24), estado do lote 4 (26), coletor do LTM (21, 22, 86), JCP duplicado (23), coletor FRED/PTAX (81) e histórico (83, 84); e, na 4ª parte, sentinela PIT comparando o `Exercicio` inteiro e sem estouro de memória (29, 107) e paridade do motor reduzido × mesa (91). `cvm_series.json` já foi regravado com o LTM novo.
 2. Temporada 3T26: `python ferramentas/temporada.py` ao sair o ITR; régua congelada até lá.
@@ -112,6 +116,7 @@ MVP de uso pessoal, maduro no cálculo. Um usuário real, sem terceiros. Prazo e
 6. Licença pretendida do código (fechado/aberto)?
 
 ## 12. O que mudou
+- 25/11/2026 (noite, DNA): `docs/00-DNA.md` — norte do projeto, leitura obrigatória (ligado no CLAUDE.md e aqui): visão (qualquer ticker), regra-alvo do veredito contra a RF líquida (§1.1, a pré-registrar), catálogo com papel e domínio, 5 princípios, B37–B48 reagrupados nas 4 causas (Ke → domínio → eventos → insumos), marcos M1–M5 com critério; M1 com duas provas (HOLD-OUT 2 e point-in-time por `DT_RECEB`). Nenhuma regra, palavra ou código mudou.
 - 25/11/2026 (B36 concluída): as 20 rodadas e o relatório gerado dos JSONs (`holdout_b36/relatorio.py`) — NÃO PASSOU; marco B36 fechado; gargalo novo §5.4 (Mesa não roda sozinha: eventos societários, central ≤ 0, Ke > 30%, protocolo de insumos), falhas B40–B48; B39 (Ke × Ke implícito, X = 3 p.p.) pré-registrada para depois.
 - 24/11/2026 (noite 2, B36): ferramenta nova `ferramentas/holdout_b36/` (seletor mecânico por liquidez, executor que reusa `dossie.gerar`/`motor_financeiras` sem tocar os registros globais, protocolo fixo de insumos por subagente Sonnet); emenda 8 commitada antes de rodar (5680ac2); 6 das 20 já falham por método (eventos em ações sem semântica, FRE sem capital, dividendos repetidos) — critério 1 reprovado; piloto RADL3/BPAC11/EQTL3 com 43–56% de insumos automáticos; B37 (trava pre-push) e B38 (conferência em 19/11/2027) no BACKLOG.
 - 24/11/2026 (noite): hook `Stop` (`.claude/hooks/auto_commit.py`) deixa de commitar/empurrar no `master`; só guarda snapshot em `wip/auto` (decisão do Frank, igual à F49 do UNION). O `master` só recebe commit explícito com a suíte verde.
