@@ -451,3 +451,53 @@ Relatório: `docs/oraculo/hipoteses-2026-10-22.md` (e `.json`).
      por palavra (CARA × não CARA), descritivo, sem teste de significância (n = 20); a média das 20 também é relatada como
      comparador (regra do B25). Não se antecipa a data.
    - **Orçamento (§0.4):** não conta como tentativa: não há variante de regra.
+9. **25/11/2026 — B39: Ke da Mesa × Ke implícito do mercado — triangulação, protocolo e gatilho; escrita e commitada SOZINHA,
+   antes de rodar qualquer conta.** Origem: hipótese do `docs/BACKLOG.md` B39 (commit 144c8b0, 24/11) com os acréscimos do
+   Frank de 25/11. Nada da B39 foi rodado. Esta emenda **substitui** o teste e a regra de gatilho escritos no B39; ficam o
+   X = 3 p.p., os dois sentidos e o motivo dos 3 p.p. (ruído de ~2 p.p. do Ke implícito; −3 p.p. sobem o valor perpétuo ~33%,
+   mais de uma faixa da régua; 60% do prêmio fixo de 5 p.p.).
+   - **Tudo em termos reais, com a mesma rf.** rf = Tesouro IPCA+ sem cupom com vencimento mais próximo de 10 anos, taxa de
+     compra da manhã (Tesouro Transparente), e π = implícita da curva no mesmo prazo, como no DNA §1.1 — lidas uma vez, no dia
+     da execução, e usadas nas três estimativas e no Ke da Mesa. O `01` §4 ainda usa o vértice mais longo no Ke; aqui o Ke da
+     Mesa é refeito com o de 10 anos, para a diferença medir só o prêmio. Nominal → real sempre por (1 + x) ÷ (1 + π) − 1.
+     **X = 3 p.p. passa a valer no Ke real** (no B39 era o nominal; a diferença é o fator 1 + π, ~0,15 p.p., abaixo do ruído).
+     Preço, rf, π e balanço (último ITR/DFP na CVM) de uma data só, registrada.
+   - **(i) Bancos** — os bancos do hall + BPAC11. Ke nominal = (ROE − g) ÷ (P/VP) + g, com **ROE normalizado = mediana de 10
+     exercícios** (lucro do controlador ÷ PL médio do controlador, DFP da CVM), **não o LTM**; P/VP = preço do dia ÷ VPA do
+     último balanço; g nominal = (1 + g real) × (1 + π) − 1, g real = 1% (o do B39). Banco com menos de 10 exercícios: mediana
+     dos disponíveis, mínimo 5; abaixo, fora (declarado). Estimativa (i) = mediana dos bancos. **Sensibilidade (só relatada):**
+     ROE LTM no lugar da mediana; g real 0% e 2%.
+   - **(ii) Ibovespa agregado — princípio do CAPE (Shiller).** Componentes da carteira teórica do Ibovespa (B3) na data. Para
+     cada um, lucro líquido do controlador dos 10 últimos exercícios (DFP), levado a R$ de hoje pelo IPCA (SGS 433) e tirada a
+     **média de 10 anos** (mínimo 5 exercícios; abaixo, fora — declarado), **não o lucro de um ano**. E10 = soma das médias;
+     P = soma dos valores de mercado (preço do dia × ações de todas as classes). Ke real implícito = E10 ÷ P: o EPV reverso
+     (valor = lucro normalizado ÷ Ke, sem crescimento), o mesmo princípio da âncora EPV da Mesa. Viés declarado: só os
+     componentes de hoje (sobrevivência). **Sensibilidade (só relatada):** sem PETR3/PETR4 e VALE3; lucro LTM; Gordon com o
+     payout mediano de 10 anos do agregado e g real 0/1/2% [Ke = payout × E10 × (1 + g) ÷ P + g]. Fonte do princípio: Campbell
+     & Shiller (1998), *Journal of Portfolio Management* 24(2), e Shiller, *Irrational Exuberance* — **fonte a abrir**; nota B
+     só depois de aberta.
+   - **(iii) rf + prêmio total do Brasil (Damodaran).** ERP total do Brasil (maduro + risco-país) e spread de default soberano
+     (s) da tabela `ctryprem` de jan/2026 (Damodaran, NYU Stern; página salva com a data; **fonte a abrir**, nota B quando
+     aberta). Ke nominal R$ = n − s + ERP, n = (1 + rf) × (1 + π) − 1; Ke real = (1 + Ke nominal) ÷ (1 + π) − 1. **Por que
+     tirar s:** o método do Damodaran tira o spread de default da taxa do título soberano em moeda local antes de somar o ERP
+     total — o risco-país já está dentro da NTN-B e de novo no CRP, e sem o desconto conta duas vezes (*Country Risk:
+     Determinants, Measures and Implications*, edição 2025 — a abrir; se o texto aberto disser outra coisa, vale o texto e o
+     desvio vai ao relatório). **Sensibilidade (só relatada):** sem tirar s (rf real da NTN-B + ERP total, a forma literal).
+   - **Ke da Mesa de cada comparação (rf de 10 anos nos dois lados).** (i): rf + 5 p.p. (prêmio fixo das financeiras, `01` §4).
+     (ii) e (iii) medem o mercado inteiro: rf + o prêmio da Mesa aplicado ao índice = média dos prêmios dos componentes
+     ponderada pelo valor de mercado — 5 p.p. nas financeiras; 5 × [1 + (1 − 0,34) × D/E] nas demais, D/E a mercado na regra da
+     v2.7 (dívida bruta + arrendamentos + outros passivos financeiros do último balanço ÷ valor de mercado do dia). t = 34% para
+     todos (simplificação declarada: o motor usa a perpétua de cada uma; com 34% o prêmio sai no mínimo e o Ke da Mesa erra
+     para baixo — o lado de **não** disparar quando o Ke da Mesa é alto demais).
+   - **Regra de gatilho (escrita antes de rodar).** Δₖ = Ke real implícito ₖ − Ke real da Mesa ₖ, k = i, ii, iii. **Dispara se
+     |mediana(Δᵢ, Δᵢᵢ, Δᵢᵢᵢ)| > 3 p.p.**, nos dois sentidos. Estimativa que não sai (insumo sem fonte A/B; menos da metade do
+     valor de mercado do índice com 5 exercícios) não é trocada por outra: com 2 que saem, vale a mediana das 2 (a média), e o
+     relatório diz qual faltou; com menos de 2, a B39 fica **NÃO CONCLUSIVA** e nada muda. Sensibilidades não mudam o gatilho;
+     vão ao lado, com a direção de cada uma. **Dispara** → o nível do Ke/prêmio entra na calibração (B35, com a B46), tentativa
+     contada no orçamento de 24 (§0.4), e o prêmio p do DNA §1.1 sai dessa calibração. **Não dispara** → o Ke fica, com este
+     motivo, e a causa do "tudo CARA" se procura em outra camada (âncoras, normalização; DNA, causas b–d).
+   - **Insumos e execução.** Cada número com fonte e data: CVM DFP/ITR, carteira teórica da B3, Tesouro Transparente, IPCA SGS
+     433 (nota A); Damodaran e Shiller (nota B depois de abertos). Nenhum número digitado sem fonte. Script em `ferramentas/`
+     com teste, saída em JSON e relatório gerado só do JSON (como o da B36), registrado no `09`.
+   - **Congelamento:** motor, doutrina e golden não mudam por causa da B39 antes do relatório.
+   - **Orçamento (§0.4):** a medição não conta como tentativa (não há variante de regra); a calibração que ela disparar, sim.
