@@ -1,0 +1,490 @@
+{
+ "fonte": "Damodaran, A. Cost of equity and capital (updateable), Emerging Markets — waccemerg.xls, aba 'Industry Averages', coluna 'D/(D+E)'",
+ "definicao": "Total Debt (including lease debt) / (Total Debt (including lease debt) + Market Cap), aggregated across all firms in group (aba 'Variables & FAQ')",
+ "url": "https://pages.stern.nyu.edu/~adamodar/pc/datasets/waccemerg.xls",
+ "atualizado": "2026-01-05",
+ "acesso": "2026-11-25",
+ "nota": "B",
+ "industrias": {
+  "Advertising": {
+   "n_empresas": 184,
+   "d_sobre_d_mais_e": 0.2400349845138532,
+   "aliquota": 0.10280547291382684
+  },
+  "Aerospace/Defense": {
+   "n_empresas": 151,
+   "d_sobre_d_mais_e": 0.10738284202908599,
+   "aliquota": 0.10744341352537773
+  },
+  "Air Transport": {
+   "n_empresas": 79,
+   "d_sobre_d_mais_e": 0.4445053063453218,
+   "aliquota": 0.13737163407443873
+  },
+  "Apparel": {
+   "n_empresas": 993,
+   "d_sobre_d_mais_e": 0.20621110668333698,
+   "aliquota": 0.14501552802460532
+  },
+  "Auto & Truck": {
+   "n_empresas": 89,
+   "d_sobre_d_mais_e": 0.2868159524191225,
+   "aliquota": 0.13909530553355096
+  },
+  "Auto Parts": {
+   "n_empresas": 592,
+   "d_sobre_d_mais_e": 0.1557442521942296,
+   "aliquota": 0.16187762034804024
+  },
+  "Bank (Money Center)": {
+   "n_empresas": 455,
+   "d_sobre_d_mais_e": 0.6415666522254004,
+   "aliquota": 0.21545502635732602
+  },
+  "Banks (Regional)": {
+   "n_empresas": 104,
+   "d_sobre_d_mais_e": 0.8437805762454547,
+   "aliquota": 0.15297178584067106
+  },
+  "Beverage (Alcoholic)": {
+   "n_empresas": 132,
+   "d_sobre_d_mais_e": 0.025275292271140892,
+   "aliquota": 0.19234185279974694
+  },
+  "Beverage (Soft)": {
+   "n_empresas": 40,
+   "d_sobre_d_mais_e": 0.04771266069437141,
+   "aliquota": 0.16589059249798627
+  },
+  "Broadcasting": {
+   "n_empresas": 63,
+   "d_sobre_d_mais_e": 0.24836304303515933,
+   "aliquota": 0.12380415408425828
+  },
+  "Brokerage & Investment Banking": {
+   "n_empresas": 468,
+   "d_sobre_d_mais_e": 0.6736120431571664,
+   "aliquota": 0.14259194584175705
+  },
+  "Building Materials": {
+   "n_empresas": 281,
+   "d_sobre_d_mais_e": 0.22372274656202773,
+   "aliquota": 0.14794934376253957
+  },
+  "Business & Consumer Services": {
+   "n_empresas": 379,
+   "d_sobre_d_mais_e": 0.13263202790386663,
+   "aliquota": 0.12160144472550669
+  },
+  "Cable TV": {
+   "n_empresas": 29,
+   "d_sobre_d_mais_e": 0.1893974610520781,
+   "aliquota": 0.091651954089193
+  },
+  "Chemical (Basic)": {
+   "n_empresas": 741,
+   "d_sobre_d_mais_e": 0.31614631323881937,
+   "aliquota": 0.14555149551220847
+  },
+  "Chemical (Diversified)": {
+   "n_empresas": 29,
+   "d_sobre_d_mais_e": 0.24204963383326716,
+   "aliquota": 0.2135787881271695
+  },
+  "Chemical (Specialty)": {
+   "n_empresas": 687,
+   "d_sobre_d_mais_e": 0.16705740371520317,
+   "aliquota": 0.16010227503306423
+  },
+  "Coal & Related Energy": {
+   "n_empresas": 96,
+   "d_sobre_d_mais_e": 0.1871910730148647,
+   "aliquota": 0.2021672555188101
+  },
+  "Computer Services": {
+   "n_empresas": 693,
+   "d_sobre_d_mais_e": 0.09246169699078033,
+   "aliquota": 0.13778307209271917
+  },
+  "Computers/Peripherals": {
+   "n_empresas": 244,
+   "d_sobre_d_mais_e": 0.09514549863335486,
+   "aliquota": 0.13390361064004702
+  },
+  "Construction Supplies": {
+   "n_empresas": 580,
+   "d_sobre_d_mais_e": 0.2461223420629468,
+   "aliquota": 0.15293999112171255
+  },
+  "Diversified": {
+   "n_empresas": 215,
+   "d_sobre_d_mais_e": 0.5501229452435178,
+   "aliquota": 0.15022444640659258
+  },
+  "Drugs (Biotechnology)": {
+   "n_empresas": 382,
+   "d_sobre_d_mais_e": 0.07789483329645908,
+   "aliquota": 0.03273948797653944
+  },
+  "Drugs (Pharmaceutical)": {
+   "n_empresas": 753,
+   "d_sobre_d_mais_e": 0.09575048741228875,
+   "aliquota": 0.139462978306192
+  },
+  "Education": {
+   "n_empresas": 182,
+   "d_sobre_d_mais_e": 0.25343225892173527,
+   "aliquota": 0.11943679574326466
+  },
+  "Electrical Equipment": {
+   "n_empresas": 810,
+   "d_sobre_d_mais_e": 0.13836798862546917,
+   "aliquota": 0.12957669804759694
+  },
+  "Electronics (Consumer & Office)": {
+   "n_empresas": 81,
+   "d_sobre_d_mais_e": 0.21972178612457416,
+   "aliquota": 0.1357096829482956
+  },
+  "Electronics (General)": {
+   "n_empresas": 1050,
+   "d_sobre_d_mais_e": 0.13809159573366436,
+   "aliquota": 0.11174962374051088
+  },
+  "Engineering/Construction": {
+   "n_empresas": 999,
+   "d_sobre_d_mais_e": 0.5909926877483946,
+   "aliquota": 0.15915988846141668
+  },
+  "Entertainment": {
+   "n_empresas": 343,
+   "d_sobre_d_mais_e": 0.07542580170094182,
+   "aliquota": 0.07968092664070184
+  },
+  "Environmental & Waste Services": {
+   "n_empresas": 223,
+   "d_sobre_d_mais_e": 0.40317825072226965,
+   "aliquota": 0.12628847004049434
+  },
+  "Farming/Agriculture": {
+   "n_empresas": 312,
+   "d_sobre_d_mais_e": 0.36629983681242706,
+   "aliquota": 0.16181016752651323
+  },
+  "Financial Svcs. (Non-bank & Insurance)": {
+   "n_empresas": 697,
+   "d_sobre_d_mais_e": 0.538394264641806,
+   "aliquota": 0.1708418267503516
+  },
+  "Food Processing": {
+   "n_empresas": 1030,
+   "d_sobre_d_mais_e": 0.27538583846137965,
+   "aliquota": 0.1636050401218475
+  },
+  "Food Wholesalers": {
+   "n_empresas": 121,
+   "d_sobre_d_mais_e": 0.4447192470107595,
+   "aliquota": 0.15168649917985652
+  },
+  "Furn/Home Furnishings": {
+   "n_empresas": 278,
+   "d_sobre_d_mais_e": 0.14691808923792704,
+   "aliquota": 0.14485354471615688
+  },
+  "Green & Renewable Energy": {
+   "n_empresas": 154,
+   "d_sobre_d_mais_e": 0.3984012659283871,
+   "aliquota": 0.13176448866017867
+  },
+  "Healthcare Products": {
+   "n_empresas": 380,
+   "d_sobre_d_mais_e": 0.08442553180438794,
+   "aliquota": 0.08749210829554217
+  },
+  "Healthcare Support Services": {
+   "n_empresas": 256,
+   "d_sobre_d_mais_e": 0.3812841521735022,
+   "aliquota": 0.1425811224228185
+  },
+  "Heathcare Information and Technology": {
+   "n_empresas": 146,
+   "d_sobre_d_mais_e": 0.06179609150339627,
+   "aliquota": 0.08196068166789691
+  },
+  "Homebuilding": {
+   "n_empresas": 46,
+   "d_sobre_d_mais_e": 0.41318250031330894,
+   "aliquota": 0.10931810416978548
+  },
+  "Hospitals/Healthcare Facilities": {
+   "n_empresas": 164,
+   "d_sobre_d_mais_e": 0.17215580701269784,
+   "aliquota": 0.18453433988481516
+  },
+  "Hotel/Gaming": {
+   "n_empresas": 427,
+   "d_sobre_d_mais_e": 0.31210462302654074,
+   "aliquota": 0.15629098848858092
+  },
+  "Household Products": {
+   "n_empresas": 339,
+   "d_sobre_d_mais_e": 0.11827516518462633,
+   "aliquota": 0.1401154315073192
+  },
+  "Information Services": {
+   "n_empresas": 49,
+   "d_sobre_d_mais_e": 0.12375249233066621,
+   "aliquota": 0.17982671816976264
+  },
+  "Insurance (General)": {
+   "n_empresas": 140,
+   "d_sobre_d_mais_e": 0.23595641696636327,
+   "aliquota": 0.143771402158095
+  },
+  "Insurance (Life)": {
+   "n_empresas": 92,
+   "d_sobre_d_mais_e": 0.37132262347294753,
+   "aliquota": 0.16197575803890557
+  },
+  "Insurance (Prop/Cas.)": {
+   "n_empresas": 158,
+   "d_sobre_d_mais_e": 0.1737015632039255,
+   "aliquota": 0.19038821767318614
+  },
+  "Investments & Asset Management": {
+   "n_empresas": 486,
+   "d_sobre_d_mais_e": 0.4721267533088709,
+   "aliquota": 0.08883564375578094
+  },
+  "Machinery": {
+   "n_empresas": 987,
+   "d_sobre_d_mais_e": 0.10871680790979643,
+   "aliquota": 0.14078976337626004
+  },
+  "Metals & Mining": {
+   "n_empresas": 358,
+   "d_sobre_d_mais_e": 0.20035568489082478,
+   "aliquota": 0.15138172717675286
+  },
+  "Office Equipment & Services": {
+   "n_empresas": 78,
+   "d_sobre_d_mais_e": 0.15072095683903508,
+   "aliquota": 0.14157320924925473
+  },
+  "Oil/Gas (Integrated)": {
+   "n_empresas": 15,
+   "d_sobre_d_mais_e": 0.1370896520020657,
+   "aliquota": 0.2349815529379119
+  },
+  "Oil/Gas (Production and Exploration)": {
+   "n_empresas": 105,
+   "d_sobre_d_mais_e": 0.23978428955081832,
+   "aliquota": 0.1413254887700449
+  },
+  "Oil/Gas Distribution": {
+   "n_empresas": 120,
+   "d_sobre_d_mais_e": 0.3501989518938975,
+   "aliquota": 0.1288169833383369
+  },
+  "Oilfield Svcs/Equip.": {
+   "n_empresas": 228,
+   "d_sobre_d_mais_e": 0.273809950991884,
+   "aliquota": 0.15581496825191818
+  },
+  "Packaging & Container": {
+   "n_empresas": 341,
+   "d_sobre_d_mais_e": 0.2960425060716154,
+   "aliquota": 0.1607571386362981
+  },
+  "Paper/Forest Products": {
+   "n_empresas": 197,
+   "d_sobre_d_mais_e": 0.5028552741275671,
+   "aliquota": 0.12410167871390171
+  },
+  "Power": {
+   "n_empresas": 328,
+   "d_sobre_d_mais_e": 0.5108311425682645,
+   "aliquota": 0.17355310697192694
+  },
+  "Precious Metals": {
+   "n_empresas": 64,
+   "d_sobre_d_mais_e": 0.12994445409878574,
+   "aliquota": 0.1592667382946683
+  },
+  "Publishing & Newspapers": {
+   "n_empresas": 171,
+   "d_sobre_d_mais_e": 0.09659101228907008,
+   "aliquota": 0.11616385663228028
+  },
+  "R.E.I.T.": {
+   "n_empresas": 208,
+   "d_sobre_d_mais_e": 0.3641425518843593,
+   "aliquota": 0.024724421385629067
+  },
+  "Real Estate (Development)": {
+   "n_empresas": 786,
+   "d_sobre_d_mais_e": 0.6630087629476379,
+   "aliquota": 0.14196491031320685
+  },
+  "Real Estate (General/Diversified)": {
+   "n_empresas": 205,
+   "d_sobre_d_mais_e": 0.41655111305522974,
+   "aliquota": 0.11885782458701509
+  },
+  "Real Estate (Operations & Services)": {
+   "n_empresas": 406,
+   "d_sobre_d_mais_e": 0.38012275528163464,
+   "aliquota": 0.14093048713534612
+  },
+  "Recreation": {
+   "n_empresas": 158,
+   "d_sobre_d_mais_e": 0.19062918962741393,
+   "aliquota": 0.11825836413828875
+  },
+  "Reinsurance": {
+   "n_empresas": 27,
+   "d_sobre_d_mais_e": 0.24328177810729157,
+   "aliquota": 0.163855181133209
+  },
+  "Restaurant/Dining": {
+   "n_empresas": 184,
+   "d_sobre_d_mais_e": 0.11837999151291023,
+   "aliquota": 0.12308434324095571
+  },
+  "Retail (Automotive)": {
+   "n_empresas": 122,
+   "d_sobre_d_mais_e": 0.42688963887936837,
+   "aliquota": 0.16579436444622273
+  },
+  "Retail (Building Supply)": {
+   "n_empresas": 55,
+   "d_sobre_d_mais_e": 0.2571339729840558,
+   "aliquota": 0.14474349347506207
+  },
+  "Retail (Distributors)": {
+   "n_empresas": 731,
+   "d_sobre_d_mais_e": 0.46779443921897523,
+   "aliquota": 0.15445010170198256
+  },
+  "Retail (General)": {
+   "n_empresas": 147,
+   "d_sobre_d_mais_e": 0.2681939414651445,
+   "aliquota": 0.1601073174673642
+  },
+  "Retail (Grocery and Food)": {
+   "n_empresas": 97,
+   "d_sobre_d_mais_e": 0.2742787419450041,
+   "aliquota": 0.1752956230846009
+  },
+  "Retail (REITs)": {
+   "n_empresas": 39,
+   "d_sobre_d_mais_e": 0.3778522361797989,
+   "aliquota": 0.05696677692732207
+  },
+  "Retail (Special Lines)": {
+   "n_empresas": 282,
+   "d_sobre_d_mais_e": 0.16283154973638592,
+   "aliquota": 0.16115150277306628
+  },
+  "Rubber& Tires": {
+   "n_empresas": 72,
+   "d_sobre_d_mais_e": 0.27556384912280874,
+   "aliquota": 0.17819752380378712
+  },
+  "Semiconductor": {
+   "n_empresas": 546,
+   "d_sobre_d_mais_e": 0.06170757747598421,
+   "aliquota": 0.08645253427932258
+  },
+  "Semiconductor Equip": {
+   "n_empresas": 300,
+   "d_sobre_d_mais_e": 0.12458332371170044,
+   "aliquota": 0.10727140531133218
+  },
+  "Shipbuilding & Marine": {
+   "n_empresas": 252,
+   "d_sobre_d_mais_e": 0.26975866272714044,
+   "aliquota": 0.1584580751455054
+  },
+  "Shoe": {
+   "n_empresas": 60,
+   "d_sobre_d_mais_e": 0.1707177474920153,
+   "aliquota": 0.1661322105956063
+  },
+  "Software (Entertainment)": {
+   "n_empresas": 67,
+   "d_sobre_d_mais_e": 0.07828469522526482,
+   "aliquota": 0.10623008705570679
+  },
+  "Software (Internet)": {
+   "n_empresas": 49,
+   "d_sobre_d_mais_e": 0.13670529682285526,
+   "aliquota": 0.12255800193212629
+  },
+  "Software (System & Application)": {
+   "n_empresas": 548,
+   "d_sobre_d_mais_e": 0.050077382549825855,
+   "aliquota": 0.08205549974551207
+  },
+  "Steel": {
+   "n_empresas": 555,
+   "d_sobre_d_mais_e": 0.3373064318732455,
+   "aliquota": 0.14331831227661535
+  },
+  "Telecom (Wireless)": {
+   "n_empresas": 68,
+   "d_sobre_d_mais_e": 0.2309854134039766,
+   "aliquota": 0.19550391470592918
+  },
+  "Telecom. Equipment": {
+   "n_empresas": 296,
+   "d_sobre_d_mais_e": 0.0859002122320558,
+   "aliquota": 0.08395715037819061
+  },
+  "Telecom. Services": {
+   "n_empresas": 142,
+   "d_sobre_d_mais_e": 0.24605745790838607,
+   "aliquota": 0.15845441152762327
+  },
+  "Tobacco": {
+   "n_empresas": 30,
+   "d_sobre_d_mais_e": 0.043820024154688886,
+   "aliquota": 0.22877164007187017
+  },
+  "Transportation": {
+   "n_empresas": 330,
+   "d_sobre_d_mais_e": 0.37030505202491226,
+   "aliquota": 0.17184940522691664
+  },
+  "Transportation (Railroads)": {
+   "n_empresas": 18,
+   "d_sobre_d_mais_e": 0.27344771664651657,
+   "aliquota": 0.2573475934694324
+  },
+  "Trucking": {
+   "n_empresas": 76,
+   "d_sobre_d_mais_e": 0.6365818700254352,
+   "aliquota": 0.19168029695245878
+  },
+  "Utility (General)": {
+   "n_empresas": 14,
+   "d_sobre_d_mais_e": 0.2677892388898513,
+   "aliquota": 0.16569261498887994
+  },
+  "Utility (Water)": {
+   "n_empresas": 76,
+   "d_sobre_d_mais_e": 0.4825190269106303,
+   "aliquota": 0.17110687710389094
+  },
+  "Total Market": {
+   "n_empresas": 27360,
+   "d_sobre_d_mais_e": 0.3653013444868277,
+   "aliquota": 0.13909503388757335
+  },
+  "Total Market (without financials)": {
+   "n_empresas": 24760,
+   "d_sobre_d_mais_e": 0.2468477161427588,
+   "aliquota": 0.13722148680313695
+  }
+ }
+}

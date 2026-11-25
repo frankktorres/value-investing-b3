@@ -536,3 +536,90 @@ Relatório: `docs/oraculo/hipoteses-2026-10-22.md` (e `.json`).
    - **Leitura pré-declarada:** se a mediana corrigida ficar com |valor| ≤ 3 p.p., o resultado é "não dispara; indício só no
      Ibovespa". A B35/B46 continua como hipótese, sem prioridade de calibração.
    - **Orçamento (§0.4):** não conta como tentativa (correção de coerência, sem variante de regra).
+12. **25/11/2026 — B46: Ke > 30% nas muito alavancadas — hipótese "separar a dificuldade" (Damodaran, 2009), regra,
+   critério e previsões; escrita e commitada SOZINHA, antes de rodar a variante.** Origem: `docs/BACKLOG.md` B46 (falha da B36:
+   CSNA3 62,2%, MOVI3 61,9%, BEEF3 48,5%; depois da B40, CSAN3 38,8% e MRVE3 32,3%). Autorizada pelo Frank sem a B35
+   (`docs/PENDENTE-FRANK.md` #12). Fontes, trechos e notas: `docs/b46/FONTES-B46.md`. Origem exploratória (§0.2): a hipótese
+   nasceu de olhar as 5 ações; elas **descrevem** a falha e não provam o conserto (a prova é o HOLD-OUT 2, DNA §5).
+   - **Mecanismo.** O motor avalia a empresa como **continuidade** (margem de meio de ciclo, perpetuidade) e desconta essa
+     perpetuidade com o D/E a mercado do preço deprimido. Damodaran (*Valuing Distressed and Declining Companies*, 2009, p. 14)
+     chama isso de "internally inconsistent"; a receita dele (p. 37–39) é separar: valor = continuidade × (1 − π) + venda forçada
+     × π, com a continuidade a um D/E sustentável e π a probabilidade de calote (Tabela 5, p. 41–42, de Altman 2007). O Hamada
+     do motor ainda supõe dívida sem risco (Damodaran, *Investment Valuation* 2ª ed., cap. 8 p. 20, nota 8), enquanto o WACC
+     cobra a mesma dívida a Kd de CC (27,9% em MOVI3 e BEEF3, acima do próprio Ke desalavancado).
+   - **Opções vistas antes de qualquer tabela; escolha do `senior`: B.** A — Conine (β_D > 0): cai porque o β_D não tem fonte
+     aberta (pelo spread do motor, β_D > 1 em CC; a tabela de Schaefer & Strebulaev não foi aberta). **Contaminação
+     declarada:** o autor estimou de cabeça a A com β_D ~0,3 e viu 4 das 5 seguirem > 30% antes de escrever esta emenda.
+     B' — B só nas sobrealavancadas: degrau no limiar sem fonte. C — Hamada "não se aplica" com rating ≤ B-: só esconde a linha
+     "Ke > 30%" do M1.
+   - **Regra da variante (B, uma regra para todo industrial; o motor não muda nesta tentativa).**
+     (1) **Continuidade:** D/E_cont = min(D/E a mercado, D/E da indústria), um D/E só no prêmio de Hamada e nos pesos do WACC
+     (regra da emenda 3). D/E da indústria = D/(D+E) da indústria em Damodaran, `waccemerg.xls` (Emerging Markets, 05/01/2026;
+     dívida com arrendamentos ÷ dívida + valor de mercado, a definição do motor), levado a D/E. Indústria pelo `indname.xls` do
+     Damodaran: o ticker; senão a mesma raiz de 4 letras com indústria única; senão **não avaliado** (razão no relatório, sem
+     trocar por outra regra). A ponte segue subtraindo a dívida real; o Kd fica o de hoje (B35 fora — conservador).
+     (2) **π, duas estimativas:** (i) rating sintético da cobertura normalizada (a conta do `custo_divida`, `credito.py`,
+     calculada também quando há `kd_ri`; dívida > 0 sem juros → não avaliado) → Tabela 5; (ii) Z'' de emergentes do motor
+     (`altman_z2`, mesmo período do `avaliar`; campo ausente → não avaliado) → rating equivalente pela coluna **2013** da tabela
+     "US Bond Rating Equivalents Based on Z''-Score Model" (Altman, *50 Years of Altman Z-Score*, slide 26; a mais recente e a
+     única monotônica): a melhor classe cuja mediana ≤ Z''; abaixo de 0,05 → CC/D. Classe sem linha na Tabela 5 → a pior
+     seguinte que existe (AAA/AA+ → AA, AA/AA- → A+, BBB+ → BBB, BBB- → BB, BB+ → BB, BB- → B+, CCC+ → CCC, CCC- → CC); D e
+     CC/D → π = 1. **π = média das duas**; com uma só, vale a única, marcada, e ela não conta como concordante no C3. Agência
+     (3ª estimativa sugerida pelo `senior`): fora, sem fonte A mecânica — declarado. A (ii) não usa juros: a diferença (i) × (ii)
+     mede o viés de dividir o lucro por juros nominais em R$ numa tabela de empresas dos EUA (hipótese do `senior`).
+     (3) **Acionista:** cada âncora de continuidade (DCF, EPV, Owner Earnings) × (1 − π); o valor de reprodução (de ativo, não
+     de continuidade) fica fora do π. Ramo de dificuldade = 0. **Direção nos dois sentidos:** fica acima da fórmula literal do
+     Damodaran quando a venda forçada é menor que a dívida (lá o acionista sai negativo) e abaixo quando é maior; e a Tabela 5
+     mede calote, não fechamento ("Many firms continue to operate as going concerns after default", p. 42), o que puxa o π
+     para cima (conservador).
+     (4) **Vieses declarados:** D/E sustentável desde t = 1, sem trajetória (a p. 38–39 diz que isso superestima a
+     continuidade); o calote entra duas vezes (Kd de CC no WACC + π), o que é conservador; o relatório separa o efeito de cada
+     parte. CSAN3 (holding) cai em "Retail (Automotive)": classificação duvidosa, prevista aqui e não corrigida depois.
+   - **Critério (sobre o conjunto de desenvolvimento: industriais do hall, os 6 dossiês e os industriais da B36).**
+     **C1 — conferência:** o Ke da variante de cada ticker = (1 + rf real + 5 p.p. × [1 + (1 − t) × D/E_cont]) × (1 + π) − 1
+     recalculado à parte; π = Tabela 5 pela classe; cada âncora de continuidade do modo completo = a do modo "só D/E" × (1 − π)
+     e a reprodução igual. **C2 — propriedades**, choque fixo: (2a) no grupo com D/E a mercado ÷ 1,3 > D/E da indústria (fica
+     acima do limite nos dois choques), preço × 0,7 e × 1,3 mudam o central em no máximo 0,5%; (2b) nesse grupo, dívida bruta
+     +10% com juros +10% (caixa e preço fixos) nunca sobe o central; abaixo do limite a direção não é prevista (efeito H2, o
+     Kd não reage) e é só relatada; (2c) π não cai com rating pior (nas duas escalas). **C3 — π mensurável:** |π(i) − π(ii)|
+     ≤ 20 p.p. (≈ uma faixa da régua, que tem faixas de 0,20 no P/C) em ≥ 2/3 dos industriais avaliados com D/E a mercado >
+     D/E da indústria. **C4:** zero "não avaliado" silencioso; erro novo (ex.: dívida sem juros com `kd_ri`) listado com razão.
+   - **O que cada linha prova (ajuste do Frank, 25/11):** C1 e C2 são **conferência de mecânica** (o C2a passa por construção
+     no grupo acima do limite); **só o C3 testa a hipótese**. "PASSA" = mecânica certa + π mensurável, **não** "valor certo";
+     a prova continua sendo o HOLD-OUT 2.
+   - **Leitura pré-declarada:** C1–C4 cumpridos → **PASSA** → proposta ⏸ ao Frank (implantar é mudança de doutrina; prova no
+     HOLD-OUT 2). C1 falha, ou C2 falha fora do previsto → **FALHA** (a variante não sai). C3 não cumprido → **NÃO
+     CONCLUSIVA**: o π não é identificável com as fontes de hoje; nada a implantar, a B46 segue aberta com o motivo.
+   - **Só relatado (§0.3):** nº de Ke > 30% (quase por construção; não é critério), palavras, P/C mediano, nº de BARATA,
+     Δcentral por ticker separado em parte do D/E e parte do π. **O relatório mostra as 41 do hall** (financeiras: não se
+     aplica): palavras que mudariam e Δcentral por ticker nas duas partes; ticker do hall com palavra mudada vai ao
+     `docs/PENDENTE-FRANK.md` junto com a proposta (ajuste do Frank).
+   - **Insumos fixados antes de rodar** (motor de hoje, mercado de 19/11/2026: rf real 7,56%, π 7,17%). Formato: ticker —
+     indústria (D/E da indústria) · D/E a mercado · rating (i). O Z'' e o π (ii) **não** foram calculados antes deste commit
+     (o C3 fica cego).
+     Hall: ABEV3 Beverage (Alcoholic) (0,026) · 0,01 · AAA; B3SA3 Financial Svcs. (Non-bank & Insurance) (1,166) · 0,21 · A-;
+     FLRY3 Healthcare Support Services (0,616) · 0,55 · BB; HYPE3 Drugs (Pharmaceutical) (0,106) · 0,50 · B+; KEPL3 Machinery
+     (0,122) · 0,30 · A-; LEVE3 Auto Parts (0,184) · 0,33 · AAA; PRIO3 Oil/Gas (Production and Exploration) (0,315) · 0,51 · A;
+     RANI3 Packaging & Container (0,421) · 1,39 · CCC; RECV3 Oil/Gas (Production and Exploration) (0,315) · 1,12 · C; SLCE3
+     Farming/Agriculture (0,578) · 1,33 · B+; SMTO3 Food Processing (0,380) · 2,18 · BB; SUZB3 Paper/Forest Products (1,011) ·
+     1,54 · BB+; TIMS3 Telecom (Wireless) (0,300) · 0,30 · BB+; UGPA3 Retail (Automotive) (0,745) · 0,59 · B+; VBBR3 Retail
+     (Automotive) (0,745) · 0,56 · B; VIVT3 Telecom. Services (0,326) · 0,19 · A-; WEGE3 Electrical Equipment (0,161) · 0,02 ·
+     AAA; **sem indústria no indname (não avaliados):** GGBR4, KLBN11, PETR4, UNIP6. Dossiês: ALLD3 Computer Services (0,102) ·
+     0,88 · A; BLAU3 Drugs (Biotechnology) (0,084) · 0,34 · A-; CMIN3 Steel (0,509) · 0,82 · AA; VLID3 Publishing & Newspapers
+     (0,107) · 0,51 · BB; **sem indústria:** FESA4, SHUL4. B36: EMBJ3 Aerospace/Defense (0,120) · 0,16 · CCC; RADL3 Retail
+     (Special Lines) (0,195) · 0,37 · BBB; RAIL3 Transportation (Railroads) (0,376) · 1,05 · BB; CSAN3 Retail (Automotive)
+     (0,745) · 5,14 · B+; SMFT3 Recreation (0,236) · 1,38 · C; CSNA3 Steel (0,509) · 11,75 · B-; MOVI3 Transportation (0,588) ·
+     10,09 · CC; MRVE3 Homebuilding (0,704) · 3,31 · CCC; AZZA3 Apparel (0,260) · 1,30 · BBB; BEEF3 Food Processing (0,380) ·
+     7,88 · CC; **sem indústria:** GOAU4, USIM5; **erro no motor de hoje (fora, com a razão):** MBRF3 (capital no FRE), TEND3 e
+     NATU3 (incorporação, B41), IGTI11 (provento repetido, B43).
+   - **Previsões (escritas antes de rodar).** Ke nominal da continuidade (à mão, t do motor): CSNA3 22,4% · MOVI3 23,0% · BEEF3
+     22,0% · CSAN3 23,3% · MRVE3 23,1%; π (i) = 42,12% · 66,6% · 66,6% · 28,25% · 59,02%. Nenhum industrial avaliado fica com Ke
+     > 30% (por construção). C1, C2a, C2b e C2c passam. **C3: sem confiança; inclino a "não cumprido"**: o rating (i) dá CCC à
+     EMBJ3 e C à RECV3 e à SMFT3, e a hipótese do `senior` (juros nominais em R$) diz que o (i) sai pior que o (ii) na maioria;
+     se for assim, a leitura é NÃO CONCLUSIVA. Direção esperada das palavras: o D/E da indústria sobe o central da maioria
+     das sobrealavancadas e o π o derruba onde o rating é B ou pior; o saldo por ticker não é previsto.
+   - **Execução:** `ferramentas/b46/` (`calculo.py` puro, com teste de esperado à mão; `rodar.py` com a variante por
+     `mock.patch`, como `oraculo/hipoteses.py`; `relatorio.py` gera `docs/b46/B46-2026-11.md` só do JSON). Motor, doutrina e
+     golden não mudam.
+   - **Orçamento (§0.4):** a execução da variante sobre o conjunto de desenvolvimento conta **7/24** (linha 14 do §6, escrita
+     depois de rodar).
