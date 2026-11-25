@@ -206,6 +206,10 @@ def eventos_em_acoes(tk: str, suplemento, isin_de=lambda tk: None) -> list[dict]
                     for i in isins}
         if len({tuple(v) for v in por_isin.values()}) > 1:
             raise NotImplementedError(f"{tk}: eventos diferentes por classe {sorted(por_isin)} — ajustar à mão")
+        if (s["tipo"] == CISAO).any():
+            # cada classe recebe a ação nova da sua espécie (Itaú → XPart ON/PN): sem o ISIN do ticker, a classe de `recebe`
+            # seria chute (adversário, 25/11)
+            raise NotImplementedError(f"{tk}: {CISAO} em várias classes {isins} sem o ISIN da classe do ticker — ajustar à mão")
         s = s[s["isin"] == isins[0]]
         chave = lambda x, f: (x["tipo"], x["data_com"], f)
     else:
@@ -245,6 +249,7 @@ def eventos_em_acoes(tk: str, suplemento, isin_de=lambda tk: None) -> list[dict]
 def _cisoes(tk: str, cis) -> list[dict]:
     """Uma `CIS RED CAP` por data-com (semântica no comentário de `SEMANTICA_CONFERIDA`): multiplicador 1 e `recebe` =
     [(ISIN da ação nova, ações novas por ação)]. As linhas já vêm da classe do ticker (ou de classes iguais)."""
+    import pandas as pd
     if not len(cis):
         return []
     if "ativo_emitido" not in cis.columns:
@@ -254,13 +259,17 @@ def _cisoes(tk: str, cis) -> list[dict]:
     for d, g in cis.groupby(cis["data_com"].astype(str).str[:10], sort=True):
         propria, recebe = [], {}
         for _, e in g.iterrows():
-            f, ativo = float(e["fator_b3"]), str(e["ativo_emitido"] or "").strip()
+            f = float(e["fator_b3"])
+            ativo = "" if pd.isna(e["ativo_emitido"]) else str(e["ativo_emitido"]).strip()      # NaN de concat não vira "nan"
             if not f > 0:
                 raise ValueError(f"{tk}: {CISAO} de {d} com fator {e['fator_b3']!r}")
             if not ativo:
                 raise NotImplementedError(f"{tk}: {CISAO} de {d} sem ativo emitido — ajustar à mão")
-            if ativo.startswith(f"BR{tk[:4]}"):
+            if ativo == str(e["isin"]).strip():
                 propria.append(f)
+            elif ativo.startswith(f"BR{tk[:4]}"):
+                # outra classe ou recibo da MESMA empresa (ex. 1 PN por ON) é ação nova, não "mantém as ações" (adversário)
+                raise NotImplementedError(f"{tk}: {CISAO} de {d} entrega {ativo}, da própria empresa em outro ISIN — ajustar à mão")
             elif ativo in recebe and recebe[ativo] != f / 100:
                 raise NotImplementedError(f"{tk}: {CISAO} de {d}: {ativo} com fatores diferentes — ajustar à mão")
             else:

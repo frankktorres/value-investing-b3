@@ -93,8 +93,25 @@ def test_cisao_em_duas_classes_conta_uma_vez():
     import proventos_hall as ph
     ev = ph.eventos_em_acoes("ITUB4", s, lambda t: "BRITUBACNPR1")
     assert [(e["multiplicador"], e["recebe"]) for e in ev] == [(1.0, [("BRXPARACNPR6", 1.0)])]
-    # sem o ISIN da classe: as duas classes têm o mesmo conjunto (tipo, data, fator) → um evento só, ×1
-    assert [e["multiplicador"] for e in base.eventos_em_acoes("ITUB4", s)] == [1.0]
+    # sem o ISIN da classe: cada classe recebe a ação nova da sua espécie → a classe de `recebe` seria chute → falha alto
+    with pytest.raises(NotImplementedError, match="várias classes"):
+        ph.eventos_em_acoes("ITUB4", s)
+
+
+@pytest.mark.parametrize("ativo", ["BRXPTOACNPR8", "BRXPTOR01OR1"])
+def test_cisao_que_entrega_outra_classe_da_propria_empresa_falha_alto(ativo):
+    """Adversário (25/11): 1 PN (ou recibo) por ON da mesma empresa é ação nova; reconhecer a linha própria só pela raiz
+    deixaria passar com ×1."""
+    s = _cis("XPTO", "2024-05-24", "2024-04-24", ("BRXPTOACNOR1", "BRNOVAACNOR1", 50.0), ("BRXPTOACNOR1", ativo, 100.0))
+    with pytest.raises(NotImplementedError, match="outro ISIN"):
+        base.eventos_em_acoes("XPTO3", s)
+
+
+def test_cisao_com_ativo_emitido_nan_falha_alto():
+    """Adversário (25/11): NaN (concat com o formato do backtest) não pode virar o ativo "nan"."""
+    s = _cis("XPTO", "2024-05-24", "2024-04-24", ("BRXPTOACNOR1", float("nan"), 50.0), ("BRXPTOACNOR1", "BRXPTOACNOR1", 100.0))
+    with pytest.raises(NotImplementedError, match="ativo emitido"):
+        base.eventos_em_acoes("XPTO3", s)
 
 
 def test_cisao_com_fator_da_propria_acao_diferente_de_100_falha_alto():

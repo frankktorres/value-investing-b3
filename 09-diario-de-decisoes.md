@@ -1270,6 +1270,8 @@ executor da B36 (`gravar=False`, resultado registrado intocado). As duas saem **
 38,8%; MRVE3 com central −6,47 e Ke 32,3%. Os dois Ke passam de 30% → B46. Nenhum ticker do hall ou dossiê tem cisão no
 cache: golden igual. Não gasta tentativa do pré-registro.
 
+**Adversário:** nenhum número do hall ou dossiê muda (eventos e DPA iguais nos 21 + 6). Reproduziu 3 furos na `_cisoes`, corrigidos com teste: linha própria reconhecida pela raiz e não pelo ISIN (1 PN por ON passaria ×1), `assetIssued` NaN virando "nan", e `recebe` da classe errada sem o ISIN do ticker (agora falha alto). Achado de dado: EQTL3 DPA 2025 = R$ 2,37 pelo hall → **B56**.
+
 **Fora do escopo → B55:** antes da cisão, a série histórica inclui o negócio cindido (MRV 2016–18 com a LOG). Falta ajustar
 ou declarar a janela não avaliada. **Resposta do Frank ao #12:** B46 sim; B35 não (fica até o HOLD-OUT 2).
 
