@@ -55,11 +55,19 @@ def montar(r: dict) -> str:
               "acima da mediana do que o mercado cobra. A coluna \"prêmio implícito\" abaixo mostra o intervalo do que as três "
               "leituras dão para o prêmio sobre a rf de 10 anos; a calibração (B35 + B46) escolhe dentro dele, com o orçamento do §0.4.", ""]
     elif g["veredito"] == "NÃO DISPARA":
-        L += ["**Saída (emenda 9):** o Ke fica, com este motivo; a causa do \"tudo CARA\" se procura em outra camada "
-              "(âncoras, normalização; DNA, causas b–d).", ""]
+        so = [k for k, v in dl.items() if v is not None and round(abs(v), 10) > 0.03]
+        L += [("**Leitura pré-declarada (emenda 11): não dispara; indício só no " + ("Ibovespa" if so == ["ii"] else
+               ", ".join(f"({k})" for k in so)) + ".** A B35/B46 continua como hipótese, sem prioridade de calibração.")
+              if so else "", "", "**Saída (emenda 9):** o Ke fica, com este motivo; a causa do \"tudo CARA\" se procura em outra "
+              "camada (âncoras, normalização; DNA, causas b–d).", ""]
     else:
         L += ["**Saída (emenda 9):** menos de 2 estimativas; nada muda.", ""]
 
+    g9 = r.get("gatilho_emenda9")
+    if g9:
+        L += [f"**Versão da emenda 9 (substituída pela 11, mantida ao lado):** {g9['veredito']}, mediana {pp(g9['mediana'])}; "
+              "a diferença é só a (i): o ROE histórico nominal era combinado com a π futura da ETTJ; a emenda 11 põe cada ROE em "
+              "real pelo IPCA do próprio ano e faz Gordon todo em real.", ""]
     L += ["## Mercado (uma data só)", "",
           "| Insumo | Valor | Fonte |", "|---|---|---|",
           f"| rf real | {pct(m['rf_real'])} | {m['rf_titulo']} — {m['rf_fonte']} (nota A) |",
@@ -71,11 +79,13 @@ def montar(r: dict) -> str:
           f"| IPCA (lucro real) | até {r['mes_ipca']} | SGS 433 (nota A) |", "",
           "## As três estimativas (Ke real)", "",
           "| | Estimativa | Ke implícito | Ke da Mesa | Δ | Prêmio implícito (Ke − rf) | Prêmio da Mesa |", "|---|---|---|---|---|---|---|"]
-    for k in ("i", "ii", "iii"):
+    for k in [k for k in ("i", "i_emenda9", "ii", "iii") if k in e]:
         x = e[k]
         pi_ = None if x["ke_real"] is None else x["ke_real"] - m["rf_real"]
         pm = None if x["ke_mesa_real"] is None else x["ke_mesa_real"] - m["rf_real"]
-        L.append(f"| ({k}) | {x['nome']} | {pct(x['ke_real'])} | {pct(x['ke_mesa_real'])} | {pp(dl[k])} | {pp(pi_)} | {pp(pm)} |")
+        d_ = r["deltas_emenda9"]["i"] if k == "i_emenda9" else dl[k]
+        rot = "(i) v. emenda 9" if k == "i_emenda9" else f"({k})"
+        L.append(f"| {rot} | {x['nome']} | {pct(x['ke_real'])} | {pct(x['ke_mesa_real'])} | {pp(d_)} | {pp(pi_)} | {pp(pm)} |")
     ii = e["ii"]
     L += ["", f"Ke da Mesa: (i) rf + 5 p.p.; (ii) e (iii) rf + o prêmio do índice ponderado pelo valor de mercado (5 p.p. nas "
           "financeiras; 5 × [1 + 0,66 × D/E] nas demais, D/E a mercado). (ii) pondera só as que entraram no E10; (iii), todas.", "",
@@ -88,17 +98,21 @@ def montar(r: dict) -> str:
              "sem_petr_vale": "sem PETR3/PETR4 e VALE3", "lucro_ltm": "lucro LTM no lugar do E10",
              "gordon_g_0%": "Gordon, payout mediano, g real 0%", "gordon_g_1%": "Gordon, payout mediano, g real 1%",
              "gordon_g_2%": "Gordon, payout mediano, g real 2%", "sem_tirar_s": "sem tirar s (rf real + ERP total)"}
-    for k in ("i", "ii", "iii"):
+    for k in [k for k in ("i", "i_emenda9", "ii", "iii") if k in e]:
+        rot = "(i) v. emenda 9" if k == "i_emenda9" else f"({k})"
         for s, v in e[k]["sens"].items():
-            L.append(f"| ({k}) | {nomes.get(s, s)} | {pct(v)} | {direcao(v, e[k]['ke_real'])} |")
+            L.append(f"| {rot} | {nomes.get(s, s)} | {pct(v)} | {direcao(v, e[k]['ke_real'])} |")
     if ii.get("payout_mediano") is not None:
         L += ["", f"Payout mediano do agregado (dividendos/JCP pagos na DFC ÷ lucro, 2016–2025): {pct(ii['payout_mediano'], 1)}."]
 
-    L += ["", "## (i) Bancos", "", "| Banco | Exercícios | ROE mediano | P/VP | Ke real | Último balanço |", "|---|---|---|---|---|---|"]
+    L += ["", "## (i) Bancos", "", "| Banco | Exercícios | ROE real mediano | ROE nominal mediano | P/VP | Ke real (emenda 11) | "
+          "Ke real (v. emenda 9) | Último balanço |", "|---|---|---|---|---|---|---|---|"]
     for b in r["bancos"]:
-        L.append(f"| {b['ticker']} | {b['n_roes']} | {pct(b['roe_normalizado'], 1)} | "
+        fora = "fora: " + b.get("fora", "")
+        L.append(f"| {b['ticker']} | {b['n_roes']} | {pct(b.get('roe_real_normalizado'), 1)} | {pct(b['roe_normalizado'], 1)} | "
                  f"{'—' if b['pvp'] is None else f'{b['pvp']:.2f}'.replace('.', ',')} | "
-                 f"{pct(b.get('ke_real')) if 'ke_real' in b else 'fora: ' + b.get('fora', '')} | {b['dt_refer_ultimo'] or '—'} |")
+                 f"{pct(b['ke_real']) if 'ke_real' in b else fora} | "
+                 f"{pct(b['ke_real_emenda9']) if 'ke_real_emenda9' in b else fora} | {b['dt_refer_ultimo'] or '—'} |")
 
     fora = [x for x in r["empresas"] if x.get("no_indice") and (x.get("e10") is None or not x.get("vm"))]
     L += ["", "## (ii) Fora do agregado (declarado)", ""]
@@ -125,6 +139,8 @@ def montar(r: dict) -> str:
           "entram as duas, como no próprio índice: lucro e valor de mercado contados dos dois lados.",
           "- (ii) E10 ÷ P é o EPV reverso da Mesa, não um resultado de Shiller (emenda 10): sem crescimento, subestima o Ke quando "
           "o crescimento cria valor. As linhas de Gordon dão o tamanho.",
+          "- (i) Emenda 11: ROE real do exercício pelo IPCA de jan–dez do próprio ano (SGS 433); ROE LTM real pelo IPCA dos mesmos "
+          "12 meses.",
           "- (ii) Lucro real: cada exercício levado a R$ do último IPCA publicado em T pelo índice médio dos 12 meses do exercício "
           "(`inflacao.deflator_periodo`).",
           "- (iii) Tirar s de uma NTN-B levada a nominal é extensão da Mesa: o Damodaran não trata título indexado de governo com "

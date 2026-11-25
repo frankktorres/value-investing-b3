@@ -55,6 +55,26 @@ def ke_banco(roe_nom: float, pvp: float, g_real: float, pi: float) -> tuple[floa
     return k, real(k, pi)
 
 
+def inflacao_acumulada(taxas_mensais: Sequence[float]) -> float:
+    """Inflação acumulada de variações mensais em fração (IPCA do ano = jan–dez da SGS 433)."""
+    f = 1.0
+    for t in taxas_mensais:
+        f *= 1 + t
+    return f - 1
+
+
+def roe_reais(roes_nom: dict[int, float], ipca_ano: dict[int, float]) -> dict[int, float]:
+    """Emenda 11: ROE real do exercício = (1 + ROE nominal) ÷ (1 + IPCA do próprio ano) − 1. Ano sem IPCA fica fora."""
+    return {a: real(r, ipca_ano[a]) for a, r in roes_nom.items() if a in ipca_ano}
+
+
+def ke_banco_real(roe_real: float, pvp: float, g_real: float) -> float:
+    """Emenda 11: Gordon todo em real, Ke real = g real + (ROE real − g real) ÷ (P/VP). Nenhuma π futura entra."""
+    if pvp <= 0:
+        raise ValueError(f"P/VP não positivo: {pvp}")
+    return g_real + (roe_real - g_real) / pvp
+
+
 # ------------------------------------------------------------------------------------------------ (ii) índice
 def e10(lucros_reais: Sequence[float | None]) -> float | None:
     """Média aritmética dos 10 últimos lucros reais (em ordem cronológica; mínimo 5 válidos). Princípio do CAPE: a construção

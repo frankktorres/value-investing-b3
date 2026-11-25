@@ -1234,3 +1234,18 @@ Achado de dado fora do escopo: o ledger do backtest não lê o lucro de banco no
 
 **Saída pela emenda 9:** o nível do Ke/prêmio entra na calibração (B35 + B46), contada no orçamento do §0.4, e o prêmio p do DNA
 §1.1 sai dela. **⏸ Decisão do Frank em outro chat.** Motor, doutrina e golden intocados.
+
+### 25/11/2026 — B39, errata da (i) (emenda 11): **NÃO DISPARA — indício só no Ibovespa**
+O Frank apontou um erro de coerência, não uma escolha nova de método. Na (i), o ROE mediano é histórico (IPCA médio de ~5%),
+mas o g nominal usava a π futura (7,17%). Isso supunha uma queda de ~2 p.p. no ROE real e deixava o prêmio implícito dos
+bancos em −0,44 p.p.
+
+**Emenda 11** (2c2d44b), em commit próprio e antes de recalcular, pelo princípio "tudo real" da emenda 9: cada ROE vai a real
+pelo IPCA de jan–dez do próprio ano (SGS 433), e o Gordon é todo em real.
+
+Recalculada só a (i): Ke real mediano **9,93%** contra 12,86%, Δ **−2,93 p.p.** (ITUB4 à mão: 6,87% contra 5,43%). Com (ii)
+−4,89 e (iii) −1,42, a mediana fica em **−2,93 p.p.: não dispara**, por 0,07 p.p. do limite.
+
+Leitura pré-declarada: indício só no Ibovespa. A B35/B46 segue como hipótese, sem prioridade de calibração, e o Ke fica.
+A versão da emenda 9 (DISPARA, −4,89) fica ao lado no relatório e em `_historico/2026-11-25 b39 antes da emenda 11/`.
+A divergência da π (`01` §4 Tesouro × código ANBIMA) virou o item B50, sem correção agora. Motor, doutrina e golden intocados.

@@ -82,6 +82,25 @@ def valor_mercado(acoes: dict | None, p: dict, unit=None) -> tuple[float | None,
     return (acoes["on"] * (pon or 0) + acoes["pn"] * (ppn or 0)) / 1000, nota
 
 
+def _ipca_mensal() -> dict[tuple[int, int], float]:
+    serie = json.loads((AQUI.parent / "dados" / "macro" / "ipca_mensal.json").read_text(encoding="utf-8"))
+    return {(int(x["data"][6:]), int(x["data"][3:5])): float(x["valor"]) / 100 for x in serie}
+
+
+def ipca_por_ano() -> dict[int, float]:
+    """IPCA de jan–dez de cada ano completo da SGS 433 (emenda 11)."""
+    m = _ipca_mensal()
+    anos = sorted({a for a, _ in m})
+    return {a: c.inflacao_acumulada([m[(a, k)] for k in range(1, 13)]) for a in anos if all((a, k) in m for k in range(1, 13))}
+
+
+def ipca_12m(dt_refer: str) -> float:
+    """IPCA dos 12 meses que terminam no mês de `dt_refer` (ROE LTM real)."""
+    m, a, k = _ipca_mensal(), int(dt_refer[:4]), int(dt_refer[5:7])
+    meses = [((a * 12 + k - 1 - i) // 12, (a * 12 + k - 1 - i) % 12 + 1) for i in range(12)]
+    return c.inflacao_acumulada([m[x] for x in meses])
+
+
 def montar() -> dict:
     tes, pi_, ibov, dam = _ler("tesouro"), _ler("pi"), _ler("ibov"), _ler("damodaran")
     rf, pi = tes["rf"]["taxa_compra_manha"], pi_["pi"]
@@ -146,7 +165,8 @@ def montar() -> dict:
     idx = [e for e in empresas if e["no_indice"]]
     vm_total = sum(e["vm"] for e in idx if e.get("vm"))
 
-    # ---------------------------------------------------------------- (i) bancos
+    # ---------------------------------------------------------------- (i) bancos — emenda 11 (vale) e emenda 9 (mantida ao lado)
+    ipca_ano = ipca_por_ano()
     bancos = []
     for tk in BANCOS:
         e = next(x for x in empresas if tk in x["tickers"])
@@ -155,26 +175,37 @@ def montar() -> dict:
         roes = c.roe_anuais(lucro, pl)
         roes = {a: v for a, v in roes.items() if a >= 2016}
         rn = c.roe_normalizado(roes)
+        roes_r = c.roe_reais(roes, ipca_ano)
+        rnr = c.roe_normalizado(roes_r)
         pl_u = e.get("ultimo", {}).get("pl")
         pvp = e["vm"] / pl_u if e.get("vm") and pl_u else None
-        r = {"ticker": tk, "roes": {str(a): v for a, v in roes.items()}, "n_roes": len(roes), "roe_normalizado": rn,
+        r = {"ticker": tk, "roes": {str(a): v for a, v in roes.items()}, "roes_reais": {str(a): v for a, v in roes_r.items()},
+             "n_roes": len(roes_r), "roe_normalizado": rn, "roe_real_normalizado": rnr,
              "pvp": pvp, "vm": e.get("vm"), "pl_ultimo": pl_u, "dt_refer_ultimo": e.get("ultimo", {}).get("dt_refer")}
-        if rn is not None and pvp:
-            r["ke_nom"], r["ke_real"] = c.ke_banco(rn, pvp, c.G_REAL, pi)
-            r["sens"] = {f"g_real_{g:.0%}": c.ke_banco(rn, pvp, g, pi)[1] for g in (0.0, 0.02)}
+        if rn is not None and rnr is not None and pvp:
+            r["ke_real"] = c.ke_banco_real(rnr, pvp, c.G_REAL)
+            r["sens"] = {f"g_real_{g:.0%}": c.ke_banco_real(rnr, pvp, g) for g in (0.0, 0.02)}
+            r["ke_nom_emenda9"], r["ke_real_emenda9"] = c.ke_banco(rn, pvp, c.G_REAL, pi)
+            r["sens_emenda9"] = {f"g_real_{g:.0%}": c.ke_banco(rn, pvp, g, pi)[1] for g in (0.0, 0.02)}
             u = e.get("ultimo", {})
             if e.get("ltm") is not None and u.get("pl") and u.get("pl_ano_antes"):
                 roe_ltm = e["ltm"] / ((u["pl"] + u["pl_ano_antes"]) / 2)
                 r["roe_ltm"] = roe_ltm
-                r["sens"]["roe_ltm"] = c.ke_banco(roe_ltm, pvp, c.G_REAL, pi)[1]
+                r["sens"]["roe_ltm"] = c.ke_banco_real(c.real(roe_ltm, ipca_12m(u["dt_refer"])), pvp, c.G_REAL)
+                r["sens_emenda9"]["roe_ltm"] = c.ke_banco(roe_ltm, pvp, c.G_REAL, pi)[1]
         else:
             r["fora"] = "menos de 5 exercícios" if rn is None else "sem P/VP"
         bancos.append(r)
-    kes = [b["ke_real"] for b in bancos if "ke_real" in b]
-    est_i = st.median(kes) if kes else None
     mesa_i = rf + c.PREMIO
-    sens_i = {k: st.median([b["sens"][k] for b in bancos if k in b.get("sens", {})])
-              for k in ("g_real_0%", "g_real_2%", "roe_ltm") if any(k in b.get("sens", {}) for b in bancos)}
+
+    def _estimativa_i(chave_ke: str, chave_sens: str):
+        kes = [b[chave_ke] for b in bancos if chave_ke in b]
+        sens = {k: st.median([b[chave_sens][k] for b in bancos if k in b.get(chave_sens, {})])
+                for k in ("g_real_0%", "g_real_2%", "roe_ltm") if any(k in b.get(chave_sens, {}) for b in bancos)}
+        return (st.median(kes) if kes else None), len(kes), sens
+
+    est_i, n_i, sens_i = _estimativa_i("ke_real", "sens")
+    est_i9, n_i9, sens_i9 = _estimativa_i("ke_real_emenda9", "sens_emenda9")
 
     # ---------------------------------------------------------------- (ii) índice agregado
     comps_ii = [{"e10": e.get("e10"), "vm": e.get("vm")} for e in idx]
@@ -205,6 +236,9 @@ def montar() -> dict:
     mesa_iii = rf + c.premio_indice(com_premio_iii)
     sens_iii = {"sem_tirar_s": c.ke_damodaran_literal(rf, dam["erp_total"])}
 
+    deltas9 = {"i": None if est_i9 is None else est_i9 - mesa_i,
+               "ii": None if agg["ke"] is None or mesa_ii is None else agg["ke"] - mesa_ii,
+               "iii": est_iii - mesa_iii}
     deltas = {"i": None if est_i is None else est_i - mesa_i,
               "ii": None if agg["ke"] is None or mesa_ii is None else agg["ke"] - mesa_ii,
               "iii": est_iii - mesa_iii}
@@ -217,8 +251,10 @@ def montar() -> dict:
                     ("atualizado", "rating_moodys", "s_adj_default_spread", "crp", "erp_total", "erp_maduro_implicito", "url")},
                     "ibov": {"n": len(ibov["componentes"]), "data_da_carteira_b3": ibov["data_da_carteira_b3"], "fonte": ibov["fonte"]}},
         "estimativas": {
-            "i": {"nome": "Bancos (Gordon sobre P/VP, ROE mediano 10a)", "ke_real": est_i, "ke_mesa_real": mesa_i,
-                  "n": len(kes), "sens": sens_i},
+            "i": {"nome": "Bancos (Gordon real sobre P/VP, ROE real mediano 10a; emenda 11)", "ke_real": est_i,
+                  "ke_mesa_real": mesa_i, "n": n_i, "sens": sens_i},
+            "i_emenda9": {"nome": "Bancos (versão da emenda 9: ROE nominal histórico com π futura; substituída)",
+                          "ke_real": est_i9, "ke_mesa_real": mesa_i, "n": n_i9, "sens": sens_i9},
             "ii": {"nome": "Ibovespa agregado (Σ E10 ÷ Σ valor de mercado)", "ke_real": agg["ke"], "ke_mesa_real": mesa_ii,
                    "cobertura_vm": agg["cobertura"], "n": agg["n"], "n_indice": len(idx),
                    "cobertura_peso_ibov": sum(e["part"] for e in dentro), "soma_e10": agg["soma_e10"],
@@ -227,6 +263,9 @@ def montar() -> dict:
                     "ke_mesa_real": mesa_iii, "sens": sens_iii}},
         "deltas": deltas,
         "gatilho": c.gatilho(deltas),
+        "deltas_emenda9": deltas9,
+        "gatilho_emenda9": c.gatilho(deltas9),
+        "ipca_ano": {str(a): v for a, v in sorted(ipca_ano.items())},
         "bancos": bancos,
         "empresas": empresas,
     }
