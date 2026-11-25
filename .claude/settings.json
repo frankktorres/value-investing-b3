@@ -20,7 +20,24 @@
       "Bash(*mesa_suite_verde*)",
       "Bash(*registrar_verde*)",
       "Bash(*MESA_LIBERA_CONFIG*)",
-      "Bash(*GOLDEN_REGRAVAR*)"
+      "Bash(*GOLDEN_REGRAVAR*)",
+      "Bash(*--no-verify*)",
+      "Bash(*core.hooksPath*)",
+      "Bash(*hooksPath=*)",
+      "PowerShell(git push --force*)",
+      "PowerShell(git push -f*)",
+      "PowerShell(git push * --force*)",
+      "PowerShell(git push * -f)",
+      "PowerShell(git push * -f *)",
+      "PowerShell(git reset --hard*)",
+      "PowerShell(git clean*)",
+      "PowerShell(*mesa_suite_verde*)",
+      "PowerShell(*registrar_verde*)",
+      "PowerShell(*MESA_LIBERA_CONFIG*)",
+      "PowerShell(*GOLDEN_REGRAVAR*)",
+      "PowerShell(*--no-verify*)",
+      "PowerShell(*core.hooksPath*)",
+      "PowerShell(*hooksPath=*)"
     ]
   },
   "hooks": {

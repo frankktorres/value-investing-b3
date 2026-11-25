@@ -1,5 +1,5 @@
 {
- "_nota": "Trava 4.2: hash (LF) dos protegidos. Regravar so com liberacao do Frank.",
+ "_nota": "Trava 4.2: hash (LF) dos protegidos. Regravar s\u00f3 com libera\u00e7\u00e3o do Frank.",
  "hashes": {
   "ferramentas/pytest.ini": "368f0a581c13226263c9d6cffa8753994d95afe096a54a9f73d075c9ab693947",
   "ferramentas/conftest.py": "cefed123a02cc7d71b5a68c91c088f196048588b056d06c886f27207ff35a1b4",
@@ -7,13 +7,15 @@
   "ferramentas/golden.py": "352c31991df3c63d9fecfdbb20de978f07466b7ff5fad691d9792da76eecf3d0",
   ".githooks/pre-push": "5711e2fc0e74ac449d0682b73972f4341aa1e06757f858ff8d41dd6e68bca02c",
   ".githooks/trava_master.py": "b1ac92801b1cc24245115f1dd8272f958ed4727bcf1b4ef76d2712e11d659050",
-  ".claude/settings.json": "84e2e0140138a4b99a78c25654948966c54b3315b29dd1913ab55d2f153504f5",
-  ".claude/hooks/trava_config.py": "1c9fd33745fee7bbcb529b1815316320a02643bf423ef8bb3ddfc16006a49cae",
+  ".claude/settings.json": "13ae7af51ef1cc594b6ef6d4b495381a809d958a950583d43e09731c471783b8",
+  ".claude/hooks/trava_config.py": "564e212e761653bd2b3816f13732d19db8eb12c6cde09624363841f2f3dfa041",
   ".claude/hooks/avisos.py": "568488ddfa40a588347e07943ddb67e488dc44f9062c1ab6b90fa294ae2ed959",
   ".claude/hooks/auto_commit.py": "ba56be0d889a5681f15effc618e25a3c58a9414fa2ecd2e45208f73ea3c37a93",
-  "ferramentas/tests/test_travas.py": "9087b859e0f739b53e11755bcad2d0e13506b651783333175e6a7f90a75ed298",
+  "ferramentas/tests/test_travas.py": "fa834839e1dd4f65696e9119d6ba9684b0203f0031edaff41ac628e152683d98",
   "ferramentas/tests/test_b37_trava_master.py": "3235a37cbe1a9f0363941d76b2b45aaa44b3eea7885ffd8e4a0b7b6a101833f3",
   "ferramentas/tests/test_motor_puro.py": "29478810c7de3cae1aaa20cad8f666c937bf8de35110e25923c451746afc4b10",
-  "ferramentas/tests/test_docs_caminhos.py": "12ddb92cc57570ab8dde88542877c97d7ff021849beb07948d902915905c9d92"
+  "ferramentas/tests/test_docs_caminhos.py": "12ddb92cc57570ab8dde88542877c97d7ff021849beb07948d902915905c9d92",
+  "ferramentas/conferir_noite.py": "da3f5d6cfb5cd66b3ecb09496ae849b3aa46c1f436ca807d2b05418fec1b16af",
+  "ferramentas/tests/test_conferir_noite_travas.py": "0e1998a0678b96c54e52f6c4901f0088661306d683486024c453205032dc6a9f"
  }
 }

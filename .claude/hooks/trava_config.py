@@ -32,6 +32,7 @@ TRAVAS_ARQUIVOS = {
     "ferramentas/tests/test_travas.py", "ferramentas/tests/travas_hashes.json",
     "ferramentas/tests/test_b37_trava_master.py", "ferramentas/tests/test_motor_puro.py",
     "ferramentas/tests/test_docs_caminhos.py",
+    "ferramentas/conferir_noite.py", "ferramentas/tests/test_conferir_noite_travas.py",   # PENDENTE #11 (25/11)
 }
 GOLDEN_DADOS = {"ferramentas/tests/golden.json", "ferramentas/tests/golden_log.md"}
 PISO = ".githooks/piso_testes.json"
