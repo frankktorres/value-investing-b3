@@ -1208,3 +1208,6 @@ vezes) — a forma literal "rf + ERP total" fica como sensibilidade; (b) na (ii)
 crescimento), o mesmo princípio da âncora EPV; Gordon com payout fica como sensibilidade; (c) o Ke da Mesa de (ii) e (iii) é
 rf + prêmio da Mesa aplicado ao índice (média ponderada: 5 p.p. nas financeiras, Hamada a mercado com t = 34% nas demais).
 Fontes de Shiller e Damodaran ainda **a abrir** (nota B só depois).
+**Aceite (Frank, 25/11):** as 3 escolhas (a)–(c) aprovadas. **Condição de execução:** antes de qualquer conta, abrir e ler
+o `ctryprem` de jan/2026 e o texto do método de risco-país do Damodaran e a definição do CAPE do Shiller; dar nota A/B e
+conferir a emenda 9 contra eles; divergência → **emenda 10** em commit próprio, e só então rodar.
