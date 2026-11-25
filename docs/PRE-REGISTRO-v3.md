@@ -521,3 +521,18 @@ Relatório: `docs/oraculo/hipoteses-2026-10-22.md` (e `.json`).
      tamanho).
    - **Sem mudança (já literal na emenda 9):** com 2 estimativas, vale a média das 2. Gordon do banco todo em nominal e
      depois para real. Agregado do índice = Σ E10 ÷ Σ valor de mercado, nunca a média dos E/P individuais.
+11. **25/11/2026 — B39: errata de coerência da estimativa (i), pelo princípio "tudo real" da emenda 9; escrita e commitada
+   SOZINHA, antes de recalcular.** A emenda 9 manda tudo em termos reais com a mesma π, e a (i) misturava duas inflações. O
+   ROE mediano é histórico (2016–2025, IPCA médio de ~5% a.a.), e o g nominal usava a π futura da ETTJ (7,17%). Isso supõe uma
+   queda de ~2 p.p. no ROE real e saía como sinal: prêmio implícito dos bancos de −0,44 p.p., um Ke abaixo da rf real. Não é
+   escolha nova de método; é a correção da mistura.
+   - **Correção:** ROE real de cada exercício = (1 + ROE nominal) ÷ (1 + IPCA do próprio ano) − 1, com o IPCA de jan–dez do
+     ano (produto das variações mensais da SGS 433, nota A). ROE normalizado = mediana dos ROE reais (os mesmos 10 exercícios,
+     mínimo 5). Gordon todo em real: **Ke real = g real + (ROE real − g real) ÷ (P/VP)**, g real = 1%, P/VP do mesmo jeito.
+     Sensibilidades iguais (g real 0% e 2%), e o ROE LTM real usa o IPCA dos mesmos 12 meses.
+   - **Nada mais muda:** (ii), (iii), o Ke da Mesa, X = 3 p.p. e a regra do gatilho são os da emenda 9.
+   - **Versão antiga mantida:** o relatório mostra as duas versões da (i) e o gatilho nas duas, lado a lado. O que vale é a
+     desta emenda.
+   - **Leitura pré-declarada:** se a mediana corrigida ficar com |valor| ≤ 3 p.p., o resultado é "não dispara; indício só no
+     Ibovespa". A B35/B46 continua como hipótese, sem prioridade de calibração.
+   - **Orçamento (§0.4):** não conta como tentativa (correção de coerência, sem variante de regra).
