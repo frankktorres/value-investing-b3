@@ -42,10 +42,14 @@ def capital_giro(b: dict) -> float:
 
 
 def altman_z2(d: dict) -> tuple[float, str]:
-    """Altman Z'' (empresa não financeira, mercado emergente). §11.1 — qualidade do lucro."""
+    """Altman Z'' (empresa não financeira, mercado emergente). §11.1 — qualidade do lucro.
+    B57 (emenda 13): X2 = lucros retidos da Lei 6.404 = reservas de lucros (2.03.04) + lucros/prejuízos acumulados (2.03.05).
+    O ledger point-in-time ainda não tem a 2.03.05 (backtest parado): sem ela, erro explícito — nunca 0."""
     at = d["ativo"]
+    if d.get("lucros_acumulados") is None:
+        raise ValueError("Z'' sem a conta 2.03.05 (lucros/prejuízos acumulados): série não recoletada (B57)")
     x1 = (v(d, "ac", 0) - v(d, "pc", 0)) / at
-    x2 = v(d, "reservas_lucro", 0) / at
+    x2 = (v(d, "reservas_lucro", 0) + d["lucros_acumulados"]) / at
     x3 = v(d, "ebit", 0) / at
     x4 = v(d, "pl", 0) / (v(d, "pc", 0) + v(d, "pnc", 0))
     z = 3.25 + 6.56 * x1 + 3.26 * x2 + 6.72 * x3 + 1.05 * x4

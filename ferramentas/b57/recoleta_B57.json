@@ -1,0 +1,175 @@
+{
+ "hall": {
+  "arquivo": "C:\\Users\\frank\\Documents\\VALUE INVESTING\\ferramentas\\dados\\cvm_series.json",
+  "aditiva": false,
+  "gravado": false,
+  "tickers": {
+   "SUZB3": {
+    "divergencias": [
+     "/ltm_2T26/acoes: 1235908788.0 → 1233136722.0"
+    ],
+    "sem_campo": []
+   },
+   "KLBN11": {
+    "divergencias": [
+     "/ltm_2T26/acoes: 6135427665.0 → 6152895333.0"
+    ],
+    "sem_campo": []
+   },
+   "RANI3": {
+    "divergencias": [
+     "/ltm_2T26/acoes: 230501.0 → 229896.0"
+    ],
+    "sem_campo": []
+   },
+   "B3SA3": {
+    "divergencias": [
+     "/ltm_2T26/acoes: 5034561292.0 → 4998298548.0"
+    ],
+    "sem_campo": []
+   },
+   "SMTO3": {
+    "divergencias": [],
+    "sem_campo": []
+   },
+   "KEPL3": {
+    "divergencias": [
+     "/ltm_2T26/lucro_controlador: some na recoleta",
+     "/ltm_2T26/acoes: 173332.0 → 173258.0",
+     "/ltm_2T26/reapresentados/lucro_controlador: some na recoleta"
+    ],
+    "sem_campo": []
+   },
+   "SLCE3": {
+    "divergencias": [
+     "/ltm_2T26/acoes: 496820758.0 → 496311324.0"
+    ],
+    "sem_campo": []
+   },
+   "SAPR11": {
+    "divergencias": [],
+    "sem_campo": []
+   },
+   "CSMG3": {
+    "divergencias": [],
+    "sem_campo": []
+   },
+   "SBSP3": {
+    "divergencias": [],
+    "sem_campo": []
+   },
+   "TAEE11": {
+    "divergencias": [],
+    "sem_campo": []
+   },
+   "ISAE4": {
+    "divergencias": [],
+    "sem_campo": []
+   },
+   "CMIG4": {
+    "divergencias": [],
+    "sem_campo": []
+   },
+   "CPFE3": {
+    "divergencias": [],
+    "sem_campo": []
+   },
+   "CPLE3": {
+    "divergencias": [
+     "/ltm_2T26/acoes: 2970070325.0 → 2970119787.0"
+    ],
+    "sem_campo": []
+   },
+   "PETR4": {
+    "divergencias": [],
+    "sem_campo": []
+   },
+   "PRIO3": {
+    "divergencias": [
+     "/ltm_2T26/acoes: 809922731.0 → 798178706.0"
+    ],
+    "sem_campo": []
+   },
+   "RECV3": {
+    "divergencias": [
+     "/ltm_2T26/lucro_controlador: some na recoleta",
+     "/ltm_2T26/acoes: 292977928.0 → 293482126.0"
+    ],
+    "sem_campo": [
+     "anual/2016",
+     "anual/2017",
+     "anual/2018",
+     "anual/2019"
+    ]
+   },
+   "UGPA3": {
+    "divergencias": [
+     "/ltm_2T26/acoes: 1087307868.0 → 1090747475.0"
+    ],
+    "sem_campo": []
+   },
+   "VBBR3": {
+    "divergencias": [
+     "/ltm_2T26/acoes: 1191974.0 → 1196213.0"
+    ],
+    "sem_campo": []
+   },
+   "LEVE3": {
+    "divergencias": [],
+    "sem_campo": []
+   },
+   "EGIE3": {
+    "divergencias": [],
+    "sem_campo": []
+   },
+   "UNIP6": {
+    "divergencias": [],
+    "sem_campo": []
+   },
+   "GGBR4": {
+    "divergencias": [
+     "/ltm_2T26/acoes: 1975143891.0 → 1963180639.0"
+    ],
+    "sem_campo": []
+   },
+   "TIMS3": {
+    "divergencias": [],
+    "sem_campo": []
+   },
+   "VIVT3": {
+    "divergencias": [],
+    "sem_campo": []
+   },
+   "FLRY3": {
+    "divergencias": [
+     "/ltm_2T26/acoes: 545015471.0 → 543626208.0"
+    ],
+    "sem_campo": []
+   },
+   "HYPE3": {
+    "divergencias": [
+     "/ltm_2T26/acoes: 632953512.0 → 703992255.0"
+    ],
+    "sem_campo": []
+   },
+   "ABEV3": {
+    "divergencias": [
+     "/ltm_2T26/acoes: 15616526.0 → 15452795.0"
+    ],
+    "sem_campo": []
+   },
+   "WEGE3": {
+    "divergencias": [
+     "/ltm_2T26/acoes: 4195695973.0 → 4195829691.0"
+    ],
+    "sem_campo": []
+   },
+   "ITSA4": {
+    "divergencias": [
+     "/ltm_2T26/acoes: 11211347.0 → 11207350.0"
+    ],
+    "sem_campo": []
+   }
+  }
+ }
+}

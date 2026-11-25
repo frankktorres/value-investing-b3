@@ -6,7 +6,9 @@
 Emenda 13 do `docs/PRE-REGISTRO-v3.md`. Recoleta pelo próprio `coletar_cvm.main` (mesmo ZIP do cache, mesmo mês do ITR que
 a série já tem) e prova que a recoleta é aditiva: todo valor que a série antiga tem sai IDÊNTICO na recoleta. Qualquer
 divergência → nada é gravado e o relatório diz onde. Grava só `lucros_acumulados` nos containers que a série antiga já tem
-(`anual/<ano>`, `ltm`, `ltm_<ref>`); chave nova do formato atual do coletor (ex.: `ltm_ref` nas séries antigas) não entra.
+(`anual/<ano>`, `ltm`, `ltm_<ref vigente>`); chave nova do formato atual do coletor (ex.: `ltm_ref` nas séries antigas) não
+entra. `ltm_<ref>` de trimestre anterior (o `ltm_2T26` do hall, gravado antes da AUD-68: ações do DFP, `lucro_controlador`
+sem o saneamento) é retrato histórico — fica intocado e listado; a 1ª conferência (25/11) mostrou que só ele divergia.
 A versão anterior de cada arquivo vai para `dados/_historico/` (`_historico/` da pasta do arquivo).
 """
 from __future__ import annotations
@@ -115,17 +117,19 @@ def processar(grupo: str, gravar: bool) -> dict:
     for tk, reg in series.items():
         try:
             principal, refs = trimestres(reg)
-            novos = {r: recoletar(grupo, tk, MES[r[:2]]) for r in refs}
-            novo = dict(novos[principal])
-            for r in refs:                       # cada `ltm_<ref>` comparado com a recoleta do próprio trimestre
-                novo[f"ltm_{r}"] = novos[r][f"ltm_{r}"]
+            novo = recoletar(grupo, tk, MES[principal[:2]])
+            # `ltm_<ref>` de trimestre anterior (ex.: o `ltm_2T26` do hall, gravado antes da AUD-68) é retrato histórico: o
+            # motor lê o LTM vigente (`ltm.ltm_de`). Fica intocado, fora da comparação e do campo novo, e é listado.
+            historicos = [f"ltm_{r}" for r in refs if r != principal]
+            reg_cmp = {k: v for k, v in reg.items() if k not in historicos}
         except Exception as x:          # noqa: BLE001 — registra a falha com a razão; o arquivo não é gravado
             rel[tk] = dict(erro=f"{type(x).__name__}: {x}")
             continue
-        div = divergencias(reg, novo)
-        out, sem = acrescentar(reg, novo)
-        rel[tk] = dict(divergencias=div, sem_campo=sem)
-        saida[tk] = out
+        div = divergencias(reg_cmp, novo)
+        out, sem = acrescentar(reg_cmp, novo)
+        out.update({k: reg[k] for k in historicos})
+        rel[tk] = dict(divergencias=div, sem_campo=sem, historicos_intocados=historicos)
+        saida[tk] = {k: out[k] for k in reg}            # mesma ordem de chaves do arquivo antigo
     ok = all(not r.get("erro") and not r["divergencias"] for r in rel.values())
     if gravar and ok:
         hist = arq.parent / "_historico"
