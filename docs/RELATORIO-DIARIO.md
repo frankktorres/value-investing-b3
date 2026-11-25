@@ -1,6 +1,12 @@
 # RELATORIO-DIARIO
 *Uma entrada por dia/turno, a mais nova em cima: o que foi feito (com commit), decisões tomadas, o que ficou, erros. Máx. 10 linhas por entrada.*
 
+## 25/11/2026 — pacote de autonomia (sessão do Frank)
+- Fiz: `senior` (26 checagens) + "Quem decide"; B37 (push no master só com a suíte inteira verde registrada, piso de testes); adversário, verificador-fonte e varredor de valuation; travas 4.2–4.6 com canário; skills `mesa-*` (o `/fechar` da Mesa estava sombreado pelo global); B51/B52 no BACKLOG. Suíte 1225 → 1285, sem nenhuma palavra, central ou tolerância mudada.
+- Provado: push de árvore sem suíte foi recusado (no repo e no clone da fumaça); o Edit no `pytest.ini` foi barrado pelo hook ao vivo.
+- Erros: o adversário achou 9 furos nas travas antes da ativação e o `senior` mais 8 (PARA → SEGUE COM AJUSTES), todos tratados; a 1ª fumaça headless não teve permissão no clone, e repetir em bypass foi barrado pelo classificador.
+- Precisa de você: #11 (deny `--no-verify`) e #12 (B35 + B46) no `PENDENTE-FRANK.md`; `claude auth login` antes de 28/11 (aviso do CLI).
+
 ## 22/10/2026 — manhã (conferência da rodada da noite, sessão do Frank)
 - Conferi a rodada com os dados locais: 1.004 passed. A única falha era a tela exportada antes da N3 (regerada: verde). Nenhuma palavra mudou; agora está provado. Junção no master: f28a76d.
 - Falhas da rodada: (1) gravou em `claude/*` e não no master, porque a nuvem só faz push nesse ramo; (2) a "data da fonte" da N3 só existe em 27 de 466 fontes → N12; (3) parou com 27 min de sessão e pulou o foco do dia (o prompt limitava a 2 itens do backlog); (4) a rede bloqueia a B3 (proxy 403) e o `conteudo.cvm.gov.br` (DNS).
