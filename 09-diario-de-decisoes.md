@@ -1306,3 +1306,24 @@ mais baixo); palavras mudariam em KEPL3, LEVE3, PRIO3, SMTO3 (hall), ALLD3 (doss
 identificável a continuidade sozinha superestima o valor (p. 39 da fonte). Próximo π candidato precisa de fonte que concorde
 (rating de agência em escala global, fonte A) — hipótese nova, outra tentativa.
 
+### 25/11/2026 — B57: X2 do Z'' com os lucros retidos da lei; B46 tentativa 8/24 — NÃO CONCLUSIVA, fim da B46 por este caminho (causa (a))
+**Pré-registro:** emenda 13 do `docs/PRE-REGISTRO-v3.md` (2c7c87a), commitada sozinha antes de mudar o motor e de rodar; opção A
+escolhida pelo `senior` antes de qualquer Z'' novo; ajustes do Frank (viés do ITR e contaminação) incorporados.
+**Fonte:** Lei 6.404, arts. 178 §2º III, 182 §4º, 189, 202 §§2º e 6º (nota A, cópia oficial da Câmara; o planalto recusou a
+conexão); plano de contas da CVM, 2.03.04 = Reservas de Lucros e 2.03.05 = Lucros/Prejuízos Acumulados em 100% das não
+financeiras (nota A); Altman 2002, NYU WP 02-41: "reinvested earnings and/or losses of a firm over its entire life" (nota B).
+`docs/b57/FONTES-B57.md`.
+**Mudança de motor:** `altman_z2` com X2 = (2.03.04 + 2.03.05) ÷ ativo; 2.03.05 ausente → erro explícito (nunca 0). Coletor
+lê a 2.03.05; espelho no backtest (`backtest/motor/contas.py`, ledger sem a conta: backtest parado falha à vista). Séries do
+hall, dos dossiês e da B36 recoletadas de forma **aditiva** (`ferramentas/b57/recoletar.py`): todo campo antigo idêntico, salvo
+os explicados pela AUD-68 no `ltm_2T26` do hall e na série antiga da CMIN3 (B60), que ficam como estavam. Camada 1:
+`tests/test_b57_x2.py` (Gafisa DFP 2025, Z'' 3,4268 à mão, 3,8573 com o X2 antigo; vermelho antes da mudança).
+**Golden:** igual com o motor antigo e os dados novos (a recoleta só acrescentou) e igual depois da mudança: nos industriais
+do hall o Z'' sobe (lucro de 9 meses no ITR) ou fica, nenhuma zona cruza 4,15/5,85, logo nota de solidez e palavras iguais
+(trava 3 do prompt não dispara). TAEE11 (motor de reguladas, solidez sem Z'') vai de cinzenta a segura: muda só o texto do PDF
+do lote 2 e a bandeira do relatório. TEND3 (B36, fora da B46 pela B41) também cruza.
+**B46 8/24:** C3 15 de 24 de novo (mesmas 9 discordam; sensibilidade com o X2 do DFP, também 15) → **NÃO CONCLUSIVA**; pela
+emenda 13, fim da B46 por este caminho (sem 9ª tentativa da mesma hipótese). O defeito do X2 não era o que separava as duas
+estimativas do π. Relatório: `docs/b46/B46-2026-11-t8.md`.
+**Decisão:** o conserto do X2 fica (vale pela fonte). Nada muda em doutrina, golden ou palavra.
+
