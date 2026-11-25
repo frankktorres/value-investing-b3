@@ -216,6 +216,49 @@ def test_bonificacao_klabin_2024_no_capital_integralizado():
     assert total(2023) / total(2022) == pytest.approx(1.1, abs=1e-6)
 
 
+# cisão com redução de capital (B40): (CNPJ, FRE que registra a redução, deliberação, R$ da redução, FRE antes, FRE depois)
+CISOES_FRE = {
+    "CSAN3": ("50.746.577/0001-15", 2015, "2014-10-01", 1_059_590_891.30, 2014, 2015),
+    "MRVE3": ("08.343.492/0001-20", 2018, "2018-12-12", 1_000_093_319.77, 2017, 2018),
+    "PCAR3": ("47.508.411/0001-56", 2020, "2020-12-31", 1_215_962_963.38, None, None),   # contagem pelo DFP (2020 → 2021)
+}
+
+
+@pytest.mark.skipif(not all((CVM_ZIP / f"fre_{a}.zip").exists() for a in (2014, 2015, 2017, 2018, 2020))
+                    or not (CVM_ZIP / "dfp_2021.zip").exists(), reason="sem os ZIPs do FRE/DFP (dados locais)")
+@pytest.mark.parametrize("tk", sorted(CISOES_FRE))
+def test_cisao_reduz_o_capital_sem_cancelar_acoes_no_fre(tk):
+    """Fonte A da semântica da `CIS RED CAP` (multiplicador 1): o FRE registra a redução de capital por cisão com 0 ações
+    canceladas, e a quantidade de ações integralizadas não salta entre o FRE de antes e o de depois."""
+    import io
+    import zipfile
+    import pandas as pd
+
+    def tabela(ano, nome, pref="fre"):
+        z = zipfile.ZipFile(CVM_ZIP / f"{pref}_{ano}.zip")
+        return pd.read_csv(io.BytesIO(z.read(f"{pref}_cia_aberta_{nome}_{ano}.csv")), sep=";", encoding="latin-1", dtype=str)
+
+    cnpj, ano_red, delib, valor, antes, depois = CISOES_FRE[tk]
+    r = tabela(ano_red, "capital_social_reducao")
+    r = r[(r["CNPJ_Companhia"] == cnpj) & (r["Data_Deliberacao"] == delib)]
+    assert len(r), (tk, "sem a redução no FRE")
+    assert r["Razao_Reducao"].str.contains("cis", case=False).all()
+    assert {float(x) for x in r["Valor_Total_Reducao"]} == {valor}
+    assert {int(x) for x in r["Quantidade_Total_Acoes"]} == {0}          # nenhuma ação cancelada
+
+    def total(ano):
+        d = tabela(ano, "capital_social")
+        d = d[(d["CNPJ_Companhia"] == cnpj) & (d["Tipo_Capital"] == "Capital Integralizado")]
+        return float(d.sort_values("Versao", key=lambda s: s.astype(int)).iloc[-1]["Quantidade_Total_Acoes"])
+    if antes:
+        assert total(depois) == total(antes)
+    else:
+        # GPA: DFP, composição do capital (mil ações): 268.352 → 269.376 (+0,4%, opções; uma cisão ×2 daria +100%)
+        q = {a: float(tabela(a, "composicao_capital", "dfp").query("CNPJ_CIA == @cnpj")["QT_ACAO_TOTAL_CAP_INTEGR"].iloc[0])
+             for a in (2020, 2021)}
+        assert q[2021] / q[2020] == pytest.approx(1.0, abs=0.01)
+
+
 @pytest.mark.skipif(not (COTAHIST / "precos_2023.parquet").exists(), reason="sem o COTAHIST (dado local)")
 def test_sem_evento_declarado_nao_tem_marca_no_cotahist():
     for (tk, ano), _ in SEM_EVENTO.items():
