@@ -1,6 +1,13 @@
 # RELATORIO-DIARIO
 *Uma entrada por dia/turno, a mais nova em cima: o que foi feito (com commit), decisões tomadas, o que ficou, erros. Máx. 10 linhas por entrada.*
 
+## 25/11/2026 — B40, cisão com redução de capital (sessão do Frank)
+- Fiz: `CIS RED CAP` com semântica conferida (b2b9d60). Multiplicador 1, a ação nova fica registrada e fora do DPA. Fonte A no FRE da CVM (0 ações canceladas): Cosan 2014, MRV 2018 e GPA 2020 (fora da B36).
+- Provado: CSAN3 e MRVE3 rodam (NÃO CONCLUSIVO; Ke 38,8% e 32,3% → B46). Golden igual. Suíte 1302 verde.
+- Erros: o adversário achou 3 furos (linha própria só pela raiz, NaN, classe errada sem ISIN), todos corrigidos com teste. O `senior` deu SEGUE COM AJUSTES (aplicados).
+- Novo: B55 (série pré-cisão: ajustar ou declarar não avaliado) e B56 (DPA 2025 da EQTL3 pelo hall).
+- Precisa de você: nada.
+
 ## 25/11/2026 — pacote de autonomia (sessão do Frank)
 - Fiz: `senior` (26 checagens) + "Quem decide"; B37 (push no master só com a suíte inteira verde registrada, piso de testes); adversário, verificador-fonte e varredor de valuation; travas 4.2–4.6 com canário; skills `mesa-*` (o `/fechar` da Mesa estava sombreado pelo global); B51/B52 no BACKLOG. Suíte 1225 → 1285, sem nenhuma palavra, central ou tolerância mudada.
 - Provado: push de árvore sem suíte foi recusado (no repo e no clone da fumaça); o Edit no `pytest.ini` foi barrado pelo hook ao vivo.

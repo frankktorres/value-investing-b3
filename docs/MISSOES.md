@@ -189,6 +189,7 @@ Front lê só o contrato. Tira o "Sistema em breve" do `index.html:27`.
 (nenhuma)
 
 ## Feitas
+- **B40** (25/11, b2b9d60): `CIS RED CAP` com semântica conferida (×1, ação nova em `recebe`, fora do DPA; fonte A = FRE `capital_social_reducao` de Cosan 2014, MRV 2018, GPA 2020); CSAN3/MRVE3 rodam (NÃO CONCLUSIVO); B55/B56 novos; PENDENTE #12 respondido (B46 sim, B35 até o HOLD-OUT 2). Suíte 1302 verde.
 - **Pacote de autonomia** (25/11, `docs/research/2026-11-25-pacote-autonomia.md`): agente `senior` + "Quem decide" (2b5d810); B37 trava do push (f879b4d); agentes adaptados (d86b7fb); travas 4.2–4.6 (dcc9a5f); skills `mesa-*` (04513d3); B51/B52 (540a325). `senior`: PARA → 8 achados corrigidos → SEGUE COM AJUSTES; resta o #11 do `PENDENTE-FRANK.md` (`--no-verify`). Fumaça: escolha pela causa (a) com o `senior` OK; push vermelho barrado no clone OK
 - **B34** (24/11, com o Frank): defeito H2 corrigido — D/E a mercado (preço da data-base × ações), sem ponto fixo; D = dívida bruta com arrendamentos + outros passivos financeiros, a mesma da ponte; Ke nominal > 30% → NÃO CONCLUSIVO (doutrina v2.7). Golden regravado (SMTO3 CARA → NC; PRIO3/UNIP6 → NC pela trava). Dossiês recalculados na data (point-in-time). Oráculo sem BLOQUEIA; suíte verde com `EXIGIR_DADOS=1`; 3T26 juntado no master. Ver `09` de 24/11.
 - **Q01** (backlog, 22/10): `gerar_pdf_lote1.py` cai para a Liberation Sans (métricas da Arial) quando a Arial do Windows não existe; `test_b23` e `test_carimbos` voltam a coletar na nuvem (suíte 963 passed, 42 skipped, sem `--ignore`). PDFs do Windows inalterados.
@@ -225,6 +226,9 @@ Front lê só o contrato. Tira o "Sistema em breve" do `index.html:27`.
 
 ## Passagem de turno
 *A skill `/mesa-fechar` reescreve esta seção: o que ficou pendente, onde parou, próximo passo.*
+- 25/11/2026 (B40): cisão com redução de capital resolvida e no master (b2b9d60); nada em andamento. Próximo passo (DNA):
+  causa (a), **B46 sozinha** (Ke > 30%), hipótese pré-registrada em commit próprio antes de rodar (tentativa 7/24); em paralelo,
+  sem gastar tentativa, causa (c) B41 (INCORPORACAO). Ver a última linha "Próximo passo (DNA):" do `DECISOES.md`.
 - 25/11/2026 (pacote de autonomia): a Mesa agora decide o reversível sozinha (`senior` + `DECISOES.md`) e não empurra master
   sem suíte verde (B37). Pendente do Frank: #11 (`--no-verify`) e #12 (autorizar B35 + B46). Próximo passo (DNA), enquanto o
   #12 não sai: causa (c), B40 (cisão com redução de capital, fonte A) — ver a linha "Próximo passo (DNA):" do `DECISOES.md`.
