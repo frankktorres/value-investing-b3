@@ -1,6 +1,7 @@
 # Mesa de Value Investing — B3
 
-Leitura de partida: `README.md`. Doutrina vigente: `01-doutrina-value-investing.md`.
+**Leitura obrigatória, antes de tudo: `docs/00-DNA.md`** (visão, princípios, causas da B36, marcos). Depois: `README.md`.
+Doutrina vigente: `01-doutrina-value-investing.md`.
 Pasta de histórico (versões substituídas): `_historico/`.
 
 ## Visão e stack
