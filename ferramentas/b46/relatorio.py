@@ -50,7 +50,7 @@ def c1(res: dict) -> dict:
         ke = C.ke_nominal(c["rf_real"], c["pi_inflacao"], c["t"], c["de_cont"])
         if abs(ke - c["ke_nom"]) > TOL_KE:
             falhas.append(f"{tk}: Ke {c['ke_nom']:.6f} ≠ fórmula {ke:.6f}")
-        if abs(C.pi_de_classe(c["rating_i"]) - c["pi_i"]) > 1e-12:
+        if c.get("rating_i") is not None and abs(C.pi_de_classe(c["rating_i"]) - c["pi_i"]) > 1e-12:
             falhas.append(f"{tk}: π (i) não bate com a Tabela 5")
         if c.get("rating_ii") is not None and abs(C.pi_de_classe(c["rating_ii"]) - c["pi_ii"]) > 1e-12:
             falhas.append(f"{tk}: π (ii) não bate com a Tabela 5")
@@ -166,7 +166,13 @@ def gerar(res: dict) -> str:
          "**Nota de execução (declarada).** A 1ª geração deste relatório deu **FALHA** por erro do leitor: o C2a reprovava todo "
          "central ≤ 0, mesmo sem nenhuma mudança com o preço (RECV3, SMFT3, CSNA3 e MOVI3 com 0 → 0; RAIL3 e MRVE3 com o mesmo "
          "negativo). O texto da emenda 12 é \"mudam o central em no máximo 0,5%\"; o leitor foi corrigido para o texto, com teste "
-         "(`tests/test_b46_relatorio.py`), sem mudar regra nem limite. As duas leituras dão o mesmo efeito: nada a implantar.", "",
+         "(`tests/test_b46_relatorio.py`), sem mudar regra nem limite. A classe muda (FALHA = a variante não sai; NÃO CONCLUSIVA = a "
+         "B46 segue aberta); nas duas, nada é implantado. Depois do `adversario`, a medição rodou de novo com dois consertos para o "
+         "texto da emenda: o choque de dívida passou a multiplicar também os outros passivos financeiros (na CMIN3 o D subia só "
+         "4,1%) e, sem o rating (i), vale só o π (ii) (\"com uma só, vale a única\"; nenhum caso nesta rodada).", "",
+         "**Limite do C1:** o π é conferido com a mesma tabela que o produziu (conferência do encanamento); a tabela em si é "
+         "conferida pelo teste à mão (`tests/test_b46_calculo.py`, contra a Tabela 5 e o slide 26). O Ke é conferido de verdade "
+         "(sai do motor, a fórmula é refeita à parte).", "",
          "**Fora do hall dos lotes:** EGIE3 e ITSA4 estão no `hall.json` mas não nos lotes de `oraculo/sanidade.py` (emenda 12).", "",
          "| Linha | O que confere | Resultado |", "|---|---|---|",
          f"| C1 | Ke, π e âncoras recalculados à parte | {'passou' if r1['passou'] else '**não** — ' + '; '.join(r1['falhas'][:5])} |",
@@ -175,7 +181,18 @@ def gerar(res: dict) -> str:
          f"| C3 | \\|π(i) − π(ii)\\| ≤ 20 p.p. em ≥ 2/3 das sobrealavancadas | {len(r3['concordam'])} de {r3['n']} "
          f"({'passou' if r3['passou'] else '**não**'}) |",
          f"| C4 | nenhum vazio sem razão | {'passou' if r4['passou'] else '**não** — ' + '; '.join(r4['sem_razao'])} |", ""]
+    perto = []
+    for l in industriais(res):
+        c = l.get("completo") or {}
+        if not _ok(c) or not c["de_mercado"] > c["de_ind"]:
+            continue
+        if c.get("pi_ii") is not None and abs(abs(c["pi_i"] - c["pi_ii"]) - C.CONCORDANCIA) <= 0.05:
+            perto.append(f"{l['tk']} |Δπ| {100 * abs(c['pi_i'] - c['pi_ii']):.2f} p.p.".replace('.', ',', 1))
+        if c["de_mercado"] / c["de_ind"] <= 1.05:
+            perto.append(f"{l['tk']} D/E a mercado só {_pct(c['de_mercado'] / c['de_ind'] - 1, 1)} acima do da indústria")
     o += ["**Discordam no π (C3):** " + (", ".join(r3["discordam"]) or "nenhuma"), "",
+          "**Fragilidade do C3 (relatada; ressalva do `oraculo`):** casos a ≤ 5 p.p. do limite de 20 p.p. ou com D/E a mercado "
+          "a ≤ 5% do da indústria: " + ("; ".join(perto) or "nenhum") + ".", "",
           "**Não avaliados (com a razão):** " + ("; ".join(r4["nao_avaliados"]) or "nenhum"), "",
           "**Abaixo do limite, dívida +10% sobe o central (relatado, previsto em parte — efeito H2):** "
           + ("; ".join(r2["abaixo_relatado"]) or "nenhum"), ""]

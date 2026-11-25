@@ -1290,7 +1290,13 @@ indústria no `indname`, 4 com erro no motor de hoje); **C3: 15 de 24 concordam,
 discordam > 20 p.p. em HYPE3, RANI3, RECV3, SLCE3, CMIN3, EMBJ3, SMFT3, MRVE3, BEEF3. O Ke da continuidade bateu a previsão nas
 5 (CSNA3 22,4%, MOVI3 23,0%, BEEF3 22,0%, CSAN3 23,3%, MRVE3 23,1%). **Erro do leitor, declarado:** a 1ª geração do relatório deu
 FALHA porque o C2a reprovava todo central ≤ 0 mesmo sem mudança (0 → 0); corrigido para o texto da emenda, com teste, sem mudar
-regra nem limite. As duas leituras dão o mesmo efeito.
+regra nem limite. A classe muda (FALHA = a variante não sai; NÃO CONCLUSIVA = a B46 segue aberta); nas duas nada é implantado.
+**Re-execução, declarada:** o `adversario` reproduziu 2 defeitos do executor — o choque de dívida não multiplicava os outros
+passivos financeiros (só a CMIN3: D +4,1% em vez de +10%) e, sem o rating (i), o ticker caía inteiro em vez de usar só o π (ii)
+(nenhum caso). Corrigidos para o texto da emenda e a mesma variante rodou de novo; não é tentativa nova. **`oraculo`: RESSALVA**
+(aceita a leitura): C3 frágil (15/24; SLCE3 discorda por 0,71 p.p., TIMS3 entra no grupo por um fio) — relatado no relatório;
+o C1 do π confere o encanamento, a tabela é conferida pelo teste à mão. Achado novo do `adversario` → **B57** (Z'' sem prejuízos
+acumulados no X2).
 
 **Relatado, não critério:** Ke > 30% 6 → 0 (por construção); P/C mediano dos industriais 1,61 → 2,33 (o π pesa mais que o D/E
 mais baixo); palavras mudariam em KEPL3, LEVE3, PRIO3, SMTO3 (hall), ALLD3 (dossiê) e em parte da B36. Sem proposta, nada vai ao

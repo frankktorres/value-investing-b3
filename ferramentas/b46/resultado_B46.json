@@ -4331,7 +4331,7 @@
      "erro": null
     },
     "divida_1.1": {
-     "de_mercado": 0.8490834334304731,
+     "de_mercado": 0.897265823855761,
      "rating_i": "AA",
      "cobertura": 6.563687242215047,
      "industria": "Steel",
@@ -4347,18 +4347,18 @@
      "de_cont": 0.508993067228213,
      "t": 0.2587939610119782,
      "anc_sem_pi": {
-      "EPV de meio de ciclo": 2.973067516328188,
-      "DCF normalizado (3 cenários)": 3.0145127490889467,
+      "EPV de meio de ciclo": 2.7521596881465675,
+      "DCF normalizado (3 cenários)": 2.793604920907326,
       "Valor de reprodução": 1.2532508208939377
      },
      "anc_com_pi": {
-      "EPV de meio de ciclo": 2.545540407480195,
-      "DCF normalizado (3 cenários)": 2.5810258157699564,
+      "EPV de meio de ciclo": 2.3563991249910914,
+      "DCF normalizado (3 cenários)": 2.391884533280853,
       "Valor de reprodução": 1.2532508208939377
      },
      "palavra": "CARA",
-     "central": 2.545540407480195,
-     "pc": 1.952434141448084,
+     "central": 2.3563991249910914,
+     "pc": 2.109150333358229,
      "ke_nom": 0.21307277477643072,
      "premio": 0.06886343676162938,
      "rf_real": 0.0706,
@@ -4367,14 +4367,14 @@
     }
    },
    "base_divida_1.1": {
-    "de_mercado": 0.8490834334304731,
+    "de_mercado": 0.897265823855761,
     "rating_i": "AA",
     "cobertura": 6.563687242215047,
     "palavra": "CARA",
-    "central": 3.260094257283211,
-    "pc": 1.5244957991311985,
-    "ke_nom": 0.2264908352553041,
-    "premio": 0.08146728842316753,
+    "central": 3.073414670168863,
+    "pc": 1.6170938624845348,
+    "ke_nom": 0.22839184243749155,
+    "premio": 0.08325294236097264,
     "rf_real": 0.0706,
     "pi_inflacao": 0.0646,
     "erro": null

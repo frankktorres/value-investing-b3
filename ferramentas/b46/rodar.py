@@ -148,7 +148,10 @@ def _descontar_com_pi(pi: float, reg: dict):
 def avaliar_v(emp, mk, modo: str, choque: dict, reg: dict):
     """Avalia `emp` no modo pedido, com o choque; `reg` recebe os insumos e números do caminho (o último chamado vale)."""
     reg.clear()
-    emp = replace(emp, preco=emp.preco * choque["preco"])
+    # o D do motor (`divida_do_desconto`) = dívida bruta com arrendamentos + outros passivos financeiros: o choque de dívida
+    # multiplica os dois (adversário, 25/11: na CMIN3 o D subia só 4,1% com o choque de "10%")
+    emp = replace(emp, preco=emp.preco * choque["preco"],
+                  outros_passivos_financeiros=emp.outros_passivos_financeiros * choque["divida"])
     with contextlib.ExitStack() as p:
         p.enter_context(_rapido())
         p.enter_context(_choque_divida(choque["divida"]))
@@ -167,9 +170,8 @@ def avaliar_v(emp, mk, modo: str, choque: dict, reg: dict):
         if modo == "de":        # π = 0: só registra as âncoras, para a conferência C1 (completo = "só D/E" × (1 − π))
             p.enter_context(mock.patch.object(M, "descontar", _descontar_com_pi(0.0, reg)))
         if modo == "completo":
-            if r_i is None:
-                raise NaoAvaliado(reg["falta_i"])
-            pi_i = C.pi_de_classe(r_i)
+            # emenda 12: "com uma só, vale a única" — vale para a (i) ausente também (adversário, 25/11)
+            pi_i = C.pi_de_classe(r_i) if r_i is not None else None
             try:
                 z = z_altman(emp, a, ltm)
                 r_ii, pi_ii, falta_ii = C.rating_altman(z), None, None
@@ -177,6 +179,8 @@ def avaliar_v(emp, mk, modo: str, choque: dict, reg: dict):
             except NaoAvaliado as x:
                 z, r_ii, pi_ii, falta_ii = None, None, None, str(x)
             pi = C.pi_combinado(pi_i, pi_ii)
+            if pi is None:
+                raise NaoAvaliado(f"{emp.ticker}: π sem nenhuma das duas estimativas ({reg.get('falta_i')}; {falta_ii})")
             reg.update(rating_i=r_i, cobertura=cob, pi_i=pi_i, z=z, rating_ii=r_ii, pi_ii=pi_ii, falta_ii=falta_ii, pi=pi,
                        concordam=C.concordam(pi_i, pi_ii))
             p.enter_context(mock.patch.object(M, "descontar", _descontar_com_pi(pi, reg)))
