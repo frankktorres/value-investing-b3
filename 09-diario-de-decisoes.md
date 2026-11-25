@@ -1275,3 +1275,34 @@ cache: golden igual. Não gasta tentativa do pré-registro.
 **Fora do escopo → B55:** antes da cisão, a série histórica inclui o negócio cindido (MRV 2016–18 com a LOG). Falta ajustar
 ou declarar a janela não avaliada. **Resposta do Frank ao #12:** B46 sim; B35 não (fica até o HOLD-OUT 2).
 
+### 25/11/2026 — B46: "separar a dificuldade" (tentativa 7/24) — NÃO CONCLUSIVA (causa (a))
+
+**Hipótese (emenda 12, commit 5461a47, antes de rodar):** o Ke > 30% vem de descontar uma perpetuidade de continuidade (margem
+de meio de ciclo) com o D/E a mercado do preço deprimido — "internally inconsistent" (Damodaran, *Valuing Distressed and
+Declining Companies*, 2009, p. 14, nota B). Variante (opção B, escolhida pelo `senior` antes de qualquer tabela; aprovada pelo
+Frank com 2 ajustes): D/E da continuidade = min(a mercado, D/E da indústria do Damodaran EM jan/2026); âncoras de
+continuidade × (1 − π), π = média de (i) rating sintético da cobertura e (ii) Z'' → rating equivalente (Altman, slide 26,
+coluna 2013), pela Tabela 5 (Altman 2007, no paper do Damodaran). Motor intocado (`mock.patch`).
+
+**Resultado (`docs/b46/B46-2026-11.md`):** **NÃO CONCLUSIVA**, como a emenda previa. C1 (Ke, π e âncoras recalculados) passa;
+C2 (preço ×0,7/×1,3 e dívida +10% no grupo acima do limite, 23 ações) passa; C4 passa (12 não avaliados com a razão: 8 sem
+indústria no `indname`, 4 com erro no motor de hoje); **C3: 15 de 24 concordam, precisava 16** — as duas estimativas do π
+discordam > 20 p.p. em HYPE3, RANI3, RECV3, SLCE3, CMIN3, EMBJ3, SMFT3, MRVE3, BEEF3. O Ke da continuidade bateu a previsão nas
+5 (CSNA3 22,4%, MOVI3 23,0%, BEEF3 22,0%, CSAN3 23,3%, MRVE3 23,1%). **Erro do leitor, declarado:** a 1ª geração do relatório deu
+FALHA porque o C2a reprovava todo central ≤ 0 mesmo sem mudança (0 → 0); corrigido para o texto da emenda, com teste, sem mudar
+regra nem limite. A classe muda (FALHA = a variante não sai; NÃO CONCLUSIVA = a B46 segue aberta); nas duas nada é implantado.
+**Re-execução, declarada:** o `adversario` reproduziu 2 defeitos do executor — o choque de dívida não multiplicava os outros
+passivos financeiros (só a CMIN3: D +4,1% em vez de +10%) e, sem o rating (i), o ticker caía inteiro em vez de usar só o π (ii)
+(nenhum caso). Corrigidos para o texto da emenda e a mesma variante rodou de novo; não é tentativa nova. **`oraculo`: RESSALVA**
+(aceita a leitura): C3 frágil (15/24; SLCE3 discorda por 0,71 p.p., TIMS3 entra no grupo por um fio) — relatado no relatório;
+o C1 do π confere o encanamento, a tabela é conferida pelo teste à mão. Achado novo do `adversario` → **B57** (Z'' sem prejuízos
+acumulados no X2).
+
+**Relatado, não critério:** Ke > 30% 6 → 0 (por construção); P/C mediano dos industriais 1,61 → 2,33 (o π pesa mais que o D/E
+mais baixo); palavras mudariam em KEPL3, LEVE3, PRIO3, SMTO3 (hall), ALLD3 (dossiê) e em parte da B36. Sem proposta, nada vai ao
+`PENDENTE-FRANK.md`.
+
+**Decisão:** nada muda em motor, doutrina ou golden. A B46 segue aberta: o D/E da indústria resolve o Ke, mas sem um π
+identificável a continuidade sozinha superestima o valor (p. 39 da fonte). Próximo π candidato precisa de fonte que concorde
+(rating de agência em escala global, fonte A) — hipótese nova, outra tentativa.
+

@@ -1,0 +1,1004 @@
+{
+ "fonte": "Damodaran, A. Companies in each industry — indname.xls, aba 'By company name' (linhas BOVESPA)",
+ "url": "https://pages.stern.nyu.edu/~adamodar/pc/datasets/indname.xls",
+ "acesso": "2026-11-25",
+ "nota": "B",
+ "empresas": {
+  "AERI3": {
+   "industria": "Electrical Equipment",
+   "nome": "Aeris Indústria e Comércio de Equipamentos para Geração de Energia S.A. (BOVESPA:AERI3)"
+  },
+  "AFLT3": {
+   "industria": "Power",
+   "nome": "Afluente Transmissão de Energia Elétrica S.A. (BOVESPA:AFLT3)"
+  },
+  "AGXY3": {
+   "industria": "Farming/Agriculture",
+   "nome": "AgroGalaxy Participações S.A. (BOVESPA:AGXY3)"
+  },
+  "RPAD3": {
+   "industria": "Bank (Money Center)",
+   "nome": "Alfa Holdings S.A. (BOVESPA:RPAD3)"
+  },
+  "AALR3": {
+   "industria": "Healthcare Support Services",
+   "nome": "Alliança Saúde e Participações S.A. (BOVESPA:AALR3)"
+  },
+  "ALLD3": {
+   "industria": "Computer Services",
+   "nome": "Allied Tecnologia S.A. (BOVESPA:ALLD3)"
+  },
+  "ALOS3": {
+   "industria": "Real Estate (Operations & Services)",
+   "nome": "Allos S.A. (BOVESPA:ALOS3)"
+  },
+  "ALPK3": {
+   "industria": "Environmental & Waste Services",
+   "nome": "Allpark Empreendimentos, Participações e Serviços S.A. (BOVESPA:ALPK3)"
+  },
+  "AVLL3": {
+   "industria": "Homebuilding",
+   "nome": "Alphaville S.A. (BOVESPA:AVLL3)"
+  },
+  "ABEV3": {
+   "industria": "Beverage (Alcoholic)",
+   "nome": "Ambev S.A. (BOVESPA:ABEV3)"
+  },
+  "AMBP3": {
+   "industria": "Environmental & Waste Services",
+   "nome": "Ambipar Participações e Empreendimentos S.A. (BOVESPA:AMBP3)"
+  },
+  "AMER3": {
+   "industria": "Retail (General)",
+   "nome": "Americanas S.A. (BOVESPA:AMER3)"
+  },
+  "CBEE3": {
+   "industria": "Power",
+   "nome": "Ampla Energia e Serviços S.A. (BOVESPA:CBEE3)"
+  },
+  "ANIM3": {
+   "industria": "Education",
+   "nome": "Ânima Holding S.A. (BOVESPA:ANIM3)"
+  },
+  "ARND3": {
+   "industria": "Business & Consumer Services",
+   "nome": "Arandu Investimentos S.A. (BOVESPA:ARND3)"
+  },
+  "ARML3": {
+   "industria": "Retail (Distributors)",
+   "nome": "Armac Locação, Logística e Serviços S.A. (BOVESPA:ARML3)"
+  },
+  "ATED3": {
+   "industria": "Publishing & Newspapers",
+   "nome": "Atom Educação E Editora S.A. (BOVESPA:ATED3)"
+  },
+  "AURE3": {
+   "industria": "Green & Renewable Energy",
+   "nome": "Auren Energia S.A. (BOVESPA:AURE3)"
+  },
+  "AMOB3": {
+   "industria": "Retail (Automotive)",
+   "nome": "Automob Participações S.A. (BOVESPA:AMOB3)"
+  },
+  "AZTE3": {
+   "industria": "Oil/Gas (Production and Exploration)",
+   "nome": "Azevedo & Travassos Energia S.A. (BOVESPA:AZTE3)"
+  },
+  "AZZA3": {
+   "industria": "Apparel",
+   "nome": "Azzas 2154 S.A. (BOVESPA:AZZA3)"
+  },
+  "B3SA3": {
+   "industria": "Financial Svcs. (Non-bank & Insurance)",
+   "nome": "B3 S.A. - Brasil, Bolsa, Balcão (BOVESPA:B3SA3)"
+  },
+  "BIED3": {
+   "industria": "Investments & Asset Management",
+   "nome": "Bahema Educação S.A. (BOVESPA:BIED3)"
+  },
+  "BAZA3": {
+   "industria": "Banks (Regional)",
+   "nome": "Banco da Amazônia S.A. (BOVESPA:BAZA3)"
+  },
+  "BBAS3": {
+   "industria": "Bank (Money Center)",
+   "nome": "Banco do Brasil S.A. (BOVESPA:BBAS3)"
+  },
+  "BNBR3": {
+   "industria": "Financial Svcs. (Non-bank & Insurance)",
+   "nome": "Banco do Nordeste do Brasil S.A. (BOVESPA:BNBR3)"
+  },
+  "BEES3": {
+   "industria": "Banks (Regional)",
+   "nome": "Banestes S.A - Banco do Estado do Espírito Santo (BOVESPA:BEES3)"
+  },
+  "BBSE3": {
+   "industria": "Insurance (General)",
+   "nome": "BB Seguridade Participações S.A. (BOVESPA:BBSE3)"
+  },
+  "BMOB3": {
+   "industria": "Entertainment",
+   "nome": "Bemobi Mobile Tech S.A. (BOVESPA:BMOB3)"
+  },
+  "BMKS3": {
+   "industria": "Recreation",
+   "nome": "Bicicletas Monark S.A. (BOVESPA:BMKS3)"
+  },
+  "BIOM3": {
+   "industria": "Drugs (Biotechnology)",
+   "nome": "Biomm S.A. (BOVESPA:BIOM3)"
+  },
+  "BLAU3": {
+   "industria": "Drugs (Biotechnology)",
+   "nome": "Blau Farmacêutica S.A. (BOVESPA:BLAU3)"
+  },
+  "SOJA3": {
+   "industria": "Farming/Agriculture",
+   "nome": "Boa Safra Sementes S.A. (BOVESPA:SOJA3)"
+  },
+  "BCIA11": {
+   "industria": "R.E.I.T.",
+   "nome": "Bradesco Carteira Imobiliaria Ativa Fundos de Investimento Imobiliario (BOVESPA:BCIA11)"
+  },
+  "BRAP3": {
+   "industria": "Steel",
+   "nome": "Bradespar S.A. (BOVESPA:BRAP3)"
+  },
+  "AGRO3": {
+   "industria": "Farming/Agriculture",
+   "nome": "BrasilAgro - Companhia Brasileira de Propriedades Agrícolas (BOVESPA:AGRO3)"
+  },
+  "BRAV3": {
+   "industria": "Oil/Gas (Production and Exploration)",
+   "nome": "Brava Energia S.A. (BOVESPA:BRAV3)"
+  },
+  "BRST3": {
+   "industria": "Telecom. Services",
+   "nome": "Brisanet Serviços de Telecomunicações S.A. (BOVESPA:BRST3)"
+  },
+  "BTLG11": {
+   "industria": "R.E.I.T.",
+   "nome": "BTG Pactual Logística Fundo de Investimento Imobiliário (BOVESPA:BTLG11)"
+  },
+  "CEAB3": {
+   "industria": "Retail (Special Lines)",
+   "nome": "C&A Modas S.A. (BOVESPA:CEAB3)"
+  },
+  "CXSE3": {
+   "industria": "Insurance (General)",
+   "nome": "Caixa Seguridade Participações S.A. (BOVESPA:CXSE3)"
+  },
+  "CAMB3": {
+   "industria": "Apparel",
+   "nome": "Cambuci S.A. (BOVESPA:CAMB3)"
+  },
+  "CAML3": {
+   "industria": "Food Processing",
+   "nome": "Camil Alimentos S.A. (BOVESPA:CAML3)"
+  },
+  "ADMF3": {
+   "industria": "Investments & Asset Management",
+   "nome": "CIABRASF - Cia. Brasileira de Serviços Financeiros S/A (BOVESPA:ADMF3)"
+  },
+  "VVEO3": {
+   "industria": "Healthcare Support Services",
+   "nome": "CM Hospitalar S/A (BOVESPA:VVEO3)"
+  },
+  "COGN3": {
+   "industria": "Education",
+   "nome": "Cogna Educação S.A. (BOVESPA:COGN3)"
+  },
+  "CBAV3": {
+   "industria": "Metals & Mining",
+   "nome": "Companhia Brasileira de Alumínio (BOVESPA:CBAV3)"
+  },
+  "PCAR3": {
+   "industria": "Retail (Grocery and Food)",
+   "nome": "Companhia Brasileira De Distribuicao (BOVESPA:PCAR3)"
+  },
+  "CEEB3": {
+   "industria": "Power",
+   "nome": "Companhia de Eletricidade do Estado da Bahia - COELBA (BOVESPA:CEEB3)"
+  },
+  "SBSP3": {
+   "industria": "Utility (Water)",
+   "nome": "Companhia de Saneamento Básico do Estado de São Paulo - SABESP (BOVESPA:SBSP3)"
+  },
+  "CSMG3": {
+   "industria": "Utility (Water)",
+   "nome": "Companhia de Saneamento de Minas Gerais (BOVESPA:CSMG3)"
+  },
+  "CPLE3": {
+   "industria": "Power",
+   "nome": "Companhia Paranaense de Energia - COPEL (BOVESPA:CPLE3)"
+  },
+  "CSNA3": {
+   "industria": "Steel",
+   "nome": "Companhia Siderúrgica Nacional (BOVESPA:CSNA3)"
+  },
+  "CALI3": {
+   "industria": "Engineering/Construction",
+   "nome": "Construtora Adolpho Lindenberg S.A. (BOVESPA:CALI3)"
+  },
+  "TEND3": {
+   "industria": "Homebuilding",
+   "nome": "Construtora Tenda S.A. (BOVESPA:TEND3)"
+  },
+  "CTAX3": {
+   "industria": "Information Services",
+   "nome": "Contax Participações S.A. (BOVESPA:CTAX3)"
+  },
+  "CSAN3": {
+   "industria": "Retail (Automotive)",
+   "nome": "Cosan S.A. (BOVESPA:CSAN3)"
+  },
+  "CPFE3": {
+   "industria": "Power",
+   "nome": "CPFL Energia S.A. (BOVESPA:CPFE3)"
+  },
+  "CSED3": {
+   "industria": "Education",
+   "nome": "Cruzeiro do Sul Educacional S.A. (BOVESPA:CSED3)"
+  },
+  "CMIN3": {
+   "industria": "Steel",
+   "nome": "CSN Mineração S.A. (BOVESPA:CMIN3)"
+  },
+  "CSUD3": {
+   "industria": "Financial Svcs. (Non-bank & Insurance)",
+   "nome": "CSU Digital S.A. (BOVESPA:CSUD3)"
+  },
+  "CURY3": {
+   "industria": "Homebuilding",
+   "nome": "Cury Construtora e Incorporadora S.A. (BOVESPA:CURY3)"
+  },
+  "CVCB3": {
+   "industria": "Hotel/Gaming",
+   "nome": "CVC Brasil Operadora e Agência de Viagens S.A. (BOVESPA:CVCB3)"
+  },
+  "CYRE3": {
+   "industria": "Homebuilding",
+   "nome": "Cyrela Brazil Realty S.A. Empreendimentos e Participações (BOVESPA:CYRE3)"
+  },
+  "DMVF3": {
+   "industria": "Retail (Special Lines)",
+   "nome": "d1000 Varejo Farma Participações S.A. (BOVESPA:DMVF3)"
+  },
+  "DESK3": {
+   "industria": "Telecom. Services",
+   "nome": "Desktop S.A. (BOVESPA:DESK3)"
+  },
+  "DXCO3": {
+   "industria": "Paper/Forest Products",
+   "nome": "Dexco S.A. (BOVESPA:DXCO3)"
+  },
+  "DEXP3": {
+   "industria": "Chemical (Basic)",
+   "nome": "Dexxos Participações S.A. (BOVESPA:DEXP3)"
+  },
+  "DASA3": {
+   "industria": "Healthcare Support Services",
+   "nome": "Diagnósticos da América S.A. (BOVESPA:DASA3)"
+  },
+  "PNVL3": {
+   "industria": "Retail (Special Lines)",
+   "nome": "Dimed S.A. Distribuidora de Medicamentos (BOVESPA:PNVL3)"
+  },
+  "DIRR3": {
+   "industria": "Homebuilding",
+   "nome": "Direcional Engenharia S.A. (BOVESPA:DIRR3)"
+  },
+  "RMAI11": {
+   "industria": "R.E.I.T.",
+   "nome": "Domo Fundo de Investimento Imobiliário - FII (BOVESPA:RMAI11)"
+  },
+  "DOTZ3": {
+   "industria": "Software (Entertainment)",
+   "nome": "Dotz S.A. (BOVESPA:DOTZ3)"
+  },
+  "ECOR3": {
+   "industria": "Transportation",
+   "nome": "EcoRodovias Infraestrutura e Logística S.A. (BOVESPA:ECOR3)"
+  },
+  "EPAR3": {
+   "industria": "Retail (Automotive)",
+   "nome": "Embpar Participacoes S.A. (BOVESPA:EPAR3)"
+  },
+  "EMBJ3": {
+   "industria": "Aerospace/Defense",
+   "nome": "Embraer S.A. (BOVESPA:EMBJ3)"
+  },
+  "PGMN3": {
+   "industria": "Retail (Special Lines)",
+   "nome": "Empreendimentos Pague Menos S.A. (BOVESPA:PGMN3)"
+  },
+  "ENEV3": {
+   "industria": "Power",
+   "nome": "Eneva S.A. (BOVESPA:ENEV3)"
+  },
+  "EGIE3": {
+   "industria": "Green & Renewable Energy",
+   "nome": "Engie Brasil Energia S.A. (BOVESPA:EGIE3)"
+  },
+  "ENJU3": {
+   "industria": "Software (Entertainment)",
+   "nome": "Enjoei S.A. (BOVESPA:ENJU3)"
+  },
+  "EQMA3B": {
+   "industria": "Power",
+   "nome": "Equatorial Maranhão Distribuidora de Energia S.A. (BOVESPA:EQMA3B)"
+  },
+  "EQPA3": {
+   "industria": "Power",
+   "nome": "Equatorial Pará Distribuidora de Energia S.A. (BOVESPA:EQPA3)"
+  },
+  "EQTL3": {
+   "industria": "Power",
+   "nome": "Equatorial S.A. (BOVESPA:EQTL3)"
+  },
+  "ETER3": {
+   "industria": "Construction Supplies",
+   "nome": "Eternit S.A. (BOVESPA:ETER3)"
+  },
+  "EVEN3": {
+   "industria": "Homebuilding",
+   "nome": "Even Construtora e Incorporadora S.A. (BOVESPA:EVEN3)"
+  },
+  "EZTC3": {
+   "industria": "Homebuilding",
+   "nome": "EZTEC Empreendimentos e Participações S.A. (BOVESPA:EZTC3)"
+  },
+  "FHER3": {
+   "industria": "Chemical (Specialty)",
+   "nome": "Fertilizantes Heringer S.A. (BOVESPA:FHER3)"
+  },
+  "FIEI3": {
+   "industria": "Real Estate (Development)",
+   "nome": "Fica Empreendimentos Imobiliarios S.A (BOVESPA:FIEI3)"
+  },
+  "FICT3": {
+   "industria": "Publishing & Newspapers",
+   "nome": "Fictor Alimentos S.A. (BOVESPA:FICT3)"
+  },
+  "BTAL11": {
+   "industria": "R.E.I.T.",
+   "nome": "FII Btg Pactual Agro Logistica (BOVESPA:BTAL11)"
+  },
+  "FLRY3": {
+   "industria": "Healthcare Support Services",
+   "nome": "Fleury S.A. (BOVESPA:FLRY3)"
+  },
+  "FRAS3": {
+   "industria": "Auto Parts",
+   "nome": "Fras-le S.A. (BOVESPA:FRAS3)"
+  },
+  "FAED11": {
+   "industria": "Investments & Asset Management",
+   "nome": "Fundo de Investimento Imobiliário - FII Anhanguera Educacional (BOVESPA:FAED11)"
+  },
+  "BRCR11": {
+   "industria": "R.E.I.T.",
+   "nome": "Fundo de Investimento Imobiliário - FII BTG Pactual Corporate Office Fund (BOVESPA:BRCR11)"
+  },
+  "EDGA11": {
+   "industria": "R.E.I.T.",
+   "nome": "Fundo de Investimento Imobiliario - FII Edificio Galeria (BOVESPA:EDGA11)"
+  },
+  "FLRP11": {
+   "industria": "Retail (REITs)",
+   "nome": "Fundo de Investimento Imobiliário - FII Floripa Shopping (BOVESPA:FLRP11)"
+  },
+  "FAMB11": {
+   "industria": "R.E.I.T.",
+   "nome": "Fundo de Investimento Imobiliario Edificio Almirante Barroso (BOVESPA:FAMB11)"
+  },
+  "FIGS11": {
+   "industria": "Retail (REITs)",
+   "nome": "Fundo de Investimento Imobiliário General Shopping Ativo e Renda - FII (BOVESPA:FIGS11)"
+  },
+  "PABY11": {
+   "industria": "Investments & Asset Management",
+   "nome": "Fundo de Investimento Imobiliário Panamby (BOVESPA:PABY11)"
+  },
+  "FPAB11": {
+   "industria": "R.E.I.T.",
+   "nome": "Fundo de Investimento Imobiliário Projeto Água Branca (BOVESPA:FPAB11)"
+  },
+  "RNGO11": {
+   "industria": "Retail (REITs)",
+   "nome": "Fundo de Investimento Imobiliário Rio Negro (BOVESPA:RNGO11)"
+  },
+  "CTXT11": {
+   "industria": "Retail (REITs)",
+   "nome": "Fundo Invest Imobiliario Centro Textil Internacional - Cotas Fund (BOVESPA:CTXT11)"
+  },
+  "GFSA3": {
+   "industria": "Homebuilding",
+   "nome": "Gafisa S.A. (BOVESPA:GFSA3)"
+  },
+  "GSHP3": {
+   "industria": "Real Estate (Operations & Services)",
+   "nome": "General Shopping e Outlets do Brasil S.A. (BOVESPA:GSHP3)"
+  },
+  "GGPS3": {
+   "industria": "Environmental & Waste Services",
+   "nome": "GPS Participações e Empreendimentos S.A. (BOVESPA:GGPS3)"
+  },
+  "GRND3": {
+   "industria": "Shoe",
+   "nome": "Grendene S.A. (BOVESPA:GRND3)"
+  },
+  "BHIA3": {
+   "industria": "Retail (Building Supply)",
+   "nome": "Grupo Casas Bahia S.A. (BOVESPA:BHIA3)"
+  },
+  "GMAT3": {
+   "industria": "Retail (General)",
+   "nome": "Grupo Mateus S.A. (BOVESPA:GMAT3)"
+  },
+  "MLAS3": {
+   "industria": "Computers/Peripherals",
+   "nome": "Grupo Multi S.A. (BOVESPA:MLAS3)"
+  },
+  "SBFG3": {
+   "industria": "Retail (Special Lines)",
+   "nome": "Grupo SBF S.A. (BOVESPA:SBFG3)"
+  },
+  "TOKY3": {
+   "industria": "Retail (Building Supply)",
+   "nome": "Grupo Toky S.A. (BOVESPA:TOKY3)"
+  },
+  "GUAR3": {
+   "industria": "Apparel",
+   "nome": "Guararapes Confecções S.A. (BOVESPA:GUAR3)"
+  },
+  "HAPV3": {
+   "industria": "Healthcare Support Services",
+   "nome": "Hapvida Participações e Investimentos S.A. (BOVESPA:HAPV3)"
+  },
+  "HBRE3": {
+   "industria": "Real Estate (Operations & Services)",
+   "nome": "HBR Realty Empreendimentos Imobiliários S.A. (BOVESPA:HBRE3)"
+  },
+  "HGBS11": {
+   "industria": "Retail (REITs)",
+   "nome": "HEDGE Brasil Shopping Fundo de Investimento Imobiliário (BOVESPA:HGBS11)"
+  },
+  "HBOR3": {
+   "industria": "Real Estate (Development)",
+   "nome": "Helbor Empreendimentos S.A. (BOVESPA:HBOR3)"
+  },
+  "HBSA3": {
+   "industria": "Shipbuilding & Marine",
+   "nome": "Hidrovias do Brasil S.A. (BOVESPA:HBSA3)"
+  },
+  "MATD3": {
+   "industria": "Hospitals/Healthcare Facilities",
+   "nome": "Hospital Mater Dei S.A. (BOVESPA:MATD3)"
+  },
+  "HYPE3": {
+   "industria": "Drugs (Pharmaceutical)",
+   "nome": "Hypera S.A. (BOVESPA:HYPE3)"
+  },
+  "IFCM3": {
+   "industria": "Information Services",
+   "nome": "Infracommerce CXaaS S.A. (BOVESPA:IFCM3)"
+  },
+  "INTB3": {
+   "industria": "Telecom. Equipment",
+   "nome": "Intelbras S.A. - Indústria de Telecomunicação Eletrônica Brasileira (BOVESPA:INTB3)"
+  },
+  "MEAL3": {
+   "industria": "Restaurant/Dining",
+   "nome": "International Meal Company Alimentação S.A. (BOVESPA:MEAL3)"
+  },
+  "MYPK3": {
+   "industria": "Auto Parts",
+   "nome": "Iochpe-Maxion S.A. (BOVESPA:MYPK3)"
+  },
+  "RANI3": {
+   "industria": "Packaging & Container",
+   "nome": "Irani Papel e Embalagem S.A. (BOVESPA:RANI3)"
+  },
+  "IRBR3": {
+   "industria": "Reinsurance",
+   "nome": "IRB-Brasil Resseguros S.A. (BOVESPA:IRBR3)"
+  },
+  "JALL3": {
+   "industria": "Food Processing",
+   "nome": "Jalles Machado S/A (BOVESPA:JALL3)"
+  },
+  "JHSF3": {
+   "industria": "Real Estate (Operations & Services)",
+   "nome": "JHSF Participações S.A. (BOVESPA:JHSF3)"
+  },
+  "JFEN3": {
+   "industria": "Real Estate (Development)",
+   "nome": "João Fortes Engenharia S.A. (BOVESPA:JFEN3)"
+  },
+  "JSLG3": {
+   "industria": "Trucking",
+   "nome": "JSL S.A. (BOVESPA:JSLG3)"
+  },
+  "KEPL3": {
+   "industria": "Machinery",
+   "nome": "Kepler Weber S.A. (BOVESPA:KEPL3)"
+  },
+  "LAVV3": {
+   "industria": "Real Estate (Development)",
+   "nome": "Lavvi Empreendimentos Imobiliários S.A. (BOVESPA:LAVV3)"
+  },
+  "LIGT3": {
+   "industria": "Power",
+   "nome": "Light S.A. (BOVESPA:LIGT3)"
+  },
+  "WDCN3": {
+   "industria": "Telecom. Equipment",
+   "nome": "Livetech da Bahia Indústria e Comércio S.A. (BOVESPA:WDCN3)"
+  },
+  "RENT3": {
+   "industria": "Transportation",
+   "nome": "Localiza Rent a Car S.A. (BOVESPA:RENT3)"
+  },
+  "LWSA3": {
+   "industria": "Software (Internet)",
+   "nome": "Locaweb Serviços de Internet S.A. (BOVESPA:LWSA3)"
+  },
+  "LOGG3": {
+   "industria": "Real Estate (Operations & Services)",
+   "nome": "LOG Commercial Properties e Participações S.A. (BOVESPA:LOGG3)"
+  },
+  "LOGN3": {
+   "industria": "Shipbuilding & Marine",
+   "nome": "Log-In Logística Intermodal S.A. (BOVESPA:LOGN3)"
+  },
+  "LJQQ3": {
+   "industria": "Retail (Building Supply)",
+   "nome": "Lojas Quero-Quero S.A. (BOVESPA:LJQQ3)"
+  },
+  "LREN3": {
+   "industria": "Retail (Special Lines)",
+   "nome": "Lojas Renner S.A. (BOVESPA:LREN3)"
+  },
+  "LPSB3": {
+   "industria": "Real Estate (Operations & Services)",
+   "nome": "LPS Brasil - Consultoria de Imóveis S.A. (BOVESPA:LPSB3)"
+  },
+  "LUPA3": {
+   "industria": "Oilfield Svcs/Equip.",
+   "nome": "Lupatech S.A. (BOVESPA:LUPA3)"
+  },
+  "MDIA3": {
+   "industria": "Food Processing",
+   "nome": "M. Dias Branco S.A. Indústria e Comércio de Alimentos (BOVESPA:MDIA3)"
+  },
+  "MGLU3": {
+   "industria": "Retail (General)",
+   "nome": "Magazine Luiza S.A. (BOVESPA:MGLU3)"
+  },
+  "LEVE3": {
+   "industria": "Auto Parts",
+   "nome": "MAHLE Metal Leve S.A. (BOVESPA:LEVE3)"
+  },
+  "MBRF3": {
+   "industria": "Food Processing",
+   "nome": "Marfrig Global Foods S.A. (BOVESPA:MBRF3)"
+  },
+  "AMAR3": {
+   "industria": "Retail (Special Lines)",
+   "nome": "Marisa Lojas S.A. (BOVESPA:AMAR3)"
+  },
+  "CASH3": {
+   "industria": "Software (Entertainment)",
+   "nome": "Méliuz S.A. (BOVESPA:CASH3)"
+  },
+  "MELK3": {
+   "industria": "Real Estate (Development)",
+   "nome": "Melnick Desenvolvimento Imobiliário S.A. (BOVESPA:MELK3)"
+  },
+  "MFII11": {
+   "industria": "R.E.I.T.",
+   "nome": "Mérito Desenvolvimento Imobiliário I FII - Fundo de Investimento Imobiliário (BOVESPA:MFII11)"
+  },
+  "FRIO3": {
+   "industria": "Machinery",
+   "nome": "Metalfrio Solutions S.A. (BOVESPA:FRIO3)"
+  },
+  "MILS3": {
+   "industria": "Retail (Distributors)",
+   "nome": "Mills Locação, Serviços e Logística S.A. (BOVESPA:MILS3)"
+  },
+  "BEEF3": {
+   "industria": "Food Processing",
+   "nome": "Minerva S.A. (BOVESPA:BEEF3)"
+  },
+  "MNPR3": {
+   "industria": "Food Processing",
+   "nome": "Minupar Participações S.A. (BOVESPA:MNPR3)"
+  },
+  "MTRE3": {
+   "industria": "Real Estate (Development)",
+   "nome": "Mitre Realty Empreendimentos e Participações S.A. (BOVESPA:MTRE3)"
+  },
+  "MOAR3": {
+   "industria": "Diversified",
+   "nome": "Monteiro Aranha S.A. (BOVESPA:MOAR3)"
+  },
+  "MOTV3": {
+   "industria": "Transportation",
+   "nome": "Motiva Infraestrutura de Mobilidade S.A. (BOVESPA:MOTV3)"
+  },
+  "MDNE3": {
+   "industria": "Real Estate (Development)",
+   "nome": "Moura Dubeux Engenharia S.A. (BOVESPA:MDNE3)"
+  },
+  "MOVI3": {
+   "industria": "Transportation",
+   "nome": "Movida Participações S.A. (BOVESPA:MOVI3)"
+  },
+  "ESPA3": {
+   "industria": "Business & Consumer Services",
+   "nome": "MPM Corpóreos S.A. (BOVESPA:ESPA3)"
+  },
+  "MRSA3B": {
+   "industria": "Transportation (Railroads)",
+   "nome": "MRS Logística S.A. (BOVESPA:MRSA3B)"
+  },
+  "MRVE3": {
+   "industria": "Homebuilding",
+   "nome": "MRV Engenharia e Participações S.A. (BOVESPA:MRVE3)"
+  },
+  "MULT3": {
+   "industria": "Real Estate (Operations & Services)",
+   "nome": "Multiplan Empreendimentos Imobiliários S.A. (BOVESPA:MULT3)"
+  },
+  "MNDL3": {
+   "industria": "Household Products",
+   "nome": "Mundial S.A. - Produtos de Consumo (BOVESPA:MNDL3)"
+  },
+  "NATU3": {
+   "industria": "Household Products",
+   "nome": "Natura Cosméticos S.A. (BOVESPA:NATU3)"
+  },
+  "NEOE3": {
+   "industria": "Power",
+   "nome": "Neoenergia S.A. (BOVESPA:NEOE3)"
+  },
+  "NGRD3": {
+   "industria": "Software (System & Application)",
+   "nome": "Neogrid Participações S.A. (BOVESPA:NGRD3)"
+  },
+  "NEXP3": {
+   "industria": "Real Estate (Operations & Services)",
+   "nome": "Nexpe Participações S.A. (BOVESPA:NEXP3)"
+  },
+  "NUTR3": {
+   "industria": "Chemical (Specialty)",
+   "nome": "Nutriplant Indústria e Comércio S/A (BOVESPA:NUTR3)"
+  },
+  "OPCT3": {
+   "industria": "Environmental & Waste Services",
+   "nome": "OceanPact Serviços Marítimos S.A. (BOVESPA:OPCT3)"
+  },
+  "ODPV3": {
+   "industria": "Healthcare Support Services",
+   "nome": "Odontoprev S.A. (BOVESPA:ODPV3)"
+  },
+  "ONCO3": {
+   "industria": "Healthcare Support Services",
+   "nome": "Oncoclínicas do Brasil Serviços Médicos S.A. (BOVESPA:ONCO3)"
+  },
+  "OBTC3": {
+   "industria": "Education",
+   "nome": "Oranjebtc S.A. - Educação e Investimento (BOVESPA:OBTC3)"
+  },
+  "ORVR3": {
+   "industria": "Environmental & Waste Services",
+   "nome": "Orizon Valorização de Resíduos S.A. (BOVESPA:ORVR3)"
+  },
+  "OSXB3": {
+   "industria": "Oilfield Svcs/Equip.",
+   "nome": "OSX Brasil S.A. (BOVESPA:OSXB3)"
+  },
+  "OFSA3": {
+   "industria": "Drugs (Pharmaceutical)",
+   "nome": "Ouro Fino Saúde Animal Participações S.A. (BOVESPA:OFSA3)"
+  },
+  "PDTC3": {
+   "industria": "Telecom. Equipment",
+   "nome": "Padtec Holding S.A. (BOVESPA:PDTC3)"
+  },
+  "PMAM3": {
+   "industria": "Metals & Mining",
+   "nome": "Paranapanema S.A. (BOVESPA:PMAM3)"
+  },
+  "PTBL3": {
+   "industria": "Building Materials",
+   "nome": "PBG S.A. (BOVESPA:PTBL3)"
+  },
+  "PDGR3": {
+   "industria": "Homebuilding",
+   "nome": "PDG Realty S.A. Empreendimentos e Participações (BOVESPA:PDGR3)"
+  },
+  "PRSN11": {
+   "industria": "R.E.I.T.",
+   "nome": "Personale I Fundo Invest Imobiliario (BOVESPA:PRSN11)"
+  },
+  "PETZ3": {
+   "industria": "Retail (Special Lines)",
+   "nome": "Pet Center Comércio e Participações S.A. (BOVESPA:PETZ3)"
+  },
+  "RECV3": {
+   "industria": "Oil/Gas (Production and Exploration)",
+   "nome": "Petroreconcavo S.A. (BOVESPA:RECV3)"
+  },
+  "PLPL3": {
+   "industria": "Homebuilding",
+   "nome": "Plano & Plano Desenvolvimento Imobiliário S.A. (BOVESPA:PLPL3)"
+  },
+  "PLAS3": {
+   "industria": "Auto Parts",
+   "nome": "Plascar Participações Industriais S.A. (BOVESPA:PLAS3)"
+  },
+  "PORD11": {
+   "industria": "R.E.I.T.",
+   "nome": "Polo Fundo de Investimento Imobiliário - Recebíveis Imobiliários II - FII (BOVESPA:PORD11)"
+  },
+  "PSSA3": {
+   "industria": "Insurance (General)",
+   "nome": "Porto Seguro S.A. (BOVESPA:PSSA3)"
+  },
+  "POSI3": {
+   "industria": "Computers/Peripherals",
+   "nome": "Positivo Tecnologia S.A. (BOVESPA:POSI3)"
+  },
+  "PRNR3": {
+   "industria": "Business & Consumer Services",
+   "nome": "Priner Serviços Industriais S.A. (BOVESPA:PRNR3)"
+  },
+  "PRIO3": {
+   "industria": "Oil/Gas (Production and Exploration)",
+   "nome": "Prio S.A. (BOVESPA:PRIO3)"
+  },
+  "PFRM3": {
+   "industria": "Healthcare Support Services",
+   "nome": "Profarma Distribuidora de Produtos Farmacêuticos S.A. (BOVESPA:PFRM3)"
+  },
+  "QUAL3": {
+   "industria": "Healthcare Support Services",
+   "nome": "Qualicorp Consultoria e Corretora de Seguros S.A. (BOVESPA:QUAL3)"
+  },
+  "RADL3": {
+   "industria": "Retail (Special Lines)",
+   "nome": "Raia Drogasil S.A. (BOVESPA:RADL3)"
+  },
+  "FIIP11": {
+   "industria": "R.E.I.T.",
+   "nome": "RB Capital Renda I Fundo de Investimento Imobiliário - FII (BOVESPA:FIIP11)"
+  },
+  "CCTY3": {
+   "industria": "Real Estate (Development)",
+   "nome": "RDVC City S.A. (BOVESPA:CCTY3)"
+  },
+  "RDOR3": {
+   "industria": "Hospitals/Healthcare Facilities",
+   "nome": "Rede D'Or São Luiz S.A. (BOVESPA:RDOR3)"
+  },
+  "REDE3": {
+   "industria": "Power",
+   "nome": "Rede Energia Participações S.A. (BOVESPA:REDE3)"
+  },
+  "RPMG3": {
+   "industria": "Oilfield Svcs/Equip.",
+   "nome": "Refinaria de Petróleos de Manguinhos S.A. (BOVESPA:RPMG3)"
+  },
+  "NEWU11": {
+   "industria": "R.E.I.T.",
+   "nome": "Renda de Escritorios Fundo de Investimento Imobiliario - Cotas Fundo (BOVESPA:NEWU11)"
+  },
+  "RNEW3": {
+   "industria": "Green & Renewable Energy",
+   "nome": "Renova Energia S.A. (BOVESPA:RNEW3)"
+  },
+  "RVEE3": {
+   "industria": "Recreation",
+   "nome": "Revee S.A. (BOVESPA:RVEE3)"
+  },
+  "RIOS3": {
+   "industria": "Green & Renewable Energy",
+   "nome": "Rio Alto Energias Renováveis S.A. (BOVESPA:RIOS3)"
+  },
+  "GEPA3": {
+   "industria": "Power",
+   "nome": "Rio Paranapanema Energia S.A. (BOVESPA:GEPA3)"
+  },
+  "ROMI3": {
+   "industria": "Machinery",
+   "nome": "Romi S.A. (BOVESPA:ROMI3)"
+  },
+  "RSID3": {
+   "industria": "Homebuilding",
+   "nome": "Rossi Residencial S.A. (BOVESPA:RSID3)"
+  },
+  "RAIL3": {
+   "industria": "Transportation (Railroads)",
+   "nome": "Rumo S.A. (BOVESPA:RAIL3)"
+  },
+  "SCAR3": {
+   "industria": "Real Estate (Operations & Services)",
+   "nome": "São Carlos Empreendimentos e Participações S.A. (BOVESPA:SCAR3)"
+  },
+  "SMTO3": {
+   "industria": "Food Processing",
+   "nome": "São Martinho S.A. (BOVESPA:SMTO3)"
+  },
+  "AHEB3": {
+   "industria": "Recreation",
+   "nome": "São Paulo Turismo S.A. (BOVESPA:AHEB3)"
+  },
+  "TRBL11": {
+   "industria": "R.E.I.T.",
+   "nome": "SDI Logística Rio - Fundo de Investimento Imobiliário - FII (BOVESPA:TRBL11)"
+  },
+  "ASAI3": {
+   "industria": "Retail (General)",
+   "nome": "Sendas Distribuidora S.A. (BOVESPA:ASAI3)"
+  },
+  "SEQL3": {
+   "industria": "Transportation",
+   "nome": "Sequoia Logística e Transportes S.A. (BOVESPA:SEQL3)"
+  },
+  "SEER3": {
+   "industria": "Education",
+   "nome": "Ser Educacional S.A. (BOVESPA:SEER3)"
+  },
+  "SIMH3": {
+   "industria": "Trucking",
+   "nome": "SIMPAR S.A. (BOVESPA:SIMH3)"
+  },
+  "SLCE3": {
+   "industria": "Farming/Agriculture",
+   "nome": "SLC Agrícola S.A. (BOVESPA:SLCE3)"
+  },
+  "SMFT3": {
+   "industria": "Recreation",
+   "nome": "Smartfit Escola de Ginástica e Dança S.A. (BOVESPA:SMFT3)"
+  },
+  "SUZB3": {
+   "industria": "Paper/Forest Products",
+   "nome": "Suzano S.A. (BOVESPA:SUZB3)"
+  },
+  "SYNE3": {
+   "industria": "Real Estate (Operations & Services)",
+   "nome": "Syn Prop & Tech S.A. (BOVESPA:SYNE3)"
+  },
+  "SHOW3": {
+   "industria": "Entertainment",
+   "nome": "T4F Entretenimento S.A. (BOVESPA:SHOW3)"
+  },
+  "TRAD3": {
+   "industria": "Financial Svcs. (Non-bank & Insurance)",
+   "nome": "TC S.A. (BOVESPA:TRAD3)"
+  },
+  "TECN3": {
+   "industria": "Apparel",
+   "nome": "Technos S.A. (BOVESPA:TECN3)"
+  },
+  "TCSA3": {
+   "industria": "Homebuilding",
+   "nome": "Tecnisa S.A. (BOVESPA:TCSA3)"
+  },
+  "TGMA3": {
+   "industria": "Trucking",
+   "nome": "Tegma Gestão Logística S.A. (BOVESPA:TGMA3)"
+  },
+  "VIVT3": {
+   "industria": "Telecom. Services",
+   "nome": "Telefônica Brasil S.A. (BOVESPA:VIVT3)"
+  },
+  "LAND3": {
+   "industria": "Real Estate (Operations & Services)",
+   "nome": "Terra Santa Propriedades Agrícolas S.A. (BOVESPA:LAND3)"
+  },
+  "TIMS3": {
+   "industria": "Telecom (Wireless)",
+   "nome": "TIM S.A. (BOVESPA:TIMS3)"
+  },
+  "TOTS3": {
+   "industria": "Software (System & Application)",
+   "nome": "TOTVS S.A. (BOVESPA:TOTS3)"
+  },
+  "TTEN3": {
+   "industria": "Farming/Agriculture",
+   "nome": "Três Tentos Agroindustrial S/A (BOVESPA:TTEN3)"
+  },
+  "TRIS3": {
+   "industria": "Homebuilding",
+   "nome": "Trisul S.A. (BOVESPA:TRIS3)"
+  },
+  "TPIS3": {
+   "industria": "Transportation",
+   "nome": "Triunfo Participações e Investimentos S.A. (BOVESPA:TPIS3)"
+  },
+  "TUPY3": {
+   "industria": "Construction Supplies",
+   "nome": "Tupy S.A. (BOVESPA:TUPY3)"
+  },
+  "UGPA3": {
+   "industria": "Retail (Automotive)",
+   "nome": "Ultrapar Participações S.A. (BOVESPA:UGPA3)"
+  },
+  "UCAS3": {
+   "industria": "Furn/Home Furnishings",
+   "nome": "Unicasa Indústria de Móveis S.A. (BOVESPA:UCAS3)"
+  },
+  "FIQE3": {
+   "industria": "Telecom. Services",
+   "nome": "Unifique Telecomunicações S.A. (BOVESPA:FIQE3)"
+  },
+  "VALE3": {
+   "industria": "Steel",
+   "nome": "Vale S.A. (BOVESPA:VALE3)"
+  },
+  "VLID3": {
+   "industria": "Publishing & Newspapers",
+   "nome": "Valid Soluções S.A. (BOVESPA:VLID3)"
+  },
+  "VAMO3": {
+   "industria": "Trucking",
+   "nome": "Vamos Locação de Caminhões, Máquinas e Equipamentos S.A. (BOVESPA:VAMO3)"
+  },
+  "VSTE3": {
+   "industria": "Apparel",
+   "nome": "Veste S.A. Estilo (BOVESPA:VSTE3)"
+  },
+  "VBBR3": {
+   "industria": "Retail (Automotive)",
+   "nome": "Vibra Energia S.A. (BOVESPA:VBBR3)"
+  },
+  "VTRU3": {
+   "industria": "Education",
+   "nome": "Vitru Brasil Empreendimentos, Participações e Comércio S.A. (BOVESPA:VTRU3)"
+  },
+  "VITT3": {
+   "industria": "Chemical (Specialty)",
+   "nome": "Vittia S.A. (BOVESPA:VITT3)"
+  },
+  "VIVA3": {
+   "industria": "Apparel",
+   "nome": "Vivara Participações S.A. (BOVESPA:VIVA3)"
+  },
+  "VIVR3": {
+   "industria": "Homebuilding",
+   "nome": "Viver Incorporadora e Construtora S.A. (BOVESPA:VIVR3)"
+  },
+  "VULC3": {
+   "industria": "Shoe",
+   "nome": "Vulcabras S.A. (BOVESPA:VULC3)"
+  },
+  "WEGE3": {
+   "industria": "Electrical Equipment",
+   "nome": "WEG S.A. (BOVESPA:WEGE3)"
+  },
+  "WEST3": {
+   "industria": "Retail (Building Supply)",
+   "nome": "Westwing Comércio Varejista S.A. (BOVESPA:WEST3)"
+  },
+  "WIZC3": {
+   "industria": "Insurance (General)",
+   "nome": "Wiz Co Participações e Corretagem de Seguros S.A. (BOVESPA:WIZC3)"
+  },
+  "XPCM11": {
+   "industria": "R.E.I.T.",
+   "nome": "XP Corporate Macaé Fundo de Investimento Imobiliário - FII (BOVESPA:XPCM11)"
+  },
+  "VVCO11": {
+   "industria": "R.E.I.T.",
+   "nome": "XTED - TRX Edificios Corporativos Fundo Invest Imobiliario FII Fund (BOVESPA:VVCO11)"
+  },
+  "YDUQ3": {
+   "industria": "Education",
+   "nome": "Yduqs Participações S.A. (BOVESPA:YDUQ3)"
+  }
+ }
+}
