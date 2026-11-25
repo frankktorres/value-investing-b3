@@ -31,7 +31,18 @@ import time
 from pathlib import Path
 
 RAIZ = Path(__file__).resolve().parent.parent
-PROTEGIDOS = ("ferramentas/tests/golden.json", "01-doutrina-value-investing.md")   # muda palavra: só com decisão do Frank
+PROTEGIDOS = ("ferramentas/tests/golden.json", "01-doutrina-value-investing.md",   # muda palavra: só com decisão do Frank
+              # travas do pacote de autonomia (25/11/2026; senior): na nuvem o Bash não passa pelo hook trava_config e o
+              # teste de hash compara com um arquivo que o mesmo Bash pode mudar -> afrouxar trava também é do Frank.
+              # A cobertura da lista do trava_config é conferida em tests/test_conferir_noite_travas.py.
+              ".githooks", ".claude/hooks", ".claude/settings.json", ".claude/settings.local.json",
+              "ferramentas/golden.py", "ferramentas/tests/golden_log.md", "ferramentas/suite_marcador.py",
+              "ferramentas/conferir_noite.py", "ferramentas/tests/travas_hashes.json", "ferramentas/tests/test_travas.py",
+              "ferramentas/tests/test_b37_trava_master.py", "ferramentas/tests/test_motor_puro.py",
+              "ferramentas/tests/test_docs_caminhos.py", "ferramentas/tests/test_conferir_noite_travas.py",
+              ":(glob)**/conftest.py", ":(glob)**/pytest.ini", ":(glob)**/pyproject.toml", ":(glob)**/setup.cfg",
+              ":(glob)**/tox.ini", ":(glob)**/ruff.toml", ":(glob)**/.ruff.toml", ":(glob)**/mypy.ini",
+              ":(glob)**/.mypy.ini", ":(glob)**/*catraca*.json")
 FORA = ("ferramentas/painel/web/dados", "ferramentas/dados/cvm/_antes", "ferramentas/monitor",
         "ferramentas/dados/suite_ultima.json", "ferramentas/carteira.local.json",
         "ferramentas/dados/privado", "ferramentas/.hypothesis")             # regerável, velho, privado ou cache: não vai para a worktree
@@ -116,7 +127,7 @@ def conferir(ramo: str, so_conferir: bool) -> int:
         return PRECISA
     protegidos = git("diff", "--name-only", f"origin/master...{sha}", "--", *PROTEGIDOS)
     if protegidos:
-        print(f"{ramo}: mexe em {protegidos.replace(chr(10), ', ')} (muda palavra) — junção só com decisão do Frank.")
+        print(f"{ramo}: mexe em {protegidos.replace(chr(10), ', ')} (muda palavra ou trava) — junção só com decisão do Frank.")
         return PRECISA
     wt = Path(tempfile.mkdtemp(prefix="noite-"))
     try:

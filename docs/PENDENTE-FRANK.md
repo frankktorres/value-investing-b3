@@ -5,6 +5,7 @@
 ## Abertas
 | # | Pergunta | Opções / recomendação | Backlog | Desde |
 |---|---|---|---|---|
+| 11 | **Fechar o furo do `--no-verify` na trava do push (B37).** Hoje `git push --no-verify` (ou mexer no `core.hooksPath`) pula o pre-push; o deny teria que entrar no `.claude/settings.json`, que a trava 4.2 protege — liberar é seu | **Recomendo (a):** abrir uma sessão com `MESA_LIBERA_CONFIG=1` no ambiente e pedir "aplicar o #11": acrescentar ao `deny` `"Bash(*--no-verify*)"`, `"Bash(*core.hooksPath*)"`, `"Bash(*hooksPath=*)"`; pôr `ferramentas/conferir_noite.py` e `ferramentas/tests/test_conferir_noite_travas.py` em `TRAVAS_ARQUIVOS` do `.claude/hooks/trava_config.py`; regravar `travas_hashes.json`. Por quê: 10 min, fecha o critério "não empurra master vermelho". (b) Mais forte, depois: o `trava_master.py` também recusar push que mexa em arquivo de trava sem a liberação | — (pacote de autonomia, senior) | 25/11 |
 | 4 | Orçamento mensal; SaaS só seu ou de terceiros; objetivo acadêmico; agente de sexta ainda roda?; fonte paga; licença do código | Ver Brief §11 | B07 | 10/10 |
 
 ## Só do Frank (a rotina nunca faz)
