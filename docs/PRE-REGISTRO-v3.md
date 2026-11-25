@@ -257,6 +257,12 @@ Nota das linhas 1–12: as variantes rodaram três vezes no mesmo código. As du
 H7 com tipo do numpy; depois a pasta de saída inexistente). Como as variantes são determinísticas, cada uma conta uma vez.
 Relatório: `docs/oraculo/hipoteses-2026-10-22.md` (e `.json`).
 
+Nota da linha 14 (25/11/2026, depois do commit da linha): o `adversario` reproduziu 2 defeitos do executor — o choque de dívida
+não multiplicava os outros passivos financeiros (só a CMIN3) e, sem o rating (i), o ticker caía inteiro em vez de usar só o π
+(ii) (nenhum caso). Os dois foram corrigidos para o texto da emenda 12, com teste (`ferramentas/tests/test_b46_executor.py`), e
+a mesma variante rodou de novo: resultado igual (NÃO CONCLUSIVA, C3 15 de 24). Não é tentativa nova. O C3 foi medido com o
+defeito do X2 do Z'' (`docs/BACKLOG.md` B57); rodar de novo depois da B57 conta 8/24.
+
 ## 7. Emendas
 1. **22/10/2026 — definições de relatório da camada 5, sem efeito em palavra.**
    - **Compounder:** mediana do ROIC real anual do motor (`roic_serie`) ≥ 10% e no máximo 2 anos < 5%, **ou** ROIC contábil

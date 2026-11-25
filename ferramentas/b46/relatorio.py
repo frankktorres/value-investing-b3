@@ -173,6 +173,9 @@ def gerar(res: dict) -> str:
          "**Limite do C1:** o π é conferido com a mesma tabela que o produziu (conferência do encanamento); a tabela em si é "
          "conferida pelo teste à mão (`tests/test_b46_calculo.py`, contra a Tabela 5 e o slide 26). O Ke é conferido de verdade "
          "(sai do motor, a fórmula é refeita à parte).", "",
+         "**O C3 foi medido com um defeito conhecido no π (ii)** (`senior`, 25/11): o X2 do Z'' do motor ignora prejuízos "
+         "acumulados (`docs/BACKLOG.md` B57), o que infla o Z'' e baixa o π (ii) de quem tem prejuízo. O C3 ficou a 1 ação de "
+         "passar. Rodar a B46 de novo depois da B57 é a **tentativa 8/24**, não conserto do executor.", "",
          "**Fora do hall dos lotes:** EGIE3 e ITSA4 estão no `hall.json` mas não nos lotes de `oraculo/sanidade.py` (emenda 12).", "",
          "| Linha | O que confere | Resultado |", "|---|---|---|",
          f"| C1 | Ke, π e âncoras recalculados à parte | {'passou' if r1['passou'] else '**não** — ' + '; '.join(r1['falhas'][:5])} |",

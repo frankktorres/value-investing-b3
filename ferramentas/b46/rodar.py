@@ -145,13 +145,26 @@ def _descontar_com_pi(pi: float, reg: dict):
     return f
 
 
+def emp_chocada(emp, choque: dict):
+    """Preço × choque["preco"]; os outros passivos financeiros × choque["divida"]. O D do motor (`divida_do_desconto`) =
+    dívida bruta com arrendamentos (choque em `_choque_divida`) + outros passivos financeiros: o choque multiplica os dois
+    (adversário, 25/11: na CMIN3 o D subia só 4,1% com o choque de "10%")."""
+    return replace(emp, preco=emp.preco * choque["preco"],
+                   outros_passivos_financeiros=emp.outros_passivos_financeiros * choque["divida"])
+
+
+def pi_das_estimativas(rating_i: str | None, z: float | None) -> tuple:
+    """(π (i), rating (ii), π (ii), π). Emenda 12: com uma só, vale a única — também quando falta a (i) (adversário, 25/11)."""
+    pi_i = C.pi_de_classe(rating_i) if rating_i is not None else None
+    r_ii = C.rating_altman(z) if z is not None else None
+    pi_ii = C.pi_de_classe(r_ii) if r_ii is not None else None
+    return pi_i, r_ii, pi_ii, C.pi_combinado(pi_i, pi_ii)
+
+
 def avaliar_v(emp, mk, modo: str, choque: dict, reg: dict):
     """Avalia `emp` no modo pedido, com o choque; `reg` recebe os insumos e números do caminho (o último chamado vale)."""
     reg.clear()
-    # o D do motor (`divida_do_desconto`) = dívida bruta com arrendamentos + outros passivos financeiros: o choque de dívida
-    # multiplica os dois (adversário, 25/11: na CMIN3 o D subia só 4,1% com o choque de "10%")
-    emp = replace(emp, preco=emp.preco * choque["preco"],
-                  outros_passivos_financeiros=emp.outros_passivos_financeiros * choque["divida"])
+    emp = emp_chocada(emp, choque)
     with contextlib.ExitStack() as p:
         p.enter_context(_rapido())
         p.enter_context(_choque_divida(choque["divida"]))
@@ -170,15 +183,11 @@ def avaliar_v(emp, mk, modo: str, choque: dict, reg: dict):
         if modo == "de":        # π = 0: só registra as âncoras, para a conferência C1 (completo = "só D/E" × (1 − π))
             p.enter_context(mock.patch.object(M, "descontar", _descontar_com_pi(0.0, reg)))
         if modo == "completo":
-            # emenda 12: "com uma só, vale a única" — vale para a (i) ausente também (adversário, 25/11)
-            pi_i = C.pi_de_classe(r_i) if r_i is not None else None
             try:
-                z = z_altman(emp, a, ltm)
-                r_ii, pi_ii, falta_ii = C.rating_altman(z), None, None
-                pi_ii = C.pi_de_classe(r_ii)
+                z, falta_ii = z_altman(emp, a, ltm), None
             except NaoAvaliado as x:
-                z, r_ii, pi_ii, falta_ii = None, None, None, str(x)
-            pi = C.pi_combinado(pi_i, pi_ii)
+                z, falta_ii = None, str(x)
+            pi_i, r_ii, pi_ii, pi = pi_das_estimativas(r_i, z)
             if pi is None:
                 raise NaoAvaliado(f"{emp.ticker}: π sem nenhuma das duas estimativas ({reg.get('falta_i')}; {falta_ii})")
             reg.update(rating_i=r_i, cobertura=cob, pi_i=pi_i, z=z, rating_ii=r_ii, pi_ii=pi_ii, falta_ii=falta_ii, pi=pi,
