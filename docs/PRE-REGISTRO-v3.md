@@ -632,3 +632,50 @@ defeito do X2 do Z'' (`docs/BACKLOG.md` B57); rodar de novo depois da B57 conta 
      golden não mudam.
    - **Orçamento (§0.4):** a execução da variante sobre o conjunto de desenvolvimento conta **7/24** (linha 14 do §6, escrita
      depois de rodar).
+13. **25/11/2026 — B57: X2 do Z'' com os lucros retidos da lei (2.03.04 + 2.03.05) e a B46 de novo como tentativa 8/24; escrita
+   e commitada SOZINHA, antes de mudar o motor e antes de rodar.** Origem: `docs/BACKLOG.md` B57 (achado do `adversario` na
+   B46). Fontes, trechos e notas: `docs/b57/FONTES-B57.md`. Opções vistas pelo `senior` (25/11) antes de qualquer Z'' novo:
+   **A** escolhida; B (só a parte negativa da 2.03.05) cai por assimetria sem fonte; C (X2 sempre do DFP) mistura datas dentro
+   do mesmo índice.
+   - **(a) O conserto, justificado pela fonte e não pelo resultado da B46.** O Z'' de emergentes usa X2 = lucros retidos ÷
+     ativo total, e "retained earnings" é "the total amount of reinvested earnings and/or losses of a firm over its entire
+     life" (Altman, 2002, nota B; F3). Pela Lei 6.404 (nota A; F1), o lucro guardado fica nas **reservas de lucros** (art. 182
+     §4º) e o não apropriado e o prejuízo não absorvido em **lucros/prejuízos acumulados** (art. 178 §2º III; art. 189). No
+     plano da CVM (nota A; F2) são as contas **2.03.04** e **2.03.05**, presentes em 100% das não financeiras medidas. O motor
+     lê só a 2.03.04: quem tem prejuízo acumulado sai com X2 alto demais. **Regra nova:** X2 = (2.03.04 + 2.03.05) ÷ ativo,
+     com sinal, no mesmo balanço do resto do Z'' (o do LTM, ou o do DFP quando não há LTM). A 2.03.05 ausente da série →
+     **erro explícito** (série antiga não recoletada; nunca 0). O conserto vale passe ou não a B46.
+   - **Vieses declarados do X2 novo.** (1) **ITR:** no balanço do ITR a 2.03.05 traz o resultado do ano ainda sem destino, e
+     parte dele sai depois como dividendo (mínimo de 25% do lucro ajustado na omissão do estatuto alterado, art. 202 §2º; o
+     saldo sem destino vai a dividendo, §6º). Frente ao DFP, o X2 do ITR fica **mais alto em quem lucrou no ano e mais baixo em
+     quem teve prejuízo**; o viés de nível é o dividendo do ano ainda não provisionado. (2) Prejuízo absorvido por reserva de
+     capital ou redução de capital some da 2.03.05 (a conferir; `FONTES-B57.md`). (3) Se a 2.03.04 já desconta ações em
+     tesouraria, quem recompra muito sai com X2 baixo (a conferir).
+   - **Contaminação declarada.** O defeito foi achado olhando a tentativa 7/24: o Z'' e o π (ii) de cada ticker com o X2
+     antigo estão publicados em `docs/b46/B46-2026-11.md`, e sabe-se que o C3 ficou a 1 ação de passar. Um PASSA na 8/24 vem de
+     um conjunto visto duas vezes: **é evidência fraca; só o HOLD-OUT 2 prova** (DNA §5).
+   - **(b) B46, tentativa 8/24.** A regra, o critério e a leitura da **emenda 12 ficam intactos**; o único insumo que muda é o
+     Z'' do (ii), agora com o X2 da regra nova (`CAMPOS_Z` ganha a 2.03.05: campo ausente → não avaliado, como na emenda 12).
+     **C3 igual:** |π(i) − π(ii)| ≤ 20 p.p. em ≥ 2/3 dos industriais avaliados do mesmo grupo (D/E a mercado > D/E da
+     indústria), ticker do grupo com uma estimativa só no denominador como não concordante; o denominador sai da regra, não é
+     fixado à mão (na 7/24 foi 24, e o limiar, 16). Insumos (i), D/E, indústria e mercado de 19/11: os da emenda 12. **Se não
+     passar: NÃO CONCLUSIVA e fim da B46 por este caminho** (nenhuma 9ª tentativa da mesma hipótese).
+   - **Sensibilidade pedida pelo Frank (relatada, não muda o critério):** o relatório da 8/24 mostra o C3 também com o X2 do
+     **último DFP** (2.03.04 + 2.03.05 ÷ ativo do DFP de 2025; SMTO3, o de mar/2026), com X1, X3 e X4 iguais. Leitura fixada
+     antes: C3 passa com o X2 da regra e falha com o do DFP → **PASSA frágil** (relatado assim, sem mudar a leitura); falha
+     nos dois → NÃO CONCLUSIVA.
+   - **Previsões (escritas antes de recoletar e de rodar; nenhum valor de 2.03.05 dos tickers foi visto).** (1) Na maioria do
+     hall, que lucrou em 2026, o X2 sobe (ITR com o lucro de 9 meses) e o Z'' sobe; cai nas que têm prejuízo acumulado ou
+     prejuízo no ano. (2) Nas 9 que discordaram na 7/24: o π (ii) **sobe** (Z'' cai) onde há prejuízo acumulado — inclino a
+     EMBJ3, SMFT3, MRVE3, BEEF3 — e **cai ou fica** nas que lucraram (HYPE3, RANI3, RECV3, SLCE3, CMIN3). (3) **C3: sem
+     confiança; inclino a "não cumprido"**: na 7/24 o (i) saiu pior que o (ii) na maioria, e o lucro do ano no ITR empurra o
+     π (ii) para baixo, alargando essa distância onde a empresa lucrou. (4) Golden: espero ao menos uma zona do Z'' cruzando
+     4,15 ou 5,85 no hall, logo nota de solidez diferente.
+   - **Trava do prompt do Frank (25/11):** se o conserto mudar a nota de solidez ou alguma palavra do golden, **não vai ao
+     master**: fica num ramo próprio, e o diff vai ao `docs/PENDENTE-FRANK.md` com a recomendação. A 8/24 roda sobre esse ramo.
+   - **Execução:** coletor (`coletar_cvm.BPP` + `lucros_acumulados` = 2.03.05) → recoleta **aditiva** do hall, dos dossiês e da
+     B36 com prova de equivalência (todo campo antigo idêntico; golden igual no código antigo) → teste da camada 1 com
+     esperado à mão → motor (`altman_z2`) e o espelho do backtest → suíte → diff do golden → `python -m b46.rodar medir
+     --tentativa 8` (arquivos novos `_t8`; os da 7/24 não são sobrescritos).
+   - **Orçamento (§0.4):** a 8/24 conta **8/24** (linha 15 do §6, escrita depois de rodar). O conserto do X2 em si é dado,
+     não variante, e não conta.
