@@ -1,0 +1,75 @@
+{
+ "_doc": "Insumos não mecânicos de EMBJ3 / Embraer (hold-out B36, protocolo v1). Fontes: FRE 2026 v4 (CVM, id 161175, CSVs), IPE 2017-2026 (1.283 documentos da Embraer indexados; 80 fatos relevantes triados por título), estatuto vigente (IPE, entregue 21/05/2024, data-ref 17/04/2024), DFP 2025 (id 155126). Textos baixados em ferramentas/dados/cvm/docs/EMBRAER/. Sem preço, valuation ou notícia. Limite: as notas explicativas do PDF da DFP 2025 saem ilegíveis na extração (fonte embutida); só DRE/BP em CSV e parecer lidos.",
+ "ma_ruim": {
+  "valor": false,
+  "fonte": "IPE 2017-2026, fatos relevantes triados: nenhuma aquisição consumada próxima de 20% do ativo (ativo consolidado R$ 71.092 mi em 2025, DFP). A combinação com a Boeing (FRs 17/12/2018, 24/01/2019; AGE 26/02/2019) não foi consumada: Boeing rescindiu o MTA (FR 25/04/2020) e a arbitragem terminou com pagamento bruto de US$ 150 mi à Embraer (FR 16/09/2024). Eve/Zanite (FR 06/05/2022) e JV com a Nidec (FRs 17/06/2023 e 05/10/2023) são operações de subsidiária, não aquisição relevante. Perda por não recuperabilidade: R$ 20,9 mi em 2025 e R$ 121,6 mi em 2024 (DRE 3.04.03), ínfimas frente ao ativo. Limite: preço pago por pequenas aquisições e notas de impairment não lidos",
+  "nota_fonte": "A"
+ },
+ "interferencias": {
+  "valor": 0,
+  "fonte": "IPE 2017-2026: títulos de todos os 80 fatos relevantes triados; não há controlador (voto limitado a 5% por acionista, estatuto art. 14; capital em circulação 96,1%, FRE 2026 distribuição_capital). Nenhuma operação de acionista relevante contra o minoritário. A União (golden share, art. 9) aprovou a parceria com a Boeing (FR 10/01/2019) e a operação foi levada a AGE; não consumada, sem prejuízo ao minoritário. Limite: comunicados ao mercado e atas não triados",
+  "nota_fonte": "A"
+ },
+ "tag_along": {
+  "valor": 1.0,
+  "fonte": "Estatuto social Embraer (IPE, versão de 17/04/2024), art. 59: a alienação do controle exige que o adquirente faça OPA das ações dos demais acionistas 'de forma a lhes assegurar tratamento igualitário àquele dado ao alienante' (Regulamento do Novo Mercado; só ações ordinárias, 740.465.044 ON, FRE 2026). Art. 56: quem atingir 35% ou mais do capital deve pedir à União OPA pela totalidade das ações",
+  "nota_fonte": "A"
+ },
+ "discricionario": {
+  "valor": true,
+  "fonte": "Estatuto social (IPE, 17/04/2024), art. 9º: a ação ordinária de classe especial (golden share) da União dá poder de veto sobre mudança de denominação/objeto social, programas militares, capacitação de terceiros em tecnologia militar, interrupção de peças de aeronaves militares, entre outros; art. 56 dá à União discricionariedade sobre o pedido de OPA de acionista com 35% ou mais. Exercida na parceria Boeing (FR 10/01/2019, 'a União manifestou-se favoravelmente'). FRE 2026, transação_parte_relacionada: 'propriedade de ação denominada golden share'",
+  "nota_fonte": "A"
+ },
+ "fisher": {
+  "respostas": [
+   "sem",
+   "sem",
+   "sem",
+   "sem",
+   "sem",
+   "sem",
+   "sem",
+   "sem",
+   "sem",
+   "sem",
+   "sem",
+   "sem",
+   "sim",
+   "sim",
+   "nao"
+  ],
+  "itens": [
+   "1 potencial de mercado: sem - sem documento A/B com mercado endereçável (não lido o relatório da administração em texto estruturado)",
+   "2 decisão de seguir lançando: sem - E2, KC-390 e Eve existem, mas sem métrica de retorno lida em fonte A/B",
+   "3 eficácia do P&D: sem - sem métrica lida",
+   "4 força de vendas: sem - sem documento lido",
+   "5 margem que vale a pena: sem - DFP 2025 (DRE consolidada): margem bruta 17,6% em 2025 (R$ 7.358 mi / R$ 41.883 mi) e 18,0% em 2024 (R$ 6.382 mi / R$ 35.424 mi); EBIT 8,0% e 10,6%; sem régua A/B para dizer se 'vale a pena'",
+   "6 o que faz pela margem: sem - sem documento lido",
+   "7 relações de trabalho: sem - não encontrado",
+   "8 relações entre executivos: sem - não encontrado",
+   "9 profundidade da gestão: sem - renúncia do CFO (FR 06/04/2026) e novo CFO (FR 10/04/2026); origem do substituto não lida",
+   "10 controles de custo e contábeis: sem - parecer sem ressalva em 2025 com principal assunto de auditoria na recuperabilidade do E2 (DFP 2025); refazimento de ITR 2T22 por warrants da Eve (FR 29/09/2022, ~US$ 82 mi não caixa); parecer limpo não basta",
+   "11 aspectos do setor: sem - não encontrado",
+   "12 visão de longo prazo: sem - não encontrado",
+   "13 crescimento sem diluição: sim - capital social em 740.465.044 ações ordinárias, última alteração do capital em 05/03/2018 (FRE 2026, capital_social); autorizado 1 bi (estatuto art. 6º); só recompras (FRs 17/03/2025, 06/11/2025, 05/03/2026)",
+   "14 fala dos problemas: sim - comunicou ao mercado a rescisão da Boeing (FR 25/04/2020), o refazimento do ITR 2T22 (FR 29/09/2022), o ajuste no release do 2T25 (FR 05/08/2025) e revisões de projeções (FRs 08/03/2018, 16/01/2019, 12/11/2019, 05/11/2021, 08/11/2024)",
+   "15 integridade inquestionável: nao - acordo de diferimento de persecução criminal (DPA) com o DOJ dos EUA e acordo com a SEC por violação do FCPA, com monitoria externa independente até 22/04/2020 (FR 19/02/2020, citando FRs de 2015-2016)"
+  ],
+  "fonte": "FRE 2026 v4, IPE 2017-2026 (FRs citados), DFP 2025 v1 (DRE em CSV e relatório do auditor), estatuto de 17/04/2024. Nota = arredondar(5 x 2 sim / 15) = 1. 'sem' onde não há documento A/B lido; textos de relatório da administração e do FRE não foram lidos por falta de orçamento de chamadas"
+ },
+ "desconto_controlador": {
+  "tipo": "zero",
+  "razao": "SEM_RAZAO"
+ },
+ "_meta": {
+  "protocolo": "B36 v1",
+  "chamadas": 22,
+  "fim": "2026-11-24T19:55",
+  "nao_achado": [
+   "partes_rel_sobre_receita",
+   "fisher itens 1-12 (exceto sem-evidência explícita: 13,14,15 achados)",
+   "desconto_controlador (sem evidência A/B de risco de controlador consumado; golden share registrada em discricionario)"
+  ],
+  "obs_partes_rel": "FRE 2026 traz só saldos (contas a receber, ativos/passivos de contrato, financiamentos BNDES/FINEP) de 31/12/2025, somando R$ 2.349 mi com Aeronáutica, Exército, Marinha, Águas Azuis, EZ Air e Nidec (5,6% da receita líquida de R$ 41.883 mi), mas mistura ativo e passivo e não traz o fluxo de receitas; a nota de partes relacionadas da DFP está ilegível. Campo não gravado."
+ }
+}

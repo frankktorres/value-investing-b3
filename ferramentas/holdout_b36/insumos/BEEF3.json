@@ -1,0 +1,77 @@
+{
+  "_doc": "Insumos nao mecanicos BEEF3 / Minerva S.A. (B36 v1). Documentos em ferramentas/dados/cvm/docs/MINERVA/ (estatuto 28/08/2025, acordo de acionistas 3a alteracao, FRs 2024-2025, DFP 2025). IPE 2017-2026 triado por titulos (1.217 documentos; 54 fatos relevantes); so os PDFs citados foram lidos. Sem fonte A/B = campo vazio ou 'sem'.",
+  "ma_ruim": {
+    "valor": false,
+    "fonte": "Unica aquisicao > 20% do ativo: operacao America do Sul com a Marfrig (Brasil, Chile, Argentina), R$ 7.180.602 mil pagos (DFP 2025 nota 2) sobre ativo consolidado de R$ 28.594 mi em 31/12/2023 (DFP 2023, CSV BPA) = ~25%. Nao ha baixa contabil nem venda com perda: teste de impairment de 31/12/2024 'nao foram identificadas perdas' nas UGCs; unica perda 2024 consolidada R$ 33,6 mi (plantas da Australia, nota 12, cerca de 0,1% do ativo); compra das plantas do Uruguai foi negada pelo Coprodec (FR 25/09/2025) e nao concluida. Limite: aquisicao recente (out/2024), 2 anos de historico; Fortunceres teve prejuizo de R$ 62,8 mi em out-dez/2024 (nota 2)",
+    "nota_fonte": "A"
+  },
+  "interferencias": {
+    "valor": 0,
+    "fonte": "IPE 2017-2026: 54 fatos relevantes triados por titulo, lidos os de aumento de capital (FR 07/04/2025 e 20/06/2025: R$ 2,0 bi a R$ 5,17/acao = media de 60 pregoes, sem agio/desagio, direito de preferencia a todos, bonus de subscricao) e reducao de capital (FR 06/08 e 28/08/2025: absorve prejuizos de R$ 577 mi, sem cancelar acoes e sem restituicao). Nenhuma operacao contra o minoritario encontrada (sem compra/venda de ativo com controlador, sem recompra do controlador, sem OPA). Limite: nao li todos os PDFs de comunicados/assembleias",
+    "nota_fonte": "A"
+  },
+  "partes_rel_sobre_receita": {
+    "valor": 0.0099,
+    "fonte": "DFP 2025 nota 10 (consolidado): aquisicao de bovinos de empresas ou pessoas fisicas acionistas da Companhia R$ 542.734 mil em 2025 (R$ 306.099 mil em 2024), em condicoes normais de mercado; mutuos e compras com controladas sao eliminados na consolidacao (FRE 2026 tabela transacao_parte_relacionada: so mutuos com controladas). 542.734 / receita liquida consolidada 2025 R$ 54.830.072 mil (DRE) = 0,99%. Leitura da coluna consolidada da nota 10 em PDF com layout confuso: valor pode estar levemente impreciso",
+    "nota_fonte": "A"
+  },
+  "tag_along": {
+    "valor": 1.0,
+    "fonte": "Estatuto social vigente (IPE 28/08/2025), art. 38: alienacao de controle exige OPA aos demais acionistas 'de forma a lhes assegurar tratamento igualitario aquele dado ao alienante' (so ha acoes ordinarias; Novo Mercado). Art. 43: poison pill de 33,34% com OPA a 135% do maior valor",
+    "nota_fonte": "A"
+  },
+  "discricionario": {
+    "valor": true,
+    "fonte": "FRE 2026 posicao_acionaria: VDQ Holding S.A. (28,89%, marcada Acionista_Controlador=S) e SALIC International Investment Company (24,34%) sao ambas participantes do acordo de acionistas (Participante_Acordo_Acionistas=S); bloco de 53,2% das acoes ON. Terceira alteracao do Acordo de Acionistas (IPE 31/05/2024, em vigor 19/12/2022) lista 'Acoes Vinculadas' de VDQ e SIIC (art. 118 Lei das S.A.). Nao li as clausulas de voto do acordo original, so a alteracao",
+    "nota_fonte": "A"
+  },
+  "fisher": {
+    "respostas": [
+      "sem",
+      "sem",
+      "sem",
+      "sem",
+      "sem",
+      "sem",
+      "sem",
+      "sem",
+      "sem",
+      "sem",
+      "sem",
+      "sem",
+      "nao",
+      "sem",
+      "nao"
+    ],
+    "itens": [
+      "1 potencial de mercado: sem - nao encontrado documento A/B que mensure mercado enderecavel",
+      "2 decisao de seguir lancando: sem - nao aplicavel/sem evidencia",
+      "3 eficacia do P&D: sem - nao aplicavel (frigorifico)",
+      "4 forca de vendas: sem - nao encontrado",
+      "5 margem que vale a pena: sem - margem bruta 17,3% em 2025 (release 4T25, IPE 31/12/2025) sem serie historica lida para julgar",
+      "6 o que faz pela margem: sem - nao encontrado",
+      "7 relacoes de trabalho: sem - nao encontrado",
+      "8 relacoes entre executivos: sem - nao encontrado",
+      "9 profundidade da gestao: sem - nao encontrado",
+      "10 controles de custo e contabeis: sem - nao lido o parecer do auditor",
+      "11 aspectos do setor: sem - nao encontrado",
+      "12 visao de longo prazo: sem - nao encontrado",
+      "13 crescimento sem diluicao: nao - aumento de capital de R$ 2,0 bi com 386.847.196 novas acoes ON a R$ 5,17 (FR 07/04/2025 e homologacao FR 20/06/2025) sobre base de 994.534.197 acoes apos a operacao (FR 28/08/2025), ou seja ~39% das acoes pos-aumento sao novas; direito de preferencia pro rata e bonus de subscricao mitigam, mas quem nao acompanhou foi diluido (A)",
+      "14 fala dos problemas: sem - ha FRs sobre negativa do Coprodec/Uruguai (25/09/2025), mas sem base para julgar o conjunto",
+      "15 integridade inquestionavel: nao - acordo de leniencia com CGU/AGU, multa ~R$ 22 mi, fatos da operacao PF de 2017 (FR 09/05/2025, IPE) (A)"
+    ]
+  },
+  "desconto_controlador": {
+    "tipo": "zero",
+    "razao": "SEM_RAZAO"
+  },
+  "_meta": {
+    "protocolo": "B36 v1",
+    "chamadas": 17,
+    "fim": "2026-11-24T19:30",
+    "nao_achado": [
+      "fisher respostas 1-12 e 14 (sem fonte A/B lida)",
+      "desconto_controlador (sem evidencia A/B de risco de controlador)"
+    ]
+  }
+}

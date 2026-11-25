@@ -1,0 +1,78 @@
+{
+  "_doc": "AZZA3 / AZZAS 2154 S.A. (CNPJ 16.590.234/0001-76, CVM 22349). Insumos B36 v1. Docs em ferramentas/dados/cvm/docs/AZZAS 2154/ (estatuto 09/12/2025, FRs 2024-2026, DFP 2025 v1 — PDF do RAD truncado em 32MB, notas até pág. ~165 lidas por texto). Orçamento de chamadas estourado (ver _meta).",
+  "ma_ruim": {
+    "valor": false,
+    "fonte": "DFP 2025 nota 5 (combinação de negócios Grupo de Moda Soma, fechada 31/07/2024, por troca de 95.500.607 ações) e nota 17: perda por impairment de 2025 relativa a ágios de Sunset e Malu = R$ 56.155 mil, 'os demais ativos submetidos ao teste não apresentaram necessidade de reconhecimento de perda' (ativo consolidado 2025 R$ 15.448.601 mil: 0,4%). Nenhuma baixa de ágio da Soma, Vicenza, Reserva ou Hering encontrada nas notas lidas. Limite: DFP 2023-2024 e demais exercícios não lidos; DFC 2025 mostra 'perda por impairment' de R$ 92.422 mil (consolidado), também < 1% do ativo",
+    "nota_fonte": "A"
+  },
+  "interferencias": {
+    "valor": 0,
+    "fonte": "IPE 2017-2026 (58 fatos relevantes, títulos triados; lidos FR 18/02/2025, 11/03/2025, 30/06/2025, 19/06/2026, 02/09/2026 e 31/07/2024). Nenhuma operação do controlador (Blocos Birman e Jatahy, acordo de acionistas de 31/07/2024) consumada contra minoritário. Examinados e não contados: reestruturação do conselho em 30/06/2025 (presidente independente, 7 membros); reorganização societária de 02/09/2026 (cisão parcial em Arezzo&Co e SOMA com participação relativa de cada acionista 'integralmente preservada', permuta de ações entre os dois blocos; ainda não consumada, depende de AGE, CADE e B3). Limite: não li o texto integral dos comunicados nem as atas de assembleia",
+    "nota_fonte": "A"
+  },
+  "partes_rel_sobre_receita": {
+    "valor": 7e-05,
+    "fonte": "DFP 2025 nota 14 (consolidado): as transações com partes relacionadas listadas são intragrupo (eliminadas) e a única com parte externa é a consultoria da Ethos Desenvolvimento S/C Ltda (de ex-conselheiro José Ernesto Beni Bolonha) = R$ 838 mil em 2025 (nota 14e); R$ 838 mil ÷ receita operacional líquida consolidada 2025 R$ 11.819.492 mil = 0,007%. Remuneração da administração (R$ 19.486 mil) não entra. Tabela transacao_parte_relacionada do FRE 2026 sem linhas para o CNPJ",
+    "nota_fonte": "A"
+  },
+  "tag_along": {
+    "valor": 1.0,
+    "fonte": "Estatuto social (IPE, 09/12/2025), art. 39: alienação de controle exige OPA a todos os demais acionistas 'de forma a lhes assegurar tratamento igualitário àquele dado ao alienante'; parágrafo quinto do capítulo do capital social veda a emissão de ações preferenciais ou partes beneficiárias (só ordinárias); art. 40: OPA obrigatória ao atingir 20% do capital em caso de Controle Difuso (Novo Mercado)",
+    "nota_fonte": "A"
+  },
+  "discricionario": {
+    "valor": true,
+    "fonte": "Acordo de Acionistas Referência, celebrado 31/07/2024, vigência 10 anos (IPE 'Informações sobre Acordo de Acionistas', 31/07/2024): Bloco Soma (Jatahy) e Bloco Birman votam em bloco em reunião prévia; aprovação depende do voto afirmativo de ambos enquanto cada um tiver >=10% do capital, com veto do bloco minoritário em matérias da cláusula 5.6. Participantes Birman+Jatahy em posição acionária FRE 2026: ~33,5% (DFP 2025 nota 14d: 33,54%). Controle compartilhado por acordo documentado",
+    "nota_fonte": "A"
+  },
+  "fisher": {
+    "respostas": [
+      "sem",
+      "sem",
+      "sem",
+      "sem",
+      "sem",
+      "sem",
+      "sem",
+      "sem",
+      "sem",
+      "sem",
+      "sem",
+      "sem",
+      "nao",
+      "sem",
+      "sem"
+    ],
+    "itens": [
+      "1 potencial de mercado: sem - sem documento A/B lido que prove",
+      "2 decisão de seguir lançando: sem - sem documento A/B lido que prove",
+      "3 eficácia do P&D: sem - sem documento A/B lido que prove",
+      "4 força de vendas: sem - sem documento A/B lido que prove",
+      "5 margem que vale a pena: sem - sem documento A/B lido que prove",
+      "6 o que faz pela margem: sem - sem documento A/B lido que prove",
+      "7 relações de trabalho: sem - sem documento A/B lido que prove",
+      "8 relações entre executivos: sem - sem documento A/B lido que prove",
+      "9 profundidade da gestão: sem - sem documento A/B lido que prove",
+      "10 controles de custo e contábeis: sem - sem documento A/B lido que prove",
+      "11 aspectos do setor: sem - sem documento A/B lido que prove",
+      "12 visão de longo prazo: sem - sem documento A/B lido que prove",
+      "13 crescimento sem diluição: nao - incorporação do Grupo de Moda Soma em 31/07/2024 emitiu 95.500.607 novas ações (acionistas da Arezzo&Co ficaram com 53,74% do bloco de controle) (DFP 2025 nota 5, A); também houve oferta pública de ações em 01-02/2022 (FR 31/01 e 03/02/2022, IPE) e incorporações de ações de Sunset e Vicenza (FR 2022 e 2023). Emissões para aquisições, não para caixa; critério lido de forma estrita",
+      "14 fala dos problemas: sem - sem documento A/B lido que prove",
+      "15 integridade inquestionável: sem - sem documento A/B lido que prove"
+    ],
+    "fonte": "Sem leitura do relatório da administração nem do FRE em texto; apenas o item 13 tem documento A lido (DFP 2025 nota 5). Demais 'sem' por falta de documento A/B lido neste levantamento"
+  },
+  "desconto_controlador": {
+    "tipo": "zero",
+    "razao": "SEM_RAZAO"
+  },
+  "_meta": {
+    "protocolo": "B36 v1",
+    "chamadas": 29,
+    "fim": "2026-11-24T19:55",
+    "nao_achado": [
+      "fisher.respostas (14 de 15 'sem')",
+      "orçamento de chamadas estourado: 29 contra teto 25"
+    ]
+  }
+}

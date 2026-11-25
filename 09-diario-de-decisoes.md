@@ -1172,3 +1172,26 @@ sem capital integralizado no FRE 2026 (`base.acoes_fre`); IGTI11 com 3 dividendo
 mínimo/alvo" deixou a EQTL3 com o piso estatutário de 25% como payout de longo prazo. **Piloto** (insumos pelo protocolo,
 subagente Sonnet): RADL3 NÃO CONCLUSIVO (P/C 3,47, Ke 21,9%; 16 automáticos / 6 pesquisa / 15 vazios), BPAC11 CARA (3,04;
 10/2/8), EQTL3 CARA (2,59; 10/2/6). Resto e relatório: próxima sessão.
+
+### 25/11/2026 — B36 hold-out: as 20 rodadas, relatório e falhas — NÃO PASSOU
+Antes de seguir: suíte inteira verde (1191 passed) sobre o último conserto do executor. **B39** pré-registrada no BACKLOG em
+commit próprio (144c8b0), antes de rodar qualquer coisa: Ke da Mesa × Ke implícito do mercado (bancos por P/VP e ROE; Ibovespa
+agregado por DCF reverso), **X = 3 p.p.** (acima do ruído de ~2 p.p. do Ke implícito; material: −3 p.p. sobem o valor perpétuo
+~33%, mais de uma faixa da régua; 60% do prêmio fixo de 5 p.p.); só depois da B36. **Insumos** das 11 que rodam pelo protocolo
+fixo (1 subagente Sonnet por ação, 3 em paralelo, texto literal do `PROTOCOLO_INSUMOS.md`); tempo e chamadas do harness em
+`holdout_b36/tempos_insumos.json` (55 s a 242 s; 9 a 27 chamadas). As 6 com erro de método ficaram sem insumo. **Rodada** das
+20 (`python -m holdout_b36.executor rodar`) e **relatório** gerado só dos JSONs (`holdout_b36/relatorio.py`, 4 testes) em
+`docs/holdout/B36-2026-11.md`. **Resultado: NÃO PASSOU, 1 de 6 linhas** — (1) rodam 14 < 16; (2) NÃO CONCLUSIVO 9 > 6;
+(3) Ke > 30% em 3 > 2 (CSNA3 62,2%, MOVI3 61,9%, BEEF3 48,5%); (4) valor absurdo 6 > 2 (RAIL3 central −3,03; SMFT3 e MOVI3
+central 0; EMBJ3 P/C 36,2; ENEV3 P/C 39,95 com palavra CARA; BEEF3 6,7); (6) vazios medianos 75% > 50%; (7) tempo mediano
+2,6 min ≤ 20 (passou; não conta a orquestração). Fora do critério: 0 BARATA, 1 RADAR (USIM5 0,55), 4 CARA; P/C mediano das
+que rodam 3,26 × hall 1,82; dispersão > 1,8× em 10 de 14 (6 infinitas); % automático mediano 43,2%. Previsto × observado: 13 de
+20 conferem ("roda" lido como "sem erro"); erraram EMBJ3 (previsto erro, saiu absurdo) e as 6 de erro, previstas como NÃO
+CONCLUSIVO/absurdo/roda. **Desvios de protocolo registrados, sem refazer:** RAIL3 (26) e AZZA3 (27) passaram do teto de 25;
+CSNA3 tag along 0,8 pela lei, não pelo estatuto; nas 2 utilities do protocolo a regra de `discricionario` foi escrita por
+extenso ("como no industrial") no prompt, mesmo conteúdo. **Falhas → BACKLOG B40–B48**, sem conserto (emenda 8): eventos CIS
+RED CAP (B40) e INCORPORACAO (B41), MBRF3 sem capital no FRE (B42), IGTI11 dividendos iguais (B43), payout pelo piso estatutário
+(B44), central ≤ 0 / P/C absurdo (B45), Ke > 30% (B46), dispersão infinita (B47), protocolo dos insumos (B48). Leitura: a Mesa
+ainda **não** analisa uma ação qualquer sozinha — 43% dos insumos saem de código, 6 de 20 param em evento societário e, das
+que rodam, só 5 dão palavra fora do NÃO CONCLUSIVO. Nenhuma palavra do hall mudou; motor, doutrina, golden, ficha e protocolo
+intocados.

@@ -1,0 +1,172 @@
+{
+ "ticker": "IGTI11",
+ "tipo": "industrial",
+ "perfil": "servicos",
+ "data": "2026-11-19",
+ "rodado_em": "2026-11-25T07:47:13",
+ "palavra": null,
+ "erro": {
+  "tipo": "ValueError",
+  "mensagem": "IGTI11: 3 linhas iguais de DIVIDENDO com data-com 2025-04-17 na B3 — parcela ou repetição? Conferir o total na DMPL da CVM e classificar em proventos_hall.GRUPOS_CONFERIDOS",
+  "onde": "proventos_hall.py:324"
+ },
+ "segundos_avaliacao": 0.0,
+ "insumos": [
+  {
+   "insumo": "séries DFP/ITR (CVM)",
+   "classe": "automatico"
+  },
+  {
+   "insumo": "preço (COTAHIST)",
+   "classe": "automatico"
+  },
+  {
+   "insumo": "ações (ITR)",
+   "classe": "automatico"
+  },
+  {
+   "insumo": "proventos (B3)",
+   "classe": "automatico"
+  },
+  {
+   "insumo": "defasagem (datas StatusInvest)",
+   "classe": "automatico"
+  },
+  {
+   "insumo": "FRE: acionistas",
+   "classe": "automatico"
+  },
+  {
+   "insumo": "FRE: remuneração",
+   "classe": "automatico"
+  },
+  {
+   "insumo": "FRE: partes relacionadas (bruto)",
+   "classe": "automatico"
+  },
+  {
+   "insumo": "nota moat (notas.py)",
+   "classe": "automatico"
+  },
+  {
+   "insumo": "nota ciclo (notas.py)",
+   "classe": "automatico"
+  },
+  {
+   "insumo": "nota gestão — base (notas.py)",
+   "classe": "automatico"
+  },
+  {
+   "insumo": "ficha: ANOS",
+   "classe": "automatico"
+  },
+  {
+   "insumo": "ficha: perfil",
+   "classe": "automatico"
+  },
+  {
+   "insumo": "ficha: outras_liquidas",
+   "classe": "automatico"
+  },
+  {
+   "insumo": "ficha: g_real",
+   "classe": "automatico"
+  },
+  {
+   "insumo": "ma_ruim",
+   "classe": "vazio"
+  },
+  {
+   "insumo": "interferencias",
+   "classe": "vazio"
+  },
+  {
+   "insumo": "partes_rel_sobre_receita",
+   "classe": "vazio"
+  },
+  {
+   "insumo": "tag_along",
+   "classe": "vazio"
+  },
+  {
+   "insumo": "discricionario",
+   "classe": "vazio"
+  },
+  {
+   "insumo": "r1_retido (Q4 da triagem)",
+   "classe": "vazio"
+  },
+  {
+   "insumo": "fisher 1",
+   "classe": "vazio"
+  },
+  {
+   "insumo": "fisher 2",
+   "classe": "vazio"
+  },
+  {
+   "insumo": "fisher 3",
+   "classe": "vazio"
+  },
+  {
+   "insumo": "fisher 4",
+   "classe": "vazio"
+  },
+  {
+   "insumo": "fisher 5",
+   "classe": "vazio"
+  },
+  {
+   "insumo": "fisher 6",
+   "classe": "vazio"
+  },
+  {
+   "insumo": "fisher 7",
+   "classe": "vazio"
+  },
+  {
+   "insumo": "fisher 8",
+   "classe": "vazio"
+  },
+  {
+   "insumo": "fisher 9",
+   "classe": "vazio"
+  },
+  {
+   "insumo": "fisher 10",
+   "classe": "vazio"
+  },
+  {
+   "insumo": "fisher 11",
+   "classe": "vazio"
+  },
+  {
+   "insumo": "fisher 12",
+   "classe": "vazio"
+  },
+  {
+   "insumo": "fisher 13",
+   "classe": "vazio"
+  },
+  {
+   "insumo": "fisher 14",
+   "classe": "vazio"
+  },
+  {
+   "insumo": "fisher 15",
+   "classe": "vazio"
+  },
+  {
+   "insumo": "desconto_controlador",
+   "classe": "vazio"
+  }
+ ],
+ "contagem": {
+  "automatico": 15,
+  "pesquisa": 0,
+  "vazio": 22,
+  "total": 37,
+  "pct_automatico": 40.5
+ },
+ "meta_insumos": {}
+}

@@ -1,0 +1,75 @@
+{
+  "_doc": "Insumos nao mecanicos de RAIL3 / Rumo S.A. (hold-out B36, protocolo v1). Fontes baixadas em ferramentas/dados/cvm/docs/RUMO S.A./ : estatuto 28/04/2026, FRs (IPE) de 2017-2025 citados, FRE 2026 v7 (id 161382, 17/09/2026) e CSVs do fre_2026.zip, DFP 2025 (dfp_2025.zip). Campo sem fonte A/B ficou vazio (ver _meta.nao_achado). Controle compartilhado: Cosan S.A. 20,3% + signatarios do acordo de acionistas (FRE 2026: Cosan, Vertiz, fundos BPAC3/Perfin, J. Arduini marcados como participantes do acordo); acordo de 2014 com BNDESPAR foi distratado em 08/09/2017 (FR de 08/09/2017).",
+  "ma_ruim": {
+    "valor": false,
+    "fonte": "Nenhuma aquisicao > 20% do ativo achada na janela 2016-2026 nos documentos lidos. DFP consolidada (A): ativo total R$ 23.031 mi (2016) a R$ 53.783 mi (2025); linha 'Perdas pela Nao Recuperabilidade de Ativos' (DRE 3.04.03) = 0 em 2016-2023 e 2025 = R$ 1.227.872 mil (2,3% do ativo) sem vinculo com aquisicao; 2024 traz 3.149.244 na DFC 6.01.01.16 (provisao para baixa/reducao ao valor recuperavel; escala nao conferida, notas nao lidas). FR 15-16/11/2022: venda de 80% da EPSA por R$ 1.400 mi (+R$ 150 mi proventos) e acordo p/ comprar a contraparte da arbitragem por ~R$ 400 mi: ambos < 20% do ativo (R$ 45,9 bi em 2022). A fusao com a ALL e de 2015, fora da janela. Limite: precos pagos das aquisicoes de 2019 (Ferrovia Norte-Sul, FR 28/03/2019) nao lidos (download falhou)",
+    "nota_fonte": "A"
+  },
+  "interferencias": {
+    "valor": 0,
+    "fonte": "IPE 2017-2026 da Rumo (1.368 documentos; ~95 fatos relevantes triados por titulo; lidos: FRs de 20/04/2023, 02/06/2023, 19/02/2025, 02/06/2025 e 16/11/2022). Casos examinados e NAO contados: (1) reorganizacao Malha Norte 2023 (cisao parcial, relacao 0,1225375 acao Rumo por acao Malha Norte) e (2) incorporacao de acoes da Malha Norte pela Rumo 2025 (relacao 0,668), ambas com comites especiais independentes (Parecer CVM 35) e laudo (art. 264 Lei das S.A.), sem evidencia lida de prejuizo ao minoritario da Rumo; (3) aumento de capital de R$ 6,4 bi em 08/2020 foi oferta publica restrita a mercado, nao dirigida ao controlador. Limite: sem leitura dos laudos nem das atas de assembleia",
+    "nota_fonte": "A"
+  },
+  "partes_rel_sobre_receita": {
+    "valor": 0.2405,
+    "fonte": "FRE 2026 v7 (CVM, id 161382, 17/09/2026), tabela transacao_parte_relacionada, montantes de 2025: Raizen (vendas de servico ferroviario) R$ 582,425 mi; Raizen Combustiveis (diesel) R$ 2.455,820 mi; Raizen despesas compartilhadas R$ 33,954 mi; Cosan rateio R$ 50,890 mi; Cosan Lubrificantes R$ 10,592 mi; Termag R$ 49,835 mi; CLI Sul R$ 11,723 mi; AG-FIPS R$ 134,820 mi. Soma R$ 3.330,059 mi / receita liquida consolidada 2025 R$ 13.847,776 mi (DFP 2025, DRE 3.01) = 24,05%. Inclui coligadas e sociedades sob controle comum (Raizen); so Cosan e Cosan Lubrificantes (R$ 61,5 mi, 0,44%) sao do grupo controlador direto. Saldos nao somados",
+    "nota_fonte": "A"
+  },
+  "tag_along": {
+    "valor": 1.0,
+    "fonte": "Estatuto social da Rumo (IPE, versao de 28/04/2026), art. 43 (Alienacao de Controle): adquirente deve fazer OPA das acoes dos demais acionistas 'de forma a lhes assegurar tratamento igualitario aquele dado ao Acionista Controlador Alienante' (Novo Mercado); capital so de acoes ordinarias (1.858.685.773), art. 5 par.1: nao pode emitir preferenciais. RAIL3 e ON: 100%",
+    "nota_fonte": "A"
+  },
+  "fisher": {
+    "respostas": [
+      "sem",
+      "sem",
+      "sem",
+      "sem",
+      "sim",
+      "sem",
+      "sem",
+      "sem",
+      "sem",
+      "sem",
+      "sem",
+      "sem",
+      "sem",
+      "sem",
+      "sem"
+    ],
+    "itens": [
+      "1 potencial de mercado: sem - sem documento A/B lido sobre mercado enderecavel",
+      "2 decisao de seguir lancando: sem - nao lido",
+      "3 eficacia do P&D: sem - nao aplicavel (ferrovia/logistica)",
+      "4 forca de vendas: sem - nao lido",
+      "5 margem que vale a pena: sim - DFP 2025 consolidada (CVM, A): receita liquida R$ 13.847.776 mil, resultado bruto R$ 6.285.627 mil (45,4%), resultado antes do financeiro e tributos R$ 4.579.664 mil (33,1%)",
+      "6 o que faz pela margem: sem - nao lido (relatorio da administracao nao baixado)",
+      "7 relacoes de trabalho: sem - nao encontrado",
+      "8 relacoes entre executivos: sem - nao encontrado",
+      "9 profundidade da gestao: sem - FR 2024-02-28 (troca do diretor presidente) e FR 2026-06-22 (nova troca) so por titulo; sem leitura que prove profundidade",
+      "10 controles de custo e contabeis: sem - parecer do auditor nao lido",
+      "11 aspectos do setor: sem - nao encontrado",
+      "12 visao de longo prazo: sem - nao provado (FRs de 2021-2024 sobre extensao Malha Norte/MT so por titulo)",
+      "13 crescimento sem diluicao: sem - misto: oferta primaria restrita de 294.252.874 acoes a R$ 21,75 (R$ 6,4 bi) em 08/2020 (FR 24/08/2020, A; +18,9% de acoes) e oferta em 2017; depois, 1.853.268.772 acoes em 08/2020 contra 1.858.685.773 no estatuto de 04/2026 (+0,3%)",
+      "14 fala dos problemas: sem - nao lido",
+      "15 integridade inquestionavel: sem - nao encontrado documento A/B lido que prove ou refute"
+    ],
+    "fonte": "DFP 2025 (CVM, A); FR 24/08/2020 (A); estatuto 28/04/2026 (A). So o item 5 e o 13 tem documento A lido; demais 'sem'. Nota Fisher resultante = arredondar(5 x 1 sim / 15) = 0 a 1 conforme notas.fisher"
+  },
+  "desconto_controlador": {
+    "tipo": "zero",
+    "razao": "SEM_RAZAO"
+  },
+  "_meta": {
+    "protocolo": "B36 v1",
+    "chamadas": 24,
+    "fim": "2026-11-24T19:45",
+    "nao_achado": [
+      "discricionario (existe acordo de acionistas com Cosan/Vertiz, FRE 2026 item 15.5, mas o texto e so link para o RI; termos nao lidos, nao gravado)",
+      "fisher itens 1-4,6-12,14,15 (sem documento A/B lido)",
+      "desconto_controlador (sem evidencia A/B de risco de controlador; zero/SEM_RAZAO)",
+      "ma_ruim: precos das aquisicoes de 2019 nao lidos (valor gravado com limite)"
+    ]
+  }
+}

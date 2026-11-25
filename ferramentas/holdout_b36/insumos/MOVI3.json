@@ -1,0 +1,77 @@
+{
+  "_doc": "Insumos não mecânicos de MOVI3 / Movida Participações (hold-out B36, protocolo v1). Docs em ferramentas/dados/cvm/docs/MOVIDA/ (índice IPE 2017-2026 com 1.492 itens; FRs 2021-02-04, 2021-06-28, 2021-07-28, 2024-11-11, 2025-12-16, 2026-03-05; ata AGE 08/07/2026 com estatuto consolidado; FRE 2026 v5 id 161116 em fre_2026.zip; DFP 2017-2025 em dfp_*.zip). Controle: SIMPAR S.A. 53,705% das ordinárias (FRE 2026 posição acionária, maio/2026), controlada pela JSP Holding (Simões). Notas das DFP e FRE em texto não foram lidas (só CSVs estruturados).",
+  "ma_ruim": {
+    "valor": false,
+    "fonte": "Maior aquisição do período: CS Frotas (Fato Relevante 04/02/2021 e apresentação de 28/06/2021: Enterprise Value implícito ~R$ 1,78 bi; Itaú BBA fairness opinion) contra ativo total consolidado de R$ 21,7 bi em 2021 (DFP 2021, 1) = ~8%, bem abaixo de 20%. Demais (Vox 01/2021, Marbor 12/2021, DOH Portugal 09/2022, BVHD/Fleet Services 2017, Avis 2018-19) são menores por título/ativo. DFP 2017-2025 consolidado: conta 3.04.03 é só provisão para perdas esperadas de crédito (R$ -23 a -128 mi/ano), sem perda de desvalorização de ativos (3.04.03.02 = 0 em 2023-2025); goodwill 1.02.04.02 = 0 em todos os anos. Limite: preço pago por Vox/Marbor/DOH/BVHD e notas de impairment não lidos",
+    "nota_fonte": "A"
+  },
+  "interferencias": {
+    "valor": 0,
+    "fonte": "Triagem dos 110 Fatos Relevantes e títulos de comunicados/assembleias do IPE 2017-2026 (índice local). Operações com a controladora SIMPAR examinadas e NÃO contadas: (1) CS Frotas (FR 04/02/2021; AGE de 26/07/2021): SIMPAR declarou que a decisão seria delegada aos minoritários, aprovação por conselheiros independentes + fairness opinion Itaú BBA, SIMPAR 'acompanha o voto dos minoritários' (apresentação 28/06/2021); (2) aumento de capital privado 2026 (FR 05/03/2026, R$ 500-750 mi): com período de preferência e sobras para todos os acionistas, SIMPAR comprometida a subscrever e BNDESPAR a até 10%; (3) cisão parcial da Movida Locação (FR 11/11/2024): reorganização intragrupo com laudo APSIS, sem fato prejudicial identificado. Sem OPA/fechamento de capital, sem recompra do controlador, sem corte de payout imposto nos títulos lidos. Limite: textos de assembleias e ata de 2026 só lidos nos pontos acima",
+    "nota_fonte": "A"
+  },
+  "partes_rel_sobre_receita": {
+    "valor": 0.0679,
+    "fonte": "FRE 2026 v5 (CVM id 161116), tabela transacao_parte_relacionada: soma do Montante_Envolvido das transações com Data_Transacao 2025-12-31 = R$ 996,3 mi (SIMPAR e coligadas do grupo: locação/venda de veículos R$ 788 mi, compra de peças/acessórios R$ 186 mi, reembolsos R$ 11 mi, juros R$ 8,8 mi, venda de ativos R$ 2,9 mi); excluídas 2021 e 2026. ÷ receita líquida consolidada 2025 R$ 14.672.054 mil (DFP 2025, DRE con 3.01) = 6,79%. Atenção: montante envolvido soma vendas e compras, pode haver dupla contagem de fluxo; não é saldo",
+    "nota_fonte": "A"
+  },
+  "tag_along": {
+    "valor": 1.0,
+    "fonte": "Estatuto consolidado (ata AGE 08/07/2026, IPE), art. 35: alienação direta ou indireta do controle só pode ser contratada sob condição de o adquirente fazer OPA aos demais 'de forma a lhes assegurar tratamento igualitário àquele dado ao alienante'; art. 5º §3º: vedada emissão de ações preferenciais (só ordinárias); Novo Mercado",
+    "nota_fonte": "A"
+  },
+  "discricionario": {
+    "valor": false,
+    "fonte": "Estatuto consolidado 08/07/2026: só ações ordinárias (vedadas preferenciais e partes beneficiárias), Novo Mercado, sem golden share, voto múltiplo ou voto especial; FRE 2026 posição acionária: SIMPAR (controladora) 53,705% das ordinárias, sem acordo de acionistas próprio (Participante_Acordo_Acionistas = N); BNDESPAR 10% é parte de acordo (FR 05/03/2026) mas não é o controlador. Controle por maioria simples de capital, não por instrumento especial",
+    "nota_fonte": "A"
+  },
+  "fisher": {
+    "respostas": [
+      "sem",
+      "sem",
+      "sem",
+      "sem",
+      "nao",
+      "sem",
+      "sem",
+      "sem",
+      "sem",
+      "sem",
+      "sem",
+      "sem",
+      "sem",
+      "sem",
+      "sem"
+    ],
+    "itens": [
+      "1 potencial de mercado: sem - não lido texto de mercado endereçável (FRE item 7 e RA não lidos)",
+      "2 decisão de seguir lançando: sem - sem documento lido",
+      "3 eficácia do P&D: sem - não aplicável",
+      "4 força de vendas: sem - sem participação de mercado em fonte A/B lida",
+      "5 margem que vale a pena: nao - DFP consolidada: receita R$ 14.672 mi em 2025, EBIT (3.05) R$ 3.256 mi mas resultado financeiro R$ -2.909 mi e lucro líquido R$ 318 mi = 2,2% da receita (DFP 2025); 2023 com prejuízo de R$ 651 mi e receita R$ 10.342 mi (DFP 2023); lucro de R$ 819 mi em 2021 com receita R$ 5.333 mi (15,4%) e R$ 228 mi em 2019 (5,9%): margem líquida em queda e dependente de juros",
+      "6 o que faz pela margem: sem - sem documento lido",
+      "7 relações de trabalho: sem - não lido",
+      "8 relações entre executivos: sem - não lido",
+      "9 profundidade da gestão: sem - troca de CEO/CFO em 2023 e CFO em 2025 (FRs 16/01/2023, 31/03/2023, 17/02/2025) sem avaliação de profundidade",
+      "10 controles de custo e contábeis: sem - parecer do auditor não lido",
+      "11 aspectos do setor: sem - não lido",
+      "12 visão de longo prazo: sem - descontinuidade de guidance em 06/08/2024 e 07/11/2024 (FRs), sem documento de visão lido",
+      "13 crescimento sem diluição: sem - houve follow-on 07/2019, incorporação da CS Frotas 07/2021 e aumento privado 2026 (R$ 500-750 mi, FR 05/03/2026), mas contagem de ações por data não conferida",
+      "14 fala dos problemas: sem - não avaliado",
+      "15 integridade inquestionável: sem - sem evidência A/B lida"
+    ]
+  },
+  "desconto_controlador": {
+    "tipo": "zero",
+    "razao": "SEM_RAZAO"
+  },
+  "_meta": {
+    "protocolo": "B36 v1",
+    "chamadas": 19,
+    "fim": "2026-11-24T19:33",
+    "nao_achado": [
+      "fisher (14 de 15 itens 'sem')",
+      "desconto_controlador (sem evidência A/B de risco consumado; nota: partes relacionadas 6,8% da receita e controle SIMPAR/JSP 53,7% ficam registrados nos campos acima, sem estimativa própria)"
+    ]
+  }
+}

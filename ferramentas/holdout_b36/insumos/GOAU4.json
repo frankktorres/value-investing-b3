@@ -1,0 +1,64 @@
+{
+  "_doc": "Insumos nao mecanicos de GOAU4 / Metalurgica Gerdau S.A. (hold-out B36, protocolo v1). Holding que consolida a Gerdau S.A. (ativo consolidado 2025 R$ 81,8 bi; receita R$ 69,9 bi). Fontes em ferramentas/dados/cvm/docs/GERDAU MET/: estatuto de 28/04/2026 (IPE), fatos relevantes conjuntos Gerdau S.A./Metalurgica (2017-03-08, 2017-03-22, 2017-08-24, 2020-11-19, 2021-09-13, 2023-02-03, 2021-02-24, 2025-12-15), ata do CA de 07/03/2017, edital da OPA de 2017; CSVs do fre_2026.zip (FRE 2026 v5, id 161396) e dfp_2016..2025.zip. Campo sem fonte A/B ficou vazio ou 'sem' (ver _meta.nao_achado). Notas explicativas da DFP e relatorio da administracao nao foram lidos (so os CSVs de demonstracoes).",
+  "ma_ruim": {
+    "valor": false,
+    "fonte": "Nenhuma aquisicao > 20% do ativo achada em 2016-2026. DFC consolidada (DFP, A), 'Pagamento na aquisicao de controle de empresa': 2020 R$ 442,5 mi (0,7% do ativo de R$ 64,8 bi), 2024 R$ 455,7 mi (0,5% de R$ 86,9 bi), 2025 R$ 699,1 mi (0,9% de R$ 81,8 bi); demais anos 0. Perdas por nao recuperabilidade de ativos (DFC 6.01.01.x): 2016 R$ 2.917,9 mi (5,3% do ativo), 2017 R$ 1.114,8 mi, 2020 R$ 411,9 mi, 2024 R$ 199,6 mi, 2025 R$ 1.964,5 mi (2,4%): nenhuma ligada nos documentos lidos a aquisicao > 20% do ativo (as de 2016-17 vem de ativos comprados antes da janela; a nota explicativa nao foi lida). A permuta/OPA de 2017 (GGBR4 por GGBR3 da Gerdau S.A., FR 08/03/2017 e 22/03/2017; laudo Bradesco BBI com relacao 0,98-1,05:1) e troca de acoes entre empresas do grupo, nao compra > 20% do ativo. Limite: notas da DFP e precos das compras de 2020/2024/2025 nao lidos",
+    "nota_fonte": "A"
+  },
+  "interferencias": {
+    "valor": 0,
+    "fonte": "IPE 2017-2026 do CNPJ 92.690.783/0001-09 (856 documentos; 37 fatos relevantes, 133 comunicados, 114 assembleias; titulos de todos os fatos relevantes triados e 10 lidos). Nenhuma operacao do controlador (familia Gerdau Johannpeter via Grupo Gerdau Empreendimentos e INDAC) contra o minoritario: sem aumento de capital dirigido, sem fechamento de capital, sem venda de ativo ao controlador em condicao desfavoravel apontada. CASOS EXAMINADOS E NAO CONTADOS: (1) permuta com o BTG Pactual (FR 08/03/2017; ata do CA 07/03/2017) para equacionar exposicao de divida da propria Metalurgica, e OPA de permuta de 2017 (FR 22/03/2017, edital 21/07/2017, resultado 22/08/2017) oferecida a todos os detentores de GGBR3 com laudo independente: operacao voluntaria, nao imposta; (2) bonificacao de 0,3333 acao por acao, gratuita e pro rata (FR 15/12/2025); (3) recompras e cancelamentos de acoes em tesouraria 2022-2026 (FRs): operacoes de mercado; (4) FR 24/08/2017 (familia deixa a diretoria executiva e passa ao conselho; CEO profissional): governanca, sem dano. Limite: so os titulos dos demais comunicados/atas foram triados",
+    "nota_fonte": "A"
+  },
+  "partes_rel_sobre_receita": {
+    "valor": 0.005,
+    "fonte": "FRE 2026 v5 (CVM, id 161396), tabela transacao_parte_relacionada, montantes de 2025 (17 linhas): locacao a Joter/Klater/Freter (controlador) 3 x R$ 115,5 mil; parcela final da venda de imovel a Freter (controlador) R$ 36,0 mi; locacao Grupo Gerdau Empreendimentos R$ 574 mil; Instituto Gerdau R$ 14,0 mi e Fundacao Ouro Branco R$ 1,0 mi (entidades assistenciais); Gerdau Sociedade de Previdencia Privada R$ 145,4 mi; Addiante, Brasil ao Cubo, INCA, Gerdau Corsa, MRM Guide Rail (controladas em conjunto) R$ 112,3 mi em vendas/compras; Dona Francisca Energetica (coligada) R$ 38,6 mi. Soma R$ 348,2 mi / receita liquida consolidada 2025 R$ 69.858,5 mi (DFP 2025, DRE 3.01) = 0,50%. Exclui a garantia concedida a Gerdau Corsa (R$ 601,6 mi, exposicao contingente, nao fluxo); com ela seria 1,36%; sem o item de previdencia seria 0,29%. Transacoes com o controlador em si somam ~R$ 37,0 mi (0,05%). Saldos nao somados",
+    "nota_fonte": "A"
+  },
+  "tag_along": {
+    "valor": 1.0,
+    "fonte": "Estatuto social da Metalurgica Gerdau (IPE, entregue em 28/04/2026), art. 6: 'As acoes da Companhia, independentemente de tipo ou classe, participarao de forma identica nos lucros sociais e no direito de serem incluidas em eventual oferta publica de alienacao de controle, sendo-lhes assegurado preco igual ao valor pago por acao com direito a voto, integrante do bloco de controle' (100% para as preferenciais GOAU4); art. 1 §1: companhia no Nivel 1 de Governanca da B3. Art. 6: preferenciais sem voto, com dividendo obrigatorio de pelo menos 30% do lucro liquido e preferencia no reembolso de capital",
+    "nota_fonte": "A"
+  },
+  "discricionario": {
+    "valor": false,
+    "fonte": "FRE 2026 v5 (CVM), posicao_acionaria: controle exercido por maioria de votos (Grupo Gerdau Empreendimentos 31,80% e INDAC 43,29% das ordinarias, ambos marcados Acionista_Controlador = S, familia Gerdau Johannpeter), e todos os acionistas aparecem com Participante_Acordo_Acionistas = N (sem acordo de acionistas informado). Estatuto de 28/04/2026: so acoes ordinarias e preferenciais sem voto; nenhuma acao de classe especial, golden share nem voto plural no texto lido. Limite: controle por maioria simples, nao por instrumento discricionario; texto do FRE (itens 15.x) nao lido alem das tabelas CSV",
+    "nota_fonte": "A"
+  },
+  "fisher": {
+    "respostas": ["sem", "sem", "sem", "sem", "sem", "sem", "sem", "sem", "sim", "sem", "sem", "sem", "sim", "sem", "sem"],
+    "itens": [
+      "1 potencial de mercado: sem - nenhum documento A/B de mercado enderecavel lido",
+      "2 decisao de seguir lancando: sem - nao aplicavel como produto; sem metrica de retorno lida",
+      "3 eficacia do P&D: sem - nao aplicavel/sem P&D relevante lido",
+      "4 forca de vendas: sem - participacao de mercado nao encontrada em fonte A/B lida",
+      "5 margem que vale a pena: sem - margem operacional consolidada (DFP, A) de -4,4% (2016), 3,0%, 8,7%, 8,0%, 11,8%, 26,8% (2021), 21,5%, 15,1%, 11,2% e 5,3% (2025): ciclica e volatil, media 2016-25 ~10,7%; sem limiar documental para sim/nao",
+      "6 o que faz pela margem: sem - relatorio da administracao nao lido",
+      "7 relacoes de trabalho: sem - nao encontrado",
+      "8 relacoes entre executivos: sem - nao encontrado",
+      "9 profundidade da gestao: sim - sucessao planejada e interna: FR de 24/08/2017 (IPE, A) anuncia que os tres membros da familia na diretoria executiva passam a 01/01/2018 ao conselho de administracao e que o Diretor-Presidente sera Gustavo Werneck da Cunha, com 13 anos de casa e diretor executivo da Operacao Brasil, com quatro meses de transicao; mesmo CEO no FRE 2026 nao conferido",
+      "10 controles de custo e contabeis: sem - parecer do auditor nao lido",
+      "11 aspectos do setor: sem - nao encontrado",
+      "12 visao de longo prazo: sem - ha planos de CAPEX plurianuais (FR 24/02/2021: R$ 6,9 bi para 2019-2021; FRs de 2022-2025), mas sem prova de horizonte/execucao lida",
+      "13 crescimento sem diluicao: sim - FRE (capital_social, A): acoes emitidas 986,9 mi (2018), 1.087,2 mi (2019-21), 1.033,8 mi (2022), 1.032,7 mi (2023), 993,7 mi (2024) com cancelamentos de tesouraria (FRs 2022-2026); o salto para 1.324,9 mi em 12/2025 e bonificacao gratuita pro rata de 0,3333 por acao via capitalizacao de reservas (FR 15/12/2025), nao emissao primaria; o aumento de 2019 (+10%) nao foi lido, mas o capital social subiu so R$ 245 mi",
+      "14 fala dos problemas: sem - FR 06/05/2020 (covid) e 24/02/2021 (revisao do CAPEX) mostram revisao de projecoes, mas insuficiente para sim",
+      "15 integridade inquestionavel: sem - nenhum documento de acordo/investigacao lido; nao se afirma ausencia"
+    ],
+    "fonte": "IPE 2017-2026 (FRs citados, A); FRE 2026 v5 e fre_2017..2026.zip capital_social (A); DFP 2016-2025 DRE consolidada (A). Nota = arredondar(5 x 2 sim / 15) = 1. 'sem' quando nao ha documento A/B lido"
+  },
+  "desconto_controlador": {
+    "tipo": "zero",
+    "razao": "SEM_RAZAO"
+  },
+  "_meta": {
+    "protocolo": "B36 v1",
+    "chamadas": 17,
+    "fim": "2026-11-24T19:55",
+    "nao_achado": [
+      "fisher itens 1-8, 10-12, 14, 15 (sem documento A/B lido; notas da DFP, relatorio da administracao e parecer do auditor nao lidos)",
+      "desconto_controlador (sem evidencia A/B de risco de controlador; zero/SEM_RAZAO)",
+      "ma_ruim: notas da DFP e precos das aquisicoes de 2020/2024/2025 nao lidos (valor gravado com limite)",
+      "discricionario: itens 15.x do FRE nao lidos alem das tabelas CSV (valor gravado com limite)"
+    ]
+  }
+}

@@ -3,7 +3,7 @@
  "tipo": "banco",
  "perfil": "servicos",
  "data": "2026-11-19",
- "rodado_em": "2026-11-24T19:04:55",
+ "rodado_em": "2026-11-25T07:46:44",
  "palavra": "CARA",
  "palavra_regua": "CARA",
  "pc": 3.044507894179779,
@@ -22,7 +22,7 @@
  "desc_controlador": 0.0,
  "payout": 0.30632646059394636,
  "erro": null,
- "segundos_avaliacao": 0.2,
+ "segundos_avaliacao": 5.4,
  "insumos": [
   {
    "insumo": "preço (COTAHIST)",

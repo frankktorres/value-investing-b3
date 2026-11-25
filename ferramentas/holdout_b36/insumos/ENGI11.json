@@ -1,0 +1,25 @@
+{
+  "payout_politica": {
+    "valor": 0.35,
+    "fonte": "Estatuto Social da Energisa S.A. (IPE, anexo II da ata da AGO/E de 29/04/2026, entregue em 29/04/2026), art. 38: 'A Companhia distribuirá, entre todas as espécies de suas ações, como dividendo mínimo obrigatório, 35% (trinta e cinco por cento) do lucro líquido do exercício, ajustado nos termos do artigo 202 da Lei das S.A.'; art. 39 permite JCP imputado ao dividendo obrigatório. Atenção: é piso estatutário, não alvo.",
+    "nota_fonte": "A"
+  },
+  "discricionario": {
+    "valor": false,
+    "fonte": "FRE 2026 (fre_cia_aberta_posicao_acionaria_2026.csv, CNPJ 00.864.214/0001-06, versão 5): Gipar S.A. com 62,454% das ordinárias e 27,743% do total em circulação, mais pessoas físicas da família Botelho marcadas Acionista_Controlador='S'; nenhum acionista com Participante_Acordo_Acionistas='S'. Estatuto de 29/04/2026: sem golden share nem voto especial do controlador; art. 28 só veda registro de acordo de acionistas que contrarie o Nível 2; ações preferenciais com voto restrito (art. 5 §2) e tag along de 100% a ordinárias e preferenciais na alienação de controle (art. 25). Há controlador majoritário por ordinárias, mas sem acordo, golden share ou voto especial documentados, critério do protocolo = false.",
+    "nota_fonte": "A"
+  },
+  "desconto_controlador": {
+    "tipo": "zero",
+    "razao": "SEM_RAZAO"
+  },
+  "_meta": {
+    "protocolo": "B36 v1",
+    "chamadas": 8,
+    "fim": "2026-11-24T19:30",
+    "nao_achado": [
+      "qualitativo (notas moat/gestao/controlador/ciclo/fisher exigem séries calculadas e documento A/B por nota; não levantadas)",
+      "desconto_controlador fixo (nenhuma interferência consumada achada nos títulos do IPE 2026 triados: reorganizações internas EPM/Denerge sem alteração de controle final; Acordo de Investimento com Itaú, FR 29/06/2026, não lido no texto)"
+    ]
+  }
+}

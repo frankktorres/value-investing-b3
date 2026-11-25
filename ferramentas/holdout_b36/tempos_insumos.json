@@ -10,5 +10,49 @@
  "BPAC11": {
   "segundos": 162.5,
   "chamadas": 22
+ },
+ "ENEV3": {
+  "segundos": 67.7,
+  "chamadas": 13
+ },
+ "ENGI11": {
+  "segundos": 55.3,
+  "chamadas": 9
+ },
+ "RAIL3": {
+  "segundos": 230.4,
+  "chamadas": 26
+ },
+ "EMBJ3": {
+  "segundos": 241.7,
+  "chamadas": 22
+ },
+ "SMFT3": {
+  "segundos": 107.3,
+  "chamadas": 11
+ },
+ "GOAU4": {
+  "segundos": 185.6,
+  "chamadas": 15
+ },
+ "CSNA3": {
+  "segundos": 241.3,
+  "chamadas": 21
+ },
+ "USIM5": {
+  "segundos": 217.0,
+  "chamadas": 21
+ },
+ "MOVI3": {
+  "segundos": 176.7,
+  "chamadas": 20
+ },
+ "BEEF3": {
+  "segundos": 151.2,
+  "chamadas": 19
+ },
+ "AZZA3": {
+  "segundos": 206.7,
+  "chamadas": 27
  }
 }

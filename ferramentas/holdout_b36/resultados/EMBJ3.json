@@ -1,0 +1,193 @@
+{
+ "ticker": "EMBJ3",
+ "tipo": "industrial",
+ "perfil": "servicos",
+ "data": "2026-11-19",
+ "rodado_em": "2026-11-25T07:46:49",
+ "palavra": "NÃO CONCLUSIVO",
+ "palavra_regua": "CARA",
+ "pc": 36.20192080916096,
+ "central": 3.0426562330948568,
+ "preco": 110.15,
+ "ke_nom": 0.2119635841522285,
+ "dispersao": Infinity,
+ "confianca": "não conclusivo",
+ "notas_regra11": {
+  "moat": 0,
+  "gestao": 1,
+  "controlador": 4,
+  "ciclo": 1,
+  "fisher": 1
+ },
+ "desc_controlador": 0.0,
+ "erro": null,
+ "segundos_avaliacao": 2.9,
+ "insumos": [
+  {
+   "insumo": "séries DFP/ITR (CVM)",
+   "classe": "automatico"
+  },
+  {
+   "insumo": "preço (COTAHIST)",
+   "classe": "automatico"
+  },
+  {
+   "insumo": "ações (ITR)",
+   "classe": "automatico"
+  },
+  {
+   "insumo": "proventos (B3)",
+   "classe": "automatico"
+  },
+  {
+   "insumo": "defasagem (datas StatusInvest)",
+   "classe": "automatico"
+  },
+  {
+   "insumo": "FRE: acionistas",
+   "classe": "automatico"
+  },
+  {
+   "insumo": "FRE: remuneração",
+   "classe": "automatico"
+  },
+  {
+   "insumo": "FRE: partes relacionadas (bruto)",
+   "classe": "automatico"
+  },
+  {
+   "insumo": "nota moat (notas.py)",
+   "classe": "automatico"
+  },
+  {
+   "insumo": "nota ciclo (notas.py)",
+   "classe": "automatico"
+  },
+  {
+   "insumo": "nota gestão — base (notas.py)",
+   "classe": "automatico"
+  },
+  {
+   "insumo": "ficha: ANOS",
+   "classe": "automatico"
+  },
+  {
+   "insumo": "ficha: perfil",
+   "classe": "automatico"
+  },
+  {
+   "insumo": "ficha: outras_liquidas",
+   "classe": "automatico"
+  },
+  {
+   "insumo": "ficha: g_real",
+   "classe": "automatico"
+  },
+  {
+   "insumo": "ma_ruim",
+   "classe": "pesquisa"
+  },
+  {
+   "insumo": "interferencias",
+   "classe": "pesquisa"
+  },
+  {
+   "insumo": "partes_rel_sobre_receita",
+   "classe": "vazio"
+  },
+  {
+   "insumo": "tag_along",
+   "classe": "pesquisa"
+  },
+  {
+   "insumo": "discricionario",
+   "classe": "pesquisa"
+  },
+  {
+   "insumo": "r1_retido (Q4 da triagem)",
+   "classe": "vazio"
+  },
+  {
+   "insumo": "fisher 1",
+   "classe": "vazio"
+  },
+  {
+   "insumo": "fisher 2",
+   "classe": "vazio"
+  },
+  {
+   "insumo": "fisher 3",
+   "classe": "vazio"
+  },
+  {
+   "insumo": "fisher 4",
+   "classe": "vazio"
+  },
+  {
+   "insumo": "fisher 5",
+   "classe": "vazio"
+  },
+  {
+   "insumo": "fisher 6",
+   "classe": "vazio"
+  },
+  {
+   "insumo": "fisher 7",
+   "classe": "vazio"
+  },
+  {
+   "insumo": "fisher 8",
+   "classe": "vazio"
+  },
+  {
+   "insumo": "fisher 9",
+   "classe": "vazio"
+  },
+  {
+   "insumo": "fisher 10",
+   "classe": "vazio"
+  },
+  {
+   "insumo": "fisher 11",
+   "classe": "vazio"
+  },
+  {
+   "insumo": "fisher 12",
+   "classe": "vazio"
+  },
+  {
+   "insumo": "fisher 13",
+   "classe": "pesquisa"
+  },
+  {
+   "insumo": "fisher 14",
+   "classe": "pesquisa"
+  },
+  {
+   "insumo": "fisher 15",
+   "classe": "pesquisa"
+  },
+  {
+   "insumo": "desconto_controlador",
+   "classe": "vazio"
+  }
+ ],
+ "contagem": {
+  "automatico": 15,
+  "pesquisa": 7,
+  "vazio": 15,
+  "total": 37,
+  "pct_automatico": 40.5
+ },
+ "meta_insumos": {
+  "protocolo": "B36 v1",
+  "chamadas": 22,
+  "fim": "2026-11-24T19:55",
+  "nao_achado": [
+   "partes_rel_sobre_receita",
+   "fisher itens 1-12 (exceto sem-evidência explícita: 13,14,15 achados)",
+   "desconto_controlador (sem evidência A/B de risco de controlador consumado; golden share registrada em discricionario)"
+  ],
+  "obs_partes_rel": "FRE 2026 traz só saldos (contas a receber, ativos/passivos de contrato, financiamentos BNDES/FINEP) de 31/12/2025, somando R$ 2.349 mi com Aeronáutica, Exército, Marinha, Águas Azuis, EZ Air e Nidec (5,6% da receita líquida de R$ 41.883 mi), mas mistura ativo e passivo e não traz o fluxo de receitas; a nota de partes relacionadas da DFP está ilegível. Campo não gravado."
+ }
+}
