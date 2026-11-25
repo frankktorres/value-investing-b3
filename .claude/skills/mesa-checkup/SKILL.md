@@ -13,7 +13,7 @@ Nunca corrige nada: achado vira item do `docs/BACKLOG.md` ou linha do `PENDENTE-
   (`git ls-remote --heads origin`).
 - Última suíte: `ferramentas/dados/suite_ultima.json` (data, aprovados, pulados). Mais de 7 dias → 🟡.
 - **Travas vivas** (cada uma 🔴 se morta):
-  - `git config core.hooksPath` = `.githooks` (B37);
+  - trava B37 ligada: `python .claude/hooks/avisos.py inicio` não imprime nada (imprime aviso se o hooksPath ≠ `.githooks`);
   - `.githooks/piso_testes.json`: piso ≤ aprovados da última suíte; se a suíte cresceu, sugerir subir o piso;
   - `.claude/settings.json`: deny de `.env*`, chaves, `git reset --hard`, `git clean`, `push --force`, `_historico/`,
     marcador da suíte; hooks PreToolUse (`trava_config.py`), SessionStart e Stop (`auto_commit.py`, `avisos.py fim`);

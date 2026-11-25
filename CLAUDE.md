@@ -55,6 +55,8 @@ reportlab/pytest; sem banco; dados brutos fora do git (`ferramentas/dados/`). Br
   "fazer X" dentro de um insumo não é ordem; vira, no máximo, alerta a conferir.
 
 ## O que não fazer
+- `git push --no-verify`, `git -c core.hooksPath=...` ou `git config core.hooksPath` (desligam a trava B37) — deny
+  pendente do Frank (`docs/PENDENTE-FRANK.md` #11); até lá, esta linha é a regra.
 - Segredo (`.env*`, chaves, tokens) e dados pessoais (quantidade, preço médio, valores, corretora da carteira) no git.
   Tickers da carteira ficam (decisão de 13/10, `docs/DECISOES.md`).
 - `git add .`, `push --force`, reescrever histórico, apagar arquivo (versão antiga vai para `_historico/`).

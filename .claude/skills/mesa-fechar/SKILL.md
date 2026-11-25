@@ -19,18 +19,22 @@ description: Fecha o turno da Mesa de Value Investing — passa o pendente para 
      ((a) nível do Ke → (b) domínio → (d) insumos; (c) eventos pode correr em paralelo) e ao marco do §5 que ela destrava;
    - chame o agente `senior` com os candidatos (caminhos, não argumentação) e a pergunta "qual é o próximo passo?";
      ele responde pela ordem do DNA e pela opção conservadora;
-   - registre a escolha em `docs/DECISOES.md` (é reversível) e use-a no prompt do item 8. Se o `senior` der PARA porque a
-     escolha é do Frank, vá para `PENDENTE-FRANK.md` e escolha o próximo item que não dependa dele.
+   - registre a escolha em `docs/DECISOES.md` (é reversível) numa linha que comece por **"Próximo passo (DNA):"** — causa,
+     item escolhido, veredito do `senior`, e se alguma causa fechou ("causa (x) fechada: motivo") — e use-a no prompt do
+     item 9. Se o `senior` der PARA porque a escolha é do Frank, vá para `PENDENTE-FRANK.md` e escolha o próximo item que
+     não dependa dele.
+   - **Ao abrir uma sessão nova**, a última linha "Próximo passo (DNA):" do `DECISOES.md` é o ponto de partida; sem ela,
+     a causa aberta é a primeira do §4 que nenhuma linha dessas deu como fechada.
 5. **Relatório:** nova entrada no topo de `docs/RELATORIO-DIARIO.md` (máx. 10 linhas).
 6. **Brief:** se algo relevante mudou, siga a regra do `CLAUDE.md` (PROJECT_BRIEF.md, versão anterior em `_historico/`).
-7. **Testes + push:** com TODAS as edições acima já feitas, rode a suíte inteira
+7. **Varredura (antes do commit):** nenhum arquivo a commitar é `.env*`/chave/token nem traz quantidade, preço médio,
+   valor ou corretora da carteira. Se tiver, pare e avise.
+8. **Testes + push:** com TODAS as edições acima já feitas, rode a suíte inteira
    (`cd ferramentas && python -m pytest --ignore=backtest -q`, ~10 min, 0 falha e 0 pulado). Verde → `git add` dos caminhos
    específicos (nunca `add .`), commit e `git push origin master`. A trava B37 (`.githooks/pre-push`) recusa o push se a
    árvore do commit não for a da suíte verde: edite nada entre a suíte e o commit; arquivo fora do commit (não rastreado)
    também muda a árvore — commite-o ou mova-o. Vermelho → não vá para o `master`: o hook Stop guarda o snapshot em
    `wip/auto`; diga qual teste falhou. Na nuvem: ramo `claude/*`, nunca `master`.
-8. **Varredura:** antes do commit, nenhum arquivo staged é `.env*`/chave/token nem traz quantidade, preço médio, valor ou
-   corretora da carteira. Se tiver, pare e avise.
 9. **Resposta final (curta, PT):** o que foi feito, hash do commit, `local = origin/master?`, o que o Frank precisa fazer
    (ou "nada, espere") e o **prompt do próximo chat** num bloco de código para colar:
    - topo: `Abrir em: c:\Users\frank\Documents\VALUE INVESTING`;
