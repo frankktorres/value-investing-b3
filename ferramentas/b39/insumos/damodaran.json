@@ -1,0 +1,16 @@
+{
+ "atualizado": "January 5, 2026",
+ "pais": "Brazil",
+ "rating_moodys": "Ba1",
+ "s_adj_default_spread": 0.0213,
+ "crp": 0.032400000000000005,
+ "erp_total": 0.0747,
+ "aliquota": 0.34,
+ "cds": 0.022099999999999998,
+ "linha": "Brazil Ba1 2.13% 3.24% 7.47% 34.00% 2.21% 7.59%",
+ "fonte": "Damodaran, Country Default Spreads and Risk Premiums (NYU Stern)",
+ "url": "https://pages.stern.nyu.edu/~adamodar/New_Home_Page/datafile/ctryprem.html",
+ "coletado_em": "2026-11-25",
+ "sha256_html": "ea30d57fc0858072c520930e2e5b8a5e5affdce81f7f2e1f9054efab79959dbc",
+ "erp_maduro_implicito": 0.0423
+}

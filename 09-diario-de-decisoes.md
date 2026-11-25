@@ -1211,3 +1211,26 @@ Fontes de Shiller e Damodaran ainda **a abrir** (nota B só depois).
 **Aceite (Frank, 25/11):** as 3 escolhas (a)–(c) aprovadas. **Condição de execução:** antes de qualquer conta, abrir e ler
 o `ctryprem` de jan/2026 e o texto do método de risco-país do Damodaran e a definição do CAPE do Shiller; dar nota A/B e
 conferir a emenda 9 contra eles; divergência → **emenda 10** em commit próprio, e só então rodar.
+
+### 25/11/2026 — B39 executada: Ke da Mesa × Ke implícito — **DISPARA** (mediana dos Δ −4,89 p.p.)
+**Fontes antes da conta** (`docs/b39/FONTES-B39.md`, commit d1a4fc9). Damodaran `ctryprem` de 5/1/2026 (nota B): Brasil Ba1,
+s = 2,13%, ERP total 7,47%. A regra "tirar s da taxa em moeda local" confere no *Country Risk 2024*, p. 101, e no *What is the
+riskfree rate?* (2008). Campbell & Shiller (NBER w8221, nota B): a construção do E10 confere, mas o texto não diz que E10/P seja
+retorno esperado. Isso gerou duas divergências de citação e atribuição → **emenda 10** em commit próprio (b8095fb), antes de
+rodar, sem mudar conta nem gatilho.
+
+**Execução** (`ferramentas/b39/`, data-base 19/11/2026; escolhas técnicas em `docs/DECISOES.md`): rf = IPCA+ 2035, 7,86%;
+π = ETTJ 2520 du, 7,1706%.
+- (i) 8 bancos, Ke real mediano **7,42%** contra 12,86% → Δ **−5,44**.
+- (ii) Ibovespa, 74 companhias, cobertura 100%: Σ E10 R$ 396 bi ÷ Σ VM R$ 4,2 tri = **9,38%**, contra 14,27% → Δ **−4,89**.
+- (iii) rf − s + ERP = **12,84%** contra 14,27% → Δ **−1,42**.
+
+**Veredito: DISPARA** (Ke da Mesa acima do que o mercado cobra). Prêmio implícito sobre a rf de 10 anos: −0,44 (i), +1,52 (ii)
+e +4,98 p.p. (iii), contra 5,00–6,41 da Mesa. Sensibilidades só relatadas no `docs/b39/B39-2026-11.md`.
+
+**Adversário antes do commit:** reproduziu 3 defeitos de dado, nenhum muda o veredito, e todos foram corrigidos com teste:
+lucro de banco com 3.11.01 = 0 (ABCB4/BRSR6, Δi +0,6 p.p.); consolidado zerado na TIMS3; unit × classe ilíquida (IGTI11).
+Achado de dado fora do escopo: o ledger do backtest não lê o lucro de banco no plano de 2023 em diante → **B49**.
+
+**Saída pela emenda 9:** o nível do Ke/prêmio entra na calibração (B35 + B46), contada no orçamento do §0.4, e o prêmio p do DNA
+§1.1 sai dela. **⏸ Decisão do Frank em outro chat.** Motor, doutrina e golden intocados.

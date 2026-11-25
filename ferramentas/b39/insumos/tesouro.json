@@ -1,0 +1,304 @@
+{
+ "data_base": "2026-11-19",
+ "fonte": "Tesouro Transparente, PrecoTaxaTesouroDireto.csv, Taxa Compra Manha",
+ "url": "https://www.tesourotransparente.gov.br/ckan/dataset/df56aa42-484a-4a59-8184-7676580c81e3/resource/796d2059-14e9-44e3-80c9-2d9e30b405c1/download/PrecoTaxaTesouroDireto.csv",
+ "coletado_em": "2026-11-25",
+ "sha256_csv": "33c80e7053362124ab0774897cd14f6f313544ee970e12cd180021e344dee143",
+ "rf": {
+  "tipo": "Tesouro IPCA+",
+  "vencimento": "2035-05-15",
+  "taxa_compra_manha": 0.0786
+ },
+ "linhas": [
+  {
+   "tipo": "Tesouro Selic",
+   "vencimento": "2027-03-01",
+   "taxa_compra_manha": 0.0003
+  },
+  {
+   "tipo": "Tesouro Selic",
+   "vencimento": "2031-03-01",
+   "taxa_compra_manha": 0.0011
+  },
+  {
+   "tipo": "Tesouro Selic",
+   "vencimento": "2029-03-01",
+   "taxa_compra_manha": 0.0005
+  },
+  {
+   "tipo": "Tesouro Selic",
+   "vencimento": "2028-03-01",
+   "taxa_compra_manha": 0.0004
+  },
+  {
+   "tipo": "Tesouro Prefixado",
+   "vencimento": "2032-01-01",
+   "taxa_compra_manha": 0.1543
+  },
+  {
+   "tipo": "Tesouro Prefixado",
+   "vencimento": "2027-01-01",
+   "taxa_compra_manha": 0.1356
+  },
+  {
+   "tipo": "Tesouro Prefixado",
+   "vencimento": "2029-01-01",
+   "taxa_compra_manha": 0.15039999999999998
+  },
+  {
+   "tipo": "Tesouro Prefixado",
+   "vencimento": "2031-01-01",
+   "taxa_compra_manha": 0.1535
+  },
+  {
+   "tipo": "Tesouro Prefixado",
+   "vencimento": "2028-01-01",
+   "taxa_compra_manha": 0.1447
+  },
+  {
+   "tipo": "Tesouro IPCA+ com Juros Semestrais",
+   "vencimento": "2060-08-15",
+   "taxa_compra_manha": 0.0758
+  },
+  {
+   "tipo": "Tesouro IPCA+ com Juros Semestrais",
+   "vencimento": "2032-08-15",
+   "taxa_compra_manha": 0.07769999999999999
+  },
+  {
+   "tipo": "Tesouro IPCA+ com Juros Semestrais",
+   "vencimento": "2050-08-15",
+   "taxa_compra_manha": 0.0759
+  },
+  {
+   "tipo": "Tesouro IPCA+ com Juros Semestrais",
+   "vencimento": "2040-08-15",
+   "taxa_compra_manha": 0.0759
+  },
+  {
+   "tipo": "Tesouro IPCA+ com Juros Semestrais",
+   "vencimento": "2055-05-15",
+   "taxa_compra_manha": 0.0758
+  },
+  {
+   "tipo": "Tesouro IPCA+ com Juros Semestrais",
+   "vencimento": "2030-08-15",
+   "taxa_compra_manha": 0.0765
+  },
+  {
+   "tipo": "Tesouro IPCA+ com Juros Semestrais",
+   "vencimento": "2045-05-15",
+   "taxa_compra_manha": 0.0759
+  },
+  {
+   "tipo": "Tesouro IPCA+ com Juros Semestrais",
+   "vencimento": "2037-05-15",
+   "taxa_compra_manha": 0.07719999999999999
+  },
+  {
+   "tipo": "Tesouro IPCA+ com Juros Semestrais",
+   "vencimento": "2035-05-15",
+   "taxa_compra_manha": 0.0781
+  },
+  {
+   "tipo": "Tesouro IPCA+",
+   "vencimento": "2050-08-15",
+   "taxa_compra_manha": 0.0756
+  },
+  {
+   "tipo": "Tesouro IPCA+",
+   "vencimento": "2035-05-15",
+   "taxa_compra_manha": 0.0786
+  },
+  {
+   "tipo": "Tesouro IPCA+",
+   "vencimento": "2040-08-15",
+   "taxa_compra_manha": 0.0754
+  },
+  {
+   "tipo": "Tesouro IPCA+",
+   "vencimento": "2032-08-15",
+   "taxa_compra_manha": 0.0782
+  },
+  {
+   "tipo": "Tesouro IPCA+",
+   "vencimento": "2045-05-15",
+   "taxa_compra_manha": 0.0755
+  },
+  {
+   "tipo": "Tesouro IPCA+",
+   "vencimento": "2029-05-15",
+   "taxa_compra_manha": 0.0746
+  },
+  {
+   "tipo": "Tesouro IGPM+ com Juros Semestrais",
+   "vencimento": "2031-01-01",
+   "taxa_compra_manha": 0.07629999999999999
+  },
+  {
+   "tipo": "Tesouro Prefixado com Juros Semestrais",
+   "vencimento": "2027-01-01",
+   "taxa_compra_manha": 0.1361
+  },
+  {
+   "tipo": "Tesouro Prefixado com Juros Semestrais",
+   "vencimento": "2035-01-01",
+   "taxa_compra_manha": 0.15460000000000002
+  },
+  {
+   "tipo": "Tesouro Prefixado com Juros Semestrais",
+   "vencimento": "2033-01-01",
+   "taxa_compra_manha": 0.1547
+  },
+  {
+   "tipo": "Tesouro Prefixado com Juros Semestrais",
+   "vencimento": "2037-01-01",
+   "taxa_compra_manha": 0.1536
+  },
+  {
+   "tipo": "Tesouro Prefixado com Juros Semestrais",
+   "vencimento": "2031-01-01",
+   "taxa_compra_manha": 0.1534
+  },
+  {
+   "tipo": "Tesouro Prefixado com Juros Semestrais",
+   "vencimento": "2029-01-01",
+   "taxa_compra_manha": 0.1495
+  },
+  {
+   "tipo": "Tesouro Renda+ Aposentadoria Extra",
+   "vencimento": "2049-12-15",
+   "taxa_compra_manha": 0.0764
+  },
+  {
+   "tipo": "Tesouro Renda+ Aposentadoria Extra",
+   "vencimento": "2059-12-15",
+   "taxa_compra_manha": 0.0755
+  },
+  {
+   "tipo": "Tesouro Renda+ Aposentadoria Extra",
+   "vencimento": "2084-12-15",
+   "taxa_compra_manha": 0.0754
+  },
+  {
+   "tipo": "Tesouro Renda+ Aposentadoria Extra",
+   "vencimento": "2064-12-15",
+   "taxa_compra_manha": 0.0755
+  },
+  {
+   "tipo": "Tesouro Renda+ Aposentadoria Extra",
+   "vencimento": "2074-12-15",
+   "taxa_compra_manha": 0.0754
+  },
+  {
+   "tipo": "Tesouro Renda+ Aposentadoria Extra",
+   "vencimento": "2079-12-15",
+   "taxa_compra_manha": 0.0754
+  },
+  {
+   "tipo": "Tesouro Renda+ Aposentadoria Extra",
+   "vencimento": "2069-12-15",
+   "taxa_compra_manha": 0.0754
+  },
+  {
+   "tipo": "Tesouro Renda+ Aposentadoria Extra",
+   "vencimento": "2054-12-15",
+   "taxa_compra_manha": 0.0759
+  },
+  {
+   "tipo": "Tesouro Educa+",
+   "vencimento": "2037-12-15",
+   "taxa_compra_manha": 0.078
+  },
+  {
+   "tipo": "Tesouro Educa+",
+   "vencimento": "2040-12-15",
+   "taxa_compra_manha": 0.0766
+  },
+  {
+   "tipo": "Tesouro Educa+",
+   "vencimento": "2046-12-15",
+   "taxa_compra_manha": 0.0755
+  },
+  {
+   "tipo": "Tesouro Educa+",
+   "vencimento": "2031-12-15",
+   "taxa_compra_manha": 0.0745
+  },
+  {
+   "tipo": "Tesouro Educa+",
+   "vencimento": "2038-12-15",
+   "taxa_compra_manha": 0.0776
+  },
+  {
+   "tipo": "Tesouro Educa+",
+   "vencimento": "2043-12-15",
+   "taxa_compra_manha": 0.0756
+  },
+  {
+   "tipo": "Tesouro Educa+",
+   "vencimento": "2047-12-15",
+   "taxa_compra_manha": 0.0755
+  },
+  {
+   "tipo": "Tesouro Educa+",
+   "vencimento": "2042-12-15",
+   "taxa_compra_manha": 0.0758
+  },
+  {
+   "tipo": "Tesouro Educa+",
+   "vencimento": "2039-12-15",
+   "taxa_compra_manha": 0.0771
+  },
+  {
+   "tipo": "Tesouro Educa+",
+   "vencimento": "2041-12-15",
+   "taxa_compra_manha": 0.0761
+  },
+  {
+   "tipo": "Tesouro Educa+",
+   "vencimento": "2035-12-15",
+   "taxa_compra_manha": 0.0781
+  },
+  {
+   "tipo": "Tesouro Educa+",
+   "vencimento": "2032-12-15",
+   "taxa_compra_manha": 0.0764
+  },
+  {
+   "tipo": "Tesouro Educa+",
+   "vencimento": "2048-12-15",
+   "taxa_compra_manha": 0.0755
+  },
+  {
+   "tipo": "Tesouro Educa+",
+   "vencimento": "2034-12-15",
+   "taxa_compra_manha": 0.07780000000000001
+  },
+  {
+   "tipo": "Tesouro Educa+",
+   "vencimento": "2044-12-15",
+   "taxa_compra_manha": 0.0755
+  },
+  {
+   "tipo": "Tesouro Educa+",
+   "vencimento": "2033-12-15",
+   "taxa_compra_manha": 0.07730000000000001
+  },
+  {
+   "tipo": "Tesouro Educa+",
+   "vencimento": "2045-12-15",
+   "taxa_compra_manha": 0.0755
+  },
+  {
+   "tipo": "Tesouro Educa+",
+   "vencimento": "2036-12-15",
+   "taxa_compra_manha": 0.0781
+  },
+  {
+   "tipo": "Tesouro Educa+",
+   "vencimento": "2030-12-15",
+   "taxa_compra_manha": 0.0731
+  }
+ ]
+}

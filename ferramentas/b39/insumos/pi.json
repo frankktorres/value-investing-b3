@@ -1,0 +1,8 @@
+{
+ "data_base": "2026-11-19",
+ "pi": 0.071706,
+ "fonte": "ANBIMA ETTJ, inflação implícita 2520 du (~10 anos)",
+ "url": "https://www.anbima.com.br/informacoes/est-termo/CZ-down.asp",
+ "tipo": "ANBIMA ETTJ inflacao implicita, 2520 du (~10a); ETTJ IPCA 7.8404 / PREF 15.5733; curva PREF termina em 2520 du",
+ "via": "ferramentas/dados/mercado.json (coleta de 23/11/2026)"
+}
