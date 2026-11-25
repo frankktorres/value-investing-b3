@@ -52,7 +52,8 @@ def test_tipo_sem_semantica_conferida_falha_alto(tipo):
 
 
 # ---------------------------------------------------------------- cisão com redução de capital (B40, 25/11/2026)
-# Linhas literais do suplemento da B3 (GetListedSupplementCompany): por classe, uma linha com a ação NOVA (assetIssued de
+# Linhas do suplemento da B3 (GetListedSupplementCompany) — CSAN, MRVE e EQTL estão no cache do hall; PCAR e ITUB foram lidas
+# da mesma API em 25/11/2026 na busca da B40 (fora do cache, transcritas aqui): por classe, uma linha com a ação NOVA (assetIssued de
 # outra raiz, fator = ações novas por 100) e uma com a PRÓPRIA ação (fator 100 = mantém as ações). Fonte A da quantidade:
 # CVM, FRE, capital_social_reducao (redução por cisão com 0 ações canceladas) — tests/test_fase3_proventos_b3.py.
 def _cis(raiz, data_com, aprov, *pares):
@@ -72,6 +73,9 @@ CISOES = {
     "PCAR3": (_cis("PCAR", "2021-02-26", "2020-12-31", ("BRPCARACNOR3", "BRASAIACNOR0", 100.0),
                    ("BRPCARACNOR3", "BRPCARACNOR3", 100.0)), [("BRASAIACNOR0", 1.0)]),
 }
+# Equatorial → Redentor (24/08/2010): 3ª ocorrência real no cache da B3, mesmo par de linhas (só o teste do cache)
+CISAO_EQTL = (_cis("EQTL", "2010-08-24", "2010-04-29", ("BREQTLACNOR0", "BRRDTRACNOR7", 100.0),
+                   ("BREQTLACNOR0", "BREQTLACNOR0", 100.0)), [("BRRDTRACNOR7", 1.0)])
 
 
 @pytest.mark.parametrize("tk", sorted(CISOES))
@@ -87,7 +91,7 @@ def test_cisao_mantem_as_acoes_e_registra_o_ativo_recebido(tk):
 
 
 def test_cisao_em_duas_classes_conta_uma_vez():
-    # Itaú → XPart (01/10/2021): ON e PN, cada uma com a sua ação nova (literal do suplemento); a classe do ticker decide
+    # Itaú → XPart (01/10/2021): ON e PN, cada uma com a sua ação nova (lido da API da B3 em 25/11/2026); a classe do ticker decide
     s = _cis("ITUB", "2021-10-01", "2021-01-31", ("BRITUBACNOR4", "BRXPARACNOR9", 100.0), ("BRITUBACNOR4", "BRITUBACNOR4", 100.0),
              ("BRITUBACNPR1", "BRXPARACNPR6", 100.0), ("BRITUBACNPR1", "BRITUBACNPR1", 100.0))
     import proventos_hall as ph
@@ -140,15 +144,15 @@ def test_cisao_nao_muda_o_provento():
 
 
 @requer_suplemento_b3
-@pytest.mark.parametrize("tk", ["CSAN3", "MRVE3"])
+@pytest.mark.parametrize("tk", ["CSAN3", "MRVE3", "EQTL3"])
 def test_cisao_do_cache_real_da_b36_carrega(tk):
-    """As duas da B36 que paravam em proventos_hall.py:207 (B40): o cache do hall tem as duas linhas e carrega."""
+    """As duas da B36 que paravam em proventos_hall.py:207 (B40) + a EQTL3 (2010): o cache do hall tem as duas linhas e carrega."""
     import proventos_hall as ph
     if not ph._arquivo_suplemento(tk).exists():
         pytest.skip(f"sem o suplemento do hall de {tk}")
     # pelo caminho do hall (classe do ticker pelo ISIN: a CSAN tem um recibo de bonificação de 2008 em outro ISIN)
     ev = [e for e in ph.eventos(tk, "2026-11-24") if e["tipo"] == "CIS RED CAP"]
-    s, recebe = CISOES[tk]
+    s, recebe = CISOES[tk] if tk in CISOES else CISAO_EQTL
     assert [(e["data_com"], e["multiplicador"]) for e in ev] == [(s["data_com"][0], 1.0)]
     assert [r for _, r in ev[0]["recebe"]] == pytest.approx([r for _, r in recebe], rel=1e-9)
 
