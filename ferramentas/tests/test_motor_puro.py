@@ -17,13 +17,19 @@ AQUI = pathlib.Path(__file__).resolve().parent.parent
 CATRACA = pathlib.Path(__file__).with_name("motor_puro_catraca.json")
 
 MODULOS = {  # raiz do import -> família
-    **dict.fromkeys(("socket", "ssl", "urllib", "http", "requests", "httpx", "aiohttp", "ftplib", "smtplib"), "rede"),
-    **dict.fromkeys(("subprocess", "os", "shutil", "tempfile", "sqlite3"), "processo/sistema"),
+    **dict.fromkeys(("socket", "ssl", "urllib", "urllib3", "http", "requests", "httpx", "aiohttp", "ftplib", "smtplib",
+                     "websocket", "websockets", "yfinance"), "rede"),
+    **dict.fromkeys(("subprocess", "os", "shutil", "tempfile", "sqlite3", "importlib", "glob", "io", "zipfile",
+                     "tarfile", "pickle", "shelve"), "processo/sistema/arquivo"),
     "time": "relógio",
 }
 RELOGIO = {"now", "today", "utcnow"}                         # datetime.now(), date.today(), datetime.utcnow()
-ARQUIVO = {"read_text", "write_text", "read_bytes", "write_bytes", "unlink", "mkdir", "touch",
-           "read_csv", "read_parquet", "read_excel", "read_json", "to_csv", "to_parquet", "to_excel", "to_json"}
+ARQUIVO = {"read_text", "write_text", "read_bytes", "write_bytes", "unlink", "mkdir", "touch", "open", "load",
+           "exists", "is_file", "is_dir", "iterdir", "glob", "rglob", "stat", "ZipFile", "import_module",
+           "read_csv", "read_parquet", "read_excel", "read_json", "read_pickle", "read_html", "read_sql",
+           "read_feather", "to_csv", "to_parquet", "to_excel", "to_json", "to_pickle"}
+NOMES_PROIBIDOS = {"open": "arquivo", "__import__": "import dinâmico", "ZipFile": "arquivo", "exec": "código dinâmico",
+                   "eval": "código dinâmico"}
 
 
 def impurezas(fonte: str) -> list[tuple[int, str]]:
@@ -41,14 +47,27 @@ def impurezas(fonte: str) -> list[tuple[int, str]]:
                 achados.append((no.lineno, f"from {no.module} ({fam})"))
         elif isinstance(no, ast.Call):
             f = no.func
-            if isinstance(f, ast.Name) and f.id == "open":
-                achados.append((no.lineno, "open (arquivo)"))
+            if isinstance(f, ast.Name) and f.id in NOMES_PROIBIDOS:
+                achados.append((no.lineno, f"{f.id} ({NOMES_PROIBIDOS[f.id]})"))
             elif isinstance(f, ast.Attribute):
-                if f.attr in RELOGIO:
-                    achados.append((no.lineno, f".{f.attr}() (relógio)"))
-                elif f.attr in ARQUIVO or (f.attr == "open" and not isinstance(f.value, ast.Name)):
+                if f.attr in ARQUIVO:
                     achados.append((no.lineno, f".{f.attr}() (arquivo)"))
-    return sorted(achados)
+            if any(isinstance(a, ast.Constant) and a.value in ("now", "today") for a in no.args):
+                achados.append((no.lineno, "'now'/'today' (relógio)"))   # pd.Timestamp('today')
+        elif isinstance(no, ast.Attribute) and no.attr in RELOGIO and not isinstance(getattr(no, "ctx", None), ast.Store):
+            achados.append((no.lineno, f".{no.attr} (relógio)"))         # agora = dt.datetime.now; agora()
+    return sorted(set(achados))
+
+
+def modulos_do_projeto(fonte: str) -> set[str]:
+    """Módulos do próprio projeto importados pelo motor (raiz do nome, quando existe ferramentas/<raiz>.py ou pasta)."""
+    nomes = set()
+    for no in ast.walk(ast.parse(fonte)):
+        if isinstance(no, ast.Import):
+            nomes |= {a.name.split(".")[0] for a in no.names}
+        elif isinstance(no, ast.ImportFrom) and no.module and no.level == 0:
+            nomes.add(no.module.split(".")[0])
+    return {n for n in nomes if (AQUI / f"{n}.py").exists() or (AQUI / n).is_dir()}
 
 
 def _contagem(achados):
@@ -70,6 +89,21 @@ def _contagem(achados):
     "import pathlib\npathlib.Path('a').read_text()",
     "import pandas as pd\npd.read_csv('a.csv')",
     "df.to_parquet('x')",
+    # furos achados pelo adversário em 25/11
+    "ARQ.open()",
+    "import zipfile\nzipfile.ZipFile('a.zip')",
+    "import numpy as np\nnp.load('a.npy')",
+    "import pandas as pd\npd.read_pickle('a')",
+    "import pandas as pd\npd.read_html('http://x')",
+    "import pandas as pd\npd.Timestamp('today')",
+    "import importlib\nimportlib.import_module('requests')",
+    "__import__('os')",
+    "from pathlib import Path\nPath('x').exists()",
+    "import yfinance",
+    "import urllib3",
+    "import glob",
+    "import io\nio.open('a')",
+    "import datetime as dt\nagora = dt.datetime.now\nagora()",
 ])
 def test_canario_construcao_proibida_e_reprovada(fonte):
     assert impurezas(fonte), fonte
@@ -77,6 +111,17 @@ def test_canario_construcao_proibida_e_reprovada(fonte):
 
 def test_canario_fonte_limpa_passa():
     assert impurezas("import math\nfrom statistics import median\ndef f(x):\n    return math.sqrt(median(x))\n") == []
+
+
+def test_motores_nao_ganham_modulo_auxiliar_novo():
+    """O AST só vê o próprio motor_*.py: leitura movida para um módulo auxiliar passaria. Os auxiliares de hoje (alguns
+    leem dado versionado no import: series_vigente, proventos_hall, inflacao) ficam na lista; módulo do projeto NOVO
+    importado pelo motor reprova até alguém conferir que ele é puro e acrescentá-lo (adversário, 25/11)."""
+    permitidos = json.loads(CATRACA.read_text(encoding="utf-8"))["modulos_do_projeto"]
+    novos = {m.name: sorted(modulos_do_projeto(m.read_text(encoding="utf-8")) - set(permitidos.get(m.name, [])))
+             for m in sorted(AQUI.glob("motor_*.py"))}
+    novos = {k: v for k, v in novos.items() if v}
+    assert not novos, f"motor passou a importar módulo do projeto não conferido: {novos}"
 
 
 def test_motores_sem_impureza_nova():

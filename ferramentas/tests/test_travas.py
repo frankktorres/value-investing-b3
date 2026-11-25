@@ -23,7 +23,7 @@ AQUI = Path(__file__).resolve().parent.parent            # ferramentas/
 RAIZ = AQUI.parent
 HASHES = Path(__file__).with_name("travas_hashes.json")
 PROTEGIDOS = [
-    "ferramentas/pytest.ini", "ferramentas/conftest.py", "ferramentas/suite_marcador.py",
+    "ferramentas/pytest.ini", "ferramentas/conftest.py", "ferramentas/suite_marcador.py", "ferramentas/golden.py",
     ".githooks/pre-push", ".githooks/trava_master.py",
     ".claude/settings.json", ".claude/hooks/trava_config.py", ".claude/hooks/avisos.py", ".claude/hooks/auto_commit.py",
     "ferramentas/tests/test_travas.py", "ferramentas/tests/test_b37_trava_master.py",
@@ -76,18 +76,27 @@ def test_canario_hook_bloqueia_config_travas_golden_e_historico(mini):
     assert _bloqueia(mini, "Edit", "ferramentas/tests/x_catraca.json", old_string='"a.py": 3', new_string='"a.py": 4')
     assert _bloqueia(mini, "Edit", "ferramentas/tests/x_catraca.json", old_string='"y"]', new_string='"y", "z"]')
     assert _bloqueia(mini, "Write", ".githooks/piso_testes.json", content='{"piso": 99}')
-    # old_string que não casa: não dá para saber o resultado -> sensível bloqueia
-    assert _bloqueia(mini, "Edit", "ferramentas/golden.py", old_string="não existe", new_string="x")
-    # acento no old_string (stdin em UTF-8) não pode esconder mudança no TOL
-    (mini / "ferramentas" / "golden.py").write_text('# régua\nTOL = {"pc": 0.005}\n', encoding="utf-8")
-    assert _bloqueia(mini, "Edit", "ferramentas/golden.py", old_string='# régua\nTOL = {"pc": 0.005}',
-                     new_string='# régua\nTOL = {"pc": 0.5}')
+    assert _bloqueia(mini, "Write", ".githooks/piso_testes.json", content='{"piso": "x"}')
+    assert _bloqueia(mini, "Edit", "ferramentas/tests/x_catraca.json", old_string='"a.py": 3', new_string='"a.py": NaN')
+    # o golden.py inteiro: o TOL vale onde é usado (`> 10 * TOL[campo]`), não só onde é definido (adversário, 25/11)
+    assert _bloqueia(mini, "Edit", "ferramentas/golden.py", old_string="return 1", new_string="return 2")
+    # arquivo NOVO que desligaria a qualidade ou as travas (adversário, 25/11)
+    assert _bloqueia(mini, "Write", "ferramentas/tests/conftest.py", content="collect_ignore = ['test_travas.py']")
+    assert _bloqueia(mini, "Write", ".claude/settings.local.json", content='{"disableAllHooks": true}')
+    assert _bloqueia(mini, "Write", "pyproject.toml", content="[tool.pytest.ini_options]\naddopts = '-k nada'")
+    assert _bloqueia(mini, "Write", ".githooks/pre-commit", content="exit 0")
+    # worktree de subagente dentro do repo: mesmas regras (adversário, 25/11)
+    wt = mini / ".claude" / "worktrees" / "agent-1"
+    for rel in (".githooks/pre-push", "ferramentas/tests/golden.json", "_historico/2026-01-01 x/velho.md"):
+        (wt / rel).parent.mkdir(parents=True, exist_ok=True)
+        (wt / rel).write_text("x", encoding="utf-8")
+        assert _bloqueia(mini, "Write", f".claude/worktrees/agent-1/{rel}", content="y"), rel
 
 
 def test_canario_hook_libera_o_que_e_livre(mini):
     assert _bloqueia(mini, "Write", "ferramentas/novo.py", content="x = 1") is None
     assert _bloqueia(mini, "Write", "_historico/2026-11-25 y/novo.md", content="n") is None
-    assert _bloqueia(mini, "Edit", "ferramentas/golden.py", old_string="return 1", new_string="return 2") is None
+    assert _bloqueia(mini, "Write", "ferramentas/tests/test_novo.py", content="def test_x(): pass") is None
     assert _bloqueia(mini, "Edit", "ferramentas/tests/x_catraca.json", old_string='"a.py": 3', new_string='"a.py": 2') is None
     assert _bloqueia(mini, "Edit", "ferramentas/tests/x_catraca.json", old_string='["x", "y"]', new_string='["x"]') is None
     assert _bloqueia(mini, "Write", ".githooks/piso_testes.json", content='{"piso": 101}') is None
@@ -98,7 +107,7 @@ def test_canario_hook_de_verdade_pelo_stdin():
     entrada = json.dumps({"tool_name": "Edit", "tool_input": {
         "file_path": str(AQUI / "pytest.ini"), "old_string": "[pytest]", "new_string": "[pytest]"}})
     env = {k: v for k, v in os.environ.items() if k != "MESA_LIBERA_CONFIG"}
-    env["CLAUDE_PROJECT_DIR"] = str(RAIZ)
+    env["CLAUDE_PROJECT_DIR"] = str(AQUI)            # sessão aberta em ferramentas/ não desloca a raiz (adversário, 25/11)
     script = str(RAIZ / ".claude" / "hooks" / "trava_config.py")
     r = subprocess.run([sys.executable, script], input=entrada, capture_output=True, text=True, env=env, encoding="utf-8")
     assert r.returncode == 2 and "TRAVA 4.2" in r.stderr
@@ -111,7 +120,7 @@ def test_canario_hook_de_verdade_pelo_stdin():
     entrada = json.dumps({"tool_name": "Edit", "tool_input": {"file_path": str(AQUI / "golden.py"), "old_string": velho,
                                                              "new_string": velho.replace('"pc": 0.005', '"pc": 0.5')}})
     r = subprocess.run([sys.executable, script], input=entrada, capture_output=True, text=True, env=env, encoding="utf-8")
-    assert r.returncode == 2 and "TOL" in r.stderr
+    assert r.returncode == 2 and "golden.py" in r.stderr
 
 
 def test_protegidos_com_hash_fixado():
@@ -121,6 +130,14 @@ def test_protegidos_com_hash_fixado():
     difere = sorted(rel for rel in PROTEGIDOS if gravado.get(rel) != atual[rel])
     assert not difere, ("arquivo protegido mudou sem liberação do Frank (trava 4.2): " + ", ".join(difere)
                         + ". Liberado? `MESA_LIBERA_CONFIG=1 python tests/test_travas.py --gravar-hashes`")
+
+
+PISO_MINIMO = 1237   # B37: o piso do pre-push nunca abaixo disto (adversário, 25/11: baixar por Bash anularia o max())
+
+
+def test_piso_do_push_nao_baixa():
+    piso = json.loads((RAIZ / ".githooks" / "piso_testes.json").read_text(encoding="utf-8"))["piso"]
+    assert isinstance(piso, int) and piso >= PISO_MINIMO, f"piso {piso} < {PISO_MINIMO}: o piso só sobe"
 
 
 def test_tolerancias_do_golden_fixadas():
@@ -178,6 +195,16 @@ def repo(tmp_path):
     _g(rp, "add", "-A")
     _g(rp, "commit", "-q", "-m", "base")
     return rp
+
+
+def test_aviso_sai_em_utf8_pelo_pipe():
+    """O Claude Code lê o JSON do Stop em UTF-8; no Windows o pipe sairia em cp1252 (adversário, 25/11)."""
+    codigo = ("import sys; sys.argv=['avisos.py','fim']; sys.path.insert(0, r'%s'); import avisos; "
+              "avisos.aviso_suite = lambda raiz=None: 'código mudou ação'; avisos.main(['fim'])"
+              % (RAIZ / ".claude" / "hooks"))
+    env = {k: v for k, v in os.environ.items() if k not in ("CLAUDE_CODE_REMOTE", "PYTHONIOENCODING", "PYTHONUTF8")}
+    r = subprocess.run([sys.executable, "-c", codigo], capture_output=True, env=env)
+    assert json.loads(r.stdout.decode("utf-8"))["systemMessage"] == "código mudou ação"
 
 
 def test_canario_aviso_quando_arvore_mudou_depois_da_suite(repo):

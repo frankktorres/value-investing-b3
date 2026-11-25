@@ -1,44 +1,51 @@
 """Trava 4.2 (pacote de autonomia, 25/11/2026): hook PreToolUse que protege a configuração de qualidade e as travas.
 
 Bloqueia (exit 2, motivo no stderr) Edit/Write/MultiEdit/NotebookEdit que:
-- mexa em config de teste/qualidade EXISTENTE: `pytest.ini`, `conftest.py`, `ruff.toml`/`.ruff.toml`, `mypy.ini`,
-  `setup.cfg`, seções `[tool.pytest*]`/`[tool.ruff*]`/`[tool.mypy*]` de `pyproject.toml`;
-- mexa nas travas: `.githooks/**`, `.claude/hooks/**`, `.claude/settings.json`, testes-canário das travas;
-- edite o golden à mão (`tests/golden.json`, `tests/golden_log.md`) ou as tolerâncias `TOL`/`EXATOS` do `golden.py`;
+- crie ou mexa em config de teste/qualidade: `pytest.ini`, `conftest.py`, `pyproject.toml`, `setup.cfg`, `tox.ini`,
+  `ruff.toml`/`.ruff.toml`, `mypy.ini` (NOVO também: um conftest novo com `collect_ignore` desligaria testes);
+- crie ou mexa nas travas: `.githooks/**`, `.claude/hooks/**`, `.claude/settings*.json` (um `settings.local.json` novo
+  com `disableAllHooks` desligaria tudo), os testes-canário, `suite_marcador.py`, o `golden.py` inteiro (o TOL vale onde
+  é usado, não só onde é definido);
+- edite o golden à mão (`tests/golden.json`, `tests/golden_log.md`);
 - suba uma catraca (`*catraca*.json`: número só cai, lista só encolhe) ou baixe o piso (`.githooks/piso_testes.json`);
 - sobrescreva arquivo EXISTENTE em `_historico/` (histórico é só acréscimo; arquivo novo lá é livre).
-Arquivo novo fora disso é livre. Liberação: só o Frank, abrindo a sessão com `MESA_LIBERA_CONFIG=1`.
-A edição por Bash não passa por aqui: o `tests/test_travas.py` fixa o conteúdo dos protegidos por hash.
+Outro arquivo novo é livre. Worktree dentro do repo (`.claude/worktrees/<x>/`) segue as mesmas regras.
+Liberação: só o Frank, abrindo a sessão com `MESA_LIBERA_CONFIG=1`. Bash não passa por aqui: `tests/test_travas.py`
+fixa o conteúdo dos protegidos por hash e o settings.json nega Bash com `MESA_LIBERA_CONFIG`/`GOLDEN_REGRAVAR`.
 """
 from __future__ import annotations
 
 import json
+import math
 import os
-import re
 import sys
 from pathlib import Path
 
-RAIZ = Path(os.environ.get("CLAUDE_PROJECT_DIR") or Path(__file__).resolve().parents[2]).resolve()
+# A raiz é a do próprio arquivo (não CLAUDE_PROJECT_DIR: a sessão aberta em ferramentas/ deslocaria tudo)
+RAIZ = Path(__file__).resolve().parents[2]
 
-CONFIG_NOMES = {"pytest.ini", "conftest.py", "ruff.toml", ".ruff.toml", "mypy.ini", "setup.cfg"}
+CONFIG_NOMES = {"pytest.ini", "conftest.py", "pyproject.toml", "setup.cfg", "tox.ini", "ruff.toml", ".ruff.toml",
+                "mypy.ini", ".mypy.ini"}
 TRAVAS_PREFIXOS = (".githooks/", ".claude/hooks/")
 TRAVAS_ARQUIVOS = {
-    ".claude/settings.json",
+    "ferramentas/golden.py", "ferramentas/suite_marcador.py",
     "ferramentas/tests/test_travas.py", "ferramentas/tests/travas_hashes.json",
     "ferramentas/tests/test_b37_trava_master.py", "ferramentas/tests/test_motor_puro.py",
-    "ferramentas/tests/test_docs_caminhos.py", "ferramentas/suite_marcador.py",
+    "ferramentas/tests/test_docs_caminhos.py",
 }
 GOLDEN_DADOS = {"ferramentas/tests/golden.json", "ferramentas/tests/golden_log.md"}
 PISO = ".githooks/piso_testes.json"
-SECAO_PYPROJECT = re.compile(r"^\s*\[tool\.(pytest|ruff|mypy)", re.M)
-LINHA_TOL = re.compile(r"^(TOL|EXATOS)\s*=", re.M)
 
 
 def relativo(caminho: str) -> str | None:
     try:
-        return Path(caminho).resolve().relative_to(RAIZ).as_posix()
+        rel = Path(caminho).resolve().relative_to(RAIZ.resolve()).as_posix()
     except (ValueError, OSError):
         return None
+    partes = rel.split("/")
+    if len(partes) > 3 and partes[0] == ".claude" and partes[1] == "worktrees":
+        rel = "/".join(partes[3:])                              # worktree de subagente: mesmas regras
+    return rel
 
 
 def novo_conteudo(ferramenta: str, entrada: dict, atual: str) -> str | None:
@@ -66,14 +73,14 @@ def _folhas(x, prefixo=""):
 
 
 def catraca_subiu(velho: str, novo: str) -> str | None:
-    """Número só cai, lista só encolhe; chave nova ou JSON inválido = subiu."""
+    """Número só cai, lista só encolhe; chave nova, NaN/inf ou JSON inválido = subiu."""
     try:
         a, b = dict(_folhas(json.loads(velho))), dict(_folhas(json.loads(novo)))
     except ValueError:
         return "JSON inválido"
     for k, v in b.items():
         if isinstance(v, bool) or not isinstance(v, (int, float, list)):
-            if k in a and a[k] != v and not k.endswith(("_nota", "/_nota")):
+            if k in a and a[k] != v and not k.endswith("_nota"):
                 return f"{k} mudou"
             continue
         if k not in a:
@@ -81,7 +88,7 @@ def catraca_subiu(velho: str, novo: str) -> str | None:
         if isinstance(v, list):
             if not set(map(str, v)) <= set(map(str, a[k] or [])):
                 return f"{k} ganhou itens"
-        elif not isinstance(a[k], (int, float)) or v > a[k]:
+        elif not math.isfinite(v) or not isinstance(a[k], (int, float)) or v > a[k]:
             return f"{k} subiu de {a[k]} para {v}"
     return None
 
@@ -91,70 +98,36 @@ def motivo_bloqueio(ferramenta: str, entrada: dict) -> str | None:
     rel = relativo(caminho) if caminho else None
     if rel is None:
         return None
-    arq = RAIZ / rel
+    arq = Path(caminho).resolve()                                # o arquivo de verdade (inclusive na worktree)
     existe = arq.is_file()
     atual = arq.read_text(encoding="utf-8", errors="replace") if existe else ""
     nome = Path(rel).name
 
-    if rel.startswith("_historico/") and existe:
-        return "arquivo existente em _historico/ (histórico é só acréscimo; grave uma pasta nova)"
-    if not existe:
-        return None                                              # arquivo novo é livre
-    novo = novo_conteudo(ferramenta, entrada, atual)
-    if rel == PISO:                                              # antes da regra de .githooks/: subir é livre
+    if rel.startswith("_historico/"):
+        return "arquivo existente em _historico/ (histórico é só acréscimo; grave uma pasta nova)" if existe else None
+    if nome in CONFIG_NOMES:
+        return f"{nome} é configuração de teste/qualidade (novo ou existente)"
+    if rel.startswith(".claude/settings") and nome.endswith(".json"):
+        return f"{rel} é configuração do Claude Code (hooks e permissões das travas)"
+    novo = novo_conteudo(ferramenta, entrada, atual) if existe else None
+    if rel == PISO and existe:                                   # antes da regra de .githooks/: subir é livre
         try:
             if novo is None or int(json.loads(novo)["piso"]) < int(json.loads(atual)["piso"]):
                 return "o piso de testes só sobe"
         except (ValueError, KeyError, TypeError):
             return "piso_testes.json inválido"
         return None
-    if nome in CONFIG_NOMES:
-        return f"{nome} é configuração de teste/qualidade"
     if rel.startswith(TRAVAS_PREFIXOS) or rel in TRAVAS_ARQUIVOS:
         return f"{rel} é uma trava do pacote de autonomia"
+    if not existe:
+        return None                                              # outro arquivo novo é livre
     if rel in GOLDEN_DADOS:
         return "golden só se regrava por golden.salvar com GOLDEN_REGRAVAR=1 e motivo citando a camada (trava 4.3)"
-    if nome == "pyproject.toml":
-        if novo is None or SECAO_PYPROJECT.findall(atual) != SECAO_PYPROJECT.findall(novo) or \
-                _secoes(atual) != _secoes(novo):
-            return "seções [tool.pytest/ruff/mypy] do pyproject.toml são configuração de qualidade"
-    if rel == "ferramentas/golden.py":
-        if novo is None or _linhas_tol(atual) != _linhas_tol(novo):
-            return "TOL/EXATOS do golden.py são as tolerâncias do golden"
     if "catraca" in nome and nome.endswith(".json"):
         subiu = catraca_subiu(atual, novo) if novo is not None else "edição ilegível"
         if subiu:
             return f"catraca só cai ({subiu})"
     return None
-
-
-def _secoes(txt: str) -> list[str]:
-    """Texto das seções [tool.pytest/ruff/mypy] (do cabeçalho até a próxima seção)."""
-    blocos, atual = [], None
-    for linha in txt.splitlines():
-        if linha.strip().startswith("["):
-            atual = linha.strip() if SECAO_PYPROJECT.match(linha) else None
-            if atual:
-                blocos.append([atual])
-            continue
-        if atual:
-            blocos[-1].append(linha.rstrip())
-    return ["\n".join(b) for b in blocos]
-
-
-def _linhas_tol(txt: str) -> list[str]:
-    """As atribuições TOL/EXATOS inteiras (até a linha que fecha o literal)."""
-    saida, dentro, prof = [], False, 0
-    for linha in txt.splitlines():
-        if not dentro and LINHA_TOL.match(linha):
-            dentro, prof = True, 0
-        if dentro:
-            saida.append(linha.rstrip())
-            prof += linha.count("{") + linha.count("(") + linha.count("[")
-            prof -= linha.count("}") + linha.count(")") + linha.count("]")
-            if prof <= 0:
-                dentro = False
-    return saida
 
 
 def main() -> int:

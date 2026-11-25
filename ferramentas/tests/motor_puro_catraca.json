@@ -1,6 +1,11 @@
 {
- "_nota": "Trava 4.5 (25/11/2026): impurezas que já existiam nos motores quando a trava nasceu. Só pode cair (test_motor_puro.py reprova se subir e pede para baixar quando cair; o hook trava_config só aceita baixar). motor_nao_financeiras.py:33 lê dados/derivados_zip.json no import (arrendamento pago do lote 4) — dado local versionado, não rede nem relógio; tirar = passar como argumento (mexe no motor: só com teste verde e registro no 09).",
+ "_nota": "Trava 4.5 (25/11/2026): impurezas que já existiam nos motores quando a trava nasceu. Só pode cair (test_motor_puro.py reprova se subir e pede para baixar quando cair; o hook trava_config só aceita baixar). motor_nao_financeiras.py:33 lê dados/derivados_zip.json no import (arrendamento pago do lote 4) — dado local versionado, não rede nem relógio; tirar = passar como argumento (mexe no motor: só com teste verde e registro no 09). modulos_do_projeto: auxiliares que os motores importavam em 25/11; series_vigente, proventos_hall e inflacao leem dado versionado no import (fora do alcance do AST do motor, limite declarado); lista só encolhe.",
  "por_arquivo": {
   "motor_nao_financeiras.py": {".read_text() (arquivo)": 1}
+ },
+ "modulos_do_projeto": {
+  "motor_financeiras.py": ["defasagem"],
+  "motor_nao_financeiras.py": ["credito", "defasagem", "inflacao", "juros", "ltm", "motor_financeiras", "proventos_ex",
+                               "proventos_hall", "series_vigente"]
  }
 }

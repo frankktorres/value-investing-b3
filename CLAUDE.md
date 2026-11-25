@@ -16,7 +16,8 @@ reportlab/pytest; sem banco; dados brutos fora do git (`ferramentas/dados/`). Br
   `.githooks/piso_testes.json`). Ordem: editar tudo → suíte → commit → push; nada muda entre a suíte e o commit. Ligada por
   `git config core.hooksPath .githooks` (o SessionStart avisa se estiver desligada).
 - `GOLDEN_REGRAVAR=1 python rodar_tudo.py --motivo "camada N: ..."` regrava o golden; só com motivo e decisão registrada
-  (trava 4.3: sem a variável ou sem a camada de prova, recusa).
+  (trava 4.3: sem a variável ou sem a camada de prova, recusa). Bash com a variável é negado ao Claude: quem regrava é o
+  Frank (roda ele, ou abre a sessão com `GOLDEN_REGRAVAR=1` no ambiente), depois do oráculo e do registro no `09`.
 - **Travas (pacote de autonomia):** hook `trava_config.py` barra editar config de teste, travas, golden à mão, TOL, catraca
   para cima, piso para baixo e arquivo existente de `_historico/` (liberar = Frank, `MESA_LIBERA_CONFIG=1`); o Stop avisa
   se a árvore mudou depois da última suíte verde; `test_motor_puro.py` (motor sem rede/relógio/arquivo) e
