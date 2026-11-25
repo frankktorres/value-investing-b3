@@ -189,6 +189,7 @@ Front lê só o contrato. Tira o "Sistema em breve" do `index.html:27`.
 (nenhuma)
 
 ## Feitas
+- **Pacote de autonomia** (25/11, `docs/research/2026-11-25-pacote-autonomia.md`): agente `senior` + "Quem decide" (2b5d810); B37 trava do push (f879b4d); agentes adaptados (d86b7fb); travas 4.2–4.6 (dcc9a5f); skills `mesa-*` (04513d3); B51/B52 (540a325). `senior`: PARA → 8 achados corrigidos → SEGUE COM AJUSTES; resta o #11 do `PENDENTE-FRANK.md` (`--no-verify`). Fumaça: escolha pela causa (a) com o `senior` OK; push vermelho barrado no clone OK
 - **B34** (24/11, com o Frank): defeito H2 corrigido — D/E a mercado (preço da data-base × ações), sem ponto fixo; D = dívida bruta com arrendamentos + outros passivos financeiros, a mesma da ponte; Ke nominal > 30% → NÃO CONCLUSIVO (doutrina v2.7). Golden regravado (SMTO3 CARA → NC; PRIO3/UNIP6 → NC pela trava). Dossiês recalculados na data (point-in-time). Oráculo sem BLOQUEIA; suíte verde com `EXIGIR_DADOS=1`; 3T26 juntado no master. Ver `09` de 24/11.
 - **Q01** (backlog, 22/10): `gerar_pdf_lote1.py` cai para a Liberation Sans (métricas da Arial) quando a Arial do Windows não existe; `test_b23` e `test_carimbos` voltam a coletar na nuvem (suíte 963 passed, 42 skipped, sem `--ignore`). PDFs do Windows inalterados.
 - **N5** (22/10, noite): `painel/tests/test_contraste_tokens.py` — texto ≥ 4,5:1 e séries ≥ 3:1 nos dois temas passam; contornos abaixo de 3:1 listados (teste fixa a lista) e em `PENDENTE-FRANK.md` #10; nenhuma cor trocada.
@@ -223,7 +224,10 @@ Front lê só o contrato. Tira o "Sistema em breve" do `index.html:27`.
 - **B10** (13/10): `carteira_tickers.json` (só tickers) lido por `monitor_semanal.py`; `requirements.lock` criado (hashes não adotados, ver `DECISOES.md`). Suíte verde. Clone limpo em Python 3.13 instalou e rodou; 3.14 não testado na nuvem.
 
 ## Passagem de turno
-*A skill `/fechar` reescreve esta seção: o que ficou pendente, onde parou, próximo passo.*
+*A skill `/mesa-fechar` reescreve esta seção: o que ficou pendente, onde parou, próximo passo.*
+- 25/11/2026 (pacote de autonomia): a Mesa agora decide o reversível sozinha (`senior` + `DECISOES.md`) e não empurra master
+  sem suíte verde (B37). Pendente do Frank: #11 (`--no-verify`) e #12 (autorizar B35 + B46). Próximo passo (DNA), enquanto o
+  #12 não sai: causa (c), B40 (cisão com redução de capital, fonte A) — ver a linha "Próximo passo (DNA):" do `DECISOES.md`.
 - 13/10/2026: infraestrutura da rotina criada (hooks, backlog, skill). Nada em andamento.
 - 14/10/2026 (fim do dia): B24, B25, B23, B15 e B11 (parte B3) feitas e publicadas (f03636e, 9bde979, 8d780f8); nada em andamento. Próximas executáveis: B11 (StatusInvest, 403), B26 (FRE nota A para os 28 `SEM_RAZAO`). Marco seguinte é local: ITR 3T26 (`temporada.py`, B01), que também reemite o PDF do lote 5 com a tabela da B23.
 - 21/10/2026 (dia, check-up): D1 temporada blindada (hash do ZIP, 404 = 0, aviso no .vbs), D2 `carimbos.py` na exceção dos 0,80×, backup sem `privado/`, D4 Agendador (TemporadaDiaria 06:30 de 22/10 a 21/11; BackupSemanal domingo 07:30). Fila da madrugada: **N1 → N5** (no topo de "Próximas"). Suíte 833 passed.
