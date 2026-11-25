@@ -5,7 +5,6 @@
 ## Abertas
 | # | Pergunta | Opções / recomendação | Backlog | Desde |
 |---|---|---|---|---|
-| 12 | **Autorizar a próxima hipótese da causa (a)?** B46 (Ke > 30%) + B35 (Kd que reage à alavancagem) como **uma** hipótese: o beta da dívida (Conine) e o Kd do rating sintético (Damodaran, *Investment Valuation*, cap. 8) saindo do mesmo spread; gasta 1 tentativa (7ª de 24). A B35 diz "não fazer antes de o Frank pedir" | **Recomendo sim** (escolha da sessão de fumaça com o `senior`, 25/11): um mecanismo só explica as duas falhas e a linha "Ke > 30% ≤ 1" do M1 continua falhando; a B39 mediu o nível do Ke, não a alavancagem. Enquanto isso a Mesa segue na causa (c), B40–B43 | B35, B46 | 25/11 |
 | 4 | Orçamento mensal; SaaS só seu ou de terceiros; objetivo acadêmico; agente de sexta ainda roda?; fonte paga; licença do código | Ver Brief §11 | B07 | 10/10 |
 
 ## Só do Frank (a rotina nunca faz)
@@ -14,6 +13,7 @@
 - Temporada 3T26 e monitor de sexta rodam na máquina dele (dados fora do git).
 
 ## Respondidas
+- **25/11 — #12 (B46 + B35):** B46 **sim**; B35 **não** (a B39 corrigida não disparou; fica até o HOLD-OUT 2) → `DECISOES.md`, `BACKLOG.md`.
 - **22/10 — #10 (contraste, N5):** (a) contornos de chip ficam como estão; o chip já leva palavra e glifo (WCAG 1.4.11 não se aplica a contorno de reforço) → `DECISOES.md`.
 - **21/10 — #8 (B26):** (a) sem controlador nem acordo no FRE = razão válida → `DECISOES.md`.
 - **21/10 — #9 (§7):** "ok §7" → doutrina 2.6.1, casos com ano e fonte; nenhum carimbo sai → `DECISOES.md`, `09`.

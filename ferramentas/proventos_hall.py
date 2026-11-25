@@ -61,7 +61,16 @@ ISIN_CLASSE = {"ON": "ACNOR", "PN": "ACNPR", "PNA": "ACNPA", "PNB": "ACNPB", "UN
 #     (×2 exato). O fator NÃO é a razão (seria ×100): MGLU 300,0 em 2020 é o 4 por 1.
 # GRUPAMENTO (08/10/2026, dossiê LEVE3): a B3 publica o fator como RAZÃO nova ÷ antiga (MGLU 2024: 0,1 = 10 para 1), não
 # como percentual — multiplicador = fator, e fator >= 1 falha alto. Os demais tipos falham alto em vez de ajustar errado.
-SEMANTICA_CONFERIDA = ("BONIFICACAO", "DESDOBRAMENTO", "GRUPAMENTO")
+SEMANTICA_CONFERIDA = ("BONIFICACAO", "DESDOBRAMENTO", "GRUPAMENTO", "CIS RED CAP")
+# CIS RED CAP (cisão com redução de capital, B40, 25/11/2026): a B3 publica, por classe, DUAS linhas na mesma data-com — uma
+# com a ação NOVA da empresa que recebeu a parcela cindida (`assetIssued` de outra raiz; fator = ações novas por 100) e uma com
+# a PRÓPRIA ação (`assetIssued` da raiz; fator 100 = o acionista fica com as mesmas ações). Multiplicador da quantidade = 1
+# (NÃO 1 + 100/100 = ×2). Conferido na CVM (FRE, capital_social_reducao: redução por cisão com 0 ações canceladas, e a
+# quantidade integralizada igual antes e depois): Cosan 01/10/2014 (1 RLOG3 por CSAN3), MRV 12/12/2018 (32.045.013 ações da LOG
+# ÷ 444.139.684 = 0,07215075382 = fator da B3 ÷ 100), GPA 31/12/2020 (1 ASAI3 por PCAR3; DFP 2020 → 2021 sem salto). A ação
+# recebida é redução de capital, não provento de lucro (§6.4, como a REST CAP DIN): fica no evento (`recebe`), fora do DPA.
+# Só o fator 100 na linha própria tem semântica conferida; outro valor, linha faltando ou sem `ativo_emitido` → falha alto.
+CISAO = "CIS RED CAP"
 # par desdobramento + grupamento na mesma data, conferido contra a contagem de ações da CVM (multiplicador = produto, e o
 # produto tem de ser o conferido — a data sozinha aceitaria fator errado, ex. 100% e 0,01 = ×0,02; fatia 2b):
 #   LEVE 14/05/2012: 29.900% e 0,01 = ×3 (FRE: 42.769.500 → 128.308.500 ações);
@@ -197,12 +206,16 @@ def eventos_em_acoes(tk: str, suplemento, isin_de=lambda tk: None) -> list[dict]
                     for i in isins}
         if len({tuple(v) for v in por_isin.values()}) > 1:
             raise NotImplementedError(f"{tk}: eventos diferentes por classe {sorted(por_isin)} — ajustar à mão")
+        if (s["tipo"] == CISAO).any():
+            # cada classe recebe a ação nova da sua espécie (Itaú → XPart ON/PN): sem o ISIN do ticker, a classe de `recebe`
+            # seria chute (adversário, 25/11)
+            raise NotImplementedError(f"{tk}: {CISAO} em várias classes {isins} sem o ISIN da classe do ticker — ajustar à mão")
         s = s[s["isin"] == isins[0]]
         chave = lambda x, f: (x["tipo"], x["data_com"], f)
     else:
         chave = lambda x, f: (x["tipo"], x["data_com"])
-    out = {}
-    for _, e in s.iterrows():
+    out = {(CISAO, x["data_com"]): x for x in _cisoes(tk, s[s["tipo"] == CISAO])}
+    for _, e in s[s["tipo"] != CISAO].iterrows():
         if e["tipo"] not in SEMANTICA_CONFERIDA:
             raise NotImplementedError(f"{tk}: evento {e['tipo']} sem semântica conferida — ajustar à mão")
         f = float(e["fator_b3"])
@@ -233,6 +246,44 @@ def eventos_em_acoes(tk: str, suplemento, isin_de=lambda tk: None) -> list[dict]
     return list(out.values())
 
 
+def _cisoes(tk: str, cis) -> list[dict]:
+    """Uma `CIS RED CAP` por data-com (semântica no comentário de `SEMANTICA_CONFERIDA`): multiplicador 1 e `recebe` =
+    [(ISIN da ação nova, ações novas por ação)]. As linhas já vêm da classe do ticker (ou de classes iguais)."""
+    import pandas as pd
+    if not len(cis):
+        return []
+    if "ativo_emitido" not in cis.columns:
+        raise NotImplementedError(f"{tk}: {CISAO} sem o ativo emitido (assetIssued) no suplemento — não dá para separar a "
+                                  "linha da própria ação da ação nova; ajustar à mão")
+    out = []
+    for d, g in cis.groupby(cis["data_com"].astype(str).str[:10], sort=True):
+        propria, recebe = [], {}
+        for _, e in g.iterrows():
+            f = float(e["fator_b3"])
+            ativo = "" if pd.isna(e["ativo_emitido"]) else str(e["ativo_emitido"]).strip()      # NaN de concat não vira "nan"
+            if not f > 0:
+                raise ValueError(f"{tk}: {CISAO} de {d} com fator {e['fator_b3']!r}")
+            if not ativo:
+                raise NotImplementedError(f"{tk}: {CISAO} de {d} sem ativo emitido — ajustar à mão")
+            if ativo == str(e["isin"]).strip():
+                propria.append(f)
+            elif ativo.startswith(f"BR{tk[:4]}"):
+                # outra classe ou recibo da MESMA empresa (ex. 1 PN por ON) é ação nova, não "mantém as ações" (adversário)
+                raise NotImplementedError(f"{tk}: {CISAO} de {d} entrega {ativo}, da própria empresa em outro ISIN — ajustar à mão")
+            elif ativo in recebe and recebe[ativo] != f / 100:
+                raise NotImplementedError(f"{tk}: {CISAO} de {d}: {ativo} com fatores diferentes — ajustar à mão")
+            else:
+                recebe[ativo] = f / 100
+        if not propria or any(f != 100.0 for f in propria):
+            raise NotImplementedError(f"{tk}: {CISAO} de {d}: linha da própria ação {propria or 'ausente'} (só o fator 100 = "
+                                      "mantém as ações tem semântica conferida) — ajustar à mão")
+        if not recebe:
+            raise NotImplementedError(f"{tk}: {CISAO} de {d} sem a ação recebida — ajustar à mão")
+        out.append({"tipo": CISAO, "data_com": d, "aprovacao": str(g["data_aprovacao"].iloc[0])[:10], "multiplicador": 1.0,
+                    "recebe": sorted(recebe.items())})
+    return out
+
+
 def _arquivo_suplemento(tk: str) -> pathlib.Path:
     return SUPLEMENTO / f"{tk[:4]}.json"
 
@@ -250,8 +301,9 @@ def suplemento(tk: str, data_preco: str):
         raise ValueError(f"{tk}: suplemento da B3 baixado em {j['baixado_em']}, antes da data do preço {data_preco}")
     return pd.DataFrame([{"raiz": j["raiz"], "tipo": (r.get("label") or "").strip().upper(), "fator_b3": _num(r.get("factor")),
                           "data_com": _iso(r.get("lastDatePrior")), "data_aprovacao": _iso(r.get("approvedOn")),
-                          "isin": r.get("isinCode") or ""} for r in j["stockDividends"]],
-                        columns=["raiz", "tipo", "fator_b3", "data_com", "data_aprovacao", "isin"])
+                          "isin": r.get("isinCode") or "", "ativo_emitido": r.get("assetIssued") or ""}
+                         for r in j["stockDividends"]],
+                        columns=["raiz", "tipo", "fator_b3", "data_com", "data_aprovacao", "isin", "ativo_emitido"])
 
 
 def eventos(tk: str, data_preco: str | None = None) -> list[dict]:

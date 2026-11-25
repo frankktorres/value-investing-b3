@@ -45,8 +45,116 @@ def test_fatores_diferentes_por_classe_na_mesma_data_falham_alto():
 
 @pytest.mark.parametrize("tipo", ["INCORPORACAO", "CIS RED CAP"])
 def test_tipo_sem_semantica_conferida_falha_alto(tipo):
+    # CIS RED CAP sem a coluna do ativo emitido (o formato do cache do backtest) também falha alto: sem ela não se sabe qual
+    # linha é a da própria ação
     with pytest.raises(NotImplementedError):
         base.eventos_em_acoes("XPTO3", _sup(("XPTO", tipo, 0.1, "2024-05-24", "2024-04-24")))
+
+
+# ---------------------------------------------------------------- cisão com redução de capital (B40, 25/11/2026)
+# Linhas do suplemento da B3 (GetListedSupplementCompany) — CSAN, MRVE e EQTL estão no cache do hall; PCAR e ITUB foram lidas
+# da mesma API em 25/11/2026 na busca da B40 (fora do cache, transcritas aqui): por classe, uma linha com a ação NOVA (assetIssued de
+# outra raiz, fator = ações novas por 100) e uma com a PRÓPRIA ação (fator 100 = mantém as ações). Fonte A da quantidade:
+# CVM, FRE, capital_social_reducao (redução por cisão com 0 ações canceladas) — tests/test_fase3_proventos_b3.py.
+def _cis(raiz, data_com, aprov, *pares):
+    """pares = (isin da classe, ativo emitido, fator)"""
+    return pd.DataFrame([dict(raiz=raiz, tipo="CIS RED CAP", fator_b3=f, data_com=data_com, data_aprovacao=aprov, isin=i,
+                              ativo_emitido=a) for i, a, f in pares])
+
+
+CISOES = {
+    # MRV → LOG: FRE 2018 "32.045.013 ações de emissão da Log" ÷ 444.139.684 MRV = 0,07215075382 (o fator da B3 ÷ 100)
+    "MRVE3": (_cis("MRVE", "2018-12-20", "2018-12-12", ("BRMRVEACNOR2", "BRLOGGACNOR7", 7.215075382),
+                   ("BRMRVEACNOR2", "BRMRVEACNOR2", 100.0)), [("BRLOGGACNOR7", 0.07215075382)]),
+    # Cosan → Cosan Logística: FRE 2015 "cada acionista recebeu 1 (uma) ação ordinária ... da Cosan Logística"
+    "CSAN3": (_cis("CSAN", "2014-10-03", "2014-10-01", ("BRCSANACNOR6", "BRRLOGACNOR4", 100.0),
+                   ("BRCSANACNOR6", "BRCSANACNOR6", 100.0)), [("BRRLOGACNOR4", 1.0)]),
+    # GPA → Sendas (Assaí), fora da B36: FRE 2020, redução por cisão "não houve redução do número de ações"
+    "PCAR3": (_cis("PCAR", "2021-02-26", "2020-12-31", ("BRPCARACNOR3", "BRASAIACNOR0", 100.0),
+                   ("BRPCARACNOR3", "BRPCARACNOR3", 100.0)), [("BRASAIACNOR0", 1.0)]),
+}
+# Equatorial → Redentor (24/08/2010): 3ª ocorrência real no cache da B3, mesmo par de linhas (só o teste do cache)
+CISAO_EQTL = (_cis("EQTL", "2010-08-24", "2010-04-29", ("BREQTLACNOR0", "BRRDTRACNOR7", 100.0),
+                   ("BREQTLACNOR0", "BREQTLACNOR0", 100.0)), [("BRRDTRACNOR7", 1.0)])
+
+
+@pytest.mark.parametrize("tk", sorted(CISOES))
+def test_cisao_mantem_as_acoes_e_registra_o_ativo_recebido(tk):
+    s, recebe = CISOES[tk]
+    ev = base.eventos_em_acoes(tk, s)
+    assert len(ev) == 1
+    e = ev[0]
+    assert (e["tipo"], e["data_com"], e["aprovacao"]) == ("CIS RED CAP", s["data_com"][0], s["data_aprovacao"][0])
+    assert e["multiplicador"] == 1.0                     # NÃO 1 + 100/100 = ×2
+    assert [a for a, _ in e["recebe"]] == [a for a, _ in recebe]
+    assert [r for _, r in e["recebe"]] == pytest.approx([r for _, r in recebe], rel=1e-9)
+
+
+def test_cisao_em_duas_classes_conta_uma_vez():
+    # Itaú → XPart (01/10/2021): ON e PN, cada uma com a sua ação nova (lido da API da B3 em 25/11/2026); a classe do ticker decide
+    s = _cis("ITUB", "2021-10-01", "2021-01-31", ("BRITUBACNOR4", "BRXPARACNOR9", 100.0), ("BRITUBACNOR4", "BRITUBACNOR4", 100.0),
+             ("BRITUBACNPR1", "BRXPARACNPR6", 100.0), ("BRITUBACNPR1", "BRITUBACNPR1", 100.0))
+    import proventos_hall as ph
+    ev = ph.eventos_em_acoes("ITUB4", s, lambda t: "BRITUBACNPR1")
+    assert [(e["multiplicador"], e["recebe"]) for e in ev] == [(1.0, [("BRXPARACNPR6", 1.0)])]
+    # sem o ISIN da classe: cada classe recebe a ação nova da sua espécie → a classe de `recebe` seria chute → falha alto
+    with pytest.raises(NotImplementedError, match="várias classes"):
+        ph.eventos_em_acoes("ITUB4", s)
+
+
+@pytest.mark.parametrize("ativo", ["BRXPTOACNPR8", "BRXPTOR01OR1"])
+def test_cisao_que_entrega_outra_classe_da_propria_empresa_falha_alto(ativo):
+    """Adversário (25/11): 1 PN (ou recibo) por ON da mesma empresa é ação nova; reconhecer a linha própria só pela raiz
+    deixaria passar com ×1."""
+    s = _cis("XPTO", "2024-05-24", "2024-04-24", ("BRXPTOACNOR1", "BRNOVAACNOR1", 50.0), ("BRXPTOACNOR1", ativo, 100.0))
+    with pytest.raises(NotImplementedError, match="outro ISIN"):
+        base.eventos_em_acoes("XPTO3", s)
+
+
+def test_cisao_com_ativo_emitido_nan_falha_alto():
+    """Adversário (25/11): NaN (concat com o formato do backtest) não pode virar o ativo "nan"."""
+    s = _cis("XPTO", "2024-05-24", "2024-04-24", ("BRXPTOACNOR1", float("nan"), 50.0), ("BRXPTOACNOR1", "BRXPTOACNOR1", 100.0))
+    with pytest.raises(NotImplementedError, match="ativo emitido"):
+        base.eventos_em_acoes("XPTO3", s)
+
+
+def test_cisao_com_fator_da_propria_acao_diferente_de_100_falha_alto():
+    s = _cis("XPTO", "2024-05-24", "2024-04-24", ("BRXPTOACNOR1", "BRNOVAACNOR1", 50.0), ("BRXPTOACNOR1", "BRXPTOACNOR1", 90.0))
+    with pytest.raises(NotImplementedError, match="própria"):
+        base.eventos_em_acoes("XPTO3", s)
+
+
+def test_cisao_sem_a_linha_da_propria_acao_ou_sem_a_nova_falha_alto():
+    with pytest.raises(NotImplementedError, match="própria"):
+        base.eventos_em_acoes("XPTO3", _cis("XPTO", "2024-05-24", "2024-04-24", ("BRXPTOACNOR1", "BRNOVAACNOR1", 50.0)))
+    with pytest.raises(NotImplementedError, match="recebida"):
+        base.eventos_em_acoes("XPTO3", _cis("XPTO", "2024-05-24", "2024-04-24", ("BRXPTOACNOR1", "BRXPTOACNOR1", 100.0)))
+    with pytest.raises(NotImplementedError, match="ativo emitido"):
+        base.eventos_em_acoes("XPTO3", _cis("XPTO", "2024-05-24", "2024-04-24", ("BRXPTOACNOR1", "", 100.0),
+                                            ("BRXPTOACNOR1", "BRXPTOACNOR1", 100.0)))
+
+
+def test_cisao_nao_muda_o_provento():
+    """A ação recebida na cisão é redução de capital (§6.4), não provento; e o provento antes da data-com não é dividido."""
+    import proventos_hall as ph
+    s, _ = CISOES["MRVE3"]
+    ev = ph.eventos_em_acoes("MRVE3", s)
+    regs = [dict(tipo_acao="ON", data_aprovacao="2018-04-20", data_com="2018-04-30", valor=0.5, lote=1.0, tipo="DIVIDENDO")]
+    assert [p["valor_hoje"] for p in ph.proventos("MRVE3", "2026-10-02", regs=regs, ev=ev, grupos={})] == [0.5]
+
+
+@requer_suplemento_b3
+@pytest.mark.parametrize("tk", ["CSAN3", "MRVE3", "EQTL3"])
+def test_cisao_do_cache_real_da_b36_carrega(tk):
+    """As duas da B36 que paravam em proventos_hall.py:207 (B40) + a EQTL3 (2010): o cache do hall tem as duas linhas e carrega."""
+    import proventos_hall as ph
+    if not ph._arquivo_suplemento(tk).exists():
+        pytest.skip(f"sem o suplemento do hall de {tk}")
+    # pelo caminho do hall (classe do ticker pelo ISIN: a CSAN tem um recibo de bonificação de 2008 em outro ISIN)
+    ev = [e for e in ph.eventos(tk, "2026-11-24") if e["tipo"] == "CIS RED CAP"]
+    s, recebe = CISOES[tk] if tk in CISOES else CISAO_EQTL
+    assert [(e["data_com"], e["multiplicador"]) for e in ev] == [(s["data_com"][0], 1.0)]
+    assert [r for _, r in ev[0]["recebe"]] == pytest.approx([r for _, r in recebe], rel=1e-9)
 
 
 @pytest.mark.parametrize("fator", [0.0, -50.0, float("nan")])

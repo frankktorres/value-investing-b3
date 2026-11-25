@@ -1249,3 +1249,29 @@ Recalculada só a (i): Ke real mediano **9,93%** contra 12,86%, Δ **−2,93 p.p
 Leitura pré-declarada: indício só no Ibovespa. A B35/B46 segue como hipótese, sem prioridade de calibração, e o Ke fica.
 A versão da emenda 9 (DISPARA, −4,89) fica ao lado no relatório e em `_historico/2026-11-25 b39 antes da emenda 11/`.
 A divergência da π (`01` §4 Tesouro × código ANBIMA) virou o item B50, sem correção agora. Motor, doutrina e golden intocados.
+
+### 25/11/2026 — B40: cisão com redução de capital (CIS RED CAP) com semântica conferida (causa (c), dado)
+Na B36, CSAN3 e MRVE3 paravam em `proventos_hall.py:207`. O suplemento da B3 publica a cisão em **duas linhas** por classe:
+a ação nova (outra raiz; fator = ações novas por 100) e a própria ação (fator 100 = mantém as ações). O `1 + f/100` dos
+outros tipos daria ×2 na linha própria. Regra (`proventos_hall._cisoes`): multiplicador **1**; a ação nova vai para
+`recebe`, fora do DPA (redução de capital, §6.4, como a REST CAP DIN); só o fator 100 na linha própria tem semântica
+conferida. Outro fator, linha faltando ou sem `assetIssued` → falha alto. O cache do backtest não tem a coluna e segue
+falhando alto.
+
+**Fonte A (CVM, FRE, `capital_social_reducao`):** redução por cisão com **0 ações canceladas** e quantidade integralizada
+igual antes e depois. Cosan 01/10/2014 (R$ 1.059,6 mi; "cada acionista recebeu 1 ação da Cosan Logística"; 407.214.353
+ações nos FRE 2014 e 2015). MRV 12/12/2018 (R$ 1.000,1 mi; 32.045.013 ações da LOG ÷ 444.139.684 = 0,07215075382, igual ao
+fator da B3 ÷ 100; 444.139.684 nos FRE 2017 e 2018). **Caso de fora da B36:** GPA 31/12/2020 → Assaí (R$ 1.216,0 mi; "não
+houve redução do número de ações"; DFP 268,4 → 269,4 mi). Itaú → XPart (2021, ON e PN) testa o caminho de várias classes.
+Imprensa e 20-F/6-K (B/C) só corroboram a razão.
+
+**Prova:** testes por caso (`dossie/tests/test_eventos.py`, `tests/test_fase3_proventos_b3.py`). CSAN3 e MRVE3 rodam no
+executor da B36 (`gravar=False`, resultado registrado intocado). As duas saem **NÃO CONCLUSIVO**: CSAN3 com P/C 2,35 e Ke
+38,8%; MRVE3 com central −6,47 e Ke 32,3%. Os dois Ke passam de 30% → B46. Nenhum ticker do hall ou dossiê tem cisão no
+cache: golden igual. Não gasta tentativa do pré-registro.
+
+**Adversário:** nenhum número do hall ou dossiê muda (eventos e DPA iguais nos 21 + 6). Reproduziu 3 furos na `_cisoes`, corrigidos com teste: linha própria reconhecida pela raiz e não pelo ISIN (1 PN por ON passaria ×1), `assetIssued` NaN virando "nan", e `recebe` da classe errada sem o ISIN do ticker (agora falha alto). Achado de dado: EQTL3 DPA 2025 = R$ 2,37 pelo hall → **B56**.
+
+**Fora do escopo → B55:** antes da cisão, a série histórica inclui o negócio cindido (MRV 2016–18 com a LOG). Falta ajustar
+ou declarar a janela não avaliada. **Resposta do Frank ao #12:** B46 sim; B35 não (fica até o HOLD-OUT 2).
+
