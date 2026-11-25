@@ -37,6 +37,11 @@ reportlab/pytest; sem banco; dados brutos fora do git (`ferramentas/dados/`). Br
   junta no master se verde e sem golden/doutrina (decisão de 22/10).
 - Mexer em motor/doutrina/golden muda palavra de investimento: só com teste verde e registro no `09`.
 
+## Skills e agentes da Mesa
+- **Neste repositório, `/fechar`, `/fatia`, `/checkup` e `/kaizen` = `/mesa-fechar`, `/mesa-fatia`, `/mesa-checkup`,
+  `/mesa-kaizen`** (a skill global de mesmo nome sombreia a do projeto). Recebeu o nome global → invoque a `mesa-*`.
+- Agentes: `senior` (decisão e processo), `oraculo` (método), `adversario`, `verificador-fonte`, `varredor`.
+
 ## Quem decide (pacote de autonomia, 25/11/2026)
 - **Reversível** (nome, estrutura de pasta, ordem de tarefa, escolha técnica com fonte, conserto de infraestrutura): escolher
   a opção **conservadora**, chamar o agente `senior` se houver opções, registrar em `docs/DECISOES.md` (opção, motivo, como
