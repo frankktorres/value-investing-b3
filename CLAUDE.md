@@ -12,6 +12,9 @@ reportlab/pytest; sem banco; dados brutos fora do git (`ferramentas/dados/`). Br
 ## Como rodar e testar
 - `pip install -r requirements.txt` · `cd ferramentas && python -m pytest --ignore=backtest -q` (roda sem os ZIPs da CVM;
   skips por dado ausente aparecem com `-rs`). Suíte do `backtest/` (~13 min): só local, sozinha.
+- **Trava B37:** push no `master` só se a árvore do commit for a de uma suíte inteira verde (0 falha/pulado, ≥ piso de
+  `.githooks/piso_testes.json`). Ordem: editar tudo → suíte → commit → push; nada muda entre a suíte e o commit. Ligada por
+  `git config core.hooksPath .githooks` (o SessionStart avisa se estiver desligada).
 - `python rodar_tudo.py --motivo "..."` regrava o golden; só com motivo e decisão registrada.
 - Tela: `painel --exportar` (raiz) regera `ferramentas/painel/web/dados/` (~100 s) e abre http://127.0.0.1:8765/; a tela só
   lê. Página web → conferir no navegador (Playwright MCP); capturas vão para `.playwright-mcp/` (ignorado).
