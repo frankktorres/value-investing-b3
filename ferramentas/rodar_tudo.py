@@ -1,7 +1,8 @@
 """Roda os 6 lotes, compara com o golden e imprime 'o que mudou e por quê'.
 
 Uso: python rodar_tudo.py            → só mostra o diff (código de saída 1 se houver mudança)
-     python rodar_tudo.py --motivo "…" → além do diff, regrava o golden com o motivo (vai para tests/golden_log.md)
+     GOLDEN_REGRAVAR=1 python rodar_tudo.py --motivo "camada N: …" → além do diff, regrava o golden com o motivo
+       (vai para tests/golden_log.md; trava 4.3: sem a variável ou sem a camada, recusa antes de rodar)
 """
 import argparse
 import sys
@@ -17,6 +18,11 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--motivo", help="regrava o golden com este motivo")
     args = ap.parse_args()
+    if args.motivo:
+        try:
+            golden.exigir_permissao(args.motivo)        # trava 4.3: falha antes de rodar os 41 tickers
+        except PermissionError as e:
+            sys.exit(str(e))
     todos = universo.avaliar_todos()
     atual = {tk: universo.instantaneo(it) for tk, it in sorted(todos.items())}
     palavras = Counter(s["palavra"] for s in atual.values())

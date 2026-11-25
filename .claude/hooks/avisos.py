@@ -13,7 +13,7 @@ import subprocess
 import sys
 from pathlib import Path
 
-RAIZ = Path(os.environ.get("CLAUDE_PROJECT_DIR") or Path(__file__).resolve().parents[2])
+RAIZ = Path(__file__).resolve().parents[2]          # a do próprio arquivo, não CLAUDE_PROJECT_DIR (sessão em subpasta)
 sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "ferramentas"))
 
 
@@ -55,6 +55,11 @@ def main(argv: list[str]) -> int:
     if os.environ.get("CLAUDE_CODE_REMOTE"):
         return 0
     modo = argv[0] if argv else ""
+    for fluxo in (sys.stdout, sys.stderr):
+        try:
+            fluxo.reconfigure(encoding="utf-8", errors="replace")   # o Claude Code lê UTF-8; pipe no Windows é cp1252
+        except AttributeError:
+            pass
     try:
         if modo == "inicio":
             msg = aviso_hookspath()

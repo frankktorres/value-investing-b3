@@ -13,6 +13,10 @@ def main():
     motivo = ap.parse_args().motivo.strip()
     if len(motivo) < 15:
         sys.exit("motivo curto demais: explique o que mudou e por quê")
+    try:
+        golden.exigir_permissao(motivo)                 # trava 4.3: GOLDEN_REGRAVAR=1 + "camada N" no motivo
+    except PermissionError as e:
+        sys.exit(str(e))
     atual = universo.instantaneo_todos()
     try:
         mud = golden.comparar(golden.carregar(), atual)

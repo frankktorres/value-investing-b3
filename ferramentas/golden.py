@@ -1,10 +1,14 @@
 """Golden da regressão: grava, carrega e compara o instantâneo dos 41 tickers.
 
 Uma mudança de método só passa se o diff for declarado: `python -m tests.regerar_golden --motivo "..."`.
+Trava 4.3 (25/11/2026): regravar exige `GOLDEN_REGRAVAR=1` no ambiente e motivo citando a camada de prova
+("camada N: ..."), senão `PermissionError` e nada é gravado. Editar o golden.json à mão é barrado pelo hook trava_config.
 """
 import json
 import math
+import os
 import pathlib
+import re
 
 AQUI = pathlib.Path(__file__).parent
 GOLDEN = AQUI / "tests" / "golden.json"
@@ -24,11 +28,24 @@ def carregar():
     return json.loads(GOLDEN.read_text(encoding="utf-8"))["tickers"]
 
 
+CAMADA = re.compile(r"\bcamadas?\s*[1-5]\b", re.I)
+
+
+def exigir_permissao(motivo):
+    """Trava 4.3: só regrava com GOLDEN_REGRAVAR=1 e motivo citando a camada de prova (docs/VALIDACAO.md)."""
+    if os.environ.get("GOLDEN_REGRAVAR") != "1":
+        raise PermissionError("golden só se regrava com GOLDEN_REGRAVAR=1 no ambiente (trava 4.3): mudar o golden muda "
+                              "palavra — depois do oráculo e do registro no 09")
+    if not CAMADA.search(motivo or ""):
+        raise PermissionError("o motivo do golden precisa citar a camada de prova, ex.: \"camada 3: ...\" (trava 4.3)")
+
+
 def salvar(snap, motivo):
     ruins = [(tk, k) for tk, d in snap.items() for k, x in d.items() if _nan(x)
               or (k == "ancoras" and any(_nan(y) for y in x.values()))]
     if ruins:
         raise ValueError(f"golden com NaN não é gravado (AUD-30): {ruins}")
+    exigir_permissao(motivo)
     from datetime import datetime
     GOLDEN.parent.mkdir(exist_ok=True)
     GOLDEN.write_text(json.dumps({"motivo": motivo, "tickers": snap}, ensure_ascii=False, indent=1, sort_keys=True,

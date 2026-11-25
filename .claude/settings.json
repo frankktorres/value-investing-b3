@@ -18,10 +18,24 @@
       "Edit(**/*.key)",
       "Edit(**/mesa_suite_verde*)",
       "Bash(*mesa_suite_verde*)",
-      "Bash(*registrar_verde*)"
+      "Bash(*registrar_verde*)",
+      "Bash(*MESA_LIBERA_CONFIG*)",
+      "Bash(*GOLDEN_REGRAVAR*)"
     ]
   },
   "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Edit|Write|MultiEdit|NotebookEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python \"$CLAUDE_PROJECT_DIR/.claude/hooks/trava_config.py\"",
+            "timeout": 30
+          }
+        ]
+      }
+    ],
     "SessionStart": [
       {
         "hooks": [
@@ -45,6 +59,11 @@
             "type": "command",
             "command": "python \"$CLAUDE_PROJECT_DIR/.claude/hooks/auto_commit.py\"",
             "timeout": 1000
+          },
+          {
+            "type": "command",
+            "command": "python \"$CLAUDE_PROJECT_DIR/.claude/hooks/avisos.py\" fim",
+            "timeout": 60
           }
         ]
       }
