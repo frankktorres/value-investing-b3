@@ -501,3 +501,23 @@ Relatório: `docs/oraculo/hipoteses-2026-10-22.md` (e `.json`).
      com teste, saída em JSON e relatório gerado só do JSON (como o da B36), registrado no `09`.
    - **Congelamento:** motor, doutrina e golden não mudam por causa da B39 antes do relatório.
    - **Orçamento (§0.4):** a medição não conta como tentativa (não há variante de regra); a calibração que ela disparar, sim.
+10. **25/11/2026 — B39: correção de citação e de atribuição da emenda 9, depois de abrir as fontes; escrita e commitada SOZINHA,
+   antes de rodar qualquer conta.** A conferência item por item está em `docs/b39/FONTES-B39.md`. Nada muda em conta,
+   insumo, sensibilidade ou gatilho.
+   - **(iii) Fonte do "tirar s".** O paper "2025 Edition" não está aberto ao público (o `CountryRisk2025.pdf` do site são os
+     slides; o SSRN recusou o acesso). Valem os textos abertos: *Country Risk … The 2024 Edition*, p. 101 e Tabela 30
+     ("subtracting that default spread from the government bond rate to get to a risk-free rate"; real 11,83% − 2,83% = 9,00%),
+     e *What is the riskfree rate?* (dez/2008), "The Solution" (o risco "may end up being double counted"). Nota B nos dois.
+     A regra da emenda 9 confere. A `ctryprem` de 5/1/2026 confere: Brasil Ba1, s = 2,13% ("Adj. Default Spread"), ERP total
+     = 7,47% (CRP 3,24% + maduro 4,23%). Nota B.
+   - **(iii) Título indexado.** O Damodaran não trata título indexado de governo com risco de default. Levar a NTN-B a
+     nominal (n) e tirar s é extensão da Mesa, coerente com a regra, e fica declarado assim.
+   - **(ii) Atribuição.** De Campbell & Shiller vem só a **construção** do E10 (média de 10 anos dos lucros reais ÷ preço
+     real; mínimo de 5 pela citação de Graham & Dodd, 1934, p. 452). A fonte aberta é o NBER WP 8221 (2001), a atualização do
+     artigo de 1998 (nota B). Do artigo de 1998 só a referência foi conferida, e o *Irrational Exuberance* não foi aberto.
+     Lá o P/E10 é preditor em regressão; o texto **não** diz que E10/P seja o retorno esperado. A leitura "Ke real = E10 ÷ P"
+     é o EPV reverso da Mesa (âncora EPV do `01`), com o viés de quem ignora o crescimento: se o crescimento cria
+     valor (retorno sobre o reinvestido > Ke), o E10/P **subestima** o Ke (a sensibilidade de Gordon da emenda 9 mostra o
+     tamanho).
+   - **Sem mudança (já literal na emenda 9):** com 2 estimativas, vale a média das 2. Gordon do banco todo em nominal e
+     depois para real. Agregado do índice = Σ E10 ÷ Σ valor de mercado, nunca a média dos E/P individuais.
