@@ -70,14 +70,15 @@ def motivo(r: dict) -> str:
         e = r["erro"]
         return f"{e['tipo']} em {e['onde']}: {e['mensagem'][:140]}".replace("|", "/").replace("\n", " ")
     if r["palavra"] != "NÃO CONCLUSIVO":
-        return f"régua do P/C ({r['palavra']})"
+        return f"régua do P/C ({r['palavra']})" + ("; valor absurdo (P/C > 5)" if absurdo(r) else "")
     m = []
     if ke30(r):
-        m.append(f"Ke nominal {100 * r['ke_nom']:.1f}% > 30%")
+        m.append(f"Ke nominal {fmt(r['ke_nom'], pct=True)} > 30%")
     if r.get("dispersao") is not None and r["dispersao"] > DISPERSAO:
-        m.append(f"dispersão das âncoras {r['dispersao']:.2f}× > {DISPERSAO}×")
+        m.append(f"dispersão das âncoras {fmt(r['dispersao'])}× > {fmt(DISPERSAO, 1)}×")
     if absurdo(r):
-        m.append("valor absurdo")
+        c = r.get("central")
+        m.append("valor absurdo (" + (f"central {fmt(c)} ≤ 0" if c is not None and c <= 0 else f"P/C {fmt(r.get('pc'))}") + ")")
     if not m:
         m.append(f"trava do método (régua: {r.get('palavra_regua')})")
     return "; ".join(m)

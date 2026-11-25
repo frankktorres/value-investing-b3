@@ -1,0 +1,116 @@
+{
+ "ticker": "ENEV3",
+ "tipo": "utility",
+ "perfil": "servicos",
+ "data": "2026-11-19",
+ "rodado_em": "2026-11-25T07:46:52",
+ "palavra": "CARA",
+ "palavra_regua": "CARA",
+ "pc": 39.947988245882364,
+ "central": 0.6563534523594595,
+ "preco": 26.22,
+ "ke_nom": 0.20630552000000013,
+ "dispersao": 1.0017265397305126,
+ "confianca": "normal",
+ "notas": {
+  "qualidade": 3.0,
+  "solidez": 3.4235762345406924,
+  "renda": 3.0,
+  "preco": 0,
+  "geral": 2.3347152469081385
+ },
+ "desc_controlador": 0.0,
+ "payout": 0.25,
+ "erro": null,
+ "segundos_avaliacao": 0.1,
+ "insumos": [
+  {
+   "insumo": "preço (COTAHIST)",
+   "classe": "automatico"
+  },
+  {
+   "insumo": "VPA (StatusInvest)",
+   "classe": "automatico"
+  },
+  {
+   "insumo": "LPA (StatusInvest)",
+   "classe": "automatico"
+  },
+  {
+   "insumo": "ROE de 10 anos (StatusInvest)",
+   "classe": "automatico"
+  },
+  {
+   "insumo": "ROE atual (StatusInvest)",
+   "classe": "automatico"
+  },
+  {
+   "insumo": "DPA de 5 anos (StatusInvest)",
+   "classe": "automatico"
+  },
+  {
+   "insumo": "JCP (StatusInvest)",
+   "classe": "automatico"
+  },
+  {
+   "insumo": "P/L histórico (StatusInvest)",
+   "classe": "automatico"
+  },
+  {
+   "insumo": "anos pagos (StatusInvest)",
+   "classe": "automatico"
+  },
+  {
+   "insumo": "payout",
+   "classe": "pesquisa"
+  },
+  {
+   "insumo": "solidez (alavancagem CVM)",
+   "classe": "automatico"
+  },
+  {
+   "insumo": "nota moat",
+   "classe": "vazio"
+  },
+  {
+   "insumo": "nota gestao",
+   "classe": "vazio"
+  },
+  {
+   "insumo": "nota controlador",
+   "classe": "vazio"
+  },
+  {
+   "insumo": "nota ciclo",
+   "classe": "vazio"
+  },
+  {
+   "insumo": "nota fisher",
+   "classe": "vazio"
+  },
+  {
+   "insumo": "discricionario",
+   "classe": "pesquisa"
+  },
+  {
+   "insumo": "desconto_controlador",
+   "classe": "vazio"
+  }
+ ],
+ "contagem": {
+  "automatico": 10,
+  "pesquisa": 2,
+  "vazio": 6,
+  "total": 18,
+  "pct_automatico": 55.6
+ },
+ "meta_insumos": {
+  "protocolo": "B36 v1",
+  "chamadas": 9,
+  "fim": "2026-11-24T19:30",
+  "nao_achado": [
+   "qualitativo (notas moat/gestao/controlador/ciclo/fisher exigem series calculadas e documento A/B por nota; nao levantadas)",
+   "desconto_controlador fixo: sem interferencia consumada documentada (IPE nao varrido em titulos de 2017-2023)"
+  ]
+ }
+}

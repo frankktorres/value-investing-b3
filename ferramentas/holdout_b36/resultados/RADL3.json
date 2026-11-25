@@ -3,7 +3,7 @@
  "tipo": "industrial",
  "perfil": "servicos",
  "data": "2026-11-19",
- "rodado_em": "2026-11-24T19:04:43",
+ "rodado_em": "2026-11-25T07:46:52",
  "palavra": "NÃO CONCLUSIVO",
  "palavra_regua": "CARA",
  "pc": 3.4702672193971074,
@@ -21,7 +21,7 @@
  },
  "desc_controlador": 0.0,
  "erro": null,
- "segundos_avaliacao": 12.0,
+ "segundos_avaliacao": 3.3,
  "insumos": [
   {
    "insumo": "séries DFP/ITR (CVM)",
