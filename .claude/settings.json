@@ -3,7 +3,22 @@
     "defaultMode": "bypassPermissions",
     "deny": [
       "Bash(git push --force*)",
-      "Bash(rm -rf*)"
+      "Bash(git push -f*)",
+      "Bash(git push * --force*)",
+      "Bash(git push * -f)",
+      "Bash(git push * -f *)",
+      "Bash(git reset --hard*)",
+      "Bash(git clean*)",
+      "Bash(rm -rf*)",
+      "Read(**/.env*)",
+      "Edit(**/.env*)",
+      "Read(**/*.pem)",
+      "Edit(**/*.pem)",
+      "Read(**/*.key)",
+      "Edit(**/*.key)",
+      "Edit(**/mesa_suite_verde*)",
+      "Bash(*mesa_suite_verde*)",
+      "Bash(*registrar_verde*)"
     ]
   },
   "hooks": {
@@ -14,6 +29,11 @@
             "type": "command",
             "command": "git pull --ff-only || echo 'git pull --ff-only falhou (árvore suja ou divergência); seguir sem atualizar'",
             "timeout": 60
+          },
+          {
+            "type": "command",
+            "command": "python \"$CLAUDE_PROJECT_DIR/.claude/hooks/avisos.py\" inicio",
+            "timeout": 30
           }
         ]
       }

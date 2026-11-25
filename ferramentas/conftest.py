@@ -46,16 +46,48 @@ def pytest_make_collect_report(collector):
         rep.longrepr = f"EXIGIR_DADOS=1: módulo pulado na coleta ({rep.longrepr})"
 
 
+def _parcial(config) -> bool:
+    # caminho explícito = parcial; valor de opção (`-p no:cacheprovider`) não é caminho (22/10: a tela dizia "sem registro")
+    args = list(config.invocation_params.args)
+    caminho = config.args_source == pytest.Config.ArgsSource.ARGS
+    return caminho or any(a in ("-k", "-m", "--lf", "--ff", "-x") or a.startswith(("-k", "-m")) for a in args)
+
+
+def pytest_sessionstart(session):
+    """B37: guarda a árvore testada (HEAD + árvore de trabalho) no início da suíte inteira."""
+    session.config._mesa_arvore = None
+    if _parcial(session.config):
+        return
+    try:
+        import suite_marcador
+        session.config._mesa_arvore = suite_marcador.arvore_trabalho(pathlib.Path(__file__).parent)
+    except (RuntimeError, OSError):
+        pass
+
+
+def _registrar_suite_verde(session, exitstatus, n):
+    """B37: suíte inteira com 0 falha/erro/pulado e árvore igual do início ao fim -> registro lido pelo pre-push do master.
+    Independe de CLAUDE_NO_SUITE_LOG: o conferir_noite (worktree) também precisa registrar para juntar no master."""
+    try:
+        import suite_marcador
+        inicio = getattr(session.config, "_mesa_arvore", None)
+        fim = suite_marcador.arvore_trabalho(pathlib.Path(__file__).parent) if inicio else None
+        if suite_marcador.deve_registrar(n, _parcial(session.config), int(exitstatus), inicio, fim):
+            suite_marcador.registrar_verde(inicio, n["passed"], pathlib.Path(__file__).parent)
+    except (RuntimeError, OSError):
+        pass
+
+
 def pytest_sessionfinish(session, exitstatus):
     """Registro da última suíte COMPLETA (alimenta a tela Sistema): `dados/suite_ultima.json`, ignorado pelo git. Rodada parcial
     (caminho, -k, -m, ou o backtest) não grava — o número só vale se for a suíte inteira do dia a dia."""
     import datetime
     import json
     args = list(session.config.invocation_params.args)
-    # caminho explícito = parcial; valor de opção (`-p no:cacheprovider`) não é caminho (22/10: a tela dizia "sem registro")
-    caminho = session.config.args_source == pytest.Config.ArgsSource.ARGS
-    parcial = caminho or any(a in ("-k", "-m", "--lf", "--ff", "-x") or a.startswith(("-k", "-m")) for a in args)
+    parcial = _parcial(session.config)
     tr = session.config.pluginmanager.get_plugin("terminalreporter")
+    if tr is not None and not parcial:
+        _registrar_suite_verde(session, exitstatus, {k: len(tr.stats.get(k, [])) for k in ("passed", "failed", "error", "skipped")})
     if parcial or tr is None or os.environ.get("CLAUDE_NO_SUITE_LOG") == "1":
         return
     n = {k: len(tr.stats.get(k, [])) for k in ("passed", "failed", "error", "skipped")}
