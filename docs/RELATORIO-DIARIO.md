@@ -9,7 +9,8 @@
   `tests/test_rotina.py` e `test_conferir_noite.py`. MISSOES limpo: fila de 23/10 conferida no código; 2 missões carimbadas (B67, B16).
 - Descobri: a ConferirNoite existia (`ValueInvesting-ConferirNoite`), desligada, com rc 30 desde 23/11 por causa dos ramos de
   outubro nunca juntados (agora `arquivo/2026-10-*`, inventário B67); MonitorSemanal rc 21 e TemporadaDiaria rc 1 → B68.
-- Precisa de você: liberar a rede B3/CVM do ambiente da nuvem (#18); subir o piso da B37 para 1399 (#17); deixar o PC ligado às
+- Frank: patch da manhã aplicado; `claude/*` de outubro apagados (cópias `arquivo/*` com os mesmos SHAs); piso da B37 1279 → 1399 (#17).
+- Precisa de você: liberar a rede B3/CVM do ambiente da nuvem (#18); deixar o PC ligado às
   07:15 e conferir `ferramentas/monitor/conferir.log` na manhã de 27/11 (1ª junção real; o push passa pela B37 pela 1ª vez).
 
 ## 26/11/2026 — B45 só diagnóstico, causa (b) (sessão do Frank)

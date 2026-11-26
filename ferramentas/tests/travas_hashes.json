@@ -15,7 +15,7 @@
   "ferramentas/tests/test_b37_trava_master.py": "3235a37cbe1a9f0363941d76b2b45aaa44b3eea7885ffd8e4a0b7b6a101833f3",
   "ferramentas/tests/test_motor_puro.py": "29478810c7de3cae1aaa20cad8f666c937bf8de35110e25923c451746afc4b10",
   "ferramentas/tests/test_docs_caminhos.py": "12ddb92cc57570ab8dde88542877c97d7ff021849beb07948d902915905c9d92",
-  "ferramentas/conferir_noite.py": "da3f5d6cfb5cd66b3ecb09496ae849b3aa46c1f436ca807d2b05418fec1b16af",
+  "ferramentas/conferir_noite.py": "7e943e9f49eed3dd63515db14634fc529c2d71d8a50669004836ee423382557b",
   "ferramentas/tests/test_conferir_noite_travas.py": "0e1998a0678b96c54e52f6c4901f0088661306d683486024c453205032dc6a9f"
  }
 }
