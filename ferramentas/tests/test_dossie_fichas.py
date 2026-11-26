@@ -30,9 +30,14 @@ ARQUIVOS = sorted(p.stem for p in VEREDITOS.glob("*.json"))
 # antes, 14,9142 volta exato). ALLD3 BARATA → RADAR no recálculo (dispersão 2,17 > 1,8, §11.3) — decisão do Frank no 09.
 METODO_VIGENTE = {
     "ALLD3-2026-10-15": dict(central=15.9743, pc=0.3944, palavra="RADAR"),          # salvo 14,9142 BARATA (antes do H2)
-    "BLAU3-2026-10-02": dict(central=8.1372, pc=1.3297, palavra="NÃO CONCLUSIVO"),  # pré-H2 8,2998
-    "CMIN3-2026-10-06": dict(central=3.6317, pc=1.3602, palavra="CARA"),            # pré-H2 3,3668 (macro de antes); minério
-                                                                                    # no IPCA da data (adversário 24/11: era 3,6810)
+    # B60 (26/11/2026, dado): série de 02/10 recoletada pelo coletor de hoje; entra `proventos_a_pagar` do ITR 2T26 e o motor
+    # passa a pôr o provento já ex na DL (AUD-02). BLAU3 8,1372 → 7,6457 (DL + R$ 114,7 mi); CMIN3 3,6317 → 3,5987: DL igual
+    # (a ficha tira o campo do passivo de contrato e o motor o soma), mas o provento (R$ 1,16 bi, sem juro) sai da dívida bruta
+    # do WACC (D/E 0,8206 → 0,7771), como no hall (adversário, 26/11). O `lucro_controlador` 0 → None de 2022–24 da CMIN3
+    # muda o OE desses anos, mas não o central (cíclica: EPV/DCF pela receita de meio). Palavras iguais.
+    "BLAU3-2026-10-02": dict(central=7.6457, pc=1.4152, palavra="NÃO CONCLUSIVO"),  # pré-B60 8,1372; pré-H2 8,2998
+    "CMIN3-2026-10-06": dict(central=3.5987, pc=1.3727, palavra="CARA"),            # pré-B60 3,6317; pré-H2 3,3668 (macro de
+                                                                                    # antes); minério no IPCA da data (era 3,6810)
     "FESA4-2026-10-15": dict(central=7.7010, pc=0.8090, palavra="RADAR"),           # salvo 7,6189
     "HYPE3-2026-10-06": dict(central=15.7668, pc=1.7125, palavra="CARA"),           # pré-H2 16,9224
     "LEVE3-2026-10-06": dict(central=38.3920, pc=0.9520, palavra="NÃO CONCLUSIVO"), # pré-H2 38,4467
