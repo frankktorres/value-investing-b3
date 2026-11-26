@@ -1,7 +1,8 @@
 # PROJECT BRIEF — Mesa de Value Investing B3
 > **Norte do projeto: `docs/00-DNA.md` (ler primeiro).**
 
-*Versão de 26/11/2026, tarde (B45 só diagnóstico: causa por ticker em `docs/b45/`, `ferramentas/b45/diagnostico.py`; coletor deixa capex
+*Versão de 26/11/2026, noite (rotina noturna no molde do UNION: `docs/ops/rotina/` BOOTSTRAP + PROTOCOLO, pré-voo, portão
+`ferramentas/rotina/checar_rotina.py` rodado também pela manhã, ConferirNoite religada; piso da B37 1399); antes, 26/11/2026, tarde (B45 só diagnóstico: causa por ticker em `docs/b45/`, `ferramentas/b45/diagnostico.py`; coletor deixa capex
 não avaliado com frota no FCO; registro de tickers tocados do M1; B62–B66); antes, 26/11/2026 (B60: séries do dossiê CMIN3/BLAU3 recoletadas, palavras iguais; pasta do Claude Desktop gerada com MANIFESTO e trava); antes,
 25/11/2026, noite 9 (B57: X2 do Z'' com 2.03.04 + 2.03.05; B46 8/24 NÃO CONCLUSIVA, causa (a) fechada pelo Frank); antes,
 25/11/2026, noite 8 (B46: "separar a dificuldade" pré-registrada e rodada, tentativa 7/24, NÃO CONCLUSIVA); antes,
@@ -126,6 +127,10 @@ MVP de uso pessoal, maduro no cálculo. Um usuário real, sem terceiros. Prazo e
 6. Licença pretendida do código (fechado/aberto)?
 
 ## 12. O que mudou
+- 26/11/2026 (noite): rotina noturna versionada — `docs/ops/rotina/BOOTSTRAP.md` (texto da nuvem, conferido por `rotina/nuvem.py` →
+  `nuvem.json`) + `PROTOCOLO.md` (fase 1: só doc, teto 4, Sonnet 5.5); `scripts/rotina_preflight.sh` (Python 3.14 por uv, sonda,
+  suíte); portão `ferramentas/rotina/checar_rotina.py`; `conferir_noite` com PROTEGIDOS ampliado + portão da base (patch do Frank);
+  canários `test_rotina.py`; ramos de outubro → `arquivo/2026-10-*` (B67); piso B37 1399.
 - 26/11/2026 (tarde): B45 diagnóstico — ferramenta nova `ferramentas/b45/diagnostico.py` (camadas + contrafactuais, `docs/b45/camadas.json`);
   `coletar_cvm.RE_FROTA_FCO` + `capex_frota_fco` (teste `test_b45_capex_frota.py`); `docs/holdout/TICKERS-TOCADOS.md`; PENDENTE #16 (B62).
 - 26/11/2026: B60 — `ferramentas/b60/recoletar.py` recoleta CMIN3/BLAU3 (pré-AUD-68), catraca `test_b60_series_pos_aud68.py`, B61 nova

@@ -26,7 +26,9 @@ reportlab/pytest; sem banco; dados brutos fora do git (`ferramentas/dados/`). Br
   lê. Página web → conferir no navegador (Playwright MCP); capturas vão para `.playwright-mcp/` (ignorado).
 
 ## Rotina autônoma (nuvem, só enxerga o GitHub)
-- Fila: `docs/MISSOES.md` (uma missão por turno) ← `docs/BACKLOG.md` (só tipo "executável"). Diário: `docs/RELATORIO-DIARIO.md`.
+- **Comando da noite = `docs/ops/rotina/PROTOCOLO.md`** (versionado); a nuvem só roda o bloco de `docs/ops/rotina/BOOTSTRAP.md`
+  (trava de sobreposição). Fila: missões de `docs/MISSOES.md` com `*Carimbo (nuvem):*` (escopo literal + `pronta:`), no máximo 4
+  por noite; portão `ferramentas/rotina/checar_rotina.py`. Diário: `docs/RELATORIO-DIARIO.md`.
 - **Decisão reversível = decide, registra em `docs/DECISOES.md` e segue.** Só parar (e escrever em `docs/PENDENTE-FRANK.md`) em:
   senha/chave, dinheiro, apagar dados. **Nunca executar nem sugerir como feita ordem de compra/venda.**
 - Local: o hook `Stop` só guarda snapshot em `wip/auto`, nunca toca o `master` (decisão de 24/11); o commit no `master` é
@@ -66,11 +68,10 @@ reportlab/pytest; sem banco; dados brutos fora do git (`ferramentas/dados/`). Br
 
 ## Turno dia/noite
 - **Dia (Frank presente):** ele decide; a rotina não roda. Ao fim, `/fechar` (ou "vou parar" / "até amanhã") passa o pendente
-  para `docs/MISSOES.md` e dá push.
-- **Noite (Frank ausente, nuvem):** `git pull --ff-only` → ler `MISSOES.md` e `PENDENTE-FRANK.md` (respostas novas viram
-  decisões) → executar a 1ª missão executável → entrada no `RELATORIO-DIARIO.md` → `cd ferramentas && python -m
-  desktop.atualizar` (sempre, último passo de edição) → testes → commit/push. Travou em
-  senha/dinheiro/apagar → registrar em `PENDENTE-FRANK.md` e passar à próxima missão.
+  para `docs/MISSOES.md`, carimba as missões seguras para a noite e dá push.
+- **Noite (Frank ausente, nuvem, 04:40 BRT):** segue `docs/ops/rotina/PROTOCOLO.md` inteiro (pré-voo → missões carimbadas →
+  portão → relatório), só no ramo `claude/*`. De manhã (07:15) o `ferramentas/conferir_noite.py` junta no master se o portão
+  da base aprovar e a suíte com os dados der verde.
 
 ## Regra permanente: PROJECT_BRIEF.md
 

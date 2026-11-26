@@ -1,6 +1,18 @@
 # RELATORIO-DIARIO
 *Uma entrada por dia/turno, a mais nova em cima: o que foi feito (com commit), decisões tomadas, o que ficou, erros. Máx. 10 linhas por entrada.*
 
+## 26/11/2026 — Rotina noturna no molde do UNION, ligada para 27/11 (sessão do Frank)
+- Fiz: `docs/ops/rotina/BOOTSTRAP.md` (texto da nuvem, 1652 caracteres, conferido: `nuvem.json`) + `PROTOCOLO.md` (pré-voo →
+  missões carimbadas → portão → relatório; fase 1: só doc, teto 4, 1 subagente, Sonnet 5.5, até 06:30 BRT); pré-voo
+  `scripts/rotina_preflight.sh`; portão `ferramentas/rotina/checar_rotina.py` (escopo da base, proibidos, prova colada); a manhã
+  roda o portão da origin/master e recusa motor/método/rotina/`_historico` (patch aplicado pelo Frank); canários em
+  `tests/test_rotina.py` e `test_conferir_noite.py`. MISSOES limpo: fila de 23/10 conferida no código; 2 missões carimbadas (B67, B16).
+- Descobri: a ConferirNoite existia (`ValueInvesting-ConferirNoite`), desligada, com rc 30 desde 23/11 por causa dos ramos de
+  outubro nunca juntados (agora `arquivo/2026-10-*`, inventário B67); MonitorSemanal rc 21 e TemporadaDiaria rc 1 → B68.
+- Frank: patch da manhã aplicado; `claude/*` de outubro apagados (cópias `arquivo/*` com os mesmos SHAs); piso da B37 1279 → 1399 (#17).
+- Precisa de você: liberar a rede B3/CVM do ambiente da nuvem (#18); deixar o PC ligado às
+  07:15 e conferir `ferramentas/monitor/conferir.log` na manhã de 27/11 (1ª junção real; o push passa pela B37 pela 1ª vez).
+
 ## 26/11/2026 — B45 só diagnóstico, causa (b) (sessão do Frank)
 - Fiz: registro append-only de tickers tocados (M1) com os 5; `python -m b45.diagnostico` reproduz os 5 números da B36 e abre
   âncoras, ponte, margem, Kd e minoritários; quadro causa por ticker × emenda 8 em `docs/b45/B45-diagnostico-2026-11-26.md`.

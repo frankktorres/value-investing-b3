@@ -1,4 +1,4 @@
 {
  "_nota": "B37 (25/11/2026): a trava do push no master recusa registro de suite verde com menos aprovados que isto. So sobe (o hook trava_config so aceita subir); subir quando a suite crescer (o pre-push avisa).",
- "piso": 1279
+ "piso": 1399
 }

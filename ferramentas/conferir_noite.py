@@ -8,7 +8,8 @@ COTAHIST, carteira): lá ~42 testes pulam, inclusive golden e dossiês — o "ne
    + CÓPIA dos dados locais ignorados pelo git (cópia, não hard link: `open(p, "wb")` trunca o mesmo arquivo e um teste
    estragaria o original) + tela regerada + suíte completa com `EXIGIR_DADOS=1` (teste pulado = falha: verde sem rodar o
    golden era justamente o furo da nuvem);
-3. verde e sem mexer em golden/doutrina → push do merge para o master, apaga o ramo remoto só se ele ainda estiver no
+3. sem tocar em PROTEGIDOS, aprovado pelo portão da rotina da origin/master (`portao`, 26/11/2026: escopo carimbado
+   pela sessão do dia, nada proibido) e verde → push do merge para o master, apaga o ramo remoto só se ele ainda estiver no
    commit testado (`--force-with-lease`; commit que chegou durante a suíte não se perde) e atualiza o checkout local com
    `pull --ff-only` se ele estiver limpo;
 4. senão deixa o ramo como está e diz por quê. Ramo `claude/*` sem commit novo (já contido no master) é apagado.
@@ -16,8 +17,8 @@ COTAHIST, carteira): lá ~42 testes pulam, inclusive golden e dossiês — o "ne
     python conferir_noite.py                 # confere e junta
     python conferir_noite.py --so-conferir   # só roda os testes da junção; não envia nada
 
-Saída: 0 = nada a fazer ou tudo juntado; 30 = testes vermelhos; 31 = precisa do Frank (golden/doutrina, conflito, ramo ainda
-recebendo commit, push recusado). Pelo Agendador: `agendador/noite.vbs <python> conferir` → log em monitor/conferir.log.
+Saída: 0 = nada a fazer ou tudo juntado; 30 = testes vermelhos; 31 = precisa do Frank (golden/doutrina/motor, portão
+recusou ou não rodou, conflito, ramo ainda recebendo commit, push recusado). Pelo Agendador: `agendador/noite.vbs <python> conferir` → log em monitor/conferir.log.
 """
 from __future__ import annotations
 
@@ -42,7 +43,17 @@ PROTEGIDOS = ("ferramentas/tests/golden.json", "01-doutrina-value-investing.md",
               "ferramentas/tests/test_docs_caminhos.py", "ferramentas/tests/test_conferir_noite_travas.py",
               ":(glob)**/conftest.py", ":(glob)**/pytest.ini", ":(glob)**/pyproject.toml", ":(glob)**/setup.cfg",
               ":(glob)**/tox.ini", ":(glob)**/ruff.toml", ":(glob)**/.ruff.toml", ":(glob)**/mypy.ini",
-              ":(glob)**/.mypy.ini", ":(glob)**/*catraca*.json")
+              ":(glob)**/.mypy.ini", ":(glob)**/*catraca*.json",
+              # rotina noturna (26/11/2026, ok do Frank; senior): motor e módulos da raiz que ele importa, dossiê, dados,
+              # régua/backtest, oráculo, registro prospectivo, insumos, método (DNA, pré-registro, 09, hall), regras, a própria
+              # rotina e _historico existente também só com decisão do Frank. O escopo fino fica com o `portao` abaixo.
+              ":(glob)ferramentas/*.py", "ferramentas/dossie", "ferramentas/dados", "ferramentas/backtest",
+              "ferramentas/oraculo", "ferramentas/prospectivo", ":(glob)**/insumos/**", ":(glob)ferramentas/tests/golden*",
+              "03-hall-de-acoes.md", "09-diario-de-decisoes.md", "docs/00-DNA.md", "docs/PRE-REGISTRO-v3.md", "CLAUDE.md",
+              ":(glob)requirements*", ".claude", "ferramentas/rotina", "docs/ops/rotina", "scripts/rotina_preflight.sh",
+              "scripts/cloud_setup.sh", ":(glob)**/_historico/**",
+              ":(exclude,glob)_historico/* upload-desktop/**")   # snapshot NOVO do desktop.atualizar (o portão barra M/D)
+PORTAO = "ferramentas/rotina/checar_rotina.py"
 FORA = ("ferramentas/painel/web/dados", "ferramentas/dados/cvm/_antes", "ferramentas/monitor",
         "ferramentas/dados/suite_ultima.json", "ferramentas/carteira.local.json",
         "ferramentas/dados/privado", "ferramentas/.hypothesis")             # regerável, velho, privado ou cache: não vai para a worktree
@@ -75,6 +86,29 @@ def apagar_remoto(ramo: str, sha: str) -> None:
     """Apaga `origin/<ramo>` só se ele ainda estiver em `sha` (o commit conferido): o que chegou depois fica."""
     nome = ramo.removeprefix("origin/")
     git("push", f"--force-with-lease={nome}:{sha}", "origin", "--delete", nome)
+
+
+def portao(sha: str) -> str | None:
+    """Portão da rotina (26/11/2026): o `checar_rotina.py` da origin/master — nunca o do ramo, que a noite poderia ter
+    editado — extraído por `git show` para uma pasta vazia e rodado em modo estático (`-I`: nada do repo no sys.path) contra
+    o ramo. None = aprovado; texto = motivo para o Frank. Portão ausente, quebrado, lento ou PARAR → motivo: nunca passa calado."""
+    try:
+        codigo = git("show", f"origin/master:{PORTAO}")
+    except RuntimeError as ex:
+        return f"portão ausente na origin/master ({ex})"
+    with tempfile.TemporaryDirectory(prefix="portao-") as pasta:
+        arq = Path(pasta) / "checar_rotina.py"
+        arq.write_text(codigo + "\n", encoding="utf-8")
+        try:
+            r = subprocess.run([sys.executable, "-I", str(arq), "--repo", str(RAIZ), "--base", "origin/master", "--head", sha],
+                               cwd=pasta, capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=600)
+        except (OSError, subprocess.TimeoutExpired) as ex:
+            return f"portão não rodou ({ex})"
+    if r.returncode == 0:
+        return None
+    saida = (r.stdout + r.stderr).strip()
+    motivos = [l for l in saida.splitlines() if l.startswith(("PARAR", "ERRO"))]
+    return f"portão rc {r.returncode}: " + ("\n".join(motivos) or saida)[-800:]
 
 
 def dados_locais() -> list[str]:
@@ -128,6 +162,10 @@ def conferir(ramo: str, so_conferir: bool) -> int:
     protegidos = git("diff", "--name-only", f"origin/master...{sha}", "--", *PROTEGIDOS)
     if protegidos:
         print(f"{ramo}: mexe em {protegidos.replace(chr(10), ', ')} (muda palavra ou trava) — junção só com decisão do Frank.")
+        return PRECISA
+    motivo = portao(sha)
+    if motivo:
+        print(f"{ramo}: o portão da rotina recusou — junção só com decisão do Frank.\n    " + motivo.replace("\n", "\n    "))
         return PRECISA
     wt = Path(tempfile.mkdtemp(prefix="noite-"))
     try:

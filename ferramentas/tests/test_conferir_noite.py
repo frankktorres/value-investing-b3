@@ -1,6 +1,8 @@
 """conferir_noite (22/10/2026): a junção da rodada da nuvem só vai ao master com a suíte verde e sem tocar em golden/doutrina.
 Repositório git de mentira (origin = repo bare em tmp_path); a suíte é trocada por um resultado fixo."""
+import shutil
 import subprocess
+from pathlib import Path
 
 import pytest
 
@@ -31,6 +33,7 @@ def repo(tmp_path, monkeypatch):
     monkeypatch.setattr(C, "RAIZ", local)
     monkeypatch.setattr(C, "PARADO_MIN", 0)
     monkeypatch.setattr(C, "dados_locais", lambda: [])
+    monkeypatch.setattr(C, "portao", lambda sha: None)    # o portão real é exercitado no fixture `repo_portao`
     # trava: nenhum git do módulo pode cair no repositório real (aconteceu em 22/10 com o default preso na definição)
     assert C.git("rev-parse", "--show-toplevel").replace("\\", "/").lower() == str(local).replace("\\", "/").lower()
     assert C.git("remote", "get-url", "origin").replace("\\", "/").lower() == str(origem).replace("\\", "/").lower()
@@ -141,6 +144,76 @@ def test_dado_com_acento_vai_para_a_worktree_como_copia(repo, tmp_path):
     copia = wt / "ferramentas" / "dados" / "preços_2024.zip"
     copia.write_bytes(b"REGRAVADO")
     assert (dados / "preços_2024.zip").read_bytes() == b"original"
+
+
+PORTAO_REAL = C.portao
+CHECAR = Path(C.__file__).resolve().parent / "rotina" / "checar_rotina.py"
+
+
+@pytest.fixture
+def repo_portao(repo, monkeypatch):
+    """O repo de mentira com o portão de verdade na origin/master e a missão B99 carimbada (escopo `docs/b99.md`)."""
+    monkeypatch.setattr(C, "portao", PORTAO_REAL)
+    (repo / "ferramentas" / "rotina").mkdir(parents=True)
+    shutil.copyfile(CHECAR, repo / "ferramentas" / "rotina" / "checar_rotina.py")
+    (repo / "docs").mkdir()
+    base = _git(repo, "rev-parse", "--short", "HEAD")
+    (repo / "docs" / "MISSOES.md").write_text(
+        f"# MISSOES\n*Carimbo (nuvem):* B99 · escopo: `docs/b99.md` · fonte: nenhuma · pronta: {base}\n", encoding="utf-8")
+    _git(repo, "add", ".")
+    _git(repo, "commit", "-q", "-m", "portão + carimbo")
+    _git(repo, "push", "-q", "origin", "master")
+    return repo
+
+
+def test_portao_da_base_aprova_ramo_dentro_do_escopo(repo_portao, monkeypatch):
+    monkeypatch.setattr(C, "suite", lambda wt: (0, "10 passed"))
+    _rodada(repo_portao, "claude/noite-8", arquivo="docs/b99.md")
+    assert C.main([]) == 0
+    assert "claude/noite-8" not in _remotos(repo_portao)
+
+
+def test_portao_da_base_recusa_ramo_fora_do_escopo_sem_rodar_a_suite(repo_portao, monkeypatch, capsys):
+    monkeypatch.setattr(C, "suite", lambda wt: pytest.fail("não devia rodar a suíte"))
+    _rodada(repo_portao, "claude/noite-9", arquivo="docs/outro.md")
+    assert C.main([]) == C.PRECISA
+    assert "docs/outro.md: FORA DO ESCOPO" in capsys.readouterr().out
+    assert "origin/claude/noite-9" in _remotos(repo_portao)
+
+
+def test_portao_vale_o_da_base_nao_o_do_ramo(repo_portao, monkeypatch, capsys):
+    """A noite edita o portão do ramo para aprovar tudo: a manhã usa o da origin/master e recusa (PROTEGIDOS + portão)."""
+    monkeypatch.setattr(C, "suite", lambda wt: pytest.fail("não devia rodar a suíte"))
+    _git(repo_portao, "checkout", "-q", "-b", "claude/noite-10")
+    (repo_portao / "ferramentas" / "rotina" / "checar_rotina.py").write_text("import sys\nsys.exit(0)\n")
+    (repo_portao / "docs" / "outro.md").write_text("x\n")
+    _git(repo_portao, "add", ".")
+    _git(repo_portao, "commit", "-q", "-m", "afrouxa o portão")
+    _git(repo_portao, "push", "-q", "origin", "claude/noite-10")
+    _git(repo_portao, "checkout", "-q", "master")
+    assert C.main([]) == C.PRECISA
+
+
+def test_ramo_que_toca_motor_espera_o_frank(repo_portao, monkeypatch, capsys):
+    monkeypatch.setattr(C, "suite", lambda wt: pytest.fail("não devia rodar a suíte"))
+    _rodada(repo_portao, "claude/noite-11", arquivo="ferramentas/motor_nao_financeiras.py")
+    assert C.main([]) == C.PRECISA
+    assert "motor_nao_financeiras.py" in capsys.readouterr().out
+
+
+def test_portao_ausente_ou_quebrado_nunca_passa_calado(repo, monkeypatch, capsys):
+    monkeypatch.setattr(C, "portao", PORTAO_REAL)
+    monkeypatch.setattr(C, "suite", lambda wt: pytest.fail("não devia rodar a suíte"))
+    _rodada(repo, "claude/noite-12")
+    assert C.main([]) == C.PRECISA                                         # sem portão na origin/master
+    assert "portão ausente" in capsys.readouterr().out
+    (repo / "ferramentas" / "rotina").mkdir(parents=True)
+    (repo / "ferramentas" / "rotina" / "checar_rotina.py").write_text("import modulo_que_nao_existe\n")
+    _git(repo, "add", ".")
+    _git(repo, "commit", "-q", "-m", "portão quebrado")
+    _git(repo, "push", "-q", "origin", "master")
+    assert C.main([]) == C.PRECISA                                         # import quebrado → rc ≠ 0 → PRECISA
+    assert "portão rc 1" in capsys.readouterr().out
 
 
 def test_conflito_nao_envia(repo, monkeypatch):
