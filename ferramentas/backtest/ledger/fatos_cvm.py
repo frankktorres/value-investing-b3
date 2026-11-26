@@ -58,7 +58,7 @@ CONTAS: dict[str, str] = {
     # BPP
     "2": "passivo", "2.01": "pc", "2.01.04": "emprest_cp",
     "2.02": "pnc", "2.02.01": "emprest_lp",
-    "2.03": "pl", "2.03.04": "reservas_lucro", "2.03.09": "nao_controladores",
+    "2.03": "pl", "2.03.04": "reservas_lucro", "2.03.05": "lucros_acumulados", "2.03.09": "nao_controladores",
     # IFRS 16: arrendamento é dívida (doutrina §11.1)
     "2.01.04.03": "arrendamento_cp", "2.02.01.03": "arrendamento_lp",
     # DFC (os totais; o detalhe vem das linhas inteiras, abaixo)

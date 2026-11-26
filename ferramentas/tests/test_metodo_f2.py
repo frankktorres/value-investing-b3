@@ -23,7 +23,7 @@ def _serie_sintetica(tk, receitas, capex, imobilizado=1000.0, da=100.0, extra_po
         anual[ano] = {"receita": rec, "capex": capex, "imobilizado": imobilizado, "intangivel": 0.0,
                       "biologico": 0.0, "da": da, "lucro": 200.0, "ac": 0.0, "pc": 0.0, "caixa": 0.0,
                       "aplic_cp": 0.0, "emprest_cp": 0.0, "emprest_lp": 0.0, "arrendamento": 0.0, "pl": 1000.0,
-                      "ebit": 0.15 * rec, "lair": 250.0, "ir": -75.0, "ativo": 2000.0, "reservas_lucro": 0.0,
+                      "ebit": 0.15 * rec, "lair": 250.0, "ir": -75.0, "ativo": 2000.0, "reservas_lucro": 0.0, "lucros_acumulados": 0.0,
                       "nao_controladores": 0.0, "receber": 0.0, "estoques": 0.0}
         anual[ano].update((extra_por_ano or {}).get(ano, {}))
     M.CVM[tk] = {"anual": anual, "ltm_2T26": dict(anual[max(anual)])}

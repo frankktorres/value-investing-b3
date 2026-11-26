@@ -20,6 +20,8 @@ from b46 import calculo as C  # noqa: E402
 
 ENTRADA = AQUI / "resultado_B46.json"
 SAIDA = FERRAMENTAS.parent / "docs" / "b46" / "B46-2026-11.md"
+ENTRADA_T8 = AQUI / "resultado_B46_t8.json"                              # emenda 13: tentativa 8/24
+SAIDA_T8 = FERRAMENTAS.parent / "docs" / "b46" / "B46-2026-11-t8.md"
 TOL_KE = 1e-9
 TOL_ANC = 1e-9
 LIMITE_PRECO = 0.005
@@ -117,6 +119,15 @@ def c3(res: dict) -> dict:
                 discordam=[l["tk"] for l in base if not l["completo"]["concordam"]])
 
 
+def c3_x2_dfp(res: dict) -> dict:
+    """Sensibilidade da emenda 13 (relatada; não é critério): o mesmo C3, com o π (ii) do Z'' de X2 do último DFP."""
+    base = [l for l in industriais(res) if _ok(l.get("completo")) and l["completo"]["de_mercado"] > l["completo"]["de_ind"]]
+    conc = [l["tk"] for l in base if l["completo"].get("concordam_x2_dfp")]
+    n = len(base)
+    return dict(passou=n > 0 and len(conc) >= FRACAO_C3 * n, n=n, concordam=conc,
+                discordam=[l["tk"] for l in base if not l["completo"].get("concordam_x2_dfp")])
+
+
 def c4(res: dict) -> dict:
     """Todo industrial sai com número no modo completo ou com a razão; nenhum vazio sem razão."""
     sem_razao, nao_avaliados = [], []
@@ -134,10 +145,13 @@ def c4(res: dict) -> dict:
     return dict(passou=not sem_razao, sem_razao=sem_razao, nao_avaliados=nao_avaliados)
 
 
-def leitura(r1: dict, r2: dict, r3: dict, r4: dict) -> str:
+def leitura(r1: dict, r2: dict, r3: dict, r4: dict, r3_dfp: dict | None = None) -> str:
+    """Emenda 12; com `r3_dfp` (tentativa 8, emenda 13): C3 passa e falha com o X2 do DFP → "PASSA frágil" (a classe é PASSA)."""
     if not (r1["passou"] and r2["passou"] and r4["passou"]):
         return "FALHA"
-    return "PASSA" if r3["passou"] else "NÃO CONCLUSIVA"
+    if not r3["passou"]:
+        return "NÃO CONCLUSIVA"
+    return "PASSA frágil" if r3_dfp is not None and not r3_dfp["passou"] else "PASSA"
 
 
 def _pct(x, casas=1):
@@ -152,11 +166,34 @@ def _d(a, b):
     return f"{100 * (a / b - 1):+.1f}%".replace(".", ",") if isinstance(a, (int, float)) and isinstance(b, (int, float)) and b > 0 else "—"
 
 
+def _cabecalho_t8(r3: dict, r3d: dict) -> list[str]:
+    return ["# B46 — tentativa 8/24: a mesma variante da emenda 12 com o X2 do Z'' corrigido (emenda 13, B57)", "",
+            "*Gerado por `ferramentas/b46/relatorio.py --tentativa 8` só a partir de `ferramentas/b46/resultado_B46_t8.json`. "
+            "Regra, critério e leitura: emenda 12; o que mudou, vieses, contaminação e previsões: emenda 13 do "
+            "`docs/PRE-REGISTRO-v3.md`, commitada antes de rodar. Fontes: `docs/b46/FONTES-B46.md` e `docs/b57/FONTES-B57.md`. "
+            "Nada aqui é ordem de compra ou venda.*", "",
+            "**Único insumo que muda frente à 7/24 (`docs/b46/B46-2026-11.md`):** o X2 do Z'' do π (ii) = (reservas de lucros "
+            "2.03.04 + lucros/prejuízos acumulados 2.03.05) ÷ ativo. **Contaminação declarada:** o defeito foi achado olhando a "
+            "7/24; um PASSA aqui vem de um conjunto visto duas vezes e é evidência fraca — só o HOLD-OUT 2 prova.", "",
+            f"**Sensibilidade (pedido do Frank; não é critério):** C3 com o X2 do último DFP = {len(r3d['concordam'])} de "
+            f"{r3d['n']} ({'passaria' if r3d['passou'] else 'não passaria'}); com o X2 da regra (balanço do LTM) = "
+            f"{len(r3['concordam'])} de {r3['n']}. Discordam com o X2 do DFP: {', '.join(r3d['discordam']) or 'nenhuma'}.", ""]
+
+
 def gerar(res: dict) -> str:
+    t8 = res.get("tentativa") == 8
     r1, r2, r3, r4 = c1(res), c2(res), c3(res), c4(res)
-    lei = leitura(r1, r2, r3, r4)
+    r3d = c3_x2_dfp(res) if t8 else None
+    lei = leitura(r1, r2, r3, r4, r3d)
     ind = industriais(res)
-    o = ["# B46 — Ke > 30% nas muito alavancadas: variante \"separar a dificuldade\" (emenda 12)", "",
+    if t8:
+        return _gerar_corpo(res, r1, r2, r3, r4, lei, ind, _cabecalho_t8(r3, r3d) + [f"## Leitura pela regra: **{lei}**", ""])
+    return _gerar_corpo(res, r1, r2, r3, r4, lei, ind, None)
+
+
+def _gerar_corpo(res, r1, r2, r3, r4, lei, ind, cabecalho) -> str:
+    o = (cabecalho if cabecalho is not None else [
+         "# B46 — Ke > 30% nas muito alavancadas: variante \"separar a dificuldade\" (emenda 12)", "",
          "*Gerado por `ferramentas/b46/relatorio.py` só a partir de `ferramentas/b46/resultado_B46.json`. Regra, critério, leitura e "
          "previsões: emenda 12 do `docs/PRE-REGISTRO-v3.md`, commitada antes de rodar. Fontes: `docs/b46/FONTES-B46.md`. O motor não "
          "mudou. Nada aqui é ordem de compra ou venda.*", "",
@@ -175,7 +212,7 @@ def gerar(res: dict) -> str:
          "(sai do motor, a fórmula é refeita à parte).", "",
          "**O C3 foi medido com um defeito conhecido no π (ii)** (`senior`, 25/11): o X2 do Z'' do motor ignora prejuízos "
          "acumulados (`docs/BACKLOG.md` B57), o que infla o Z'' e baixa o π (ii) de quem tem prejuízo. O C3 ficou a 1 ação de "
-         "passar. Rodar a B46 de novo depois da B57 é a **tentativa 8/24**, não conserto do executor.", "",
+         "passar. Rodar a B46 de novo depois da B57 é a **tentativa 8/24**, não conserto do executor.", ""]) + [
          "**Fora do hall dos lotes:** EGIE3 e ITSA4 estão no `hall.json` mas não nos lotes de `oraculo/sanidade.py` (emenda 12).", "",
          "| Linha | O que confere | Resultado |", "|---|---|---|",
          f"| C1 | Ke, π e âncoras recalculados à parte | {'passou' if r1['passou'] else '**não** — ' + '; '.join(r1['falhas'][:5])} |",
@@ -241,12 +278,17 @@ def gerar(res: dict) -> str:
     return "\n".join(o) + "\n"
 
 
-def main() -> int:
+def main(argv=None) -> int:
     sys.stdout.reconfigure(encoding="utf-8")
-    res = json.loads(ENTRADA.read_text(encoding="utf-8"))
-    SAIDA.parent.mkdir(parents=True, exist_ok=True)
-    SAIDA.write_text(gerar(res), encoding="utf-8")
-    print(SAIDA)
+    a = list(argv if argv is not None else sys.argv[1:])
+    if a not in ([], ["--tentativa", "8"]):
+        print(__doc__)
+        return 2
+    entrada, saida = (ENTRADA_T8, SAIDA_T8) if a else (ENTRADA, SAIDA)
+    res = json.loads(entrada.read_text(encoding="utf-8"))
+    saida.parent.mkdir(parents=True, exist_ok=True)
+    saida.write_text(gerar(res), encoding="utf-8")
+    print(saida)
     return 0
 
 

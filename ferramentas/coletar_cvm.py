@@ -43,7 +43,9 @@ DRE = {"receita": "3.01", "custo": "3.02", "lucro_bruto": "3.03", "desp_vendas":
 BPA = {"ativo": "1", "ac": "1.01", "caixa": "1.01.01", "aplic_cp": "1.01.02", "receber": "1.01.03", "estoques": "1.01.04",
        "anc": "1.02", "rlp": "1.02.01", "investimentos": "1.02.02", "imobilizado": "1.02.03", "intangivel": "1.02.04"}
 BPP = {"passivo": "2", "pc": "2.01", "emprest_cp": "2.01.04", "pnc": "2.02", "emprest_lp": "2.02.01", "pl": "2.03",
-       "reservas_lucro": "2.03.04", "nao_controladores": "2.03.09"}
+       "reservas_lucro": "2.03.04", "nao_controladores": "2.03.09",
+       # B57 (emenda 13): lucros/prejuízos acumulados — com as reservas de lucros, o lucro retido da Lei 6.404 (X2 do Z'')
+       "lucros_acumulados": "2.03.05"}
 DFC = {"fco": "6.01", "fci": "6.02", "fcf_fin": "6.03"}
 RE_DA = re.compile(r"deprecia|amortiza|exaust|colhid", re.I)   # inclui "ativos biológicos colhidos" (cana, florestas)
 RE_DA_NAO = re.compile(r"juros|capta|empr[eé]stimo|cambia|financiamento|transa[cç]|deb[eê]nture|valor presente", re.I)   # custo de captação/transação e AVP de dívida não são D&A (05/10)

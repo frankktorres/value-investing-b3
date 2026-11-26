@@ -1,0 +1,199 @@
+"""B57 — recoleta ADITIVA da conta 2.03.05 (lucros/prejuízos acumulados) nas séries da CVM. Uso, de `ferramentas/`:
+
+    python -m b57.recoletar conferir   # recoleta num arquivo temporário e compara; não grava nada
+    python -m b57.recoletar gravar     # idem e, se todo campo antigo for idêntico, grava SÓ o campo novo
+
+Emenda 13 do `docs/PRE-REGISTRO-v3.md`. Recoleta pelo próprio `coletar_cvm.main` (mesmo ZIP do cache, mesmo mês do ITR que
+a série já tem) e prova que a recoleta é aditiva: todo valor que a série antiga tem sai IDÊNTICO na recoleta. Qualquer
+divergência → nada é gravado e o relatório diz onde. Grava só `lucros_acumulados` nos containers que a série antiga já tem
+(`anual/<ano>`, `ltm`, `ltm_<ref vigente>`); chave nova do formato atual do coletor (ex.: `ltm_ref` nas séries antigas) não
+entra. `ltm_<ref>` de trimestre anterior (o `ltm_2T26` do hall, gravado antes da AUD-68: ações do DFP, `lucro_controlador`
+sem o saneamento) é recoletado no próprio mês e também recebe a 2.03.05 — o dossiê na data lê esse container
+(`ltm.na_data`; achado do `adversario`, 25/11). Ali só `acoes` e `lucro_controlador` podem divergir (AUD-68), e ficam como
+estavam. `python -m b57.recoletar historicos hall` faz só essa parte (o principal já gravado não é refeito).
+A versão anterior de cada arquivo vai para `dados/_historico/` (`_historico/` da pasta do arquivo).
+"""
+from __future__ import annotations
+
+import contextlib
+import json
+import math
+import pathlib
+import shutil
+import sys
+import tempfile
+
+AQUI = pathlib.Path(__file__).resolve().parent
+FERRAMENTAS = AQUI.parent
+if str(FERRAMENTAS) not in sys.path:
+    sys.path.insert(0, str(FERRAMENTAS))
+
+import coletar_cvm  # noqa: E402
+
+CAMPO = "lucros_acumulados"
+ANO_ITR = 2026
+MES = {"1T": 3, "2T": 6, "3T": 9}
+ARQUIVOS = {
+    "hall": FERRAMENTAS / "dados" / "cvm_series.json",
+    "dossie": FERRAMENTAS / "dossie" / "dados" / "cvm_series_dossie.json",
+    "b36": FERRAMENTAS / "holdout_b36" / "dados" / "cvm_series_holdout.json",
+}
+DATA = "2026-11-25"
+# Divergências em campo ANTIGO, explicadas e fora do escopo da B57: a série da CMIN3 é de 02/10, antes da AUD-68 (3.11.01 = 0 vira
+# None; ações do ITR). O valor antigo fica como está (nada é reescrito) e a conta nova entra; o conserto é o B60 do BACKLOG.
+EXPLICADAS = {("dossie", "CMIN3"): ("/anual/2022/lucro_controlador: 0.0 → None", "/anual/2023/lucro_controlador: 0.0 → None",
+                                    "/anual/2024/lucro_controlador: 0.0 → None",
+                                    "/ltm_2T26/acoes: 54267151083.0 → 5402435438.0")}
+
+
+def trimestres(reg: dict) -> tuple[str, list[str]]:
+    """(trimestre principal, todos os trimestres guardados). Principal = `ltm_ref`; no formato antigo (sem `ltm_ref`), o único
+    `ltm_<ref>`. Cada `ltm_<ref>` guardado é recoletado no próprio mês. Ambíguo, ausente ou de outro ano → erro explícito."""
+    refs = sorted(k[4:] for k in reg if k.startswith("ltm_") and k[4:6] in MES and isinstance(reg[k], dict))
+    principal = reg.get("ltm_ref") or (refs[0] if len(refs) == 1 else None)
+    if principal is None or principal not in refs:
+        raise ValueError(f"trimestre do LTM ambíguo ou ausente: ltm_ref={reg.get('ltm_ref')!r}, guardados={refs}")
+    fora = [r for r in refs if not r.endswith(f"{ANO_ITR % 100:02d}")]
+    if fora:
+        raise ValueError(f"LTM de {fora}, recoleta só para {ANO_ITR}")
+    return principal, refs
+
+
+@contextlib.contextmanager
+def _contexto(grupo: str, tk: str):
+    if grupo != "b36":
+        yield
+        return
+    from holdout_b36 import executor as X
+    with X.registrado(X.cadastro()[tk]):     # põe o código CVM do ticker em `coletar_cvm.EMPRESAS` só no bloco
+        yield
+
+
+def recoletar(grupo: str, tk: str, mes: int) -> dict:
+    with tempfile.TemporaryDirectory() as tmp, _contexto(grupo, tk):
+        arq = pathlib.Path(tmp) / "s.json"
+        coletar_cvm.main([tk], arq=arq, ano_itr=ANO_ITR, mes=mes)
+        return json.loads(arq.read_text(encoding="utf-8"))[tk]      # ida e volta pelo JSON: chaves de ano como texto
+
+
+def _igual(a, b) -> bool:
+    if isinstance(a, float) and isinstance(b, float) and math.isnan(a) and math.isnan(b):
+        return True
+    if isinstance(a, dict) and isinstance(b, dict):
+        return all(k in b and _igual(a[k], b[k]) for k in a)        # só o que a série ANTIGA tem precisa bater
+    if isinstance(a, list) and isinstance(b, list):
+        return len(a) == len(b) and all(_igual(x, y) for x, y in zip(a, b))
+    return a == b
+
+
+def divergencias(velho: dict, novo: dict, caminho: str = "") -> list[str]:
+    out = []
+    for k, va in velho.items():
+        c = f"{caminho}/{k}"
+        if k not in novo:
+            out.append(f"{c}: some na recoleta")
+        elif isinstance(va, dict) and isinstance(novo[k], dict):
+            out += divergencias(va, novo[k], c)
+        elif not _igual(va, novo[k]):
+            out.append(f"{c}: {va!r} → {novo[k]!r}")
+    return out
+
+
+def acrescentar(velho: dict, novo: dict) -> tuple[dict, list[str]]:
+    """Cópia da série antiga com o CAMPO onde a recoleta o tem; devolve também a lista de containers sem o campo."""
+    out = json.loads(json.dumps(velho))
+    sem = []
+    alvos = [("anual", a) for a in velho.get("anual", {})] + [(k, None) for k in velho if k == "ltm" or k.startswith("ltm_")
+                                                               and isinstance(velho[k], dict)]
+    for k, a in alvos:
+        dv = out[k][a] if a else out[k]
+        dn = (novo.get(k) or {}).get(a) if a else novo.get(k)
+        if not isinstance(dv, dict) or not dv or dv.get("erro"):
+            continue                            # ano sem demonstração / LTM com erro: nada a acrescentar
+        if not isinstance(dn, dict) or dn.get(CAMPO) is None:
+            sem.append(f"{k}/{a}" if a else k)
+            continue
+        dv[CAMPO] = dn[CAMPO]
+    return out, sem
+
+
+def _explicada_aud68(caminho: str, historicos: list[str]) -> bool:
+    """`ltm_<ref>` de trimestre anterior gravado antes da AUD-68 (ex.: o `ltm_2T26` do hall): ações do DFP em vez das do ITR e
+    3.11.01 = 0 em vez de None. Só esses campos podem divergir ali; o resto tem de bater (adversário, 25/11: o dossiê na data
+    lê esse container por `ltm.na_data`, então ele também precisa da 2.03.05)."""
+    for h in historicos:
+        p = f"/{h}/"
+        if caminho.startswith(p):
+            resto = caminho[len(p):]
+            return resto.split(":")[0] in ("acoes", "lucro_controlador") or resto.startswith("reapresentados/")
+    return False
+
+
+def processar(grupo: str, gravar: bool, so_historicos: bool = False) -> dict:
+    """`so_historicos`: só os `ltm_<ref>` de trimestre anterior (o principal já foi recoletado e gravado)."""
+    arq = ARQUIVOS[grupo]
+    series = json.loads(arq.read_text(encoding="utf-8"))
+    rel, saida = {}, {}
+    for tk, reg in series.items():
+        try:
+            principal, refs = trimestres(reg)
+            historicos = [f"ltm_{r}" for r in refs if r != principal]
+            novo = dict(reg) if so_historicos else recoletar(grupo, tk, MES[principal[:2]])
+            for h in historicos:                 # cada trimestre anterior recoletado no próprio mês
+                novo[h] = recoletar(grupo, tk, MES[h[4:6]])[h]
+            reg_cmp = {k: reg[k] for k in historicos} if so_historicos else reg
+        except Exception as x:          # noqa: BLE001 — registra a falha com a razão; o arquivo não é gravado
+            rel[tk] = dict(erro=f"{type(x).__name__}: {x}")
+            continue
+        todas = divergencias(reg_cmp, novo)
+        explicadas = [x for x in todas if x in EXPLICADAS.get((grupo, tk), ()) or _explicada_aud68(x, historicos)]
+        div = [x for x in todas if x not in explicadas]
+        if so_historicos:
+            out = json.loads(json.dumps(reg))
+            sem = []
+            for h in historicos:
+                if isinstance(out[h], dict) and out[h] and not out[h].get("erro"):
+                    if novo[h].get(CAMPO) is None:
+                        sem.append(h)
+                    else:
+                        out[h][CAMPO] = novo[h][CAMPO]
+        else:
+            out, sem = acrescentar(reg_cmp, novo)
+        rel[tk] = dict(divergencias=div, divergencias_explicadas=explicadas, sem_campo=sem, historicos=historicos)
+        saida[tk] = {k: out[k] for k in reg}            # mesma ordem de chaves do arquivo antigo
+    ok = all(not r.get("erro") and not r["divergencias"] for r in rel.values())
+    if gravar and ok:
+        hist = arq.parent / "_historico"
+        hist.mkdir(exist_ok=True)
+        destino, n = hist / f"{arq.stem}_{DATA}_antes_B57{arq.suffix}", 2
+        while destino.exists():                 # nunca sobrescreve um backup anterior
+            destino, n = hist / f"{arq.stem}_{DATA}_antes_B57_{n}{arq.suffix}", n + 1
+        shutil.copy2(arq, destino)
+        arq.write_text(json.dumps(saida, ensure_ascii=False, indent=1), encoding="utf-8")
+    return dict(arquivo=str(arq), aditiva=ok, gravado=bool(gravar and ok), tickers=rel)
+
+
+def main(argv=None) -> int:
+    sys.stdout.reconfigure(encoding="utf-8")
+    a = list(argv if argv is not None else sys.argv[1:])
+    if a[:1] not in (["conferir"], ["gravar"], ["historicos"]):
+        print(__doc__)
+        return 2
+    grupos = a[1:] or list(ARQUIVOS)
+    rel = {g: processar(g, a[0] != "conferir", so_historicos=a[0] == "historicos") for g in grupos}
+    arq_rel = AQUI / "recoleta_B57.json"
+    todos = json.loads(arq_rel.read_text(encoding="utf-8")) if arq_rel.exists() else {}
+    todos.update(rel)                       # rodar um grupo só não apaga o relatório dos outros
+    arq_rel.write_text(json.dumps(todos, ensure_ascii=False, indent=1), encoding="utf-8")
+    for g, r in rel.items():
+        ruins = {tk: x for tk, x in r["tickers"].items() if x.get("erro") or x["divergencias"]}
+        sem = {tk: x["sem_campo"] for tk, x in r["tickers"].items() if x.get("sem_campo")}
+        print(f"{g}: aditiva={r['aditiva']} gravado={r['gravado']} tickers={len(r['tickers'])} "
+              f"com problema={len(ruins)} containers sem o campo={sum(len(v) for v in sem.values())}")
+        for tk, x in ruins.items():
+            print("  ", tk, x.get("erro") or x["divergencias"][:5])
+    return 0 if all(r["aditiva"] for r in rel.values()) else 1
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

@@ -30,7 +30,7 @@ SERIE = pathlib.Path(__file__).resolve().parent.parent.parent / "dados" / "cvm_s
 # Chaves que as oito funções leem, direta ou indiretamente.
 CHAVES = ("ativo", "ac", "pc", "pnc", "pl", "receita", "lucro", "lucro_bruto", "ebit", "fco",
           "caixa", "aplic_cp", "receber", "estoques", "imobilizado", "intangivel", "da",
-          "emprest_cp", "emprest_lp", "arrendamento", "reservas_lucro", "desp_vendas", "desp_ga",
+          "emprest_cp", "emprest_lp", "arrendamento", "reservas_lucro", "lucros_acumulados", "desp_vendas", "desp_ga",
           "outras_receitas_op", "outras_despesas_op", "impairment", "impairment_outras", "acoes")
 
 UM = (contas.divida_liquida, contas.capital_giro, contas.altman_z2)

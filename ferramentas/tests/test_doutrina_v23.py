@@ -22,7 +22,7 @@ def _serie(tk, receita=10_000.0, anos=range(2016, 2026), **campos):
         d = {"receita": receita, "capex": 500.0, "imobilizado": 5_000.0, "intangivel": 0.0, "biologico": 0.0, "da": 500.0,
              "lucro": 1_000.0, "ac": 3_000.0, "pc": 1_000.0, "caixa": 500.0, "aplic_cp": 0.0, "emprest_cp": 0.0,
              "emprest_lp": 1_000.0, "arrendamento": 0.0, "pl": 6_000.0, "ebit": 1_500.0, "lair": 1_500.0, "ir": -500.0,
-             "ativo": 10_000.0, "pnc": 1_000.0, "reservas_lucro": 0.0, "nao_controladores": 0.0, "receber": 0.0,
+             "ativo": 10_000.0, "pnc": 1_000.0, "reservas_lucro": 0.0, "lucros_acumulados": 0.0, "nao_controladores": 0.0, "receber": 0.0,
              "lucro_bruto": 4_000.0, "fco": 1_200.0, "acoes": 1_000_000.0, "juros_pagos": 100.0}
         d.update(campos)
         anual[str(a)] = d

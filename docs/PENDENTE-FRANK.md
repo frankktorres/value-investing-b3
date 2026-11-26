@@ -13,6 +13,8 @@
 - Temporada 3T26 e monitor de sexta rodam na máquina dele (dados fora do git).
 
 ## Respondidas
+- **25/11 — #13 (trava de ordem):** "ok #13 A" → exceção pontual em `ferramentas/oraculo/ordem.py` (SHA completo de 2c7c87a + `{docs/b57/FONTES-B57.md}`), com canários em `tests/test_oraculo_ordem.py`; a B57 vai ao `master` → `DECISOES.md`, `09`.
+- **25/11 — #14 (causa (a)):** "ok #14" → causa (a) do DNA §4 fechada "como está, com motivo" (Ke > 30% sai NÃO CONCLUSIVO pela H2 e é medido no M1); segue para (b) e (c) → `DECISOES.md`, `09`; texto do DNA §3/§4 a atualizar.
 - **25/11 — #12 (B46 + B35):** B46 **sim**; B35 **não** (a B39 corrigida não disparou; fica até o HOLD-OUT 2) → `DECISOES.md`, `BACKLOG.md`.
 - **22/10 — #10 (contraste, N5):** (a) contornos de chip ficam como estão; o chip já leva palavra e glifo (WCAG 1.4.11 não se aplica a contorno de reforço) → `DECISOES.md`.
 - **21/10 — #8 (B26):** (a) sem controlador nem acordo no FRE = razão válida → `DECISOES.md`.

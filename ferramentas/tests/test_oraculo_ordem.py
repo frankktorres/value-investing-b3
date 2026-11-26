@@ -163,3 +163,30 @@ def test_caminho_com_espaco(repo):
     r, corte = repo
     _commit(r, "junto", **{"docs/PRE-REGISTRO-v3 b.md": BASE, MOTOR: "x = 2" + NL})
     assert O.verificar(r, corte)["status"] == "falha"
+
+
+# ---------------------------------------------------------------- exceção pontual (PENDENTE-FRANK #13, opção A, 25/11/2026)
+FONTES = "docs/b57/FONTES-B57.md"
+
+
+def _sha(repo):
+    return subprocess.run(["git", "rev-parse", "HEAD"], cwd=repo, capture_output=True, text=True).stdout.strip()
+
+
+def test_excecao_pontual_vale_so_para_o_sha_e_o_conjunto_exatos(repo):
+    r, corte = repo
+    _commit(r, "docs(pre-registro): emenda 2 + fontes", **{PRE: EMENDA2, FONTES: "fontes\n"})
+    sha = _sha(r)
+    _commit(r, "feat: motor pela emenda 2", **{MOTOR: "x = 2\n"})
+    v = O.verificar(r, corte, excecoes={sha: frozenset({FONTES})})
+    assert v["status"] == "ok" and 2 in v["emendas"]                    # o commit conta como só de pré-registro
+    v = O.verificar(r, corte, excecoes={})
+    assert v["status"] == "falha" and 2 not in v["emendas"]             # sem a exceção: a regra de sempre
+    v = O.verificar(r, corte, excecoes={"0" * 40: frozenset({FONTES})})
+    assert v["status"] == "falha"                                       # outro SHA com o mesmo arquivo reprova
+    v = O.verificar(r, corte, excecoes={sha: frozenset({FONTES, "outro.md"})})
+    assert v["status"] == "falha"                                       # o SHA com outro conjunto reprova
+
+
+def test_excecao_do_projeto_e_so_a_da_emenda_13():
+    assert O.EXCECOES == {"2c7c87aa3ac40b15a4007439443a843c6292092c": frozenset({FONTES})}

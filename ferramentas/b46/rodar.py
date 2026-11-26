@@ -3,6 +3,8 @@
     python -m b46.rodar insumos   # ANTES da emenda: indústria, D/E da indústria, D/E a mercado, t, rating (i) por ticker
     python -m b46.rodar medir     # DEPOIS do commit da emenda: variante + choques + conferências → b46/resultado_B46.json
     python -m b46.relatorio       # gera docs/b46/B46-2026-11.md só do JSON
+    python -m b46.rodar medir --tentativa 8   # emenda 13 (B57): X2 com a 2.03.05 → b46/resultado_B46_t8.json
+    python -m b46.relatorio --tentativa 8     # → docs/b46/B46-2026-11-t8.md (com a sensibilidade do X2 do DFP)
 
 A variante roda sobre o motor congelado por `mock.patch` (como `oraculo/hipoteses.py`): o arquivo do motor não é tocado.
 Modos: "base" = motor de hoje; "de" = só o D/E da continuidade (π = 0); "completo" = D/E da continuidade + π.
@@ -31,6 +33,8 @@ from b46 import calculo as C  # noqa: E402
 
 INSUMOS = AQUI / "insumos"
 SAIDA = AQUI / "resultado_B46.json"
+SAIDA_T8 = AQUI / "resultado_B46_t8.json"     # emenda 13: tentativa 8/24 (X2 do Z'' com a 2.03.05); a 7/24 não é sobrescrita
+TENTATIVA = 7                                 # `medir --tentativa 8` troca para 8 (sensibilidade do X2 do DFP + SAIDA_T8)
 SAIDA_INSUMOS = AQUI / "insumos_pre_registro.json"
 DOSSIES = ("ALLD3", "BLAU3", "CMIN3", "FESA4", "SHUL4", "VLID3")     # os 6 dossiês do DNA §2 (princípio 5)
 CHOQUES = {"preco_0.7": dict(preco=0.7, divida=1.0), "preco_1.3": dict(preco=1.3, divida=1.0),
@@ -78,16 +82,33 @@ def rating_cobertura(emp, ltm) -> tuple[str, float | None]:
     return credito.spread_sintetico(cob)[1], cob
 
 
-CAMPOS_Z = ("ativo", "ac", "pc", "reservas_lucro", "ebit", "pl", "pnc")
+CAMPOS_Z = ("ativo", "ac", "pc", "reservas_lucro", "lucros_acumulados", "ebit", "pl", "pnc")   # 2.03.05: emenda 13 (B57)
+
+
+def _dfp(emp, a) -> dict:
+    return a["2026" if emp.ticker == "SMTO3" else "2025"]
 
 
 def z_altman(emp, a, ltm) -> float:
     """(ii) o Z'' do motor sobre o MESMO período que o `avaliar` usa; campo ausente → não avaliado (sem o zero do `v`)."""
-    d = ltm if ltm.get("ativo") else a["2026" if emp.ticker == "SMTO3" else "2025"]
+    d = ltm if ltm.get("ativo") else _dfp(emp, a)
     faltam = [k for k in CAMPOS_Z if d.get(k) is None]
     if faltam:
         raise NaoAvaliado(f"{emp.ticker}: Z'' sem {', '.join(faltam)}")
     return M.altman_z2(d)[0]
+
+
+def z_altman_x2_dfp(emp, a, ltm) -> float:
+    """Sensibilidade da emenda 13 (pedido do Frank; relatada, não entra no π): o mesmo Z'' com o X2 do ÚLTIMO DFP —
+    (2.03.04 + 2.03.05) ÷ ativo do DFP — e X1, X3, X4 do período do `avaliar`. As duas contas do DFP vão ao motor escaladas
+    pelo ativo do período, para que o X2 calculado lá dentro seja exatamente o do DFP."""
+    d, f = (ltm if ltm.get("ativo") else _dfp(emp, a)), _dfp(emp, a)
+    faltam = [k for k in CAMPOS_Z if d.get(k) is None] + [f"DFP {k}" for k in ("ativo", "reservas_lucro", "lucros_acumulados")
+                                                         if f.get(k) is None]
+    if faltam:
+        raise NaoAvaliado(f"{emp.ticker}: Z'' (X2 do DFP) sem {', '.join(faltam)}")
+    esc = d["ativo"] / f["ativo"]
+    return M.altman_z2({**d, "reservas_lucro": f["reservas_lucro"] * esc, "lucros_acumulados": f["lucros_acumulados"] * esc})[0]
 
 
 # ------------------------------------------------------------------------------------------------ variante
@@ -192,6 +213,13 @@ def avaliar_v(emp, mk, modo: str, choque: dict, reg: dict):
                 raise NaoAvaliado(f"{emp.ticker}: π sem nenhuma das duas estimativas ({reg.get('falta_i')}; {falta_ii})")
             reg.update(rating_i=r_i, cobertura=cob, pi_i=pi_i, z=z, rating_ii=r_ii, pi_ii=pi_ii, falta_ii=falta_ii, pi=pi,
                        concordam=C.concordam(pi_i, pi_ii))
+            if TENTATIVA == 8:      # sensibilidade (emenda 13): só registrada; o π que desconta as âncoras é o de cima
+                try:
+                    z_d = z_altman_x2_dfp(emp, a, ltm)
+                    pi_ii_d = C.pi_de_classe(C.rating_altman(z_d))
+                    reg.update(z_x2_dfp=z_d, pi_ii_x2_dfp=pi_ii_d, concordam_x2_dfp=C.concordam(pi_i, pi_ii_d))
+                except NaoAvaliado as x:
+                    reg.update(z_x2_dfp=None, falta_x2_dfp=str(x), concordam_x2_dfp=False)
             p.enter_context(mock.patch.object(M, "descontar", _descontar_com_pi(pi, reg)))
         r = M.avaliar(emp, mk)
     reg.update(palavra=r["palavra"], central=r.get("central"), pc=r.get("pc"), ke_nom=r.get("ke_nom_emp"),
@@ -308,7 +336,7 @@ def medir() -> dict:
         c = lin["completo"]
         print(u["tk"], lin["base"].get("palavra"), "→", c.get("palavra"), "Ke", c.get("ke_nom") and round(c["ke_nom"], 4),
               "π", c.get("pi") and round(c["pi"], 3), (c.get("erro") or {}).get("mensagem", "")[:80])
-    return dict(emenda=12, data_mercado_hall=str(mercado.vigente().data), fontes=dict(waccemerg={k: IND[k] for k in IND if k != "industrias"},
+    return dict(emenda=12 if TENTATIVA == 7 else 13, tentativa=TENTATIVA, data_mercado_hall=str(mercado.vigente().data), fontes=dict(waccemerg={k: IND[k] for k in IND if k != "industrias"},
                 indname={k: NOMES[k] for k in NOMES if k != "empresas"}), linhas=linhas)
 
 
@@ -319,7 +347,12 @@ def main(argv=None) -> int:
         SAIDA_INSUMOS.write_text(json.dumps(_limpo(insumos()), ensure_ascii=False, indent=1), encoding="utf-8")
         return 0
     if a[:1] == ["medir"]:
-        SAIDA.write_text(json.dumps(_limpo(medir()), ensure_ascii=False, indent=1, default=str), encoding="utf-8")
+        global TENTATIVA
+        if a[1:] not in ([], ["--tentativa", "8"]):
+            print(__doc__)
+            return 2
+        TENTATIVA = 8 if a[1:] else 7
+        (SAIDA_T8 if TENTATIVA == 8 else SAIDA).write_text(json.dumps(_limpo(medir()), ensure_ascii=False, indent=1, default=str), encoding="utf-8")
         return 0
     print(__doc__)
     return 2

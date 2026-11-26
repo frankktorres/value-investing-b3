@@ -1,0 +1,454 @@
+{
+ "hall": {
+  "arquivo": "C:\\Users\\frank\\Documents\\VALUE INVESTING\\ferramentas\\dados\\cvm_series.json",
+  "aditiva": true,
+  "gravado": true,
+  "tickers": {
+   "SUZB3": {
+    "divergencias": [],
+    "divergencias_explicadas": [
+     "/ltm_2T26/acoes: 1235908788.0 → 1233136722.0"
+    ],
+    "sem_campo": [],
+    "historicos": [
+     "ltm_2T26"
+    ]
+   },
+   "KLBN11": {
+    "divergencias": [],
+    "divergencias_explicadas": [
+     "/ltm_2T26/acoes: 6135427665.0 → 6152895333.0"
+    ],
+    "sem_campo": [],
+    "historicos": [
+     "ltm_2T26"
+    ]
+   },
+   "RANI3": {
+    "divergencias": [],
+    "divergencias_explicadas": [
+     "/ltm_2T26/acoes: 230501.0 → 229896.0"
+    ],
+    "sem_campo": [],
+    "historicos": [
+     "ltm_2T26"
+    ]
+   },
+   "B3SA3": {
+    "divergencias": [],
+    "divergencias_explicadas": [
+     "/ltm_2T26/acoes: 5034561292.0 → 4998298548.0"
+    ],
+    "sem_campo": [],
+    "historicos": [
+     "ltm_2T26"
+    ]
+   },
+   "SMTO3": {
+    "divergencias": [],
+    "divergencias_explicadas": [],
+    "sem_campo": [],
+    "historicos": [
+     "ltm_2T26"
+    ]
+   },
+   "KEPL3": {
+    "divergencias": [],
+    "divergencias_explicadas": [
+     "/ltm_2T26/lucro_controlador: some na recoleta",
+     "/ltm_2T26/acoes: 173332.0 → 173258.0",
+     "/ltm_2T26/reapresentados/lucro_controlador: some na recoleta"
+    ],
+    "sem_campo": [],
+    "historicos": [
+     "ltm_2T26"
+    ]
+   },
+   "SLCE3": {
+    "divergencias": [],
+    "divergencias_explicadas": [
+     "/ltm_2T26/acoes: 496820758.0 → 496311324.0"
+    ],
+    "sem_campo": [],
+    "historicos": [
+     "ltm_2T26"
+    ]
+   },
+   "SAPR11": {
+    "divergencias": [],
+    "divergencias_explicadas": [],
+    "sem_campo": [],
+    "historicos": [
+     "ltm_2T26"
+    ]
+   },
+   "CSMG3": {
+    "divergencias": [],
+    "divergencias_explicadas": [],
+    "sem_campo": [],
+    "historicos": [
+     "ltm_2T26"
+    ]
+   },
+   "SBSP3": {
+    "divergencias": [],
+    "divergencias_explicadas": [],
+    "sem_campo": [],
+    "historicos": [
+     "ltm_2T26"
+    ]
+   },
+   "TAEE11": {
+    "divergencias": [],
+    "divergencias_explicadas": [],
+    "sem_campo": [],
+    "historicos": [
+     "ltm_2T26"
+    ]
+   },
+   "ISAE4": {
+    "divergencias": [],
+    "divergencias_explicadas": [],
+    "sem_campo": [],
+    "historicos": [
+     "ltm_2T26"
+    ]
+   },
+   "CMIG4": {
+    "divergencias": [],
+    "divergencias_explicadas": [],
+    "sem_campo": [],
+    "historicos": [
+     "ltm_2T26"
+    ]
+   },
+   "CPFE3": {
+    "divergencias": [],
+    "divergencias_explicadas": [],
+    "sem_campo": [],
+    "historicos": [
+     "ltm_2T26"
+    ]
+   },
+   "CPLE3": {
+    "divergencias": [],
+    "divergencias_explicadas": [
+     "/ltm_2T26/acoes: 2970070325.0 → 2970119787.0"
+    ],
+    "sem_campo": [],
+    "historicos": [
+     "ltm_2T26"
+    ]
+   },
+   "PETR4": {
+    "divergencias": [],
+    "divergencias_explicadas": [],
+    "sem_campo": [],
+    "historicos": [
+     "ltm_2T26"
+    ]
+   },
+   "PRIO3": {
+    "divergencias": [],
+    "divergencias_explicadas": [
+     "/ltm_2T26/acoes: 809922731.0 → 798178706.0"
+    ],
+    "sem_campo": [],
+    "historicos": [
+     "ltm_2T26"
+    ]
+   },
+   "RECV3": {
+    "divergencias": [],
+    "divergencias_explicadas": [
+     "/ltm_2T26/lucro_controlador: some na recoleta",
+     "/ltm_2T26/acoes: 292977928.0 → 293482126.0"
+    ],
+    "sem_campo": [],
+    "historicos": [
+     "ltm_2T26"
+    ]
+   },
+   "UGPA3": {
+    "divergencias": [],
+    "divergencias_explicadas": [
+     "/ltm_2T26/acoes: 1087307868.0 → 1090747475.0"
+    ],
+    "sem_campo": [],
+    "historicos": [
+     "ltm_2T26"
+    ]
+   },
+   "VBBR3": {
+    "divergencias": [],
+    "divergencias_explicadas": [
+     "/ltm_2T26/acoes: 1191974.0 → 1196213.0"
+    ],
+    "sem_campo": [],
+    "historicos": [
+     "ltm_2T26"
+    ]
+   },
+   "LEVE3": {
+    "divergencias": [],
+    "divergencias_explicadas": [],
+    "sem_campo": [],
+    "historicos": [
+     "ltm_2T26"
+    ]
+   },
+   "EGIE3": {
+    "divergencias": [],
+    "divergencias_explicadas": [],
+    "sem_campo": [],
+    "historicos": [
+     "ltm_2T26"
+    ]
+   },
+   "UNIP6": {
+    "divergencias": [],
+    "divergencias_explicadas": [],
+    "sem_campo": [],
+    "historicos": [
+     "ltm_2T26"
+    ]
+   },
+   "GGBR4": {
+    "divergencias": [],
+    "divergencias_explicadas": [
+     "/ltm_2T26/acoes: 1975143891.0 → 1963180639.0"
+    ],
+    "sem_campo": [],
+    "historicos": [
+     "ltm_2T26"
+    ]
+   },
+   "TIMS3": {
+    "divergencias": [],
+    "divergencias_explicadas": [],
+    "sem_campo": [],
+    "historicos": [
+     "ltm_2T26"
+    ]
+   },
+   "VIVT3": {
+    "divergencias": [],
+    "divergencias_explicadas": [],
+    "sem_campo": [],
+    "historicos": [
+     "ltm_2T26"
+    ]
+   },
+   "FLRY3": {
+    "divergencias": [],
+    "divergencias_explicadas": [
+     "/ltm_2T26/acoes: 545015471.0 → 543626208.0"
+    ],
+    "sem_campo": [],
+    "historicos": [
+     "ltm_2T26"
+    ]
+   },
+   "HYPE3": {
+    "divergencias": [],
+    "divergencias_explicadas": [
+     "/ltm_2T26/acoes: 632953512.0 → 703992255.0"
+    ],
+    "sem_campo": [],
+    "historicos": [
+     "ltm_2T26"
+    ]
+   },
+   "ABEV3": {
+    "divergencias": [],
+    "divergencias_explicadas": [
+     "/ltm_2T26/acoes: 15616526.0 → 15452795.0"
+    ],
+    "sem_campo": [],
+    "historicos": [
+     "ltm_2T26"
+    ]
+   },
+   "WEGE3": {
+    "divergencias": [],
+    "divergencias_explicadas": [
+     "/ltm_2T26/acoes: 4195695973.0 → 4195829691.0"
+    ],
+    "sem_campo": [],
+    "historicos": [
+     "ltm_2T26"
+    ]
+   },
+   "ITSA4": {
+    "divergencias": [],
+    "divergencias_explicadas": [
+     "/ltm_2T26/acoes: 11211347.0 → 11207350.0"
+    ],
+    "sem_campo": [],
+    "historicos": [
+     "ltm_2T26"
+    ]
+   }
+  }
+ },
+ "dossie": {
+  "arquivo": "C:\\Users\\frank\\Documents\\VALUE INVESTING\\ferramentas\\dossie\\dados\\cvm_series_dossie.json",
+  "aditiva": true,
+  "gravado": true,
+  "tickers": {
+   "BLAU3": {
+    "divergencias": [],
+    "divergencias_explicadas": [],
+    "sem_campo": [
+     "anual/2016"
+    ],
+    "historicos_intocados": []
+   },
+   "CMIN3": {
+    "divergencias": [],
+    "divergencias_explicadas": [
+     "/anual/2022/lucro_controlador: 0.0 → None",
+     "/anual/2023/lucro_controlador: 0.0 → None",
+     "/anual/2024/lucro_controlador: 0.0 → None",
+     "/ltm_2T26/acoes: 54267151083.0 → 5402435438.0"
+    ],
+    "sem_campo": [
+     "anual/2016",
+     "anual/2017",
+     "anual/2018"
+    ],
+    "historicos_intocados": []
+   },
+   "ALLD3": {
+    "divergencias": [],
+    "divergencias_explicadas": [],
+    "sem_campo": [
+     "anual/2016",
+     "anual/2017",
+     "anual/2018"
+    ],
+    "historicos_intocados": []
+   },
+   "FESA4": {
+    "divergencias": [],
+    "divergencias_explicadas": [],
+    "sem_campo": [],
+    "historicos_intocados": []
+   },
+   "SHUL4": {
+    "divergencias": [],
+    "divergencias_explicadas": [],
+    "sem_campo": [],
+    "historicos_intocados": []
+   },
+   "VLID3": {
+    "divergencias": [],
+    "divergencias_explicadas": [],
+    "sem_campo": [],
+    "historicos_intocados": []
+   }
+  }
+ },
+ "b36": {
+  "arquivo": "C:\\Users\\frank\\Documents\\VALUE INVESTING\\ferramentas\\holdout_b36\\dados\\cvm_series_holdout.json",
+  "aditiva": true,
+  "gravado": true,
+  "tickers": {
+   "EMBJ3": {
+    "divergencias": [],
+    "sem_campo": [],
+    "historicos_intocados": []
+   },
+   "EQTL3": {
+    "divergencias": [],
+    "sem_campo": [],
+    "historicos_intocados": []
+   },
+   "ENEV3": {
+    "divergencias": [],
+    "sem_campo": [],
+    "historicos_intocados": []
+   },
+   "RADL3": {
+    "divergencias": [],
+    "sem_campo": [],
+    "historicos_intocados": []
+   },
+   "RAIL3": {
+    "divergencias": [],
+    "sem_campo": [],
+    "historicos_intocados": []
+   },
+   "ENGI11": {
+    "divergencias": [],
+    "sem_campo": [],
+    "historicos_intocados": []
+   },
+   "CSAN3": {
+    "divergencias": [],
+    "sem_campo": [],
+    "historicos_intocados": []
+   },
+   "SMFT3": {
+    "divergencias": [],
+    "sem_campo": [],
+    "historicos_intocados": []
+   },
+   "MBRF3": {
+    "divergencias": [],
+    "sem_campo": [],
+    "historicos_intocados": []
+   },
+   "CSNA3": {
+    "divergencias": [],
+    "sem_campo": [],
+    "historicos_intocados": []
+   },
+   "GOAU4": {
+    "divergencias": [],
+    "sem_campo": [],
+    "historicos_intocados": []
+   },
+   "USIM5": {
+    "divergencias": [],
+    "sem_campo": [],
+    "historicos_intocados": []
+   },
+   "TEND3": {
+    "divergencias": [],
+    "sem_campo": [],
+    "historicos_intocados": []
+   },
+   "NATU3": {
+    "divergencias": [],
+    "sem_campo": [],
+    "historicos_intocados": []
+   },
+   "MOVI3": {
+    "divergencias": [],
+    "sem_campo": [],
+    "historicos_intocados": []
+   },
+   "MRVE3": {
+    "divergencias": [],
+    "sem_campo": [],
+    "historicos_intocados": []
+   },
+   "AZZA3": {
+    "divergencias": [],
+    "sem_campo": [],
+    "historicos_intocados": []
+   },
+   "IGTI11": {
+    "divergencias": [],
+    "sem_campo": [],
+    "historicos_intocados": []
+   },
+   "BEEF3": {
+    "divergencias": [],
+    "sem_campo": [],
+    "historicos_intocados": []
+   }
+  }
+ }
+}
