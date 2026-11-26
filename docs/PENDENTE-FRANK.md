@@ -5,6 +5,7 @@
 ## Abertas
 | # | Pergunta | Opções / recomendação | Backlog | Desde |
 |---|---|---|---|---|
+| 13 | **Trava de ordem (emenda 7) reprova para sempre o commit 2c7c87a**: a emenda 13 (B57) foi commitada junto com `docs/b57/FONTES-B57.md` (fichas de fonte, sem código), e o `oraculo/ordem.py` exige pré-registro sozinho; a emenda 13 não conta como registrada e todo commit que a cita reprova. A regra foi escrita antes do resultado (2c7c87a vem antes do motor no git), mas a trava não tem como saber. Erro do Claude, 25/11 | **(A, recomendo)** exceção pontual em `ordem.py`: commit 2c7c87a aceito, com o motivo escrito no código e teste — conserta só este caso, não afrouxa a regra. (B) aceitar `docs/b*/FONTES-*.md` junto do pré-registro sempre — afrouxa a regra. (C) deixar a falha registrada para sempre — o `python -m oraculo` sai com 1 em toda rodada. Mexer em trava = `MESA_LIBERA_CONFIG=1` (seu) | B57 | 25/11 |
 | 4 | Orçamento mensal; SaaS só seu ou de terceiros; objetivo acadêmico; agente de sexta ainda roda?; fonte paga; licença do código | Ver Brief §11 | B07 | 10/10 |
 
 ## Só do Frank (a rotina nunca faz)
