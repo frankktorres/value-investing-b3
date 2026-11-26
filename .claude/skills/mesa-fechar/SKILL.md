@@ -27,6 +27,9 @@ description: Fecha o turno da Mesa de Value Investing — passa o pendente para 
      a causa aberta é a primeira do §4 que nenhuma linha dessas deu como fechada.
 5. **Relatório:** nova entrada no topo de `docs/RELATORIO-DIARIO.md` (máx. 10 linhas).
 6. **Brief:** se algo relevante mudou, siga a regra do `CLAUDE.md` (PROJECT_BRIEF.md, versão anterior em `_historico/`).
+   **Desktop:** mudou doc listado no `UPLOAD CLAUDE DESKTOP/MANIFESTO.txt` (inclusive DECISOES/BACKLOG/brief deste fecho) →
+   rodar `cd ferramentas && python -m desktop.atualizar` (último passo de edição, antes da suíte) e avisar o Frank quais
+   arquivos trocar no Desktop (a lista sai no fim do MANIFESTO). Sem isso o `test_desktop_upload.py` reprova.
 7. **Varredura (antes do commit):** nenhum arquivo a commitar é `.env*`/chave/token nem traz quantidade, preço médio,
    valor ou corretora da carteira. Se tiver, pare e avise.
 8. **Testes + push:** com TODAS as edições acima já feitas, rode a suíte inteira

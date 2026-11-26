@@ -1,0 +1,115 @@
+# B46 — tentativa 8/24: a mesma variante da emenda 12 com o X2 do Z'' corrigido (emenda 13, B57)
+
+*Gerado por `ferramentas/b46/relatorio.py --tentativa 8` só a partir de `ferramentas/b46/resultado_B46_t8.json`. Regra, critério e leitura: emenda 12; o que mudou, vieses, contaminação e previsões: emenda 13 do `docs/PRE-REGISTRO-v3.md`, commitada antes de rodar. Fontes: `docs/b46/FONTES-B46.md` e `docs/b57/FONTES-B57.md`. Nada aqui é ordem de compra ou venda.*
+
+**Único insumo que muda frente à 7/24 (`docs/b46/B46-2026-11.md`):** o X2 do Z'' do π (ii) = (reservas de lucros 2.03.04 + lucros/prejuízos acumulados 2.03.05) ÷ ativo. **Contaminação declarada:** o defeito foi achado olhando a 7/24; um PASSA aqui vem de um conjunto visto duas vezes e é evidência fraca — só o HOLD-OUT 2 prova.
+
+**Sensibilidade (pedido do Frank; não é critério):** C3 com o X2 do último DFP = 15 de 24 (não passaria); com o X2 da regra (balanço do LTM) = 15 de 24. Discordam com o X2 do DFP: HYPE3, RANI3, RECV3, SLCE3, CMIN3, EMBJ3, SMFT3, MRVE3, BEEF3.
+
+## Leitura pela regra: **NÃO CONCLUSIVA**
+
+**Fora do hall dos lotes:** EGIE3 e ITSA4 estão no `hall.json` mas não nos lotes de `oraculo/sanidade.py` (emenda 12).
+
+| Linha | O que confere | Resultado |
+|---|---|---|
+| C1 | Ke, π e âncoras recalculados à parte | passou |
+| C2 | preço ×0,7/×1,3 e dívida +10% no grupo acima do limite (23); π monotônico | passou |
+| C3 | \|π(i) − π(ii)\| ≤ 20 p.p. em ≥ 2/3 das sobrealavancadas | 15 de 24 (**não**) |
+| C4 | nenhum vazio sem razão | passou |
+
+**Discordam no π (C3):** HYPE3, RANI3, RECV3, SLCE3, CMIN3, EMBJ3, SMFT3, MRVE3, BEEF3
+
+**Fragilidade do C3 (relatada; ressalva do `oraculo`):** casos a ≤ 5 p.p. do limite de 20 p.p. ou com D/E a mercado a ≤ 5% do da indústria: HYPE3 |Δπ| 23,25 p.p.; SLCE3 |Δπ| 23,25 p.p.; TIMS3 D/E a mercado só 0,3% acima do da indústria; VLID3 |Δπ| 18,97 p.p.; RAIL3 |Δπ| 17,17 p.p.; CSNA3 |Δπ| 16,90 p.p..
+
+**Não avaliados (com a razão):** GGBR4: não avaliado: GGBR4: sem indústria no indname do Damodaran (ausente); KLBN11: não avaliado: KLBN11: sem indústria no indname do Damodaran (ausente); PETR4: não avaliado: PETR4: sem indústria no indname do Damodaran (ausente); UNIP6: não avaliado: UNIP6: sem indústria no indname do Damodaran (ausente); FESA4: não avaliado: FESA4: sem indústria no indname do Damodaran (ausente); SHUL4: não avaliado: SHUL4: sem indústria no indname do Damodaran (ausente); MBRF3: ValueError: MBRF3: sem capital integralizado no FRE 2026; GOAU4: não avaliado: GOAU4: sem indústria no indname do Damodaran (ausente); USIM5: não avaliado: USIM5: sem indústria no indname do Damodaran (ausente); TEND3: NotImplementedError: TEND3: evento INCORPORACAO sem semântica conferida — ajustar à mão; NATU3: NotImplementedError: NATU3: evento INCORPORACAO sem semântica conferida — ajustar à mão; IGTI11: ValueError: IGTI11: 3 linhas iguais de DIVIDENDO com data-com 2025-04-17 na B3 — parcela ou repetição? Conferir o total na DMPL da CVM e classificar em proventos_hall.GRUPOS_CONFERIDOS
+
+**Abaixo do limite, dívida +10% sobe o central (relatado, previsto em parte — efeito H2):** nenhum
+
+## Relatado fora do critério (§0.3)
+
+- Ke nominal > 30%: motor de hoje 6 de 39; variante 0 de 31 (quase por construção).
+- P/C mediano dos industriais: hoje 1,61; variante 2,33.
+- BARATA: hoje 0; variante 1. RADAR: 5 → 2. JUSTA: 1 → 0. NÃO CONCLUSIVO: 20 → 12.
+
+- Viés (i) × (ii) (hipótese do `senior`: juros nominais em R$): π (i) > π (ii) em 17 de 31; mediana de π (i) − π (ii) = 4,3%.
+
+## Hall (todos; financeiras: não se aplica)
+
+| Ação | Indústria | D/E mercado → cont. | Ke hoje → var. | Rating (i) · Z'' → (ii) | π (i) · (ii) → π | Palavra hoje → var. | P/C hoje → var. | Δ central: parte D/E · parte π |
+|---|---|---|---|---|---|---|---|---|
+| ABCB4 | financeira — não se aplica | | | | | | | |
+| ABEV3 | Beverage (Alcoholic) | 0,01 → 0,01 | 20,7% → 20,7% | AAA · 7,89 → A | 0,1% · 0,7% → 0,4% | CARA → CARA | 1,74 → 1,75 | +0,0% · -0,4% |
+| B3SA3 | Financial Svcs. (Non-bank & Insurance) | 0,21 → 0,21 | 21,4% → 21,4% | A- · 6,45 → A- | 5,0% · 5,0% → 5,0% | CARA → CARA | 1,70 → 1,78 | +0,0% · -5,0% |
+| BBAS3 | financeira — não se aplica | | | | | | | |
+| BBDC4 | financeira — não se aplica | | | | | | | |
+| BBSE3 | financeira — não se aplica | | | | | | | |
+| BRBI11 | financeira — não se aplica | | | | | | | |
+| BRSR6 | financeira — não se aplica | | | | | | | |
+| CMIG4 | financeira — não se aplica | | | | | | | |
+| CPFE3 | financeira — não se aplica | | | | | | | |
+| CPLE3 | financeira — não se aplica | | | | | | | |
+| CSMG3 | financeira — não se aplica | | | | | | | |
+| CXSE3 | financeira — não se aplica | | | | | | | |
+| FLRY3 | Healthcare Support Services | 0,55 → 0,55 | 22,9% → 22,9% | BB · 6,06 → BBB+ | 19,6% · 7,5% → 13,6% | CARA → CARA | 2,01 → 2,33 | +0,0% · -13,6% |
+| GGBR4 | não avaliado | | 21,9% | | | CARA | 1,52 | não avaliado: GGBR4: sem indústria no indname do Damodaran (ausente) |
+| HYPE3 | Drugs (Pharmaceutical) | 0,50 → 0,11 | 22,4% → 21,0% | B+ · 6,29 → A- | 28,2% · 5,0% → 16,6% | CARA → CARA | 1,46 → 2,05 | -14,6% · -16,6% |
+| ISAE4 | financeira — não se aplica | | | | | | | |
+| ITUB4 | financeira — não se aplica | | | | | | | |
+| KEPL3 | Machinery | 0,30 → 0,12 | 21,9% → 21,1% | A- · 7,78 → A | 5,0% · 0,7% → 2,8% | JUSTA → CARA **(muda)** | 1,04 → 1,12 | -4,5% · -2,8% |
+| KLBN11 | não avaliado | | 27,8% | | | NÃO CONCLUSIVO | 13,81 | não avaliado: KLBN11: sem indústria no indname do Damodaran (ausente) |
+| LEVE3 | Auto Parts | 0,33 → 0,18 | 22,0% → 21,4% | AAA · 7,23 → A | 0,1% · 0,7% → 0,4% | RADAR → RADAR | 0,87 → 0,88 | -1,4% · -0,4% |
+| PETR4 | não avaliado | | 23,1% | | | RADAR | 0,77 | não avaliado: PETR4: sem indústria no indname do Damodaran (ausente) |
+| PRIO3 | Oil/Gas (Production and Exploration) | 0,51 → 0,32 | 22,4% → 21,7% | A · 6,70 → A- | 0,7% · 5,0% → 2,8% | NÃO CONCLUSIVO → CARA **(muda)** | 1,08 → 1,20 | -7,2% · -2,8% |
+| PSSA3 | financeira — não se aplica | | | | | | | |
+| RANI3 | Packaging & Container | 1,39 → 0,42 | 26,2% → 22,3% | CCC · 6,03 → BBB+ | 59,0% · 7,5% → 33,3% | NÃO CONCLUSIVO → NÃO CONCLUSIVO | 3,22 → 4,53 | +6,5% · -33,3% |
+| RECV3 | Oil/Gas (Production and Exploration) | 1,12 → 0,32 | 25,7% → 22,1% | C · 6,24 → A- | 81,0% · 5,0% → 43,0% | NÃO CONCLUSIVO → NÃO CONCLUSIVO | — → — | — · — |
+| SANB11 | financeira — não se aplica | | | | | | | |
+| SAPR11 | financeira — não se aplica | | | | | | | |
+| SBSP3 | financeira — não se aplica | | | | | | | |
+| SLCE3 | Farming/Agriculture | 1,33 → 0,58 | 26,1% → 23,0% | B+ · 6,17 → A- | 28,2% · 5,0% → 16,6% | NÃO CONCLUSIVO → NÃO CONCLUSIVO | 3,71 → 5,71 | -21,9% · -16,6% |
+| SMTO3 | Food Processing | 2,18 → 0,38 | 30,3% → 22,3% | BB · 5,81 → BBB+ | 19,6% · 7,5% → 13,6% | NÃO CONCLUSIVO → CARA **(muda)** | 1,38 → 1,95 | -18,3% · -13,6% |
+| SUZB3 | Paper/Forest Products | 1,54 → 1,01 | 27,2% → 25,0% | BB+ · 5,54 → BB | 19,6% · 19,6% → 19,6% | NÃO CONCLUSIVO → NÃO CONCLUSIVO | 5,71 → 8,57 | -17,2% · -19,6% |
+| TAEE11 | financeira — não se aplica | | | | | | | |
+| TIMS3 | Telecom (Wireless) | 0,30 → 0,30 | 21,9% → 21,9% | BB+ · 5,28 → BB- | 19,6% · 28,2% → 23,9% | CARA → CARA | 2,32 → 3,05 | -0,0% · -23,9% |
+| UGPA3 | Retail (Automotive) | 0,59 → 0,59 | 22,9% → 22,9% | B+ · 6,90 → A- | 28,2% · 5,0% → 16,6% | CARA → CARA | 2,69 → 3,22 | +0,0% · -16,6% |
+| UNIP6 | não avaliado | | 23,1% | | | NÃO CONCLUSIVO | 1,07 | não avaliado: UNIP6: sem indústria no indname do Damodaran (ausente) |
+| VBBR3 | Retail (Automotive) | 0,56 → 0,56 | 23,0% → 23,0% | B · 7,29 → A | 36,8% · 0,7% → 18,7% | CARA → CARA | 2,93 → 3,61 | +0,0% · -18,7% |
+| VIVT3 | Telecom. Services | 0,19 → 0,19 | 21,5% → 21,5% | A- · 5,16 → BB- | 5,0% · 28,2% → 16,6% | CARA → CARA | 2,35 → 2,82 | +0,0% · -16,6% |
+| WEGE3 | Electrical Equipment | 0,02 → 0,02 | 20,7% → 20,7% | AAA · 7,19 → A | 0,1% · 0,7% → 0,4% | CARA → CARA | 5,31 → 5,33 | +0,0% · -0,4% |
+
+## Dossiês
+
+| Ação | Indústria | D/E mercado → cont. | Ke hoje → var. | Rating (i) · Z'' → (ii) | π (i) · (ii) → π | Palavra hoje → var. | P/C hoje → var. | Δ central: parte D/E · parte π |
+|---|---|---|---|---|---|---|---|---|
+| ALLD3 | Computer Services | 0,88 → 0,10 | 22,4% → 19,7% | A · 7,72 → A | 0,7% · 0,7% → 0,7% | RADAR → BARATA **(muda)** | 0,32 → 0,40 | -19,6% · -0,7% |
+| BLAU3 | Drugs (Biotechnology) | 0,34 → 0,08 | 20,7% → 19,6% | A- · 8,15 → A | 5,0% · 0,7% → 2,8% | NÃO CONCLUSIVO → NÃO CONCLUSIVO | 1,33 → 1,46 | -6,1% · -2,8% |
+| CMIN3 | Steel | 0,82 → 0,51 | 22,5% → 21,3% | AA · 4,96 → B+ | 0,5% · 28,2% → 14,4% | CARA → CARA | 1,47 → 1,86 | -7,7% · -14,4% |
+| FESA4 | não avaliado | | 20,0% | | | RADAR | 0,76 | não avaliado: FESA4: sem indústria no indname do Damodaran (ausente) |
+| SHUL4 | não avaliado | | 21,1% | | | CARA | 1,26 | não avaliado: SHUL4: sem indústria no indname do Damodaran (ausente) |
+| VLID3 | Publishing & Newspapers | 0,51 → 0,11 | 21,6% → 19,8% | BB · 7,67 → A | 19,6% · 0,7% → 10,1% | CARA → CARA | 1,11 → 1,28 | -3,0% · -10,1% |
+
+## B36 (só descrevem a falha)
+
+| Ação | Indústria | D/E mercado → cont. | Ke hoje → var. | Rating (i) · Z'' → (ii) | π (i) · (ii) → π | Palavra hoje → var. | P/C hoje → var. | Δ central: parte D/E · parte π |
+|---|---|---|---|---|---|---|---|---|
+| BPAC11 | financeira — não se aplica | | | | | | | |
+| EMBJ3 | Aerospace/Defense | 0,16 → 0,12 | 21,2% → 21,1% | CCC · 5,07 → B+ | 59,0% · 28,2% → 43,6% | NÃO CONCLUSIVO → NÃO CONCLUSIVO | 36,20 → 64,52 | -0,4% · -43,6% |
+| EQTL3 | financeira — não se aplica | | | | | | | |
+| ENEV3 | financeira — não se aplica | | | | | | | |
+| RADL3 | Retail (Special Lines) | 0,37 → 0,19 | 21,9% → 21,3% | BBB · 5,85 → BBB+ | 7,5% · 7,5% → 7,5% | NÃO CONCLUSIVO → CARA **(muda)** | 3,47 → 4,27 | -12,1% · -7,5% |
+| RAIL3 | Transportation (Railroads) | 1,05 → 0,38 | 24,9% → 22,2% | BB · 4,54 → B | 19,6% · 36,8% → 28,2% | NÃO CONCLUSIVO → NÃO CONCLUSIVO | — → — | — · — |
+| ENGI11 | financeira — não se aplica | | | | | | | |
+| CSAN3 | Retail (Automotive) | 5,14 → 0,74 | 38,8% → 23,3% | B+ · 4,16 → B | 28,2% · 36,8% → 32,5% | NÃO CONCLUSIVO → NÃO CONCLUSIVO | 2,35 → 28,54 | -87,8% · -32,5% |
+| SMFT3 | Recreation | 1,38 → 0,24 | 25,5% → 21,5% | C · 4,82 → B+ | 81,0% · 28,2% → 54,6% | NÃO CONCLUSIVO → NÃO CONCLUSIVO | — → — | — · — |
+| MBRF3 | não avaliado | | — | | | — | — | ValueError: MBRF3: sem capital integralizado no FRE 2026 |
+| CSNA3 | Steel | 11,75 → 0,51 | 62,2% → 22,4% | B- · 3,23 → CCC+ | 42,1% · 59,0% → 50,6% | NÃO CONCLUSIVO → NÃO CONCLUSIVO | 1,89 → — | -100,0% · — |
+| GOAU4 | não avaliado | | 24,8% | | | NÃO CONCLUSIVO | 1,32 | não avaliado: GOAU4: sem indústria no indname do Damodaran (ausente) |
+| USIM5 | não avaliado | | 24,1% | | | RADAR | 0,55 | não avaliado: USIM5: sem indústria no indname do Damodaran (ausente) |
+| TEND3 | não avaliado | | — | | | — | — | NotImplementedError: TEND3: evento INCORPORACAO sem semântica conferida — ajustar à mão |
+| NATU3 | não avaliado | | — | | | — | — | NotImplementedError: NATU3: evento INCORPORACAO sem semântica conferida — ajustar à mão |
+| MOVI3 | Transportation | 10,09 → 0,59 | 61,9% → 23,0% | CC · 3,51 → CCC+ | 66,6% · 59,0% → 62,8% | NÃO CONCLUSIVO → NÃO CONCLUSIVO | — → — | — · — |
+| MRVE3 | Homebuilding | 3,31 → 0,70 | 32,3% → 23,1% | CCC · 5,43 → BB- | 59,0% · 28,2% → 43,6% | NÃO CONCLUSIVO → NÃO CONCLUSIVO | — → — | — · — |
+| AZZA3 | Apparel | 1,30 → 0,26 | 25,2% → 21,5% | BBB · 6,79 → A- | 7,5% · 5,0% → 6,3% | NÃO CONCLUSIVO → RADAR **(muda)** | 0,58 → 0,87 | -28,5% · -6,3% |
+| IGTI11 | não avaliado | | — | | | — | — | ValueError: IGTI11: 3 linhas iguais de DIVIDENDO com data-com 2025-04-17 na B3 — parcela ou repetição? Conferir o total na DMPL da C |
+| BEEF3 | Food Processing | 7,88 → 0,38 | 48,5% → 22,0% | CC · 5,11 → BB- | 66,6% · 28,2% → 47,4% | NÃO CONCLUSIVO → CARA **(muda)** | 6,69 → 5,52 | +84,6% · -34,4% |
+

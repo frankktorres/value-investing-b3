@@ -31,8 +31,9 @@ ARQUIVOS = sorted(p.stem for p in VEREDITOS.glob("*.json"))
 METODO_VIGENTE = {
     "ALLD3-2026-10-15": dict(central=15.9743, pc=0.3944, palavra="RADAR"),          # salvo 14,9142 BARATA (antes do H2)
     # B60 (26/11/2026, dado): série de 02/10 recoletada pelo coletor de hoje; entra `proventos_a_pagar` do ITR 2T26 e o motor
-    # passa a pôr o provento já ex na DL (AUD-02). BLAU3 8,1372 → 7,6457 (passivo R$ 114,7 mi); CMIN3 3,6317 → 3,5987 (a ficha
-    # já descontava o campo do passivo de contrato; resta o ajuste da B3). O `lucro_controlador` 0 → None de 2022–24 da CMIN3
+    # passa a pôr o provento já ex na DL (AUD-02). BLAU3 8,1372 → 7,6457 (DL + R$ 114,7 mi); CMIN3 3,6317 → 3,5987: DL igual
+    # (a ficha tira o campo do passivo de contrato e o motor o soma), mas o provento (R$ 1,16 bi, sem juro) sai da dívida bruta
+    # do WACC (D/E 0,8206 → 0,7771), como no hall (adversário, 26/11). O `lucro_controlador` 0 → None de 2022–24 da CMIN3
     # muda o OE desses anos, mas não o central (cíclica: EPV/DCF pela receita de meio). Palavras iguais.
     "BLAU3-2026-10-02": dict(central=7.6457, pc=1.4152, palavra="NÃO CONCLUSIVO"),  # pré-B60 8,1372; pré-H2 8,2998
     "CMIN3-2026-10-06": dict(central=3.5987, pc=1.3727, palavra="CARA"),            # pré-B60 3,6317; pré-H2 3,3668 (macro de
