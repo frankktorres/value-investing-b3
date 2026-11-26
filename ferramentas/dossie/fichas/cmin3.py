@@ -142,7 +142,7 @@ def empresa(qualitativo: dict | None = None, desconto_controlador: dict | None =
                             f"{JANELA_PRECO[0]}–{JANELA_PRECO[1]}) × volume de meio ÷ volume 12m ({vol['fator']:.3f})"),
         # v2.3: os dois são financeiros (o passivo de contrato tem juros, nota 22; o provento a pagar já é ex) → entram na DL.
         # AUD-02 (08/10/2026): o motor soma sozinho o `proventos_a_pagar` da série; quando a série do dossiê for recoletada com o
-        # campo, ele sai daqui para não contar duas vezes (hoje a série não o tem: desconta zero)
+        # campo, ele sai daqui para não contar duas vezes (B60, 26/11/2026: a série foi recoletada e tem o campo, R$ 1.163.385 mil)
         outros_passivos_financeiros=float(_num("outros_passivos")) - float(ltm_de(CVM[TK]).get("proventos_a_pagar") or 0.0),
         outros_passivos_fonte="passivo de contrato (minério e energia pré-vendidos, com juros) + dividendos a pagar já ex, ITR 2T26",
         g_real=0.01, jcp_share=base.jcp_share(TK), pl_hist=None,
