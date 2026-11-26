@@ -1,7 +1,8 @@
 # PROJECT BRIEF — Mesa de Value Investing B3
 > **Norte do projeto: `docs/00-DNA.md` (ler primeiro).**
 
-*Versão de 25/11/2026, noite 8 (B46: "separar a dificuldade" pré-registrada e rodada, tentativa 7/24, NÃO CONCLUSIVA); antes,
+*Versão de 25/11/2026, noite 9 (B57: X2 do Z'' com 2.03.04 + 2.03.05; B46 8/24 NÃO CONCLUSIVA, causa (a) fechada pelo Frank); antes,
+25/11/2026, noite 8 (B46: "separar a dificuldade" pré-registrada e rodada, tentativa 7/24, NÃO CONCLUSIVA); antes,
 25/11/2026, noite 7 (B40: cisão com redução de capital conferida na CVM; CSAN3 e MRVE3 rodam); antes, 25/11/2026, noite 6 (PENDENTE #11 aplicado: deny do pulo do pre-push no Bash e no PowerShell); antes, 25/11/2026, noite 5 (pacote de autonomia: agente `senior`, "Quem decide", B37 trava do push, travas 4.2–4.6, skills `mesa-*`); antes, 25/11/2026, noite 4 (B39 FEITA, com a errata da emenda 11: NÃO DISPARA, mediana −2,93 p.p. — indício só no Ibovespa; B50 da π; antes, na noite 3, a versão da emenda 9 dava DISPARA −4,89); antes, 25/11/2026, noite 2 (B39: emenda 9 do pré-registro — Ke real, triangulação, gatilho; falta abrir as fontes e rodar); antes, 25/11/2026, noite (`docs/00-DNA.md` criado: visão, princípios, 4 causas da B36, marcos M1–M5); antes, 25/11/2026 (B36 hold-out FEITO: NÃO PASSOU, 1 de 6 linhas; falhas B40–B48; B39 pré-registrada); antes, 24/11/2026, noite 2 (B36 hold-out em andamento: emenda 8 pré-registrada sozinha, executor `holdout_b36/`, piloto de 3; antes, hook Stop só snapshot em `wip/auto`; antes, à tarde: B34 + desbloqueio do oráculo: emenda 7, Graham no Ke da casa, check `ordem`, hold-out B36; defeito H2 do Ke corrigido — D/E a mercado sem ponto fixo, doutrina v2.7; dossiês recalculados na data, point-in-time; 3T26 juntado no master; antes: 23/11, gravação do 3T26 com data-base 19/11)*
 
 ## 1. Projeto
@@ -60,7 +61,8 @@ MVP de uso pessoal, maduro no cálculo. Um usuário real, sem terceiros. Prazo e
 4b. **Nível do Ke (B39, 25/11, com a emenda 11): NÃO DISPARA, por pouco** (mediana −2,93 p.p.; bancos −2,93, Ibovespa −4,89, Damodaran −1,42). Indício só no Ibovespa; a B35/B46 segue hipótese, sem prioridade. A causa do "tudo CARA" se procura primeiro nas causas b–d do DNA. `docs/b39/B39-2026-11.md`.
 4c. **Ke > 30% (B46, 25/11, emenda 12): NÃO CONCLUSIVA.** Damodaran (2009) — D/E da indústria na continuidade + π de calote — tira
    o Ke > 30% (6 → 0, por construção), mas o π não é identificável: rating da cobertura × Z'' de Altman discordam > 20 p.p. em 9 de
-   24 (C3 15/24, precisava 16). Medido com um defeito conhecido no Z'' (B57). Nada implantado. `docs/b46/B46-2026-11.md`.
+   24 (C3 15/24, precisava 16). Refeita depois da B57 (X2 corrigido): tentativa 8/24, mesmo C3 15/24 → hipótese encerrada; **causa (a) fechada "como está"**
+   pelo Frank (25/11, #14): o Ke > 30% sai NÃO CONCLUSIVO pela H2 e é medido no M1. `docs/b46/B46-2026-11-t8.md`.
 5. **Universo que não gera compra.** Blue chips eficientes: quase tudo JUSTA/CARA, zero compra; triagem de toda a B3 deixou 5 de 104 no portão.
 6. **Risco de burocracia.** O projeto paralelo (`analisador/`) morreu por regra nova a cada sessão sem decisão; o próprio repo registra sinais
    da mesma doença. Comitê único (mesma família de modelo; 2º comitê pausado).
@@ -121,6 +123,9 @@ MVP de uso pessoal, maduro no cálculo. Um usuário real, sem terceiros. Prazo e
 6. Licença pretendida do código (fechado/aberto)?
 
 ## 12. O que mudou
+- 25/11/2026 (noite 9): B57 — emenda 13 (2c7c87a); `altman_z2` com X2 = (2.03.04 + 2.03.05) ÷ ativo (Lei 6.404 nota A, plano da CVM nota A,
+  Altman 2002 nota B); `ferramentas/b57/recoletar.py` (recoleta aditiva das séries); golden igual; B46 8/24 NÃO CONCLUSIVA; exceção
+  pontual na trava de ordem (#13 A) e causa (a) fechada (#14); B58–B60 novos; commits f96cb7b, d955857.
 - 25/11/2026 (noite 8): B46 — emenda 12 (5461a47) antes de rodar; `ferramentas/b46/` (variante por `mock.patch`, motor intocado) →
   NÃO CONCLUSIVA (7/24); fontes novas nota B: Damodaran *Valuing Distressed* (2009), `waccemerg.xls`/`indname.xls` (jan/2026), slide
   26 do Altman; B57 nova (X2 do Z''); commits 18218c1, d98c264, e8a039b.
