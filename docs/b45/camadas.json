@@ -1,0 +1,2318 @@
+{
+ "RAIL3": {
+  "ticker": "RAIL3",
+  "perfil": "servicos",
+  "setor": "Emp. Adm. Part. - Serviços Transporte e Logística",
+  "preco": 16.8,
+  "n_acoes_mil": 1856634.394,
+  "palavra": "NÃO CONCLUSIVO",
+  "palavra_regua": "NÃO CONCLUSIVO",
+  "confianca": "não conclusivo",
+  "pc": Infinity,
+  "central": -3.0273154641117452,
+  "dispersao": Infinity,
+  "ancoras": {
+   "DCF (3 cenários)": 0.0,
+   "EPV": -3.0273154641117452,
+   "Owner Earnings ÷ (Ke − g)": -4.155606571821181
+  },
+  "ancoras_descartadas": [],
+  "dcf_cenarios": {
+   "pessimista": -6.2004529781377125,
+   "base": -3.0273154641117452,
+   "otimista": -1.3195687066431971
+  },
+  "dcf_pond": 0.0,
+  "epv": -3.0273154641117452,
+  "oe_val": -4.155606571821181,
+  "oe_norm": -1166874.7428662162,
+  "oe_por_ano": [
+   [
+    "2017",
+    -3782870.7617657147
+   ],
+   [
+    "2018",
+    829224.4450519613
+   ],
+   [
+    "2019",
+    1225927.4440640225
+   ],
+   [
+    "2020",
+    -9212744.242292767
+   ],
+   [
+    "2021",
+    -825618.135546551
+   ],
+   [
+    "2022",
+    476611.65226157266
+   ],
+   [
+    "2023",
+    -1166874.7428662162
+   ],
+   [
+    "2024",
+    -3309209.0834373026
+   ],
+   [
+    "2025",
+    -1794923.6525874147
+   ]
+  ],
+  "margem": {
+   "m25": 0.20427542652647335,
+   "m50": 0.2628351818421356,
+   "m75": 0.29435138049927817,
+   "m50_5a": 0.27161406782025466,
+   "margens": [
+    0.0667344974027724,
+    0.1742981628885359,
+    0.20427542652647335,
+    0.2370966781842859,
+    0.2597994425394037,
+    0.2658709211448676,
+    0.27161406782025466,
+    0.29435138049927817,
+    0.3176599209560753,
+    0.32032221834168173
+   ],
+   "ajuste_manut": -0.04459645969014821,
+   "med_outras": -0.0014771088571407034,
+   "quebra_suspeita": false,
+   "divergencia_janela": 0.03340072632815126
+  },
+  "receita_meio": 14392277.420626093,
+  "lucro_pre_ir": 3140952.23313434,
+  "aliquota": 0.24381399082448096,
+  "aliquota_regra": "mediana",
+  "nopat": 2375144.1341847912,
+  "ke_nom": 0.24900835285392175,
+  "wacc_nom": 0.18763521153183255,
+  "wacc_real": 0.10817879213570247,
+  "kd": 0.17112052000000014,
+  "kd_info": {
+   "kd": 0.17112052000000014,
+   "origem": "sintético",
+   "spread": 0.0184,
+   "rating": "BB",
+   "cobertura": 2.045827115622801,
+   "fonte": "Damodaran, ratings.html, empresas não financeiras grandes, jan/2026 (nota B)"
+  },
+  "e_mercado": 31191457.8192,
+  "d_desconto": 32871573.0,
+  "d_sobre_e": 1.0538645930093655,
+  "bruta": 32871573.0,
+  "caixa": 5725798.0,
+  "caixa_livre": 5516986.0,
+  "dl": 27354587.0,
+  "minor": 221759.0,
+  "outros_passivos_financeiros": 0.0,
+  "ev_epv_firma": 21955727.98784206,
+  "ponte_dl_mais_minor": 27576346.0,
+  "ponte_sobre_ev_epv": 1.2559977977168575,
+  "cap_inv": 42460827.0,
+  "roic": 0.0559373027328175,
+  "roic_filtro": 0.034615841542338405,
+  "lpa_norm": -0.6272158463198788,
+  "vpa": 8.016915472481546,
+  "reprod": 8.016915472481546,
+  "ltm": {
+   "ref": null,
+   "receita": 14526853.0,
+   "ebit": 5117369.0,
+   "lucro": 1269817.0,
+   "lucro_controlador": 1247182.0,
+   "pl": 15106240.0,
+   "nao_controladores": 221759.0,
+   "emprest_cp": 1252910.0,
+   "emprest_lp": 23187936.0,
+   "arrendamento": 8430727.0,
+   "caixa": 5725798.0,
+   "aplic_cp": 0.0,
+   "juros_pagos": 1535297.0,
+   "desp_fin": -2387242.0,
+   "ativo": 56780108.0
+  },
+  "por_ano": {
+   "2016": {
+    "receita": 4311713.0,
+    "ebit": 287740.0,
+    "margem_ebit_aj": 0.0667,
+    "lucro": -1052572.0,
+    "lucro_controlador": -1063230.0,
+    "pl": 5675287.0,
+    "nao_controladores": 270592.0,
+    "divida_bruta": 12528524.0,
+    "caixa": 1177120.0,
+    "da": 1291307.0,
+    "capex": 1479881.0
+   },
+   "2017": {
+    "receita": 5946349.0,
+    "ebit": 1415339.0,
+    "margem_ebit_aj": 0.2371,
+    "lucro": -258438.0,
+    "lucro_controlador": -260807.0,
+    "pl": 8019381.0,
+    "nao_controladores": 267921.0,
+    "divida_bruta": 12865624.0,
+    "caixa": 178004.0,
+    "da": 1341687.0,
+    "capex": 2045390.0
+   },
+   "2018": {
+    "receita": 6584936.0,
+    "ebit": 1750743.0,
+    "margem_ebit_aj": 0.2659,
+    "lucro": 272967.0,
+    "lucro_controlador": 264357.0,
+    "pl": 8294623.0,
+    "nao_controladores": 266423.0,
+    "divida_bruta": 14356299.0,
+    "caixa": 141527.0,
+    "da": 1491306.0,
+    "capex": 1996746.0
+   },
+   "2019": {
+    "receita": 7087840.0,
+    "ebit": 2113246.0,
+    "margem_ebit_aj": 0.2944,
+    "lucro": 785871.0,
+    "lucro_controlador": 778237.0,
+    "pl": 8614287.0,
+    "nao_controladores": 270011.0,
+    "divida_bruta": 19703757.0,
+    "caixa": 1963014.0,
+    "da": 1716182.0,
+    "capex": 1943063.0
+   },
+   "2020": {
+    "receita": 6966159.0,
+    "ebit": 1948481.0,
+    "margem_ebit_aj": 0.2598,
+    "lucro": 304675.0,
+    "lucro_controlador": 297163.0,
+    "pl": 15296327.0,
+    "nao_controladores": 312721.0,
+    "divida_bruta": 25807698.0,
+    "caixa": 7778606.0,
+    "da": 1859511.0,
+    "capex": 2979213.0
+   },
+   "2021": {
+    "receita": 7439632.0,
+    "ebit": 1519734.0,
+    "margem_ebit_aj": 0.2043,
+    "lucro": 155741.0,
+    "lucro_controlador": 150538.0,
+    "pl": 15018563.0,
+    "nao_controladores": 223142.0,
+    "divida_bruta": 27339876.0,
+    "caixa": 9448193.0,
+    "da": 1830683.0,
+    "capex": 3453407.0
+   },
+   "2022": {
+    "receita": 9841508.0,
+    "ebit": 3036172.0,
+    "margem_ebit_aj": 0.2716,
+    "lucro": 514021.0,
+    "lucro_controlador": 514940.0,
+    "pl": 15410450.0,
+    "nao_controladores": 219281.0,
+    "divida_bruta": 23363508.0,
+    "caixa": 7385421.0,
+    "da": 1966945.0,
+    "capex": 2717745.0
+   },
+   "2023": {
+    "receita": 10937716.0,
+    "ebit": 3474474.0,
+    "margem_ebit_aj": 0.3177,
+    "lucro": 721917.0,
+    "lucro_controlador": 719666.0,
+    "pl": 15871055.0,
+    "nao_controladores": 199703.0,
+    "divida_bruta": 25937057.0,
+    "caixa": 7233993.0,
+    "da": 2175834.0,
+    "capex": 3689877.0
+   },
+   "2024": {
+    "receita": 13936389.0,
+    "ebit": 2429087.0,
+    "margem_ebit_aj": 0.1743,
+    "lucro": -949242.0,
+    "lucro_controlador": -959247.0,
+    "pl": 14935155.0,
+    "nao_controladores": 203911.0,
+    "divida_bruta": 26876598.0,
+    "caixa": 7461618.0,
+    "da": 2303380.0,
+    "capex": 5492724.0
+   },
+   "2025": {
+    "receita": 13847776.0,
+    "ebit": 4579664.0,
+    "margem_ebit_aj": 0.3203,
+    "lucro": 865125.0,
+    "lucro_controlador": 847057.0,
+    "pl": 14048438.0,
+    "nao_controladores": 205799.0,
+    "divida_bruta": 31257230.0,
+    "caixa": 7018132.0,
+    "da": 2213331.0,
+    "capex": 6096341.0
+   }
+  },
+  "contrafactuais": {
+   "base": {
+    "central": -3.0273154641117452,
+    "ancoras": {
+     "DCF (3 cenários)": 0.0,
+     "EPV": -3.0273154641117452,
+     "Owner Earnings ÷ (Ke − g)": -4.155606571821181
+    },
+    "kd": 0.17112052000000014,
+    "wacc_real": 0.10817879213570247,
+    "ev_epv": 21955727.98784206,
+    "dl_mais_minor": 27576346.0,
+    "pc": Infinity
+   },
+   "margem_5a": {
+    "central": -2.5516199582414285,
+    "ancoras": {
+     "DCF (3 cenários)": 0.0,
+     "EPV": -2.5516199582414285,
+     "Owner Earnings ÷ (Ke − g)": -4.155606571821181
+    },
+    "kd": 0.17112052000000014,
+    "wacc_real": 0.10817879213570247,
+    "ev_epv": 22838920.62511212,
+    "dl_mais_minor": 27576346.0,
+    "pc": Infinity
+   },
+   "receita_ltm": {
+    "central": -2.916740148754339,
+    "ancoras": {
+     "DCF (3 cenários)": 0.0,
+     "EPV": -2.916740148754339,
+     "Owner Earnings ÷ (Ke − g)": -4.155606571821181
+    },
+    "kd": 0.17112052000000014,
+    "wacc_real": 0.10817879213570247,
+    "ev_epv": 22161025.921462018,
+    "dl_mais_minor": 27576346.0,
+    "pc": Infinity
+   },
+   "kd_cobertura_ltm": {
+    "central": -2.6389829759331405,
+    "ancoras": {
+     "DCF (3 cenários)": 0.0,
+     "EPV": -2.6389829759331405,
+     "Owner Earnings ÷ (Ke − g)": -4.155606571821181
+    },
+    "kd": 0.16162052000000013,
+    "wacc_real": 0.10473931823740545,
+    "ev_epv": 22676719.441702057,
+    "dl_mais_minor": 27576346.0,
+    "pc": Infinity
+   },
+   "as_tres": {
+    "central": -2.028865870316752,
+    "ancoras": {
+     "DCF (3 cenários)": 0.0,
+     "EPV": -2.028865870316752,
+     "Owner Earnings ÷ (Ke − g)": -4.155606571821181
+    },
+    "kd": 0.16162052000000013,
+    "wacc_real": 0.10473931823740545,
+    "ev_epv": 23809483.844357174,
+    "dl_mais_minor": 27576346.0,
+    "pc": Infinity
+   },
+   "_kd_ltm": {
+    "cobertura_ltm": 3.3331459645918673,
+    "rating": "A-",
+    "spread": 0.0089
+   },
+   "_pl_hist": 32.337142546581866,
+   "_ke_nom": 0.24900835285392175
+  }
+ },
+ "SMFT3": {
+  "ticker": "SMFT3",
+  "perfil": "servicos",
+  "setor": "Brinquedos e Lazer",
+  "preco": 17.69,
+  "n_acoes_mil": 612078.938,
+  "palavra": "NÃO CONCLUSIVO",
+  "palavra_regua": "NÃO CONCLUSIVO",
+  "confianca": "não conclusivo",
+  "pc": Infinity,
+  "central": 0.0,
+  "dispersao": Infinity,
+  "ancoras": {
+   "DCF (3 cenários)": 0.0,
+   "EPV": -14.17085836630169,
+   "Owner Earnings ÷ (Ke − g)": 5.428420648749408
+  },
+  "ancoras_descartadas": [],
+  "dcf_cenarios": {
+   "pessimista": -16.771048771373888,
+   "base": -14.17085836630169,
+   "otimista": -8.501593599249068
+  },
+  "dcf_pond": 0.0,
+  "epv": -14.17085836630169,
+  "oe_val": 5.428420648749408,
+  "oe_norm": 540982.9400625573,
+  "oe_por_ano": [
+   [
+    "2017",
+    -109400.72448430568
+   ],
+   [
+    "2018",
+    662919.5323587047
+   ],
+   [
+    "2019",
+    147073.8856239013
+   ],
+   [
+    "2020",
+    -1003649.0024920512
+   ],
+   [
+    "2021",
+    60154.38177336103
+   ],
+   [
+    "2022",
+    516597.7918638958
+   ],
+   [
+    "2023",
+    1057620.297488992
+   ],
+   [
+    "2024",
+    540982.9400625573
+   ],
+   [
+    "2025",
+    1605137.7754608917
+   ]
+  ],
+  "margem": {
+   "m25": 0.045473997037219244,
+   "m50": 0.09623538274783477,
+   "m75": 0.2069117912810669,
+   "m50_5a": 0.2069117912810669,
+   "margens": [
+    -0.3133969197066812,
+    -0.21705503149060892,
+    0.045473997037219244,
+    0.07913885211578364,
+    0.09057212607808116,
+    0.10189863941758838,
+    0.11098806789652642,
+    0.2069117912810669,
+    0.2263872328553617,
+    0.2323511213394794
+   ],
+   "ajuste_manut": 0.0,
+   "med_outras": -0.004327617088297293,
+   "quebra_suspeita": true,
+   "divergencia_janela": 1.1500594206939159
+  },
+  "receita_meio": 6876757.076408444,
+  "lucro_pre_ir": 661787.3493120478,
+  "aliquota": 0.34,
+  "aliquota_regra": "sem_dado",
+  "nopat": 436779.6505459515,
+  "ke_nom": 0.25497058747423207,
+  "wacc_nom": 0.22683926574894256,
+  "wacc_real": 0.14475997550521846,
+  "kd": 0.31272052000000017,
+  "kd_info": {
+   "kd": 0.31272052000000017,
+   "origem": "sintético",
+   "spread": 0.16,
+   "rating": "C",
+   "cobertura": 0.4082730542110659,
+   "fonte": "Damodaran, ratings.html, empresas não financeiras grandes, jan/2026 (nota B)"
+  },
+  "e_mercado": 10827676.413220001,
+  "d_desconto": 14899285.0,
+  "d_sobre_e": 1.376037150667782,
+  "bruta": 14899285.0,
+  "caixa": 3296413.0,
+  "caixa_livre": 3259085.0,
+  "dl": 11640200.0,
+  "minor": 50752.0,
+  "outros_passivos_financeiros": 0.0,
+  "ev_epv_firma": 3017268.060605647,
+  "ponte_dl_mais_minor": 11690952.0,
+  "ponte_sobre_ev_epv": 3.874681256412236,
+  "cap_inv": 17777842.0,
+  "roic": 0.024568766588540472,
+  "roic_filtro": 0.01824691068441997,
+  "lpa_norm": -3.211523268279311,
+  "vpa": 9.944615999840204,
+  "reprod": 9.944615999840204,
+  "ltm": {
+   "ref": null,
+   "receita": 8576130.0,
+   "ebit": 2058897.0,
+   "lucro": 754641.0,
+   "lucro_controlador": 754403.0,
+   "pl": 6137642.0,
+   "nao_controladores": 50752.0,
+   "emprest_cp": 1100981.0,
+   "emprest_lp": 7026020.0,
+   "arrendamento": 6772284.0,
+   "caixa": 1588230.0,
+   "aplic_cp": 1708183.0,
+   "juros_pagos": 1620943.0,
+   "desp_fin": -1647181.0,
+   "ativo": 22977946.0
+  },
+  "por_ano": {
+   "2016": {
+    "receita": 641196.0,
+    "ebit": 65337.0,
+    "margem_ebit_aj": 0.1019,
+    "lucro": -21577.0,
+    "lucro_controlador": -22225.0,
+    "pl": 443301.0,
+    "nao_controladores": 25038.0,
+    "divida_bruta": 481378.0,
+    "caixa": 232903.0,
+    "da": 107089.0,
+    "capex": 121551.0
+   },
+   "2017": {
+    "receita": 745563.0,
+    "ebit": 59003.0,
+    "margem_ebit_aj": 0.0791,
+    "lucro": -11589.0,
+    "lucro_controlador": -14839.0,
+    "pl": 411941.0,
+    "nao_controladores": 21303.0,
+    "divida_bruta": 1256228.0,
+    "caixa": 807730.0,
+    "da": 119182.0,
+    "capex": 275275.0
+   },
+   "2018": {
+    "receita": 1160033.0,
+    "ebit": 505201.0,
+    "margem_ebit_aj": 0.111,
+    "lucro": 356956.0,
+    "lucro_controlador": 351529.0,
+    "pl": 1206526.0,
+    "nao_controladores": 25796.0,
+    "divida_bruta": 1837681.0,
+    "caixa": 692194.0,
+    "da": 184206.0,
+    "capex": 548771.0
+   },
+   "2019": {
+    "receita": 1983947.0,
+    "ebit": 90218.0,
+    "margem_ebit_aj": 0.0455,
+    "lucro": -339272.0,
+    "lucro_controlador": -347980.0,
+    "pl": 2267451.0,
+    "nao_controladores": 26999.0,
+    "divida_bruta": 4651585.0,
+    "caixa": 1351381.0,
+    "da": 527308.0,
+    "capex": 891670.0
+   },
+   "2020": {
+    "receita": 1256244.0,
+    "ebit": -393703.0,
+    "margem_ebit_aj": -0.3134,
+    "lucro": -604428.0,
+    "lucro_controlador": -598584.0,
+    "pl": 2468801.0,
+    "nao_controladores": 22665.0,
+    "divida_bruta": 5519945.0,
+    "caixa": 1019611.0,
+    "da": 704146.0,
+    "capex": 495081.0
+   },
+   "2021": {
+    "receita": 1706851.0,
+    "ebit": -359546.0,
+    "margem_ebit_aj": -0.2171,
+    "lucro": -633017.0,
+    "lucro_controlador": -634581.0,
+    "pl": 4429292.0,
+    "nao_controladores": 32787.0,
+    "divida_bruta": 6611553.0,
+    "caixa": 3719629.0,
+    "da": 791120.0,
+    "capex": 503585.0
+   },
+   "2022": {
+    "receita": 2930438.0,
+    "ebit": 265416.0,
+    "margem_ebit_aj": 0.0906,
+    "lucro": -86051.0,
+    "lucro_controlador": -89431.0,
+    "pl": 4208115.0,
+    "nao_controladores": 21729.0,
+    "divida_bruta": 6749341.0,
+    "caixa": 2922835.0,
+    "da": 902255.0,
+    "capex": 1039833.0
+   },
+   "2023": {
+    "receita": 4244743.0,
+    "ebit": 1044874.0,
+    "margem_ebit_aj": 0.2069,
+    "lucro": 1044176.0,
+    "lucro_controlador": 1036554.0,
+    "pl": 5095634.0,
+    "nao_controladores": 27372.0,
+    "divida_bruta": 7927314.0,
+    "caixa": 2613313.0,
+    "da": 1157395.0,
+    "capex": 1361643.0
+   },
+   "2024": {
+    "receita": 5580304.0,
+    "ebit": 1263607.0,
+    "margem_ebit_aj": 0.2264,
+    "lucro": 440576.0,
+    "lucro_controlador": 436440.0,
+    "pl": 5471778.0,
+    "nao_controladores": 15882.0,
+    "divida_bruta": 11315226.0,
+    "caixa": 2947375.0,
+    "da": 1412269.0,
+    "capex": 1945209.0
+   },
+   "2025": {
+    "receita": 7241694.0,
+    "ebit": 1697845.0,
+    "margem_ebit_aj": 0.2324,
+    "lucro": 640534.0,
+    "lucro_controlador": 638688.0,
+    "pl": 5663406.0,
+    "nao_controladores": 1863.0,
+    "divida_bruta": 13751505.0,
+    "caixa": 3426137.0,
+    "da": 1757201.0,
+    "capex": 2380427.0
+   }
+  },
+  "contrafactuais": {
+   "base": {
+    "central": 0.0,
+    "ancoras": {
+     "DCF (3 cenários)": 0.0,
+     "EPV": -14.17085836630169,
+     "Owner Earnings ÷ (Ke − g)": 5.428420648749408
+    },
+    "kd": 0.31272052000000017,
+    "wacc_real": 0.14475997550521846,
+    "ev_epv": 3017268.060605647,
+    "dl_mais_minor": 11690952.0,
+    "pc": Infinity
+   },
+   "margem_5a": {
+    "central": 0.0,
+    "ancoras": {
+     "DCF (3 cenários)": 0.0,
+     "EPV": -8.501593599249068,
+     "Owner Earnings ÷ (Ke − g)": 5.428420648749408
+    },
+    "kd": 0.31272052000000017,
+    "wacc_real": 0.14475997550521846,
+    "ev_epv": 6487305.618464033,
+    "dl_mais_minor": 11690952.0,
+    "pc": Infinity
+   },
+   "receita_ltm": {
+    "central": 0.0,
+    "ancoras": {
+     "DCF (3 cenários)": 0.0,
+     "EPV": -12.952678348421871,
+     "Owner Earnings ÷ (Ke − g)": 5.428420648749408
+    },
+    "kd": 0.31272052000000017,
+    "wacc_real": 0.14475997550521846,
+    "ev_epv": 3762890.392242348,
+    "dl_mais_minor": 11690952.0,
+    "pc": Infinity
+   },
+   "kd_cobertura_ltm": {
+    "central": 0.0,
+    "ancoras": {
+     "DCF (3 cenários)": 0.0,
+     "EPV": -12.35871652734204,
+     "Owner Earnings ÷ (Ke − g)": 5.428420648749408
+    },
+    "kd": 0.20362052000000014,
+    "wacc_real": 0.10584897588897291,
+    "ev_epv": 4126441.9129014374,
+    "dl_mais_minor": 11690952.0,
+    "pc": Infinity
+   },
+   "as_tres": {
+    "central": 0.0,
+    "ancoras": {
+     "DCF (3 cenários)": 0.0,
+     "EPV": -1.0233958713718259,
+     "Owner Earnings ÷ (Ke − g)": 5.428420648749408
+    },
+    "kd": 0.20362052000000014,
+    "wacc_real": 0.10584897588897291,
+    "ev_epv": 11064552.941897148,
+    "dl_mais_minor": 11690952.0,
+    "pc": Infinity
+   },
+   "_kd_ltm": {
+    "cobertura_ltm": 1.270184701127677,
+    "rating": "B-",
+    "spread": 0.0509
+   },
+   "_pl_hist": 21.78819904945764,
+   "_ke_nom": 0.25497058747423207
+  }
+ },
+ "MOVI3": {
+  "ticker": "MOVI3",
+  "perfil": "servicos",
+  "setor": "Serviços Transporte e Logística",
+  "preco": 5.64,
+  "n_acoes_mil": 423965.629,
+  "palavra": "NÃO CONCLUSIVO",
+  "palavra_regua": "NÃO CONCLUSIVO",
+  "confianca": "não conclusivo (Ke nominal 61.9% > 30%: conferência do H2)",
+  "pc": Infinity,
+  "central": 0.0,
+  "dispersao": Infinity,
+  "ancoras": {
+   "DCF (3 cenários)": 0.0,
+   "EPV": -27.012672850480755,
+   "Owner Earnings ÷ (Ke − g)": 8.653620602461613
+  },
+  "ancoras_descartadas": [],
+  "dcf_cenarios": {
+   "pessimista": -32.28951740905835,
+   "base": -27.012672850480755,
+   "otimista": -15.143099351394607
+  },
+  "dcf_pond": 0.0,
+  "epv": -27.012672850480755,
+  "oe_val": 8.653620602461613,
+  "oe_norm": 1835875.3395923537,
+  "oe_por_ano": [
+   [
+    "2017",
+    18134.989558631987
+   ],
+   [
+    "2018",
+    360971.624948754
+   ],
+   [
+    "2019",
+    748224.5534569297
+   ],
+   [
+    "2020",
+    747457.4514980472
+   ],
+   [
+    "2021",
+    1634060.4506367769
+   ],
+   [
+    "2022",
+    1570981.7219165668
+   ],
+   [
+    "2023",
+    1835875.3395923537
+   ],
+   [
+    "2024",
+    2562906.9716559546
+   ],
+   [
+    "2025",
+    2901140.701976716
+   ]
+  ],
+  "margem": {
+   "m25": 0.10215143297178303,
+   "m50": 0.13578298322245017,
+   "m75": 0.21143276846003292,
+   "m50_5a": 0.21143276846003292,
+   "margens": [
+    0.07448756614941672,
+    0.10103740795909529,
+    0.10215143297178303,
+    0.10592620067841556,
+    0.1219846422578192,
+    0.14958132418708114,
+    0.18662899645352332,
+    0.21143276846003292,
+    0.24986104267959175,
+    0.3120895656304194
+   ],
+   "ajuste_manut": 0.0,
+   "med_outras": -0.01907054075624995,
+   "quebra_suspeita": true,
+   "divergencia_janela": 0.5571374515586202
+  },
+  "receita_meio": 14451574.855569828,
+  "lucro_pre_ir": 1962277.9461518207,
+  "aliquota": 0.23717613234784884,
+  "aliquota_regra": "mediana",
+  "nopat": 1496872.4522920514,
+  "ke_nom": 0.6186924532447751,
+  "wacc_nom": 0.249304766172321,
+  "wacc_real": 0.16572246540293079,
+  "kd": 0.2788205200000001,
+  "kd_info": {
+   "kd": 0.2788205200000001,
+   "origem": "sintético",
+   "spread": 0.1261,
+   "rating": "CC",
+   "cobertura": 0.6988851284462304,
+   "fonte": "Damodaran, ratings.html, empresas não financeiras grandes, jan/2026 (nota B)"
+  },
+  "e_mercado": 2391166.14756,
+  "d_desconto": 24123879.0,
+  "d_sobre_e": 10.088750639355007,
+  "bruta": 24123879.0,
+  "caixa": 3639029.0,
+  "caixa_livre": 3639029.0,
+  "dl": 20484850.0,
+  "minor": 0.0,
+  "outros_passivos_financeiros": 0.0,
+  "ev_epv_firma": 9032405.163974704,
+  "ponte_dl_mais_minor": 20484850.0,
+  "ponte_sobre_ev_epv": 2.267928600203055,
+  "cap_inv": 24675489.0,
+  "roic": 0.06066232171901645,
+  "roic_filtro": 0.03739745338076187,
+  "lpa_norm": -6.745994266722496,
+  "vpa": 9.884383811688659,
+  "reprod": 9.884383811688659,
+  "ltm": {
+   "ref": null,
+   "receita": 15075517.0,
+   "ebit": 3870114.0,
+   "lucro": 514607.0,
+   "lucro_controlador": null,
+   "pl": 4190639.0,
+   "nao_controladores": 0.0,
+   "emprest_cp": 3286690.0,
+   "emprest_lp": 20837189.0,
+   "arrendamento": 0.0,
+   "caixa": 1134909.0,
+   "aplic_cp": 2504120.0,
+   "juros_pagos": 2807726.0,
+   "desp_fin": -4132553.0,
+   "ativo": 38537363.0
+  },
+  "por_ano": {
+   "2016": {
+    "receita": 1893180.0,
+    "ebit": 191282.0,
+    "margem_ebit_aj": 0.101,
+    "lucro": 39697.0,
+    "lucro_controlador": 39697.0,
+    "pl": 721765.0,
+    "nao_controladores": 0.0,
+    "divida_bruta": 1040186.0,
+    "caixa": 123511.0,
+    "da": 77845.0,
+    "capex": 3953.0
+   },
+   "2017": {
+    "receita": 2467983.0,
+    "ebit": 252108.0,
+    "margem_ebit_aj": 0.1022,
+    "lucro": 66466.0,
+    "lucro_controlador": 66466.0,
+    "pl": 1284840.0,
+    "nao_controladores": 0.0,
+    "divida_bruta": 1861040.0,
+    "caixa": 783609.0,
+    "da": 74739.0,
+    "capex": 5219.0
+   },
+   "2018": {
+    "receita": 2538599.0,
+    "ebit": 379727.0,
+    "margem_ebit_aj": 0.1496,
+    "lucro": 159754.0,
+    "lucro_controlador": 159754.0,
+    "pl": 1658842.0,
+    "nao_controladores": 0.0,
+    "divida_bruta": 2265932.0,
+    "caixa": 812151.0,
+    "da": 102011.0,
+    "capex": 26350.0
+   },
+   "2019": {
+    "receita": 3836044.0,
+    "ebit": 468188.0,
+    "margem_ebit_aj": 0.1059,
+    "lucro": 227815.0,
+    "lucro_controlador": 227815.0,
+    "pl": 2300999.0,
+    "nao_controladores": 0.0,
+    "divida_bruta": 3144185.0,
+    "caixa": 1047105.0,
+    "da": 278371.0,
+    "capex": 91854.0
+   },
+   "2020": {
+    "receita": 4085259.0,
+    "ebit": 304301.0,
+    "margem_ebit_aj": 0.0745,
+    "lucro": 109027.0,
+    "lucro_controlador": 109027.0,
+    "pl": 2358680.0,
+    "nao_controladores": 0.0,
+    "divida_bruta": 4406958.0,
+    "caixa": 1692507.0,
+    "da": 412880.0,
+    "capex": 76294.0
+   },
+   "2021": {
+    "receita": 5332623.0,
+    "ebit": 1666736.0,
+    "margem_ebit_aj": 0.3121,
+    "lucro": 819439.0,
+    "lucro_controlador": null,
+    "pl": 3284472.0,
+    "nao_controladores": 0.0,
+    "divida_bruta": 14765667.0,
+    "caixa": 7786453.0,
+    "da": 416251.0,
+    "capex": 108944.0
+   },
+   "2022": {
+    "receita": 9600029.0,
+    "ebit": 2416748.0,
+    "margem_ebit_aj": 0.2499,
+    "lucro": 556406.0,
+    "lucro_controlador": null,
+    "pl": 2768683.0,
+    "nao_controladores": 0.0,
+    "divida_bruta": 17723979.0,
+    "caixa": 6827536.0,
+    "da": 1134431.0,
+    "capex": 211560.0
+   },
+   "2023": {
+    "receita": 10342015.0,
+    "ebit": 1261567.0,
+    "margem_ebit_aj": 0.122,
+    "lucro": -650851.0,
+    "lucro_controlador": -650851.0,
+    "pl": 2522137.0,
+    "nao_controladores": 0.0,
+    "divida_bruta": 15299446.0,
+    "caixa": 2998752.0,
+    "da": 2237679.0,
+    "capex": 271998.0
+   },
+   "2024": {
+    "receita": 13481270.0,
+    "ebit": 2620072.0,
+    "margem_ebit_aj": 0.1866,
+    "lucro": 231493.0,
+    "lucro_controlador": 231493.0,
+    "pl": 2492492.0,
+    "nao_controladores": 0.0,
+    "divida_bruta": 20491514.0,
+    "caixa": 4291363.0,
+    "da": 2080489.0,
+    "capex": 227602.0
+   },
+   "2025": {
+    "receita": 14672054.0,
+    "ebit": 3256129.0,
+    "margem_ebit_aj": 0.2114,
+    "lucro": 318364.0,
+    "lucro_controlador": null,
+    "pl": 2967804.0,
+    "nao_controladores": 0.0,
+    "divida_bruta": 21909922.0,
+    "caixa": 4121580.0,
+    "da": 2430030.0,
+    "capex": 244502.0
+   }
+  },
+  "contrafactuais": {
+   "base": {
+    "central": 0.0,
+    "ancoras": {
+     "DCF (3 cenários)": 0.0,
+     "EPV": -27.012672850480755,
+     "Owner Earnings ÷ (Ke − g)": 8.653620602461613
+    },
+    "kd": 0.2788205200000001,
+    "wacc_real": 0.16572246540293079,
+    "ev_epv": 9032405.163974704,
+    "dl_mais_minor": 20484850.0,
+    "pc": Infinity
+   },
+   "margem_5a": {
+    "central": 0.0,
+    "ancoras": {
+     "DCF (3 cenários)": 0.0,
+     "EPV": -15.143099351394607,
+     "Owner Earnings ÷ (Ke − g)": 8.653620602461613
+    },
+    "kd": 0.2788205200000001,
+    "wacc_real": 0.16572246540293079,
+    "ev_epv": 14064696.358476494,
+    "dl_mais_minor": 20484850.0,
+    "pc": Infinity
+   },
+   "receita_ltm": {
+    "central": 0.0,
+    "ancoras": {
+     "DCF (3 cenários)": 0.0,
+     "EPV": -26.092854848144984,
+     "Owner Earnings ÷ (Ke − g)": 8.653620602461613
+    },
+    "kd": 0.2788205200000001,
+    "wacc_real": 0.16572246540293079,
+    "ev_epv": 9422376.381900512,
+    "dl_mais_minor": 20484850.0,
+    "pc": Infinity
+   },
+   "kd_cobertura_ltm": {
+    "central": 0.0,
+    "ancoras": {
+     "DCF (3 cenários)": 0.0,
+     "EPV": -18.146729299741967,
+     "Owner Earnings ÷ (Ke − g)": 8.653620602461613
+    },
+    "kd": 0.20362052000000014,
+    "wacc_real": 0.11702306058964718,
+    "ev_epv": 12791260.498142168,
+    "dl_mais_minor": 20484850.0,
+    "pc": Infinity
+   },
+   "as_tres": {
+    "central": 0.690724209929896,
+    "ancoras": {
+     "DCF (3 cenários)": 0.518043157447422,
+     "EPV": 0.690724209929896,
+     "Owner Earnings ÷ (Ke − g)": 8.653620602461613
+    },
+    "kd": 0.20362052000000014,
+    "wacc_real": 0.11702306058964718,
+    "ev_epv": 20777693.324128456,
+    "dl_mais_minor": 20484850.0,
+    "pc": 8.165342866109214
+   },
+   "_kd_ltm": {
+    "cobertura_ltm": 1.378380226560569,
+    "rating": "B-",
+    "spread": 0.0509
+   },
+   "_pl_hist": 6.957883906428666,
+   "_ke_nom": 0.6186924532447751
+  },
+  "frota_fco_por_ano": {
+   "2016": [
+    -0.0,
+    0.0
+   ],
+   "2017": [
+    -0.0,
+    0.0
+   ],
+   "2018": [
+    -0.0,
+    0.0
+   ],
+   "2019": [
+    3304196.0,
+    2137145.0
+   ],
+   "2020": [
+    3051663.0,
+    2219779.0
+   ],
+   "2021": [
+    6068501.0,
+    1918460.0
+   ],
+   "2022": [
+    9346899.0,
+    4094282.0
+   ],
+   "2023": [
+    8915438.0,
+    4643840.0
+   ],
+   "2024": [
+    11191382.0,
+    6435475.0
+   ],
+   "2025": [
+    10268203.0,
+    6440582.0
+   ]
+  },
+  "variante_frota": {
+   "ticker": "MOVI3",
+   "perfil": "servicos",
+   "setor": "Serviços Transporte e Logística",
+   "preco": 5.64,
+   "n_acoes_mil": 423965.629,
+   "palavra": "NÃO CONCLUSIVO",
+   "palavra_regua": "NÃO CONCLUSIVO",
+   "confianca": "não conclusivo (Ke nominal 61.9% > 30%: conferência do H2)",
+   "pc": Infinity,
+   "central": -2.1625932903403133,
+   "dispersao": Infinity,
+   "ancoras": {
+    "DCF (3 cenários)": 0.0,
+    "EPV": -30.952088167012207,
+    "Owner Earnings ÷ (Ke − g)": -2.1625932903403133
+   },
+   "ancoras_descartadas": [],
+   "dcf_cenarios": {
+    "pessimista": -35.61166872400996,
+    "base": -30.952088167012207,
+    "otimista": -20.47096952077603
+   },
+   "dcf_pond": 0.0,
+   "epv": -30.952088167012207,
+   "oe_val": -2.1625932903403133,
+   "oe_norm": -458796.5978279991,
+   "oe_por_ano": [
+    [
+     "2017",
+     18134.989558631987
+    ],
+    [
+     "2018",
+     360971.624948754
+    ],
+    [
+     "2019",
+     748224.5534569297
+    ],
+    [
+     "2020",
+     -293418.79908734706
+    ],
+    [
+     "2021",
+     -2178721.6285381224
+    ],
+    [
+     "2022",
+     -2455686.332920123
+    ],
+    [
+     "2023",
+     -458796.5978279991
+    ],
+    [
+     "2024",
+     100505.7291223303
+    ],
+    [
+     "2025",
+     1822481.7405432235
+    ]
+   ],
+   "margem": {
+    "m25": 0.10215143297178303,
+    "m50": 0.13578298322245017,
+    "m75": 0.21143276846003292,
+    "m50_5a": 0.21143276846003292,
+    "margens": [
+     0.07448756614941672,
+     0.10103740795909529,
+     0.10215143297178303,
+     0.10592620067841556,
+     0.1219846422578192,
+     0.14958132418708114,
+     0.18662899645352332,
+     0.21143276846003292,
+     0.24986104267959175,
+     0.3120895656304194
+    ],
+    "ajuste_manut": -0.010446154114180315,
+    "med_outras": -0.01907054075624995,
+    "quebra_suspeita": true,
+    "divergencia_janela": 0.5571374515586202
+   },
+   "receita_meio": 14451574.855569828,
+   "lucro_pre_ir": 1811314.5680179251,
+   "aliquota": 0.23717613234784884,
+   "aliquota_regra": "mediana",
+   "nopat": 1381713.9843101192,
+   "ke_nom": 0.6186924532447751,
+   "wacc_nom": 0.2728324265113055,
+   "wacc_real": 0.18767605347700433,
+   "kd": 0.31272052000000017,
+   "kd_info": {
+    "kd": 0.31272052000000017,
+    "origem": "sintético",
+    "spread": 0.16,
+    "rating": "C",
+    "cobertura": 0.6451179951383879,
+    "fonte": "Damodaran, ratings.html, empresas não financeiras grandes, jan/2026 (nota B)"
+   },
+   "e_mercado": 2391166.14756,
+   "d_desconto": 24123879.0,
+   "d_sobre_e": 10.088750639355007,
+   "bruta": 24123879.0,
+   "caixa": 3639029.0,
+   "caixa_livre": 3639029.0,
+   "dl": 20484850.0,
+   "minor": 0.0,
+   "outros_passivos_financeiros": 0.0,
+   "ev_epv_firma": 7362228.471409212,
+   "ponte_dl_mais_minor": 20484850.0,
+   "ponte_sobre_ev_epv": 2.7824251963317534,
+   "cap_inv": 24675489.0,
+   "roic": 0.05599540435896201,
+   "roic_filtro": 0.034520365602735206,
+   "lpa_norm": -8.267087241716293,
+   "vpa": 9.884383811688659,
+   "reprod": 9.884383811688659,
+   "ltm": {
+    "ref": null,
+    "receita": 15075517.0,
+    "ebit": 3870114.0,
+    "lucro": 514607.0,
+    "lucro_controlador": null,
+    "pl": 4190639.0,
+    "nao_controladores": 0.0,
+    "emprest_cp": 3286690.0,
+    "emprest_lp": 20837189.0,
+    "arrendamento": 0.0,
+    "caixa": 1134909.0,
+    "aplic_cp": 2504120.0,
+    "juros_pagos": 2807726.0,
+    "desp_fin": -4132553.0,
+    "ativo": 38537363.0
+   },
+   "por_ano": {
+    "2016": {
+     "receita": 1893180.0,
+     "ebit": 191282.0,
+     "margem_ebit_aj": 0.101,
+     "lucro": 39697.0,
+     "lucro_controlador": 39697.0,
+     "pl": 721765.0,
+     "nao_controladores": 0.0,
+     "divida_bruta": 1040186.0,
+     "caixa": 123511.0,
+     "da": 77845.0,
+     "capex": 3953.0
+    },
+    "2017": {
+     "receita": 2467983.0,
+     "ebit": 252108.0,
+     "margem_ebit_aj": 0.1022,
+     "lucro": 66466.0,
+     "lucro_controlador": 66466.0,
+     "pl": 1284840.0,
+     "nao_controladores": 0.0,
+     "divida_bruta": 1861040.0,
+     "caixa": 783609.0,
+     "da": 74739.0,
+     "capex": 5219.0
+    },
+    "2018": {
+     "receita": 2538599.0,
+     "ebit": 379727.0,
+     "margem_ebit_aj": 0.1496,
+     "lucro": 159754.0,
+     "lucro_controlador": 159754.0,
+     "pl": 1658842.0,
+     "nao_controladores": 0.0,
+     "divida_bruta": 2265932.0,
+     "caixa": 812151.0,
+     "da": 102011.0,
+     "capex": 26350.0
+    },
+    "2019": {
+     "receita": 3836044.0,
+     "ebit": 468188.0,
+     "margem_ebit_aj": 0.1059,
+     "lucro": 227815.0,
+     "lucro_controlador": 227815.0,
+     "pl": 2300999.0,
+     "nao_controladores": 0.0,
+     "divida_bruta": 3144185.0,
+     "caixa": 1047105.0,
+     "da": 278371.0,
+     "capex": 1258905.0
+    },
+    "2020": {
+     "receita": 4085259.0,
+     "ebit": 304301.0,
+     "margem_ebit_aj": 0.0745,
+     "lucro": 109027.0,
+     "lucro_controlador": 109027.0,
+     "pl": 2358680.0,
+     "nao_controladores": 0.0,
+     "divida_bruta": 4406958.0,
+     "caixa": 1692507.0,
+     "da": 412880.0,
+     "capex": 908178.0
+    },
+    "2021": {
+     "receita": 5332623.0,
+     "ebit": 1666736.0,
+     "margem_ebit_aj": 0.3121,
+     "lucro": 819439.0,
+     "lucro_controlador": null,
+     "pl": 3284472.0,
+     "nao_controladores": 0.0,
+     "divida_bruta": 14765667.0,
+     "caixa": 7786453.0,
+     "da": 416251.0,
+     "capex": 4258985.0
+    },
+    "2022": {
+     "receita": 9600029.0,
+     "ebit": 2416748.0,
+     "margem_ebit_aj": 0.2499,
+     "lucro": 556406.0,
+     "lucro_controlador": null,
+     "pl": 2768683.0,
+     "nao_controladores": 0.0,
+     "divida_bruta": 17723979.0,
+     "caixa": 6827536.0,
+     "da": 1134431.0,
+     "capex": 5464177.0
+    },
+    "2023": {
+     "receita": 10342015.0,
+     "ebit": 1261567.0,
+     "margem_ebit_aj": 0.122,
+     "lucro": -650851.0,
+     "lucro_controlador": -650851.0,
+     "pl": 2522137.0,
+     "nao_controladores": 0.0,
+     "divida_bruta": 15299446.0,
+     "caixa": 2998752.0,
+     "da": 2237679.0,
+     "capex": 4543596.0
+    },
+    "2024": {
+     "receita": 13481270.0,
+     "ebit": 2620072.0,
+     "margem_ebit_aj": 0.1866,
+     "lucro": 231493.0,
+     "lucro_controlador": 231493.0,
+     "pl": 2492492.0,
+     "nao_controladores": 0.0,
+     "divida_bruta": 20491514.0,
+     "caixa": 4291363.0,
+     "da": 2080489.0,
+     "capex": 4983509.0
+    },
+    "2025": {
+     "receita": 14672054.0,
+     "ebit": 3256129.0,
+     "margem_ebit_aj": 0.2114,
+     "lucro": 318364.0,
+     "lucro_controlador": null,
+     "pl": 2967804.0,
+     "nao_controladores": 0.0,
+     "divida_bruta": 21909922.0,
+     "caixa": 4121580.0,
+     "da": 2430030.0,
+     "capex": 4072123.0
+    }
+   }
+  }
+ },
+ "EMBJ3": {
+  "ticker": "EMBJ3",
+  "perfil": "servicos",
+  "setor": "Máquinas, Equipamentos, Veículos e Peças",
+  "preco": 110.15,
+  "n_acoes_mil": 711833.0,
+  "palavra": "NÃO CONCLUSIVO",
+  "palavra_regua": "CARA",
+  "confianca": "não conclusivo",
+  "pc": 36.20192080916096,
+  "central": 3.0426562330948568,
+  "dispersao": Infinity,
+  "ancoras": {
+   "DCF (3 cenários)": 4.189684023415985,
+   "EPV": 3.0426562330948568,
+   "Owner Earnings ÷ (Ke − g)": -5.227023918772796
+  },
+  "ancoras_descartadas": [],
+  "dcf_cenarios": {
+   "pessimista": -12.058310865349503,
+   "base": 3.0426562330948568,
+   "otimista": 10.673423627474227
+  },
+  "dcf_pond": 4.189684023415985,
+  "epv": 3.0426562330948568,
+  "oe_val": -5.227023918772796,
+  "oe_norm": -413548.80540297134,
+  "oe_por_ano": [
+   [
+    "2017",
+    -1125411.8006019061
+   ],
+   [
+    "2018",
+    -3471153.6537812273
+   ],
+   [
+    "2019",
+    -3254512.541861258
+   ],
+   [
+    "2020",
+    -5980362.547691974
+   ],
+   [
+    "2021",
+    -413548.80540297134
+   ],
+   [
+    "2022",
+    -1091461.9240752917
+   ],
+   [
+    "2023",
+    -507970.2578805725
+   ],
+   [
+    "2024",
+    3631567.0865399237
+   ],
+   [
+    "2025",
+    1603300.9221167269
+   ]
+  ],
+  "margem": {
+   "m25": -0.02369369379742759,
+   "m50": 0.026826108405781694,
+   "m75": 0.052354596542310235,
+   "m50_5a": 0.03080543872344363,
+   "margens": [
+    -0.08558666115731764,
+    -0.06148836861840224,
+    -0.02369369379742759,
+    0.005506200852276673,
+    0.02284677808811976,
+    0.03080543872344363,
+    0.03348582663236127,
+    0.052354596542310235,
+    0.0538002302432032,
+    0.05460449516494271
+   ],
+   "ajuste_manut": -0.009950329592966727,
+   "med_outras": -0.04618729183030221,
+   "quebra_suspeita": false,
+   "divergencia_janela": 0.14833796454815973
+  },
+  "receita_meio": 40004960.83383343,
+  "lucro_pre_ir": 675114.870447099,
+  "aliquota": 0.34,
+  "aliquota_regra": "sem_dado",
+  "nopat": 445575.8144950853,
+  "ke_nom": 0.2119635841522285,
+  "wacc_nom": 0.204687180441822,
+  "wacc_real": 0.12408993229618548,
+  "kd": 0.24122052000000013,
+  "kd_info": {
+   "kd": 0.24122052000000013,
+   "origem": "sintético",
+   "spread": 0.0885,
+   "rating": "CCC",
+   "cobertura": 0.9531831896230822,
+   "fonte": "Damodaran, ratings.html, empresas não financeiras grandes, jan/2026 (nota B)"
+  },
+  "e_mercado": 78408404.95,
+  "d_desconto": 12544210.0,
+  "d_sobre_e": 0.1599855271638197,
+  "bruta": 12544210.0,
+  "caixa": 13363738.0,
+  "caixa_livre": 13064135.0,
+  "dl": -519925.0,
+  "minor": 1944811.0,
+  "outros_passivos_financeiros": 0.0,
+  "ev_epv_firma": 3590749.114372611,
+  "ponte_dl_mais_minor": 1424886.0,
+  "ponte_sobre_ev_epv": 0.3968213747645695,
+  "cap_inv": 19524649.0,
+  "roic": 0.022821194608675693,
+  "roic_filtro": 0.01696849053649365,
+  "lpa_norm": 0.74223976205563,
+  "vpa": 25.426979361732318,
+  "reprod": 25.426979361732318,
+  "ltm": {
+   "ref": null,
+   "receita": 45328149.0,
+   "ebit": 4302493.0,
+   "lucro": 2105814.0,
+   "lucro_controlador": 2073122.0,
+   "pl": 20044574.0,
+   "nao_controladores": 1944811.0,
+   "emprest_cp": 553946.0,
+   "emprest_lp": 11382487.0,
+   "arrendamento": 607777.0,
+   "caixa": 7754117.0,
+   "aplic_cp": 5609621.0,
+   "juros_pagos": 708274.0,
+   "desp_fin": -3217164.0,
+   "ativo": 72206289.0
+  },
+  "por_ano": {
+   "2016": {
+    "receita": 21435696.0,
+    "ebit": 717792.0,
+    "margem_ebit_aj": 0.0335,
+    "lucro": 591811.0,
+    "lucro_controlador": 585433.0,
+    "pl": 12844858.0,
+    "nao_controladores": 301258.0,
+    "divida_bruta": 12254022.0,
+    "caixa": 9832759.0,
+    "da": 1133249.0,
+    "capex": 3103954.0
+   },
+   "2017": {
+    "receita": 18713045.0,
+    "ebit": 1059584.0,
+    "margem_ebit_aj": 0.0538,
+    "lucro": 847376.0,
+    "lucro_controlador": 795788.0,
+    "pl": 13834566.0,
+    "nao_controladores": 375269.0,
+    "divida_bruta": 13888790.0,
+    "caixa": 12029023.0,
+    "da": 997958.0,
+    "capex": 2265757.0
+   },
+   "2018": {
+    "receita": 18721620.0,
+    "ebit": 103085.0,
+    "margem_ebit_aj": 0.0055,
+    "lucro": -643568.0,
+    "lucro_controlador": -669025.0,
+    "pl": 15266994.0,
+    "nao_controladores": 365734.0,
+    "divida_bruta": 14134065.0,
+    "caixa": 11718339.0,
+    "da": 994829.0,
+    "capex": 1625133.0
+   },
+   "2019": {
+    "receita": 10467931.0,
+    "ebit": -643656.0,
+    "margem_ebit_aj": -0.0615,
+    "lucro": -1294086.0,
+    "lucro_controlador": -1316797.0,
+    "pl": 14569552.0,
+    "nao_controladores": 390577.0,
+    "divida_bruta": 521978.0,
+    "caixa": 5098806.0,
+    "da": 831009.0,
+    "capex": 2251397.0
+   },
+   "2020": {
+    "receita": 19641764.0,
+    "ebit": -1681073.0,
+    "margem_ebit_aj": -0.0856,
+    "lucro": -3596233.0,
+    "lucro_controlador": -3616014.0,
+    "pl": 15272715.0,
+    "nao_controladores": 585204.0,
+    "divida_bruta": 23451125.0,
+    "caixa": 14034460.0,
+    "da": 1548117.0,
+    "capex": 1152551.0
+   },
+   "2021": {
+    "receita": 22669705.0,
+    "ebit": 1054718.0,
+    "margem_ebit_aj": 0.0228,
+    "lucro": -267618.0,
+    "lucro_controlador": -274819.0,
+    "pl": 15484552.0,
+    "nao_controladores": 597421.0,
+    "divida_bruta": 22828248.0,
+    "caixa": 14337186.0,
+    "da": 1126326.0,
+    "capex": 1455944.0
+   },
+   "2022": {
+    "receita": 23448771.0,
+    "ebit": -555588.0,
+    "margem_ebit_aj": -0.0237,
+    "lucro": -1047213.0,
+    "lucro_controlador": -953656.0,
+    "pl": 14736781.0,
+    "nao_controladores": 1340091.0,
+    "divida_bruta": 17083576.0,
+    "caixa": 12059457.0,
+    "da": 1085766.0,
+    "capex": 1319089.0
+   },
+   "2023": {
+    "receita": 26110517.0,
+    "ebit": 1522609.0,
+    "margem_ebit_aj": 0.0308,
+    "lucro": 784355.0,
+    "lucro_controlador": 783559.0,
+    "pl": 14714230.0,
+    "nao_controladores": 1223918.0,
+    "divida_bruta": 14437965.0,
+    "caixa": 10413069.0,
+    "da": 1202053.0,
+    "capex": 2142602.0
+   },
+   "2024": {
+    "receita": 35424174.0,
+    "ebit": 3772121.0,
+    "margem_ebit_aj": 0.0524,
+    "lucro": 1923831.0,
+    "lucro_controlador": 1918850.0,
+    "pl": 20710908.0,
+    "nao_controladores": 1665702.0,
+    "divida_bruta": 16117596.0,
+    "caixa": 13640186.0,
+    "da": 1331819.0,
+    "capex": 2513847.0
+   },
+   "2025": {
+    "receita": 41883234.0,
+    "ebit": 3348114.0,
+    "margem_ebit_aj": 0.0546,
+    "lucro": 1992037.0,
+    "lucro_controlador": 1952951.0,
+    "pl": 20974950.0,
+    "nao_controladores": 2021093.0,
+    "divida_bruta": 14922529.0,
+    "caixa": 14448992.0,
+    "da": 1441157.0,
+    "capex": 2696344.0
+   }
+  },
+  "contrafactuais": {
+   "base": {
+    "central": 3.0426562330948568,
+    "ancoras": {
+     "DCF (3 cenários)": 4.189684023415985,
+     "EPV": 3.0426562330948568,
+     "Owner Earnings ÷ (Ke − g)": -5.227023918772796
+    },
+    "kd": 0.24122052000000013,
+    "wacc_real": 0.12408993229618548,
+    "ev_epv": 3590749.114372611,
+    "dl_mais_minor": 1424886.0,
+    "pc": 36.20192080916096
+   },
+   "margem_5a": {
+    "central": 4.232125185470083,
+    "ancoras": {
+     "DCF (3 cenários)": 4.784418499603598,
+     "EPV": 4.232125185470083,
+     "Owner Earnings ÷ (Ke − g)": -5.227023918772796
+    },
+    "kd": 0.24122052000000013,
+    "wacc_real": 0.12408993229618548,
+    "ev_epv": 4437452.367148725,
+    "dl_mais_minor": 1424886.0,
+    "pc": 26.02711289783483
+   },
+   "receita_ltm": {
+    "central": 3.7138762707966775,
+    "ancoras": {
+     "DCF (3 cenários)": 4.94694263662455,
+     "EPV": 3.7138762707966775,
+     "Owner Earnings ÷ (Ke − g)": -5.227023918772796
+    },
+    "kd": 0.24122052000000013,
+    "wacc_real": 0.12408993229618548,
+    "ev_epv": 4068545.6874700114,
+    "dl_mais_minor": 1424886.0,
+    "pc": 29.659038688537493
+   },
+   "kd_cobertura_ltm": {
+    "central": 3.340683558889551,
+    "ancoras": {
+     "DCF (3 cenários)": 4.525913198281297,
+     "EPV": 3.340683558889551,
+     "Owner Earnings ÷ (Ke − g)": -5.227023918772796
+    },
+    "kd": 0.15972052000000014,
+    "wacc_real": 0.11716753629930676,
+    "ev_epv": 3802894.799775026,
+    "dl_mais_minor": 1424886.0,
+    "pc": 32.97229386090494
+   },
+   "as_tres": {
+    "central": 5.478929838787899,
+    "ancoras": {
+     "DCF (3 cenários)": 6.0415964279891625,
+     "EPV": 5.478929838787899,
+     "Owner Earnings ÷ (Ke − g)": -5.227023918772796
+    },
+    "kd": 0.15972052000000014,
+    "wacc_real": 0.11716753629930676,
+    "ev_epv": 5324969.063933906,
+    "dl_mais_minor": 1424886.0,
+    "pc": 20.104291027820214
+   },
+   "_kd_ltm": {
+    "cobertura_ltm": 6.074616603178995,
+    "rating": "A+",
+    "spread": 0.007
+   },
+   "_pl_hist": 32.78989979779318,
+   "_ke_nom": 0.2119635841522285
+  },
+  "variante_2019_reapresentado": {
+   "ticker": "EMBJ3",
+   "perfil": "servicos",
+   "setor": "Máquinas, Equipamentos, Veículos e Peças",
+   "preco": 110.15,
+   "n_acoes_mil": 711833.0,
+   "palavra": "NÃO CONCLUSIVO",
+   "palavra_regua": "CARA",
+   "confianca": "não conclusivo",
+   "pc": 19.6003902048657,
+   "central": 5.619786078169802,
+   "dispersao": Infinity,
+   "ancoras": {
+    "DCF (3 cenários)": 5.889332480466202,
+    "EPV": 5.619786078169802,
+    "Owner Earnings ÷ (Ke − g)": -5.227023918772796
+   },
+   "ancoras_descartadas": [],
+   "dcf_cenarios": {
+    "pessimista": -12.323970003155448,
+    "base": 5.619786078169802,
+    "otimista": 12.317757765525206
+   },
+   "dcf_pond": 5.889332480466202,
+   "epv": 5.619786078169802,
+   "oe_val": -5.227023918772796,
+   "oe_norm": -413548.80540297134,
+   "oe_por_ano": [
+    [
+     "2017",
+     -1125411.8006019061
+    ],
+    [
+     "2018",
+     -3471153.6537812273
+    ],
+    [
+     "2019",
+     -2017378.0548074106
+    ],
+    [
+     "2020",
+     -7631006.883141635
+    ],
+    [
+     "2021",
+     -413548.80540297134
+    ],
+    [
+     "2022",
+     -1091461.9240752917
+    ],
+    [
+     "2023",
+     -507970.2578805725
+    ],
+    [
+     "2024",
+     1964778.4561188433
+    ],
+    [
+     "2025",
+     1603300.9221167269
+    ]
+   ],
+   "margem": {
+    "m25": -0.02369369379742759,
+    "m50": 0.03479159686087408,
+    "m75": 0.056622746324823135,
+    "m50_5a": 0.044056027724710754,
+    "margens": [
+     -0.08558666115731764,
+     -0.04714452479093549,
+     -0.02369369379742759,
+     0.005506200852276673,
+     0.03348582663236127,
+     0.03609736708938689,
+     0.044056027724710754,
+     0.056622746324823135,
+     0.06560518554357736,
+     0.06785508416620985
+    ],
+    "ajuste_manut": -0.009950329592966727,
+    "med_outras": -0.032936702829035075,
+    "quebra_suspeita": true,
+    "divergencia_janela": 0.2662835770626919
+   },
+   "receita_meio": 40004960.83383343,
+   "lucro_pre_ir": 993773.9241154223,
+   "aliquota": 0.34,
+   "aliquota_regra": "sem_dado",
+   "nopat": 655890.7899161787,
+   "ke_nom": 0.2119635841522285,
+   "wacc_nom": 0.20126455080625702,
+   "wacc_real": 0.1208962870264596,
+   "kd": 0.20362052000000014,
+   "kd_info": {
+    "kd": 0.20362052000000014,
+    "origem": "sintético",
+    "spread": 0.0509,
+    "rating": "B-",
+    "cobertura": 1.4030924813213845,
+    "fonte": "Damodaran, ratings.html, empresas não financeiras grandes, jan/2026 (nota B)"
+   },
+   "e_mercado": 78408404.95,
+   "d_desconto": 12544210.0,
+   "d_sobre_e": 0.1599855271638197,
+   "bruta": 12544210.0,
+   "caixa": 13363738.0,
+   "caixa_livre": 13064135.0,
+   "dl": -519925.0,
+   "minor": 1944811.0,
+   "outros_passivos_financeiros": 0.0,
+   "ev_epv_firma": 5425235.183381844,
+   "ponte_dl_mais_minor": 1424886.0,
+   "ponte_sobre_ev_epv": 0.2626404113068866,
+   "cap_inv": 19524649.0,
+   "roic": 0.03359296189735235,
+   "roic_filtro": 0.024977739589114933,
+   "lpa_norm": 1.0195695804555824,
+   "vpa": 25.426979361732318,
+   "reprod": 25.426979361732318,
+   "ltm": {
+    "ref": null,
+    "receita": 45328149.0,
+    "ebit": 4302493.0,
+    "lucro": 2105814.0,
+    "lucro_controlador": 2073122.0,
+    "pl": 20044574.0,
+    "nao_controladores": 1944811.0,
+    "emprest_cp": 553946.0,
+    "emprest_lp": 11382487.0,
+    "arrendamento": 607777.0,
+    "caixa": 7754117.0,
+    "aplic_cp": 5609621.0,
+    "juros_pagos": 708274.0,
+    "desp_fin": -3217164.0,
+    "ativo": 72206289.0
+   },
+   "por_ano": {
+    "2016": {
+     "receita": 21435696.0,
+     "ebit": 717792.0,
+     "margem_ebit_aj": 0.0335,
+     "lucro": 591811.0,
+     "lucro_controlador": 585433.0,
+     "pl": 12844858.0,
+     "nao_controladores": 301258.0,
+     "divida_bruta": 12254022.0,
+     "caixa": 9832759.0,
+     "da": 1133249.0,
+     "capex": 3103954.0
+    },
+    "2017": {
+     "receita": 18713045.0,
+     "ebit": 1059584.0,
+     "margem_ebit_aj": 0.0566,
+     "lucro": 847376.0,
+     "lucro_controlador": 795788.0,
+     "pl": 13834566.0,
+     "nao_controladores": 375269.0,
+     "divida_bruta": 13888790.0,
+     "caixa": 12029023.0,
+     "da": 997958.0,
+     "capex": 2265757.0
+    },
+    "2018": {
+     "receita": 18721620.0,
+     "ebit": 103085.0,
+     "margem_ebit_aj": 0.0055,
+     "lucro": -643568.0,
+     "lucro_controlador": -669025.0,
+     "pl": 15266994.0,
+     "nao_controladores": 365734.0,
+     "divida_bruta": 14134065.0,
+     "caixa": 11718339.0,
+     "da": 994829.0,
+     "capex": 1625133.0
+    },
+    "2019": {
+     "receita": 21802075.0,
+     "ebit": -309760.0,
+     "margem_ebit_aj": -0.0471,
+     "lucro": -1294086.0,
+     "lucro_controlador": -1316797.0,
+     "pl": 14569552.0,
+     "nao_controladores": 390577.0,
+     "divida_bruta": 521978.0,
+     "caixa": 5098806.0,
+     "da": 831009.0,
+     "capex": 2251397.0
+    },
+    "2020": {
+     "receita": 19641764.0,
+     "ebit": -1681073.0,
+     "margem_ebit_aj": -0.0856,
+     "lucro": -3596233.0,
+     "lucro_controlador": -3616014.0,
+     "pl": 15272715.0,
+     "nao_controladores": 585204.0,
+     "divida_bruta": 23451125.0,
+     "caixa": 14034460.0,
+     "da": 1548117.0,
+     "capex": 1152551.0
+    },
+    "2021": {
+     "receita": 22669705.0,
+     "ebit": 1054718.0,
+     "margem_ebit_aj": 0.0361,
+     "lucro": -267618.0,
+     "lucro_controlador": -274819.0,
+     "pl": 15484552.0,
+     "nao_controladores": 597421.0,
+     "divida_bruta": 22828248.0,
+     "caixa": 14337186.0,
+     "da": 1126326.0,
+     "capex": 1455944.0
+    },
+    "2022": {
+     "receita": 23448771.0,
+     "ebit": -555588.0,
+     "margem_ebit_aj": -0.0237,
+     "lucro": -1047213.0,
+     "lucro_controlador": -953656.0,
+     "pl": 14736781.0,
+     "nao_controladores": 1340091.0,
+     "divida_bruta": 17083576.0,
+     "caixa": 12059457.0,
+     "da": 1085766.0,
+     "capex": 1319089.0
+    },
+    "2023": {
+     "receita": 26110517.0,
+     "ebit": 1522609.0,
+     "margem_ebit_aj": 0.0441,
+     "lucro": 784355.0,
+     "lucro_controlador": 783559.0,
+     "pl": 14714230.0,
+     "nao_controladores": 1223918.0,
+     "divida_bruta": 14437965.0,
+     "caixa": 10413069.0,
+     "da": 1202053.0,
+     "capex": 2142602.0
+    },
+    "2024": {
+     "receita": 35424174.0,
+     "ebit": 3772121.0,
+     "margem_ebit_aj": 0.0656,
+     "lucro": 1923831.0,
+     "lucro_controlador": 1918850.0,
+     "pl": 20710908.0,
+     "nao_controladores": 1665702.0,
+     "divida_bruta": 16117596.0,
+     "caixa": 13640186.0,
+     "da": 1331819.0,
+     "capex": 2513847.0
+    },
+    "2025": {
+     "receita": 41883234.0,
+     "ebit": 3348114.0,
+     "margem_ebit_aj": 0.0679,
+     "lucro": 1992037.0,
+     "lucro_controlador": 1952951.0,
+     "pl": 20974950.0,
+     "nao_controladores": 2021093.0,
+     "divida_bruta": 14922529.0,
+     "caixa": 14448992.0,
+     "da": 1441157.0,
+     "capex": 2696344.0
+    }
+   }
+  }
+ },
+ "BEEF3": {
+  "ticker": "BEEF3",
+  "perfil": "ciclica",
+  "setor": "Alimentos",
+  "preco": 3.73,
+  "n_acoes_mil": 991717.887,
+  "palavra": "NÃO CONCLUSIVO",
+  "palavra_regua": "CARA",
+  "confianca": "não conclusivo (Ke nominal 48.5% > 30%: conferência do H2)",
+  "pc": 6.685137070251868,
+  "central": 0.5579541542383766,
+  "dispersao": 7.4233678038658795,
+  "ancoras": {
+   "EPV de meio de ciclo": 0.09820105036279261,
+   "DCF normalizado (3 cenários)": 0.5579541542383766,
+   "Valor de reprodução": 0.7289825155689664
+  },
+  "ancoras_descartadas": [],
+  "dcf_cenarios": {
+   "pessimista": -1.6213061259618533,
+   "base": 0.09820105036279261,
+   "otimista": 2.035414516227921
+  },
+  "dcf_pond": 0.5579541542383766,
+  "epv": 0.09820105036279261,
+  "oe_val": 0.11704077801283275,
+  "oe_norm": 43597.197493585845,
+  "oe_por_ano": [
+   [
+    "2017",
+    -1900887.7971339514
+   ],
+   [
+    "2018",
+    -1780681.7735863265
+   ],
+   [
+    "2019",
+    -136383.43881386623
+   ],
+   [
+    "2020",
+    641965.8811031181
+   ],
+   [
+    "2021",
+    266611.23967314773
+   ],
+   [
+    "2022",
+    -191758.4070392041
+   ],
+   [
+    "2023",
+    43597.197493585845
+   ],
+   [
+    "2024",
+    -1194206.2875318148
+   ],
+   [
+    "2025",
+    253418.9091754474
+   ]
+  ],
+  "margem": {
+   "m25": 0.06911232693494554,
+   "m50": 0.0767656208317995,
+   "m75": 0.08538789598094941,
+   "m50_5a": 0.07548269335176686,
+   "margens": [
+    0.04159825997173342,
+    0.06899474506686754,
+    0.06911232693494554,
+    0.07548269335176686,
+    0.07612951346692627,
+    0.07740172819667271,
+    0.08159352533769769,
+    0.08538789598094941,
+    0.09192831758159414,
+    0.09243229945836269
+   ],
+   "ajuste_manut": -0.005193955653090387,
+   "med_outras": 0.0006492028614879721,
+   "quebra_suspeita": false,
+   "divergencia_janela": -0.01671226606560837
+  },
+  "receita_meio": 46059192.732797585,
+  "lucro_pre_ir": 3296533.120673421,
+  "aliquota": 0.34,
+  "aliquota_regra": "sem_dado",
+  "nopat": 2175711.8596444577,
+  "ke_nom": 0.4849546039617365,
+  "wacc_nom": 0.21791426324599156,
+  "wacc_real": 0.13643208290192366,
+  "kd": 0.2788205200000001,
+  "kd_info": {
+   "kd": 0.2788205200000001,
+   "origem": "sintético",
+   "spread": 0.1261,
+   "rating": "CC",
+   "cobertura": 0.7078627528086979,
+   "fonte": "Damodaran, ratings.html, empresas não financeiras grandes, jan/2026 (nota B)"
+  },
+  "e_mercado": 3699107.7185099996,
+  "d_desconto": 29145226.0,
+  "d_sobre_e": 7.878988182517619,
+  "bruta": 29145226.0,
+  "caixa": 13904054.0,
+  "caixa_livre": 13904054.0,
+  "dl": 15241172.0,
+  "minor": 608656.0,
+  "outros_passivos_financeiros": 0.0,
+  "ev_epv_firma": 15947215.73816697,
+  "ponte_dl_mais_minor": 15849828.0,
+  "ponte_sobre_ev_epv": 0.9938931196664075,
+  "cap_inv": 16572773.0,
+  "roic": 0.13128230620454753,
+  "roic_filtro": 0.1012780563675053,
+  "lpa_norm": -0.6342450209049962,
+  "vpa": 0.7289825155689664,
+  "reprod": 0.7289825155689664,
+  "ltm": {
+   "ref": null,
+   "receita": 56235956.0,
+   "ebit": 3667526.0,
+   "lucro": -348169.0,
+   "lucro_controlador": -378635.0,
+   "pl": 1331601.0,
+   "nao_controladores": 608656.0,
+   "emprest_cp": 4594632.0,
+   "emprest_lp": 24466960.0,
+   "arrendamento": 83634.0,
+   "caixa": 11476053.0,
+   "aplic_cp": 2428001.0,
+   "juros_pagos": 0.0,
+   "desp_fin": -4657023.0,
+   "ativo": 45404916.0
+  },
+  "por_ano": {
+   "2016": {
+    "receita": 9648670.0,
+    "ebit": 886986.0,
+    "margem_ebit_aj": 0.0919,
+    "lucro": 195035.0,
+    "lucro_controlador": 194870.0,
+    "pl": 522067.0,
+    "nao_controladores": 1444.0,
+    "divida_bruta": 6827703.0,
+    "caixa": 3397870.0,
+    "da": 80367.0,
+    "capex": 179601.0
+   },
+   "2017": {
+    "receita": 12103789.0,
+    "ebit": 989541.0,
+    "margem_ebit_aj": 0.0816,
+    "lucro": -280683.0,
+    "lucro_controlador": -281023.0,
+    "pl": 71077.0,
+    "nao_controladores": 0.0,
+    "divida_bruta": 9607008.0,
+    "caixa": 3807342.0,
+    "da": 145020.0,
+    "capex": 270515.0
+   },
+   "2018": {
+    "receita": 16214909.0,
+    "ebit": 674512.0,
+    "margem_ebit_aj": 0.0416,
+    "lucro": -1264782.0,
+    "lucro_controlador": -1264782.0,
+    "pl": -301114.0,
+    "nao_controladores": 0.0,
+    "divida_bruta": 10467574.0,
+    "caixa": 4396985.0,
+    "da": 221732.0,
+    "capex": 189090.0
+   },
+   "2019": {
+    "receita": 17122825.0,
+    "ebit": 1462082.0,
+    "margem_ebit_aj": 0.0854,
+    "lucro": 16157.0,
+    "lucro_controlador": 16157.0,
+    "pl": -281662.0,
+    "nao_controladores": 0.0,
+    "divida_bruta": 10524173.0,
+    "caixa": 4469687.0,
+    "da": 263994.0,
+    "capex": 247063.0
+   },
+   "2020": {
+    "receita": 19406344.0,
+    "ebit": 1793773.0,
+    "margem_ebit_aj": 0.0924,
+    "lucro": 697092.0,
+    "lucro_controlador": 697092.0,
+    "pl": 840072.0,
+    "nao_controladores": 0.0,
+    "divida_bruta": 11618929.0,
+    "caixa": 6391429.0,
+    "da": 308662.0,
+    "capex": 354724.0
+   },
+   "2021": {
+    "receita": 26965360.0,
+    "ebit": 2035418.0,
+    "margem_ebit_aj": 0.0755,
+    "lucro": 598879.0,
+    "lucro_controlador": 598879.0,
+    "pl": 654131.0,
+    "nao_controladores": 0.0,
+    "divida_bruta": 13444412.0,
+    "caixa": 7302009.0,
+    "da": 346786.0,
+    "capex": 504185.0
+   },
+   "2022": {
+    "receita": 30977769.0,
+    "ebit": 2423235.0,
+    "margem_ebit_aj": 0.0774,
+    "lucro": 655064.0,
+    "lucro_controlador": 652533.0,
+    "pl": 1062495.0,
+    "nao_controladores": 555667.0,
+    "divida_bruta": 13804839.0,
+    "caixa": 7071463.0,
+    "da": 414525.0,
+    "capex": 813263.0
+   },
+   "2023": {
+    "receita": 26891609.0,
+    "ebit": 2050198.0,
+    "margem_ebit_aj": 0.0761,
+    "lucro": 395533.0,
+    "lucro_controlador": 421054.0,
+    "pl": 659550.0,
+    "nao_controladores": 485171.0,
+    "divida_bruta": 21584854.0,
+    "caixa": 12678589.0,
+    "da": 512426.0,
+    "capex": 714902.0
+   },
+   "2024": {
+    "receita": 34068866.0,
+    "ebit": 2427875.0,
+    "margem_ebit_aj": 0.0691,
+    "lucro": -1563806.0,
+    "lucro_controlador": -1558712.0,
+    "pl": 87217.0,
+    "nao_controladores": 565856.0,
+    "divida_bruta": 30118044.0,
+    "caixa": 14460929.0,
+    "da": 668681.0,
+    "capex": 742768.0
+   },
+   "2025": {
+    "receita": 54830072.0,
+    "ebit": 3848351.0,
+    "margem_ebit_aj": 0.069,
+    "lucro": 848260.0,
+    "lucro_controlador": 810488.0,
+    "pl": 1893220.0,
+    "nao_controladores": 583005.0,
+    "divida_bruta": 27825614.0,
+    "caixa": 15031399.0,
+    "da": 974417.0,
+    "capex": 1139514.0
+   }
+  },
+  "contrafactuais": {
+   "base": {
+    "central": 0.5579541542383766,
+    "ancoras": {
+     "EPV de meio de ciclo": 0.09820105036279261,
+     "DCF normalizado (3 cenários)": 0.5579541542383766,
+     "Valor de reprodução": 0.7289825155689664
+    },
+    "kd": 0.2788205200000001,
+    "wacc_real": 0.13643208290192366,
+    "ev_epv": 15947215.73816697,
+    "dl_mais_minor": 15849828.0,
+    "pc": 6.685137070251868
+   },
+   "margem_5a": {
+    "central": 0.5088536290569803,
+    "ancoras": {
+     "EPV de meio de ciclo": -0.19004124613741802,
+     "DCF normalizado (3 cenários)": 0.5088536290569803,
+     "Valor de reprodução": 0.7289825155689664
+    },
+    "kd": 0.2788205200000001,
+    "wacc_real": 0.13643208290192366,
+    "ev_epv": 15661360.696937753,
+    "dl_mais_minor": 15849828.0,
+    "pc": 7.330202217310556
+   },
+   "receita_ltm": {
+    "central": 7.132411356887247,
+    "ancoras": {
+     "EPV de meio de ciclo": 7.132411356887247,
+     "DCF normalizado (3 cenários)": 7.210646296363977,
+     "Valor de reprodução": 0.7289825155689664
+    },
+    "kd": 0.24122052000000013,
+    "wacc_real": 0.1158842738662973,
+    "ev_epv": 22923167.920067023,
+    "dl_mais_minor": 15849828.0,
+    "pc": 0.5229647889557313
+   },
+   "kd_cobertura_ltm": {
+    "central": 0.5579541542383766,
+    "ancoras": {
+     "EPV de meio de ciclo": 0.09820105036279261,
+     "DCF normalizado (3 cenários)": 0.5579541542383766,
+     "Valor de reprodução": 0.7289825155689664
+    },
+    "kd": 0.2788205200000001,
+    "wacc_real": 0.13643208290192366,
+    "ev_epv": 15947215.73816697,
+    "dl_mais_minor": 15849828.0,
+    "pc": 6.685137070251868
+   },
+   "as_tres": {
+    "central": 3.2992297109761806,
+    "ancoras": {
+     "EPV de meio de ciclo": 3.2992297109761806,
+     "DCF normalizado (3 cenários)": 3.541646484242642,
+     "Valor de reprodução": 0.7289825155689664
+    },
+    "kd": 0.2788205200000001,
+    "wacc_real": 0.13643208290192366,
+    "ev_epv": 19121733.11769692,
+    "dl_mais_minor": 15849828.0,
+    "pc": 1.130566928271376
+   },
+   "_kd_ltm": {
+    "cobertura_ltm": 0.7875258507419869,
+    "rating": "CC",
+    "spread": 0.1261
+   },
+   "_pl_hist": 10.330408741665678,
+   "_ke_nom": 0.4849546039617365
+  }
+ }
+}

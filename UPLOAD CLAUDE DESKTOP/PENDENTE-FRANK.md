@@ -5,6 +5,7 @@
 ## Abertas
 | # | Pergunta | Opções / recomendação | Backlog | Desde |
 |---|---|---|---|---|
+| 16 | **Série anual: usar a DFP reapresentada?** (B45, achado E2) A série anual pega cada exercício da DFP original; quando a empresa reapresenta (operação descontinuada, erro, mudança de política), o motor usa o número velho. Afeta 18 do hall/dossiês (receita ou EBIT > 0,5%) → **muda golden** | **Recomendo sim, com regra:** usar o comparativo da DFP seguinte (como o AUD-21 já faz no LTM), exceto quando a diferença vier de operação descontinuada que depois foi desfeita (EMBJ3 2018) — a regra e a lista dos 18 vão a um pré-registro antes de regravar o golden. Responda "ok #16" ou "não #16" | B62 | 26/11 |
 | 4 | Orçamento mensal; SaaS só seu ou de terceiros; objetivo acadêmico; agente de sexta ainda roda?; fonte paga; licença do código | Ver Brief §11 | B07 | 10/10 |
 
 ## Só do Frank (a rotina nunca faz)
