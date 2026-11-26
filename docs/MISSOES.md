@@ -3,6 +3,12 @@
 
 ## Próximas (ordem de prioridade)
 
+**B61 — `ltm_2T26` do hall com ações do DFP (pré-AUD-68): recoletar o container ou estender a catraca da B60.** *(26/11/2026)*
+KEPL3, ISAE4, EGIE3, HYPE3 com `ltm_2T26/acoes` ≠ ITR (BACKLOG B61). Dormente hoje (`ltm.py` lê `ltm` antes; só `na_data` lê o
+`ltm_2T26`), mas tem de fechar antes da Prova 2 do M1. Recoleta pelo modelo de `ferramentas/b60/recoletar.py` (só `acoes` e
+`lucro_controlador` podem mudar); golden igual. *Pronto quando:* teste comparando `acoes` entre os `ltm*` de cada ticker nas 3
+séries verde, suíte verde, golden "sem mudanças". Rede da CVM pode faltar na nuvem → máquina do Frank. Sonnet low.
+
 **B33 — EGIE3: explicar os ~R$ 2 bi que faltam no PL do 3T26, antes de reavaliar a palavra.** *(23/11/2026)*
 O PL do controlador subiu R$ 6,30 bi de 30/06 a 30/09/2026; oferta de jul/26 (R$ 8,36 bi) − dividendo de ago/26 (R$ 770,8 mi, B3) daria R$ 7,59 bi. Conferir no RI do 3T26 (release e ITR) e na DMPL do ITR 3T26 (CVM, nota A) o custo da oferta (gastos com emissão de ações, líquidos de IR) e o dividendo efetivamente pago/declarado no trimestre, e o resultado do 3T26 que entra no PL. Fato com fonte → `ferramentas/dados/eventos_societarios.json` (nunca número no código). Não mudar a palavra: a EGIE3 fica NÃO CONCLUSIVO (trava do §9, decisão do Frank de 23/11) até o Frank ver a conta. *Pronto quando:* a diferença está explicada linha a linha com fonte A/B em `docs/` (ou o resíduo declarado), e a reavaliação proposta está em `PENDENTE-FRANK.md`.
 
@@ -189,6 +195,8 @@ Front lê só o contrato. Tira o "Sistema em breve" do `index.html:27`.
 (nenhuma)
 
 ## Feitas
+- **Pasta do Desktop** (26/11, c2f7b07): `ferramentas/desktop/atualizar.py` + `ATUALIZAR.bat` regeram `UPLOAD CLAUDE DESKTOP/` (21 cópias exatas + LEIA-ME, MAPA, O QUE MUDOU, instruções; MANIFESTO com sha256); `test_desktop_upload.py` (cópia/fonte × MANIFESTO, segredo); PDFs de 09/10 e versões de 21/10 em `_historico/2026-11-26 upload-desktop/`; linha no `mesa-fechar`. Suíte 1399.
+- **B60** (26/11, 7474afd): séries do dossiê CMIN3 e BLAU3 (pré-AUD-68) recoletadas (`b60/recoletar.py`); palavras iguais; centrais na data CMIN3 3,6317→3,5987 (provento sai da dívida bruta do WACC), BLAU3 8,1372→7,6457 (provento já ex na DL); catraca `test_b60_series_pos_aud68.py`; resíduo do hall → B61. `adversario`: sem dupla contagem. Suíte 1339.
 - **B57** (25/11, emenda 13 2c7c87a → f96cb7b, d955857): X2 do Z'' = (2.03.04 + 2.03.05) ÷ ativo, 2.03.05 ausente → erro explícito; séries do hall, dossiês e B36 recoletadas só com o campo novo; golden igual. B46 tentativa 8/24 → **NÃO CONCLUSIVA** (C3 15/24), hipótese encerrada. `adversario` 1 grave (ltm_2T26 do hall) corrigido; `senior` SEGUE COM AJUSTES; `oraculo` BLOQUEIA por processo (commit da emenda com a ficha de fontes) → Frank: #13 A (exceção pontual em `ordem.py`) e #14 (causa (a) fechada). Suíte 1333 verde.
 - **B46** (25/11, emenda 12 5461a47 → e8a039b): "separar a dificuldade" (Damodaran 2009) pré-registrada e rodada sobre o conjunto de desenvolvimento, tentativa 7/24 → **NÃO CONCLUSIVA** (C3 15/24; o π da cobertura e o do Z'' discordam). Nada implantado; motor, doutrina e golden intocados. `oraculo` RESSALVA, `senior` SEGUE COM AJUSTES (aplicados), `adversario` 2 defeitos do executor corrigidos com re-execução igual; B57 nova. Suíte 1324 verde.
 - **B40** (25/11, b2b9d60): `CIS RED CAP` com semântica conferida (×1, ação nova em `recebe`, fora do DPA; fonte A = FRE `capital_social_reducao` de Cosan 2014, MRV 2018, GPA 2020); CSAN3/MRVE3 rodam (NÃO CONCLUSIVO); B55/B56 novos; PENDENTE #12 respondido (B46 sim, B35 até o HOLD-OUT 2). Suíte 1302 verde.
@@ -228,6 +236,9 @@ Front lê só o contrato. Tira o "Sistema em breve" do `index.html:27`.
 
 ## Passagem de turno
 *A skill `/mesa-fechar` reescreve esta seção: o que ficou pendente, onde parou, próximo passo.*
+- 26/11/2026 (B60 + Desktop): no master (7474afd, c2f7b07); nada em andamento. B60 fechada sem mudar palavra; B61 aberta (ações do
+  `ltm_2T26` do hall, P2). Pasta do Desktop agora gerada: todo fecho que mexe em doc do MANIFESTO roda `python -m desktop.atualizar`.
+  Próximo passo: ver a última linha "Próximo passo (DNA):" do `DECISOES.md`.
 - 25/11/2026 (B57): no master (d955857); nada em andamento. Causa (a) **fechada** pelo Frank (#14). Próximo passo (DNA): **B60**
   (erro de dado no dossiê CMIN3: recoletar e mostrar o diff da palavra, que é do Frank), depois o **diagnóstico da B45** (causa (b),
   sem conserto nem tentativa); B41 (causa (c)) em paralelo. Falta atualizar o texto do DNA §3/§4 com a (a) fechada (decisão já no `09`).

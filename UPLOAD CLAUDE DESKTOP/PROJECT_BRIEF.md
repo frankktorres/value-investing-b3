@@ -1,7 +1,8 @@
 # PROJECT BRIEF — Mesa de Value Investing B3
 > **Norte do projeto: `docs/00-DNA.md` (ler primeiro).**
 
-*Versão de 25/11/2026, noite 9 (B57: X2 do Z'' com 2.03.04 + 2.03.05; B46 8/24 NÃO CONCLUSIVA, causa (a) fechada pelo Frank); antes,
+*Versão de 26/11/2026 (B60: séries do dossiê CMIN3/BLAU3 recoletadas, palavras iguais; pasta do Claude Desktop gerada com MANIFESTO e trava); antes,
+25/11/2026, noite 9 (B57: X2 do Z'' com 2.03.04 + 2.03.05; B46 8/24 NÃO CONCLUSIVA, causa (a) fechada pelo Frank); antes,
 25/11/2026, noite 8 (B46: "separar a dificuldade" pré-registrada e rodada, tentativa 7/24, NÃO CONCLUSIVA); antes,
 25/11/2026, noite 7 (B40: cisão com redução de capital conferida na CVM; CSAN3 e MRVE3 rodam); antes, 25/11/2026, noite 6 (PENDENTE #11 aplicado: deny do pulo do pre-push no Bash e no PowerShell); antes, 25/11/2026, noite 5 (pacote de autonomia: agente `senior`, "Quem decide", B37 trava do push, travas 4.2–4.6, skills `mesa-*`); antes, 25/11/2026, noite 4 (B39 FEITA, com a errata da emenda 11: NÃO DISPARA, mediana −2,93 p.p. — indício só no Ibovespa; B50 da π; antes, na noite 3, a versão da emenda 9 dava DISPARA −4,89); antes, 25/11/2026, noite 2 (B39: emenda 9 do pré-registro — Ke real, triangulação, gatilho; falta abrir as fontes e rodar); antes, 25/11/2026, noite (`docs/00-DNA.md` criado: visão, princípios, 4 causas da B36, marcos M1–M5); antes, 25/11/2026 (B36 hold-out FEITO: NÃO PASSOU, 1 de 6 linhas; falhas B40–B48; B39 pré-registrada); antes, 24/11/2026, noite 2 (B36 hold-out em andamento: emenda 8 pré-registrada sozinha, executor `holdout_b36/`, piloto de 3; antes, hook Stop só snapshot em `wip/auto`; antes, à tarde: B34 + desbloqueio do oráculo: emenda 7, Graham no Ke da casa, check `ordem`, hold-out B36; defeito H2 do Ke corrigido — D/E a mercado sem ponto fixo, doutrina v2.7; dossiês recalculados na data, point-in-time; 3T26 juntado no master; antes: 23/11, gravação do 3T26 com data-base 19/11)*
 
@@ -99,7 +100,8 @@ MVP de uso pessoal, maduro no cálculo. Um usuário real, sem terceiros. Prazo e
 - **Usadas:** Claude Code (análise, coleta, agente `adversario`, auditoria multiagente), git + GitHub privado, pytest + golden, reportlab,
   Agendador do Windows.
 - **Descartadas/pausadas:** pipeline B3 antigo (extinto em 07/09/2026); `analisador/` (arquivado 08/10 — motor e régua piores, excesso de
-  regra); Claude Desktop como 2º comitê e reenvio da pasta de upload (pausados 05–08/10, "não tem ajudado"); Cowork (só lê/escreve pasta, não
+  regra); Claude Desktop como 2º comitê (pausado 05–08/10, "não tem ajudado"; volta em 26/11 só como consulta, com a pasta
+  gerada por `ferramentas/desktop/atualizar.py`); Cowork (só lê/escreve pasta, não
   analisa); backtest como validação da régua (portão falhou).
 
 ## 9. IA
@@ -123,6 +125,8 @@ MVP de uso pessoal, maduro no cálculo. Um usuário real, sem terceiros. Prazo e
 6. Licença pretendida do código (fechado/aberto)?
 
 ## 12. O que mudou
+- 26/11/2026: B60 — `ferramentas/b60/recoletar.py` recoleta CMIN3/BLAU3 (pré-AUD-68), catraca `test_b60_series_pos_aud68.py`, B61 nova
+  (7474afd); ferramenta nova `ferramentas/desktop/atualizar.py` + `ATUALIZAR.bat` + `test_desktop_upload.py` (c2f7b07).
 - 25/11/2026 (noite 9): B57 — emenda 13 (2c7c87a); `altman_z2` com X2 = (2.03.04 + 2.03.05) ÷ ativo (Lei 6.404 nota A, plano da CVM nota A,
   Altman 2002 nota B); `ferramentas/b57/recoletar.py` (recoleta aditiva das séries); golden igual; B46 8/24 NÃO CONCLUSIVA; exceção
   pontual na trava de ordem (#13 A) e causa (a) fechada (#14); B58–B60 novos; commits f96cb7b, d955857.

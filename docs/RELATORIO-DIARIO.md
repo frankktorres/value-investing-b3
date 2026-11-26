@@ -1,6 +1,13 @@
 # RELATORIO-DIARIO
 *Uma entrada por dia/turno, a mais nova em cima: o que foi feito (com commit), decisões tomadas, o que ficou, erros. Máx. 10 linhas por entrada.*
 
+## 26/11/2026 — B60 e pasta do Desktop (sessão do Frank)
+- Fiz: B60 — CMIN3 e BLAU3 do dossiê recoletadas pelo coletor de hoje (7474afd); varredura das 3 séries só achou essas duas;
+  palavras iguais, centrais explicados (provento a pagar do ITR 2T26 entrou; `lucro_controlador` 0 → None muda só o OE de 2022–24).
+- Fiz: gerador da pasta `UPLOAD CLAUDE DESKTOP/` com MANIFESTO e trava (c2f7b07); PDFs de lote pré-H2 saíram para `_historico/`.
+- Erros: comentário do pino da CMIN3 com a causa errada (pego pelo `adversario`, corrigido). Novo: B61 (P2).
+- Precisa de você: trocar os arquivos no Desktop (lista no fim do `UPLOAD CLAUDE DESKTOP/MANIFESTO.txt`); piso de testes pode subir para 1399.
+
 ## 25/11/2026 — B57, X2 do Z'' de Altman (sessão do Frank)
 - Fiz: emenda 13 antes de mudar o motor (2c7c87a); X2 = reservas de lucros + lucros/prejuízos acumulados (Lei 6.404, CVM, Altman);
   coletor + recoleta aditiva das séries (campos antigos idênticos); golden igual; motor no master (d955857).
