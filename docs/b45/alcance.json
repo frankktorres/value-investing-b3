@@ -1,0 +1,395 @@
+{
+ "e1_frota": {
+  "hall_dossies": [],
+  "empresas_b3": [
+   "ARMAC LOCAÇÃO, LOGÍSTICA E SERVIÇOS S.A.",
+   "CLARANET TECHNOLOGY S.A.",
+   "COMPANHIA DE LOCAÇÃO DAS AMÉRICAS",
+   "CS BRASIL PARTICIPAÇÕES E LOCAÇÕES S.A.",
+   "JSL S.A.",
+   "LETS RENT A CAR S/A",
+   "LM TRANSPORTES INTERESTADUAIS SERVIÇOS E COMÉRCIO S.A.",
+   "LOCALIZA FLEET S.A.",
+   "LOCALIZA RENT A CAR S.A.",
+   "LOCAMÉRICA RENT-A-CAR S.A.",
+   "MAESTRO LOCADORA DE VEICULOS S.A.",
+   "MILLS LOCAÇÃO, SERVIÇOS E LOGÍSTICA S.A.",
+   "MOVIDA LOCAÇÃO DE VEÍCULOS S.A.",
+   "MOVIDA PARTICIPACOES SA",
+   "RODOBENS SA",
+   "SIMPAR S.A.",
+   "TURBI COMPARTILHAMENTO DE VEÍCULOS S.A.",
+   "UNIDAS LOCADORA S.A.",
+   "UNIDAS LOCAÇÕES E SERVIÇOS S.A.",
+   "VAMOS LOCAÇÃO DE CAMINHÕES, MÁQUINAS E EQUIPAMENTOS S.A.",
+   "VIX LOGÍSTICA S.A.",
+   "VOKE S.A."
+  ]
+ },
+ "e2_reapresentacao": [
+  {
+   "ticker": "RANI3",
+   "ano": 2018,
+   "conta": "3.01",
+   "original": 932817.0,
+   "reapresentado": 799159.0,
+   "dif": -0.1433
+  },
+  {
+   "ticker": "RANI3",
+   "ano": 2018,
+   "conta": "3.05",
+   "original": 117835.0,
+   "reapresentado": 130440.0,
+   "dif": 0.107
+  },
+  {
+   "ticker": "RANI3",
+   "ano": 2024,
+   "conta": "3.01",
+   "original": 1627470.0,
+   "reapresentado": 1555346.0,
+   "dif": -0.0443
+  },
+  {
+   "ticker": "RANI3",
+   "ano": 2024,
+   "conta": "3.05",
+   "original": 317934.0,
+   "reapresentado": 328931.0,
+   "dif": 0.0346
+  },
+  {
+   "ticker": "B3SA3",
+   "ano": 2018,
+   "conta": "3.01",
+   "original": 4831915.0,
+   "reapresentado": 5351875.0,
+   "dif": 0.1076
+  },
+  {
+   "ticker": "SMTO3",
+   "ano": 2016,
+   "conta": "3.05",
+   "original": 467419.0,
+   "reapresentado": 486860.0,
+   "dif": 0.0416
+  },
+  {
+   "ticker": "SLCE3",
+   "ano": 2022,
+   "conta": "3.01",
+   "original": 9589710.0,
+   "reapresentado": 9518344.0,
+   "dif": -0.0074
+  },
+  {
+   "ticker": "TAEE11",
+   "ano": 2019,
+   "conta": "3.01",
+   "original": 1794959.0,
+   "reapresentado": 1839990.0,
+   "dif": 0.0251
+  },
+  {
+   "ticker": "TAEE11",
+   "ano": 2019,
+   "conta": "3.05",
+   "original": 1404994.0,
+   "reapresentado": 1513498.0,
+   "dif": 0.0772
+  },
+  {
+   "ticker": "ISAE4",
+   "ano": 2019,
+   "conta": "3.01",
+   "original": 3305155.0,
+   "reapresentado": 3331862.0,
+   "dif": 0.0081
+  },
+  {
+   "ticker": "CMIG4",
+   "ano": 2019,
+   "conta": "3.05",
+   "original": 3109384.0,
+   "reapresentado": 3209809.0,
+   "dif": 0.0323
+  },
+  {
+   "ticker": "CPLE3",
+   "ano": 2016,
+   "conta": "3.05",
+   "original": 2044102.0,
+   "reapresentado": 1988818.0,
+   "dif": -0.027
+  },
+  {
+   "ticker": "CPLE3",
+   "ano": 2019,
+   "conta": "3.01",
+   "original": 16244274.0,
+   "reapresentado": 15869245.0,
+   "dif": -0.0231
+  },
+  {
+   "ticker": "CPLE3",
+   "ano": 2019,
+   "conta": "3.05",
+   "original": 3190681.0,
+   "reapresentado": 3302287.0,
+   "dif": 0.035
+  },
+  {
+   "ticker": "CPLE3",
+   "ano": 2022,
+   "conta": "3.01",
+   "original": 21927721.0,
+   "reapresentado": 20535341.0,
+   "dif": -0.0635
+  },
+  {
+   "ticker": "CPLE3",
+   "ano": 2022,
+   "conta": "3.05",
+   "original": 2916236.0,
+   "reapresentado": 2948772.0,
+   "dif": 0.0112
+  },
+  {
+   "ticker": "PETR4",
+   "ano": 2018,
+   "conta": "3.01",
+   "original": 349836000.0,
+   "reapresentado": 310255000.0,
+   "dif": -0.1131
+  },
+  {
+   "ticker": "PETR4",
+   "ano": 2018,
+   "conta": "3.05",
+   "original": 64876000.0,
+   "reapresentado": 62465000.0,
+   "dif": -0.0372
+  },
+  {
+   "ticker": "PRIO3",
+   "ano": 2018,
+   "conta": "3.05",
+   "original": 170300.0,
+   "reapresentado": 186615.0,
+   "dif": 0.0958
+  },
+  {
+   "ticker": "UGPA3",
+   "ano": 2017,
+   "conta": "3.01",
+   "original": 80007422.0,
+   "reapresentado": 79230014.0,
+   "dif": -0.0097
+  },
+  {
+   "ticker": "UGPA3",
+   "ano": 2017,
+   "conta": "3.05",
+   "original": 2887593.0,
+   "reapresentado": 2813415.0,
+   "dif": -0.0257
+  },
+  {
+   "ticker": "UGPA3",
+   "ano": 2020,
+   "conta": "3.01",
+   "original": 81241102.0,
+   "reapresentado": 74058056.0,
+   "dif": -0.0884
+  },
+  {
+   "ticker": "UGPA3",
+   "ano": 2020,
+   "conta": "3.05",
+   "original": 1768438.0,
+   "reapresentado": 1501929.0,
+   "dif": -0.1507
+  },
+  {
+   "ticker": "VBBR3",
+   "ano": 2019,
+   "conta": "3.05",
+   "original": 1353000.0,
+   "reapresentado": 1313000.0,
+   "dif": -0.0296
+  },
+  {
+   "ticker": "LEVE3",
+   "ano": 2016,
+   "conta": "3.01",
+   "original": 2236007.0,
+   "reapresentado": 2143308.0,
+   "dif": -0.0415
+  },
+  {
+   "ticker": "LEVE3",
+   "ano": 2016,
+   "conta": "3.05",
+   "original": 16207.0,
+   "reapresentado": 26009.0,
+   "dif": 0.6048
+  },
+  {
+   "ticker": "HYPE3",
+   "ano": 2016,
+   "conta": "3.01",
+   "original": 3288747.0,
+   "reapresentado": 3228092.0,
+   "dif": -0.0184
+  },
+  {
+   "ticker": "HYPE3",
+   "ano": 2016,
+   "conta": "3.05",
+   "original": 1068981.0,
+   "reapresentado": 1027631.0,
+   "dif": -0.0387
+  },
+  {
+   "ticker": "HYPE3",
+   "ano": 2017,
+   "conta": "3.01",
+   "original": 3638458.0,
+   "reapresentado": 3499899.0,
+   "dif": -0.0381
+  },
+  {
+   "ticker": "ABEV3",
+   "ano": 2018,
+   "conta": "3.05",
+   "original": 16990457.0,
+   "reapresentado": 17151903.0,
+   "dif": 0.0095
+  },
+  {
+   "ticker": "ABEV3",
+   "ano": 2019,
+   "conta": "3.01",
+   "original": 52599709.0,
+   "reapresentado": 52005120.0,
+   "dif": -0.0113
+  },
+  {
+   "ticker": "ITSA4",
+   "ano": 2017,
+   "conta": "3.05",
+   "original": 8590000.0,
+   "reapresentado": 8323000.0,
+   "dif": -0.0311
+  },
+  {
+   "ticker": "ITSA4",
+   "ano": 2018,
+   "conta": "3.05",
+   "original": 9927000.0,
+   "reapresentado": 10226000.0,
+   "dif": 0.0301
+  },
+  {
+   "ticker": "BLAU3",
+   "ano": 2024,
+   "conta": "3.05",
+   "original": 328797.0,
+   "reapresentado": 361166.0,
+   "dif": 0.0984
+  },
+  {
+   "ticker": "VLID3",
+   "ano": 2021,
+   "conta": "3.01",
+   "original": 2198001.0,
+   "reapresentado": 1616413.0,
+   "dif": -0.2646
+  },
+  {
+   "ticker": "VLID3",
+   "ano": 2021,
+   "conta": "3.05",
+   "original": 135787.0,
+   "reapresentado": 165362.0,
+   "dif": 0.2178
+  },
+  {
+   "ticker": "*MOVI3",
+   "ano": 2016,
+   "conta": "3.01",
+   "original": 1893180.0,
+   "reapresentado": 1830613.0,
+   "dif": -0.033
+  },
+  {
+   "ticker": "*MOVI3",
+   "ano": 2022,
+   "conta": "3.01",
+   "original": 9600029.0,
+   "reapresentado": 9300119.0,
+   "dif": -0.0312
+  },
+  {
+   "ticker": "*EMBJ3",
+   "ano": 2017,
+   "conta": "3.05",
+   "original": 1059584.0,
+   "reapresentado": 1098491.0,
+   "dif": 0.0367
+  },
+  {
+   "ticker": "*EMBJ3",
+   "ano": 2018,
+   "conta": "3.01",
+   "original": 18721620.0,
+   "reapresentado": 7888033.0,
+   "dif": -0.5787
+  },
+  {
+   "ticker": "*EMBJ3",
+   "ano": 2018,
+   "conta": "3.05",
+   "original": 103085.0,
+   "reapresentado": -1069517.0,
+   "dif": -11.3751
+  },
+  {
+   "ticker": "*EMBJ3",
+   "ano": 2019,
+   "conta": "3.01",
+   "original": 10467931.0,
+   "reapresentado": 21802075.0,
+   "dif": 1.0827
+  },
+  {
+   "ticker": "*EMBJ3",
+   "ano": 2019,
+   "conta": "3.05",
+   "original": -643656.0,
+   "reapresentado": -309760.0,
+   "dif": 0.5187
+  }
+ ],
+ "e2_tickers_hall_dossies": [
+  "ABEV3",
+  "B3SA3",
+  "BLAU3",
+  "CMIG4",
+  "CPLE3",
+  "HYPE3",
+  "ISAE4",
+  "ITSA4",
+  "LEVE3",
+  "PETR4",
+  "PRIO3",
+  "RANI3",
+  "SLCE3",
+  "SMTO3",
+  "TAEE11",
+  "UGPA3",
+  "VBBR3",
+  "VLID3"
+ ]
+}

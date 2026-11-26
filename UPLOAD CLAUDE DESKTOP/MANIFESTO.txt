@@ -1,9 +1,9 @@
-Gerado em 2026-11-26 · repo 2ce1349 (fontes com mudança sem commit) · gerador ferramentas/desktop/atualizar.py
+Gerado em 2026-11-26 · repo 700f17b (fontes com mudança sem commit) · gerador ferramentas/desktop/atualizar.py
 Hash = sha256 com fim de linha normalizado para LF nos arquivos de texto. Este arquivo NÃO sobe para o Desktop.
 
 # arquivo	origem	data	sha256
 00-CONFIGURACAO-DO-PROJETO.md	00-CONFIGURACAO-DO-PROJETO.md	2026-10-10	72697aa004b40a3b89bbc56f95bd4fe83e657fcd03c893e9953a278a532a33d2
-00-DNA.md	docs/00-DNA.md	2026-11-25	eed9fe77ee0369d4aeab897e6879841fb74f2aa7fbfdd1800245aeeb4dfff159
+00-DNA.md	docs/00-DNA.md	2026-11-26	eed9fe77ee0369d4aeab897e6879841fb74f2aa7fbfdd1800245aeeb4dfff159
 00-LEIA-ME.md	gerador	2026-11-26	11e50bd9acdee48afc01235ee2cc603d101526ca7e594063e3b3f227563a2dfb
 00-O-QUE-MUDOU.md	gerador	2026-11-26	1107d1754594b573cafc8158471bad6fdb26749f8001d9442939e0a71793fe7d
 01-doutrina-value-investing.md	01-doutrina-value-investing.md	2026-11-24	89cc9076498b95c78b48c99a5abfcd6c08a63c0bd4099b9be8ef694e3c144f98
@@ -15,13 +15,13 @@ Hash = sha256 com fim de linha normalizado para LF nos arquivos de texto. Este a
 06-triagem-e-fila.md	06-triagem-e-fila.md	2026-10-08	3f86085ae5868cfad331601db193948a78f8ef5832b8387231ce67efa63678fb
 07-perfil-do-investidor.md	07-perfil-do-investidor.md	2026-10-05	629929e62c071e5327ab04aac06d1225d9fdf1b6a833002ce17e7c5802de2ed0
 08-prompt-recalculo-lote.md	08-prompt-recalculo-lote.md	2026-10-10	d98fb67d05052eeb7541ca0d5442c7ae8aad197fc3d51a8b461790e672027527
-BACKLOG.md	docs/BACKLOG.md	2026-11-26	4c235da3bf44d91cd1d5a69ca6fd37448eb1fc1241e1b68ca8b2e7a2e6a46278
+BACKLOG.md	docs/BACKLOG.md	2026-11-26	e526aa5eb829974108c7e92b7e21c8f06c9c7717b5b7d16d19a9c4db9fd27b9d
 COLAR-NO-CAMPO-INSTRUCOES.txt	gerador	2026-11-26	432b098f1ba404179dafa9e95464276bfefd35667988be84809325709464c290
-DECISOES.md	docs/DECISOES.md	2026-11-26	57481473cfb74963e2c3e008e2e89d2218dcfee52fb13359aef7615445b9262e
+DECISOES.md	docs/DECISOES.md	2026-11-26	732d4eb3fdca306effe817fed2cec49e91ea0c946285e280b844616d8c3628e8
 PACOTE-AUTONOMIA-2026-11-25.md	docs/research/2026-11-25-pacote-autonomia.md	2026-11-25	b3d59cc3c6754ccd5958be4a0f50efa951160407d72d9f87a81c3373445d84e1
-PENDENTE-FRANK.md	docs/PENDENTE-FRANK.md	2026-11-26	8e260f3dcf77c5c65ca13f95d854ccbe62216bfb60f0195988196b76985c8bc0
+PENDENTE-FRANK.md	docs/PENDENTE-FRANK.md	2026-11-26	17b782d514d71f1b8e777aa2929727042e7b96cce932dffe8b8e7b87e8ecabd0
 PRE-REGISTRO-v3.md	docs/PRE-REGISTRO-v3.md	2026-11-25	3750dd733a458f4f6b226c9cbbd76b418ff04746708faabbd2955474c6fd6a91
-PROJECT_BRIEF.md	PROJECT_BRIEF.md	2026-11-26	b89c5ad0c7bf6d901b73d367c7d2cc4069754371b82bb3a00b3df4fbe576919b
+PROJECT_BRIEF.md	PROJECT_BRIEF.md	2026-11-26	145cd29f2a4163ae9d52c251eb97b7f0b05dba7d008dd57925451b86e1b6e843
 PROMPT-AGENTE-NOTICIAS-SEXTA.md	PROMPT-AGENTE-NOTICIAS-SEXTA.md	2026-11-24	a8636e53e5f6069ce5138a9d257a9ae824bd5acfa3603e741f9a9b60fca130f3
 REL-B36-holdout-2026-11.md	docs/holdout/B36-2026-11.md	2026-11-25	37c0fbd044d8b1cbbfa2b2880658868257f95aabff5ef162ab55178b391161b6
 REL-B39-ke-implicito-2026-11.md	docs/b39/B39-2026-11.md	2026-11-25	7cb1380661fbe2f0fc17f753c41a79c609357f6fd351a0199d194ddcc48a78c0
@@ -31,7 +31,7 @@ REL-B57-fontes-x2-altman.md	docs/b57/FONTES-B57.md	2026-11-25	d6670b33a661d3b89f
 
 ## O que fazer no Desktop (contra a pasta do último commit, que é a carga anterior)
 SUBIR (novo): nada
-TROCAR (apagar o antigo de mesmo nome e subir): 00-DNA.md, DECISOES.md, PENDENTE-FRANK.md
+TROCAR (apagar o antigo de mesmo nome e subir): BACKLOG.md, DECISOES.md, PENDENTE-FRANK.md, PROJECT_BRIEF.md
 APAGAR do Desktop (saiu; cópia em _historico/): nada
 INSTRUÇÕES: sem mudança
 Trava de segredo: OK (0 achados)

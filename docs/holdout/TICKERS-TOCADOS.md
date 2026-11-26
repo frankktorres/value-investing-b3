@@ -4,6 +4,10 @@
 entra aqui e fica **fora** do HOLD-OUT 2. Só se acrescenta linha no fim; nunca se apaga nem se edita linha antiga
 (correção = linha nova citando a anterior). Criado em 26/11/2026 (B45).*
 
+*O que é "tocar": abrir a valuation, as camadas ou as séries de um ticker para diagnóstico ou conserto. **Não** é toque
+contar alcance por regex nos ZIPs da CVM sem abrir valuation (ex.: `python -m b45.alcance` varre a DFC de toda a B3); um
+item que for abrir esses tickers de fato (ex.: B63, locadoras) os registra aqui.*
+
 *Anterior a este registro (já excluídos pela regra do M1 por outro motivo): hall (41), dossiês, fila do `06`, triagem
 manual e as 20 da B36 — não precisam ser repetidos aqui, mas podem ser, quando abertos.*
 

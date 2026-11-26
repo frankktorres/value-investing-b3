@@ -55,7 +55,8 @@ RE_CAPEX = re.compile(r"(?:aquisi|adi[cç]|compra|investiment|aplica[cç][aã]o|
 # B45 (26/11/2026): locadora lança a compra de frota no caixa OPERACIONAL (MOVI3 6.01.03.03, RENT3 6.01.02.03) — é imobilizado,
 # mas o RE_CAPEX só olha 6.02. Havendo a linha, o capex fica None (não avaliado) e o valor vai para `capex_frota_fco`: a regra de
 # capex líquido de frota (compra − custo dos carros vendidos) é método e fica para a causa (b)/(d), com fonte.
-RE_FROTA_FCO = re.compile(r"(?:compra|aquisi)\w*.*(?:imobilizad\w*.*loca|ve[ií]culo|carros|frota)", re.I)
+RE_FROTA_FCO = re.compile(r"(?:compra|aquisi)\w*.*(?:imobilizad|ve[ií]culo|carros|frota)", re.I)   # qualquer compra de
+# imobilizado no FCO (MOVI3 2016–18 "Compra de Imobilizado", JSL, ARMAC — adversário 26/11); hall/dossiês: 0 linhas em 2016–25
 RE_DIV = re.compile(r"dividend|juros sobre (?:o )?capital", re.I)
 RE_ARREND_PAGO = re.compile(r"arrendamento|loca[cç][aã]o|ifrs ?16|direito de uso", re.I)   # 6.03: pagamento de passivo de arrendamento (05/10)
 RE_ARREND_NAO = re.compile(r"juros|empr[eé]stim|financiament|deb[eê]nture", re.I)   # juros já saem do lucro; linha que mistura dívida não serve

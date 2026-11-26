@@ -34,7 +34,8 @@ def test_frota_no_fco_deixa_capex_nao_avaliado():
 def test_rotulos_das_locadoras():
     for ds in ("Aquisição de carros, líq. da variação do saldo a pagar a montadoras de carros",
                "Compra de ativo imobilizado operacional para locação", "Aquisição de veículos",
-               "Aquisição e renovação de frota de veículos"):
+               "Aquisição e renovação de frota de veículos", "Compra de Imobilizado",
+               "Compra de Ativo Imobilizado Operacional", "Aquisição de ativos imobilizados"):
         e, _ = C.dfc_extra(_dfc(BASE + [("6.01.02.03", ds, -100.0)]))
         assert e["capex"] is None and e["capex_frota_fco"] == 100.0, ds
 

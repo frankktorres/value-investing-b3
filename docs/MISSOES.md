@@ -240,6 +240,9 @@ Front lê só o contrato. Tira o "Sistema em breve" do `index.html:27`.
 
 ## Passagem de turno
 *A skill `/mesa-fechar` reescreve esta seção: o que ficou pendente, onde parou, próximo passo.*
+- 26/11/2026 (B45 diagnóstico): no master (este commit); nada em andamento. Causa por ticker em `docs/b45/`; E1 corrigido no
+  coletor, E2 → PENDENTE #16. Próximo passo (DNA): desenho + pré-registro do conserto da (b) em Opus high com plan mode (ver a
+  última linha "Próximo passo (DNA):" do `DECISOES.md`).
 - 26/11/2026 (B60 + Desktop): no master (7474afd, c2f7b07); nada em andamento. B60 fechada sem mudar palavra; B61 aberta (ações do
   `ltm_2T26` do hall, P2). Pasta do Desktop agora gerada: todo fecho que mexe em doc do MANIFESTO roda `python -m desktop.atualizar`.
   Próximo passo: ver a última linha "Próximo passo (DNA):" do `DECISOES.md`.
