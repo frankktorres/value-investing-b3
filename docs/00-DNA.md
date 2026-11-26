@@ -96,6 +96,7 @@ não sobem nem descem palavra por nota; item sem evidência A/B fica "não avali
 do hall escolhidas por liquidez: rodam 14 (limite ≥ 16); NÃO CONCLUSIVO 9 de 14 (≤ 6); Ke nominal > 30% em 3 (≤ 2);
 valor absurdo em 6 (≤ 2); vazios medianos 75% (≤ 50%); só o tempo passou (2,6 min ≤ 20). 0 BARATA, P/C mediano 3,26
 contra 1,82 do hall, dispersão > 1,8× em 10 de 14 (6 infinitas), 43% dos insumos saem de código.
+**Causa aberta: (b) domínio por método** (a (a) fechou em 25/11, #14; ver §4).
 Leitura: a Mesa funciona nas 41 que foram ajustadas à mão; fora delas, para em evento societário, publica valor
 absurdo ou fica sem palavra.
 
@@ -121,7 +122,7 @@ oráculo. **Nenhuma é provada nas 20 da B36** (contaminadas); a prova é o M1.
 
 | # | Causa | Itens | O que fecha | Por que nesta ordem |
 |---|---|---|---|---|
-| a | **Nível do Ke** | B39 (Ke da Mesa × Ke implícito, X = 3 p.p., já pré-registrada), B46 (Ke > 30%), B35 (Kd que reage à alavancagem), B14 | o Ke mede o risco que o mercado cobra, ou fica como está com motivo; fixa o prêmio p do §1.1 | move todo P/C; mexer em âncora antes seria trabalhar sobre um Ke que pode mudar |
+| a | **Nível do Ke** — **FECHADA 25/11 (#14): como está, com motivo** — Ke > 30% sai NÃO CONCLUSIVO pela H2 e é medido no M1; B39 não disparou, B46 NÃO CONCLUSIVA, B35 até o HOLD-OUT 2 | B39 (Ke da Mesa × Ke implícito, X = 3 p.p., já pré-registrada), B46 (Ke > 30%), B35 (Kd que reage à alavancagem), B14 | o Ke mede o risco que o mercado cobra, ou fica como está com motivo; fixa o prêmio p do §1.1 | move todo P/C; mexer em âncora antes seria trabalhar sobre um Ke que pode mudar |
 | b | **Domínio de validade por método** | B45 (central ≤ 0, P/C absurdo), B47 (dispersão com âncora ≤ 0), parte "DDM de quem não distribui" da B44 | cada método devolve **valor**, **não se aplica (razão)** ou **não avaliado (dado)**; central = mediana das válidas; dispersão só entre válidas | sem isso o valor absurdo vira palavra (ENEV3 CARA com P/C 39,95) |
 | c | **Eventos societários** | B40 (cisão com redução de capital), B41 (incorporação), B42 (capital fora do FRE), B43 (provento repetido, unit) | regra genérica com fonte A por tipo de evento; o que não tiver semântica conferida para **explícito** (não chuta) | 6 de 20 param aqui; é dado, não calibração — pode correr em paralelo a (a) e (b) sem gastar tentativa do pré-registro |
 | d | **Redesenho dos insumos manuais** | B44 (payout = mediana medida; piso estatutário não é política), B48 (teto imposto pelo orquestrador, tag along, Fisher, `discricionario`, quali das financeiras), B32 (digitados das financeiras, prazo 31/01/2027) | insumo é automático ou "não avaliado"; leitura humana só onde muda a palavra, com fonte A/B; lentes qualitativas só como motivo | depende de (b): o domínio diz quais insumos importam para cada método |
