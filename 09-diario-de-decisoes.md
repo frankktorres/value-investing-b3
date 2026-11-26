@@ -1325,5 +1325,10 @@ do lote 2 e a bandeira do relatório. TEND3 (B36, fora da B46 pela B41) também 
 **B46 8/24:** C3 15 de 24 de novo (mesmas 9 discordam; sensibilidade com o X2 do DFP, também 15) → **NÃO CONCLUSIVA**; pela
 emenda 13, fim da B46 por este caminho (sem 9ª tentativa da mesma hipótese). O defeito do X2 não era o que separava as duas
 estimativas do π. Relatório: `docs/b46/B46-2026-11-t8.md`.
-**Decisão:** o conserto do X2 fica (vale pela fonte). Nada muda em doutrina, golden ou palavra.
+**Revisão:** `adversario` 1 grave reproduzido (o `ltm_2T26` do hall, lido pelo dossiê na data, ficou sem a 2.03.05 e
+quebrava HYPE3/LEVE3) — corrigido com a recoleta dos históricos; `senior` SEGUE COM AJUSTES (aplicados); **`oraculo`
+BLOQUEIA por processo**: o commit da emenda 13 (2c7c87a) levou junto o `FONTES-B57.md`, e o check `ordem` (emenda 7) não
+registra a emenda 13 — conteúdo aprovado (fonte, dado, PIT, camada 1). Aceitar o risco é do Frank (`PENDENTE-FRANK.md` #13);
+até lá a B57 fica no ramo `b57-x2-altman`, fora do `master`.
+**Decisão (proposta):** o conserto do X2 fica (vale pela fonte). Nada muda em doutrina, golden ou palavra.
 

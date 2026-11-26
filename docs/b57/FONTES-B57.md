@@ -49,3 +49,4 @@ PDF → pypdf). O planalto.gov.br recusou a conexão (curl e PowerShell); a lei 
 - Se a 2.03.04 da CVM já desconta ações em tesouraria em alguma subconta (ex.: 2.03.04.09) — recompra grande baixaria o X2.
 - Prejuízo absorvido por reserva de capital ou redução de capital (Lei 6.404, arts. 173 e 200) some da 2.03.05: viés do X2.
 - Se o "retained earnings" de um balanço trimestral nos EUA inclui o lucro do ano corrente (fonte A a abrir; US GAAP).
+- O dividendo adicional proposto fica dentro da 2.03.04 até a assembleia e infla um pouco o X2 (`oraculo`, 25/11; não declarado na emenda 13).
