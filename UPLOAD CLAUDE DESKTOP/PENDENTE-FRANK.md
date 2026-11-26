@@ -5,7 +5,6 @@
 ## Abertas
 | # | Pergunta | Opções / recomendação | Backlog | Desde |
 |---|---|---|---|---|
-| 18 | **Liberar a rede da nuvem para B3 e CVM** (ambiente `env_014gwoENsQxHwMi1CTpyaWzz` da rotina "VALUE B3 – noturno", em claude.ai → rotina → ambiente → rede). Em 22/10 `b3.com.br` e `conteudo.cvm.gov.br`/`gov.br` davam 403/ENOTFOUND; o pré-voo mede toda noite (`/tmp/mesa_prevoo_rede.json`) | **Recomendo liberar** `dados.cvm.gov.br`, `conteudo.cvm.gov.br`, `sistemaswebb3-listados.b3.com.br`, `www.b3.com.br`, `www.gov.br`: sem eles a noite só faz doc (fase 1 já é só doc, então não trava hoje). Só você mexe nisso | B11, N11 | 26/11 |
 | 16 | **Série anual: usar a DFP reapresentada?** (B45, achado E2) A série anual pega cada exercício da DFP original; quando a empresa reapresenta (operação descontinuada, erro, mudança de política), o motor usa o número velho. Afeta 18 do hall/dossiês (receita ou EBIT > 0,5%) → **muda golden** | **Recomendo sim, com regra:** usar o comparativo da DFP seguinte (como o AUD-21 já faz no LTM), exceto quando a diferença vier de operação descontinuada que depois foi desfeita (EMBJ3 2018) — a regra e a lista dos 18 vão a um pré-registro antes de regravar o golden. Responda "ok #16" ou "não #16" | B62 | 26/11 |
 | 4 | Orçamento mensal; SaaS só seu ou de terceiros; objetivo acadêmico; agente de sexta ainda roda?; fonte paga; licença do código | Ver Brief §11 | B07 | 10/10 |
 
@@ -15,6 +14,9 @@
 - Temporada 3T26 e monitor de sexta rodam na máquina dele (dados fora do git).
 
 ## Respondidas
+- **26/11 — #18 (rede da nuvem):** feito pelo Frank → ambiente "VALUE B3" em Limitado, com `*.cvm.gov.br`, `*.b3.com.br`,
+  `api.bcb.gov.br`, `www.tesourotransparente.gov.br`, `fred.stlouisfed.org`, `statusinvest.com.br` e `www.gov.br` (o único que
+  faltava); o pré-voo da noite confere em `/tmp/mesa_prevoo_rede.json`.
 - **26/11 — #17 (piso da B37):** "ok #17" → `.githooks/piso_testes.json` de 1279 para 1399 (contagem do master desde 700f17b); o hook só deixa subir.
 - **26/11 — #15 (texto do DNA):** "ok #15" → DNA §4 linha (a) marcada FECHADA (#14) e §3 com "causa aberta: (b)"; versão anterior em `_historico/2026-11-26 DNA antes do #15/`.
 - **25/11 — #13 (trava de ordem):** "ok #13 A" → exceção pontual em `ferramentas/oraculo/ordem.py` (SHA completo de 2c7c87a + `{docs/b57/FONTES-B57.md}`), com canários em `tests/test_oraculo_ordem.py`; a B57 vai ao `master` → `DECISOES.md`, `09`.
