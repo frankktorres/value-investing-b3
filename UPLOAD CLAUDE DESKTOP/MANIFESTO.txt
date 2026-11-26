@@ -1,4 +1,4 @@
-Gerado em 2026-11-26 · repo 8a92e08 · gerador ferramentas/desktop/atualizar.py
+Gerado em 2026-11-26 · repo 8a92e08 (fontes com mudança sem commit) · gerador ferramentas/desktop/atualizar.py
 Hash = sha256 com fim de linha normalizado para LF nos arquivos de texto. Este arquivo NÃO sobe para o Desktop.
 
 # arquivo	origem	data	sha256
@@ -19,7 +19,7 @@ BACKLOG.md	docs/BACKLOG.md	2026-11-26	99e0bc4ef75ea9464d26e1a12182391de3c036a781
 COLAR-NO-CAMPO-INSTRUCOES.txt	gerador	2026-11-26	432b098f1ba404179dafa9e95464276bfefd35667988be84809325709464c290
 DECISOES.md	docs/DECISOES.md	2026-11-26	e93ba835859b231c069cd9b6df8f5bc37c1e6a218ae71d94e9e0ea929fd59f51
 PACOTE-AUTONOMIA-2026-11-25.md	docs/research/2026-11-25-pacote-autonomia.md	2026-11-25	b3d59cc3c6754ccd5958be4a0f50efa951160407d72d9f87a81c3373445d84e1
-PENDENTE-FRANK.md	docs/PENDENTE-FRANK.md	2026-11-26	01d586f09e6e9b0af762f3836d9497f19303506882a368515f2e65e5de9d353c
+PENDENTE-FRANK.md	docs/PENDENTE-FRANK.md	2026-11-26	df1623bb9aaf326d4426834ef01ace1b1a675853a3f15b9dd445b7e39148a107
 PRE-REGISTRO-v3.md	docs/PRE-REGISTRO-v3.md	2026-11-25	3750dd733a458f4f6b226c9cbbd76b418ff04746708faabbd2955474c6fd6a91
 PROJECT_BRIEF.md	PROJECT_BRIEF.md	2026-11-26	908d36ba1bf9ac1005c90a1e4c935a03ebe6a816babbe73445529325ac175e78
 PROMPT-AGENTE-NOTICIAS-SEXTA.md	PROMPT-AGENTE-NOTICIAS-SEXTA.md	2026-11-24	a8636e53e5f6069ce5138a9d257a9ae824bd5acfa3603e741f9a9b60fca130f3
@@ -31,7 +31,7 @@ REL-B57-fontes-x2-altman.md	docs/b57/FONTES-B57.md	2026-11-25	d6670b33a661d3b89f
 
 ## O que fazer no Desktop (contra a pasta do último commit, que é a carga anterior)
 SUBIR (novo): nada
-TROCAR (apagar o antigo de mesmo nome e subir): nada
+TROCAR (apagar o antigo de mesmo nome e subir): PENDENTE-FRANK.md
 APAGAR do Desktop (saiu; cópia em _historico/): nada
 INSTRUÇÕES: sem mudança
 Trava de segredo: OK (0 achados)
