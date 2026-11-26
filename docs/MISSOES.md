@@ -195,6 +195,10 @@ Front lê só o contrato. Tira o "Sistema em breve" do `index.html:27`.
 (nenhuma)
 
 ## Feitas
+- **B45 só diagnóstico** (26/11): `ferramentas/b45/diagnostico.py` reproduz os 5 números da B36 e abre as camadas
+  (`docs/b45/camadas.json`); quadro causa por ticker × emenda 8 em `docs/b45/B45-diagnostico-2026-11-26.md`. Erro de dado E1
+  (frota no FCO fora do capex) corrigido no coletor, hall intacto; E2 (série anual sem reapresentação, 18 do hall) → PENDENTE #16.
+  Registro de tickers tocados do M1 criado. Novos B62–B66. Nenhuma palavra mudou.
 - **Pasta do Desktop** (26/11, c2f7b07): `ferramentas/desktop/atualizar.py` + `ATUALIZAR.bat` regeram `UPLOAD CLAUDE DESKTOP/` (21 cópias exatas + LEIA-ME, MAPA, O QUE MUDOU, instruções; MANIFESTO com sha256); `test_desktop_upload.py` (cópia/fonte × MANIFESTO, segredo); PDFs de 09/10 e versões de 21/10 em `_historico/2026-11-26 upload-desktop/`; linha no `mesa-fechar`. Suíte 1399.
 - **B60** (26/11, 7474afd): séries do dossiê CMIN3 e BLAU3 (pré-AUD-68) recoletadas (`b60/recoletar.py`); palavras iguais; centrais na data CMIN3 3,6317→3,5987 (provento sai da dívida bruta do WACC), BLAU3 8,1372→7,6457 (provento já ex na DL); catraca `test_b60_series_pos_aud68.py`; resíduo do hall → B61. `adversario`: sem dupla contagem. Suíte 1339.
 - **B57** (25/11, emenda 13 2c7c87a → f96cb7b, d955857): X2 do Z'' = (2.03.04 + 2.03.05) ÷ ativo, 2.03.05 ausente → erro explícito; séries do hall, dossiês e B36 recoletadas só com o campo novo; golden igual. B46 tentativa 8/24 → **NÃO CONCLUSIVA** (C3 15/24), hipótese encerrada. `adversario` 1 grave (ltm_2T26 do hall) corrigido; `senior` SEGUE COM AJUSTES; `oraculo` BLOQUEIA por processo (commit da emenda com a ficha de fontes) → Frank: #13 A (exceção pontual em `ordem.py`) e #14 (causa (a) fechada). Suíte 1333 verde.

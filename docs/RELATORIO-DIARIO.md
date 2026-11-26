@@ -1,6 +1,15 @@
 # RELATORIO-DIARIO
 *Uma entrada por dia/turno, a mais nova em cima: o que foi feito (com commit), decisões tomadas, o que ficou, erros. Máx. 10 linhas por entrada.*
 
+## 26/11/2026 — B45 só diagnóstico, causa (b) (sessão do Frank)
+- Fiz: registro append-only de tickers tocados (M1) com os 5; `python -m b45.diagnostico` reproduz os 5 números da B36 e abre
+  âncoras, ponte, margem, Kd e minoritários; quadro causa por ticker × emenda 8 em `docs/b45/B45-diagnostico-2026-11-26.md`.
+- Achado comum: com o g zerado DCF = EPV nas 5; o piso zero do DCF ponderado publica 0 como valor (central 0 de SMFT3/MOVI3);
+  ponte > EV em RAIL3/SMFT3/MOVI3; BEEF3 é uma lasca (ponte 0,99× EV): só a receita LTM leva o P/C de 6,69 a 0,52.
+- Erros de dado: E1 frota no FCO fora do capex (MOVI3: OE 8,65 falso) → corrigido no coletor, hall intacto; E2 série anual sem
+  reapresentação (EMBJ3 2019; 18 do hall) → PENDENTE #16. Novos: B62–B66. `desktop.atualizar` agora roda sempre no fecho/noite.
+- Precisa de você: responder #16; trocar os arquivos do Desktop (lista no fim do MANIFESTO).
+
 ## 26/11/2026 — B60 e pasta do Desktop (sessão do Frank)
 - Fiz: B60 — CMIN3 e BLAU3 do dossiê recoletadas pelo coletor de hoje (7474afd); varredura das 3 séries só achou essas duas;
   palavras iguais, centrais explicados (provento a pagar do ITR 2T26 entrou; `lucro_controlador` 0 → None muda só o OE de 2022–24).

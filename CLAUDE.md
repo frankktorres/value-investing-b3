@@ -68,7 +68,8 @@ reportlab/pytest; sem banco; dados brutos fora do git (`ferramentas/dados/`). Br
 - **Dia (Frank presente):** ele decide; a rotina não roda. Ao fim, `/fechar` (ou "vou parar" / "até amanhã") passa o pendente
   para `docs/MISSOES.md` e dá push.
 - **Noite (Frank ausente, nuvem):** `git pull --ff-only` → ler `MISSOES.md` e `PENDENTE-FRANK.md` (respostas novas viram
-  decisões) → executar a 1ª missão executável → testes → commit/push → entrada no `RELATORIO-DIARIO.md`. Travou em
+  decisões) → executar a 1ª missão executável → entrada no `RELATORIO-DIARIO.md` → `cd ferramentas && python -m
+  desktop.atualizar` (sempre, último passo de edição) → testes → commit/push. Travou em
   senha/dinheiro/apagar → registrar em `PENDENTE-FRANK.md` e passar à próxima missão.
 
 ## Regra permanente: PROJECT_BRIEF.md
