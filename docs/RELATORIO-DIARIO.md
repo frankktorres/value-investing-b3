@@ -1,6 +1,14 @@
 # RELATORIO-DIARIO
 *Uma entrada por dia/turno, a mais nova em cima: o que foi feito (com commit), decisões tomadas, o que ficou, erros. Máx. 10 linhas por entrada.*
 
+## 25/11/2026 — B57, X2 do Z'' de Altman (sessão do Frank)
+- Fiz: emenda 13 antes de mudar o motor (2c7c87a); X2 = reservas de lucros + lucros/prejuízos acumulados (Lei 6.404, CVM, Altman);
+  coletor + recoleta aditiva das séries (campos antigos idênticos); golden igual; motor no master (d955857).
+- B46 refeita (8/24): NÃO CONCLUSIVA de novo (C3 15/24) → hipótese encerrada; causa (a) fechada pelo Frank (#14).
+- Erros: commitei a ficha de fontes junto com a emenda (trava de ordem reprovou; exceção pontual aprovada pelo Frank, #13 A);
+  o `adversario` achou o `ltm_2T26` do hall sem a conta nova (quebrava HYPE3/LEVE3) — corrigido. Novos: B58, B59, B60 (P1).
+- Precisa de você: nada.
+
 ## 25/11/2026 — B46, Ke > 30% nas muito alavancadas (sessão do Frank)
 - Fiz: emenda 12 antes de rodar (5461a47): "separar a dificuldade" (Damodaran 2009, fonte aberta no primário) — D/E da indústria na
   continuidade + π de calote (rating da cobertura × Z'' de Altman). Medição em `ferramentas/b46/` sem tocar o motor (e8a039b).
