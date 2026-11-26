@@ -17,6 +17,10 @@ import re
 import subprocess
 
 CORTE = "b07482a"          # último commit antes da emenda 7 (24/11/2026)
+# Exceção pontual, decisão do Frank (docs/PENDENTE-FRANK.md #13, opção A, 25/11/2026): a emenda 13 (B57) foi commitada junto
+# com a ficha de fontes dela (sem código), antes do motor. Vale só para ESTE SHA completo com ESTE conjunto exato de arquivos
+# extras; com isso o commit conta como só de pré-registro e a emenda 13 fica registrada. Qualquer outro caso reprova.
+EXCECOES = {"2c7c87aa3ac40b15a4007439443a843c6292092c": frozenset({"docs/b57/FONTES-B57.md"})}
 PRE = re.compile(r"^docs/PRE-REGISTRO-[^/]+\.md$")
 ITEM = re.compile(r"^(\d+)\.\s", re.M)                       # item de 1º nível da lista do §7 = uma emenda
 _N = r"(\d{1,2})(?![\d/])"                                   # 1–2 dígitos, nunca parte de data (24/11, 2026)
@@ -84,8 +88,9 @@ def _sujos(raiz) -> set[str]:
     return out
 
 
-def verificar(raiz: pathlib.Path, corte: str = CORTE) -> dict:
+def verificar(raiz: pathlib.Path, corte: str = CORTE, excecoes: dict | None = None) -> dict:
     raiz = pathlib.Path(raiz)
+    excecoes = EXCECOES if excecoes is None else excecoes
     _git(raiz, "merge-base", "--is-ancestor", corte, "HEAD")          # corte fora do histórico → erro, nunca "ok"
     registradas = _emendas_no(raiz, corte)
     problemas, n = [], 0
@@ -94,7 +99,7 @@ def verificar(raiz: pathlib.Path, corte: str = CORTE) -> dict:
         arqs = _arquivos(raiz, c)
         pre = {a for a in arqs if PRE.match(a)}
         curto = c[:7]
-        if pre and arqs - pre:
+        if pre and arqs - pre and excecoes.get(c) != frozenset(arqs - pre):
             problemas.append(f"{curto} mistura pré-registro com {len(arqs - pre)} outro(s) arquivo(s) "
                              f"({', '.join(sorted(arqs - pre)[:3])}): emenda vai em commit próprio")
         elif pre:

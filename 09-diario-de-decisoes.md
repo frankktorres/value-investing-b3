@@ -1328,7 +1328,11 @@ estimativas do π. Relatório: `docs/b46/B46-2026-11-t8.md`.
 **Revisão:** `adversario` 1 grave reproduzido (o `ltm_2T26` do hall, lido pelo dossiê na data, ficou sem a 2.03.05 e
 quebrava HYPE3/LEVE3) — corrigido com a recoleta dos históricos; `senior` SEGUE COM AJUSTES (aplicados); **`oraculo`
 BLOQUEIA por processo**: o commit da emenda 13 (2c7c87a) levou junto o `FONTES-B57.md`, e o check `ordem` (emenda 7) não
-registra a emenda 13 — conteúdo aprovado (fonte, dado, PIT, camada 1). Aceitar o risco é do Frank (`PENDENTE-FRANK.md` #13);
-até lá a B57 fica no ramo `b57-x2-altman`, fora do `master`.
-**Decisão (proposta):** o conserto do X2 fica (vale pela fonte). Nada muda em doutrina, golden ou palavra.
+registra a emenda 13 — conteúdo aprovado (fonte, dado, PIT, camada 1). **Decisão do Frank (25/11, `PENDENTE-FRANK.md` #13, "ok #13 A"):** exceção pontual no check
+`ordem` só para 2c7c87a com `{docs/b57/FONTES-B57.md}` (canários: outro SHA ou outro conjunto reprova); com ela o `ordem`
+volta a passar e a B57 vai ao `master`.
+**Decisão:** o conserto do X2 fica (vale pela fonte). Nada muda em doutrina, golden ou palavra.
+**Decisão do Frank (25/11, #14, "ok #14"): causa (a) do DNA §4 fechada "como está, com motivo"** — B39 não disparou,
+B46 encerrada (7/24 e 8/24), B35 fora até o HOLD-OUT 2; o Ke > 30% sai NÃO CONCLUSIVO pela H2 (emenda 3) e é medido no M1
+("Ke > 30% ≤ 1"). Próximo: B60 (dado), diagnóstico da B45 (causa (b)), B41 (causa (c)) em paralelo.
 
