@@ -1,4 +1,4 @@
-Gerado em 2026-11-26 · repo 7474afd (fontes com mudança sem commit) · gerador ferramentas/desktop/atualizar.py
+Gerado em 2026-11-26 · repo c2f7b07 (fontes com mudança sem commit) · gerador ferramentas/desktop/atualizar.py
 Hash = sha256 com fim de linha normalizado para LF nos arquivos de texto. Este arquivo NÃO sobe para o Desktop.
 
 # arquivo	origem	data	sha256
@@ -17,11 +17,11 @@ Hash = sha256 com fim de linha normalizado para LF nos arquivos de texto. Este a
 08-prompt-recalculo-lote.md	08-prompt-recalculo-lote.md	2026-10-10	d98fb67d05052eeb7541ca0d5442c7ae8aad197fc3d51a8b461790e672027527
 BACKLOG.md	docs/BACKLOG.md	2026-11-26	4c235da3bf44d91cd1d5a69ca6fd37448eb1fc1241e1b68ca8b2e7a2e6a46278
 COLAR-NO-CAMPO-INSTRUCOES.txt	gerador	2026-11-26	432b098f1ba404179dafa9e95464276bfefd35667988be84809325709464c290
-DECISOES.md	docs/DECISOES.md	2026-11-26	607ce3b88b5de54463968cdf090d22493a5c902ab84230659fd74066e823689c
+DECISOES.md	docs/DECISOES.md	2026-11-26	f6692c89717cc3688d180ebf1e67f129da182eae34cd1b0636ad10d47c6a5834
 PACOTE-AUTONOMIA-2026-11-25.md	docs/research/2026-11-25-pacote-autonomia.md	2026-11-25	b3d59cc3c6754ccd5958be4a0f50efa951160407d72d9f87a81c3373445d84e1
-PENDENTE-FRANK.md	docs/PENDENTE-FRANK.md	2026-11-25	7dc6b803e8bba289cd6b01d1a5380771a51b2193a102614daae2b59d7fd8491e
+PENDENTE-FRANK.md	docs/PENDENTE-FRANK.md	2026-11-25	4e0c04c65c98559376091cd91b86e6bf4c680b85184698a2fd909ca27ed8034e
 PRE-REGISTRO-v3.md	docs/PRE-REGISTRO-v3.md	2026-11-25	3750dd733a458f4f6b226c9cbbd76b418ff04746708faabbd2955474c6fd6a91
-PROJECT_BRIEF.md	PROJECT_BRIEF.md	2026-11-26	b55df2b92497fb7d5bba01045a15563b3c06f3ca4a792c05521ca51edbeee45c
+PROJECT_BRIEF.md	PROJECT_BRIEF.md	2026-11-26	b89c5ad0c7bf6d901b73d367c7d2cc4069754371b82bb3a00b3df4fbe576919b
 PROMPT-AGENTE-NOTICIAS-SEXTA.md	PROMPT-AGENTE-NOTICIAS-SEXTA.md	2026-11-24	a8636e53e5f6069ce5138a9d257a9ae824bd5acfa3603e741f9a9b60fca130f3
 REL-B36-holdout-2026-11.md	docs/holdout/B36-2026-11.md	2026-11-25	37c0fbd044d8b1cbbfa2b2880658868257f95aabff5ef162ab55178b391161b6
 REL-B39-ke-implicito-2026-11.md	docs/b39/B39-2026-11.md	2026-11-25	7cb1380661fbe2f0fc17f753c41a79c609357f6fd351a0199d194ddcc48a78c0
@@ -30,8 +30,8 @@ REL-B46-tentativa-8-2026-11.md	docs/b46/B46-2026-11-t8.md	2026-11-25	c8b3f8b4ba6
 REL-B57-fontes-x2-altman.md	docs/b57/FONTES-B57.md	2026-11-25	d6670b33a661d3b89f02cbf6d17598489635ab466ceb085779731634cabaa3f4
 
 ## O que fazer no Desktop (contra a pasta do último commit, que é a carga anterior)
-SUBIR (novo): 00-DNA.md, 00-LEIA-ME.md, 00-O-QUE-MUDOU.md, 02-MAPA-DA-MESA.md, BACKLOG.md, DECISOES.md, PACOTE-AUTONOMIA-2026-11-25.md, PENDENTE-FRANK.md, PRE-REGISTRO-v3.md, PROJECT_BRIEF.md, REL-B36-holdout-2026-11.md, REL-B39-ke-implicito-2026-11.md, REL-B46-ke-acima-30-2026-11.md, REL-B46-tentativa-8-2026-11.md, REL-B57-fontes-x2-altman.md
-TROCAR (apagar o antigo de mesmo nome e subir): 01-doutrina-value-investing.md, 02-prompt-analise-completa.md, 03-hall-de-acoes.md, PROMPT-AGENTE-NOTICIAS-SEXTA.md
-APAGAR do Desktop (saiu; cópia em _historico/): Banco_Seguridade_rev_09-10-2026.pdf, Energia_Saneamento_rev_09-10-2026.pdf, Infra_Agro_rev_09-10-2026.pdf, Petroleo_Gas_rev_09-10-2026.pdf, Quimica_Metalurgia_rev_09-10-2026.pdf, README.md, Saude_Telecom_Bluechips_rev_09-10-2026.pdf
-INSTRUÇÕES: colar de novo o COLAR-NO-CAMPO-INSTRUCOES.txt
+SUBIR (novo): nada
+TROCAR (apagar o antigo de mesmo nome e subir): DECISOES.md, PENDENTE-FRANK.md, PROJECT_BRIEF.md
+APAGAR do Desktop (saiu; cópia em _historico/): nada
+INSTRUÇÕES: sem mudança
 Trava de segredo: OK (0 achados)

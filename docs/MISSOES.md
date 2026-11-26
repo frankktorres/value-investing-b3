@@ -3,6 +3,12 @@
 
 ## Próximas (ordem de prioridade)
 
+**B61 — `ltm_2T26` do hall com ações do DFP (pré-AUD-68): recoletar o container ou estender a catraca da B60.** *(26/11/2026)*
+KEPL3, ISAE4, EGIE3, HYPE3 com `ltm_2T26/acoes` ≠ ITR (BACKLOG B61). Dormente hoje (`ltm.py` lê `ltm` antes; só `na_data` lê o
+`ltm_2T26`), mas tem de fechar antes da Prova 2 do M1. Recoleta pelo modelo de `ferramentas/b60/recoletar.py` (só `acoes` e
+`lucro_controlador` podem mudar); golden igual. *Pronto quando:* teste comparando `acoes` entre os `ltm*` de cada ticker nas 3
+séries verde, suíte verde, golden "sem mudanças". Rede da CVM pode faltar na nuvem → máquina do Frank. Sonnet low.
+
 **B33 — EGIE3: explicar os ~R$ 2 bi que faltam no PL do 3T26, antes de reavaliar a palavra.** *(23/11/2026)*
 O PL do controlador subiu R$ 6,30 bi de 30/06 a 30/09/2026; oferta de jul/26 (R$ 8,36 bi) − dividendo de ago/26 (R$ 770,8 mi, B3) daria R$ 7,59 bi. Conferir no RI do 3T26 (release e ITR) e na DMPL do ITR 3T26 (CVM, nota A) o custo da oferta (gastos com emissão de ações, líquidos de IR) e o dividendo efetivamente pago/declarado no trimestre, e o resultado do 3T26 que entra no PL. Fato com fonte → `ferramentas/dados/eventos_societarios.json` (nunca número no código). Não mudar a palavra: a EGIE3 fica NÃO CONCLUSIVO (trava do §9, decisão do Frank de 23/11) até o Frank ver a conta. *Pronto quando:* a diferença está explicada linha a linha com fonte A/B em `docs/` (ou o resíduo declarado), e a reavaliação proposta está em `PENDENTE-FRANK.md`.
 

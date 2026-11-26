@@ -6,6 +6,7 @@
 | # | Pergunta | Opções / recomendação | Backlog | Desde |
 |---|---|---|---|---|
 | 4 | Orçamento mensal; SaaS só seu ou de terceiros; objetivo acadêmico; agente de sexta ainda roda?; fonte paga; licença do código | Ver Brief §11 | B07 | 10/10 |
+| 15 | **Texto do DNA §3/§4 com a causa (a) fechada** (#14 já decidido; o arquivo ainda diz "B39 … já pré-registrada"). Mudar o DNA é seu. | **Recomendo aprovar** este diff: na tabela do §4, linha (a) → acrescentar "**FECHADA 25/11 (#14): como está, com motivo** — Ke > 30% sai NÃO CONCLUSIVO pela H2 e é medido no M1; B39 não disparou, B46 NÃO CONCLUSIVA, B35 até o HOLD-OUT 2"; no §3, "Onde estamos" ganha a linha "causa aberta: (b) domínio por método". Só texto; nenhuma regra muda. Responder "ok #15" | — | 26/11 (`senior`) |
 
 ## Só do Frank (a rotina nunca faz)
 - Executar qualquer compra ou venda (inclui a posição em ITSA4, acima da saída).
