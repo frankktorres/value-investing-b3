@@ -1,4 +1,4 @@
-Gerado em 2026-11-26 · repo 700f17b (fontes com mudança sem commit) · gerador ferramentas/desktop/atualizar.py
+Gerado em 2026-11-26 · repo 6a5dd8a (fontes com mudança sem commit) · gerador ferramentas/desktop/atualizar.py
 Hash = sha256 com fim de linha normalizado para LF nos arquivos de texto. Este arquivo NÃO sobe para o Desktop.
 
 # arquivo	origem	data	sha256
@@ -15,11 +15,11 @@ Hash = sha256 com fim de linha normalizado para LF nos arquivos de texto. Este a
 06-triagem-e-fila.md	06-triagem-e-fila.md	2026-10-08	3f86085ae5868cfad331601db193948a78f8ef5832b8387231ce67efa63678fb
 07-perfil-do-investidor.md	07-perfil-do-investidor.md	2026-10-05	629929e62c071e5327ab04aac06d1225d9fdf1b6a833002ce17e7c5802de2ed0
 08-prompt-recalculo-lote.md	08-prompt-recalculo-lote.md	2026-10-10	d98fb67d05052eeb7541ca0d5442c7ae8aad197fc3d51a8b461790e672027527
-BACKLOG.md	docs/BACKLOG.md	2026-11-26	e526aa5eb829974108c7e92b7e21c8f06c9c7717b5b7d16d19a9c4db9fd27b9d
+BACKLOG.md	docs/BACKLOG.md	2026-11-26	99e0bc4ef75ea9464d26e1a12182391de3c036a781c4f1ab50b44b08ab3b1a6b
 COLAR-NO-CAMPO-INSTRUCOES.txt	gerador	2026-11-26	432b098f1ba404179dafa9e95464276bfefd35667988be84809325709464c290
-DECISOES.md	docs/DECISOES.md	2026-11-26	732d4eb3fdca306effe817fed2cec49e91ea0c946285e280b844616d8c3628e8
+DECISOES.md	docs/DECISOES.md	2026-11-26	28a7666f6cc7ff1d824a51c6323a843cdb768c5c59f96afb6f0a45cf78f1d29d
 PACOTE-AUTONOMIA-2026-11-25.md	docs/research/2026-11-25-pacote-autonomia.md	2026-11-25	b3d59cc3c6754ccd5958be4a0f50efa951160407d72d9f87a81c3373445d84e1
-PENDENTE-FRANK.md	docs/PENDENTE-FRANK.md	2026-11-26	17b782d514d71f1b8e777aa2929727042e7b96cce932dffe8b8e7b87e8ecabd0
+PENDENTE-FRANK.md	docs/PENDENTE-FRANK.md	2026-11-26	b84e6d4b64f7aaaaddf00b2bb5de6041f045b57565769a0aea082ea350448f66
 PRE-REGISTRO-v3.md	docs/PRE-REGISTRO-v3.md	2026-11-25	3750dd733a458f4f6b226c9cbbd76b418ff04746708faabbd2955474c6fd6a91
 PROJECT_BRIEF.md	PROJECT_BRIEF.md	2026-11-26	145cd29f2a4163ae9d52c251eb97b7f0b05dba7d008dd57925451b86e1b6e843
 PROMPT-AGENTE-NOTICIAS-SEXTA.md	PROMPT-AGENTE-NOTICIAS-SEXTA.md	2026-11-24	a8636e53e5f6069ce5138a9d257a9ae824bd5acfa3603e741f9a9b60fca130f3
@@ -31,7 +31,7 @@ REL-B57-fontes-x2-altman.md	docs/b57/FONTES-B57.md	2026-11-25	d6670b33a661d3b89f
 
 ## O que fazer no Desktop (contra a pasta do último commit, que é a carga anterior)
 SUBIR (novo): nada
-TROCAR (apagar o antigo de mesmo nome e subir): BACKLOG.md, DECISOES.md, PENDENTE-FRANK.md, PROJECT_BRIEF.md
+TROCAR (apagar o antigo de mesmo nome e subir): BACKLOG.md, DECISOES.md, PENDENTE-FRANK.md
 APAGAR do Desktop (saiu; cópia em _historico/): nada
 INSTRUÇÕES: sem mudança
 Trava de segredo: OK (0 achados)

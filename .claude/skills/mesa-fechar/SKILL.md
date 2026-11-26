@@ -11,7 +11,12 @@ description: Fecha o turno da Mesa de Value Investing — passa o pendente para 
    - mova missões concluídas para "Feitas" (com hash do commit);
    - o que ficou pela metade vai para "Em andamento" com: onde parou, próximo passo concreto, "pronto quando";
    - ideias novas entram em `docs/BACKLOG.md` (com tipo executável / decisão Frank / local e a causa ou marco do DNA);
-   - reescreva "Passagem de turno" com data de hoje e 2–4 linhas.
+   - reescreva "Passagem de turno" com data de hoje e 2–4 linhas;
+   - **carimbe para a noite (desde 26/11/2026)** 0–4 missões seguras (só doc/teste/coleta que NÃO mudam palavra e NÃO
+     tocam o que o `docs/ops/rotina/PROTOCOLO.md` §2 proíbe; sem dado local), com a última linha
+     `*Carimbo (nuvem):* <ID> · escopo: <caminhos literais entre crases, sem glob> · fonte: <domínio|nenhuma> · pronta: <sha7 do master>`.
+     Só a sessão do dia carimba; missão sem carimbo é local. Antes do commit, rode
+     `python ferramentas/rotina/checar_rotina.py --base origin/master` (mostra quais missões o portão enxerga).
 3. **Quem decide** (`CLAUDE.md`): decisão reversível tomada → `docs/DECISOES.md` (opção, motivo, como reverter); o que
    é do Frank (palavra, dinheiro, histórico, DNA, liberar trava, senha) → `docs/PENDENTE-FRANK.md` com recomendação.
 4. **Próximo passo decidido pelo DNA (não pergunte ao Frank "o que fazer agora"):**
@@ -31,6 +36,10 @@ description: Fecha o turno da Mesa de Value Investing — passa o pendente para 
    `cd ferramentas && python -m desktop.atualizar` em TODO fecho (quase todo fecho mexe em DECISOES/BACKLOG/brief, que estão
    no `UPLOAD CLAUDE DESKTOP/MANIFESTO.txt`; sem nada mudado ele não troca nada) e avisar o Frank quais arquivos trocar no
    Desktop (a lista sai no fim do MANIFESTO). Sem isso o `test_desktop_upload.py` reprova.
+6b. **Rotina da nuvem × repo:** `RemoteTrigger get` em `trig_016wrGPsNHp4dUaVAExNhZyU`; salve o texto do prompt num arquivo
+   do scratchpad e rode `cd ferramentas && python -m rotina.nuvem conferir <arquivo> --next-run <next_run_at> --enabled <enabled>`.
+   Diferente → `RemoteTrigger update` com o bloco de `python -m rotina.nuvem bloco` e confira de novo. Diga ao Frank
+   `Rotina: enabled=… · próxima …` (o `tests/test_rotina.py` reprova se o BOOTSTRAP mudou sem essa conferência).
 7. **Varredura (antes do commit):** nenhum arquivo a commitar é `.env*`/chave/token nem traz quantidade, preço médio,
    valor ou corretora da carteira. Se tiver, pare e avise.
 8. **Testes + push:** com TODAS as edições acima já feitas, rode a suíte inteira

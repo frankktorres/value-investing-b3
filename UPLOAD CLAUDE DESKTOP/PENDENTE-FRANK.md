@@ -5,6 +5,8 @@
 ## Abertas
 | # | Pergunta | Opções / recomendação | Backlog | Desde |
 |---|---|---|---|---|
+| 18 | **Liberar a rede da nuvem para B3 e CVM** (ambiente `env_014gwoENsQxHwMi1CTpyaWzz` da rotina "VALUE B3 – noturno", em claude.ai → rotina → ambiente → rede). Em 22/10 `b3.com.br` e `conteudo.cvm.gov.br`/`gov.br` davam 403/ENOTFOUND; o pré-voo mede toda noite (`/tmp/mesa_prevoo_rede.json`) | **Recomendo liberar** `dados.cvm.gov.br`, `conteudo.cvm.gov.br`, `sistemaswebb3-listados.b3.com.br`, `www.b3.com.br`, `www.gov.br`: sem eles a noite só faz doc (fase 1 já é só doc, então não trava hoje). Só você mexe nisso | B11, N11 | 26/11 |
+| 17 | **Subir o piso da trava B37 de 1279 para 1399** (`.githooks/piso_testes.json`; a suíte do master já tem 1399 desde 700f17b, e hoje passa disso com os testes da rotina) | **Recomendo sim:** piso abaixo da contagem real deixa apagar ~120 testes sem a trava perceber. É trava sua (`MESA_LIBERA_CONFIG=1`): edite o número e rode a suíte | — | 26/11 |
 | 16 | **Série anual: usar a DFP reapresentada?** (B45, achado E2) A série anual pega cada exercício da DFP original; quando a empresa reapresenta (operação descontinuada, erro, mudança de política), o motor usa o número velho. Afeta 18 do hall/dossiês (receita ou EBIT > 0,5%) → **muda golden** | **Recomendo sim, com regra:** usar o comparativo da DFP seguinte (como o AUD-21 já faz no LTM), exceto quando a diferença vier de operação descontinuada que depois foi desfeita (EMBJ3 2018) — a regra e a lista dos 18 vão a um pré-registro antes de regravar o golden. Responda "ok #16" ou "não #16" | B62 | 26/11 |
 | 4 | Orçamento mensal; SaaS só seu ou de terceiros; objetivo acadêmico; agente de sexta ainda roda?; fonte paga; licença do código | Ver Brief §11 | B07 | 10/10 |
 

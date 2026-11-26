@@ -1,16 +1,50 @@
 # MISSOES
-*Fila de trabalho da rotina autônoma. Cada missão: executável só com o GitHub, com "pronto quando" verificável. Ao terminar, mover para "Feitas" e registrar em `RELATORIO-DIARIO.md`. Fonte: `BACKLOG.md` (tipo executável). Desde 22/10 a rotina grava no ramo `claude/*` dela; o `ferramentas/conferir_noite.py` junta no master de manhã, com os dados locais (`DECISOES.md`, 22/10).*
+*Fila de trabalho. Cada missão tem "pronto quando" verificável; ao terminar, mover para "Feitas" e registrar em `RELATORIO-DIARIO.md`. Fonte: `BACKLOG.md`. A rotina da nuvem segue `docs/ops/rotina/PROTOCOLO.md` (só missão carimbada), grava no ramo `claude/*` dela, e o `ferramentas/conferir_noite.py` junta no master de manhã, com os dados locais e o portão da base.*
 
 ## Próximas (ordem de prioridade)
+
+*Desde 26/11/2026 a noite segue `docs/ops/rotina/PROTOCOLO.md`: só faz missão com a linha `*Carimbo (nuvem):*` (escopo só com
+caminho literal, `fonte:` e `pronta:` = commit do master em que a sessão do dia carimbou), no máximo 4 por noite, e nunca
+escreve carimbo. Missão sem carimbo é da sessão do dia (local). O `/mesa-fechar` carimba.*
+
+**B67 — Inventário dos ramos de outubro não juntados (só doc).** *(26/11/2026)*
+Os ramos `arquivo/2026-10-keen-babbage-bvjh9h` (contém o `-vf5kor`) e `arquivo/2026-10-fase3-bugs` têm os commits das noites
+de 23–24/10 que não estão no master (base 595388f de 22/10; a junção de 23/11 deu VERMELHO, 13 falhas). Para cada commit
+(`git log --reverse --oneline origin/master..origin/arquivo/2026-10-keen-babbage-bvjh9h` e o mesmo para o `-fase3-bugs`): o que
+fez, se o master já tem o equivalente (citar commit ou arquivo:linha do master) e a classe **portar** (dizendo o que precisa:
+local, golden, oráculo) / **superado** / **conflita** (com quê). Pontos já conhecidos: O3 superado (H10 em 4bb5f34, A1 pelo
+H2/B34); O4/O4b mediram o motor antes da B34/B57 (arquivo:linha dos sobreviventes não vale mais); O5 em parte coberto pela
+B51; N13 deu ERROR no Windows na junção; B16 é missão própria. O conflito de numeração (o ramo cria PENDENTE #11/#12 e usa
+"6/24"; no master #11/#12 são outros e o orçamento está em 8/24) só é descrito: não renumerar nem editar o `PENDENTE-FRANK.md`.
+Nenhum código é portado nesta missão.
+*Pronto quando:* `docs/INVENTARIO-RAMOS-2026-10.md` com uma linha por commit (sha curto, missão, classe, prova) e a contagem
+por classe; a linha B67 do `BACKLOG.md` aponta para ele; portão OK.
+*Carimbo (nuvem):* B67 · escopo: `docs/INVENTARIO-RAMOS-2026-10.md` · fonte: nenhuma · pronta: 6a5dd8a
+
+**B16 — Enquadramento CVM (Res. 19 e 20/2021) se houver SaaS: trazer o doc do ramo arquivado (só doc).** *(26/11/2026)*
+O texto foi escrito na noite de 23/10 com a leitura das resoluções consolidadas (fonte A) e ficou só no ramo:
+`git show origin/arquivo/2026-10-keen-babbage-bvjh9h:docs/ENQUADRAMENTO-CVM-B16.md`. Trazer o arquivo e reconferir contra o
+master de hoje toda citação interna (caminho, arquivo:linha, frase da meta; o 94e196c trocou a citação para `carteira.py`);
+citação que não confere → corrigir ou marcar "não confere em <commit>". Não buscar a fonte de novo pela rede (gov.br estava
+bloqueado em 22/10); se faltar algo da fonte, `[!] sem acesso`.
+*Pronto quando:* `docs/ENQUADRAMENTO-CVM-B16.md` no ramo com a lista das citações internas conferidas no fim, e a linha B16 do
+`BACKLOG.md` atualizada; portão OK.
+*Carimbo (nuvem):* B16 · escopo: `docs/ENQUADRAMENTO-CVM-B16.md` · fonte: nenhuma · pronta: 6a5dd8a
+
+*Fila de 23/10 (O3 → N12 → O4 → O5), conferida no código em 26/11: O3 superada (ver Feitas); N12, O4, O5, e também N13 e B16,
+foram feitas só no ramo hoje arquivado e nunca juntadas → o inventário B67 diz o que portar. Texto antigo das missões:
+`_historico/2026-11-26 rotina-nuvem/MISSOES.md`.*
+
+### Da sessão do dia (local, sem carimbo)
 
 **B61 — `ltm_2T26` do hall com ações do DFP (pré-AUD-68): recoletar o container ou estender a catraca da B60.** *(26/11/2026)*
 KEPL3, ISAE4, EGIE3, HYPE3 com `ltm_2T26/acoes` ≠ ITR (BACKLOG B61). Dormente hoje (`ltm.py` lê `ltm` antes; só `na_data` lê o
 `ltm_2T26`), mas tem de fechar antes da Prova 2 do M1. Recoleta pelo modelo de `ferramentas/b60/recoletar.py` (só `acoes` e
 `lucro_controlador` podem mudar); golden igual. *Pronto quando:* teste comparando `acoes` entre os `ltm*` de cada ticker nas 3
-séries verde, suíte verde, golden "sem mudanças". Rede da CVM pode faltar na nuvem → máquina do Frank. Sonnet low.
+séries verde, suíte verde, golden "sem mudanças". Rede da CVM e golden → máquina do Frank. Sonnet low.
 
 **B33 — EGIE3: explicar os ~R$ 2 bi que faltam no PL do 3T26, antes de reavaliar a palavra.** *(23/11/2026)*
-O PL do controlador subiu R$ 6,30 bi de 30/06 a 30/09/2026; oferta de jul/26 (R$ 8,36 bi) − dividendo de ago/26 (R$ 770,8 mi, B3) daria R$ 7,59 bi. Conferir no RI do 3T26 (release e ITR) e na DMPL do ITR 3T26 (CVM, nota A) o custo da oferta (gastos com emissão de ações, líquidos de IR) e o dividendo efetivamente pago/declarado no trimestre, e o resultado do 3T26 que entra no PL. Fato com fonte → `ferramentas/dados/eventos_societarios.json` (nunca número no código). Não mudar a palavra: a EGIE3 fica NÃO CONCLUSIVO (trava do §9, decisão do Frank de 23/11) até o Frank ver a conta. *Pronto quando:* a diferença está explicada linha a linha com fonte A/B em `docs/` (ou o resíduo declarado), e a reavaliação proposta está em `PENDENTE-FRANK.md`.
+O PL do controlador subiu R$ 6,30 bi de 30/06 a 30/09/2026; oferta de jul/26 (R$ 8,36 bi) − dividendo de ago/26 (R$ 770,8 mi, B3) daria R$ 7,59 bi. Conferir no RI do 3T26 (release e ITR) e na DMPL do ITR 3T26 (CVM, nota A) o custo da oferta (gastos com emissão de ações, líquidos de IR) e o dividendo efetivamente pago/declarado no trimestre, e o resultado do 3T26 que entra no PL. Fato com fonte → `ferramentas/dados/eventos_societarios.json` (nunca número no código). Não mudar a palavra: a EGIE3 fica NÃO CONCLUSIVO (trava do §9, decisão do Frank de 23/11) até o Frank ver a conta. *Pronto quando:* a diferença está explicada linha a linha com fonte A/B em `docs/` (ou o resíduo declarado), e a reavaliação proposta está em `PENDENTE-FRANK.md`. Local: precisa do RI/CVM pela rede e grava em `ferramentas/dados/`.
 
 **B32 — Zerar a catraca de anos fixos nos lotes (prazo 31/01/2027, antes do DFP 2026).** *(23/11/2026)*
 Datas de mês/dia/trimestre nos lotes já estão zeradas (tolerância zero em `tests/test_lotes_sem_data_fixa.py`). Restam os anos:
@@ -19,182 +53,22 @@ Datas de mês/dia/trimestre nos lotes já estão zeradas (tolerância zero em `t
 de janela com quebra estrutural (ex. PETR4 2019, RECV3 2020) é fato: vai para dado com `janela_razao`, não para o código.
 Junto, antes do DFP 2026: ler o balanço pelo DFP quando o LTM for 4T (`ltm.zip_itr("4T26")` falha alto hoje — ações e
 holding dos lotes 4 e 6 e ITSA4). Uma fatia por lote; golden idêntico em cada uma (refatoração pura). *Pronto quando:* `tests/datas_fixas_catraca.json` com 0 em
-todos os lotes, suíte verde com `EXIGIR_DADOS=1` e `python rodar_tudo.py` "sem mudanças".
-*Fila da madrugada de 23/10 (montada em 22/10 fim do dia): **O3 → N12 → O4 → O5**. O3 em ramo próprio (muda palavra); as
-outras no ramo da sessão. Fio condutor: `docs/PROMPT-ORACULO-E-CALIBRACAO.md` (ler "Princípios invioláveis" e as Fases 3–4
-antes de começar). Fases 0–2 feitas (9fd7159, 9e9e8ac); relatórios de 22/10 em `docs/oraculo/`.*
+todos os lotes, suíte verde com `EXIGIR_DADOS=1` e `python rodar_tudo.py` "sem mudanças". Local (ZIPs, golden).
 
-**O3 — Oráculo Fase 3: corrigir os bugs H10 e A1 (muda palavra → ramo próprio; o ok final é do Frank de manhã).**
-*Ler antes:* `docs/PROMPT-ORACULO-E-CALIBRACAO.md` §Fase 3; `docs/PRE-REGISTRO-v3.md` (emenda 2 e linhas 1–12 do §6);
-`docs/oraculo/hipoteses-2026-10-22.md` (linha H10); os dois xfail estritos em `ferramentas/tests/test_oraculo_propriedades.py`
-(`test_h10_dado_critico_ausente_nunca_da_palavra_de_decisao` e `test_desconto_do_controlador_so_no_valor_industrial`).
-*Ramo:* `git fetch origin && git switch -c claude/fase3-bugs origin/master`. Ramo separado porque o `conferir_noite.py` confere
-cada `claude/*` sozinho: este vai ficar vermelho no golden de manhã (esperado) e não pode segurar N12/O4. Se o push desse
-ramo for recusado, faça O3 **por último**, no ramo da sessão, e diga isso no `PENDENTE-FRANK.md`.
-- (a) **H10 — zero silencioso.** Sem caixa, dívida, PL, D&A ou imobilizado (campo ausente em todos os períodos) o motor
-  publica palavra de decisão. Pontos citados no xfail: `motor_nao_financeiras.py:176-177, 214, 250, 273-277, 287, 297` e
-  `montar_series.py:48`. Correção: campo crítico ausente → **NÃO CONCLUSIVO** com razão `"dado crítico ausente: <campo>"`;
-  nunca 0 no lugar de ausente. Dado presente e igual a 0 continua valendo (não confundir ausente com zero).
-- (b) **A1 — desconto do controlador volta no Ke.** Doutrina §5 (`01`, l.105; matriz D5.09): o desconto entra **uma vez, no
-  valor**. Hoje, nos industriais, ele entra no E do ponto fixo do WACC (`estrutura_de_capital`) e volta como Ke maior (Hamada)
-  e nota de qualidade diferente; atinge a PETR4. Correção: o ponto fixo usa o valor **antes** do desconto; Ke, g e notas
-  ficam iguais com e sem desconto (é o que o teste exige).
-- (c) Conferir se seguem abertos (lista da Fase 3 no prompt): LEVE3 com palavra velha no `hall.json`; trava de coerência só
-  em JUSTA; payout × g terminal no DDM. Aberto e inequívoco contra o `01` → mesmo tratamento. Exige escolha de doutrina →
-  não mexer; vira pergunta no `PENDENTE-FRANK.md` com opções e recomendação.
-- Para cada bug: teste que falha antes e passa depois; tirar a marca xfail **no mesmo commit** (é strict: XPASS reprova);
-  fechar a lacuna correspondente em `ferramentas/oraculo/matriz.py` (D5.09 e as da H10).
-- **Proibido nesta missão:** regravar o golden (`rodar_tudo.py` precisa dos ZIPs locais, a nuvem não tem), mexer no `01`,
-  mexer em premissa digitada.
-- **Palavras que mudam:** a nuvem não mede. No `09`, escrever "a medir de manhã" + os tickers prováveis: (b) os industriais
-  com `desconto_controlador` ≠ zero nas fichas (listar); (a) os tickers reais com algum desses campos ausente (listar pelo que
-  estiver em git; se nenhum, dizer "nenhum esperado").
-- **Parecer:** agente `oraculo` (`.claude/agents/oraculo.md`) recebendo **só caminhos**: o diff, `docs/PRE-REGISTRO-v3.md`, o
-  `01` e a saída do `cd ferramentas && python -m oraculo` (se rodar na nuvem; se pular por falta de dado, dizer). Veredito
-  (APROVA/RESSALVA/BLOQUEIA) vai para o `09`. BLOQUEIA → corrigir e repedir; não dar push de BLOQUEIA sem explicação.
-*Pronto quando:* os dois testes (sem xfail) passam; suíte da nuvem verde; `git diff --stat origin/master -- ferramentas/tests/golden.json 01-doutrina-value-investing.md` vazio;
-entrada no `09` com parecer; linha nova no `PENDENTE-FRANK.md`: *"#11 — Fase 3 (H10, A1) pronta no ramo `claude/fase3-bugs`. De
-manhã: `cd ferramentas && python -m pytest --ignore=backtest -q` (golden vai acusar as palavras), `python rodar_tudo.py
---motivo "Fase 3: H10 e A1"`, ler o que mudou e dar ok para juntar."* Commit + push do ramo; depois `git switch` de volta
-ao ramo da sessão antes da próxima missão.
-
-**N12 — Data de cada fonte de verdade no produto (ressalva do revisor da noite de 22/10; N3 ficou parcial).** O contrato da tela
-já tem `fontes[].data` (de `Origem.data`, `relatorio/modelo.py`), mas só os registros de `insumos_a` passam `data=`: no contrato
-exportado em 22/10 manhã, **27 de 466 fontes** têm data (19 COTAHIST e poucas mais); `relatorio/procedencia.py` e quem mais
-construir `Origem(` não passam nada (Tesouro, StatusInvest, B3 proventos, CVM DFP/ITR, Damodaran sem data). Preencher a
-data só onde ela está declarada num arquivo do repo, sem chute: COTAHIST = `precos_hall.PRECO_DATA`; proventos da B3 =
-`baixado_em` de `dados/proventos_hall/<TK>.json`; CVM DFP/ITR = a referência do LTM (`ltm_ref` do `cvm_series.json`);
-FRE = o ano do formulário. Origem sem data declarada continua `None`.
-*Pronto quando:* teste com fixture mostra `data` preenchida para COTAHIST, proventos e CVM, e `None` para origem sem data;
-`grep -rn "Origem(" ferramentas --include=*.py | grep -v tests` lista onde a data entrou; nenhuma palavra, central ou golden
-mudou (`git diff --stat ferramentas/tests/golden.json` vazio); linha no `09`.
-
-**O4 — Oráculo Fase 4 (parte 1): nota de mutação dos dois motores (só relatório; nenhuma palavra muda).** A nuvem é Linux,
-onde o mutmut 3 roda (no Windows não roda: prompt §Fase 4). Conferir a API/config atual do mutmut no Context7 antes de
-configurar. Alvo: `ferramentas/motor_nao_financeiras.py` e `ferramentas/motor_financeiras.py`; testes = suíte sem `backtest/`.
-Fixar a versão exata em `requirements-dev.txt` (criar se não existir; não pôr no `requirements.txt` da tela) e a pasta
-`mutants/` no `.gitignore`. Orçamento: se passar de ~90 min, parar e relatar o parcial (quantos mutantes rodaram).
-*Pronto quando:* `docs/oraculo/mutacao-2026-10-23.md` com nota de mutação por motor, sobreviventes agrupados por função e os
-20 mais importantes (os que mexem em Ke, g, central ou palavra) com arquivo:linha; nada de código de motor alterado;
-linha em `DECISOES.md` ("mutmut na nuvem Linux; cosmic-ray descartado" ou o contrário, com motivo) e uma linha na §12 do
-`PROJECT_BRIEF.md` (ferramenta adotada; guardar a versão anterior em `_historico/AAAA-MM-DD brief/`).
-
-**O5 — Oráculo Fase 4 (parte 2): motor-sombra FCFF/FCFE e DDM (só relatório).** Antes de começar, conferir se os insumos dos
-tickers carregam na nuvem (`cd ferramentas && python -c "from oraculo import sanidade as S; print(len(S.empresas()))"` ou o equivalente
-usado em `tests/test_oraculo_propriedades.py`). Se não carregarem sem os ZIPs, **não fazer**: registrar "O5 precisa da
-máquina local" no relatório e parar. Se carregarem: implementação mínima e independente em `ferramentas/oraculo/sombra.py`
-(sem importar os motores; estilo Damodaran), mesma entrada, e comparar o central. Tolerância pré-registrada **antes** de
-rodar, como linha nova no §6 do `PRE-REGISTRO-v3.md` (teste, não conta no orçamento de 24).
-*Pronto quando:* `docs/oraculo/sombra-2026-10-23.md` com a divergência por ticker e a explicação de cada uma acima da
-tolerância; teste mínimo da sombra num caso de livro (fixture); nenhuma palavra, central ou golden mudou.
-
-*Fila da madrugada de 22/10 (N7 → N1 → N2 → N9 → N10 → N8 → N11 → N3 → N4 → N5): toda feita; N11 e N3 parciais.*
-
-**(FEITA 22/10) N1 — Higiene de docs (check-up 21/10).** Corrigir só texto:
-- (a) `README.md`: doutrina v2.6 (linhas 2, 9, 50); 8 dossiês (+ALLD3, FESA4, SHUL4, VLID3, linhas 23 e 50); tela v0.2 com Hall/Empresa/Carteira/Monitor (linha 25).
-- (b) `PROJECT_BRIEF.md`: §3 fonte Space Grotesk (linha 18); nº de testes atual (linha 37); tela v0.2 (linha 68); fatias 2b e 3 feitas (linha 71); "23 `SEM_RAZAO`" (linha 131). Guardar antes em `_historico/2026-10-21 brief/`.
-- (c) `docs/BACKLOG.md`: B04 respondido; B08 feito; linhas B24–B31 para dentro da tabela; recontar o total; "HANDOFF existe em `docs/design/handoff-claude-code/handoff/`"; B15 com 2b e 3 feitas; incluir a tela v0.2 e os itens N1–N5 e D1–D5 deste check-up.
-- (d) `03-hall-de-acoes.md`: cabeçalho v2.6; tirar "Candidata a sair: KLBN11" (já NC); a contagem 33/3/5 do `09` é das 41 (36 do hall + 5 fora) — escrever as duas na mesma linha.
-- (e) `docs/RELATORIO-DIARIO.md`: mais nova em cima (a entrada da sessão do Frank de 14/10 está no fim).
-- (f) `docs/design/handoff-claude-code/PROMPT.md:10`: caminho das capturas = `docs/design/handoff-claude-code/handoff/referencia/capturas/`.
-
-*Pronto quando:* `grep -rn "v2\.5" README.md 03-hall-de-acoes.md` só acha histórico; contagem do BACKLOG = nº de IDs; `pytest --ignore=backtest -q` verde (nada de código mudou).
-
-**(FEITA 22/10) N2 — Testes das regras sem cobertura (check-up 21/10).** Só testes novos, com fixture; código de motor intocado. Cobrir:
-- desconto de controlador por cenários (`motor_nao_financeiras.py:827-831`: soma prob × perda, só âncora positiva);
-- escala da nota de Preço (`motor_financeiras.py:178-192`, cada degrau);
-- saída a 1,50× nunca em financeira (§9);
-- DCF reverso `g_implicito` (`motor_nao_financeiras.py:853`: ida e volta preço → g → preço).
-
-*Pronto quando:* testes verdes; golden intacto (`git diff --stat ferramentas/tests/golden.json` vazio); uma linha no `09`. Teste que acha defeito → não corrigir motor; registrar em `PENDENTE-FRANK.md`.
-
-**(FEITA 22/10) N3 — Contrato liga o que o motor já calcula (fatia "sem fonte", parte 1).** Em `painel/contrato.py`:
-- setor a partir de `backtest/motor/perfil.py` (o mesmo de `triagem/avaliar.py:21`);
-- dividendo × JCP por mês no calendário (de `relatorio/carteira.py:139-142`);
-- data de cada fonte a partir de `insumos_a.origem`;
-- faixa baixo/alto do DCF a partir dos cenários pessimista/otimista (`motor_nao_financeiras.py:740`).
-
-Os outros métodos seguem `null`. Probabilidade e impacto de risco ficam `null` (nenhum motor calcula; não inventar). Atualizar `docs/DECISOES.md` (linha de 20/10, conflito C).
-
-*Pronto quando:* `painel/tests/test_contrato.py` cobre os 4 campos com fixture; `test_web_estatico.py` verde (sem cálculo no front).
-
-**(FEITA 22/10) N4 — Tela Sistema** (`docs/design/handoff-claude-code/handoff/HANDOFF.md:52-53`, captura `06-sistema`). Contrato `web/dados/contrato/sistema.json` com:
-- idade de cada dado (COTAHIST, CVM, proventos B3, monitor, temporada);
-- último boletim do monitor e da temporada;
-- data e motivo do golden;
-- nº de testes da última suíte, se houver registro.
-
-Front lê só o contrato. Tira o "Sistema em breve" do `index.html:27`.
-
-*Pronto quando:* `test_contrato` e `test_web_estatico` verdes. Conferência visual fica para o Frank (dia).
-
-**(FEITA 22/10) N5 — Contraste dos tokens (etapa 4 da tela v0.2, parte automática).** Teste que lê `ferramentas/painel/web/tokens.css` e calcula a razão de contraste WCAG dos pares texto × fundo nos temas claro e escuro.
-
-*Pronto quando:* teste verde, ou a lista de pares abaixo de 4,5:1 (texto) / 3:1 (texto grande e UI) em `docs/PENDENTE-FRANK.md`, sem trocar cor sozinho (o visual é decisão do Frank).
-
-~~1. **B09** — Conferir se `09-diario-de-decisoes.md` e `PROJECT_BRIEF.md` §12 registram a rodada de 10/10 (boletim `2026-10-10-monitor`, pastas em `_historico/`); completar o que faltar. *Pronto quando:* uma linha em cada, `pytest` dos módulos tocados verde.~~
-~~2. **B10** — AUD-49: lock de dependências (`requirements.txt` já fixa 6 libs; avaliar `requirements.lock`/hashes) e config da carteira fora do código. *Pronto quando:* clone limpo roda `pip install -r requirements.txt` e `cd ferramentas && python -m pytest --ignore=backtest -q` verde.~~
-~~3. **B12** — Onda 4 textual: AUD-96, 64, 65, 48, 105, 87.~~ (feita 14/10; AUD-64 vira B23)
-~~4. **B13/B14** — Sensibilidade das premissas provisórias (AUD-57/60) e Ke dos alavancados (KLBN11). Só relatório + proposta; mudar doutrina só com decisão registrada em `DECISOES.md`.~~ (feita 14/10: `docs/SENSIBILIDADE-B13-B14.md`)
-~~5. **B24** — AUD-41: `filtros_1a4` exige razão não vazia para desconto de controlador; registrar as 29 razões (só com fonte A/B; sem fonte → marcar "sem razão documentada", não inventar). *Pronto quando:* teste novo + suíte verde, golden explicado ou intacto, registro no `09`.~~ (feita 14/10)
-~~6. **B25** — AUD-32/98/99: ajustar `registro_prospectivo.py` ao pré-registro decidido (critério contínuo, comparador = média do hall, uma linha por ticker×rodada). *Pronto quando:* testes verdes e registro no `09`.~~ (feita 14/10)
-*QA de 21/10/2026 (5 frentes: motores, tela/servidor, nuvem/CLIs, dados × CVM/B3, fatos × FRE): N7–N11, na ordem do topo, na mesma regra (uma por turno; golden intacto, senão `wip/auto`).*
-
-**(FEITA 22/10) N7 — Motor sem defesa contra dado inválido (ALTA preventiva; hoje os 47 tickers estão limpos).** NaN, ±inf, None ou ≤ 0 têm de virar recusa explícita (NÃO CONCLUSIVO ou `ValueError` com mensagem), nunca palavra ou elegibilidade em silêncio. Pontos reproduzidos pelo QA:
-- `motor_financeiras.palavra` (`:86-92`): NaN vira CARA; 0, −1 e −inf viram BARATA.
-- `precos_de_referencia` (`:97`): o guarda `central <= 0` não pega NaN.
-- `entrada_parcial` (`:111`): NaN em pc, dispersão, notas ou central dá `(True, [])`.
-- `descontar` (`:133`): aceita `desc` fora de [0,1].
-- `media_qualitativa` (`:142`): aceita nota fora de 0–5 e NaN.
-- `nota_preco` (`:192`): NaN dá 0 e −1 dá 10.
-- `motor_nao_financeiras.central_de` (`:822`): NaN entra na mediana e o resultado depende da ordem.
-- `qualifica_saida` (`:788`): aceita mais anos acima do que a série tem.
-- `carimbos.de` (`carimbos.py:25`): falta `.strip().upper()`.
-- `relatorio/montar.py:24`: falta `strip`.
-
-*Pronto quando:* teste parametrizado com NaN/inf/None/0/negativo para cada função; golden intacto (`git diff --stat ferramentas/tests/golden.json` vazio); uma linha no `09`.
-
-**(FEITA 22/10) N8 — Escala do nº de ações (MÉDIA, investigar primeiro).** A CVM informa a composição do capital em MIL. O `cvm_series.json` da TAEE11 tem 1.033.497 (o certo é 1,033 bi de ações = 344,5 mi units); `dossie/base.py` já corrige isso com q×1000 para a ALLD3. Rastrear se `acoes` da TAEE11 (e de quem mais vier em mil) chega a valor por ação (`lote2_energia.py:104` e o que mais ler `l["acoes"]`).
-
-*Pronto quando:* relatório em `docs/QA-2026-10-21.md` com a lista dos tickers afetados e o efeito. Se chega ao valor: corrigir `coletar_cvm.acoes_em_circulacao`, com teste de fixture, mas SEM regravar `cvm_series.json` (isso é LOCAL, com o Frank) → registrar em `PENDENTE-FRANK.md`.
-
-**(FEITA 22/10) N9 — Robustez do servidor e do front (MÉDIA).**
-- `painel/servir.py:57-58`: bind exclusivo; o segundo `painel` na mesma porta tem de falhar com "porta em uso" (hoje no Windows sobem dois e há `ERR_CONNECTION_REFUSED` intermitente).
-- `ui.js:58` / `app.js:185`: `hall.json` sem `fatores` dá TypeError e tela quase vazia → faixa de erro amigável.
-- `app.js:38`: "está na versão undefined" quando falta `versao`.
-- Roteador: hash desconhecido (`#/xyz`, `#/sistema` antes da N4) mostra o Hall sem avisar.
-
-*Pronto quando:* teste de subir dois servidores na mesma porta; `test_web_estatico` cobre o guarda de formato; suíte verde.
-
-**(FEITA 22/10) N10 — CLIs com traceback cru (MÉDIA/BAIXA).**
-- `temporada.py --trimestre 5T26 | 4T26` e `--simular 9T99`: dão traceback do `ValueError` → `parser.error`, rc 2.
-- `triagem/rodar.py:73` `--data 2026-13-40`: valida com `date.fromisoformat` via `type=`.
-- Texto do contrato da ALLD3 com ponto decimal ("18.2%", "(0.1048)") em `riscos`/`qualitativo` obs: achar a origem (`relatorio/quali.py`?) e usar o formato BR.
-
-*Pronto quando:* testes das CLIs com argumento inválido (rc 2, sem traceback, nada gravado); suíte verde.
-
-**(FEITA 22/10, parcial) N11 — Cadastro do relatório (MÉDIA).** `relatorio/quali.py:26` (`CADASTRO`) só tem BBSE3. Por isso EGIE3, PETR4, TAEE11, ITUB4 e SAPR11 dizem "nome de pregão/CNPJ não cadastrado" e ficam sem a série de proventos e o FRE na tela. Ler o pregão de `proventos_ex.PREGAO` (PETR4 = PETROBRAS já existe) e o CNPJ de `triagem/dados/triagem_2026-10-02.csv` (EGIE3 02.474.103/0001-19 conferido no cadastro da CVM). Para TAEE11 (TAESA, units: somar os eventos UNT) e ITUB4 (ITAUUNIBANCO), confirmar o nome de pregão na API da B3 (tradingName) antes de gravar.
-
-*Pronto quando:* teste de `_cadastro` para os 5; a série aparece no relatório quando o dado local existir (na nuvem, só o cadastro e o teste).
-
-7. **B11** (resto) — StatusInvest: termos dão 403 na nuvem — bloqueado até o Frank colar o texto (B3 feita 14/10). Não é missão de turno.
-~~8. **B26** — Razão do desconto de controlador com fonte A (FRE) para os 28 com `SEM_RAZAO`.~~ (feita 20/10: 28 → 23, ver Feitas)
-
-~~8b. **B27** — fatia 2 do relatório (quali + PDF).~~ (feita 19/10; faltam fatia 3 = B08/ALLD3 e fatia 4 = adversário + verificador-fonte)
-
-~~9. **B08** — Dossiês FESA4, SHUL4, VLID3.~~ (feita 19/10, ver Feitas)
-~~9b. **Fatia 4 do relatório** — `adversario` + `verificador-fonte` no pacote (inclui: margem normalizada da ALLD3 4,0% vs EBIT recorrente 2025 ~3,1%; cenários do desconto de controlador estimados), README, DECISOES.~~ (feita 19/10)
-~~9c. **B15 / fase 3, fatia 2** — DPA/JCP StatusInvest → API B3 nas não financeiras do lote.~~ (feita 20/10, ver Feitas)
-9f. **B15 / fatia 4** — financeiras (L2 utilities → ITSA4/EGIE3 → L1 bancos/seguradoras; conferir códigos do DFP de IF no ZIP real antes): `vpa`, `lpa_12m`, `roe_lp`, `roe_inicio` da CVM; DPA/JCP/anos pagos da B3; `pl_hist` CVM+COTAHIST; `payout` medido (mediana 5a), valor diferente só como julgamento declarado. Palavra pode mudar → `09` por ticker. Depois da temporada 3T26 (commit próprio, B01). Junto: o relatório das financeiras (`relatorio/quali.py` → `dossie.base.proventos_b3_legado`) e a renda de 12 meses da carteira (`relatorio/renda.py._sem_repeticao`) ainda usam a regra do AUD-23 (linha igual conta uma vez) — classificar os grupos de linhas iguais das financeiras e da carteira na DMPL (`proventos_hall.GRUPOS_CONFERIDOS`) e trocar pelas regras do hall (fatia 2b, 09 de 20/10).
-9g. **B15 / fatia 5** — trava final: StatusInvest só para datas (defasagem); zero `lote (digitado)` em campo de dado do central.
-10. **B01** — Temporada 3T26: a tarefa de sexta já detecta o ITR (`monitor/temporada.log` + boletim); quando aparecer ticker com 3T26, rodar `temporada.py --gravar` + `rodar_tudo.py --motivo`.
-
-- **Rede bloqueada na nuvem (22/10):** `b3.com.br` (API de listadas) e `gov.br`/`conteudo.cvm.gov.br` devolvem 403/ENOTFOUND → B16 (Res. CVM 19/20 com fonte A) e os pregões da N11 seguem abertos; fazer na máquina do Frank.
+- **9f — B15 / fatia 4 (financeiras)** e **9g — B15 / fatia 5 (trava final):** abertas, local (mexem em motor/palavra; os
+  VPA/LPA dos bancos já foram absorvidos pela B32). Texto completo no `_historico/2026-11-26 rotina-nuvem/MISSOES.md`.
+- **B11 (resto) — StatusInvest:** termos dão 403 na nuvem; bloqueado até o Frank colar o texto.
+- **Rede bloqueada na nuvem (22/10):** `b3.com.br` (API de listadas) e `gov.br`/`conteudo.cvm.gov.br` devolviam 403/ENOTFOUND;
+  o pré-voo da noite mede de novo e grava em `/tmp/mesa_prevoo_rede.json`.
 
 ## Em andamento
 (nenhuma)
 
 ## Feitas
+- **O3** (superada, conferida em 26/11): H10 refeito no master em 4bb5f34 (`motor_nao_financeiras.py`, "dado crítico
+  ausente" → NÃO CONCLUSIVO), A1 fechado pelo H2 (B34, 24/11); os commits do ramo `arquivo/2026-10-fase3-bugs` ficam
+  superados (inventário B67).
+- **10 / B01** (24/11, B34): temporada 3T26 juntada no master.
 - **B45 só diagnóstico** (26/11): `ferramentas/b45/diagnostico.py` reproduz os 5 números da B36 e abre as camadas
   (`docs/b45/camadas.json`); quadro causa por ticker × emenda 8 em `docs/b45/B45-diagnostico-2026-11-26.md`. Erro de dado E1
   (frota no FCO fora do capex) corrigido no coletor, hall intacto; E2 (série anual sem reapresentação, 18 do hall) → PENDENTE #16.
