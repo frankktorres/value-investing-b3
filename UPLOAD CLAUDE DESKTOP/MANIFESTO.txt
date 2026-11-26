@@ -1,4 +1,4 @@
-Gerado em 2026-11-26 · repo 6a5dd8a (fontes com mudança sem commit) · gerador ferramentas/desktop/atualizar.py
+Gerado em 2026-11-26 · repo 8a92e08 · gerador ferramentas/desktop/atualizar.py
 Hash = sha256 com fim de linha normalizado para LF nos arquivos de texto. Este arquivo NÃO sobe para o Desktop.
 
 # arquivo	origem	data	sha256
@@ -31,7 +31,7 @@ REL-B57-fontes-x2-altman.md	docs/b57/FONTES-B57.md	2026-11-25	d6670b33a661d3b89f
 
 ## O que fazer no Desktop (contra a pasta do último commit, que é a carga anterior)
 SUBIR (novo): nada
-TROCAR (apagar o antigo de mesmo nome e subir): 02-MAPA-DA-MESA.md, BACKLOG.md, DECISOES.md, PENDENTE-FRANK.md, PROJECT_BRIEF.md
+TROCAR (apagar o antigo de mesmo nome e subir): nada
 APAGAR do Desktop (saiu; cópia em _historico/): nada
 INSTRUÇÕES: sem mudança
 Trava de segredo: OK (0 achados)

@@ -65,6 +65,10 @@ todos os lotes, suíte verde com `EXIGIR_DADOS=1` e `python rodar_tudo.py` "sem 
 (nenhuma)
 
 ## Feitas
+- **Rotina noturna no molde do UNION** (26/11, 8a92e08): `docs/ops/rotina/` (BOOTSTRAP conferido na nuvem + PROTOCOLO), pré-voo,
+  portão `ferramentas/rotina/checar_rotina.py`, `conferir_noite` com PROTEGIDOS ampliado + portão da base (patch do Frank),
+  canários; rotina enabled (Sonnet 5.5, próxima 2026-11-27T07:40Z); ConferirNoite religada (rc 0 à mão, próxima 27/11 07:15);
+  ramos de outubro → `arquivo/2026-10-*`; piso B37 1399. Suíte 1427.
 - **O3** (superada, conferida em 26/11): H10 refeito no master em 4bb5f34 (`motor_nao_financeiras.py`, "dado crítico
   ausente" → NÃO CONCLUSIVO), A1 fechado pelo H2 (B34, 24/11); os commits do ramo `arquivo/2026-10-fase3-bugs` ficam
   superados (inventário B67).
@@ -114,6 +118,10 @@ todos os lotes, suíte verde com `EXIGIR_DADOS=1` e `python rodar_tudo.py` "sem 
 
 ## Passagem de turno
 *A skill `/mesa-fechar` reescreve esta seção: o que ficou pendente, onde parou, próximo passo.*
+- 26/11/2026 (rotina noturna): no master (8a92e08 + fecho); nada em andamento. 1ª noite em 27/11 04:40 BRT com B67 e B16
+  carimbadas (só doc). De manhã: `ferramentas/monitor/conferir.log` e o topo do `RELATORIO-DIARIO.md` (1ª junção real pela
+  B37). Próximo passo (DNA) segue o de hoje: causa (b), desenho do conserto do domínio + pré-registro (última linha
+  "Próximo passo (DNA):" do `DECISOES.md`).
 - 26/11/2026 (B45 diagnóstico): no master (este commit); nada em andamento. Causa por ticker em `docs/b45/`; E1 corrigido no
   coletor, E2 → PENDENTE #16. Próximo passo (DNA): desenho + pré-registro do conserto da (b) em Opus high com plan mode (ver a
   última linha "Próximo passo (DNA):" do `DECISOES.md`).
