@@ -56,6 +56,11 @@ RC_VELHO, RC_FALHA = 20, 21    # lidos pelo agendador/monitor_semanal.vbs
 
 
 # ------------------------------------------------------------------------------ COTAHIST
+def falhou(estado_download: str) -> bool:
+    """Download que não trouxe o anual novo: o preço pode estar velho mesmo com o pregão a ≤ DIAS_VELHO dias."""
+    return estado_download.startswith("falhou")
+
+
 def atualizar_cotahist(ano: int, log=print) -> str:
     """Baixa o anual de `ano` de novo e regera o parquet. Troca atômica: o ZIP velho volta se o
     novo não abrir ou o trailer não conferir."""
@@ -79,7 +84,9 @@ def atualizar_cotahist(ano: int, log=print) -> str:
             except Exception as e:                                  # noqa: BLE001 — rede: retenta
                 novo.unlink(missing_ok=True)
                 ultimo = f"{type(e).__name__}: {e}"
-                time.sleep(5 * tentativa)
+                # B68 (27/11/2026): 4 resets seguidos em ~50 s fizeram o boletim sair com preço de 8 dias; a mesma
+                # chamada 3 h depois baixou 106 MB em 3,9 s. Espera de 1, 2, 3 e 4 min (~10 min) cobre a queda passageira.
+                time.sleep(60 * tentativa)
         else:
             continue
         break
@@ -194,7 +201,7 @@ def markdown(hall: list[dict], fila: pd.DataFrame, precos_fila: dict, pregao: st
              estado_download: str) -> str:
     dias = (dt.date.fromisoformat(hoje) - dt.date.fromisoformat(pregao)).days
     s = []
-    if dias > DIAS_VELHO:
+    if dias > DIAS_VELHO or falhou(estado_download):    # 27/11: download falho com ≤ 7 dias saía calado no topo
         s.append(f"> **DADO VELHO:** o último pregão é de {pregao}, {dias} dias antes de hoje. "
                  f"Download: {estado_download}.\n")
     s.append(f"# Monitor semanal de preço — {hoje}\n")
@@ -306,7 +313,7 @@ def _rodar(a) -> int:
     n = sum(x["alerta"] in (COMPRA, SAIDA) for x in hall)
     print(f"{saida.name} · pregão {pregao} · {n} alerta(s) de compra/saída")
     velho = (dt.date.fromisoformat(a.hoje) - dt.date.fromisoformat(pregao)).days > DIAS_VELHO
-    return RC_VELHO if velho else 0
+    return RC_VELHO if velho or falhou(estado) else 0
 
 
 def main(argv: list[str] | None = None) -> int:

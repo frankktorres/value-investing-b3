@@ -5,6 +5,7 @@
 ## Abertas
 | # | Pergunta | Opções / recomendação | Backlog | Desde |
 |---|---|---|---|---|
+| 19 | **Liberar `ferramentas/conferir_noite.py` (trava 4.2) para: guarda `merge-base --is-ancestor` antes de apagar ramo + ramo VERMELHO vai para `arquivo/AAAA-MM-DD-<nome>` (SHA conferido por `ls-remote`) e só então sai o `claude/*`, com ALERTA no log?** Hoje é seguro (só apaga ramo contido no master, com lease; o vermelho fica intocado), mas o vermelho volta toda manhã (rc 30 diário, como em outubro). | **Recomendo sim:** abrir uma sessão com `MESA_LIBERA_CONFIG=1` e pedir "implementar o #19"; mudança + teste no `test_conferir_noite.py` + hash em `travas_hashes.json` no mesmo commit. O hook barrou o Claude em 27/11 (correto) | B68 | 27/11 |
 | 16 | **Série anual: usar a DFP reapresentada?** (B45, achado E2) A série anual pega cada exercício da DFP original; quando a empresa reapresenta (operação descontinuada, erro, mudança de política), o motor usa o número velho. Afeta 18 do hall/dossiês (receita ou EBIT > 0,5%) → **muda golden** | **Recomendo sim, com regra:** usar o comparativo da DFP seguinte (como o AUD-21 já faz no LTM), exceto quando a diferença vier de operação descontinuada que depois foi desfeita (EMBJ3 2018) — a regra e a lista dos 18 vão a um pré-registro antes de regravar o golden. Responda "ok #16" ou "não #16" | B62 | 26/11 |
 | 4 | Orçamento mensal; SaaS só seu ou de terceiros; objetivo acadêmico; agente de sexta ainda roda?; fonte paga; licença do código | Ver Brief §11 | B07 | 10/10 |
 

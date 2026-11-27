@@ -1,6 +1,13 @@
 # RELATORIO-DIARIO
 *Uma entrada por dia/turno, a mais nova em cima: o que foi feito (com commit), decisões tomadas, o que ficou, erros. Máx. 10 linhas por entrada.*
 
+## 27/11/2026 — noite de 28/11 preparada com prova (sessão do Frank)
+- Provas: com dados 4/4 passam; sem `dados/raw` + `EXIGIR_DADOS=1` → 4 errors, rc 1 (a manhã fica vermelha); `.gitignore`: 0 versionado
+  ignorado, lista de não versionados idêntica à de antes. `senior` no f7123d0: SEGUE COM AJUSTES (1 médio, aplicado).
+- B68: monitor caiu por reset passageiro (não IPv6/URL/formato); espera maior + DADO VELHO no topo sempre que o download falha; boletim regerado.
+- Carimbos B67/B16 → f7123d0; nenhuma missão nova (sem candidato que passe nos 5 critérios).
+- Precisa de você: #19 (liberar `conferir_noite.py` para arquivar ramo vermelho); subir o piso da B37 para 1427.
+
 ## 27/11/2026 — conserto da 1ª noite da rotina (sessão do Frank)
 - Noite: BASE VERMELHA (5 falhas só sem dados), nenhuma missão; manhã recusou a junção (rc 30) — travas fizeram o papel.
 - Fiz: `requer_raw` nos 4 testes que liam `ferramentas/dados/raw`; `.gitignore` sem barra final em 6 pastas (o `test_docs_caminhos`

@@ -8,7 +8,7 @@ Como: `git stash create` (árvore com as alterações não commitadas) → workt
 não ignorados → `python -m pytest --ignore=backtest -q` em `ferramentas/`. Verde = rc 0 (pulos são esperados: é a nuvem).
 Não toca no checkout nem no índice; o worktree é removido no fim.
 
-    cd ferramentas && python -m rotina.ensaio_nuvem
+    cd ferramentas && python -m rotina.ensaio_nuvem    # ~4 min: Bash com timeout 600000 ou em segundo plano
 """
 from __future__ import annotations
 
@@ -16,6 +16,7 @@ import pathlib
 import shutil
 import subprocess
 import sys
+import os
 import tempfile
 
 RAIZ = pathlib.Path(__file__).resolve().parents[2]
@@ -28,17 +29,19 @@ def git(*args: str, cwd: pathlib.Path = RAIZ) -> str:
 
 def main() -> int:
     sys.stdout.reconfigure(encoding="utf-8")  # type: ignore[attr-defined]
+    git("worktree", "prune")                                # sobra de um ensaio morto no meio
     alvo = git("stash", "create") or git("rev-parse", "HEAD")
     novos = [a for a in git("ls-files", "-z", "--others", "--exclude-standard").split("\0") if a]
     wt = pathlib.Path(tempfile.mkdtemp(prefix="mesa_ensaio_nuvem_"))
+    git("worktree", "add", "--detach", str(wt), alvo)          # fora do try: se falhar, a causa aparece
     try:
-        git("worktree", "add", "--detach", str(wt), alvo)
         for a in novos:
             destino = wt / a
             destino.parent.mkdir(parents=True, exist_ok=True)
             shutil.copy2(RAIZ / a, destino)
         r = subprocess.run([sys.executable, "-m", "pytest", "--ignore=backtest", "-q", "-p", "no:cacheprovider"],
-                           cwd=wt / "ferramentas", capture_output=True, text=True, encoding="utf-8", errors="replace")
+                           cwd=wt / "ferramentas", capture_output=True, text=True, encoding="utf-8", errors="replace",
+                           timeout=1200, env={k: v for k, v in os.environ.items() if k != "EXIGIR_DADOS"})
         linhas = r.stdout.strip().splitlines()
         for ln in linhas:
             if ln.startswith(("FAILED", "ERROR")):
@@ -48,7 +51,7 @@ def main() -> int:
               "VERMELHO — a noite pararia em BASE VERMELHA; consertar antes de carimbar missões.")
         return r.returncode
     finally:
-        git("worktree", "remove", "--force", str(wt))
+        subprocess.run(["git", "worktree", "remove", "--force", str(wt)], cwd=RAIZ, capture_output=True)
         shutil.rmtree(wt, ignore_errors=True)
         git("worktree", "prune")
 

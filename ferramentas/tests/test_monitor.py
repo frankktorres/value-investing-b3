@@ -167,6 +167,13 @@ def test_dado_velho_no_topo():
     assert "DADO VELHO" not in md
 
 
+def test_download_falho_avisa_no_topo_mesmo_com_pregao_recente():
+    """27/11/2026: com o download falho e o pregão a ≤ 7 dias o boletim saía sem aviso no topo (e rc 0)."""
+    md = M.markdown(_hall(), pd.DataFrame(), {}, "2026-10-02", "2026-10-06", "falhou: ConnectionError: x")
+    assert md.startswith("> **DADO VELHO:** o último pregão é de 2026-10-02, 4 dias")
+    assert M.falhou("falhou: x") and not M.falhou("atualizado") and not M.falhou("sem download (--sem-download)")
+
+
 def test_monitor_nao_muda_palavra():
     md = M.markdown(_hall(), pd.DataFrame(), {}, "2026-10-02", "2026-10-06", "ok")
     assert "| CARA |" in md and "não muda palavra" in md

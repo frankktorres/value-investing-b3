@@ -1,12 +1,12 @@
 # Dados brutos reproduzíveis (CVM/StatusInvest) — não versionar
 ferramentas/dados/cvm/*.zip
 # Documentos do RAD/IPE baixados para os dossiês (DFP completo, fatos relevantes) — rebaixáveis pelo protocolo citado no dossiê
-ferramentas/dados/cvm/docs/
-ferramentas/dados/raw/
+ferramentas/dados/cvm/docs
+ferramentas/dados/raw
 # Derivados do backtest (reconstruíveis dos ZIPs da CVM por backtest/ledger/*)
 ferramentas/backtest/dados
 # Pipeline antigo (histórico, fora do fluxo atual)
-analisador/.venv/
+analisador/.venv
 analisador/dados/
 # Python
 __pycache__/
@@ -39,7 +39,7 @@ ferramentas/monitor/*.log
 # Projeto antigo arquivado em 08/10/2026 (git próprio; ver analisador/ARQUIVADO.md)
 analisador
 # Cópia datada do ZIP da CVM anterior à reescrita (temporada.baixar_itr); ver ferramentas/manifesto_cvm.py
-ferramentas/dados/cvm/_antes/
+ferramentas/dados/cvm/_antes
 # Material pessoal do Frank fora do projeto (Fase 0, 23/11/2026): livros em PDF (302 MB, um > 100 MB do GitHub),
 # notas de outro projeto (UNION, com dado de saúde) e anotações soltas. Ficam no disco, nunca no git.
 livros/
