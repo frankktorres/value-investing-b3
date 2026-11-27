@@ -18,6 +18,7 @@ import motor_nao_financeiras as MN
 from lote1_bancos import MK
 from relatorio import procedencia as pr
 from relatorio.modelo import pior
+from dados_opcionais import requer_raw
 
 
 def _emp(tk):
@@ -245,6 +246,7 @@ def test_smto3_usa_o_fechamento_de_marco():
     assert _emp("SMTO3").pl_hist == pytest.approx(marco) and marco != pytest.approx(dez)
 
 
+@requer_raw
 def test_cmin3_exige_a_serie_do_minerio_no_insumo(monkeypatch):
     from dossie.fichas import cmin3
     ins = cmin3.insumos()

@@ -124,6 +124,7 @@ def test_diluicao_so_desfaz_evento_dentro_da_janela():
         CVM.pop("XPTO3")
 
 
+@pytest.mark.skipif(not TEM_RAW, reason="dados/raw fora do disco (coletas brutas ignoradas pelo git; clone limpo/nuvem)")
 def test_minerio_12m_e_fatores():
     m = cmin3.minerio()
     assert m["fator"] == pytest.approx(m["meio_rs_real"] / m["ltm_rs"])

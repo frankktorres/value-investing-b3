@@ -4,6 +4,7 @@ import json
 
 import pytest
 
+from dados_opcionais import TEM_RAW
 from holdout_b36 import executor as X
 
 ALLD3 = dict(ticker="ALLD3", cnpj="20.247.322/0001-47", cd_cvm=25330, pregao="ALLIED", classe="ON", acoes_por_unit=1,
@@ -15,7 +16,7 @@ def _tem_dados_alld3():
     return base.SERIES.exists() and "ALLD3" in json.loads(base.SERIES.read_text(encoding="utf-8"))
 
 
-@pytest.mark.skipif(not _tem_dados_alld3(), reason="sem séries do dossiê (ZIPs/dados locais)")
+@pytest.mark.skipif(not _tem_dados_alld3() or not TEM_RAW, reason="sem séries do dossiê ou sem dados/raw (ZIPs/dados locais)")
 def test_equivalencia_alld3_executor_igual_ao_dossie():
     """Prova que o executor não muda o método: mesma ficha, mesmos insumos e mesma data → mesma palavra, P/C e Ke."""
     from dossie import base, gerar
