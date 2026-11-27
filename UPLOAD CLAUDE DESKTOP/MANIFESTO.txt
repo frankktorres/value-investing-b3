@@ -1,13 +1,13 @@
-Gerado em 2026-11-26 · repo 8a92e08 (fontes com mudança sem commit) · gerador ferramentas/desktop/atualizar.py
+Gerado em 2026-11-27 · repo f78afef (fontes com mudança sem commit) · gerador ferramentas/desktop/atualizar.py
 Hash = sha256 com fim de linha normalizado para LF nos arquivos de texto. Este arquivo NÃO sobe para o Desktop.
 
 # arquivo	origem	data	sha256
 00-CONFIGURACAO-DO-PROJETO.md	00-CONFIGURACAO-DO-PROJETO.md	2026-10-10	72697aa004b40a3b89bbc56f95bd4fe83e657fcd03c893e9953a278a532a33d2
 00-DNA.md	docs/00-DNA.md	2026-11-26	eed9fe77ee0369d4aeab897e6879841fb74f2aa7fbfdd1800245aeeb4dfff159
-00-LEIA-ME.md	gerador	2026-11-26	11e50bd9acdee48afc01235ee2cc603d101526ca7e594063e3b3f227563a2dfb
-00-O-QUE-MUDOU.md	gerador	2026-11-26	1107d1754594b573cafc8158471bad6fdb26749f8001d9442939e0a71793fe7d
+00-LEIA-ME.md	gerador	2026-11-27	11e50bd9acdee48afc01235ee2cc603d101526ca7e594063e3b3f227563a2dfb
+00-O-QUE-MUDOU.md	gerador	2026-11-27	1107d1754594b573cafc8158471bad6fdb26749f8001d9442939e0a71793fe7d
 01-doutrina-value-investing.md	01-doutrina-value-investing.md	2026-11-24	89cc9076498b95c78b48c99a5abfcd6c08a63c0bd4099b9be8ef694e3c144f98
-02-MAPA-DA-MESA.md	gerador	2026-11-26	c127d9db85331eecdd4ea9f0b5e7509089b3e27e4928dced2fc0053de6bcfe2f
+02-MAPA-DA-MESA.md	gerador	2026-11-27	c127d9db85331eecdd4ea9f0b5e7509089b3e27e4928dced2fc0053de6bcfe2f
 02-prompt-analise-completa.md	02-prompt-analise-completa.md	2026-10-14	737a051c5e41b058dd96b9679dc1ab099450318d0a9dbe42c704a734ab01a4f1
 03-hall-de-acoes.md	03-hall-de-acoes.md	2026-11-24	3ddae076c4c8d8b1fadec26c2a996e1168b0aafa2240367af4d50bf904ce2d0c
 04-checklist-anti-erro.md	04-checklist-anti-erro.md	2026-10-21	cd6ef5db1708544c8f8c96d01e1e8f065c3b374deacefee2ba0b3478486de3b5
@@ -16,8 +16,8 @@ Hash = sha256 com fim de linha normalizado para LF nos arquivos de texto. Este a
 07-perfil-do-investidor.md	07-perfil-do-investidor.md	2026-10-05	629929e62c071e5327ab04aac06d1225d9fdf1b6a833002ce17e7c5802de2ed0
 08-prompt-recalculo-lote.md	08-prompt-recalculo-lote.md	2026-10-10	d98fb67d05052eeb7541ca0d5442c7ae8aad197fc3d51a8b461790e672027527
 BACKLOG.md	docs/BACKLOG.md	2026-11-26	99e0bc4ef75ea9464d26e1a12182391de3c036a781c4f1ab50b44b08ab3b1a6b
-COLAR-NO-CAMPO-INSTRUCOES.txt	gerador	2026-11-26	432b098f1ba404179dafa9e95464276bfefd35667988be84809325709464c290
-DECISOES.md	docs/DECISOES.md	2026-11-26	e93ba835859b231c069cd9b6df8f5bc37c1e6a218ae71d94e9e0ea929fd59f51
+COLAR-NO-CAMPO-INSTRUCOES.txt	gerador	2026-11-27	432b098f1ba404179dafa9e95464276bfefd35667988be84809325709464c290
+DECISOES.md	docs/DECISOES.md	2026-11-26	967b2d742ea176a513bd1d99863e956c512a462c4ff37def2e1ee2fc9c07ae7e
 PACOTE-AUTONOMIA-2026-11-25.md	docs/research/2026-11-25-pacote-autonomia.md	2026-11-25	b3d59cc3c6754ccd5958be4a0f50efa951160407d72d9f87a81c3373445d84e1
 PENDENTE-FRANK.md	docs/PENDENTE-FRANK.md	2026-11-26	df1623bb9aaf326d4426834ef01ace1b1a675853a3f15b9dd445b7e39148a107
 PRE-REGISTRO-v3.md	docs/PRE-REGISTRO-v3.md	2026-11-25	3750dd733a458f4f6b226c9cbbd76b418ff04746708faabbd2955474c6fd6a91
@@ -31,7 +31,7 @@ REL-B57-fontes-x2-altman.md	docs/b57/FONTES-B57.md	2026-11-25	d6670b33a661d3b89f
 
 ## O que fazer no Desktop (contra a pasta do último commit, que é a carga anterior)
 SUBIR (novo): nada
-TROCAR (apagar o antigo de mesmo nome e subir): PENDENTE-FRANK.md
+TROCAR (apagar o antigo de mesmo nome e subir): DECISOES.md
 APAGAR do Desktop (saiu; cópia em _historico/): nada
 INSTRUÇÕES: sem mudança
 Trava de segredo: OK (0 achados)

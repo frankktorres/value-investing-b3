@@ -14,6 +14,7 @@ import pytest
 
 import eventos
 import ltm
+from dados_opcionais import requer_raw
 
 
 # ---------------------------------------------------------------- ltm.py
@@ -169,6 +170,7 @@ def test_publicacao_parcial_na_temporada_nao_quebra_o_import():
     assert ant != vig and ok == ["True", "True", "True"], p.stdout
 
 
+@requer_raw
 def test_cmin3_janela_do_minerio_anda_com_o_ltm():
     """Adversário, 23/11: o dossiê da CMIN3 tinha a mesma janela fixa (jul/25–jun/26) do barril."""
     from dossie.fichas import cmin3 as C

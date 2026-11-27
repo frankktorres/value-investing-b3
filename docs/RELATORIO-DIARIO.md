@@ -1,6 +1,14 @@
 # RELATORIO-DIARIO
 *Uma entrada por dia/turno, a mais nova em cima: o que foi feito (com commit), decisões tomadas, o que ficou, erros. Máx. 10 linhas por entrada.*
 
+## 27/11/2026 — conserto da 1ª noite da rotina (sessão do Frank)
+- Noite: BASE VERMELHA (5 falhas só sem dados), nenhuma missão; manhã recusou a junção (rc 30) — travas fizeram o papel.
+- Fiz: `requer_raw` nos 4 testes que liam `ferramentas/dados/raw`; `.gitignore` sem barra final em 6 pastas (o `test_docs_caminhos`
+  reprovava em clone sem elas, inclusive no worktree da manhã); `python -m rotina.ensaio_nuvem` (suíte sem dados no PC) virou
+  passo do `/mesa-fechar` antes de carimbar. Ensaio: 1369 passaram, 58 pulados. Relatório da noite juntado no master.
+- Erro meu (26/11): liguei a rotina sem ensaiar num clone sem dados.
+- Precisa de você: nada; a noite de 28/11 roda B67 e B16 na base verde.
+
 ## 2026-11-27 · Rotina na nuvem (ramo claude/keen-babbage-xrdtg8)
 BASE VERMELHA: nenhuma missão feita; base (origin/master 7137b09) falha na nuvem.
 ### Pré-voo da noite
