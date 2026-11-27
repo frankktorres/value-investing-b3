@@ -1,4 +1,4 @@
-Gerado em 2026-11-27 · repo 7137b09 (fontes com mudança sem commit) · gerador ferramentas/desktop/atualizar.py
+Gerado em 2026-11-27 · repo f78afef (fontes com mudança sem commit) · gerador ferramentas/desktop/atualizar.py
 Hash = sha256 com fim de linha normalizado para LF nos arquivos de texto. Este arquivo NÃO sobe para o Desktop.
 
 # arquivo	origem	data	sha256
@@ -17,7 +17,7 @@ Hash = sha256 com fim de linha normalizado para LF nos arquivos de texto. Este a
 08-prompt-recalculo-lote.md	08-prompt-recalculo-lote.md	2026-10-10	d98fb67d05052eeb7541ca0d5442c7ae8aad197fc3d51a8b461790e672027527
 BACKLOG.md	docs/BACKLOG.md	2026-11-26	99e0bc4ef75ea9464d26e1a12182391de3c036a781c4f1ab50b44b08ab3b1a6b
 COLAR-NO-CAMPO-INSTRUCOES.txt	gerador	2026-11-27	432b098f1ba404179dafa9e95464276bfefd35667988be84809325709464c290
-DECISOES.md	docs/DECISOES.md	2026-11-26	5a7778cafb730f6d3d68a045f419fe964d25df3f68be48e07b5ff617adb1307b
+DECISOES.md	docs/DECISOES.md	2026-11-26	967b2d742ea176a513bd1d99863e956c512a462c4ff37def2e1ee2fc9c07ae7e
 PACOTE-AUTONOMIA-2026-11-25.md	docs/research/2026-11-25-pacote-autonomia.md	2026-11-25	b3d59cc3c6754ccd5958be4a0f50efa951160407d72d9f87a81c3373445d84e1
 PENDENTE-FRANK.md	docs/PENDENTE-FRANK.md	2026-11-26	df1623bb9aaf326d4426834ef01ace1b1a675853a3f15b9dd445b7e39148a107
 PRE-REGISTRO-v3.md	docs/PRE-REGISTRO-v3.md	2026-11-25	3750dd733a458f4f6b226c9cbbd76b418ff04746708faabbd2955474c6fd6a91
