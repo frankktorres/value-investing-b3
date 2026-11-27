@@ -19,7 +19,7 @@ B51; N13 deu ERROR no Windows na junção; B16 é missão própria. O conflito d
 Nenhum código é portado nesta missão.
 *Pronto quando:* `docs/INVENTARIO-RAMOS-2026-10.md` com uma linha por commit (sha curto, missão, classe, prova) e a contagem
 por classe; a linha B67 do `BACKLOG.md` aponta para ele; portão OK.
-*Carimbo (nuvem):* B67 · escopo: `docs/INVENTARIO-RAMOS-2026-10.md` · fonte: nenhuma · pronta: 6a5dd8a
+*Carimbo (nuvem):* B67 · escopo: `docs/INVENTARIO-RAMOS-2026-10.md` · fonte: nenhuma · pronta: f7123d0
 
 **B16 — Enquadramento CVM (Res. 19 e 20/2021) se houver SaaS: trazer o doc do ramo arquivado (só doc).** *(26/11/2026)*
 O texto foi escrito na noite de 23/10 com a leitura das resoluções consolidadas (fonte A) e ficou só no ramo:
@@ -29,7 +29,7 @@ citação que não confere → corrigir ou marcar "não confere em <commit>". N�
 bloqueado em 22/10); se faltar algo da fonte, `[!] sem acesso`.
 *Pronto quando:* `docs/ENQUADRAMENTO-CVM-B16.md` no ramo com a lista das citações internas conferidas no fim, e a linha B16 do
 `BACKLOG.md` atualizada; portão OK.
-*Carimbo (nuvem):* B16 · escopo: `docs/ENQUADRAMENTO-CVM-B16.md` · fonte: nenhuma · pronta: 6a5dd8a
+*Carimbo (nuvem):* B16 · escopo: `docs/ENQUADRAMENTO-CVM-B16.md` · fonte: nenhuma · pronta: f7123d0
 
 *Fila de 23/10 (O3 → N12 → O4 → O5), conferida no código em 26/11: O3 superada (ver Feitas); N12, O4, O5, e também N13 e B16,
 foram feitas só no ramo hoje arquivado e nunca juntadas → o inventário B67 diz o que portar. Texto antigo das missões:

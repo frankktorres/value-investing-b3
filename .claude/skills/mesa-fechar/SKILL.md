@@ -17,7 +17,8 @@ description: Fecha o turno da Mesa de Value Investing — passa o pendente para 
      `*Carimbo (nuvem):* <ID> · escopo: <caminhos literais entre crases, sem glob> · fonte: <domínio|nenhuma> · pronta: <sha7 do master>`.
      Só a sessão do dia carimba; missão sem carimbo é local. Antes do commit, rode
      `python ferramentas/rotina/checar_rotina.py --base origin/master` (mostra quais missões o portão enxerga) **e**
-     `cd ferramentas && python -m rotina.ensaio_nuvem` (suíte sem os dados, como a nuvem; ~4 min): vermelho = a noite
+     `cd ferramentas && python -m rotina.ensaio_nuvem` (suíte sem os dados, como a nuvem; ~4 min → Bash com
+     timeout 600000 ou `run_in_background`; sem a linha final VERDE/VERMELHO = não carimbar): vermelho = a noite
      pararia em BASE VERMELHA (1ª noite, 27/11) → consertar antes de carimbar.
 3. **Quem decide** (`CLAUDE.md`): decisão reversível tomada → `docs/DECISOES.md` (opção, motivo, como reverter); o que
    é do Frank (palavra, dinheiro, histórico, DNA, liberar trava, senha) → `docs/PENDENTE-FRANK.md` com recomendação.
