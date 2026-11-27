@@ -1,6 +1,25 @@
 # RELATORIO-DIARIO
 *Uma entrada por dia/turno, a mais nova em cima: o que foi feito (com commit), decisões tomadas, o que ficou, erros. Máx. 10 linhas por entrada.*
 
+## 2026-11-27 · Rotina na nuvem (ramo claude/keen-babbage-xrdtg8)
+BASE VERMELHA: nenhuma missão feita; base (origin/master 7137b09) falha na nuvem.
+### Pré-voo da noite
+- início (UTC): 2026-11-27T07:40Z
+- HEAD 7137b09 · origin/master 7137b09
+- Python: Python 3.14.6 (/root/venv314/bin/python)
+- rede: dados.cvm.gov.br=200 conteudo.cvm.gov.br=200 sistemaswebb3-listados.b3.com.br=403 www.b3.com.br=200 api.bcb.gov.br=302 www.gov.br=301 www.tesourotransparente.gov.br=200
+- suíte da base: rc 1 · 5 failed, 1368 passed, 54 skipped in 64.83s (0:01:04) (log /tmp/mesa_prevoo_suite.log)
+- **BASE VERMELHA:**
+  - FAILED tests/test_datas_do_ltm.py::test_cmin3_janela_do_minerio_anda_com_o_ltm
+  - FAILED tests/test_docs_caminhos.py::test_documentos_vigentes_sem_caminho_quebrado_novo
+  - FAILED tests/test_dossie_fichas.py::test_minerio_12m_e_fatores - FileNotFound...
+  - FAILED tests/test_fase3_procedencia.py::test_cmin3_exige_a_serie_do_minerio_no_insumo
+  - FAILED tests/test_holdout_b36_executor.py::test_equivalencia_alld3_executor_igual_ao_dossie
+- Causa provável (1 frase cada):
+  - test_cmin3_janela_do_minerio_anda_com_o_ltm, test_minerio_12m_e_fatores, test_cmin3_exige_a_serie_do_minerio_no_insumo, test_equivalencia_alld3_executor_igual_ao_dossie: `ferramentas/dados/raw` não existe na nuvem (FileNotFoundError; dados fora do git) — teste sem skip por dado ausente.
+  - test_documentos_vigentes_sem_caminho_quebrado_novo: docs vigentes citam caminhos que só existem no PC do Frank (`.playwright-mcp`, `analisador`, `ferramentas/painel/web/dados`, `RELATORIOS/privado`, `dados/privado`, `ferramentas/backtest/dados`).
+- Precisa do Frank: decidir se esses 5 testes devem pular na nuvem (sem dado/pasta ignorada) ou se o pré-voo tolera. Sessão do dia.
+
 ## 26/11/2026 — Rotina noturna no molde do UNION, ligada para 27/11 (sessão do Frank)
 - Fiz: `docs/ops/rotina/BOOTSTRAP.md` (texto da nuvem, 1652 caracteres, conferido: `nuvem.json`) + `PROTOCOLO.md` (pré-voo →
   missões carimbadas → portão → relatório; fase 1: só doc, teto 4, 1 subagente, Sonnet 5.5, até 06:30 BRT); pré-voo
