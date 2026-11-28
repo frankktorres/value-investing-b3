@@ -42,7 +42,7 @@ Papéis: `senior` antes de toda escolha entre opções e ao fim de cada marco; `
 
 | Trava | O que barra | Onde |
 |---|---|---|
-| B37 | push no `master` sem suíte inteira verde na árvore do commit (piso atual: 1399 testes) | `.githooks/pre-push`, `.githooks/trava_master.py` |
+| B37 | push no `master` sem suíte inteira verde na árvore do commit (piso atual: 1428 testes) | `.githooks/pre-push`, `.githooks/trava_master.py` |
 | 4.2 | editar config de teste, travas, tolerâncias, catraca para cima, piso para baixo, `_historico/` existente | `.claude/hooks/trava_config.py` |
 | 4.3 | regravar o golden sem `GOLDEN_REGRAVAR=1` e motivo com a camada de prova | `ferramentas/rodar_tudo.py` |
 | 4.4 | aviso no fim do turno se a árvore mudou depois da última suíte verde | `.claude/hooks/avisos.py` |

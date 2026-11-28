@@ -7,30 +7,6 @@
 caminho literal, `fonte:` e `pronta:` = commit do master em que a sessão do dia carimbou), no máximo 4 por noite, e nunca
 escreve carimbo. Missão sem carimbo é da sessão do dia (local). O `/mesa-fechar` carimba.*
 
-**B67 — Inventário dos ramos de outubro não juntados (só doc).** *(26/11/2026)*
-Os ramos `arquivo/2026-10-keen-babbage-bvjh9h` (contém o `-vf5kor`) e `arquivo/2026-10-fase3-bugs` têm os commits das noites
-de 23–24/10 que não estão no master (base 595388f de 22/10; a junção de 23/11 deu VERMELHO, 13 falhas). Para cada commit
-(`git log --reverse --oneline origin/master..origin/arquivo/2026-10-keen-babbage-bvjh9h` e o mesmo para o `-fase3-bugs`): o que
-fez, se o master já tem o equivalente (citar commit ou arquivo:linha do master) e a classe **portar** (dizendo o que precisa:
-local, golden, oráculo) / **superado** / **conflita** (com quê). Pontos já conhecidos: O3 superado (H10 em 4bb5f34, A1 pelo
-H2/B34); O4/O4b mediram o motor antes da B34/B57 (arquivo:linha dos sobreviventes não vale mais); O5 em parte coberto pela
-B51; N13 deu ERROR no Windows na junção; B16 é missão própria. O conflito de numeração (o ramo cria PENDENTE #11/#12 e usa
-"6/24"; no master #11/#12 são outros e o orçamento está em 8/24) só é descrito: não renumerar nem editar o `PENDENTE-FRANK.md`.
-Nenhum código é portado nesta missão.
-*Pronto quando:* `docs/INVENTARIO-RAMOS-2026-10.md` com uma linha por commit (sha curto, missão, classe, prova) e a contagem
-por classe; a linha B67 do `BACKLOG.md` aponta para ele; portão OK.
-*Carimbo (nuvem):* B67 · escopo: `docs/INVENTARIO-RAMOS-2026-10.md` · fonte: nenhuma · pronta: f7123d0
-
-**B16 — Enquadramento CVM (Res. 19 e 20/2021) se houver SaaS: trazer o doc do ramo arquivado (só doc).** *(26/11/2026)*
-O texto foi escrito na noite de 23/10 com a leitura das resoluções consolidadas (fonte A) e ficou só no ramo:
-`git show origin/arquivo/2026-10-keen-babbage-bvjh9h:docs/ENQUADRAMENTO-CVM-B16.md`. Trazer o arquivo e reconferir contra o
-master de hoje toda citação interna (caminho, arquivo:linha, frase da meta; o 94e196c trocou a citação para `carteira.py`);
-citação que não confere → corrigir ou marcar "não confere em <commit>". Não buscar a fonte de novo pela rede (gov.br estava
-bloqueado em 22/10); se faltar algo da fonte, `[!] sem acesso`.
-*Pronto quando:* `docs/ENQUADRAMENTO-CVM-B16.md` no ramo com a lista das citações internas conferidas no fim, e a linha B16 do
-`BACKLOG.md` atualizada; portão OK.
-*Carimbo (nuvem):* B16 · escopo: `docs/ENQUADRAMENTO-CVM-B16.md` · fonte: nenhuma · pronta: f7123d0
-
 *Fila de 23/10 (O3 → N12 → O4 → O5), conferida no código em 26/11: O3 superada (ver Feitas); N12, O4, O5, e também N13 e B16,
 foram feitas só no ramo hoje arquivado e nunca juntadas → o inventário B67 diz o que portar. Texto antigo das missões:
 `_historico/2026-11-26 rotina-nuvem/MISSOES.md`.*
@@ -65,6 +41,8 @@ todos os lotes, suíte verde com `EXIGIR_DADOS=1` e `python rodar_tudo.py` "sem 
 (nenhuma)
 
 ## Feitas
+- **B67** (28/11, claude/keen-babbage-4aepwn): `docs/INVENTARIO-RAMOS-2026-10.md` — 32 commits: 13 portar, 16 superado, 3 conflita; nenhum código portado.
+- **B16** (28/11, claude/keen-babbage-4aepwn): `docs/ENQUADRAMENTO-CVM-B16.md` trazido do ramo arquivado, citações internas conferidas (fonte A não relida).
 - **Rotina noturna no molde do UNION** (26/11, 8a92e08): `docs/ops/rotina/` (BOOTSTRAP conferido na nuvem + PROTOCOLO), pré-voo,
   portão `ferramentas/rotina/checar_rotina.py`, `conferir_noite` com PROTEGIDOS ampliado + portão da base (patch do Frank),
   canários; rotina enabled (Sonnet 5.5, próxima 2026-11-27T07:40Z); ConferirNoite religada (rc 0 à mão, próxima 27/11 07:15);

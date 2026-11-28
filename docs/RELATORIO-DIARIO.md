@@ -1,6 +1,22 @@
 # RELATORIO-DIARIO
 *Uma entrada por dia/turno, a mais nova em cima: o que foi feito (com commit), decisões tomadas, o que ficou, erros. Máx. 10 linhas por entrada.*
 
+## 2026-11-28 · Rotina na nuvem (ramo claude/keen-babbage-4aepwn)
+### Pré-voo da noite
+- início (UTC): 2026-11-28T07:40Z
+- HEAD 5f4dad5 · origin/master 5f4dad5
+- Python: Python 3.14.6 (/root/venv314/bin/python)
+- rede: dados.cvm.gov.br=200 conteudo.cvm.gov.br=200 sistemaswebb3-listados.b3.com.br=403 www.b3.com.br=403 api.bcb.gov.br=302 www.gov.br=301 www.tesourotransparente.gov.br=200
+- suíte da base: rc 0 · 1370 passed, 58 skipped in 66.34s (0:01:06) (log /tmp/mesa_prevoo_suite.log)
+- **VERDE**
+1. **Não feito e por quê:** nada (fila: B67 e B16, as duas carimbadas).
+2. **Feito:** B67 (67a2ce5): `docs/INVENTARIO-RAMOS-2026-10.md`, 32 commits distintos = 13 portar, 16 superado, 3 conflita; nenhum código portado. B16 (eaed60d): `docs/ENQUADRAMENTO-CVM-B16.md` trazido do ramo arquivado, 2 citações internas conferidas no master (carteira.py:170, BACKLOG:27), fonte A não relida. Na nuvem, sem os testes de dados; o conferidor da manhã confirma.
+3. **Descobri:** N13 tem instruções diferentes no BACKLOG (só Windows local) e no inventário (portar à mão, não-Windows) → decisão da sessão do dia. Testes do ramo antigo não foram rodados contra o master (cópia de trabalho negada pelo ambiente): "portar" = ausência no master.
+4. **Precisa do Frank:** nada.
+5. **Parei porque:** fila vazia (2 de 2 missões), antes da hora-limite.
+6. **Executáveis sem missão:** ver BACKLOG (não recontado nesta noite).
+- **Auditoria de entrega:** revisor de doc (somente leitura, sem git): contagens e arquivo:linha conferidos na árvore local, 2 ressalvas de rótulo corrigidas; não auditado por git (ferramenta ausente no subagente).
+
 ## 27/11/2026 — noite de 28/11 preparada com prova (sessão do Frank)
 - Provas: com dados 4/4 passam; sem `dados/raw` + `EXIGIR_DADOS=1` → 4 errors, rc 1 (a manhã fica vermelha); `.gitignore`: 0 versionado
   ignorado, lista de não versionados idêntica à de antes. `senior` no f7123d0: SEGUE COM AJUSTES (1 médio, aplicado).
