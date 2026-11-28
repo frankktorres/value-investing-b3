@@ -16,6 +16,22 @@
 5. **Parei porque:** fila vazia (2 de 2 missões), antes da hora-limite.
 6. **Executáveis sem missão:** ver BACKLOG (não recontado nesta noite).
 - **Auditoria de entrega:** revisor de doc (somente leitura, sem git): contagens e arquivo:linha conferidos na árvore local, 2 ressalvas de rótulo corrigidas; não auditado por git (ferramenta ausente no subagente).
+- **Prova (gerada por `checar_rotina.py`; não editar à mão):** PORTÃO OK
+<!-- prova: checar_rotina base=5f4dad5 head=30ed9d8 -->
+```text
+base 5f4dad5 (origin/master) · ponta 30ed9d8 + árvore de trabalho · missões carimbadas: B16, B67
+OK M UPLOAD CLAUDE DESKTOP/02-MAPA-DA-MESA.md (controle da noite)
+OK M UPLOAD CLAUDE DESKTOP/BACKLOG.md (controle da noite)
+OK M UPLOAD CLAUDE DESKTOP/MANIFESTO.txt (controle da noite)
+OK A _historico/2026-11-28 upload-desktop/02-MAPA-DA-MESA.md (controle da noite)
+OK A _historico/2026-11-28 upload-desktop/BACKLOG.md (controle da noite)
+OK M docs/BACKLOG.md (controle da noite)
+OK A docs/ENQUADRAMENTO-CVM-B16.md (escopo B16)
+OK A docs/INVENTARIO-RAMOS-2026-10.md (escopo B67)
+OK M docs/MISSOES.md (controle da noite)
+OK M docs/RELATORIO-DIARIO.md (controle da noite)
+suíte (nuvem, sem os testes de dados; o conferidor da manhã confirma): rc 0 · 1370 passed, 58 skipped in 65.89s (0:01:05)
+```
 
 ## 27/11/2026 — noite de 28/11 preparada com prova (sessão do Frank)
 - Provas: com dados 4/4 passam; sem `dados/raw` + `EXIGIR_DADOS=1` → 4 errors, rc 1 (a manhã fica vermelha); `.gitignore`: 0 versionado
